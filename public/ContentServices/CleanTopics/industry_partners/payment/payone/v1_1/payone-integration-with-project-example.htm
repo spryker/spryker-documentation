@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Objectives: Place order with PayPal express checkout. Be redirected to summary page of standard checkout. Have shipping a method selector on summary page. First of all we need to provide a URL to Payone module, which will be used to redirect user when the quote is filled with data obtained from PayPal. To achieve this, make the following steps: Add custom controller action to"src/Pyz/Yves/Checkout/Controller/CheckoutController.php": /**
+* @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
+public function paypalExpressCheckoutEntryPointAction()
+{
+$this-&gt;getFactory()
+-&gt;createExpressCheckoutHandler()
+-&gt;fulfillPostConditionsUntilSummaryStep();
+return $this-&gt;redirectResponseInternal(CheckoutControllerProvider::CHECKOUT_SUMMARY);
+} Register a new controller action in controller provider: ...
+const CHECKOUT_PAYPAL_EXPRESS_CHECKOUT_ENTRY_POINT = 'checkout-paypal-express-checkout-entry-point';
+...
+protected function defineControllers(Application $app)
+{
+...
+$this-&gt;createController('/{checkout}/paypal-express-checkout-entry-point', self::CHECKOUT_PAYPAL_EXPRESS_CHECKOUT_ENTRY_POINT, 'Checkout', 'Checkout', 'paypalExpressCheckoutEntryPoint')
+-&gt;assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+-&gt;value('checkout', 'checkout')
+-&gt;method('GET');
+...
+} CreateExpressCheckoutHandlerclass"src/Pyz/Yves/Checkout/Handler/ExpressCheckoutHandler.php"with corresponding interface: namespace Pyz\Yves\Checkout\Handler;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
+class ExpressCheckoutHandler implements ExpressCheckoutHandlerInterface
+{
+/**
+* @var \Spryker\Client\Cart\CartClientInterface
+*/
+protected $cartClient;
+/**
+* @param \Spryker\Client\Cart\CartClientInterface $cartClient
+*/
+public function __construct(CartClientInterface $cartClient)
+{
+$this-&gt;cartClient = $cartClient;
+}
+/**
+* @return void
+*/
+public function fulfillPostConditionsUntilSummaryStep()
+{
+$quoteTransfer = $this-&gt;cartClient-&gt;getQuote();
+$quoteTransfer-&gt;addExpense(
+(new ExpenseTransfer())-&gt;setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE)
+);
+}
+} AddExpressCheckoutHandlerrelated method in"src/Pyz/Yves/Checkout/CheckoutFactory.php": /**
+* @return \Pyz\Yves\Checkout\Handler\ExpressCheckoutHandler
+*/
+public function createExpressCheckoutHandler()
+{
+return new ExpressCheckoutHandler(
+$this-&gt;getCartClient()
+);
+} ExtendShipmentFormclass to override a property_path option (create"src/Pyz/Yves/Shipment/Form/ShipmentSubForm.php"): namespace Pyz\Yves\Shipment\Form;
+class ShipmentSubForm extends ShipmentForm
+{
+/**
+* @const string
+*/
+const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_SELECTION;
+} Adjust summary form by adding a shipment subform in"src/Pyz/Yves/Checkout/Form/Steps/SummaryForm.php": class SummaryForm extends AbstractType
+{
+/**
+* Builds the form.
+*
+* This method is called for each type in the hierarchy starting from the
+* top most type. Type extensions can further modify the form.
+*
+* @see FormTypeExtensionInterface::buildForm()
+*
+* @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
+* @param array $options The options
+*
+* @return void
+*/
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+$builder-&gt;add(
+'shipmentForm',
+ShipmentSubForm::class,
+array_merge(
+$options,
+[
+'data_class' =&gt; ShipmentTransfer::class,
+'property_path' =&gt; 'shipment',
+]
+)
+);
+}
+/**
+* @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+*
+* @return void
+*/
+public function configureOptions(OptionsResolver $resolver)
+{
+$resolver-&gt;setRequired('shipmentMethods');
+$resolver-&gt;setDefaults([
+'data_class' =&gt; QuoteTransfer::class,
+]);
+}
+/**
+* Returns the name of this type.
+*
+* @return string The name of this type
+*/
+public function getName()
+{
+return 'summaryForm';
+}
+} Create shipment subform template for summary page in"src/Pyz/Yves/Checkout/Theme/default/checkout/partials/shipment.twig": &lt;div class="row columns"&gt; {% set shipmentForm = summaryForm.shipmentForm %} &lt;div class="callout"&gt; &lt;ul class="no-bullet"&gt; {% for name, choices in shipmentForm.idShipmentMethod.vars.choices %} &lt;h4&gt;{{ name }}&lt;/h4&gt; {% for key, choice in choices %} &lt;li&gt; &lt;label&gt; {{ form_widget(shipmentForm.idShipmentMethod[key], {'attr': {'class': '__toggler'}}) }} {{ shipmentForm.idShipmentMethod[key].vars.label | raw }} &lt;/label&gt; &lt;/li&gt; {% endfor %} {% endfor %} &lt;/ul&gt; &lt;/div&gt;
+&lt;/div&gt; Update summary twig template in"src/Pyz/Yves/Checkout/Theme/default/checkout/summary.twig". Move"form_start"expression to the top of a content section and"form_end"to the end: ...
+{% block content %}
+{{ form_start(summaryForm, {'attr': {'class': 'row'}}) }}
+...
+...
+...
+{{ form_end(summaryForm) }}
+{% endblock %} Remove"{% include '@checkout/checkout/partials/voucher-form.twig' %}"include from summary template. Includecheckout/partials/shipment.twigin your summary template: ... {{ 'checkout.step.summary.shipping' | trans }} {% include '@checkout/checkout/partials/shipment.twig' %} ... Add shipment form data provider and remove voucher form from summary form collection(It is just an example, if you need voucher form, you need to adjust summary page on your own). In"src/Pyz/Yves/Checkout/Form/FormFactory.php": /**
+* @param \Generated\Shared\Transfer\QuoteTransfer
+*
+* @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+*/
+public function createSummaryFormCollection()
+{
+return $this-&gt;createFormCollection($this-&gt;createSummaryFormTypes(), $this-&gt;getShipmentFormDataProviderPlugin());
+} .... /**
+* @return \Symfony\Component\Form\FormTypeInterface[]
+*/
+protected function createSummaryFormTypes()
+{
+return [
+$this-&gt;createSummaryForm(),
+//$this-&gt;createVoucherFormType(),
+];
+} Handle shipment form data, when summary form is submitted. Inject two dependencies into"src/Pyz/Yves/Checkout/Process/Steps/SummaryStep.php": /**
+* @var \Spryker\Client\Calculation\CalculationClientInterface
+*/
+protected $calculationClient;
+/**
+* @var \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
+*/
+protected $shipmentPlugins;
+/**
+* @param \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface $productBundleGrouper
+* @param \Spryker\Client\Cart\CartClientInterface $cartClient
+* @param \Spryker\Client\Calculation\CalculationClientInterface $calculationClient
+* @param \Spryker\Client\Calculation\CalculationClientInterface $shipmentPlugins
+* @param string $stepRoute
+* @param string $escapeRoute
+*/
+public function __construct(
+ProductBundleGrouperInterface $productBundleGrouper,
+CartClientInterface $cartClient,
+CalculationClientInterface $calculationClient,
+StepHandlerPluginCollection $shipmentPlugins,
+$stepRoute,
+$escapeRoute
+) {
+parent::__construct($stepRoute, $escapeRoute);
+$this-&gt;productBundleGrouper = $productBundleGrouper;
+$this-&gt;cartClient = $cartClient;
+$this-&gt;calculationClient = $calculationClient;
+$this-&gt;shipmentPlugins = $shipmentPlugins;
+} Extendexecutemethod: /**
+* @param \Symfony\Component\HttpFoundation\Request $request
+* @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+*
+* @return \Generated\Shared\Transfer\QuoteTransfer
+*/
+public function execute(Request $request, AbstractTransfer $quoteTransfer)
+{
+$shipmentHandler = $this-&gt;shipmentPlugins-&gt;get(CheckoutDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
+$shipmentHandler-&gt;addToDataClass($request, $quoteTransfer);
+$this-&gt;calculationClient-&gt;recalculate($quoteTransfer);
+$this-&gt;markCheckoutConfirmed($request, $quoteTransfer);
+return $quoteTransfer;
+} Now go to checkout and try placing an order with Paypal express checkout. See also: Payment Integration - BS Payone - Version 1.0 Payment Integration - BS Payone - Version 1.1 Last review date: Nov. 6th, 2017</body>
+</html>

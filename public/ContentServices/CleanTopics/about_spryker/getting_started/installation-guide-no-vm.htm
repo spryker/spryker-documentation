@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>This guide will help you install Spryker's Demoshop without using the virtual machine that we offer. Minimum requirements: PHP v7.1.x apt-get install php7.0-curl php7.0-gd php7.0-gmp php7.0-intl php7.0-mcrypt php7.0-pgsql php-redis php7.0-xml php7.0-mbstring php7.0-bz2 Jenkins Please install appropriate version for your system, refer to https://jenkins.io/download/ . Make sure it runs on portlocalhost:10007, otherwise update config. Elasticsearch v2.3+ Please install appropriate version for your system, refer to https://www.elastic.co/guide/en/elasticsearch/guide/current/running-elasticsearch.html . Make sure it runs onlocalhost:10005, otherwise update config. Graphviz v2.x Please follow the instructions at http://www.graphviz.org/Download_linux_ubuntu.php . Nginx or Apache Redis v1.x Make sure it runs onlocalhost:10009, otherwise update config. PostgreSQL v9.x Nginx Configuration Nginx Configuration for Yves The following configuration must be included for Yves in the Nginx configuration file. location / { if (-f $document_root/maintenance.html) { return 503; } # CORS - Allow Ajax requests from http to https webservices on the same domain #more_set_headers "Access-Control-Allow-Origin: http://$server_name"; #more_set_headers "Access-Control-Allow-Credentials: true"; #more_set_headers "Access-Control-Allow-Headers: Authorization"; # CORS - Allow Ajax calls from cdn/static scripts if ($http_origin ~* "^(http|https)://(img[1234]|cdn|static|cms)\.") { add_header "Access-Control-Allow-Origin" $http_origin; } # Frontend - force browser to use new rendering engine #more_set_headers "X-UA-Compatible: IE=Edge,chrome=1"; # Terminate OPTIONS requests immediately. No need for calling php # OPTIONS is used by Ajax from http to https as a pre-flight-request # see http://en.wikipedia.org/wiki/Cross-origin_resource_sharing if ($request_method = OPTIONS) { return 200; } add_header X-Server $hostname; try_files $uri @rewriteapp; #more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';
+} location @rewriteapp { # rewrite all to app.php rewrite ^(.*)$ /index.php last;
+} Nginx Configuration for Zed The following configuration must be included for Yves in the Nginx configuration file. # Timeout for Zed requests - 10 minutes
+# (longer requests should be converted to jobs and executed via jenkins)
+proxy_read_timeout 600s;
+proxy_send_timeout 600s;
+fastcgi_read_timeout 600s;
+client_body_timeout 600s;
+client_header_timeout 600s;
+send_timeout 600s; # Static files can be delivered directly
+location ~ (/images/|/scripts|/styles|/fonts|/bundles|/favicon.ico|/robots.txt) { access_log off; expires 30d; add_header Pragma public; add_header Cache-Control "public, must-revalidate, proxy-revalidate"; try_files $uri =404;
+} # Payone - PHP application gets all other requests without authorized
+location /payone/ { auth_basic off; add_header X-Server $hostname; try_files $uri @rewriteapp;
+} # PHP application gets all other requests
+location / { #add_header X-Server $hostname; try_files $uri @rewriteapp; #more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server'; } location @rewriteapp { # rewrite all to app.php rewrite ^(.*)$ /index.php last;
+} PHP Required Extensions curl json mysql pdo_sqlit sqlite3 gd intl mysqli pgsql ssh2 gmp mcrypt pdo_mysq readline twig imagick memcache pdo_pgsq redis Configuration Files Database Edit config_local.php to configure the database access: &lt;?php
+$config[ApplicationConstants::ZED_DB_USERNAME] = 'development';
+$config[ApplicationConstants::ZED_DB_PASSWORD] = 'mate20mg';
+$config[ApplicationConstants::ZED_DB_DATABASE] = 'DE_development_zed';
+$config[ApplicationConstants::ZED_DB_HOST] = '127.0.0.1';
+$config[ApplicationConstants::ZED_DB_ENGINE] = $config[ApplicationConstants::ZED_DB_ENGINE_PGSQL];
+$config[ApplicationConstants::ZED_DB_PORT] = 5432; Redis Configure Redis in your local configuration file: &lt;?php
+$config[ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PROTOCOL] = 'tcp';
+$config[ApplicationConstants::YVES_STORAGE_SESSION_REDIS_HOST] = '127.0.0.1';
+$config[ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PORT] = '10009';
+$config[ApplicationConstants::YVES_STORAGE_SESSION_REDIS_PASSWORD] = ''; Elasticsearch Configure Elasticsearch in your local configuration file: &lt;?php
+$config[ApplicationConstants::ELASTICA_PARAMETER__HOST] = 'localhost';
+$config[ApplicationConstants::ELASTICA_PARAMETER__TRANSPORT] = 'http';
+$config[ApplicationConstants::ELASTICA_PARAMETER__PORT] = '10005';
+$config[ApplicationConstants::ELASTICA_PARAMETER__AUTH_HEADER] = '';
+$config[ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME] = 'index_page';
+$config[ApplicationConstants::ELASTICA_PARAMETER__DOCUMENT_TYPE] = 'page'; Configure Elasticsearch localized parameters: &lt;?php
+$config[ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME] = 'de_development_catalog'; If you want to configure the hostname, set the values for Yves and Zed hostnames in your local configuration file: $config[ApplicationConstants::HOST_ZED_GUI] $config[ApplicationConstants::HOST_YVES] See also: Installation Guide Last review date:
+Oct. 10th, 2017</body>
+</html>

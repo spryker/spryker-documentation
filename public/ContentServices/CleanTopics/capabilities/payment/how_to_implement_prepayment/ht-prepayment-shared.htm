@@ -1,0 +1,8 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>As you can see, we need to identify the new payment type through some unique constants which we’re going to define under theSharednamespace, since they’re needed both by Yves and Zed. Create thePaymentMethodsConstantsinterface in the Sharednamespace, where you’ll define these constants. &lt;?php namespace Pyz\Shared\PaymentMethods; interface PaymentMethodsConstants
+{ /** * @const string */ const PROVIDER = 'paymentmethods'; /** * @const string */ const PAYMENT_METHOD_PREPAYMENT = 'prepayment'; /** * @const string */ const PAYMENT_PREPAYMENT_FORM_PROPERTY_PATH = static::PROVIDER . static::PAYMENT_METHOD_PREPAYMENT; } Also, enrich thePaymenttransfer file with a new property that corresponds to the new payment method: &lt;?xml version="1.0"?&gt;
+&lt;transfers xmlns="spryker:transfer-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt; &lt;transfer name="Payment"&gt; &lt;!-- Should be equal to PaymentMethodsConstants::PAYMENT_PREPAYMENT_FORM_PROPERTY_PATH. Then the form fields can be automatically mapped to the transfer object inside this field. --&gt; &lt;property name="paymentmethodsprepayment" type="string"/&gt; &lt;/transfer&gt;
+&lt;/transfers&gt; In order to have thePaymentTransferclass updated, you need to run thevendor/bin/console transfer:generatecommand first.</body>
+</html>

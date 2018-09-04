@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Migration Guide - Environment Configuration</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="3oAtbZT3Gk2momGBfbiu8g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="3oAtbZT3Gk2momGBfbiu8g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ZZ1Od-OUAEakeOYZ7bgiKg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ZZ1Od-OUAEakeOYZ7bgiKg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -232,7 +235,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
 );</code></pre>
                                                 <h3>_BASE_URL_STATIC_ASSETS_, _BASE_URL_STATIC_MEDIA_, _BASE_URL_SSL_STATIC_ASSETS_, and _BASE_URL_SSL_STATIC_MEDIA_</h3>
                                                 <p>These ones replace the existing, and now deprecated, constants <var>HOST_STATIC_ASSETS</var>, <var>HOST_STATIC_MEDIA</var>, <var>HOST_SSL_STATIC_ASSETS</var>, and <var>HOST_SSL_STATIC_MEDIA</var>. They should include the scheme and optionally a port.</p>
-                                                <p>It might be necessary to update <var>\Pyz\Yves\Twig\Plugin\TwigAsset</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a> to have it use the new configuration options.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">It might be necessary to update <var>\Pyz\Yves\Twig\Plugin\TwigAsset</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a> to have it use the new configuration options.</p>
                                                 <h2>Defining Ports</h2>
                                                 <p><var>PORT_YVES</var>, <var>PORT_SSL_YVES</var>, <var>PORT_ZED</var>, and <var>PORT_SSL_ZED</var> have been added but aren't used by Spryker core yet. They can be defined and reused to set e.g. <var>BASE_URL_YVES</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -245,7 +248,7 @@ $config[ApplicationConstants::BASE_URL_ZED] = sprintf(
     $config[ApplicationConstants::HOST_YVES],
     $config[ApplicationConstants::PORT_YVES] ?: ''
 );</code></pre>
-                                                <p>If it is required to define ports in project implementations, it might be necessary to update <var>\Pyz\Shared\Application\Business\Routing\UrlGenerator</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a>. Older versions of this class aren't aware of URLs containing ports.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">If it is required to define ports in project implementations, it might be necessary to update <var>\Pyz\Shared\Application\Business\Routing\UrlGenerator</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a>. Older versions of this class aren't aware of URLs containing ports.</p>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />List of the New Configuration Constants</a></span>
                                                     <div class="MCDropDownBody dropDownBody">
                                                         <ul>

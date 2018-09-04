@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Addspryker-eco/payolutionto your project by runningcomposer require spryker-eco/payolution Please refer toconfig/config.dist.phpfor example of module configuration. To setup the initial Payolution configuration, use the credentials you received after registering your Payolution merchant account: $config[PayolutionConstants::TRANSACTION_GATEWAY_URL] = '';
+$config[PayolutionConstants::CALCULATION_GATEWAY_URL] = '';
+$config[PayolutionConstants::TRANSACTION_SECURITY_SENDER] = '';
+$config[PayolutionConstants::TRANSACTION_USER_LOGIN] = '';
+$config[PayolutionConstants::TRANSACTION_USER_PASSWORD] = '';
+$config[PayolutionConstants::CALCULATION_SENDER] = '';
+$config[PayolutionConstants::CALCULATION_USER_LOGIN] = '';
+$config[PayolutionConstants::CALCULATION_USER_PASSWORD] = '';
+$config[PayolutionConstants::TRANSACTION_CHANNEL_PRE_CHECK] = '';
+$config[PayolutionConstants::TRANSACTION_CHANNEL_INVOICE] = '';
+$config[PayolutionConstants::TRANSACTION_CHANNEL_INSTALLMENT] = '';
+$config[PayolutionConstants::CALCULATION_CHANNEL] = ''; Next, specify modes and order limits: $config[PayolutionConstants::TRANSACTION_MODE] = 'CONNECTOR_TEST';
+$config[PayolutionConstants::CALCULATION_MODE] = 'TEST';
+$config[PayolutionConstants::MIN_ORDER_GRAND_TOTAL_INVOICE] = '500';
+$config[PayolutionConstants::MAX_ORDER_GRAND_TOTAL_INVOICE] = '500000';
+$config[PayolutionConstants::MIN_ORDER_GRAND_TOTAL_INSTALLMENT] = '500';
+$config[PayolutionConstants::MAX_ORDER_GRAND_TOTAL_INSTALLMENT] = '500000'; Checkout Configuration To use Payolution in frontend, Payolution payment method handlers and subforms should be added toPyz/Yves/Checkout/CheckoutDependencyProvider.php $container[static::PAYMENT_METHOD_HANDLER] = function () { $paymentHandlerPlugins = new StepHandlerPluginCollection(); $paymentHandlerPlugins-&gt;add(new PayolutionHandlerPlugin(), PaymentTransfer::PAYOLUTION_INVOICE); $paymentHandlerPlugins-&gt;add(new PayolutionHandlerPlugin(), PaymentTransfer::PAYOLUTION_INSTALLMENT); return $paymentHandlerPlugins; }; $container[static::PAYMENT_SUB_FORMS] = function () { $paymentSubFormPlugins = new SubFormPluginCollection(); $paymentSubFormPlugins-&gt;add(new PayolutionInstallmentSubFormPlugin()); $paymentSubFormPlugins-&gt;add(new PayolutionInvoiceSubFormPlugin()); return $paymentSubFormPlugins; }; All subform and handler plugins are located inSprykerEco\Yves\Payolution\Plugin\namespace. OMS Configuration Please activate the following Payolution process. $config[OmsConstants::ACTIVE_PROCESSES][] = 'PayolutionPayment01'; Default implementation for commands and options should be added toPyz/Zed/Oms/OmsDependencyProvider.php Commands: $container-&gt;extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) { $commandCollection -&gt;add(new PreAuthorizePlugin(), 'Payolution/PreAuthorize') -&gt;add(new ReAuthorizePlugin(), 'Payolution/ReAuthorize') -&gt;add(new RevertPlugin(), 'Payolution/Revert') -&gt;add(new CapturePlugin(), 'Payolution/Capture') -&gt;add(new RefundPlugin(), 'Payolution/Refund'); return $commandCollection;
+}); Conditions: $container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) { $conditionCollection -&gt;add(new IsPreAuthorizationApprovedPlugin(), 'Payolution/IsPreAuthorizationApproved') -&gt;add(new IsReAuthorizationApprovedPlugin(), 'Payolution/IsReAuthorizationApproved') -&gt;add(new IsReversalApprovedPlugin(), 'Payolution/IsReversalApproved') -&gt;add(new IsCaptureApprovedPlugin(), 'Payolution/IsCaptureApproved') -&gt;add(new IsRefundApprovedPlugin(), 'Payolution/IsRefundApproved'); return $conditionCollection;
+}); All commands and conditions are located inSprykerEco\Zed\Payolution\Communication\Plugin\Oms\namespace. Payment Configuration Default implementation for checkout payment plugins should be added toPyz/Zed/Payment/PaymentDependencyProvider.php $container-&gt;extend(static::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) { $pluginCollection -&gt;add(new PayolutionPreCheckPlugin(), PayolutionConfig::PROVIDER_NAME, static::CHECKOUT_PRE_CHECK_PLUGINS) -&gt;add(new PayolutionSaveOrderPlugin(), PayolutionConfig::PROVIDER_NAME, static::CHECKOUT_ORDER_SAVER_PLUGINS) -&gt;add(new PayolutionPostCheckPlugin(), PayolutionConfig::PROVIDER_NAME, static::CHECKOUT_POST_SAVE_PLUGINS); return $pluginCollection; }); All payment plugins are located inSprykerEco\Zed\Payolution\Communication\Plugin\Checkout\namespace. Last review date: Oct. 7th, 2017</body>
+</html>

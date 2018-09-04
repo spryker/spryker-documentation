@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>HowTo - Cart Integration</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="laBjiWh140ewFFgMLNp56g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="laBjiWh140ewFFgMLNp56g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="qjTc4aOQo0yQVR3Q5NQbMQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qjTc4aOQo0yQVR3Q5NQbMQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -209,20 +212,20 @@
                                                 <p>This article describes how to add product variants and product pictures to an existing cart</p>
                                                 <h2>Prerequisites:</h2>
                                                 <p>Before starting make sure you are familiar with the concept of Spryker Super Attributes. </p>
-                                                <h2>UI Changes:</h2>
-                                                <p>Cart now supports changing the items in the cart by modifying their attributes. If we have a wrong T-Shirt size in the cart we will be able to change it.</p>
-                                                <p>Cart now also supports product images out of the box.</p>
-                                                <p>
+                                                <h2 data-mc-conditions="Spryker.DemoShop">UI Changes:</h2>
+                                                <p data-mc-conditions="Spryker.DemoShop">Cart now supports changing the items in the cart by modifying their attributes. If we have a wrong T-Shirt size in the cart we will be able to change it.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">Cart now also supports product images out of the box.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">
                                                     <img src="../../resources/images/cart_product_images.png" title="Product Images" />
                                                 </p>
-                                                <p>If we have products with multiple super attributes we can now, narrowing-down in the cart.</p>
-                                                <p>
+                                                <p data-mc-conditions="Spryker.DemoShop">If we have products with multiple super attributes we can now, narrowing-down in the cart.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">
                                                     <img src="../../resources/images/product_super_attributes.png" title="Product Super Attributes" />
                                                 </p>
                                                 <h2>Installation</h2>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Item images in cart</a></span>
                                                     <div class="MCDropDownBody dropDownBody">
-                                                        <p>To support  images in a cart,  install the optional <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span><var>ProductImageCartConnector</var> by running: </p>
+                                                        <p>To support  images in a cart,  install the optional module<var>ProductImageCartConnector</var> by running: </p>
                                                         <p><var>composer require spryker/product-image-cart-connector</var>
                                                         </p>
                                                         <p>This module will provide the <var>ProductImageCartPlugin</var> that you will have to then register in your shop <var>CartDependencyProvider</var> like in a snippet below:</p><pre><code class="language-PHP line-numbers">/**
@@ -262,8 +265,8 @@ protected function getExpanderPlugins(Container $container)
                                                         </p>
                                                     </div>
                                                 </div>
-                                                <h2>Integration:</h2>
-                                                <p>To integrate variant selection in your cart you will need to do some modifications to your project.</p>
+                                                <h2 data-mc-conditions="Spryker.DemoShop">Integration for Demoshop:</h2>
+                                                <p data-mc-conditions="Spryker.DemoShop">To integrate variant selection in your cart you will need to do some modifications to your project.</p>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Cart Controller</a></span>
                                                     <div class="MCDropDownBody dropDownBody">
                                                         <p>In the Cart controller (<var>src/Pyz/Yves/Cart/Controller/CartController.php</var>)  add an additional action to allow Cart item attribute changes as follows:</p><pre><code class="language-PHP line-numbers">/**
@@ -301,8 +304,8 @@ public function updateAction($sku, $quantity, array $selectedAttributes, array $
 </code></pre>
                                                     </div>
                                                 </div>
-                                                <p>To support cart item attribute rendering, add the following parameter to index action</p><pre><code class="language-PHP line-numbers">array $selectedAttributes = null</code></pre>
-                                                <p>Add the following line to the function's body:</p><pre><code class="language-PHP line-numbers">$itemAttributesBySku = $this-&gt;getFactory()
+                                                <p data-mc-conditions="Spryker.DemoShop">To support cart item attribute rendering, add the following parameter to index action</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">array $selectedAttributes = null</code></pre>
+                                                <p data-mc-conditions="Spryker.DemoShop">Add the following line to the function's body:</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">$itemAttributesBySku = $this-&gt;getFactory()
     -&gt;createCartItemsAttributeProvider()-&gt;getItemsAttributes($quoteTransfer, $selectedAttributes);
 </code></pre>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />The full indexAction code should be as follows:</a></span>
@@ -336,8 +339,8 @@ public function indexAction(array $selectedAttributes = null)
 </code></pre>
                                                     </div>
                                                 </div>
-                                                <h3>Additional Classes:</h3>
-                                                <p>To complete the feature integration:</p>
+                                                <h3 data-mc-conditions="Spryker.DemoShop">Additional Classes:</h3>
+                                                <p data-mc-conditions="Spryker.DemoShop">To complete the feature integration:</p>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Add <var>src/Pyz/Yves/Cart/Plugin/Provider/AttributeVariantsProvider.php</var> by copying the following code:</a></span>
                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -830,8 +833,8 @@ protected function filterConcreteProductIds(array $concreteProducts)
     return $concreteProductIds;
 }
 </code></pre>
-                                                <h2>UI Integration</h2>
-                                                <p>You can use the demoshop's <var>cart-item.twig</var> as a template for your own project. </p>
+                                                <h2 data-mc-conditions="Spryker.DemoShop">UI Integration</h2>
+                                                <p data-mc-conditions="Spryker.DemoShop">You can use the demoshop's <var>cart-item.twig</var> as a template for your own project. </p>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />The following code sample demonstrates the feature's use: </a></span>
                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;form method="POST" action="{{ path('cart/update', {'sku': cartItem.sku }) }}"&gt;
     {% for attributeName, attributeOptions in itemAttributes %}
@@ -878,7 +881,7 @@ protected function filterConcreteProductIds(array $concreteProducts)
 </code></pre>
                                                     </div>
                                                 </div>
-                                                <p>Seemingly complex, you can simplify the code if your implementation does not support narrowing down of attributes (only one super attribute per product i.e. T-shirt size). </p>
+                                                <p data-mc-conditions="Spryker.DemoShop">Seemingly complex, you can simplify the code if your implementation does not support narrowing down of attributes (only one super attribute per product i.e. T-shirt size). </p>
                                                 <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />The following snippet should help:</a></span>
                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">{% set itemAttributes = attribute(data.attributes, cartItem.sku) %}
 {% if itemAttributes|length &gt; 0 %}

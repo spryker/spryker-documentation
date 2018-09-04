@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Console</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="l1jpg-MJaESEmggaXOuJdg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="l1jpg-MJaESEmggaXOuJdg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="drxS_k3h6UCYUDmM9H0ugQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="drxS_k3h6UCYUDmM9H0ugQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -206,9 +209,75 @@
                                                     </div>
                                                 </div>
                                                 <h1>Console</h1>
-                                                <p>"With the Spryker Commerce OS comes an all-inclusive and fully pre-provisioned development environment on a virtual machine, based on Vagrant and VirtualBox.
-The command-line Console tool enables you to execute a great variety of commands, such as managing the Spryker COmmerce OS installer, to run the OS in any environment."</p>
-                                                <p>The Command-line tool based on the Symfony Console Component which is used for the installer and other use cases.</p>
+                                                <p>With the Spryker Commerce OS comes an all-inclusive and fully pre-provisioned development environment on a virtual machine, based on Vagrant and VirtualBox.</p>
+                                                <p>The command-line Console tool enables you to execute a great variety of commands, such as managing the Spryker Commerce OS installer, to run the OS in any environment.</p>
+                                                <p>A console command is a php class that contains the implementation of a functionality that can get executed from the command line. Spryker contains a wrapper over Symfony’s Console component, that makes the implementation and configuration of a console command easier. More information about console commands in Spryker can be found here.</p>
+                                                <h2>Console Commands in Spryker</h2>
+                                                <p>To list the available console commands, execute the following from the command line:</p><pre><code class="language-PHP line-numbers">vendor/bin/console</code></pre>
+                                                <p>The list contains the command names together with a short description of what the command does. The most important commands in Spryker can be split in 3 categories :</p>
+                                                <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Collector Commands</a></span>
+                                                    <div class="MCDropDownBody dropDownBody">
+                                                        <p>Collector commands are responsible of exporting the data in the SQL database to the front-end data storages (Redis and Elasticsearch)</p>
+                                                        <ul>
+                                                            <li class="bullet_list" value="1">collector:search:export - exports data to the Elasticsearch storage</li>
+                                                            <li class="bullet_list" value="2">collector:search:update - updates the data in the Elasticsearch storage</li>
+                                                            <li class="bullet_list" value="3">collector:storage:export - exports data to Key-Value storage (Redis)</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Order Management System Commands</a></span>
+                                                    <div class="MCDropDownBody dropDownBody">
+                                                        <ul>
+                                                            <li class="bullet_list" value="1"><var>oms:check-condition</var> - check if conditions are satisfied for orders that are in a state that is the source state for a transition that has a condition attached</li>
+                                                            <li class="bullet_list" value="2"><var>oms:check-timeout</var> - check if timeout was reached for orders that are in a state that is the source state for a transition that has a timeout attached</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <h2>Setup Commands</h2>
+                                                <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Installation setup commands</a></span>
+                                                    <div class="MCDropDownBody dropDownBody">
+                                                        <p><var>setup:install</var> - runs a set of commands, necessary for installing or updating the application. The following steps are performed when running this command:</p>
+                                                        <ol>
+                                                            <li value="1">delete all cache files for all stores (<var>cache:delete-all</var>)</li>
+                                                            <li value="2">remove the directory that contains the generated files, such as transfer classes, merged database schema XML files or autocompletion classes (<var>setup:remove-generated-directory</var>)</li>
+                                                            <li value="3">create or migrate the database (<var>setup:propel</var>)</li>
+                                                            <li value="4">generate transfer classes for each of the objects defined in the XML transfer files (<var>transfer:generate</var>)</li>
+                                                            <li value="5">initialize the database with required data (<var>setup:init-db</var>)</li>
+                                                            <li value="6">generate ide autocompletion files to enable navigation to referenced classes (<var>dev:ide:generate-auto-completion</var>). Generated autocompletion classes will be found for each application under the generated folder.</li>
+                                                            <li value="7">build the project resources for Yves and Zed</li>
+                                                            <li value="8">build the navigation tree (<var>application:build-navigation-tree</var>)</li>
+                                                        </ol>
+                                                        <p class="info">
+                                                            <br /><strong>Installation Commands</strong>
+                                                            <br />Each of the commands contained in the steps above can also be executed individually.</p>
+                                                        <p><var>setup:install:demo-data</var> - inserts demo data into the database for testing reasons</p>
+                                                        <p><var>setup:propel</var> - runs a set of commands, necessary for creating or migrating the database. The following steps are performed when running this command:</p>
+                                                        <ol>
+                                                            <li value="1">write propel configuration (<var>setup:propel:config:convert</var>)</li>
+                                                            <li value="2">creates the database if it doesn’t exist yet, based on the configuration set in the previous step (<var>setup:propel:database:create</var>)</li>
+                                                            <li value="3">ensure compatibility with Postgresql if necessary, by adjusting the Propel XML schema files (<var>setup:propel:pg-sql-compat</var>)</li>
+                                                            <li value="4">copy schema files from Spryker and project packages to the generated folder (<var>setup:propel:schema:copy</var>)</li>
+                                                            <li value="5">build Propel classes based on the XML schema files (<var>setup:propel:model:build</var>)</li>
+                                                            <li value="6">compare the propel models with the database tables and generate the diff, in order to prepare for migration (<var>setup:propel:diff</var>)</li>
+                                                            <li value="7">migrate the database: update the database so that’s in sync with the propel models in the project (<var>setup:propel:migrate</var>)</li>
+                                                        </ol>
+                                                    </div>
+                                                </div>
+                                                <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Jenkins Setup Commands</a></span>
+                                                    <div class="MCDropDownBody dropDownBody">
+                                                        <p>Cron jobs are scheduled by using Jenkins. For setting up Jenkins, the following console commands can be used from the command line:</p>
+                                                        <ul>
+                                                            <li class="bullet_list" value="1"><var>setup:jenkins:enable</var> - starts the Jenkins service</li>
+                                                            <li class="bullet_list" value="2"><var>setup:jenkins:disable</var> - shut downs the Jenkins service</li>
+                                                            <li class="bullet_list" value="3"><var>setup:jenkins:generate</var> - setups the cron jobs based on the definitions contained in the configuration file ( the config file for jobs is placed in <var>/config/Zed/cronjobs/jobs.php</var>)</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Git Commands</a></span>
+                                                    <div class="MCDropDownBody dropDownBody">
+                                                        <p>Git commands are enabled through console commands and they have effect over the Spryker packages.</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>

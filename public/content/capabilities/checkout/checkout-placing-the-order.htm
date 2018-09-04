@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Placing the Order — Checkout</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="KBvq1iRl20agcUtOxd-dwA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KBvq1iRl20agcUtOxd-dwA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="6-Q3eh-4JUGDMKenkR4eRw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="6-Q3eh-4JUGDMKenkR4eRw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -206,12 +209,12 @@
                                                     </div>
                                                 </div>
                                                 <h1>Placing the Order — Checkout</h1>
-                                                <p>After the customer clicks the submit button during the <var>SummaryStep</var>, the <var>PlaceOrderStep</var> is started. This step takes the <var>QuoteTransfer</var>` and starts the checkout workflow to store the order into the system. Zed Checkout <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>contains a number of plugins where you can add additional behavior, check preconditions, save or execute post condition check.</p>
+                                                <p>After the customer clicks the submit button during the <var>SummaryStep</var>, the <var>PlaceOrderStep</var> is started. This step takes the <var>QuoteTransfer</var>` and starts the checkout workflow to store the order into the system. Zed Checkout module contains a number of plugins where you can add additional behavior, check preconditions, save or execute post condition check.</p>
                                                 <h2><a name="Plugins"></a>Plugins</h2>
-                                                <p>Zed's Checkout <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> contains three types of plugins to extend the behavior on placing an order. Any plugin has access to <var>QuoteTransfer</var> that is supposed to be read only and <a href="#checkout_response_transfer">CheckoutResponseTransfer</a> data object that can be modified.</p>
+                                                <p>Zed's Checkout module contains three types of plugins to extend the behavior on placing an order. Any plugin has access to <var>QuoteTransfer</var> that is supposed to be read only and <a href="#checkout_response_transfer">CheckoutResponseTransfer</a> data object that can be modified.</p>
                                                 <ul>
                                                     <li class="bullet_list" value="1">PreCondition — is for checking if the order satisfies predefined constraints (e.g., if the quantity of items is still available).</li>
-                                                    <li class="bullet_list" value="2">OrderSavers — is for saving order, each plugin is responsible for saving certain parts of the order (sales <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> saves items, discount <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> saves discounts, product option <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> saves options etc..). Each <var>OrderSaver</var> plugin is wrapped into a single transaction; if exception is being thrown, transaction will be rolledback.</li>
+                                                    <li class="bullet_list" value="2">OrderSavers — is for saving order, each plugin is responsible for saving certain parts of the order (sales module saves items, discount module saves discounts, product option module saves options etc..). Each <var>OrderSaver</var> plugin is wrapped into a single transaction; if exception is being thrown, transaction will be rolledback.</li>
                                                     <li class="bullet_list" value="3">CheckPostConditions — is for checking conditions after saving, last time to react if something did not happen by the plan. It’s called after state machine execution.</li>
                                                 </ul>
                                                 <h2><a name="checkout_response_transfer"></a>Checkout Response Transfer</h2>
@@ -259,8 +262,8 @@
                                                     <li value="1"><var>SalesOrderExpanderPlugin</var> — expands items by quantity and recalculate quote.</li>
                                                 </ul>
                                                 <h2>State Machine</h2>
-                                                <p>State machine is triggered in the <var>CheckoutWorkflow</var> class from the Checkout <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>; the execution starts after pre-condition and order saver plugins store no errors into <a href="#checkout_response_transfer">CheckoutResponseTransfer</a>.</p>
-                                                <p>The state machine trigger needs a name in order to be executed. The name is set by <var>SalesOrderSaverPlugin</var> in the Sales <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. Each project has to implement <var>SalesConfig::determineProcessForOrderItem()</var> method, which should return the state machine name for the selected order item. E.g.: Payolution payment would return PayolutionPayment01.</p>
+                                                <p>State machine is triggered in the <var>CheckoutWorkflow</var> class from the Checkout module; the execution starts after pre-condition and order saver plugins store no errors into <a href="#checkout_response_transfer">CheckoutResponseTransfer</a>.</p>
+                                                <p>The state machine trigger needs a name in order to be executed. The name is set by <var>SalesOrderSaverPlugin</var> in the Sales module. Each project has to implement <var>SalesConfig::determineProcessForOrderItem()</var> method, which should return the state machine name for the selected order item. E.g.: Payolution payment would return PayolutionPayment01.</p>
                                                 <p>&#160;</p>
                                             </div>
                                         </div>

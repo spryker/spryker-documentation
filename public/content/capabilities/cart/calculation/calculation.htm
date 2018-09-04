@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Calculation</title>
+        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="dBt_JeRP-0Kvkmf9raOljw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="dBt_JeRP-0Kvkmf9raOljw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="BVVDAd4b7kW6snxSblNOoA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BVVDAd4b7kW6snxSblNOoA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -208,10 +211,10 @@
                                                 <h1>Calculation</h1>
                                                 <p><a href="javascript:void(0);" class="MCHelpControl MCHelpControl-Related relatedTopics" data-mc-topics="Calculation 3.0|calculation-3-0.htm" target="_self" style="mc-label: 'Versions:';mc-help-control-display: popup;"><span class="MCHelpControl-RelatedHotSpot_"><img class="MCHelpControl_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions:</span></a>
                                                 </p>
-                                                <p>Spryker uses the Calculation <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> to calculate the cart totals that are displayed in the cart/checkout or when the order is placed.
-Its also used to recalculate order totals after refund.
+                                                <p>Spryker Commerce OS uses the Calculation module to calculate the cart totals that are displayed in the cart/checkout or when the order is placed.
+It's also used to recalculate the order totals after refund.
 </p>
-                                                <p>The calculation <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> extensively uses plugins to inject calculation algorithms.
+                                                <p>The calculation module extensively uses plugins to inject calculation algorithms.
 </p>
                                                 <h2>How Calculation Works</h2>
                                                 <p class="info">Quote Transfer
@@ -219,7 +222,7 @@ Its also used to recalculate order totals after refund.
 <br />The quote transfer object is used to store data and plugins that calculate the amounts.
 </p>
                                                 <p>There is already a list of plugins which populate quote transfer with corresponding data. Calculations are executed every time the content of the cart is updated.</p>
-                                                <p class="tip">For more details see <a href="../cart-1.htm#CartDataFlow" class="MCXref xref">Cart Data Flow</a>.
+                                                <p class="tip">For more details see <a href="../cart-functionality.htm#CartDataFlow" class="MCXref xref">Cart Data Flow</a>.
 </p>
                                                 <p>If manual cart recalculation is required, <var>CalculationFacade::recalculate</var> can be called from Zed or <var>CalculationClient::recalculate</var> from Yves with prepared <a href="calculation-data-structure.htm#Quote_Transfer" class="MCXref xref">Quote Transfer
 </a>. When the recalculation operation is called, the calculator runs the calculator plugin stack and each plugin modifies the QuoteTransfer (calculates discounts, adds sum gross prices, calculates taxes, etc.). Most plugins require the <var>unitPrice</var> and the <var>quantity</var> to be provided.
@@ -234,7 +237,7 @@ Its also used to recalculate order totals after refund.
                                                 <p>After calculation, the original object that was passed is converted back to the object's recalculated state.</p>
                                                 <p>Each calculable object holds reference to  the <var>CalculableObjectTransfer::originalQuote</var> and <var>CalculableObjectTransfer::originalOrder objects</var>, in order for you to use this for more context when working with a custom calculator.</p>
                                                 <p class="important">Do not modify <var>CalculableObjectTransfer::originalQuote</var> and <var>CalculableObjectTransfer::originalOrder</var> as changes will not be propagated.</p>
-                                                <p>Download our <a href="../../../Resources/pdf/Calculation.xlsx">Calculation Spreadsheet</a> to see how calculations are made.</p>
+                                                <p>Download our <a href="../../../resources/documents/calculation.xlsx">Calculation Spreadsheet</a> to see how calculations are made.</p>
                                                 <h1>Price Mode</h1>
                                                 <p>You can switch price mode calculators using by setting <var>QuoteTransfer::priceMode</var> property, this will change tax calculation and values for <var>unitPrice</var> and <var>sumPrice</var></p>
                                                 <p>will be read from <var>unitNetPrice</var> and <var>sumNetPrice</var> respectively. This value is set in cart Expander <var>CartItemPricePlugin</var>. Price mode is also persisted when order is placed.</p>

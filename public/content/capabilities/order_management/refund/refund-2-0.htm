@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Refund 2.0</title>
+        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="BlHwdhekJUK6EKzXQyz9WQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BlHwdhekJUK6EKzXQyz9WQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="U9ixH-IY6UuNPgiHBk58hA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="U9ixH-IY6UuNPgiHBk58hA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -208,8 +211,8 @@
                                                 <h1>Refund 2.0</h1>
                                                 <p><a href="javascript:void(0);" class="MCHelpControl MCHelpControl-Related relatedTopics relatedTopicssideContent" data-mc-topics="refund_2_0|refund_2_0.htm||Refund|refund.htm" target="_self" style="mc-label: 'Versions:';mc-help-control-display: popup;"><span class="MCHelpControl-RelatedHotSpot_ MCHelpControl-RelatedHotSpot_sideContent"><img class="MCHelpControl_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions:</span></a>
                                                 </p>
-                                                <p class="important">The latest version of this <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> can be found here <a href="refund.htm" class="MCXref xref">Refund</a></p>
-                                                <p>The Refund <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> manages the retours refund process.</p>
+                                                <p class="important">The latest version of this module can be found here <a href="refund.htm" class="MCXref xref">Refund</a></p>
+                                                <p>The Refund module manages the retours refund process.</p>
                                                 <ul>
                                                     <li class="bullet_list" value="1"><a href="#Overview">Overview</a>
                                                     </li>
@@ -243,7 +246,7 @@
                                                     </li>
                                                 </ul>
                                                 <p>When you need to refund one or more items of an order, you just need to create an array of order items that you have to refund and the sales order entity. The <var>RefundFacade::calculateRefund($salesOrderItems, $salesOrderEntity)</var> will return a <var>RefundTransfer</var> that contains the calculated refundable amount.</p>
-                                                <h2><a name="Using"></a>Using the Refund <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span></h2>
+                                                <h2><a name="Using"></a>Using the Refund Module</h2>
                                                 <p>Usually this functionality will be integrated in the state machine processes and will be called by a command.</p>
                                                 <p>A command plugin that calls the refund functionality can be similar to the example below:</p><pre xml:space="preserve"><code class="bash">&lt;?php
 
@@ -288,7 +291,7 @@ class RefundCommand extends AbstractPlugin implements CommandByOrderInterface
                                                     <li class="bullet_list" value="2">the <var>RefundTransfer</var> object can be passed to your payment provider facade that handles the refund<ul><li class="bullet_list" value="1">the payment provider should return if the refund was successful or not</li></ul></li>
                                                     <li class="bullet_list" value="3">if the refund was successful, persist the data<ul><li class="bullet_list" value="1">pass the <var>RefundTransfer</var> to <var>RefundFacade::saveRefund()</var> to persist the refund data.</li></ul></li>
                                                 </ul>
-                                                <h2><a name="Extendin"></a>Extending the Refund <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span></h2>
+                                                <h2><a name="Extendin"></a>Extending the Refund Module</h2>
                                                 <p>The manner of calculating the refundable amount is different from one project to another. One will refund the shipment for every item, while the other one will refund the shipment only when all items are refunded etc.</p>
                                                 <p>The calculation of the refundable amount is achieved through a plugin mechanism.</p>
                                                 <p>The default implementation will refund all expenses when the last item will be refunded. If you need to change this behaviour, you simply need to create a new plugin that implements <var>RefundCalculatorPluginInterface</var> and replace the default one from the plugin stack with the new one.</p>

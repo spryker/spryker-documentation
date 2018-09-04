@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>The Installer module is responsible of managing the installment process of required database data in any environment. Plugin Stack You define the installer plugins of the bundles you want to include in the PyzImporterDependencyProvider: &lt;?php
+namespace Pyz\Zed\Installer; use Spryker\Zed\Acl\Communication\Plugin\AclInstallerPlugin;
+use Spryker\Zed\Country\Communication\Plugin\CountryInstallerPlugin;
+use Spryker\Zed\Glossary\Communication\Plugin\GlossaryInstallerPlugin;
+use Spryker\Zed\Installer\InstallerDependencyProvider as SprykerInstallerDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Locale\Communication\Plugin\LocaleInstallerPlugin;
+use Spryker\Zed\Newsletter\Communication\Plugin\NewsletterInstallerPlugin;
+use Spryker\Zed\Price\Communication\Plugin\PriceInstallerPlugin;
+use Spryker\Zed\Product\Communication\Plugin\Installer as ProductInstallerPlugin;
+use Spryker\Zed\User\Communication\Plugin\UserInstallerPlugin; class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
+{ /** * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[] */ public function getInstallerPlugins() { return [ new ProductInstallerPlugin(), new PriceInstallerPlugin(), new LocaleInstallerPlugin(), new CountryInstallerPlugin(), new UserInstallerPlugin(), new AclInstallerPlugin(), new NewsletterInstallerPlugin(), new GlossaryInstallerPlugin(), ]; } } This is new in version 3.0 improving project level dependency management. Before 3.0 everything was added by default on core level and to opt-out you needed to overwrite.</body>
+</html>

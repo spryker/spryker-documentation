@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>The Loggly(Undefined variable: General.bundle/module)provides a plugin to read log messages from a queue and send the messages via https to Loggly . To integrate this plugin you need to have theQueueHandlerenabled in your Logger configuration as described here . In addition you need to properly configure the queue setup for Loggly to work. RabbitMqDependencyProvider &lt;?php namespace Pyz\Client\RabbitMq; use ArrayObject;
+use Generated\Shared\Transfer\RabbitMqOptionTransfer;
+use Spryker\Client\RabbitMq\RabbitMqDependencyProvider as RabbitMqRabbitMqDependencyProvider;
+use Spryker\Shared\Config\Config;
+use SprykerEco\Shared\Loggly\LogglyConstants; class RabbitMqDependencyProvider extends RabbitMqRabbitMqDependencyProvider
+{ /** * @return \ArrayObject */ protected function getQueueOptions() { $queueOptionCollection = new ArrayObject(); $queueOptionCollection-&gt;append($this-&gt;getLoggerQueueOption()); return $queueOptionCollection; } /** * @return \Generated\Shared\Transfer\RabbitMqOptionTransfer */ protected function getLoggerQueueOption() { $queueOption = new RabbitMqOptionTransfer(); $queueOption-&gt;setQueueName(Config::get(LogglyConstants::QUEUE_NAME)); $queueOption-&gt;setDurable(true); $queueOption-&gt;setType('direct'); $queueOption-&gt;setDeclarationType(Connection::RABBIT_MQ_EXCHANGE); $queueOption-&gt;setBindingQueue($this-&gt;getLoggerQueueBinding()); return $queueOption; } /** * @return \Generated\Shared\Transfer\RabbitMqOptionTransfer */ protected function getLoggerQueueBinding() { $queueOption = new RabbitMqOptionTransfer(); $queueOption-&gt;setQueueName(Config::get(LogglyConstants::QUEUE_NAME)); $queueOption-&gt;setDurable(true); return $queueOption; } } QueueConfig &lt;?php namespace Pyz\Zed\Queue; use Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer;
+use Spryker\Shared\Config\Config;
+use Spryker\Shared\Event\EventConstants;
+use Spryker\Zed\Queue\QueueConfig as SprykerQueueConfig;
+use SprykerEco\Shared\Loggly\LogglyConstants; class QueueConfig extends SprykerQueueConfig
+{ /** * @return array */ protected function getQueueReceiverOptions() { return [ Config::get(LogglyConstants::QUEUE_NAME) =&gt; [ 'rabbitmq' =&gt; $this-&gt;getRabbitMqQueueConsumerOptions(), ], ]; } /** * @return \Generated\Shared\Transfer\RabbitMqConsumerOptionTransfer */ protected function getRabbitMqQueueConsumerOptions() { $queueOptionTransfer = new RabbitMqConsumerOptionTransfer(); $queueOptionTransfer-&gt;setConsumerExclusive(false); $queueOptionTransfer-&gt;setNoWait(false); return $queueOptionTransfer; } } QueueDependencyProvider &lt;?php namespace Pyz\Zed\Queue; use Spryker\Shared\Config\Config;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
+use SprykerEco\Shared\Loggly\LogglyConstants;
+use SprykerEco\Zed\Loggly\Communication\Plugin\LogglyLoggerQueueMessageProcessorPlugin; class QueueDependencyProvider extends SprykerDependencyProvider
+{ /** * @param \Spryker\Zed\Kernel\Container $container * * @return \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[] */ protected function getProcessorMessagePlugins(Container $container) { return [ Config::get(LogglyConstants::QUEUE_NAME) =&gt; new LogglyLoggerQueueMessageProcessorPlugin(), ]; } } See also: Logger Last review date: Oct. 23rd, 2017</body>
+</html>

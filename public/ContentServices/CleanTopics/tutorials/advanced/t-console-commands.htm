@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>A console command is a PHP class that contains the implementation of a functionality that can get executed from the command line. Spryker offers a wrapper over Symfony’s Console component, that makes the implementation and configuration of a console command easier. Implementing a New Console Command To exemplify how to implement and use a console command, we’ll build a console command that installs the application and updates the search and key-value storages. TheUpdateApplicationConsolewill run the following commands in one step : vendor/bin/console setup:install
+vendor/bin/console setup:install-demo-data
+vendor/bin/console collector:search:export
+vendor/bin/console collector:storage:export 1. Create theUpdateApplicationConsoleclass The console commands must be added in Zed under the Communication layer of the(Undefined variable: General.bundle/module), in the Console folder. The console command must extend the Console class from Spryker, as you can see below : &lt;?php
+namespace Pyz\Zed\Tutorial\Communication\Console; use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\ArrayInput;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface; class UpdateApplicationConsole extends Console
+{ //..
+} 2. Configure the new console command : specify the name and a short description &lt;?php
+const COMMAND_NAME = 'tutorial:update';
+const DESCRIPTION = 'Install the application and update search and key-value data storage'; /** * @return void */
+protected function configure()
+{ $this-&gt;setName(static::COMMAND_NAME); $this-&gt;setDescription(static::DESCRIPTION); parent::configure();
+} 3. ImplementUpdateApplicationConsolecommand The code that gets executed when the command is called from the command line must be placed in theexecutefunction : &lt;?php
+/** * @param \Symfony\Component\Console\Input\InputInterface $input * @param \Symfony\Component\Console\Output\OutputInterface $output * * @return int|null */
+protected function execute(InputInterface $input, OutputInterface $output)
+{ $this-&gt;runDependingCommand('setup:install'); $this-&gt;info('Application was successfully installed.', false); $this-&gt;runDependingCommand('setup:install-demo-data'); $this-&gt;info('Demo data was successfully installed.', false); $this-&gt;runDependingCommand('collector:search:export'); $this-&gt;info('Data was successfully exported to search storage.', false); $this-&gt;runDependingCommand('collector:storage:export'); $this-&gt;info('Data was successfully exported to key-value storage.', false);
+} 4. Register the new console command To enable the console command, it must be registered in thegetConsoleCommands()operation in theConsoleConfigclass : &lt;?php
+/** * @return \Symfony\Component\Console\Command\Command[] */
+public function getConsoleCommands()
+{ $commands = [ // ... $this-&gt;getLocator()-&gt;tutorial()-&gt;consoleUpdateApplicationConsole() ]; return $commands;
+} 5. Test the new console command vendor/bin/console tutorial:update</body>
+</html>

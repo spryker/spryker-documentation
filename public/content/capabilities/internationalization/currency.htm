@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Currency</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="IlJMRKFNRU2w0h567uqiQQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="IlJMRKFNRU2w0h567uqiQQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="A-4oV6WJS0G6WX0g25LA3A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="A-4oV6WJS0G6WX0g25LA3A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -209,7 +212,7 @@
                                                     <li value="1">
                                                         <h1>Currency</h1>
                                                         <p class="tip">
-The Currency <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> provides an easy way to retrieve information about a currency given as an ISO code.
+The Currency module provides an easy way to retrieve information about a currency given as an ISO code.
 </p>
                                                         <p>The methods in the <var>CurrencyFacade </var>will always return an instance of the <var>CurrencyTransfer</var>. You can get any currency by its ISO code or the current configured currency.
 
@@ -243,8 +246,8 @@ currency ISO code e.g. EUR
 </p>
                                                         <p>From currency version 3, we have introduced currency table where currencies are persisted. And currency facade provides API to read this data. Please check migration guide to migrate to the latest currency module.
 
-   We have also introduced a currency switcher to Yves. To use it, do the following:</p>
-                                                        <ol>
+   <MadCap:conditionalText data-mc-conditions="Spryker.DemoShop">We have also introduced a currency switcher to Yves. To use it, do the following:</MadCap:conditionalText></p>
+                                                        <ol data-mc-conditions="Spryker.DemoShop">
                                                             <li value="1">Include <var>"\Spryker\Yves\Currency\Plugin\CurrencySwitcherServiceProvider"</var> to your Yves bootstrap and then include twig function <var>"spyCurrencySwitch"</var> in your template where you want the switcher to appear.
    With this switcher we have introduced a new extension point to act when currency is changed. Implement <var>"\Spryker\Yves\Currency\Dependency\CurrencyPostChangePluginInterface"</var> in your custom  plugin, place it to <var>"\Pyz\Yves\Currency\CurrencyDependencyProvider::getCurrencyPostChangePlugins"</var> and get notified when currency is changed.</li>
                                                             <li value="2">Create a Controller Provider for switcher:

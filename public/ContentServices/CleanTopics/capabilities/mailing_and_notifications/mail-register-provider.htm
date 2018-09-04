@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>To add your provider to theMailProviderCollectionadd it toMailDependencyProvider: &lt;?php
+namespace Pyz\Zed\Mail; ... public function provideBusinessLayerDependencies(Container $container) { ... $container-&gt;extend(self::MAIL_PROVIDER_COLLECTION, function (MailProviderCollectionAddInterface $mailProviderCollection) { $mailProviderCollection-&gt;addProvider(new YourProviderPlugin(), MailConfig::MAIL_TYPE_ALL); return $mailProviderCollection; }); ...
+}
+... By using$container-&gt;extend()you get theMailProviderCollectionAddInterfacewhere you can add your provider to. TheMailProviderCollectionAddInterface::addProvider()takes as first argument the provider you want to use and as second argument one or a list of MailTypes which should be handled by this provider. As you can see in the example above the provider is registered to all MailTypes by usingMailConfig::MAIL_TYPE_ALL. If you want the provider to only handle a specific MailType use the MailType constant from your MailTypePlugin e.g.CustomerRegistrationMailTypePlugin::MAIL_TYPE. To Use More Than One Provider To send mails through different providers, register more than one provider to the Mail module. This supports creating a scenario where, all marketing mails through provider A and all others through provider B, In Register the Mail Provider you already made use of this technique to register one provider to all types. The following example demonstrates how to wire up more than one provider: &lt;?php
+namespace Pyz\Zed\Mail; ... public function provideBusinessLayerDependencies(Container $container) { ... $container-&gt;extend(self::MAIL_PROVIDER_COLLECTION, function (MailProviderCollectionAddInterface $mailProviderCollection) { $mailProviderCollection -&gt;addProvider(new ProviderAPlugin(), [MailTypeA::MAIL_TYPE, MailTypeB::MAIL_TYPE]) -&gt;addProvider(new ProviderBPlugin(), MailTypeC::MAIL_TYPE); return $mailProviderCollection; }); ...
+}
+... If a MailType can be handled by more than one provider the email will be send by both of them.</body>
+</html>

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Upgrading from Version 3.* to Version 4.* Console version 4 has been prepared for a standalone usage. Now you are able to use Console module even without a DB configuration. Find or createConsoleDependencyProviderin a project. Make sure it extends\Spryker\Zed\Console\ConsoleDependencyProvider. FindgetServiceProvidersmethod and add\Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProviderto the service stack. The method could look like this: /**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Silex\ServiceProviderInterface[]
+*/
+public function getServiceProviders(Container $container)
+{ $serviceProviders = parent::getServiceProviders($container); $serviceProviders[] = new PropelServiceProvider(); return $serviceProviders;
+} See also: Learn how to migrate Collector Learn more about Console Commands Last review date: Nov. 23rd, 2017</body>
+</html>

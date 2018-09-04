@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>All(Undefined variable: General.bundles/modules)are shipped with a dedicated factory for each layer. The responsibility of the factory is to create new instances of the classes from the same layer and(Undefined variable: General.bundle/module). The following example shows a typical method from a factory. The methodcreateKeyBuilder()creates an instance which is then injected inside ofcreateCmsBlockFinder(): Click to expand the code sample &lt;?php
+class CmsBlockFactory extends AbstractFactory
+{ /** * @return \Spryker\Client\CmsBlock\Storage\CmsBlockStorageInterface */ public function createCmsBlockFinder() { return new CmsBlockStorage( $this-&gt;getStorage(), $this-&gt;createKeyBuilder() ); } /** * @return \Spryker\Client\CmsBlock\Dependency\Client\CmsBlockToStorageClientInterface */ protected function getStorage() { return $this-&gt;getProvidedDependency(CmsBlockDependencyProvider::KV_STORAGE); } /** * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface */ protected function createKeyBuilder() { return new CmsBlockKeyBuilder(); } } Conventions for Factory Methods The factories contain two types of methods: methods which create internal classes methods which provide external dependencies Naming convention Example Purpose createXXX() createCmsBlockFinder() These methods inject dependencies and create instances of internal classes. They always start with thecreate-prefix. It is highly recommended to have only one occurrence ofnewper method. getXXX() getCustomerClient() These methods retrieve a provided external dependency which can be injected into an internal model. Typical external dependencies are Clients, Facades and QueryContainer. It is a good practice to add the type of the object as a suffix (e.g. getCustomerFacade()). Inherited Methods from AbstractFactory The extended AbstractFactory holds some important methods: Method Purpose Available getConfig() The(Undefined variable: General.bundle/module)config contains all of the needed settings for the current(Undefined variable: General.bundle/module). Zed only getQueryContainer() The dependency container always holds a direct connection to the(Undefined variable: General.bundle/module)’s query container, which is often required by internal models. Zed only Snippets to Create a New Factory The factory pattern is used all over our code-base. The concrete implementations looks a bit different for Yves, Zed and Client. You can copy&amp;paste these snippets and just replace ‘MyBundle’ with your real(Undefined variable: General.bundle/module)name. To enable auto-completion it is recommended to define the interfaces for the query container and(Undefined variable: General.bundle/module)config in the class doc block as shown in the snippets. Yves &lt;?php
+namespace Pyz\Yves\MyBundle; use Spryker\Yves\Kernel\AbstractFactory; class MyBundleFactory extends AbstractFactory
+{
+} Client &lt;?php
+namespace Pyz\Client\MyBundle; use Pyz\Client\Kernel\AbstractFactory; class MyBundleFactory extends AbstractFactory
+{
+} Zed - Communication Layer &lt;?php
+namespace Pyz\Zed\MyBundle\Communication; use Pyz\Zed\MyBundle\MyBundleConfig;
+use Pyz\Zed\MyBundle\Persistence\MyBundleQueryContainerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory; /** * @method MyBundleConfig getConfig() * @method MyBundleQueryContainerInterface getQueryContainer() */
+class MyBundleCommunicationFactory extends AbstractCommunicationFactory
+{
+} Zed - Business Layer &lt;?php
+namespace Pyz\Zed\MyBundle\Business; use Pyz\Zed\MyBundle\MyBundleConfig;
+use Pyz\Zed\MyBundle\Persistence\MyBundleQueryContainerInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory; /** * @method MyBundleConfig getConfig() * @method MyBundleQueryContainerInterface getQueryContainer() */
+class MyBundleBusinessFactory extends AbstractBusinessFactory
+{
+} Zed - Persistence Layer &lt;?php
+namespace Pyz\Zed\MyBundle\Persistence; use Pyz\Zed\MyBundle\MyBundleConfig;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory; /** * @method MyBundleConfig getConfig() */
+class MyBundlePersistenceFactory extends AbstractPersistenceFactory
+{
+} Using the Factory An instance of the factory can be retrieved by calling$this-&gt;getFactory(); this will return the instance of the factory defined in the same layer. &lt;?php public function registerCustomer(CustomerTransfer $customerTransfer) { return $this-&gt;getFactory() -&gt;createCustomer() -&gt;register($customerTransfer); }</body>
+</html>

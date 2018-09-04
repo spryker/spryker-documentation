@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.DemoShop" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Industry Partners|Performance|Search Integration - FactFinder">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>FACT-Finder - Exporting CSVs</title>
+        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.topic-ratings-button
+{
+	-pie-background: transparent url('../../../../Skins/Default/Stylesheets/Images/star-full.png') no-repeat center center;
+}
+
+.button.separator-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.edit-user-profile-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <script src="../../../resources/prism.js">
+                                </script>
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="nocontent">
+                                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="PC72ZNPZR0KvJzo-lDWpyA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PC72ZNPZR0KvJzo-lDWpyA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: ;">
+                                                    <div class="button-group-container-left">
+                                                        <div class="button-group star-buttons loading feedback-topic-required">
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="button-separator feedback-topic-required">
+                                                        </div>
+                                                        <button class="button feedback-required login-button" id="normalLoginBtn" data-state1-class="login-button" data-state2-class="edit-user-profile-button" title="Login" data-state1-title="Login">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="login" />
+                                                        </button>
+                                                        <button class="button needs-pie print-button" title="Print">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                        </button>
+                                                        <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h1>FACT-Finder - Exporting CSVs <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
+                                                <h2>Output Folder </h2>
+                                                <p>Define an output folder where  the CSV files will be generated by adding the following line in your configuration file:</p><pre><code class="language-php line-numbers">&lt;?php
+$config[FactFinderSdkConstants::CSV_DIRECTORY] = APPLICATION_ROOT_DIR . '/path/to/generated/csv/files';</code></pre>
+                                                <p class="note">Zed must have Read / Write access to this folder because  we will generate and read CSV files in that directory.</p>
+                                                <h2>Queries</h2>
+                                                <p>To export data to the CSV, we need to define the queries  executed in the database.</p>
+                                                <p>All queries are located in the <var>SprykerEco\Zed\FactFinderSdk\Persistence\FactFinderSdkQueryContainer </var> directory.</p>
+                                                <p>To change the query in <var>FactFinderSdk</var> module, we need to extend the <var>FactFinderSdkQueryContainer</var> in your project.</p>
+                                                <h2>How is my Query Mapped to CSV Output ?</h2>
+                                                <p>If you need to modify the CSV column mapping for any reason, you will have to extend the <var>FactFinderSdkQueryContainer</var> from <var>FactFinderSdk</var> module and implement your own <var>addColumns</var> method.</p>
+                                                <h3>Console</h3>
+                                                <p>To export the products and categories using the queries we made before, we must register the <var>FactFinderSdk</var> console command in <a href="../../../Industry Partners/Resources and Developer Tools/console_commands.htm">Console</a>.</p>
+                                                <p>The <var>FactFinderSdk</var> module already includes everything though you will need to add <var>FactFinderSdkExportConsole</var> to <var>Pyz\Zed\Console\ConsoleDependencyProvider</var> like below:</p><pre><code class="language-php line-numbers">&lt;?php
+
+/**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Symfony\Component\Console\Command\Command[]
+*/
+public function getConsoleCommands(Container $container)
+{
+   $commands = [
+       ...
+       new FactFinderSdkExportConsole(),
+   ];
+       ...
+}</code></pre>
+                                                <h3>Restrictions</h3>
+                                                <ul>
+                                                    <li value="1">The first row of the CSV file must contain the field names. The structure of this row is identical to the data rows.</li>
+                                                    <li value="2">The number of fields is limited to 128. However, the standard FACT-Finder modules require the use of a limited number of fields. For that reason, we recommend that you do not use this limit in full. If your product database contains more than 128 attributes, you can store them in the multi-attribute fields.</li>
+                                                    <li value="3">The field content is not limited in length. There is, however, a limit on the complete data record size. This limit is set at 50,000 characters. In special cases, the limit can be removed. We consider it as a part of a special FACT-Finder package creation process we perform  for you.</li>
+                                                </ul>
+                                                <h3>Recommendations</h3>
+                                                <ul>
+                                                    <li value="1">
+            To save transmission bandwidth, you may compress the file in ZIP format before sending it to FACT-Finder. Other compression formats are also supported: GZip, BZip, GZip+TAR. RAR files and other archive formats are not supported by FACT-Finder automatic data update process.
+        </li>
+                                                    <li value="2">
+            FACT-Finder suggests two ways of data exporting - downloads and uploads. Currently, export implemented for the downloads.
+            You need to create an URL for a CSV file or put it into a public folder. Then you can set up an URL and an interval
+            in a FACT-Finder channel management panel to download the CSV file.
+        </li>
+                                                    <li value="3">
+            A CSV file export can be scheduled with the help of a cron job or triggered by an event.
+        </li>
+                                                    <li value="4">
+                
+            If additional attributes are available, they can also be used by the search process.
+ </li>
+                                                    <li value="5">If you have attribute types that vary from item to item, it does not make sense to create a separate field for every possible attribute type. Instead, you can create an attribute field that is formatted according to the following pattern: <var>|attribute1=value|attribute2=value|attribute3=value|</var>. <p class="note">Please note that  for the Attribute field the pipe separator <var>(|)</var> appears between the attributes, as well as at the beginning and at the end of the field contents. Also note, that the symbols <var>|</var>, <var>#</var> and <var>=</var> are reserved symbols in attribute field data and therefore are not permitted here. For some attributes, it is desirable to include a unit or currency designator. You must separate the attribute name from the unit with a double tilde <var>(~~)</var>. Please note that there can only be one unit per attribute name (even if the attributes appear in different data records), so the values must be normalized beforehand.</p></li>
+                                                </ul>
+                                                <h2>Checking Your Setup</h2>
+                                                <p>If all the steps were correct you should be able to see the <var>fact-finder:export:products</var> command in the FACT-Finder section when you run <var>vendor/bin/console</var> from the project's root folder.</p>
+                                                <p>Running <var>vendor/bin/console fact-finder:export:products</var> will create several CSV files (one per locale) in the folder you specified in <var>`$config[FactFinderSdkConstants::CSV_DIRECTORY]</var>.</p>
+                                                <p>&#160;</p>
+                                                <p><b>See also:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder.htm">Get a general idea about FACT-Finder</a>
+                                                    </li>
+                                                    <li value="2"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder_recommendation.htm">Configure FACT-Finder recommendations widget</a>
+                                                    </li>
+                                                    <li value="3"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder_search.htm">Configure FACT-Finder Search</a>
+                                                    </li>
+                                                    <li value="4"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder_suggest.htm">Configure FACT-Finder Suggest module</a>
+                                                    </li>
+                                                    <li value="5"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder_campaigns.htm">Configure FACT-Finder Campaign Manager module</a>
+                                                    </li>
+                                                    <li value="6"><a href="../../../Industry Partners/Performance/FactFinder/integration_search_factfinder_tracking.htm">Learn more about FACT-Finder tracking system</a>
+                                                    </li>
+                                                </ul>
+                                                <p>&#160;</p>
+                                                <p><i>Last review date: Dec. 22nd, 2017</i>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Glossary keys present two layers of persistence: SQL database storage in-memory key-value storage (Redis) In this section we’ll exemplify the usage of the functionality for managing the glossary keys from the backoffice user interface and the usage of them for the Yves interface through twig extensions. The update/insert and delete operations for glossary keys are exposed in the Glossary module through theGlossaryFacadeclass. For both update and insert operations, GlossaryFacade exposessaveGlossaryKeyTranslationsthat can be accessed in the following manner: &lt;?php
+// Insert or update the translations for a glossary key
+$facade = $this-&gt;getFactory()-&gt;getGlossaryFacade();
+$facade-&gt;saveGlossaryKeyTranslations($formData); //Delete the translation for a glossary key
+$facade-&gt;deleteTranslation($keyName,$locale); Retrieving the glossary keys : the support for listing the glossary keys is exposed through the GlossaryBusinessContainer : &lt;?php
+$availableLocales = $this-&gt;getFactory()-&gt;getEnabledLocales();
+$grid = $this-&gt;getFactory()-&gt;createGlossaryKeyTranslationGrid($request); getEnabledLocales()retrieves the list of locales that are contained in thestores.phpconfiguration file. createGlossaryKeyTranslationGrid()queries the database for the list of glossary keys in the database for each of the supported languages. (Note: If one of the locales is removed from configuration, then its corresponding glossary keys won’t be retrieved from the database, but they would still exist in the database). Configuring the locales: The locales supported by the application can be configured through the configuration filestores.phpthat’s under theconfig/Shared/folder. &lt;?php
+$stores['DE'] = [ ... 'locales' =&gt; ['de_DE','en_US'],
+];</body>
+</html>

@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>CMS Block Product Connector</title>
+        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="uDsg44WCDkWJWLqH8Rl_hQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="uDsg44WCDkWJWLqH8Rl_hQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="JPq3HslQsUGmEApG1toBlg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="JPq3HslQsUGmEApG1toBlg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -318,9 +321,9 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     }
 }
             </code></pre>
-                                                <h3>Usage</h3>
-                                                <p>Adding a template for a new block is done in the same way as for static blocks see <a href="../../../Developing with Spryker/Module Guide/CMS/CMS Block/Developing with Spryker/Module Guide/Content Management/CMS Block/cms_block.htm" class="MCXref xref">CMS Block</a>.</p>
-                                                <p>Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. Call it <var>productSale.twig</var> and it will contain the following structure:</p><pre><code class="language-html line-numbers">
+                                                <h3 data-mc-conditions="Spryker.DemoShop">Usage for Demoshop</h3>
+                                                <p data-mc-conditions="Spryker.DemoShop">Adding a template for a new block is done in the same way as for static blocks see <a href="../../../Developing with Spryker/Module Guide/CMS/CMS Block/Developing with Spryker/Module Guide/Content Management/CMS Block/cms_block.htm" class="MCXref xref">CMS Block</a>.</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. Call it <var>productSale.twig</var> and it will contain the following structure:</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-html line-numbers">
 &lt;!-- CMS_BLOCK_PLACEHOLDER : "saleMessage" --&gt;
 &lt;!-- CMS_BLOCK_PLACEHOLDER : "saleInterval" --&gt;
 &lt;blockquote&gt;
@@ -330,41 +333,42 @@ class ProductManagementDependencyProvider extends SprykerProductManagementDepend
     &lt;/footer&gt;
 &lt;/blockquote&gt;
             </code></pre>
-                                                <p><strong>To configure the block</strong>: </p>
-                                                <ul>
+                                                <p data-mc-conditions="Spryker.DemoShop"><strong>To configure the block</strong>: </p>
+                                                <ul data-mc-conditions="Spryker.DemoShop">
                                                     <li value="1">In Zed, go to the CMS section and navigate to the blocks section.</li>
                                                     <li value="2">Click <strong>Create CMS Block</strong>, to create a new block. </li>
                                                     <li value="3">From the template drop-down select the new added template and  name the new block.</li>
                                                     <li value="4">Set a product or a list of product the <strong>ProductField</strong> field. While typing, the product  search will offer suggestions from the product list.</li>
                                                 </ul>
-                                                <p>
+                                                <p data-mc-conditions="Spryker.DemoShop">
                                                     <img src="../../../resources/images/cms-block-product-edit-page.png" title="CMS Block Product Edit Page" />
                                                 </p>
-                                                <ul>
+                                                <ul data-mc-conditions="Spryker.DemoShop">
                                                     <li value="1">Set the block active if you need to use it straight away.</li>
                                                     <li value="2">After clicking <strong>Save </strong>, similar to static blocks and pages, you'll be asked to provide the glossary keys for the placeholders that are included in the Twig template. For this part, follow the steps described for creating a static page here .</li>
                                                     <li value="3">Embed the block in the product page by adding the following code in a product page template (e.g "detail.twig" in Spryker Demoshop):</li>
-                                                </ul><pre><code class="language-html line-numbers">
+                                                </ul><pre data-mc-conditions="Spryker.DemoShop"><code class="language-html line-numbers">
 {% if product is defined %}
     {{ spyCmsBlock({product: product.id}) }}
 {% endif %}
             </code></pre>
-                                                <ul>
+                                                <ul data-mc-conditions="Spryker.DemoShop">
                                                     <li value="1">To see the page in Yves, the client data storage (Redis) must be up-to-date. This is handled through cronjobs.</li>
                                                     <li value="2">To manually execute this step,  run the collectors to update the frontend data storage:</li>
-                                                </ul><pre><code class="language-PHP line-numbers">
+                                                </ul><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">
 vendor/bin/console collector:storage:export
             </code></pre>
-                                                <p><strong>Results</strong>:</p>
-                                                <p>After running the collectors you should be able to see the block only on the page to which you configured it to be shown.</p>
-                                                <p style="font-weight: bold;">See also:</p>
+                                                <p data-mc-conditions="Spryker.DemoShop"><strong>Results</strong>:</p>
+                                                <p data-mc-conditions="Spryker.DemoShop">After running the collectors you should be able to see the block only on the page to which you configured it to be shown.</p>
+                                                <p style="font-weight: bold;"><span style="font-weight: normal;">See also:</span>
+                                                </p>
                                                 <ul>
                                                     <li value="1"><a href="cms-block.htm">Learn what CMS blocks are and what they are needed for</a>
                                                     </li>
                                                     <li value="2">Learn how to create and use a CMS Block</li>
-                                                    <li value="3"><a href="../mg-cms-block.htm">Learn how to migrate to a newer version of a CMS Block</a>
+                                                    <li value="3"><a href="mg-cms-block.htm">Learn how to migrate to a newer version of a CMS Block</a>
                                                     </li>
-                                                    <li value="4"><a href="../mg-cms-block-gui.htm">Learn how to migrate to a newer version of a CMS Block GUI</a>
+                                                    <li value="4"><a href="mg-cms-block-gui.htm">Learn how to migrate to a newer version of a CMS Block GUI</a>
                                                     </li>
                                                 </ul>
                                             </div>

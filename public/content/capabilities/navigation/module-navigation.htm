@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Navigation Module</title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="iVoRkObSt0Ws56oap1ukxQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iVoRkObSt0Ws56oap1ukxQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="xHBvhvUU20iAC5cPRwVTOQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="xHBvhvUU20iAC5cPRwVTOQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -223,11 +226,11 @@
 </p>
                                                 <ul>
                                                     <li class="bullet_list" value="1"><![CDATA[
-]]><strong>Navigation <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span></strong> provides database structure and a public API to manage what’s in the database. It also provides a small toolkit for rendering navigation menus in the frontend.
+]]><strong>Navigation module</strong> provides database structure and a public API to manage what’s in the database. It also provides a small toolkit for rendering navigation menus in the frontend.
 </li>
-                                                    <li class="bullet_list" value="2"><strong>NavigationGui</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> provides a Zed UI to manage navigation menus.
+                                                    <li class="bullet_list" value="2"><strong>NavigationGui</strong> module provides a Zed UI to manage navigation menus.
 </li>
-                                                    <li class="bullet_list" value="3"><strong>NavigationCollector</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> provides full collector logic for exporting navigation menus to the KV storage (Redis).
+                                                    <li class="bullet_list" value="3"><strong>NavigationCollector</strong> module provides full collector logic for exporting navigation menus to the KV storage (Redis).
 </li>
                                                 </ul>
                                                 <h2>Feature Integration</h2>
@@ -292,17 +295,17 @@ class CollectorDependencyProvider extends SprykerCollectorDependencyProvider
 }
 </code></pre>
                                                 <h3>Data Setup</h3>
-                                                <p>You should now be able to manage navigation menus from Zed UI, and the collectors should also be able to export the navigation menus to the KV storage. This is a good time to implement an installer in your project to install a selection of frequently used navigation menus. Check out our <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop implementation</a> for examples and ideas.</p>
+                                                <p>You should now be able to manage navigation menus from Zed UI, and the collectors should also be able to export the navigation menus to the KV storage. This is a good time to implement an installer in your project to install a selection of frequently used navigation menus. <MadCap:conditionalText data-mc-conditions="Spryker.DemoShop">Check out our <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop implementation</a> for examples and ideas.</MadCap:conditionalText></p>
                                                 <h3>Usage in Yves</h3>
                                                 <p>The KV storage should by now have some navigation menus we can display in our frontend.</p>
-                                                <p>The Navigation <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> ships with a twig extension that provides the <var>spyNavigation() </var>twig function which renders a navigation menu.</p>
+                                                <p>The Navigation module ships with a twig extension that provides the <var>spyNavigation() </var>twig function which renders a navigation menu.</p>
                                                 <p><var>spyNavigation()</var> accepts two parameters:</p>
                                                 <ul>
                                                     <li class="bullet_list" value="1"><![CDATA[
 ]]><strong>$navigationKey</strong>: Reference of a navigation menu by its <var>key </var>field (i.e. <var>"MAIN_NAVIGATION"</var>).</li>
                                                     <li class="bullet_list" value="2"><strong>$template</strong>: Template path used to render the navigation menu (i.e. <var>"@application/layout/navigation/main.twig"</var>).</li>
                                                 </ul>
-                                                <p>To enable the navigation twig function register <var>\Spryker\Yves\Navigation\Plugin\Provider\NavigationTwigServiceProvider</var> in your application’s bootstrap.
+                                                <p>To enable the navigation twig function, register <var>\Spryker\Yves\Navigation\Plugin\Provider\NavigationTwigServiceProvider</var> in your application’s bootstrap.
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -436,12 +439,12 @@ class YvesBootstrap
 </code></pre>
                                                 <h2>Under the Hood</h2>
                                                 <h3>Database Schema</h3>
-                                                <p>The Navigation <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> provides the <var>spy_navigation</var> table that stores navigation menus. They have a <var>name </var>field which is only used for backend display and they also have a <var>key </var>field used to reference the navigation menus from Yves.</p>
+                                                <p>The Navigation module provides the <var>spy_navigation</var> table that stores navigation menus. They have a <var>name </var>field which is only used for backend display and they also have a <var>key </var>field used to reference the navigation menus from Yves.</p>
                                                 <p>Every navigation entity contains some nodes stored in the <var>spy_navigation_node</var> table. The structure of the navigation tree depends on the <var>fk_parent_navigation_node</var> and the <var>position </var>fields which define if a node has a parent on its level, in what position they are ordered.
 		Each navigation node has attributes that can be different per displayed locale. This information is stored in the <var>spy_navigation_node_localized_attributes</var> table.</p>
                                                 <p>The <var>valid_from</var>, <var>valid_to</var>, and <var>is_active</var> fields allow to toggle the node's and its descendants visibility.</p>
-                                                <p><![CDATA[
-		]]><img src="../../../Resources/Images/navigation_db_schema_2_0.png" title="Click Me" alt="Navigation Database Schema" class="Thumbnail" /></p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/navigation_db_schema_2_0.png" data-mc-popup-alt="Navigation Database Schema"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="1080" data-mc-height="640" src="../../resources/images/navigation_db_schema_2_0_thumb_0_48.png" alt="Navigation Database Schema" title="Click Me" tabindex="" /></a>
+                                                </p>
                                                 <p><b>See also:</b>
                                                 </p>
                                                 <ul>

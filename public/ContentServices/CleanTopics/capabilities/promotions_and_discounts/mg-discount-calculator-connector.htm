@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Upgrading from version 4.* to version 5.* This module no longer has any calculator plugins, except the DiscountCalculatorPlugin. All other plugins were moved to the separate repository inspryker/calculation-migration. To learn how to migrate to the new structure see, Upgrading from Version 3.* to Version 4.* Upgrading from Version 2.* to Version 3.* The tax plugins are using the version 3.* of the Tax module. Upgrade Migration Guide - Tax A new tax calculator must be registered in theCalculationDependencyProvider::getCalculatorStack() AddExpenseTaxWithDiscountsCalculatorPlugininto the discount calculator block, after DiscountCalculatorPlugin. //..
+use Spryker\Zed\DiscountCalculationConnector\Communication\Plugin; class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
+{ /** * @param \Spryker\Zed\Kernel\Container $container * @return \Spryker\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface[] */ protected function getCalculatorStack(Container $container) { return [ .... other existing plugins ..... new ExpenseTaxWithDiscountsCalculatorPlugin(), ]; } See also: Learn how to migrate Discount Get a general idea about Discount Learn how to apply a discount Learn how to migrate Tax Learn how to migrate DiscountSalesAggregatorConnector</body>
+</html>

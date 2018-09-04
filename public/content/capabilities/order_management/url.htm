@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Capabilities|Capabilities|Order Management">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.DemoShop" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Capabilities|Capabilities|Order Management">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>URL </title>
+        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="4lbk-R4ldUGjk1xvHVUGpA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="4lbk-R4ldUGjk1xvHVUGpA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="H6ryMG3Hwkabtv1ozJZ5Tg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="H6ryMG3Hwkabtv1ozJZ5Tg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -206,20 +209,20 @@
                                                     </div>
                                                 </div>
                                                 <h1>URL </h1>
-                                                <p>The URL <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> handles dynamic URLs for entities that appear on the front-end (Yves). At the moment, Spryker core provides URL handling for products, CMS pages, categories and URL redirects.</p>
+                                                <p>The URL module handles dynamic URLs for entities that appear on the front-end (Yves). At the moment, Spryker core provides URL handling for products, CMS pages, categories and URL redirects.</p>
                                                 <p>The URLs are stored in one database table and each is unique. The database structure for storing URLs looks like the following:</p>
                                                 <p class="Figure"><a href="http://www.gliffy.com/go/publish/10811573" target="_blank"><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/discount_schema.png"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="693" data-mc-height="656" src="../../resources/images/discount_schema_thumb_0_48.png" tabindex="" /></a></a>
                                                 </p>
                                                 <p class="Figure" data-mc-conditions="General.Image_Source">http://www.gliffy.com/go/publish/10811573</p>
                                                 <p>In the Spryker Demoshop, URLs are exported to the key-value storage (Redis) with collectors. Every stored key contains the URL that can be matched with a router and every stored value contains a <samp>reference key </samp>and a <var>type</var>.</p>
                                                 <p>The <var>reference_key</var> contains the key of the entity that was also stored in the key-value storage. The data read from the reference key is exactly the data that will be provided to the controller to handle the request at the end. The <samp>type </samp>is required to determine which controller handles the request (along with the data from the reference key).</p>
-                                                <p>The example below shows the value stored under the <var>kv:de.en_us.url./en/imprint</var> key which will match the <a href="http://zed.de.demoshop.local/en/imprint">/en/imprint</a> URL in Demoshop.
+                                                <p data-mc-conditions="Spryker.DemoShop">The example below shows the value stored under the <var>kv:de.en_us.url./en/imprint</var> key which will match the <a href="http://zed.de.demoshop.local/en/imprint">/en/imprint</a> URL in Demoshop.
 		
-		</p><pre><code class="language-PHP line-numbers">{
+		</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">{
     "reference_key": "de.en_us.resource.page.1",
     "type": "page"
 }</code></pre>
-                                                <p>A router called <var>\Pyz\Yves\Collector\Plugin\Router\StorageRouter</var>, matches URLs for Yves requests handled by the URL <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. If a requested URL is matched with the <samp>StorageRouter</samp> then it will try to find a <var>ResourceCreator</var> that can handle the provided resource type. <var>ResourceCreator</var> provides data for the router about the controller that will handle the request. </p>
+                                                <p data-mc-conditions="Spryker.DemoShop">A router called <var>\Pyz\Yves\Collector\Plugin\Router\StorageRouter</var>, matches URLs for Yves requests handled by the URL module. If a requested URL is matched with the <samp>StorageRouter</samp> then it will try to find a <var>ResourceCreator</var> that can handle the provided resource type. <var>ResourceCreator</var> provides data for the router about the controller that will handle the request. </p>
                                                 <p>To read more about how to implement a custom <samp><var>ResourceCreator</var> </samp>see Setting up the frontend (link to http://spryker.github.io/core/bundles/url/#setting-up-the-frontend).</p>
                                                 <p><strong>See also:</strong>
                                                 </p>

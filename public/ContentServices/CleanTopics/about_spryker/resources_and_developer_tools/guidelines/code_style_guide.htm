@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>We follow the PSR-2 standards . To achieve a styled codebase, we integrated the well known PHP-CS Fixer and PHPCodeSniffer . Code Sniffer and Fixer We use a very powerful tool to help keeping the code clean and preventing simple mistakes. Automate Code Style Correction The sniffer can find all the issues, and can also auto-fix most of them (when used with -f option). $ vendor/bin/console code:sniff:style // Fix fixable errors instead of just reporting
+$ vendor/bin/console code:sniff:style -f // Sniff a specific module in your project (looks into all application layers Zed, Yves, Client, ...)
+$ vendor/bin/console code:sniff:style -m Discount // Sniff a specific subfolder of your project
+$ vendor/bin/console code:sniff:style src/Pyz/Zed // Run a specific sniff only
+$ vendor/bin/console code:sniff:style ... -s Spryker.Commenting.FullyQualifiedClassNameInDocBlock Tip:c:s:scan be used as a shortcut. Additional options: -v:Verbose output -d:Dry-run, only output the command to be run Always commit your changes before executing this command! Run–helpor-hto get help about usage of all options available. See the code sniffer documentation for details and information on how to set it up for your CI system as a checking tool for each PR. Necessary Project Adjustments Make sure you change the composer package name of your application, once you forked or copied the demoshop code. By default it reads this in the maincomposer.json: "name": "spryker/demoshop", Modify this in order to skip the MIT license checks. The code sniffer documentation shows how to extend and customize the sniffer rules in general for your project. Conventions and Guidelines Always try to follow these best practices, they help to avoid certain classes of problems. These are more guidelines than absolute rules. If you feel the need to deviate from them, please document why you are doing so. Use Statements Use statements must be ordered. Alias for Use When you need an alias to use a Spryker class, follow this naming: useSpryker\Foo\Bar as SprykerBar; Do not useCoreBaror any other naming. One Programming Language per File Only ever use one programming language per file. This allows us to use language specific tooling on those files. This means no inline JavaScript or CSS, no generation of HTML in PHP, no execution of raw SQL statements from PHP. (Currently all *Table.php files are an exception to this, HTML is allowed here.) Comparison Don’t use loose comparison, always be as strict as possible. Bad &lt;?php
+if ($a == $b) Good &lt;?php
+if ($a === $b) For null checks use comparison to null instead of invoking methodis_null(). Bad &lt;?php
+if (is_null($variable)) Good &lt;?php
+if ($variable === null) Don’t use Yoda conditions (reversed order) and don’t use inline assignment (assignment inside conditions). They easily introduce bugs. Bad &lt;?php
+if (static::SOME_CONST === ($b = $a-&gt;getFoo())) Good &lt;?php
+$b = $a-&gt;getFoo();
+if ($b === static::SOME_CONST) Only useempty()andisset()where the variable or array key could possibly not exist: Bad &lt;?php
+$var = $this-&gt;getVar();
+if (empty($var)) {
+} Good &lt;?php
+$var = $this-&gt;getVar();
+if (!$var) {
+} You can also be more strict and use!== nullcheck, especially if the returned value is either an object or not (null). Typecasting Don’t useintval()or other casting functions. Use(int),(bool), etc. Don’t use!!to cast to bool, use(bool). There is no space after casts. String Functions Always use the multibyte string functions when available ( Multibyte String Functions ) and where non-ascii input is possible. The performance costs are negligible and it makes it really easy to see where we might still use the wrong function. Switch Statements Don’t use switch statements in PHP, they only do loose comparison and it’s easy to mess up the break. Return Early and Else Return as soon as you know your method cannot do some meaningful work anymore. Reduce indentation by usingif/returninstead of a top-levelif/else. Try to keep the “meat” of your method at the lowest indentation level. Usingelseis almost always a code smell. Read up on how to refactor to returnearlyif you find yourself in deeply nested conditions. Return Types All functions and methods need to declare a@returnstatement. The only exception: Do not use return statements for constructor__construct()and destructor__destruct(), as per definition both of them cannot return anything. Be explicit about your return type. Even thoughreturn;andreturn null;are technically the same, we make a semantic differentiation between them. This way we can also see when a return parameter was forgotten or someone tries to use a void method. &lt;?php
+/** * @return void */
+public function doNotReturnSth()
+{ if ($this-&gt;returnEarly()) { return; } // ...
+} /** * @return Object|null */
+public function doReturnSth()
+{ if ($this-&gt;shouldReturnEarly()) { return null; } $object = ...; return $object;
+} Bottom line:voidif nothing is expected to be returned,nullotherwise (or if mixed with others). Try to return only one type, mixed return types are often a code smell. Also, proper object is better than associative arrays most of the time. Avoid "no-op" Methods &lt;?php
+/* * //Bad * * @param string|null $input * * @return void */
+public function foo($input = null)
+{ if ($input === null) { return; } ...
+} /* * //Good * * @param string|null $input * * @return void */
+public function foo($input)
+{ if ($input === null) { return; } ...
+} The first would allow "no-ops" like$this-&gt;foo()which does not do any operation at all. So semantically this makes no sense. In this case no default value may be used and a first argument is actually required for the first if statement to make sense ($this-&gt;foo($requiredArgument)). You can still passnull, of course, to break out early. Default values may only be used if their usage does make this method still do an operation (apart from returningearly). Datetimes Always use UTC Datetimes when you are storing and processing them. The only place Datetimes should be converted to a different timezone, is in the presentation layer. Deprecations When you deprecate a method, class or alike, it is recommended to add a short sentence on what to use instead. &lt;?php
+/** * @deprecated Use Foo::bar() instead. */ So all people know immediately what to do without having to investigate deeper. Exceptions Always throw custom exceptions from the(Undefined variable: General.bundle/module)namespace. Never throw base exceptions. This allows better handling of exceptions. Error Handling Never use the error control operator (@). Environments and Configuration If you have behavior that depends on the current environment, never check the environment directly. Use a configuration setting for that behavior and set it to the appropriate value for the environment. The environment should only affect the fact which configuration is used. Documentation Annotations If a method returns$this(the class instance itself), please hint that in the doc comment with: &lt;?php
+/** * @return $this */ We group the doc block types, so there is space around the params, and the order is: &lt;?php
+/** * @param ... * @param ... * * @throws ... * * @return ... */ All classes use FQCN in doc block annotations. We only outline exceptions in annotations for them being thrown in the same method. Last review date: Oct. 13th, 2017</body>
+</html>

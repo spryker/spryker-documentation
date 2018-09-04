@@ -7,6 +7,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Migration Guide - Calculation</title>
+        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -70,6 +71,8 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -163,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="VB2mmZNOB0Wm5H3UhdwIoA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="VB2mmZNOB0Wm5H3UhdwIoA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Pu8Bj85_2kW9TdwQtMDmMQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Pu8Bj85_2kW9TdwQtMDmMQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -221,7 +224,7 @@
      new ItemsWithProductOptionsAndDiscountsTaxCalculatorPlugin(),
      new ExpenseTaxCalculatorPlugin(),</code></pre>
                                                         <p class="note">The old Calculator plugins were moved to the following separate repository: <var>spryker/calculation-migration</var>. <br />Please include into your <var>composer.json</var> like <var>"spryker/calculation-migration": "dev-master"</var> and run <var>composer update</var>. <br />This should enable you to use old plugins.</p>
-                                                        <p>The Caclulator <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> also returns <var>back sales.fk_customer</var>, <var>sales.fk_shipment_method</var>, <var>sales.shipment_delivery_time</var> - these are deprecated methods. To safely migrate them see <a href="../../order_management/sales/mg-sales.htm" class="MCXref xref">Migration Guide - Sales</a>.</p>
+                                                        <p>The Caclulator module also returns <var>back sales.fk_customer</var>, <var>sales.fk_shipment_method</var>, <var>sales.shipment_delivery_time</var> - these are deprecated methods. To safely migrate them see <a href="../../order_management/sales/mg-sales.htm" class="MCXref xref">Migration Guide - Sales</a>.</p>
                                                         <p>After this you should see new values calculated + legacy ones.</p><![CDATA[
         
                         
@@ -340,7 +343,7 @@ class CalculationDependencyProvider extends SprykerCalculationDependencyProvider
                                                         <p>Instead of using specific calculated fields, there are more generic fields provided with the new calculator version.</p>
                                                         <p>If you were using <var>ItemTransfer::unitGrossPrice</var> or <var>ProductOptionTransfer::unitGrossPrice</var>, replace this with <var>ItemTransfer::unitPrice</var> or <var>ProductOptionTransfer::unitPrice</var> - these values are used mostly in cart details, checkout summary or customer order details pages.</p>
                                                         <p>You also need to update <var>Price` &gt;= 4.*</var> and <var>PriceCartConnector` &gt;= 3.*</var> as they provide additional data to the quote transfer when "adding to cart". (<var>QuoteTransfer::priceMode</var>).</p>
-                                                        <p>It is necessary only if you extended the <var>\Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager</var> class, because you will receive this change when you update the <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</p>
+                                                        <p>It is necessary only if you extended the <var>\Spryker\Zed\PriceCartConnector\Business\Manager\PriceManager</var> class, because you will receive this change when you update the module.</p>
                                                         <h4>Update Cart Expander Plugin CartItemPricePlugin</h4>
                                                         <p>If you extended the core CartItemPricePlugin, adapt the following code:</p><pre><code class="language-PHP line-numbers">&lt;?php
 use Spryker\Shared\Price\PricePriceMode;
@@ -362,7 +365,7 @@ protected function setQuotePriceMode(QuoteTransfer $quoteTransfer)
                                                         <h4><a name="Migratin"></a>Migrating Sales to the New Calculator Logic</h4>
                                                         <p>To migrate all your orders, do the following:</p>
                                                         <ol>
-                                                            <li value="1">Update Yves to use the new version of the Calculator <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> with the new Calculator plugins.</li>
+                                                            <li value="1">Update Yves to use the new version of the Calculator module with the new Calculator plugins.</li>
                                                             <li value="2">Update your schema by running the following SQL inserts:</li>
                                                         </ol>
                                                         <p class="note">By default, all data is nullable so you can easily run inserts. We will provide a migration script to make those fields not nullable after migration is done.</p>
@@ -500,7 +503,7 @@ COMMIT;
     }
 ?&gt;    </code></pre>
                                                         <p>After this, when you read an order using <var>SalesFacade::getOrderByIdSalesOrder()</var>, the above mentioned plugins will be called to populate the order with additional data,  in this case ProductOptions and Discounts.</p>
-                                                        <p class="note">The Sales <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> does not depend on the <var>SalesAggregator</var> anymore. Therefore, you need to remove the <var>/sales-aggregator/sales/list</var> from <var>\Pyz\Zed\Sales\SalesConfig::getSalesDetailExternalBlocksUrls </var>as it is no longer in use. Totals were moved to Sales to the template <var>Spryker/Zed/Sales/Presentation/Detail/boxes/totals.twig</var> available in Sales version &gt;= 6.*.</p>
+                                                        <p class="note">The Sales module does not depend on the <var>SalesAggregator</var> anymore. Therefore, you need to remove the <var>/sales-aggregator/sales/list</var> from <var>\Pyz\Zed\Sales\SalesConfig::getSalesDetailExternalBlocksUrls </var>as it is no longer in use. Totals were moved to Sales to the template <var>Spryker/Zed/Sales/Presentation/Detail/boxes/totals.twig</var> available in Sales version &gt;= 6.*.</p>
                                                         <h4>Template Changes in SalesBundle &gt;= 6.*:</h4>
                                                         <p>Item and Item option display have been split into three separate template files:</p>
                                                         <ol>
@@ -564,7 +567,7 @@ use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\Order
                                                         <h4>Console Command</h4>
                                                         <p>We prepared a migration console command which will  populate your old orders with the new calculated values.</p>
                                                         <p>To download this console command, go to <a href="../../order_management/sales/mg-sales-aggregator.htm#Console" class="MCXref xref">Migration Guide - SalesAggregator</a>.</p>
-                                                        <p>Register the following console command: <var>\Pyz\Zed\SalesAggregator\Communication\Console\SalesAggregatorMigrationConsole</var> in the Spryker Console <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> dependency provider: <var>\Pyz\Zed\Console\ConsoleDependencyProvider::getConsoleCommands</var> method.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <p>Register the following console command: <var>\Pyz\Zed\SalesAggregator\Communication\Console\SalesAggregatorMigrationConsole</var> in the Spryker Console module dependency provider: <var>\Pyz\Zed\Console\ConsoleDependencyProvider::getConsoleCommands</var> method.</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
   * @param \Spryker\Zed\Kernel\Container $container
   *

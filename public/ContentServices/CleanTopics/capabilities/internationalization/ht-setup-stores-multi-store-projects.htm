@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>For the case in which you must support multiple stores in your application, this can be achieved through configuration. You can setup the stores together with their settings such as date format or currency and also you can setup the default store for your application. Configure Stores The stores configuration can be found inconfig/Shared/stores.php &lt;?php $stores = []; $stores['DE'] = [ // place the DE store configuration here
+];
+$stores['AT'] = [ // place the AT store configuration here
+];
+return $stores; Here you can configure the formatting settings, depending on the context (for the shop or for the back-office interface). &lt;?php
+stores['DE'] = [ // different contexts 'contexts' =&gt; [ // settings for contexts (overwrites shared configurations) 'yves' =&gt; [], 'zed' =&gt; [ 'dateFormat' =&gt; [ // short date (2012-12-28) 'short' =&gt; 'Y-m-d', ], ], ] ]; You can have shared configuration for common settings(e.g. timezone). &lt;?php
+stores['DE'] = [ // different contexts 'contexts' =&gt; [ // shared settings for all contexts '*' =&gt; [ 'timezone' =&gt; 'Europe/Berlin', 'dateFormat' =&gt; [ 'short' =&gt; 'd/m/Y', 'medium' =&gt; 'd. M Y', // date formatted as described in RFC 2822 'rfc' =&gt; 'r', 'datetime' =&gt; 'Y-m-d H:i:s', ], ], ] ]; You can specify for each shop the locales that need to be supported: &lt;?php
+'locales' =&gt; [ // first entry is default 'en' =&gt; 'en_US', 'de' =&gt; 'de_DE', ], You can also specify the currency and country for the shop you’re configuring: &lt;?php
+'countries' =&gt; ['DE'],
+'currencyIsoCode' =&gt; 'EUR' Example of configuration for application supporting 2 shops: Click to expand the code sample &lt;?php $stores = []; $stores['DE'] = [ 'contexts' =&gt; [ '*' =&gt; [ 'timezone' =&gt; 'Europe/Berlin', 'dateFormat' =&gt; [ 'short' =&gt; 'd/m/Y', 'medium' =&gt; 'd. M Y', 'rfc' =&gt; 'r', 'datetime' =&gt; 'Y-m-d H:i:s', ], ], 'yves' =&gt; [], 'zed' =&gt; [ 'dateFormat' =&gt; [ 'short' =&gt; 'Y-m-d', ], ], ], 'locales' =&gt; [ 'en' =&gt; 'en_US', 'de' =&gt; 'de_DE', ], 'countries' =&gt; ['DE'], 'currencyIsoCode' =&gt; 'EUR',
+]; $stores['AT'] = [ 'contexts' =&gt; [ '*' =&gt; [ 'timezone' =&gt; 'Europe/Vienna', 'dateFormat' =&gt; [ 'short' =&gt; 'd/m/Y', 'medium' =&gt; 'd. M Y', 'rfc' =&gt; 'r', 'datetime' =&gt; 'Y-m-d H:i:s', ], ], 'yves' =&gt; [], 'zed' =&gt; [ 'dateFormat' =&gt; [ 'short' =&gt; 'Y-m-d', ], ], ], 'locales' =&gt; [ 'en' =&gt; 'en_US', 'de' =&gt; 'de_AT', ], 'countries' =&gt; ['AT'], 'currencyIsoCode' =&gt; 'EUR',
+]; return $stores; Configuration Files for Stores Each store defined in theconfig/Shared/stores.phpmust have a dedicated configuration file. The configuration file holds details such as database name and credentials for the store that it corresponds to. Example:config_default-development_DE.phpis the configuration file for the DE store, for the development environment. Configure Default Store The default store is configured in theconfig/Shared/default_store.phpfile. Example: &lt;?php return 'DE';</body>
+</html>

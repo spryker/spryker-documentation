@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head />
+    <body>Plugins are used to enable developers to have more focus on message processing. This is achieved by handling the queue implementation as a background process, allowing developers to focus on messages and their processing logic. Example: &lt;?php
+namespace Pyz\Zed\Application\Communication\Plugin; use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface; class SampleQueueMessageProcessorPlugin implements QueueMessageProcessorPluginInterface
+{ public function processMessages(array $queueMessageTransfers) { /* Do something*/ } public function getChunkSize() { return 100; }
+}
+?&gt; Registering the plugin inQueueDependencyProvider::getProcessorMessagePlugins(): &lt;?php
+namespace Pyz\Zed\Queue; use Pyz\Zed\Application\Communication\Plugin\SampleQueueMessageProcessorPlugin;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Queue\QueueDependencyProvider as SprykerQueueDependencyProvider; class QueueDependencyProvider extends SprykerQueueDependencyProvider
+{ protected function getProcessorMessagePlugins(Container $container) { return [ 'hello' =&gt; new SampleQueueMessageProcessorPlugin() ]; }
+} ?&gt;</body>
+</html>
