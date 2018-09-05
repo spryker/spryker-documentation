@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Capabilities|Capabilities|Product Management|Product Reviews|Product TTL">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Capabilities|Capabilities|Product Management|Product TTL">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -7,7 +7,6 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Product TTL (Time To Live)</title>
-        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -71,8 +70,6 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
-        </script>
-        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -166,8 +163,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="WslW_KVQc0Shc3Ui8Gg0KQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WslW_KVQc0Shc3Ui8Gg0KQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="3bHSIbXbQEKhZJlOVBZSxA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="3bHSIbXbQEKhZJlOVBZSxA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -210,6 +207,41 @@
                                                 </div>
                                                 <h1>Product TTL (Time To Live)</h1>
                                                 <p> With TTL  you can easily define from and till when your product(s) will be visible and available for purchase by your customers, without having to manually manage your inventory. This feature is extremely useful if you sell products with expiry date, seasonal products or products that are valid for a certain period of time (e.g. tickets). If for promotional reasons, you temporally sell some products within a limited time frame, or if you want to start selling some products (e.g. a collection) from a specific date and time. The product validity time can be set to up-to-the minute accuracy.</p>
+                                                <h2>TTL For Products Overview</h2>
+                                                <p>The TTL feature is implemented through <var>isActive</var> field by introducing two more fields for product concretes in the Administration Interface - "Valid from" and "Valid to".  Product can have exactly one "life" - one (or no) start, one (or no) end. If "Valid from" date has not come yet, or if "Valid to" has been reached, the value of <var>isActive</var> field is set to "false" and the product is invisible for customers.  This being said, the product validity settings overrule manual (de)activation of products, which means that, if, for example, a product has been manually set to "Deactivated" but has "Valid from" and Valid to" values specified, and "Valid to" lies in the future, the product will be displayed until after the time set in "Valid to" field. To deactivate the product in this case, it would be necessary to clear the values in "Valid from" and "Valid to" fields.</p>
+                                                <p>Time set for the product validity "Valid from" and Valid to" fields is accurate up to the minute, however technically it is possible to change the accuracy (up to the second or up to the days) via a cronjob. The time is set in GMT by default.</p>
+                                                <h2>Use Cases</h2>
+                                                <p>The table below shows possible usage scenarios with the TTL feature and resulting system behavior.</p>
+                                                <table style="width: 100%;">
+                                                    <col style="width: 357px;" />
+                                                    <col />
+                                                    <tbody>
+                                                        <tr>
+                                                            <td style="font-weight: bold;">Validity dates settings</td>
+                                                            <td style="font-weight: bold;">Result</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>"Valid from" is set, "Valid to"&#160;is set and lies in the future</td>
+                                                            <td>Product goes online starting from "Valid to" time and remains online until after the "Valid to" time</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>"Valid from" is set, "Valid to" is not set</td>
+                                                            <td>Product goes online from "Valid from" time and never goes offline</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>"Valid from" is not set, "Valid to"&#160;is set</td>
+                                                            <td>Product goes online after manual activation and remains online till "Valid to" time is reached</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>"Valid to" is set in the past</td>
+                                                            <td>Product will be deactivated shortly</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>"Valid from" is set, "Valid to"&#160;is set and lies in the future, the product is deactivated manually</td>
+                                                            <td>Message saying that the product will be activated because of set "Valid from"&#160;and "Valid to" time</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
                                                 <p>With TTL you can:</p>
                                                 <table style="width: 100%;margin-left: 0;margin-right: auto;">
                                                     <col style="width: 50%;" />
@@ -222,10 +254,8 @@
                                                             </td>
                                                         </tr>
                                                         <tr>
-                                                            <td><a href="product-ttl-overview.htm">Familiarize yourself with the feature and its usage scenarios in more detail</a>
-                                                            </td>
-                                                            <td><a href="product-ttl-overview.htm">Familiarize yourself with the feature and its usage scenarios in more detail</a>
-                                                            </td>
+                                                            <td>Familiarize yourself with the feature and its usage scenarios in more detail</td>
+                                                            <td>Familiarize yourself with the feature and its usage scenarios in more detail</td>
                                                         </tr>
                                                         <tr>
                                                             <td><a href="../mg-product-validity.htm">Install the Product Validity module for TTL</a>
@@ -235,6 +265,9 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                                <p>&#160;</p>
+                                                <p><i>Last review date: Feb. 23rd, 2018 </i>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

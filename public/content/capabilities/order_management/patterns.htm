@@ -7,7 +7,6 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>State Machine Patterns</title>
-        <link href="../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -71,8 +70,6 @@
         <script src="../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../Resources/Scripts/MadCapAll.js">
-        </script>
-        <script src="../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -166,8 +163,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="266JvW4WmUGZskI6XfJ-cQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="266JvW4WmUGZskI6XfJ-cQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="WzzgG-xg40Cukzb8J38nsQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WzzgG-xg40Cukzb8J38nsQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -217,17 +214,14 @@
                                                 <p>A state machine process describes the entire control flow a sales order/sales order item can follow. This typically includes payment, fulfillment and return processes. The state machine is supposed to orchestrate the entire flow. If you consider the process a relay the baton needs to be handed over to different other systems. Let’s use the example of the fulfillment with an ERP system. At a given point the sales order is ready to be fulfilled. A command can be used to invoke a service from the ERP system that allows to trigger fulfillment for a specific sales order. At that point the ERP system will take over the control and start the pick pack ship process. Zed is passive during this time. It will wait until the ERP system sends an event to inform Zed that the fulfillment is complete. Technically Zed will provide a service that can be called by the ERP system. The service itself needs to identify the Sales Order (correlation) for which this event needs to be fired and then invoke the invokeEvent method from the OMS Facade. Same pattern can be used to do more fine granular status updates. In this case there would be more waiting states and corresponding events that are waited for. See also §4 async response pattern, for timeout and exception management.</p>
                                                 <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/cross_system_orchestration.png" data-mc-popup-alt="Cross system orchestration"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="980" data-mc-height="450" src="../../resources/images/cross_system_orchestration_thumb_0_48.png" alt="Cross system orchestration" title="Click me" tabindex="" /></a>
                                                 </p>
-                                                <p data-mc-conditions="General.Image_Source">https://www.gliffy.com/go/html5/10030433</p>
                                                 <h2>Ticket System Integration</h2>
                                                 <p>Most of the sales order processing will be automated. However there are still cases that need human interaction.</p>
                                                 <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/ticket_system_integration.png" data-mc-popup-alt="Ticket system integration"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="740" data-mc-height="410" src="../../resources/images/ticket_system_integration_thumb_0_48.png" alt="Ticket system integration" title="Click me" tabindex="" /></a>
                                                 </p>
-                                                <p data-mc-conditions="General.Image_Source">https://www.gliffy.com/go/html5/10030517</p>
                                                 <h2>Async Response</h2>
                                                 <p>Everytime the process needs to wait for an async response, this pattern can be applied. The first state indicates that an external service is ready to be invoked. The first transition fires automatically and executes a command that includes the coding to capture the payment in this example. Afterwards a state <var>waiting for result</var> is reached. This shows that the process is waiting for an external event to happen. It is good practice to include the case that the response does not arrive. Therefore a timeout event is bound to an exception transition. This state indicates that the normal flow of the process did not take place. It could be used to open a ticket (see §3). Nevertheless the event could still arrive. Therefore it needs a transition from the <var>timed out</var> state to the <var>capture result received</var> state.</p>
                                                 <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/async_response.png" data-mc-popup-alt="Async response"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="620" data-mc-height="490" src="../../resources/images/async_response_thumb_0_48.png" alt="Async response" title="Click me" tabindex="" /></a>
                                                 </p>
-                                                <p data-mc-conditions="General.Image_Source">https://www.gliffy.com/go/html5/10030617</p>
                                             </div>
                                         </div>
                                     </div>

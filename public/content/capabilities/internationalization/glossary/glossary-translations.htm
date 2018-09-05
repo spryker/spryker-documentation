@@ -7,7 +7,6 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>How Translations are Managed - Glossary</title>
-        <link href="../../../../Skins/Default/Stylesheets/Elasticsearch.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -71,8 +70,6 @@
         <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
         <script src="../../../../Resources/Scripts/MadCapAll.js">
-        </script>
-        <script src="../../../../Resources/Scripts/MadCapSearch.Elastic.js">
         </script>
     </head>
     <body>
@@ -166,8 +163,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="BfKAA4ng6ECvvQDNc1dQfA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BfKAA4ng6ECvvQDNc1dQfA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="xGJ14Ls-skO3MTst8ssycQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="xGJ14Ls-skO3MTst8ssycQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -216,12 +213,10 @@
                                                 <p>The diagram bellow pictures the DB schema for the tables in which the translations are being stored.</p>
                                                 <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/glossary_kv_and_db.png" data-mc-popup-alt="Glossary KV and DB"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="562" data-mc-height="308" src="../../../resources/images/glossary_kv_and_db_thumb_0_48.png" alt="Glossary KV and DB" title="Click me" tabindex="" /></a>
                                                 </p>
-                                                <p data-mc-conditions="General.Image_Source">https://www.gliffy.com/go/html5/9959279</p>
                                                 <p>When the web application is first installed, the data stored in Zed’s database is exported in the key-value storage (Redis) used by Yves. To assure that the key-value storage is in sync with the data stored in the SQL database, a cronjob is configured to run in order to make these updates. The cronjob can be configured to trigger as often and when is more convenient, but its execution can also be started manually.</p><pre><code class="language-PHP line-numbers">console collector:storage:export</code></pre>
                                                 <p>The schema bellow summarizes the levels of persistence used in order to offer localized content into the front office interface ( Yves ).</p>
                                                 <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/glossarykeyspersistence.png" data-mc-popup-alt="Glossary keys persistance diagram"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="709" data-mc-height="290" src="../../../resources/images/glossarykeyspersistence_thumb_0_48.png" alt="Glossary keys persistance diagram" title="Click Me" tabindex="" /></a>
                                                 </p>
-                                                <p data-mc-conditions="General.Image_Source">https://www.gliffy.com/go/share/spjm4p7he74ehonteu75</p>
                                                 <h2>Command Query Separation</h2>
                                                 <p>We can consider the key-value storage as a denormalized model of the relational model stored in the Sql database and the request of rendering a page as a query that the user makes. Statistically, query requests are happening a lot more often than command requests ( such as checkout or submitting a payment) and using a dedicated storage for them brings a lot of speed in the application.</p>
                                                 <p>Another advantage of using a denormalized model for displaying localized content is that we don’t have to do the transformations of the objects stored in the relational database when using them on the client side logic.</p>
