@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2C,Spryker.B2B,Spryker.ShopSuite,Spryker.DemoShop" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Capabilities|Capabilities|Order Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Order Process Modelling via State Machines    </title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/Stylesheets/MadCapSearch.Google.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.topic-ratings-button
+{
+	-pie-background: transparent url('../../../../Skins/Default/Stylesheets/Images/star-full.png') no-repeat center center;
+}
+
+.button.separator-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.edit-user-profile-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Google.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form>
+                                            <div id="jAgM3ZMb9EKPv6VQrvCK3g" class="search-bar search-bar-container needs-pie">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <script src="../../../resources/prism.js">
+                                </script>
+                                <div class="search-container">
+                                    <form>
+                                        <div id="eICkFSqxvE-6F1GUtzeE-w" class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="nocontent">
+                                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="iZ9TZZE5xkKRkTkPP8UDiw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iZ9TZZE5xkKRkTkPP8UDiw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: ;">
+                                                    <div class="button-group-container-left">
+                                                        <div class="button-group star-buttons loading feedback-topic-required">
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="button-separator feedback-topic-required">
+                                                        </div>
+                                                        <button class="button feedback-required login-button" id="normalLoginBtn" data-state1-class="login-button" data-state2-class="edit-user-profile-button" title="Login" data-state1-title="Login">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="login" />
+                                                        </button>
+                                                        <button class="button needs-pie print-button" title="Print">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                        </button>
+                                                        <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h1>Order Process Modelling via State Machines <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
+                                                <p>
+                                                    <img src="../../../resources/images/multi_icon_multi-store_64.png" />
+                                                </p>
+                                                <p>State Machines help you define, execute and visualize predefined and automated processes. It can model events that involve performing a predetermined sequence of actions, for example in the order process, e.g. order is being shipped if the payment is successful.</p>
+                                                <p>You can tailor the State Machine to your needs to trigger certain processes automatically or execute them manually.</p>
+                                                <p>- Model and visualize the process as state machine in XML
+</p>
+                                                <p>- reusable sub processes (eg return-process)
+- programmable commands and conditions
+</p>
+                                                <p>- Events can be triggered manually or fully automated
+</p>
+                                                <p>- Timeouts</p>
+                                                <h2>State Machine Module</h2>
+                                                <p>The <var>StateMachine</var> module provides generic implementation for state machines (SM). This module provides functionality for drawing the SM graph, triggering events, initializing a new state machine or for getting the state history for a processed item. </p>
+                                                <p class="note"> If you are looking for information on the OMS State Machine see: <a href="../oms.htm">OMS State Machine</a></p>
+                                                <p data-mc-conditions="Spryker.DemoShop">There is already example state machine implemented in demoshop. Look for stateMachineExample module, you can use as a base for implementing your custom SM.&#160;</p>
+                                                <h2>States</h2>
+                                                <p>How are the states modelled in XML?</p>
+                                                <p>A list of state elements can be easily defined in an XML file, as in the example below.</p>
+                                                <p>A state is defined by a name. The display attribute allows to link a glossary key that contains the name of the state for the locales configured in the application, as you want to be shown in Yves.</p><pre><code class="language-PHP line-numbers">&lt;states&gt;
+    &lt;state name="new" reserved="true"/&gt;
+    &lt;state name="paid" display="customer.order.state.received"&gt;
+        &lt;flag&gt;invoiceable&lt;/flag&gt;
+    &lt;/state&gt;
+    &lt;state name="shipped" display="custom.order.state.shipped" /&gt;
+&lt;/states&gt;</code></pre>
+                                                <p>Furthermore, a state can have several associated flags. You can query the state machine for items marked with specified flags by using <var>StateMachineFacade::getItemsWithFlag()</var> or vice versa <var>StateMachineFacade::getItemsWithoutFlag()</var>.</p>
+                                                <p>We already have predefined number of sate machine flags in our oms.xsd filed which can be found in http://static.spryker.com/oms-01.xsd, you can find it in stateType definition flag subsection.</p>
+                                                <p>Currently we use 'exclude from customer' flag which will skip all orders having ALL item states flagged with this flag. That means it won't be displayed in customer Yves order details/list pages.</p>
+                                                <h2>Transitions</h2>
+                                                <p>Spryker’s state machine allows to define transitions between states. A transition is bound to an event, which tells when the state machine item can leave the current state.</p>
+                                                <p>For example, the states <var>waiting for credit card capture</var> and <var>captured</var> are connected with a transition that expects an external event <var>capture successful</var>.</p>
+                                                <p>States and transitions define the possible flow a process can take and also which sequence of states is actually not possible.</p>
+                                                <p>Technically, transitions are very simple. The attribute <var>happy</var> marks this transition as the happy case. When the state machine graph is rendered in Zed, the transition is marked with green.</p>
+                                                <p>The condition attribute allows to add PHP code that double checks if this transition can be fired or not. The condition is evaluated when the event associated with the transition has been fired.</p>
+                                                <p>Furthermore a <var>source</var> and a <var>target</var> state are defined. The event specifies when the transition can be fired.</p>
+                                                <p>The event element can be omitted (making request not block user request). This way an external call like save Order or triggerEvent are finished. That means that the control flow of the code goes back to the invoking method. Zed will continue the execution of the process model with the help of a cron job. If the event element is omitted and a condition is used, Zed will use the condition to evaluate if the transition can be fired.</p><pre><code class="language-PHP line-numbers">&lt;transition condition="PackageName/ClassName" happy="true"&gt;
+    &lt;source&gt;paid&lt;/source&gt;
+    &lt;target&gt;shipped&lt;/target&gt;
+    &lt;event&gt;ship it&lt;/event&gt;
+&lt;/transition&gt;</code></pre>
+                                                <h2>Events</h2>
+                                                <p>Events tell when a transition can be fired. Every event has a name that is referenced in a transition.</p>
+                                                <p>The easiest event is the one that has the <var>onEnter="true"</var> attribute associated. This event is fired automatically when the source state is reached.</p>
+                                                <p>Another option is to attach a timeout. It can be used for a prepayment process: if after 12 days no payment is received, the timeout makes sure that a reminder state <var>reminder sent</var> is fired. How is the reminder then technically sent? This is implemented with the command attribute. The command attribute references a PHP class that implements a specific interface. Every time the event is fired (automatically, after timeout), Zed makes sure the associated command is executed. If an exception occurs when executing the command, the item stays in the source state.</p>
+                                                <p>This is how an event is defined:</p><pre><code class="language-PHP line-numbers">&lt;event name="ship it" timeout="" manual="true|false" onEnter="true|false" command="PackageName/ClassName"/&gt;</code></pre>
+                                                <p>The timeout attribute uses string date <a href="http://php.net/manual/en/datetime.formats.relative.php" title="Relative formats" alt="Relative formats" target="_blank">relative formats</a> (E.g. 1 day, 1 hour, 1 min).</p>
+                                                <p>Another option to fire the event is by setting the manual attribute to true. This allows adding manual button in your Zed UI to manually trigger events. By clicking the button the event will be fired and thus, the corresponding transition will take place.</p>
+                                                <p>Furthermore events can be triggered via an API call. The method <var>triggerEvent</var> allows to trigger an event for a given process instance. For example if a message from the payment provider is received that a capture was successful, the corresponding process instance can be triggered via API call.</p>
+                                                <h2>Subprocesses</h2>
+                                                <p>A process can be split into multiple subprocesses, that is each related to a single independent concept (e.g.: payment subprocess, cancellation subprocess).</p>
+                                                <p>There are several reasons for introducing subprocesses when modeling a state machine process:</p>
+                                                <ul>
+                                                    <li class="bullet_list" value="1">the flow of the process is easier to follow</li>
+                                                    <li class="bullet_list" value="2">if more then one process needs to be defined (e.g.: orders that are being paid before delivery and orders that are paid on delivery) then the common parts of the processes can be extracted into subprocesses and they be reused</li>
+                                                </ul>
+                                                <p>To introduce a subprocess in the main process, you need to specify it’s name under the subprocesses tag as in the example below :</p><pre><code class="language-PHP line-numbers">&lt;process name="Prepayment" main="true"&gt;
+    &lt;subprocesses&gt;
+        &lt;process&gt;completion&lt;/process&gt;
+        &lt;process&gt;cancellation&lt;/process&gt;
+       ..
+    &lt;/subprocesses&gt;
+..</code></pre>
+                                                <p>You also need to specify the path to the file in which the transitions of that subprocess are being described :</p><pre><code class="language-PHP line-numbers">&lt;process name="Prepayment01" main="true"&gt;
+ ..
+&lt;/process&gt;
+&lt;process name="completion" file="subprocesses/Completion.xml"/&gt;
+&lt;process name="cancellation" file="subprocesses/Cancellation.xml"/&gt;</code></pre>
+                                                <p>In the main process add the corresponding transitions between the starting and ending states of the included subprocesses and other states (that are defined in other subprocesses or in the main process).</p>
+                                                <h2>Subprocess Prefix</h2>
+                                                <p>You might want to copy a subprocess over to consolidate process endpoints. To do so, you need to define a prefix for a subprocess and use it for a target/source state or an event definition.</p><pre><code class="language-PHP line-numbers">
+                &lt;process name="Name" main="true"&gt;
+                     ...
+                     &lt;transition condition="PackageName/ClassName"&gt;
+                        &lt;source&gt;paid&lt;/source&gt;
+                        &lt;target&gt;Foo - Cancellation&lt;/target&gt;
+                        &lt;event&gt;Enter Foo cancellation&lt;/event&gt;
+                     &lt;/transition&gt;
+
+                    &lt;transition condition="PackageName/ClassName" happy="true"&gt;
+                        &lt;source&gt;paid&lt;/source&gt;
+                        &lt;target&gt;Cancellation&lt;/target&gt;
+                        &lt;event&gt;Enter general cancellation&lt;/event&gt;
+                    &lt;/transition&gt;
+                    ...
+                &lt;/process&gt;
+                &lt;process name="cancellation" file="subprocesses/Cancellation.xml"/&gt;
+                &lt;process name="cancellation" file="subprocesses/Cancellation.xml" prefix="Foo"/&gt;
+            </code></pre>
+                                                <h2>Putting It All Together</h2>
+                                                <p>The following snippet shows how all the elements are brought together in an XML file. Notice that we can also define subprocesses. This allows to reuse a subprocess from several processes. Therefore the subprocess used is declared in the <var>&lt;subprocesses&gt;</var> section. You need to define for each subprocess a process element that contains the name and file location as attributes.</p><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;statemachine
+    xmlns="spryker:state-machine-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:state-machine-01 http://static.spryker.com/state-machine-01.xsd"&gt;
+
+   &lt;process name="CreditCardDropShipping"&gt;
+      &lt;subprocesses&gt;
+         &lt;process&gt;invoice creation&lt;/process&gt;
+      &lt;/subprocesses&gt;
+
+      &lt;!-- state go here --&gt;
+      &lt;states&gt;
+         &lt;state&gt; ... &lt;/state&gt;
+      &lt;/states&gt;
+
+
+      &lt;!-- Transitions go here --&gt;
+      &lt;transitions&gt;
+         &lt;transition&gt; ... &lt;/transition&gt;
+      &lt;transitions&gt;
+
+
+      &lt;!-- Events go here --&gt;
+      &lt;events&gt;
+         &lt;event&gt; ... &lt;/event&gt;
+      &lt;events&gt;
+   &lt;/process&gt;
+   &lt;process name="invoice creation" file="subprocesses/InvoiceCreation.xml"/&gt;
+&lt;/statemachine&gt;</code></pre>
+                                                <h2>Where to Store the File?</h2>
+                                                <p>Each state machine should have a folder created under the <var>config/Zed/StateMachine/{StateMachineName}/</var> folder. {StateMachineName} name is taken from SM handler plugin <var>StateMachineHandlerInterface::getStateMachineName()</var>.</p>
+                                                <h2>Linking Processes With Code</h2>
+                                                <p>Events can have commands attached to it, which is logic that gets executed when that event is fired.</p>
+                                                <p>Example:</p><pre><code class="language-PHP line-numbers">
+&lt;events&gt;
+    &lt;event name="example event" onEnter="true" manual="true" command="Example/ExampleCommand"/&gt;
+    ..
+&lt;/events&gt;
+            </code></pre>
+                                                <p>The mapping between this string and the actual implementation of the command is done through the state machine handler <var>StateMachineHandlerInterface::getCommandPlugins()</var>.</p>
+                                                <p>Example of <var>\Pyz\Zed\Oms\OmsDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">
+&lt;?php
+...
+class OmsDependencyProvider extends SprykerOmsDependencyProvider
+{
+    ...
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container = parent::provideBusinessLayerDependencies($container);
+
+        $container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+            $commandCollection-&gt;add(new ExamplePlugin(), 'Example/ExampleCommand');
+
+            return $commandCollection;
+        });
+
+        return $container;
+    }
+...
+}
+            </code></pre>
+                                                <p>Similar to this, the mapping between a string linked to a condition and the implementation of the condition is also done through the state machine handler <var>StateMachineHandlerInterface::getConditionPlugins().</var></p>
+                                                <p>A transition from one state to another can be conditioned: it’s possible to make that transition if a condition is satisfied:</p><pre><code class="language-PHP line-numbers">&lt;transition condition="Example/ExampleTransition" happy="true"&gt;
+    &lt;source&gt;paid&lt;/source&gt;
+    &lt;target&gt;shipped&lt;/target&gt;
+    &lt;event&gt;ship it&lt;/event&gt;
+&lt;/transition&gt;</code></pre>
+                                                <p>&#160;</p>
+                                                <p><b>See also:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1"><a href="#" class="MCXref xref selected">Order Process Modelling via State Machines    </a>
+                                                    </li>
+                                                    <li value="2"><a href="state-machine-cronjob.htm" class="MCXref xref">Cron Jobs - State Machine    </a>
+                                                    </li>
+                                                    <li value="3"><a href="state-machine-events.htm" class="MCXref xref">Triggering Events - State Machine    </a>
+                                                    </li>
+                                                    <li value="4"><a href="state-machine-implementing-plugin.htm" class="MCXref xref">Implementing the Plugin - State Machine    </a>
+                                                    </li>
+                                                    <li value="5"><a href="state-machine-persistence.htm" class="MCXref xref">Persistence - State Machine    </a>
+                                                    </li>
+                                                    <li value="6"><a href="state-machine-zed-presentation.htm" class="MCXref xref">Updating Presentation in Zed - State Machine    </a>
+                                                    </li>
+                                                </ul>
+                                                <p>&#160;</p>
+                                                <p><![CDATA[
+		
+		]]><i>Last review date: </i><i>Oct. 24th, 2017 </i><![CDATA[    ]]></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
