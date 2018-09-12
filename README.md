@@ -5,7 +5,9 @@ The central hub for Spryker documentation, knowledge and information.
 Note: Our process is built so that we do not merge pull requests, but migrate the changes manually. We do so to moderate content to see if the feedback needs to be applied somewhere else.
 However, you can be credited in our documentation by stating that you wish to be mentioned when you send us feedback.
 
-# Urheber &amp; Haftungsausschluss für Publikationen
+Scroll-Down for English version of  Disclaimer.
+
+## Urheber &amp; Haftungsausschluss für Publikationen
 
 Veröffentlicht in Berlin von der:
 
@@ -31,7 +33,7 @@ Die gewerblichen Schutzrechte wie Marken (Logos) oder Patente, die in dieser Pub
 
 Unerlaubte Vervielfältigung im Ganzen oder in Teilen stellen eine Verletzung des Urheberrechts dar. Die Spryker Systems GmbH wird jede Verletzung ihrer Urheberrechte aktiv verfolgen.
 
-# Copyright &amp; Disclaimer publications
+## Copyright &amp; Disclaimer publications
 
 Published in Berlin by:
 
