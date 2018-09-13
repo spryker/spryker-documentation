@@ -1,7 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
-    <head />
-    <body>This module is used to handle requests from Yves to Zed and the responses from Zed. Internally it makes use of the well known Guzzle library. HandlerStackContainer Guzzle provides a way to add a so called middleware. It makes use of a handler stack where you can push a middleware to. For more details about this checkout the Guzzle handler and middleware documentation . TheHandlerStackContainercan be used to add middleware to the handler stack without touching theAbstractHttpClient. TheHandlerStackContainerholds a static variable where you can add your middle-ware from e.g. aServiceProvider. &lt;?php namespace Pyz\Yves\YourBundle\Plugin\ServiceProvider; class YourServiceProvider extends AbstractPlugin implements ServiceProviderInterface
-{ ... public function boot(Application $app) { $handlerStackContainer = $this-&gt;getFactory()-&gt;createHandlerStackContainer(); $handlerStackContainer-&gt;addMiddleware($this-&gt;getFactory()-&gt;createYourMiddlewarePlugin()); } ...
-} This technique is used for logging requests sent from Yves to Zed and the responses returned from Zed. For more details you can look into theZedRequestLogServiceProviderclass. Your middleware needs to implementMiddlewareInterfacewhich has two simple methodsMiddlewareInterface::getName()andMiddlewareInterface::getCallable().</body>
-</html>

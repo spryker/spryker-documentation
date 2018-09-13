@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
-    <head />
-    <body>MailType is a class used to build the entireMailTransferthrough an easy to use interface. Create theMailTypePluginwithin the module which should send out a email and implementMailTypePluginInterface. Then just setup your email in thebuild()method. Within thebuild()method you have access to theMailBuilderInterfacewhich makes it easy to enrich theMailTransferwith the information needed to send out the mail. You also have access to theMailTransferitself through theMailBuilderInterface. This is for example used to get the recipient information from a given Transfer object. In most cases you will add a specific transfer to theMailTransfere.g. aCustomerTransferwhen a customer registers. This transfer object is then available in your MailType through theMailTransfer. Example of a MailTypePlugin: &lt;?php
-namespace Pyz\Zed\YourBundle\Communication\Plugin\Mail; use Spryker\Zed\Kernel\Communication\AbstractPlugin;
-use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
-use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface; class YourMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
-{ const MAIL_TYPE = 'name of your mail'; /** * @return string */ public function getName() { return static::MAIL_TYPE; } /** * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder * * @return void */ public function build(MailBuilderInterface $mailBuilder) { $this -&gt;setSubject($mailBuilder) -&gt;setHtmlTemplate($mailBuilder) -&gt;setTextTemplate($mailBuilder) -&gt;setSender($mailBuilder) -&gt;setRecipient($mailBuilder); } ... }</body>
-</html>
