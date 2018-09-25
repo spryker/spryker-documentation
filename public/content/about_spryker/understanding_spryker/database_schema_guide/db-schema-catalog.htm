@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="About Spryker|Understanding Spryker|Database Schema Guide">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Catalog Schema</title>
+        <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/Stylesheets/MadCapSearch.Google.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.topic-ratings-button
+{
+	-pie-background: transparent url('../../../../Skins/Default/Stylesheets/Images/star-full.png') no-repeat center center;
+}
+
+.button.separator-button
+{
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.edit-user-profile-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
+        </script>
+        <script src="../../../../Resources/Scripts/MadCapSearch.Google.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form>
+                                            <div id="rHSClAaO_UGYWwh5FkXSKw" class="search-bar search-bar-container needs-pie">
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <script src="../../../resources/prism.js">
+                                </script>
+                                <div class="search-container">
+                                    <form>
+                                        <div id="kcP6pl7yHUOJNxULGFyavw" class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="nocontent">
+                                            <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="_HWpfZLrTkSR38oYzhnPew">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_HWpfZLrTkSR38oYzhnPew:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: ;">
+                                                    <div class="button-group-container-left">
+                                                        <div class="button-group star-buttons loading feedback-topic-required">
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                            <div class="button star-button topic-ratings-empty-button" data-state1-class="topic-ratings-empty-button" data-state2-class="topic-ratings-button" title="Click a star to rate this topic" data-state1-title="Click a star to rate this topic" data-state2-title="Click a star to rate this topic">
+                                                                <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="topic rating" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="button-separator feedback-topic-required">
+                                                        </div>
+                                                        <button class="button feedback-required login-button" id="normalLoginBtn" data-state1-class="login-button" data-state2-class="edit-user-profile-button" title="Login" data-state1-title="Login">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="login" />
+                                                        </button>
+                                                        <button class="button needs-pie print-button" title="Print">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                        </button>
+                                                        <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                            <img src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h1>Catalog Schema</h1>
+                                                <h2>Products</h2>
+                                                <h3><span style="color: #e35d44;">Abstract and Concrete Products</span>
+                                                </h3>
+                                                <p>Spryker's product catalog is divided into Abstract Products that contain all common Attributes and Variants (~ Concrete Products). The Attributes which make the difference among the Variants are called Super-Attributes (e.g. Size of T-Shirts).</p>
+                                                <table style="width: 100%;mc-table-style: url('../../../resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <tbody>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Abstract Product</td>
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                                                                <p>Holds all data which is the same for all variants.
+
+</p>
+                                                                <p>Holds all common attributes
+.</p>
+                                                                <p>Cannot be added to cart.</p>
+                                                            </td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">"A T-shirt"</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">Concrete Product
+				(~ Variant)</td>
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                                                                <p>A product with a specific SKU that can be added to cart. 
+
+</p>
+                                                                <p>Holds these attributes which make the product unique amongst the other variants. (We are used to call them the "Super-Attributes"). The Super-Attributes are usually used for facet filters in the catalog.
+
+</p>
+                                                                <p>The final data in Yves is a merge of the attributes from an Abstract and a Concrete Product ("Attribute Inheritance"). If an attribute exist in both places then the value from the Concrete Products will be used.</p>
+                                                            </td>
+                                                            <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">"A T-Shirt with a specific size and colour"</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-abstract.png" data-mc-popup-alt="Abstract and Concrete Products"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="165" data-mc-height="464" src="../../../resources/images/databaase_schema_guide/product-abstract_thumb_0_48.png" alt="Abstract and Concrete Products" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Product Attributes</span>
+                                                </h3>
+                                                <p>Attribute keys and values are saved in JSON array to the products and their variants. This means you don't need to predefine a static schema and you don't require clean product data. Any information can be imported and then later enriched by meta data (like pre-defined values), used for facet filters and full-text search. Localizable Attribute values can be translated while keys are saved without translation.</p>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1">There are two <i>*_localized_attributes</i> tables which hold all the localizable data (like name, seo information and attributes)</li>
+                                                    <li value="2">There is an attributes field in four tables (see below)</li>
+                                                    <ul>
+                                                        <li value="1">The abstract and concrete product can contain attributes which don't need to be localized (e.g. dimensions)</li>
+                                                        <li value="2">The <i>*_localized_attributes</i> tables contain data which needs to be localized (e.g. material)</li>
+                                                    </ul>
+                                                    <li value="3">The attributes field contains a json-array where the values are translated already while the keys are not.</li>
+                                                    <li value="4">In contrast to most other tables we are using plural table names here. That's because every row in the *_attributes tables represents a set of attributes</li>
+                                                </ul>
+                                                <p style="font-style: italic;">Example: /en/sony-hxr-mc2500-199</p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-attributes.png" data-mc-popup-alt="Product Attributes"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="633" data-mc-height="531" src="../../../resources/images/databaase_schema_guide/product-attributes_thumb_0_48.png" alt="Product Attributes" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Attribute configuration (PIM, Search and Filters)</span>
+                                                </h3>
+                                                <p>Any product can have any Attributes. The data is stored as pairs of keys / values in a JSON field. The idea is that inventory managers can add any kind of information and then use the Administration Interface to define what Spryker should do with the data. This way they can optimize the shop without deployments.</p>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1">Attributes are identified by the key (e.g. "material").</li>
+                                                    <li value="2">The table <i>spy_product_attribute_key</i> can contain attribute keys so that it is possible to add metadata</li>
+                                                    <li value="3">Super-Attributes must be declared here with <i>is_super=true</i>.</li>
+                                                    <li value="4">
+                                                        <p><b>Data for PIM</b>: On the left side of <i>spy_product_attribute_key</i> you see the general attribute meta data that can be attached to the keys. (warning) This meta data is only used for the integrated PIM and does not work for imported data.</p>
+                                                    </li>
+                                                    <ul>
+                                                        <li value="1"><i>spy_product_attribute_attribute::allow_input</i> - The user can add any input by himself.</li>
+                                                        <li value="2"><i>spy_product_attribute_attribute::input_type</i> - E.g. text, number, select, ...</li>
+                                                        <li value="3"><i>spy_product_attribute_attribute_value::value</i> - Selectable values.</li>
+                                                    </ul>
+                                                    <li value="5"><b>Data for Search</b>: On the top right side of <i>spy_product_attribute_key</i> there is the information if an attribute is searchable.</li>
+                                                    <ul>
+                                                        <li value="1"><i>spy_product_search_attribute_map::target_field</i> - This field defines how the attributes is indexed in Elasticsearch (full-text, full-text-boosted, suggestion-terms, completion-terms). Multiple entries for the same attribute-key are possible.</li>
+                                                    </ul>
+                                                    <li value="6"><b>Data for Filters</b>: On the bottom right side of <i>spy_product_attribute_key</i> there is the information if an attribute is used for facet-filters and how it looks like.</li>
+                                                    <ul>
+                                                        <li value="1"><i>spy_product_search_attribute::filter_type</i> - Type of filter that is shown in Yves (e.g. single-select, multi-select).</li>
+                                                    </ul>
+                                                    <li value="7"><b>Searchable Products</b>: All the search-related information about attributes are only applied if the product is marked as searchable.</li>
+                                                    <ul>
+                                                        <li value="1"><i>spy_product_search::is_searchable</i> - Defines if the product appears in search results.</li>
+                                                    </ul>
+                                                    <li value="8">
+                                                        <p>Synchronisation: Modifying the search and filter preferences are executing an expensive SQL query (full-text search in attributes) that checks all products that have the related attributes, so we’ve decided back then to collect all changes and “publish” them at once. The sync field is responsible for determining which attributes need to be published.</p>
+                                                        <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/attribute-configuration.png" data-mc-popup-alt="Attribute configuration"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="996" data-mc-height="599" src="../../../resources/images/databaase_schema_guide/attribute-configuration_thumb_0_48.png" alt="Attribute configuration" title="Click Me" tabindex="" /></a>
+                                                        </p>
+                                                    </li>
+                                                </ul>
+                                                <h3><span style="color: #e35d44;">Multi-Store Products</span>
+                                                </h3>
+                                                <p>Abstract Products can be activated per Store. The approach is if a product is not related to any store then it will not appear anywhere. So to make all products appear in all stores, all relations must be explicitly defined.</p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/multi-store-products.png" data-mc-popup-alt="Multi-store Products"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="519" data-mc-height="452" src="../../../resources/images/databaase_schema_guide/multi-store-products_thumb_0_48.png" alt="Multi-store Products" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3 style="color: #e35d44;">Related Data (via Foreign Key)</h3>
+                                                <p>Abstract and Concrete Products are related to other entities.</p>
+                                                <ul>
+                                                    <li value="1">Every Abstract Product is represented by a Product-Detail-Page in the shop which has a unique URL per locale</li>
+                                                    <li value="2">Abstract Products can be categorized</li>
+                                                    <li value="3">Only Concrete Products have stocks</li>
+                                                    <li value="4">Prices and Image-Sets are related to Abstract and Concrete Products. The relation to the Concrete Product has a higher priority and allows to overwrite the inherited price (or image-set)</li>
+                                                </ul>
+                                                <p>The schema below is not complete as there are a few more entities like product reviews or product validity.</p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/related-data-foreign-key.png" data-mc-popup-alt="Related data (via foreign key)"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="1119" data-mc-height="692" src="../../../resources/images/databaase_schema_guide/related-data-foreign-key_thumb_0_48.png" alt="Related data (via foreign key)" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Related Data (via SKU)</span>
+                                                </h3>
+                                                <p>Products are also related to objects from different functional areas (e.g. sales-orders). Here we are using implicit relations via the natural identifier (SKU) to avoid hard coupling among different bounded contexts which makes it easier to operate Spryker in a service approach with separated databases (product-, order-, availability-service).</p>
+                                                <ul>
+                                                    <li value="1">Soft relationships:</li>
+                                                    <ul>
+                                                        <li value="1">We are using the SKU as a natural identifier for soft-relations.</li>
+                                                        <li value="2">
+                                                            <p>These relations are not explicitly defined and therefore are not visible in the schema below.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <li value="2">Sales-order-item are related to Concrete Products.</li>
+                                                    <li value="3">The calculated Availability of Abstract- and Concrete Products are also related via SKU.</li>
+                                                </ul>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/related-data-sku.png" data-mc-popup-alt="Related data (via sku)"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="694" data-mc-height="744" src="../../../resources/images/databaase_schema_guide/related-data-sku_thumb_0_48.png" alt="Related data (via sku)" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Product Options</span>
+                                                </h3>
+                                                <p>Product options are additional items with a price but without their own stock. Customers can only buy them together with a product. (e.g. an insurance for a phone)</p>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1">An Option Group can contain multiple Abstract Products. (e.g. "Warranty")</li>
+                                                    <li value="2">Each group has several values (e.g. "1y", "2x", ...)</li>
+                                                    <li value="3">Each value has a net and a gross price (per store and per currency)</li>
+                                                </ul>
+                                                <p><i>Example: /en/acer-aspire-s7-134</i>
+                                                </p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-options.png" data-mc-popup-alt="Product Options"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="949" data-mc-height="548" src="../../../resources/images/databaase_schema_guide/product-options_thumb_0_48.png" alt="Product Options" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Product Bundles</span>
+                                                </h3>
+                                                <p>Two or more product variants can be bundled together and mapped to a  Product Bundle. The Product Bundle is a regular product with its own information, price, and stock. When a customer buys a Product Bundle then each Sales-Order-Item in the Sales-Order represents one of the bundled products.</p>
+                                                <ul>
+                                                    <li value="1">The "Product Bundle" itself is represented by a Concrete Product while the bundled products are relations to other Concrete Products:</li>
+                                                    <ul>
+                                                        <li value="1">fk_product links to this product which represents the bundle (and which has its own price, stock, etc)</li>
+                                                        <li value="2">fk_bundled_product links to the bundled products which are inside the Bundle</li>
+                                                        <li value="3">If one bundled product is included several times then the quantity can higher than "1".</li>
+                                                    </ul>
+                                                </ul>
+                                                <p><i>Example: /en/hp-bundle-211</i>
+                                                </p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-bundles.png" data-mc-popup-alt="Product Bundles"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="422" data-mc-height="450" src="../../../resources/images/databaase_schema_guide/product-bundles_thumb_0_48.png" alt="Product Bundles" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3 style="color: #e35d44;">Product Groups</h3>
+                                                <p>Product groups are used to link products together which are equal from the customer point of view (e.g. different colors of a T-Shirt)</p>
+                                                <ul>
+                                                    <li value="1">Typical use case:</li>
+                                                    <ul>
+                                                        <li value="1">Red T-Shirt (Abstract Product)</li>
+                                                        <li value="2">Red T-Shirt in XL (Concrete Product)</li>
+                                                        <li value="3">Blue T-Shirt (Abstract Product in the same group)</li>
+                                                    </ul>
+                                                </ul>
+                                                <p style="font-style: italic;">Example: /en/canon-ixus-160-002</p>
+                                                <p style="font-style: italic;"><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-groups.png" data-mc-popup-alt="Product Groups"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="597" data-mc-height="454" src="../../../resources/images/databaase_schema_guide/product-groups_thumb_0_48.png" alt="Product Groups" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3 style="color: #e35d44;">Product Sets</h3>
+                                                <p>Multiple products can be offered as a set so that the customer can add them to cart with a single click. Each set has its own URL and all sets can be shown on a separate section in the catalog. The typical use case is called "Shop-by-Look" and it's a common feature for fashion shops.</p>
+                                                <ul>
+                                                    <li value="1">The Product Set has a localizable name and can contain multiple products</li>
+                                                    <li value="2">Product Sets are represented by dedicated pages in the shop and therefore have an URL</li>
+                                                    <li value="3">A Product Set has its own Image Set</li>
+                                                </ul>
+                                                <p><i>Example: /en/sony-product-set</i>
+                                                </p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-set.png" data-mc-popup-alt="Product Set"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="804" data-mc-height="727" src="../../../resources/images/databaase_schema_guide/product-set_thumb_0_48.png" alt="Product Set" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Product Relations</span>
+                                                </h3>
+                                                <p>An Abstract Product can be related to other Abstract Products for cross- and up-selling purposes. For instance, to show "similar products" on a product detail page.</p>
+                                                <p style="font-weight: bold;">Structure:</p>
+                                                <ul>
+                                                    <li value="1">Like Product Sets, a Product Relation contains multiple products</li>
+                                                    <li value="2">Main differences to Product Sets:</li>
+                                                    <ul>
+                                                        <li value="1">Relations are typed (e.g. "cross-selling")</li>
+                                                        <li value="2">Relations have a main Abstract Product (this is the product which shows the related products)</li>
+                                                    </ul>
+                                                </ul>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-relations.png" data-mc-popup-alt="Product Relations"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="728" data-mc-height="536" src="../../../resources/images/databaase_schema_guide/product-relations_thumb_0_48.png" alt="Product Relations" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Measurement Units</span>
+                                                </h3>
+                                                <p>Products can be sold in different Measurement Units. For instance, apples can be sold in "Item" and "Kilogram" amounts. Each product variant can be sold in one or multiple different units but only one unit is the base one that we use for all internal calculations.</p>
+                                                <table style="width: 100%;mc-table-style: url('../../../resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <thead>
+                                                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Use case</th>
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Product Variant</th>
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">(Internal) Base Unit</th>
+                                                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Sales Unit(s)</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Appels can be bought per item or per kilogram</td>
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Apple</td>
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Item</td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Item, Kg</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">Cable</td>
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">Cable</td>
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">Kg</td>
+                                                            <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">Kg, Meter
+					</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1"><b>Global Measurement Units:</b>
+                                                    </li>
+                                                    <ul>
+                                                        <li value="1">There is a list of base units (like "cm", "meter", "kg", ...) in spy_product_measurement_unit</li>
+                                                        <li value="2">There is a global conversion mapping in code (e.g. "1 meter = 100 cm")</li>
+                                                    </ul>
+                                                    <li value="2"><b>Base Unit</b>
+                                                    </li>
+                                                    <ul>
+                                                        <li value="1">An Abstract Product can have a Base Unit (otherwise we assume that the product is sold as "Item")</li>
+                                                        <li value="2">The Base Unit is used for all internal calculations of prices and stocks (e.g Cables are usually calculated in kilogram).</li>
+                                                    </ul>
+                                                    <li value="3"><b>Sales Unit</b>
+                                                    </li>
+                                                    <ul>
+                                                        <li value="1">Concrete Products can have Sales Units which are only shown in the Shop. (e.g. Cables are usually sold in meters)</li>
+                                                        <li value="2">Sales Units are only used in Yves's presentation layer and immediately converted to the Base Unit. Either with the global or product-specific conversion rate.</li>
+                                                        <li value="3">Sales Unit attributes:</li>
+                                                        <ul>
+                                                            <li value="1">conversion - conversion rate to the Base Unit (e.g. "5 meter = 3 Kg")</li>
+                                                            <li value="2">precision - This number is used as a multiplier on all values (A value of 5 and a precision of 100 means a value of 5*100 = 500. This way we avoid floats).</li>
+                                                            <li value="3">is_default - Default Sales Unit</li>
+                                                            <li value="4">Sales Units can be toggled per store while the Base Unit has to the same on all stores</li>
+                                                        </ul>
+                                                        <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/measurement-units.png" data-mc-popup-alt="Measurement Units"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="752" data-mc-height="613" src="../../../resources/images/databaase_schema_guide/measurement-units_thumb_0_48.png" alt="Measurement Units" title="Click Me" tabindex="" /></a>
+                                                        </p>
+                                                    </ul>
+                                                </ul>
+                                                <h3><span style="color: #e35d44;">Product Quantity</span>
+                                                </h3>
+                                                <p>When products are added to the cart there can be restrictions like min/max quantity or an interval. This is especially useful in combination with Measurement Units (e.g. to disallow that a client buys 3g or 3 tons of apple).</p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/product-quantity.png" data-mc-popup-alt="Product Quantity"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="408" data-mc-height="453" src="../../../resources/images/databaase_schema_guide/product-quantity_thumb_0_48.png" alt="Product Quantity" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Splittable Products</span>
+                                                </h3>
+                                                <p>When a Quote is transferred into a Sales-Order, all Cart-Items are saved as individual Sales-Order-Items with Quantity of one. This way Spryker can assign a unique state to each Sales-Order-Item. For instance, when a customer buys the same T-Shirt five times, then the Sales-Order contains five Sales-Order-Items. Each item has its own state, so there is no problem to realize split cancelations or returns.</p>
+                                                <p>But this does not work for all kinds of products. For instance, when a customer buys five-meter cable then she cannot cancel or return a single meter. For this reason, we introduced a new parameter for products which determines if a product is splittable or not.</p>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1">Concrete Products have a boolean is_quantity_splittable</li>
+                                                    <li value="2">This boolean information and the quantity are also saved to the Sales-Order-Item</li>
+                                                </ul>
+                                                <p>Even when the product is marked as splittable Spryker may still save them into a single item. This is a performance optimization that can be applied to orders with very high quantities (e.g. "1000 nails").</p>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/splittable-products.png" data-mc-popup-alt="Splittable Products"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="453" data-mc-height="740" src="../../../resources/images/databaase_schema_guide/splittable-products_thumb_0_48.png" alt="Splittable Products" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <h3><span style="color: #e35d44;">Packaging Units</span>
+                                                </h3>
+                                                <p>A shop can sell the same product in different Packaging Units, for example, to sell apples, options could be to sell apples as "Item", a "Bag" of apples or a "Pallet" of apples. Each Packaging Unit is represented by one product variant:</p>
+                                                <table style="width: 100%;mc-table-style: url('../../../resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <thead>
+                                                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Abstract Product</th>
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Concrete Product / Variant</th>
+                                                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Packaging Unit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Apple</td>
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">"An apple"</td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Item</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Apple</td>
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">"Bag of apples"</td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">Bag</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">Apple</td>
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">"Pallet of apples"</td>
+                                                            <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">Pallet</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                                <p>These different product variants have their own SKU and price but they may represent the same physical product in the warehouse. For this reason, we may need to share the information about availability among these variants. We have a new optional relation between the abstract and the concrete product (variant) that marks the "Leading Product" which holds the availability. We also add a boolean <i>has_lead_product</i> to define how the calculation of the availability works.</p>
+                                                <p>A packaging unit contains multiple items of a product. For instance, a "Bag of apples" can contain 10 apples. This information is called the "amount" of a packaging unit. It is always related to the Leading Product.</p>
+                                                <p><b>Structure:</b>
+                                                </p>
+                                                <ul>
+                                                    <li value="1">A Packaging Unit is represented by a Concrete Product</li>
+                                                    <li value="2">The Packaging Unit has a type (like "Bag", "Pallet" or "Item) and a fixed or variable amount.</li>
+                                                    <ul>
+                                                        <li value="1"><i>spy_product_packaging_unit_amount::default_amount</i> - E.g. a bag contains 10 apples</li>
+                                                        <li value="2"><i>spy_product_packaging_unit_amount::is_variable</i> - If true then the customer can define a different amount on the product detail page (with min/max and interval constraints)</li>
+                                                    </ul>
+                                                    <li value="3"><b>Price</b>: In the case of a variable amount the price needs to be adjusted: (Price) * (Customer Input) / (Default Amount)</li>
+                                                    <li value="4"><b>Availability</b>: there are three ways to define the availability of a Packaging Unit Product:</li>
+                                                    <ol>
+                                                        <li value="1"> The Packaging Unit Product has its own availability. This is used when <i>spy_product_packaging_unit::has_lead_product=false</i></li>
+                                                        <li value="2">The Packaging Unit Product retrieves the availability from the Leading Product (E.g. When there are 250 apples available and one bag contains 10 apples, then the availability of bags is 25).</li>
+                                                        <ul>
+                                                            <li value="1">This is used when <i>spy_product_packaging_unit::has_lead_product=true</i> and the stock of Packaging Unit Product is infinite</li>
+                                                        </ul>
+                                                        <li value="3"> Both stocks need to be obeyed and the smaller one is applied. (E.g. When there are 250 bottles and 15 crates available and one crate contains 10 bottles, then the availability of crates is 15). This is used when <i>spy_product_packaging_unit::has_lead_product=true</i> and the stock of Packaging Unit Product is not infinite</li>
+                                                    </ol>
+                                                    <li value="5">The OMS Reservation mechanism also obeys the <i>has_lead_product</i> flag and therefore reserves either both Products or only one.</li>
+                                                </ul>
+                                                <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/databaase_schema_guide/packaging-units.png" data-mc-popup-alt="Packaging Units"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="821" data-mc-height="629" src="../../../resources/images/databaase_schema_guide/packaging-units_thumb_0_48.png" alt="Packaging Units" title="Click Me" tabindex="" /></a>
+                                                </p>
+                                                <p>As we are using the Concrete Product to realize Product Packaging Units we may need to use Product Groups to realize deeper hierarchy structures:</p>
+                                                <table style="width: 100%;mc-table-style: url('../../../resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                    <thead>
+                                                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                                                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">What</th>
+                                                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Hierarchical Level</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                                                                <p>Single Chocolate Bar </p>
+                                                                <p>Set of Single Chocolate Bars </p>
+                                                                <p>Pallet of Sets of Single Chocolate Bars</p>
+                                                            </td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Concrete Product (~ Packing Unit Product)</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                                            <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Chocolate Bar</td>
+                                                            <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">Abstract Product</td>
+                                                        </tr>
+                                                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                            <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">Chocolate</td>
+                                                            <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">Product Group</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
