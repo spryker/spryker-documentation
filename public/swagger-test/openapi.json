@@ -1,0 +1,4201 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Spryker API",
+    "license": {
+      "name": "MIT"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://glue.90.spryker-shop-b2c.com:10001"
+    }
+  ],
+  "paths": {
+    "/abstract-products/{sku}/abstract-product-availabilities": {
+      "get": {
+        "summary": "Retrieves abstract product availability by the given SKU",
+        "tags": [
+          "abstract-product-availabilities"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "SKU of the abstract product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns availability of an abstract product with the given SKU.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAbstractProductAvailabilityResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Product SKU is not specified or incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There is no availability data for a product with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abstract-products/{sku}/abstract-product-image-sets": {
+      "get": {
+        "summary": "Retrieves image sets for an abstract product",
+        "tags": [
+          "abstract-product-image-sets"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "SKU of the abstract product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns image sets for an abstract product with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestProductImageSetsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Product SKU is not specified or incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There are no image sets for a product with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abstract-products/{sku}/abstract-product-prices": {
+      "get": {
+        "summary": "Retrieves abstract product prices by the given SKU",
+        "tags": [
+          "abstract-product-prices"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "SKU of the abstract product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns the prices of an abstract product with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestProductPricesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Product SKU is not specified or incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There are no prices for a product with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abstract-products/{sku}": {
+      "get": {
+        "summary": "Gets abstract product data",
+        "tags": [
+          "abstract-products"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "SKU of the abstract product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Returns a information on the requested abstract product in JSON format",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAbstractProductsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Product SKU is not specified or incorrect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "There are no abstract products with the given SKU",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/abstract-products/{sku}/tax-sets": {
+      "get": {
+        "summary": "Retrieve tax set for abstract product",
+        "tags": [
+          "tax-sets"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "Sku of abstract product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestTaxSetsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/access-tokens": {
+      "post": {
+        "summary": "Create access tokens",
+        "tags": [
+          "access-tokens"
+        ],
+        "requestBody": {
+          "description": "Create access token for user.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestAccessTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAccessTokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed to authenticate user.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerId}/addresses/{addressId}": {
+      "patch": {
+        "summary": "Update customer address",
+        "tags": [
+          "addresses"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Id of customer's address",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update customer's address",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestAddressesResponse"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAddressesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "\"Customer not found.\" or \"Address UUID is missing.\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve one customer address.",
+        "tags": [
+          "addresses"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Id of customer's address",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAddressesResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Address not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete customer`s addresses",
+        "tags": [
+          "addresses"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "addressId",
+            "in": "path",
+            "required": true,
+            "description": "Id of customer's address",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request"
+          },
+          "404": {
+            "description": "Address was not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerId}/addresses": {
+      "get": {
+        "summary": "Retrieve list of all customer addresses",
+        "tags": [
+          "addresses"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAddressesListResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "\"Customer does not have addresses.\" or \"Address was not found.\"",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create customer addresses",
+        "tags": [
+          "addresses"
+        ],
+        "parameters": [
+          {
+            "name": "customerId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Add customer's address",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestAddressesRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAddressesResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/{cartId}": {
+      "get": {
+        "summary": "Retrieve a cart.",
+        "tags": [
+          "carts"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a cart stored in database",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart was not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete cart by id.",
+        "tags": [
+          "carts"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a cart stored in database",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request"
+          },
+          "500": {
+            "description": "Can not delete a cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts": {
+      "get": {
+        "summary": "Retrieve list of all customers carts",
+        "tags": [
+          "carts"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsListResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create cart.",
+        "tags": [
+          "carts"
+        ],
+        "requestBody": {
+          "description": "Create a cart",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCartsRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Can not create a cart",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog-search": {
+      "get": {
+        "summary": "Catalog search",
+        "tags": [
+          "catalog-search"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query compatible with elastic search"
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Currency code to process request with"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCatalogSearchResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/catalog-search-suggestions": {
+      "get": {
+        "summary": "Catalog search suggestions",
+        "tags": [
+          "catalog-search-suggestions"
+        ],
+        "parameters": [
+          {
+            "name": "q",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Search query compatible with elastic search"
+          },
+          {
+            "name": "currency",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Currency code to process request with"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCatalogSearchSuggestionsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid currency",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category-nodes/{nodeId}": {
+      "get": {
+        "summary": "Retrieve a category node.",
+        "tags": [
+          "category-nodes"
+        ],
+        "parameters": [
+          {
+            "name": "nodeId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a node to be loaded",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCategoryNodeResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/category-trees": {
+      "get": {
+        "summary": "Retrieve category tree for specified locale.",
+        "tags": [
+          "category-trees"
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCategoryTreesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concrete-products/{sku}/concrete-product-availabilities": {
+      "get": {
+        "summary": "Retrieve concrete product availability data.",
+        "tags": [
+          "concrete-product-availabilities"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "sku of a concrete product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestConcreteProductAvailabilityResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concrete-products/{sku}/concrete-product-image-sets": {
+      "get": {
+        "summary": "Retrieve poncrete Product`s Image sets.",
+        "tags": [
+          "concrete-product-image-sets"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "sku of an concrete product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestProductImageSetsResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concrete-products/{sku}/concrete-product-prices": {
+      "get": {
+        "summary": "Retrieve prices of concrte product.",
+        "tags": [
+          "concrete-product-prices"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "sku of an concrete product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestProductPricesResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/concrete-products/{sku}": {
+      "get": {
+        "summary": "Retrieve product concrete data.",
+        "tags": [
+          "concrete-products"
+        ],
+        "parameters": [
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "sku of a concrete product",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestConcreteProductsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Missing resource identifier",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Concrete product is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers/{customerReference}": {
+      "get": {
+        "summary": "Retrieve customer data.",
+        "tags": [
+          "customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerReference",
+            "in": "path",
+            "required": true,
+            "description": "Customer reference",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCustomersResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Customer reference is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "summary": "Update customer data",
+        "tags": [
+          "customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerReference",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update customer`s info.",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCustomersRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCustomersResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Failed to save customer.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Anonymize customers.",
+        "tags": [
+          "customers"
+        ],
+        "parameters": [
+          {
+            "name": "customerReference",
+            "in": "path",
+            "required": true,
+            "description": "Id of a customer",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request"
+          },
+          "400": {
+            "description": "Customer reference is missing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Unauthorized request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customers": {
+      "post": {
+        "summary": "Create customer.",
+        "tags": [
+          "customers"
+        ],
+        "requestBody": {
+          "description": "Register new customer",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCustomersRegisterRequestData"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCustomersResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/{cartId}/items": {
+      "post": {
+        "summary": "Adds an item to the cart.",
+        "tags": [
+          "items"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a cart",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "The request represents a cart item",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPostCartItemsRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart or item is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Errors appeared during item creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/carts/{cartId}/items/{itemId}": {
+      "patch": {
+        "summary": "Update cart item quantity.",
+        "tags": [
+          "items"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a cart",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "description": "Group key of a cart item",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Add an item in a cart",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPostCartItemsRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart or item is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Remove item from the cart.",
+        "tags": [
+          "items"
+        ],
+        "parameters": [
+          {
+            "name": "cartId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a cart",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "itemId",
+            "in": "path",
+            "required": true,
+            "description": "Group key of a cart item",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestCartsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Cart or item is not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/refresh-tokens": {
+      "post": {
+        "summary": "Refresh access token.",
+        "tags": [
+          "refresh_tokens"
+        ],
+        "requestBody": {
+          "description": "Refresh customer's auth token",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestRefreshTokenRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestAccessTokenResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Failed to refresh token.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/stores": {
+      "get": {
+        "summary": "Retrieve current store data.",
+        "tags": [
+          "stores"
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestStoresResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wishlists/{wishlistId}/wishlist-items": {
+      "post": {
+        "summary": "Add item to wishlist.",
+        "tags": [
+          "wishlist-items"
+        ],
+        "parameters": [
+          {
+            "name": "wishlistId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a wishlist",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Add item to wishlist",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestWishlistItemRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestWishlistItemResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Can`t add an item.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Can`t find wishlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wishlists/{wishlistId}/wishlist-items/{sku}": {
+      "delete": {
+        "summary": "Remove item from wishlist.",
+        "tags": [
+          "wishlist-items"
+        ],
+        "parameters": [
+          {
+            "name": "wishlistId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a wishlist",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          },
+          {
+            "name": "sku",
+            "in": "path",
+            "required": true,
+            "description": "SKU of item, deleted from wishlist",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request"
+          },
+          "404": {
+            "description": "Can`t find wishlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Can`t find wishlist item",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wishlists/{wishlistId}": {
+      "patch": {
+        "summary": "Update wishlist.",
+        "tags": [
+          "wishlists"
+        ],
+        "parameters": [
+          {
+            "name": "wishlistId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a wishlist",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Update customer`s wishlist",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestWishlistsPatchRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestWishlistsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A wishlist with the same name already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Can`t find wishlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Retrieve wishlist data.",
+        "tags": [
+          "wishlists"
+        ],
+        "parameters": [
+          {
+            "name": "wishlistId",
+            "in": "path",
+            "required": true,
+            "description": "Id of a wishlist",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestWishlistsResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Can`t find wishlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete customer`s wishlist.",
+        "tags": [
+          "wishlists"
+        ],
+        "parameters": [
+          {
+            "name": "wishlistId",
+            "in": "path",
+            "description": "ID of wishlist to delete",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Expected response to a valid request"
+          },
+          "404": {
+            "description": "Can`t find wishlist.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/wishlists": {
+      "get": {
+        "summary": "Retrieve all customer`s wishlists.",
+        "tags": [
+          "wishlists"
+        ],
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestWishlistsListResponse"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create wishlist.",
+        "tags": [
+          "wishlists"
+        ],
+        "requestBody": {
+          "description": "Add customer`s wishlist",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestWishlistsRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestWishlistsResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "A wishlist with the same name already exists.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer-password-forgot": {
+      "post": {
+        "summary": "Password forgot request.",
+        "tags": [
+          "password-forgot"
+        ],
+        "requestBody": {
+          "description": "Create restore password request",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPasswordForgotRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request"
+          },
+          "404": {
+            "description": "Email not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer-password-restore/{restorePasswordKey}": {
+      "post": {
+        "summary": "Password restore request.",
+        "tags": [
+          "password-restore"
+        ],
+        "parameters": [
+          {
+            "name": "restorePasswordKey",
+            "in": "path",
+            "required": true,
+            "description": "Restore password key",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Restore password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestPasswordRestoreRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Expected response to a valid request"
+          },
+          "400": {
+            "description": "Passwords don`t match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Invalid Restore password key",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/customer-password": {
+      "patch": {
+        "summary": "Update customer password.",
+        "tags": [
+          "customer-password"
+        ],
+        "requestBody": {
+          "description": "Change customer`s password",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RestCustomerPasswordRequest"
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Expected response to a valid request"
+          },
+          "400": {
+            "description": "Passwords don`t match",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Customer not found.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Invalid password.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          },
+          "default": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RestErrorMessage"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "AbstractProductsRestAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object",
+            "items": {}
+          },
+          "superAttributesDefinition": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "attributeMap": {
+            "type": "object",
+            "items": {}
+          },
+          "metaTitle": {
+            "type": "string"
+          },
+          "metaKeywords": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "ConcreteProductsRestAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "attributes": {
+            "type": "object"
+          },
+          "superAttributesDefinition": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "metaTitle": {
+            "type": "string"
+          },
+          "metaKeywords": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          }
+        }
+      },
+      "RestAccessTokensResponseAttributes": {
+        "properties": {
+          "tokenType": {
+            "type": "string"
+          },
+          "expiresIn": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RestAccessTokensRequestAttributes": {
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCatalogSearchAttributes": {
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "sort": {
+            "$ref": "#/components/schemas/RestCatalogSearchSortAttributes"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/RestCatalogSearchPaginationAttributes"
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestCatalogSearchProductsAttributes"
+            }
+          },
+          "valueFacets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestFacetSearchResultAttributes"
+            }
+          },
+          "rangeFacets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestRangeSearchResultAttributes"
+            }
+          },
+          "spellingSuggestion": {
+            "type": "string"
+          }
+        }
+      },
+      "RestFacetSearchResultAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "doc_count": {
+            "type": "integer"
+          },
+          "values": {
+            "type": "array"
+          },
+          "active_value": {
+            "type": "string"
+          }
+        }
+      },
+      "RestRangeSearchResultAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "min": {
+            "type": "number"
+          },
+          "max": {
+            "type": "number"
+          },
+          "active_min": {
+            "type": "number"
+          },
+          "active_max": {
+            "type": "number"
+          },
+          "doc_count": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestCatalogSearchPaginationAttributes": {
+        "properties": {
+          "numFound": {
+            "type": "integer"
+          },
+          "currentPage": {
+            "type": "integer"
+          },
+          "maxPage": {
+            "type": "integer"
+          },
+          "currentItemsPerPage": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestCatalogSearchProductImageAttributes": {
+        "properties": {
+          "externalUrlSmall": {
+            "type": "string"
+          },
+          "externalUrlLarge": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCatalogSearchProductsAttributes": {
+        "properties": {
+          "images": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestCatalogSearchProductImageAttributes"
+            }
+          },
+          "price": {
+            "type": "integer"
+          },
+          "abstractName": {
+            "type": "string"
+          },
+          "prices": {
+            "$ref": "#/components/schemas/RestProductPrice"
+          },
+          "abstractSku": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCatalogSearchSortAttributes": {
+        "properties": {
+          "sortParamNames": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "currentSortParam": {
+            "type": "string"
+          },
+          "currentSortOrder": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCatalogSearchSuggestionsAttributes": {
+        "properties": {
+          "currency": {
+            "type": "string"
+          },
+          "completion": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "products": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "abstract_sku": {
+                  "type": "string"
+                },
+                "abstract_name": {
+                  "type": "string"
+                },
+                "price": {
+                  "type": "integer"
+                },
+                "images": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "external_url_small": {
+                        "type": "string"
+                      },
+                      "external_url_large": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "categories": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "cmsPages": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RestErrorMessage": {
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestErrorMessageAttibutes"
+            }
+          }
+        }
+      },
+      "RestErrorMessageAttibutes": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          }
+        }
+      },
+      "RestRefreshTokensAttributes": {
+        "properties": {
+          "expiresIn": {
+            "type": "string"
+          },
+          "accessToken": {
+            "type": "string"
+          },
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RestWishlistItemsAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          }
+        }
+      },
+      "RestWishlistsAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "numberOfItems": {
+            "type": "integer"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          }
+        }
+      },
+      "RestAddressAttributes": {
+        "properties": {
+          "salutation": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "address1": {
+            "type": "string"
+          },
+          "address2": {
+            "type": "string"
+          },
+          "address3": {
+            "type": "string"
+          },
+          "zipCode": {
+            "type": "string"
+          },
+          "city": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "company": {
+            "type": "string"
+          },
+          "phone": {
+            "type": "string"
+          },
+          "isDefaultShipping": {
+            "type": "boolean"
+          },
+          "isDefaultBilling": {
+            "type": "boolean"
+          },
+          "iso2Code": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCustomersAttributes": {
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "gender": {
+            "type": "string"
+          },
+          "dateOfBirth": {
+            "type": "string"
+          },
+          "salutation": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string"
+          },
+          "updatedAt": {
+            "type": "string"
+          },
+          "registered": {
+            "type": "string"
+          }
+        }
+      },
+      "RestConcreteProductAvailabilityAttributes": {
+        "properties": {
+          "availability": {
+            "type": "boolean"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "isNeverOutOfStock": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestAbstractProductAvailabilityAttributes": {
+        "properties": {
+          "availability": {
+            "type": "boolean"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestProductImageSetsAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "images": {
+            "$ref": "#/components/schemas/RestImagesAttributes"
+          }
+        }
+      },
+      "RestImagesAttributes": {
+        "properties": {
+          "externalUrlLarge": {
+            "type": "string"
+          },
+          "externalUrlSmall": {
+            "type": "string"
+          }
+        }
+      },
+      "RestProductPricesAttributes": {
+        "properties": {
+          "prices": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestProductPrice"
+            }
+          }
+        }
+      },
+      "RestProductPrice": {
+        "properties": {
+          "priceTypeName": {
+            "type": "string"
+          },
+          "grossAmount": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestCartsRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCartsRequestData"
+          }
+        }
+      },
+      "RestCartsRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCartsRequestAttributes"
+          }
+        }
+      },
+      "RestCartsAttributes": {
+        "properties": {
+          "priceMode": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "store": {
+            "type": "string"
+          },
+          "discounts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestCartsDiscounts"
+            }
+          },
+          "totals": {
+            "$ref": "#/components/schemas/RestCartsTotals"
+          }
+        }
+      },
+      "RestCartsRequestAttributes": {
+        "properties": {
+          "priceMode": {
+            "type": "string"
+          },
+          "currency": {
+            "type": "string"
+          },
+          "store": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCartsDiscounts": {
+        "properties": {
+          "displayName": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          },
+          "code": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCartsTotals": {
+        "properties": {
+          "expenseTotal": {
+            "type": "integer"
+          },
+          "discountTotal": {
+            "type": "integer"
+          },
+          "taxTotal": {
+            "type": "integer"
+          },
+          "subtotal": {
+            "type": "integer"
+          },
+          "grandTotal": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestCartItemsAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          },
+          "groupKey": {
+            "type": "string"
+          },
+          "amount": {
+            "type": "integer"
+          },
+          "calculations": {
+            "$ref": "#/components/schemas/RestCartItemCalculations"
+          }
+        }
+      },
+      "RestCartItemCalculations": {
+        "properties": {
+          "unitPrice": {
+            "type": "integer"
+          },
+          "sumPrice": {
+            "type": "integer"
+          },
+          "taxRate": {
+            "type": "integer"
+          },
+          "unitNetPrice": {
+            "type": "integer"
+          },
+          "sumNetPrice": {
+            "type": "integer"
+          },
+          "unitGrossPrice": {
+            "type": "integer"
+          },
+          "sumGrossPrice": {
+            "type": "integer"
+          },
+          "unitTaxAmountFullAggregation": {
+            "type": "integer"
+          },
+          "sumTaxAmountFullAggregation": {
+            "type": "integer"
+          },
+          "sumSubtotalAggregation": {
+            "type": "integer"
+          },
+          "unitSubtotalAggregation": {
+            "type": "integer"
+          },
+          "unitProductOptionPriceAggregation": {
+            "type": "integer"
+          },
+          "sumProductOptionPriceAggregation": {
+            "type": "integer"
+          },
+          "unitDiscountAmountAggregation": {
+            "type": "integer"
+          },
+          "sumDiscountAmountAggregation": {
+            "type": "integer"
+          },
+          "unitDiscountAmountFullAggregation": {
+            "type": "integer"
+          },
+          "sumDiscountAmountFullAggregation": {
+            "type": "integer"
+          },
+          "unitPriceToPayAggregation": {
+            "type": "integer"
+          },
+          "sumPriceToPayAggregation": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestCategoryNodesAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "metaTitle": {
+            "type": "string"
+          },
+          "metaKeywords": {
+            "type": "string"
+          },
+          "metaDescription": {
+            "type": "string"
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "parents": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "RestCategoryTreesAttributes": {
+        "properties": {
+          "nodeId": {
+            "type": "integer"
+          },
+          "order": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string"
+          },
+          "children": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      },
+      "StoresRestAttributes": {
+        "properties": {
+          "timeZone": {
+            "type": "string"
+          },
+          "defaultCurrency": {
+            "type": "string"
+          },
+          "currencies": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StoreCurrencyRestAttributes"
+            }
+          },
+          "locales": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StoreLocaleRestAttributes"
+            }
+          },
+          "countries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/StoreCountryRestAttributes"
+            }
+          }
+        }
+      },
+      "StoreCurrencyRestAttributes": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StoreLocaleRestAttributes": {
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StoreRegionRestAttributes": {
+        "properties": {
+          "iso2Code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "StoreCountryRestAttributes": {
+        "properties": {
+          "iso2Code": {
+            "type": "string"
+          },
+          "iso3Code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "postalCodeMandatory": {
+            "type": "boolean"
+          },
+          "postalCodeRegex": {
+            "type": "string"
+          },
+          "regions": {
+            "$ref": "#/components/schemas/StoreRegionRestAttributes"
+          }
+        }
+      },
+      "RestTaxSetAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "taxRates": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestTaxRate"
+            }
+          }
+        }
+      },
+      "RestTaxRate": {
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "rate": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          }
+        }
+      },
+      "RestWishlistsRequestAttributes": {
+        "properties": {
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "RestWishlistItemAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCustomersInfoAttributes": {
+        "properties": {
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "salutation": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCustomersRegisterAttributes": {
+        "properties": {
+          "salutation": {
+            "type": "string"
+          },
+          "firstName": {
+            "type": "string"
+          },
+          "lastName": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          },
+          "passwordConfirmation": {
+            "type": "string"
+          },
+          "acceptedTerms": {
+            "type": "boolean"
+          }
+        }
+      },
+      "RestCustomerPasswordAttributes": {
+        "properties": {
+          "password": {
+            "type": "string"
+          },
+          "newPassword": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "RestRefreshTokenRequestAttributes": {
+        "properties": {
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "RestPasswordForgotAttributes": {
+        "properties": {
+          "email": {
+            "type": "string"
+          }
+        }
+      },
+      "RestPasswordRestoreAttributes": {
+        "properties": {
+          "newPassword": {
+            "type": "string"
+          },
+          "confirmPassword": {
+            "type": "string"
+          }
+        }
+      },
+      "RestAbstractProductAvailabilityResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAbstractProductAvailabilityResponseData"
+          }
+        }
+      },
+      "RestAbstractProductAvailabilityResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestAbstractProductAvailabilityAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestConcreteProductAvailabilityResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestConcreteProductAvailabilityResponseData"
+          }
+        }
+      },
+      "RestConcreteProductAvailabilityResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestConcreteProductAvailabilityAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestProductImageSetsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestProductImageSetsResponseData"
+          }
+        }
+      },
+      "RestProductImageSetsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestProductImageSetsAttributesList"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestProductImageSetsAttributesList": {
+        "properties": {
+          "imageSets": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestProductImageSetsAttributes"
+            }
+          }
+        }
+      },
+      "RestProductPricesResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestProductPricesResponseData"
+          }
+        }
+      },
+      "RestProductPricesResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestProductPricesAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestAbstractProductsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAbstractProductsResponseData"
+          }
+        }
+      },
+      "RestAbstractProductsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/AbstractProductsRestAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestConcreteProductsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestConcreteProductsResponseData"
+          }
+        }
+      },
+      "RestConcreteProductsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/ConcreteProductsRestAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestAccessTokenRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAccessTokenRequestData"
+          }
+        }
+      },
+      "RestAccessTokenRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestAccessTokensRequestAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestAccessTokenResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAccessTokenResponseData"
+          }
+        }
+      },
+      "RestAccessTokenResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestAccessTokensResponseAttributes"
+          }
+        }
+      },
+      "RestAddressesResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAddressesResponseData"
+          }
+        }
+      },
+      "RestAddressesListResponse": {
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestAddressesResponseData"
+            }
+          }
+        }
+      },
+      "RestAddressesResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestAddressAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestAddressesRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestAddressesRequestData"
+          }
+        }
+      },
+      "RestAddressesRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestAddressAttributes"
+          }
+        }
+      },
+      "RestCartsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCartsResponseData"
+          }
+        }
+      },
+      "RestCartsListResponse": {
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestCartsResponseData"
+            }
+          }
+        }
+      },
+      "RestCartsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCartsAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/RestCartsRelationships"
+          }
+        }
+      },
+      "RestCartsRelationships": {
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestCartsItemsRelationshipData"
+            }
+          }
+        }
+      },
+      "RestCartsItemsRelationshipData": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "RestCatalogSearchResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCatalogSearchResponseData"
+          }
+        }
+      },
+      "RestCatalogSearchResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCatalogSearchAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCatalogSearchSuggestionsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCatalogSearchuggestionsResponseData"
+          }
+        }
+      },
+      "RestCatalogSearchuggestionsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCatalogSearchSuggestionsAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCategoryNodeResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCategoryNodeResponseData"
+          }
+        }
+      },
+      "RestCategoryNodeResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCategoryNodesAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCategoryTreesResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCategoryTreesResponseData"
+          }
+        }
+      },
+      "RestCategoryTreesResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCategoryTreesAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCustomersResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCustomersResponseData"
+          }
+        }
+      },
+      "RestCustomersResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCustomersAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCustomersRegisterResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCustomersRegisterResponseData"
+          }
+        }
+      },
+      "RestCustomersRegisterResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCustomersRegisterAttributes"
+          }
+        }
+      },
+      "RestCustomersRegisterRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCustomersRegisterAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestCustomersRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCustomersRequestData"
+          }
+        }
+      },
+      "RestCustomersRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCustomersAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestPostCartItemsRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestPostCartItemsRequestData"
+          }
+        }
+      },
+      "RestPostCartItemsRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestPostCartItemsAttributes"
+          }
+        }
+      },
+      "RestPostCartItemsAttributes": {
+        "properties": {
+          "sku": {
+            "type": "string"
+          },
+          "quantity": {
+            "type": "integer"
+          }
+        }
+      },
+      "RestRefreshTokenRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestRefreshTokenRequestData"
+          }
+        }
+      },
+      "RestRefreshTokenRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestRefreshTokenRequestAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestStoresResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestStoresResponseData"
+          }
+        }
+      },
+      "RestStoresResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/StoresRestAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestTaxSetsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestTaxSetsResponseData"
+          }
+        }
+      },
+      "RestTaxSetsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestTaxSetAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestWishlistItemResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestWishlistItemResponseData"
+          }
+        }
+      },
+      "RestWishlistItemResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestWishlistItemAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          }
+        }
+      },
+      "RestWishlistRelationships": {
+        "properties": {
+          "wishlist-items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestWishlistItemsRelationshipData"
+            }
+          }
+        }
+      },
+      "RestWishlistItemsRelationshipData": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "RestWishlistItemRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestWishlistItemRequestData"
+          }
+        }
+      },
+      "RestWishlistItemRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestWishlistItemAttributes"
+          }
+        }
+      },
+      "RestWishlistsResponse": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestWishlistsResponseData"
+          }
+        }
+      },
+      "RestWishlistsListResponse": {
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RestWishlistsResponseData"
+            }
+          }
+        }
+      },
+      "RestWishlistsResponseData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestWishlistsAttributes"
+          },
+          "links": {
+            "$ref": "#/components/schemas/RestLinks"
+          },
+          "relationships": {
+            "$ref": "#/components/schemas/RestWishlistRelationships"
+          }
+        }
+      },
+      "RestWishlistsRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestWishlistsRequestData"
+          }
+        }
+      },
+      "RestWishlistsRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestWishlistsRequestAttributes"
+          }
+        }
+      },
+      "RestWishlistsPatchRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestWishlistsPatchRequestData"
+          }
+        }
+      },
+      "RestWishlistsPatchRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestWishlistsRequestAttributes"
+          }
+        }
+      },
+      "RestPasswordForgotRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestPasswordForgotRequestData"
+          }
+        }
+      },
+      "RestPasswordForgotRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestPasswordForgotAttributes"
+          }
+        }
+      },
+      "RestPasswordRestoreRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestPasswordRestoreRequestData"
+          }
+        }
+      },
+      "RestPasswordRestoreRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestPasswordRestoreAttributes"
+          }
+        }
+      },
+      "RestCustomerPasswordRequest": {
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/RestCustomerPasswordRequestData"
+          }
+        }
+      },
+      "RestCustomerPasswordRequestData": {
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "attributes": {
+            "$ref": "#/components/schemas/RestCustomerPasswordAttributes"
+          }
+        }
+      },
+      "RestLinks": {
+        "properties": {
+          "self": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}
