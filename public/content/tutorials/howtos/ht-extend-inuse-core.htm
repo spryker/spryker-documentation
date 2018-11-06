@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>HowTo - Extend a Core (Undefined variable: General.Bundle/Module) That is Used by Another</title>
+        <meta name="author" content="" /><title>HowTo - Extend a Core Module That is Used by Another</title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="vtFwTliXRkWllIjxMWMIpQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="vtFwTliXRkWllIjxMWMIpQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="1UyugIgfxk2zhJU5K2Te-Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="1UyugIgfxk2zhJU5K2Te-Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -195,16 +196,16 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer">
-                                                    <h1>HowTo - Extend a Core <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span> That is Used by Another</h1>
-                                                    <p class="info">This topic describes how to extend a core <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> that is used by another core <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.
+                                                    <h1>HowTo - Extend a Core Module That is Used by Another</h1>
+                                                    <p class="info">This topic describes how to extend a core module that is used by another core module.
 
 </p>
-                                                    <p>Extra consideration must be taken when extending core <span class="Generalbundles/modules">(Undefined variable: General.bundles/modules)</span> that are already in use by another <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. In the following example we will extend the <var>Cart </var> -&gt; <var>Calculation </var><span class="Generalbundles/modules">(Undefined variable: General.bundles/modules)</span>.
+                                                    <p>Extra consideration must be taken when extending core modules that are already in use by another module. In the following example we will extend the <var>Cart </var> -&gt; <var>Calculation </var>modules.
 
 </p>
                                                     <h2>Step 1:&#160;Modify the Interface</h2>
-                                                    <p>Add a <var>foo()</var> method to <var>CalculationFacade </var>in the project level and call it from the cart-<span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. </p>
-                                                    <p>The <var>CalculationFacade </var>needs to implement the <var>CartToCalculationInterface </var>because this interface is used in the Cart-<span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. </p>
+                                                    <p>Add a <var>foo()</var> method to <var>CalculationFacade </var>in the project level and call it from the cart-module. </p>
+                                                    <p>The <var>CalculationFacade </var>needs to implement the <var>CartToCalculationInterface </var>because this interface is used in the Cart-module. </p>
                                                     <p>You can also add your own interface as follows:</p><pre><code class="language-PHP line-numbers">
 &lt;?php
 namespace Pyz\Zed\Calculation\Business;
@@ -237,7 +238,7 @@ interface CartToCalculationInterface extends SprykerCartToCalculationInterface
                                                     <h2>
 
 Step 3: Remove the Bridge</h2>
-                                                    <p>In the Cart <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>'s dependency provider, remove the bridge to directly use the facade.</p><pre><code class="language-PHP line-numbers">class CartDependencyProvider extends SprykerCartDependencyProvider
+                                                    <p>In the Cart module's dependency provider, remove the bridge to directly use the facade.</p><pre><code class="language-PHP line-numbers">class CartDependencyProvider extends SprykerCartDependencyProvider
 {
 
     public function provideBusinessLayerDependencies(Container $container)
@@ -252,7 +253,7 @@ Step 3: Remove the Bridge</h2>
 Bridges are for core-level only. If you use them at the project-level, you are doing it wrong!
 </p>
                                                     <p class="info">
-The described case is only practical when you are “between” two core-bundles and you want to make it right. For you own modules, use the general <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>-interface (e.g. <var>My<span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span>Interface</var>).</p>
+The described case is only practical when you are “between” two core-bundles and you want to make it right. For you own modules, use the general module-interface (e.g. <var>MyModuleInterface</var>).</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -270,9 +271,22 @@ The described case is only practical when you are “between” two core-bundles
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="lBNhhnUGwEaBRecowT_vUg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lBNhhnUGwEaBRecowT_vUg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="G3lSKzevmEGpr5oT38t4gQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="G3lSKzevmEGpr5oT38t4gQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -196,18 +197,20 @@
                                                 </div>
                                                 <div class="js-anchorer">
                                                     <h1>Tutorial - Extending Spryker</h1>
-                                                    <p>To extend the Spryker-Core functionality and to use the Spryker Engine to develop a project, it’s important to understand the folder structure used in Spryker.</p>
-                                                    <p>The project consists of two parts : Spryker-Core and project implementation. They both follow the same structure and the project implementation goes on top of the Spryker-Core functionalities.</p>
-                                                    <p>The project implementation goes on top of the Spryker Core implementation. The picture below shows how a request is being handled :</p>
-                                                    <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/request_handling.png" data-mc-popup-alt="Request handling"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="241" data-mc-height="356" src="../../resources/images/request_handling_thumb_0_48.png" alt="Request handling" title="Click me" tabindex="" /></a>
+                                                    <p>To extend the Spryker-Core functionality and to use the Spryker Engine to develop a project, it’s important to understand the folder structure used in Spryker Commerce OS.</p>
+                                                    <p>The project consists of two parts : <b>Spryker Core</b> and <b>Project</b> implementation. They both follow the same structure and the project implementation goes on top of the Spryker Core functionalities.</p>
+                                                    <p>The picture below shows how a request is being handled :</p>
+                                                    <p>
+                                                        <img src="../../resources/images/request_handling.png" alt="Request handling" title="Click me" />
                                                     </p>
                                                     <h2>Project Structure Overview</h2>
-                                                    <p>The code is divided in two parts:</p>
+                                                    <p>The code is divided into three parts:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1"><var>src/ </var>folder contains the code of the current project</li>
+                                                        <li class="bullet_list" value="1"><var>src/</var> folder contains the code of the current project</li>
                                                         <li class="bullet_list" value="2"><var>vendor/spryker/</var> folder contains the Spryker OS</li>
+                                                        <li class="bullet_list" value="3"><var>vendor/spryker-eco/</var> folder contains the Spryker Ecosystem modules, which are distributed separately from core</li>
                                                     </ul>
-                                                    <p>Both project and Spryker-Core parts follow a very similar directory structure and it reflects the namespaces for the contained classes :</p>
+                                                    <p>All projects, SprykerCore and SprykerEco parts follow a very similar directory structure:</p>
                                                     <p>E.g. : if <var>CustomerFacade</var> is extended on the project side, it will have the following locations and namespaces :</p>
                                                     <p>in Spryker Core :</p>
                                                     <ul>
@@ -215,43 +218,61 @@
                                                         <li class="bullet_list" value="2">namespace : <var>SprykerFeature/Zed/Customer/Business</var></li>
                                                     </ul>
                                                     <p>on the Project layer :</p>
-                                                    <p>location : <var>src/Pyz/Zed/Customer/Business</var></p>
-                                                    <p>namespace : <var>Pyz/Zed/Customer/Business</var></p>
-                                                    <p>As it can be observed from the example above, the location of the file reflects the namespace its under.</p>
+                                                    <ul>
+                                                        <li class="bullet_list" value="1">location : <var>src/Pyz/Zed/Customer/Business</var></li>
+                                                        <li class="bullet_list" value="2">namespace : <var>Pyz/Zed/Customer/Business</var></li>
+                                                    </ul>
+                                                    <p>As it can be observed from the example above, the location of the file reflects the namespace its located in.</p>
+                                                    <p><b>SprykerEco modules can be treated as Spryker Core in the context of replacing.</b>
+                                                    </p>
                                                     <h2>Folder organization</h2>
                                                     <p>Depending on where and how the code is intended to be used, it can be placed in one of the following folders :</p>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Client - the code placed in here handles communication between Yves and Zed</li>
                                                         <li class="bullet_list" value="2">Shared - the code placed in here is used both by Yves and Zed ( to avoid code duplication)</li>
                                                         <li class="bullet_list" value="3">Zed - the code in here is meant only for the backend application</li>
-                                                        <li class="bullet_list" value="4">Yves - frontent code</li>
+                                                        <li class="bullet_list" value="4">Yves - the frontend code</li>
                                                     </ul>
-                                                    <p>Each <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> contains one folder for each layer of the application :</p>
+                                                    <p>Each module contains one folder for every layer of the application :</p>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Business</li>
                                                         <li class="bullet_list" value="2">Communication</li>
                                                         <li class="bullet_list" value="3">Persistence</li>
                                                         <li class="bullet_list" value="4">Presentation</li>
                                                     </ul>
-                                                    <h2>Extending Spryker Core Functionality</h2>
-                                                    <p>To extend the functionality of a class from Spryker Core, a new class with the same name must be added in the corresponding location on the project side.</p>
+                                                    <h2>Extending SprykerCore Functionality</h2>
+                                                    <p>To extend the functionality of a class from SprykerCore, a new class with the same name must be added in the corresponding location on the project side.</p>
+                                                    <p>Replacement rules, described in this article work for the next classes in Spryker module:</p>
+                                                    <ul>
+                                                        <li class="bullet_list" value="1"><var>Facade</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="2"><var>BusinessFactory</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="3"><var>Controller</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="4"><var>QueryContainer</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="5"><var>DependencyProvider</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="6"><var>Config</var>
+                                                        </li>
+                                                    </ul>
                                                     <p>The example below illustrates how CategoryFacade can be extended on the project side:</p>
                                                     <p>Spryker Core:</p><pre><code class="language-PHP line-numbers">&lt;?php
-namespace Spryker\Zed\Category\Business;
-
-use Spryker\Zed\Kernel\Business\AbstractFacade;
-
-class CategoryFacade extends AbstractFacade
-{
-}</code></pre>
+				namespace Spryker\Zed\Category\Business;
+				use Spryker\Zed\Kernel\Business\AbstractFacade;
+				class CategoryFacade extends AbstractFacade
+				{
+		}</code></pre>
                                                     <p>Project:</p><pre><code class="language-PHP line-numbers">&lt;?php
-namespace Pyz\Zed\Category\Business;
-
-use Spryker\Zed\Category\Business\CategoryFacade as SprykerCategoryFacade;
-
-class CategoryFacade extends SprykerCategoryFacade
-{
-}</code></pre>
+				namespace Pyz\Zed\Category\Business;
+				use Spryker\Zed\Category\Business\CategoryFacade as SprykerCategoryFacade;
+				class CategoryFacade extends SprykerCategoryFacade
+				{
+		}</code></pre>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: November, 5th</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -269,9 +290,22 @@ class CategoryFacade extends SprykerCategoryFacade
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Features|Cart">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -23,6 +23,7 @@
         <link href="../../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -156,21 +157,11 @@
                                 <div class="row collapse">
                                     <div class="top-bar">
                                         <div class="breadcrumbs-block">
-                                            <div class="nocontent">
-                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="w3ULEbysPEy31f0Gkt3BGg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="w3ULEbysPEy31f0Gkt3BGg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
-                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
-                                                        </ul>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div>
@@ -461,7 +452,7 @@ It is set by <var>GrandTotalCalculatorPlugin</var> calculator plugin.</p>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">canceledAmount (int)</td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Canceled amount for this item (order only), set by <a href="../../order_management/refund/refund.htm">refund</a>, when refund occurs.</td>
+                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Canceled amount for this item (order only), set by <a href="../../payment/refund/refund.htm">refund</a>, when refund occurs.</td>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">unitTaxAmountFullAggregation (int)</td>
@@ -828,7 +819,7 @@ sumTaxAmount (int)	</p>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">canceledAmount (int)</td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Total canceled amount for this item (order only), set by <a href="../../order_management/refund/refund.htm">refund</a>.</td>
+                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Total canceled amount for this item (order only), set by <a href="../../payment/refund/refund.htm">refund</a>.</td>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">unitTaxAmount (int)</td>
@@ -866,9 +857,22 @@ sumTaxAmount (int)	</p>
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../../resources/scripts/prism.js">
                                 </script>

@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -165,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="YPdLBkM83ESwcHbQLcuKMA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YPdLBkM83ESwcHbQLcuKMA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="pjVjbqu6KU23DfIgUEe8Cw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="pjVjbqu6KU23DfIgUEe8Cw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -205,7 +206,7 @@
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add an <var>IndexController::indexAction()</var> to <var>src/Pyz/Zed/Application/Communication/Controller</var> that outputs a string containing a message about the project level.</li>
                                                     </ul>
-                                                    <p>Check <a href="http://zed.de.demoshop.local/" target="_blank">http://zed.de.demoshop.local</a>. That’s it!</p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">Check <a href="http://zed.de.demoshop.local/" target="_blank">http://zed.de.demoshop.local</a>. That’s it!</p>
                                                     <h4>Store Level</h4>
                                                     <p>Now, let’s override the same module for a store level.</p>
                                                     <ol>
@@ -216,7 +217,7 @@
                                                         <li value="5">Change the store in Nginx config for zed. To do so, open the config file: <var>/etc/nginx/sites-available/DE_development_zed</var> and change the <var>$application_store</var> to <var>XY</var>.</li>
                                                         <li value="6">Restart Nginx by running <var>sudo /etc/init.d/nginx restart</var>.</li>
                                                     </ol>
-                                                    <p>Configuring the store <var>XY</var> is done! Check again <a href="http://zed.de.demoshop.local/" target="_blank">http://zed.de.demoshop.local</a> to see the new message for the <var>XY</var> store.</p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">Configuring the store <var>XY</var> is done! Check again <a href="http://zed.de.demoshop.local/" target="_blank">http://zed.de.demoshop.local</a> to see the new message for the <var>XY</var> store.</p>
                                                     <h2>References</h2>
                                                     <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
                                                         <col class="TableStyle-PatternedRows-Column-Regular" />
@@ -258,9 +259,22 @@
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

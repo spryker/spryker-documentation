@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="e5KakIzFvki1IlkHWWYxOg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="e5KakIzFvki1IlkHWWYxOg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="kB9GFU-u2ky_K6Fs8MW1dQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="kB9GFU-u2ky_K6Fs8MW1dQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -300,7 +301,7 @@ protected function createProductImageImporter()
                                                     <p>In the <var>DataImportBusinessFactory::getImporter()</var> we now add the new DataImporter with <var>$dataImporterCollection-&gt;addDataImporter($this-&gt;createProductImageImporter())</var>.</p>
                                                     <h3>ConsoleDependencyProvider</h3>
                                                     <p>To be able to execute the command from the console we need to register a new console command in the <var>ConsoleDependencyProvider</var></p>
-                                                    <p>The DataImport <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> brings a generic console command which can be used several times to add a console command for each data import type. You only need to register it as follows:</p>
+                                                    <p>The DataImport module brings a generic console command which can be used several times to add a console command for each data import type. You only need to register it as follows:</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 /**
  * @param \Spryker\Zed\Kernel\Container $container
@@ -321,7 +322,7 @@ public function getConsoleCommands(Container $container)
                                                     <p>You will now have a new console command <var>data:import:product-image</var> available. When you run <var>vendor/bin/console</var> you will see a new entry "data:import:product-image  This command executes your "product-image" importer." under data.</p>
                                                     <h2>Execute the DataImporter</h2>
                                                     <p>
-			As already mentioned, the DataImport <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> brings a generic command which can be used several times. You need to at least register it once without a constructor argument.<br />		This command will execute all the registered DataImporter in the <var>DataImportBusinessFactory</var> one after the other.
+			As already mentioned, the DataImport module brings a generic command which can be used several times. You need to at least register it once without a constructor argument.<br />		This command will execute all the registered DataImporter in the <var>DataImportBusinessFactory</var> one after the other.
 		</p>
                                                     <p>As you already made it in the example above, you can add it with a new name over and over again. This brings in the ability to execute only one specific data importer.</p>
                                                     <p>When you now execute <var>vendor/bin/console data:import:product-image</var> you will see the debug output from the <var>ProductImageWriterStep</var>.</p>
@@ -554,9 +555,22 @@ public function execute(DataSetInterface $dataSet)
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

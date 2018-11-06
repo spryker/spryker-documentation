@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="YL9yMktxCE2QqA5UK1bNvQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YL9yMktxCE2QqA5UK1bNvQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="flY_v2jDvkaCLjkmOp_Tfw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="flY_v2jDvkaCLjkmOp_Tfw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -258,7 +259,7 @@ protected function registerServiceProviders()
                                                     <p>Service providers need to implement <var>\Silex\ServiceProviderInterface</var>. You can find detailed information about service providers in the official <a href="https://silex.sensiolabs.org/doc/2.0/providers.html" target="_blank" title="Silex documentation page" alt="Silex documentation page">Silex documentation page</a>.</p>
                                                     <h2>Controller Providers</h2>
                                                     <p>Whenever you need to create a new controller you’ll need to define a path where it’s available. To do that you’ll need to register your controllers for a specific path (or in other words to create new route definition) in a controller provider.</p>
-                                                    <p>Let’s have a look at the <var>ApplicationControllerProvider </var>and how it registers two controllers in the Application <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Let’s have a look at the <var>ApplicationControllerProvider </var>and how it registers two controllers in the Application module.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\Application\Plugin\Provider;
  
 use Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider;
@@ -278,7 +279,7 @@ class ApplicationControllerProvider extends AbstractYvesControllerProvider
         $this-&gt;createGetController('/imprint', static::ROUTE_IMPRINT, 'Application', 'Static', 'imprint');
     }
 }</code></pre>
-                                                    <p>Here we connect the IndexController and StaticController in the Application <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> to the paths <var>/</var> and <var>/imprint</var>. The last argument is the action name, which defaults to index.</p>
+                                                    <p>Here we connect the IndexController and StaticController in the Application module to the paths <var>/</var> and <var>/imprint</var>. The last argument is the action name, which defaults to index.</p>
                                                     <p>Note that we are extending <var>AbstractYvesControllerProvider</var> in the example which helps to get the URL prefix in the mounting process, but this is optional to use. If you want to register your controller providers the Silex way, you only need to implement <var>\Silex\ControllerProviderInterface</var> for your class and mount your controller providers as Silex recommends.</p>
                                                     <p>The mounting process happens in <var>YvesBootstrap</var>. The example assumes that the Controller providers we use extends the <var>AbstractYvesControllerProvider</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
@@ -331,9 +332,22 @@ protected function registerRouters()
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

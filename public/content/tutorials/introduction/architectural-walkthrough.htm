@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -165,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="ro1ZcJ4uwkCD-yPafjowWg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ro1ZcJ4uwkCD-yPafjowWg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="NCO0OWEXpEia5l25XjEd9g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="NCO0OWEXpEia5l25XjEd9g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -200,15 +201,15 @@
                                                     <p>This is an architecture walkthrough as a coding exercise.</p>
                                                     <h2>Challenge Description</h2>
                                                     <ol>
-                                                        <li value="1">Build a <strong>HelloSpryker</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> in Zed that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. The string must be retrieved from the config.</li>
-                                                        <li value="2">Build a <strong>HelloSpryker</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> in Yves that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. Yves must communicate with Zed in order to retrieve the string.</li>
-                                                        <li value="3">Add Zed persistence layer in <strong>HelloSpryker</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</li>
-                                                        <li value="4">Move the functionality that returns a string in reverse order to a new <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> (<strong>StringFormat</strong>). Use this functionality from the <strong>HelloSpryker</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</li>
+                                                        <li value="1">Build a <strong>HelloSpryker</strong> module in Zed that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. The string must be retrieved from the config.</li>
+                                                        <li value="2">Build a <strong>HelloSpryker</strong> module in Yves that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. Yves must communicate with Zed in order to retrieve the string.</li>
+                                                        <li value="3">Add Zed persistence layer in <strong>HelloSpryker</strong> module</li>
+                                                        <li value="4">Move the functionality that returns a string in reverse order to a new module (<strong>StringFormat</strong>). Use this functionality from the <strong>HelloSpryker</strong> module.</li>
                                                     </ol>
                                                     <h2>Challenge Solving Highlights</h2>
-                                                    <h3>1. Building the HelloSpryker <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span> in Zed</h3>
+                                                    <h3>1. Building the HelloSpryker Module in Zed</h3>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Add the <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> folder in Zed.</li>
+                                                        <li class="bullet_list" value="1">Add the module folder in Zed.</li>
                                                         <li class="bullet_list" value="2">Add the config class with a method <var>getString</var> holding the default string <var>'Hello Spryker!'</var>.</li>
                                                         <li class="bullet_list" value="3">Add the logic for returning the string reversed under the business layer in <var>/Model</var> sub-folder.</li>
                                                         <li class="bullet_list" value="4">Create a business factory under the business layer to create this class.</li>
@@ -236,10 +237,10 @@ $config[HelloSprykerConstants::STRING] = 'Foo Bar';</code></pre>
     &lt;/div&gt;
 &lt;/div&gt;
 {% endblock %}</code></pre>
-                                                    <h3>2. Building a <strong>HelloSpryker</strong> <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span> in Yves</h3>
+                                                    <h3>2. Building a <strong>HelloSpryker</strong> Module in Yves</h3>
                                                     <p>Add Yves layer:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Add the <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> folder in Yves.</li>
+                                                        <li class="bullet_list" value="1">Add the module folder in Yves.</li>
                                                         <li class="bullet_list" value="2">Add controller + action.</li>
                                                         <li class="bullet_list" value="3">Create the Twig template under the presentation layer (<var>/HelloSpryker/Theme/default/hello-spryker/index.twig</var>).</li>
                                                         <li class="bullet_list" value="4">Add route in the controller provider (for URL <var>/hello-spryker</var>).</li>
@@ -282,7 +283,7 @@ public function getReversedStringAction(HelloSprykerTransfer $helloSprykerTransf
 {% block title %}
     &lt;h3&gt;{{ helloSpryker.reversedString }}&lt;/h3&gt;
 {% endblock %}</code></pre>
-                                                    <h3>3. Make <strong>HelloSpryker</strong> <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span> Read from Database</h3>
+                                                    <h3>3. Make <strong>HelloSpryker</strong> Module Read from Database</h3>
                                                     <ul>
                                                         <li class="bullet_list" value="1">In Zed add a persistence layer and a schema XML file with a very basic table holding the string.</li>
                                                         <li class="bullet_list" value="2">Run <var>vendor/bin/console propel:install</var> to generate the table and classes.</li>
@@ -322,22 +323,22 @@ protected function initDatabaseFromConfig(HelloSprykerConfig $helloSprykerConfig
     &lt;/table&gt;
 
 &lt;/database&gt;</code></pre>
-                                                    <h3>4. <strong>StringFormat</strong> <span class="GeneralBundle/Module">(Undefined variable: General.Bundle/Module)</span></h3>
+                                                    <h3>4. <strong>StringFormat</strong> Module</h3>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Create the <strong>StringFormat</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> in Zed.</li>
-                                                        <li class="bullet_list" value="2">In the HelloSpryker <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>, create a dependency provider class and call it <var>HelloSprykerDependencyProvider</var>.</li>
-                                                        <li class="bullet_list" value="3">Extract the functionality that formats the string and move it to the new <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</li>
+                                                        <li class="bullet_list" value="1">Create the <strong>StringFormat</strong> module in Zed.</li>
+                                                        <li class="bullet_list" value="2">In the HelloSpryker module, create a dependency provider class and call it <var>HelloSprykerDependencyProvider</var>.</li>
+                                                        <li class="bullet_list" value="3">Extract the functionality that formats the string and move it to the new module.</li>
                                                         <li class="bullet_list" value="4">Create <var>StringFormatFacade</var> class.</li>
-                                                        <li class="bullet_list" value="5">Provide the business layer dependency to the <strong>HelloSpryker</strong> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> and internally use this other facade now.</li>
+                                                        <li class="bullet_list" value="5">Provide the business layer dependency to the <strong>HelloSpryker</strong> module and internally use this other facade now.</li>
                                                     </ul>
                                                     <h4>Implementation Tips</h4>
                                                     <ul>
                                                         <li class="bullet_list" value="1">The HelloSpryker class will now have a third constructor argument, the provided facade.</li>
-                                                        <li class="bullet_list" value="2">You can use the transfer object to pass the string between <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>s.</li>
+                                                        <li class="bullet_list" value="2">You can use the transfer object to pass the string between modules.</li>
                                                         <li class="bullet_list" value="3">Try to add interfaces for your classes so that the constructor typehints are abstract instead of concrete.</li>
                                                     </ul>
                                                     <h2>More Tips</h2>
-                                                    <p>Run <var>vendor/bin/console dev:ide:generate-auto-completion </var>to also get IDE typehinting for the new <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> for both Yves and Zed.</p>
+                                                    <p>Run <var>vendor/bin/console dev:ide:generate-auto-completion </var>to also get IDE typehinting for the new module for both Yves and Zed.</p>
                                                     <p>Add <var>@method</var> annotations to your classes to get complete IDE type-hinting and clickability:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -446,9 +447,22 @@ class HelloSprykerClient extends AbstractClient
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

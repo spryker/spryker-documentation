@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|Tutorials|Advanced">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.DemoShop" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|Tutorials|Advanced">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Tutorial - Working with Filter Facets</title>
+        <meta name="author" content="" /><title>Tutorial - Working with Filter Facets </title>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="S6cLz9oY3UWDGDlBKrY7UQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="S6cLz9oY3UWDGDlBKrY7UQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="TxLAwONgc0izW1SBUgnjng">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TxLAwONgc0izW1SBUgnjng:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -195,7 +196,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer">
-                                                    <h1>Tutorial - Working with Filter Facets</h1>
+                                                    <h1>Tutorial - Working with Filter Facets <img src="../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <p>A search engine is one of the most important functionalities in an online shops because it facilitates a better navigation, allowing the user to get to the products that are in his interest.</p>
                                                     <p>The search engine should return a small number of items that match the query.</p>
                                                     <p>Facets provide aggregated data based on a search query. For example, let’s say we need to query for all the shirts that are in color blue. The search engine has configured a facet on category and one on the color attribute. Therefore, the search query will be executed using these 2 facets. The search result will return the entries that are aggregated both in the category facet with shirt category ID and in the color facet with value blue.</p>
@@ -225,7 +226,7 @@
         return $this-&gt;viewResponse($response);
     }</code></pre>
                                                     <p>Example:</p>
-                                                    <p>Making a request on the URL <a href="http://www.de.demoshop.local/en/computers/notebooks" target="_blank" title="demoshop" alt="demoshop">http://www.de.demoshop.local/en/computers/notebooks</a> in Demoshop will be routed to the <var>CatalogController:indexAction</var> controller action, which is designated for category detail page.</p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">Making a request on the URL <a href="http://www.de.demoshop.local/en/computers/notebooks" target="_blank" title="demoshop" alt="demoshop">http://www.de.demoshop.local/en/computers/notebooks</a> in Demoshop will be routed to the <var>CatalogController:indexAction</var> controller action, which is designated for category detail page.</p>
                                                     <p>A facet search will be executed using the category facet with the provided category node as a parameter.</p>
                                                     <h2>Configuring Facet Filters</h2>
                                                     <p>As mentioned above, the category facet is a special case and needs to be handled this way because a call needs to be made to Redis to retrieve the category node ID when a category detail page is requested.</p>
@@ -267,9 +268,22 @@
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

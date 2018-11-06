@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="9nIuJaABTUWT7UgoJ1uRWg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="9nIuJaABTUWT7UgoJ1uRWg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="EsfQDcl49EmHzNUlcmBFTw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="EsfQDcl49EmHzNUlcmBFTw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -196,11 +197,11 @@
                                                 </div>
                                                 <div class="js-anchorer">
                                                     <h1>Tutorial - Customer Import</h1>
-                                                    <p>This tutorial describes the steps you need to follow in order to extend the <var>Importer</var> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> functionality.</p>
+                                                    <p>This tutorial describes the steps you need to follow in order to extend the <var>Importer</var> module functionality.</p>
                                                     <p>In this example, we’ll import customer data; of course you can update the code in this tutorial to fit your need.</p>
-                                                    <h2>Customer Data file</h2>
+                                                    <h2>Customer Data File</h2>
                                                     <p>In order to import customer data from a legacy system, the data needs to be exported to a CSV file in a format that fits the new database schema.</p>
-                                                    <p>In the <var>Importer</var> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>, we’ll place the <var>customers.csv</var> file under the <var>src/Pyz/Zed/Importer/Business/Internal/data/</var> folder.</p>
+                                                    <p>In the <var>Importer</var> module, we’ll place the <var>customers.csv</var> file under the <var>src/Pyz/Zed/Importer/Business/Internal/data/</var> folder.</p>
                                                     <p>The first line in the CSV file must describe the structure of the data we need to import. The other lines must respect this given structure and one row corresponds to one entry.</p><pre><code class="language-PHP line-numbers">customer_reference,email,first_name,last_name
 DE--1,test_customer1@mail.com,Test,Customer1
 DE--2,test_customer2@mail.com,Test,Customer2</code></pre>
@@ -346,7 +347,7 @@ class CustomerImporter extends AbstractImporter
 
         return $customerImporter;
     }</code></pre>
-                                                    <h3>Add the dependency to the <var>Customer</var> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span></h3>
+                                                    <h3>Add the Dependency to the <var>Customer</var> Module</h3>
                                                     <p>Since we need to use the <var>CustomerFacade</var>, we need to add this dependency.</p>
                                                     <p>In the <var>ImporterDependencyProvider</var> add the dependency to the <var>CustomerBundle</var> in the <var>provideBusinessLayerDependencies(Container $container)</var> method:</p><pre><code class="language-PHP line-numbers">&lt;?php
     const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
@@ -375,10 +376,10 @@ class CustomerImporter extends AbstractImporter
     {
         return $this-&gt;getProvidedDependency(ImporterDependencyProvider::FACADE_CUSTOMER);
     }</code></pre>
-                                                    <h2>Extend Customer <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span></h2>
+                                                    <h2>Extend Customer Module</h2>
                                                     <p>As you can see, the importer calls some methods from the <var>CustomerFacade</var> that don’t exist yet.</p>
                                                     <p>Next, we’ll need to extend the <var>CustomerFacade</var> so that it implements and exposes those 2 methods that we need for our data import.</p>
-                                                    <p>Create the <var>Business</var> layer in the <var>Customer</var> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. Add a <var>CustomerWriter</var> class, where we’ll implement the business logic for these 2 operations.</p>
+                                                    <p>Create the <var>Business</var> layer in the <var>Customer</var> module. Add a <var>CustomerWriter</var> class, where we’ll implement the business logic for these 2 operations.</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -531,9 +532,22 @@ class CustomerFacade extends SprykerCustomerFacade implements CustomerFacadeInte
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

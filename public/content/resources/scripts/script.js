@@ -1,16 +1,4 @@
-﻿console.log('connect');
-// var container = document.querySelector('.navigation .has-children .sub-menu');
-// var scrollbar = new PerfectScrollbar(container);
-// scrollbar.addEventListener('ps-scroll-x', function(e){console.log(e)});
-//containers.forEach(function(item){
-//		var scrollbar = new PerfectScrollbar(item);
-//		scrollbar.addEventListener('ps-scroll-x', function(e){console.log(e)});
-//	});
-//var ps = new PerfectScrollbar(container);
-
-
-
-
+﻿pl
 function ScrollToTop () {
 
     const THRESHOLD = 500;
@@ -169,3 +157,30 @@ function Anchorer () {
 
 var anchorer = new Anchorer();
 anchorer.init();
+
+
+var menuItems;
+document.addEventListener("DOMContentLoaded", function() {
+    setTimeout(function(){
+        menuItems = document.querySelectorAll('.navigation .has-children');
+
+        menuItems.forEach(function (item) {
+            item.addEventListener('mouseenter', function (e) {
+                var menuItem = e.currentTarget;
+
+
+                setTimeout(function () {
+                    var container = menuItem.querySelector('.navigation .has-children > .sub-menu');
+
+                    if(!container.classList.contains('ps') && container.clientHeight > window.innerHeight - 100){
+                        var scrollbar = new PerfectScrollbar(container, {
+                            useBothWheelAxes: false,
+                            suppressScrollX: true
+                        });
+                    }
+                },500)
+            })
+        });
+        }, 500);
+});
+

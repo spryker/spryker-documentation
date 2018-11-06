@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="DBHcHzHvOEyTyFOGM0cyYw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="DBHcHzHvOEyTyFOGM0cyYw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="6utEqlfuaUeWL8DWdDPdhw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="6utEqlfuaUeWL8DWdDPdhw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -196,14 +197,70 @@
                                                 </div>
                                                 <div class="js-anchorer">
                                                     <h1>Multiple Payment Methods Per Order <img src="../../resources/images/shoptype/b2b_shop.png" /> <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/mastersuite.png" /> <img src="../../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <p>
-                                                        <img src="../../resources/images/multi_icon_multi-language_64.png" />
-                                                        <img src="../../resources/images/multi_icon_multi-store_64.png" />
-                                                        <img src="../../resources/images/multi_icon_multi-currency_64.png" />
-                                                    </p>
+                                                    <p><a href="javascript:void(0);" class="MCTextPopup popup popupHead">ML<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-language</span></a>, <a href="javascript:void(0);" class="MCTextPopup popup popupHead">MS<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-store</span></a>, <a href="javascript:void(0);" class="MCTextPopup popup popupHead">MC<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-currency</span></a></p>
                                                     <p>All orders can be paid with none, one or multiple payment methods which the customer can select during checkout. To accommodate your customer's requirements, you can offer multiple payment methods for a single order, such as gift card and an additional credit card.
 </p>
                                                     <p>Most orders are paid with a single payment method but in same cases it is useful to allow multiple payment methods, for instance the customer may want to use two credit cards or he uses  gift card in addition to a traditional payment method.</p>
+                                                    <p>&#160;</p>
+                                                    <h2>Multiple Payments
+</h2>
+                                                    <p>Spryker enables to have multiple payments per checkout, payments are stored in <var>QuoteTransfer::payments</var> and persisted when <var>CheckoutClient::placeOrder</var> is called in last checkout step.</p>
+                                                    <p>
+Each payment method must provide payment amount it shares from order grand total. This amount is stored in <var>PaymentTransfer::amount</var> field. When order is placed in last step all payments are persisted to <var>spy_sales_payment</var> table.
+</p>
+                                                    <h2>Payment Hydration <sub>for </sub>Order
+</h2>
+                                                    <p>The <a href="../order_management/sales/sales.htm">Sales</a> module provides plugins to hydrate OrderTransfer which is called when <var>SalesFacade::getOrderByIdSalesOrder</var> invoked. </p>
+                                                    <p>One of those plugins are <var>\Spryker\Zed\Payment\Communication\Plugin\Sales\PaymentOrderHydratePlugin</var> which must be added to
+<var>\Pyz\Zed\Sales\SalesDependencyProvider::getOrderHydrationPlugins</var> plugin stack. </p>
+                                                    <p>This plugin invokes the payment hydration plugin stack which must be injected to <var>\Spryker\Zed\Payment\PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS</var>, for example:
+</p>
+                                                    <p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Spryker\Zed\PaymentProvider\Dependency\Injector;
+class PaymentDependencyInjector extends AbstractDependencyInjector
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function injectBusinessLayerDependencies(Container $container)
+    {
+        $container = $this-&gt;injectPaymentPlugin($container);
+        return $container;
+    }
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function injectPaymentPlugin(Container $container)
+    {
+        $container-&gt;extend(PaymentDependencyProvider::PAYMENT_HYDRATION_PLUGINS, function (PaymentHydratorPluginCollectionInterface $pluginCollection) {
+             $pluginCollection-&gt;add(‘PaymentProvider’,  new PaymentProviderSalesOrderPaymentHydrationPlugin()) // this plugin must implement \Spryker\Zed\Payment\Dependency\Plugin\Sales\PaymentHydratorPluginInterface
+             return $pluginCollection;
+        });
+        return $container;
+    }
+}
+?&gt;
+</code></pre>
+                                                    </p>
+                                                    <p>The plugin will receive <var>OrderTransfer</var> and <var>PaymentTransfer</var> which is the payment you need to hydrate with additional data. </p>
+                                                    <p>Plugins have to populate the <var>PaymentTransfer</var> object and return it back. After this step you should be able to get payment information when calling
+<var>SalesFacade::getOrderByIdSalesOrder</var>.
+We also included simple zed ui twig block for payments so it can display a little more information about payment methods used in order detail page. </p>
+                                                    <p><strong>To enable it go to</strong>:</p>
+                                                    <p><var>\Pyz\Zed\Sales\SalesConfig::getSalesDetailExternalBlocksUrls</var> and add <var>‘payments’ =&gt; ‘/payment/sales/list’,</var> to <var>$projectExternalBlocks</var> array.</p>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also</b>: </p>
+                                                    <ul>
+                                                        <li value="1"><a href="http://documentation.spryker.com/content/module_migration_guides/mg-payment.htm">Payment Migration Guide</a>
+                                                        </li>
+                                                        <li value="2"><a href="dummy-payment.htm">Implement Dummy payment</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -221,9 +278,22 @@
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

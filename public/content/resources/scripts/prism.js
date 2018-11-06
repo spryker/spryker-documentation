@@ -1,20 +1,7 @@
-﻿/* PrismJS 1.15.0
-https://prismjs.com/download.html#themes=prism-tomorrow&languages=markup+css+clike+javascript+abap+actionscript+ada+apacheconf+apl+applescript+c+arff+asciidoc+asm6502+csharp+autohotkey+autoit+bash+basic+batch+bison+brainfuck+bro+cpp+aspnet+arduino+coffeescript+clojure+ruby+csp+css-extras+d+dart+diff+django+docker+eiffel+elixir+elm+markup-templating+erlang+fsharp+flow+fortran+gedcom+gherkin+git+glsl+gml+go+graphql+groovy+less+handlebars+haskell+haxe+http+hpkp+hsts+ichigojam+icon+inform7+ini+io+j+java+jolie+json+julia+keyman+kotlin+latex+markdown+liquid+lisp+livescript+lolcode+lua+makefile+crystal+erb+matlab+mel+mizar+monkey+n4js+nasm+nginx+nim+nix+nsis+objectivec+ocaml+opencl+oz+parigp+parser+pascal+perl+php+php-extras+sql+powershell+processing+prolog+properties+protobuf+scss+puppet+pure+python+q+qore+r+jsx+typescript+renpy+reason+rest+rip+roboconf+textile+rust+sas+sass+stylus+scala+scheme+smalltalk+smarty+plsql+soy+pug+swift+yaml+tcl+haml+tt2+twig+tsx+vbnet+velocity+verilog+vhdl+vim+visual-basic+wasm+wiki+xeora+xojo+xquery+tap&plugins=line-numbers */
-var _self = (typeof window !== 'undefined')
-    ? window   // if in browser
-    : (
-        (typeof WorkerGlobalScope !== 'undefined' && self instanceof WorkerGlobalScope)
-            ? self // if in worker
-            : {}   // if in node js
-    );
-
-/**
- * Prism: Lightweight, robust, elegant syntax highlighting
- * MIT license http://www.opensource.org/licenses/mit-license.php/
- * @author Lea Verou http://lea.verou.me
- */
-
+﻿function getPrism(){
 var Prism = (function(){
+
+    var _self = window;
 
 // Private helper vars
     var lang = /\blang(?:uage)?-([\w-]+)\b/i;
@@ -8340,3 +8327,231 @@ Prism.languages.tap = {
     };
 
 }());
+(function(){
+    if (typeof self === 'undefined' || !self.Prism || !self.document) {
+        return;
+    }
+
+    var callbacks = [];
+    var map = {};
+    var noop = function() {};
+
+    Prism.plugins.toolbar = {};
+
+    /**
+     * Register a button callback with the toolbar.
+     *
+     * @param {string} key
+     * @param {Object|Function} opts
+     */
+    var registerButton = Prism.plugins.toolbar.registerButton = function (key, opts) {
+        var callback;
+
+        if (typeof opts === 'function') {
+            callback = opts;
+        } else {
+            callback = function (env) {
+                var element;
+
+                if (typeof opts.onClick === 'function') {
+                    element = document.createElement('button');
+                    element.type = 'button';
+                    element.addEventListener('click', function () {
+                        opts.onClick.call(this, env);
+                    });
+                } else if (typeof opts.url === 'string') {
+                    element = document.createElement('a');
+                    element.href = opts.url;
+                } else {
+                    element = document.createElement('span');
+                }
+
+                element.textContent = opts.text;
+
+                return element;
+            };
+        }
+
+        callbacks.push(map[key] = callback);
+    };
+
+    /**
+     * Post-highlight Prism hook callback.
+     *
+     * @param env
+     */
+    var hook = Prism.plugins.toolbar.hook = function (env) {
+        // Check if inline or actual code block (credit to line-numbers plugin)
+        var pre = env.element.parentNode;
+        if (!pre || !/pre/i.test(pre.nodeName)) {
+            return;
+        }
+
+        // Autoloader rehighlights, so only do this once.
+        if (pre.parentNode.classList.contains('code-toolbar')) {
+            return;
+        }
+
+        // Create wrapper for <pre> to prevent scrolling toolbar with content
+        var wrapper = document.createElement("div");
+        wrapper.classList.add("code-toolbar");
+        pre.parentNode.insertBefore(wrapper, pre);
+        wrapper.appendChild(pre);
+
+        // Setup the toolbar
+        var toolbar = document.createElement('div');
+        toolbar.classList.add('toolbar');
+
+        if (document.body.hasAttribute('data-toolbar-order')) {
+            callbacks = document.body.getAttribute('data-toolbar-order').split(',').map(function(key) {
+                return map[key] || noop;
+            });
+        }
+
+        callbacks.forEach(function(callback) {
+            var element = callback(env);
+
+            if (!element) {
+                return;
+            }
+
+            var item = document.createElement('div');
+            item.classList.add('toolbar-item');
+
+            item.appendChild(element);
+            toolbar.appendChild(item);
+        });
+
+        // Add our toolbar to the currently created wrapper of <pre> tag
+        wrapper.appendChild(toolbar);
+    };
+
+    registerButton('label', function(env) {
+        var pre = env.element.parentNode;
+        if (!pre || !/pre/i.test(pre.nodeName)) {
+            return;
+        }
+
+        if (!pre.hasAttribute('data-label')) {
+            return;
+        }
+
+        var element, template;
+        var text = pre.getAttribute('data-label');
+        try {
+            // Any normal text will blow up this selector.
+            template = document.querySelector('template#' + text);
+        } catch (e) {}
+
+        if (template) {
+            element = template.content;
+        } else {
+            if (pre.hasAttribute('data-url')) {
+                element = document.createElement('a');
+                element.href = pre.getAttribute('data-url');
+            } else {
+                element = document.createElement('span');
+            }
+
+            element.textContent = text;
+        }
+
+        return element;
+    });
+
+    /**
+     * Register the toolbar with Prism.
+     */
+    Prism.hooks.add('complete', hook);
+})();
+
+(function(){
+    if (typeof self === 'undefined' || !self.Prism || !self.document) {
+        return;
+    }
+
+    if (!Prism.plugins.toolbar) {
+        console.warn('Copy to Clipboard plugin loaded before Toolbar plugin.');
+
+        return;
+    }
+
+    var ClipboardJS = window.ClipboardJS || undefined;
+
+    if (!ClipboardJS && typeof require === 'function') {
+        ClipboardJS = require('clipboard');
+    }
+
+    var callbacks = [];
+
+    if (!ClipboardJS) {
+        var script = document.createElement('script');
+        var head = document.querySelector('head');
+
+        script.onload = function() {
+            ClipboardJS = window.ClipboardJS;
+
+            if (ClipboardJS) {
+                while (callbacks.length) {
+                    callbacks.pop()();
+                }
+            }
+        };
+
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.0/clipboard.min.js';
+        head.appendChild(script);
+    }
+
+    Prism.plugins.toolbar.registerButton('copy-to-clipboard', function (env) {
+        var linkCopy = document.createElement('a');
+        linkCopy.textContent = 'Copy';
+
+        if (!ClipboardJS) {
+            callbacks.push(registerClipboard);
+        } else {
+            registerClipboard();
+        }
+
+        return linkCopy;
+
+        function registerClipboard() {
+            var clip = new ClipboardJS(linkCopy, {
+                'text': function () {
+                    return env.code;
+                }
+            });
+
+            clip.on('success', function() {
+                linkCopy.textContent = 'Copied!';
+
+                resetText();
+            });
+            clip.on('error', function () {
+                linkCopy.textContent = 'Press Ctrl+C to copy';
+
+                resetText();
+            });
+        }
+
+        function resetText() {
+            setTimeout(function () {
+                linkCopy.textContent = 'Copy';
+            }, 5000);
+        }
+    });
+})();
+return Prism;
+}
+var prismLoader = 0;
+var prismInterval = setInterval(function () {
+    prismLoader++;
+    if(window.Clipboard){
+        console.log('clipboard loaded');
+        getPrism();
+        clearInterval(prismInterval);
+        return;
+    }
+    prismLoader == 20 ? clearInterval(prismInterval) : console.log('loading clipboard');;
+
+},200)
+

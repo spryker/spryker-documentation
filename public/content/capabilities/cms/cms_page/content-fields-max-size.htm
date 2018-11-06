@@ -23,6 +23,7 @@
         <link href="../../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -191,15 +192,17 @@
                 Based on your DB (MySql or PostgreSql), it will be transferred to TEXT (65535 bytes) and TEXT (unlimited length) respectively.
                 In case your project requires more, you can redefine field size in <var>spy_cms_version</var> table.
                 </p>
-                                                        <p>For example, place the following into <var>src/Pyz/Zed/Cms/Persistence/Propel/Schema/spy_cms.schema.xml</var>:<pre><code class="language-xml line-numbers">&lt;div code="xml"&gt;
-                &lt;?xml version="1.0"?&gt;
-                &lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="OrmZedCmsPersistence" package="src.Orm.Zed.Cms.Persistence"&gt;
-                    &lt;table name="spy_cms_version"&gt;
-                        &lt;column name="data" type="LONGVARCHAR" size="4294967295" /&gt;
-                    &lt;/table&gt;
-                &lt;/database&gt;
-            &lt;/div&gt;
-            </code></pre></p>
+                                                        <p>For example, place the following into <var>src/Pyz/Zed/Cms/Persistence/Propel/Schema/spy_cms.schema.xml</var>:
+				<pre><code class="language-PHP line-numbers">
+	&lt;div code="xml"&gt;
+		&lt;?xml version="1.0"?&gt;
+		&lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="OrmZedCmsPersistence" package="src.Orm.Zed.Cms.Persistence"&gt;
+			&lt;table name="spy_cms_version"&gt;
+				&lt;column name="data" type="LONGVARCHAR" size="4294967295" /&gt;
+			&lt;/table&gt;
+		&lt;/database&gt;
+	&lt;/div&gt;
+					</code></pre></p>
                                                         <p>&#160;</p>
                                                         <p><b>See also:</b>
                                                         </p>
@@ -234,9 +237,22 @@
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../../resources/scripts/prism.js">
                                 </script>

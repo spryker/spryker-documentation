@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="AL6U5a0hH06SgoBdqhY1sw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="AL6U5a0hH06SgoBdqhY1sw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="_giedZ93vUqCncuTFV7V2w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_giedZ93vUqCncuTFV7V2w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -197,7 +198,7 @@
                                                 <div class="js-anchorer">
                                                     <h1>Tutorial - Extending the Database Schema</h1>
                                                     <p>Fields can be added to the existing database tables, but they cannot be removed (removing fields from the tables could break the functionalities implemented in Spryker Core).</p>
-                                                    <p>As an example, we will add a description field to the spy_price_type table. The structure of this table is defined in the Price <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>, in the spy_price.schema.xml file, as it can be seen below:</p><pre><code class="language-PHP line-numbers">&lt;table name="spy_price_type"&gt;
+                                                    <p>As an example, we will add a description field to the spy_price_type table. The structure of this table is defined in the Price mosdule, in the spy_price.schema.xml file, as it can be seen below:</p><pre><code class="language-PHP line-numbers">&lt;table name="spy_price_type"&gt;
     &lt;column name="id_price_type" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/&gt;
     &lt;column name="name" type="VARCHAR" size="255" required="true"/&gt;
     &lt;unique&gt;
@@ -261,9 +262,22 @@ class PropelConfig extends SprykerPropelConfig
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

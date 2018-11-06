@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="nmwsLjOdt0S5sVJd4t11Bw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="nmwsLjOdt0S5sVJd4t11Bw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="fy3Qw3PFEEySI5-3cFTlaw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="fy3Qw3PFEEySI5-3cFTlaw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -199,10 +200,10 @@
                                                     <p>This tutorial explains how to retrieve data from the database and render it in a table.</p>
                                                     <p>Prerequisites:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">You have created a new <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> (<a href="t-add-new-bundle.htm" class="MCXref xref">Tutorial - Adding a New Module</a>).</li>
+                                                        <li class="bullet_list" value="1">You have created a new <a href="t-add-new-bundle.htm">module</a>.</li>
                                                     </ul>
                                                     <h2>Create a QueryContainer</h2>
-                                                    <p>Create the <var>QueryContainer</var> class in the HelloWorld <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>:</p><pre><code class="language-PHP line-numbers">mkdir -p src/Pyz/Zed/HelloWorld/Persistence/
+                                                    <p>Create the <var>QueryContainer</var> class in the HelloWorld module:</p><pre><code class="language-PHP line-numbers">mkdir -p src/Pyz/Zed/HelloWorld/Persistence/
 touch src/Pyz/Zed/HelloWorld/Persistence/HelloWorldQueryContainer.php</code></pre>
                                                     <p>Add the <var>queryProducts</var> operation in the query container :</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Persistence;
@@ -372,7 +373,7 @@ class IndexController extends AbstractController
     {% endembed %}
 
 {% endblock %}</code></pre>
-                                                    <p>This is all! To see the table you created, go to <a href="http://zed.de.demoshop.local/hello-world" target="_blank">http://zed.de.demoshop.local/hello-world</a>. You will be able to see the products listed in the table.</p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">This is all! To see the table you created, go to <a href="http://zed.de.demoshop.local/hello-world" target="_blank">http://zed.de.demoshop.local/hello-world</a>. You will be able to see the products listed in the table.</p>
                                                 </div>
                                             </div>
                                         </div>
@@ -390,9 +391,22 @@ class IndexController extends AbstractController
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

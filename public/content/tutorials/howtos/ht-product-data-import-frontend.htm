@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -164,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="PYw62SSRsE2oFFcrSEBvXg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PYw62SSRsE2oFFcrSEBvXg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="bz4gINPTQkeeU5QI8qGPLg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="bz4gINPTQkeeU5QI8qGPLg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -202,7 +203,7 @@
 </p>
                                                     <h2>Importing Products to the SQL Database
 </h2>
-                                                    <p>Products are imported in the SQL database through the Importer <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. The product details are parsed from CSV files, from where they are processed and inserted in the SQL database. This step is done when installing the application, after the database is created, when running the <var>./setup -i</var> script.
+                                                    <p>Products are imported in the SQL database through the Importer module. The product details are parsed from CSV files, from where they are processed and inserted in the SQL database. This step is done when installing the application, after the database is created, when running the <var>./setup -i</var> script.
 
 </p>
                                                     <p>The products can also be imported separately, by running the dedicated command below:
@@ -232,7 +233,7 @@ There are also several fields such as <var>attribute_key_1</var> and <var>value_
                                                     <p>Now that we have the data in the key-value storage, we are able to show the product details in the front-end views.
 
 </p>
-                                                    <p>When requesting a page in front-end, the <var>Collector </var><span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> takes care of identifying the type of request (if it is a product details page or a category page) and retrieves necessary data from Redis.
+                                                    <p>When requesting a page in front-end, the <var>Collector </var>module takes care of identifying the type of request (if it is a product details page or a category page) and retrieves necessary data from Redis.
 
 </p>
                                                     <p>It also takes care of routing the request to the correct controller action.
@@ -254,7 +255,7 @@ There are also several fields such as <var>attribute_key_1</var> and <var>value_
                                                     <p>After building the product, the resource creator will route the request to the corresponding controller action and will pass the built product to it.
 
 </p>
-                                                    <p>In Demoshop, product details requests are routed to <var>ProductController::detailAction(ProductAbstractInterface $product)</var> from the Product <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.
+                                                    <p>In Demoshop, product details requests are routed to <var>ProductController::detailAction(ProductAbstractInterface $product)</var> from the Product module.
 
 </p>
                                                     <p>You can find the view associated with this controller action under <var>Pyz\Yves\Product\Theme\demoshop\product\detail.twig</var>.
@@ -306,9 +307,22 @@ In the <var>product_abstract.csv</var> file add the “waterproof” key to one 
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

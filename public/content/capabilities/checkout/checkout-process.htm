@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -254,13 +255,18 @@
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Placing the Order</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>After the customer clicks the submit button during the <var>SummaryStep</var>, the <var>PlaceOrderStep</var> is started. This step takes the <var>QuoteTransfer</var>` and starts the checkout workflow to store the order into the system. Zed Checkout module contains a number of plugins where you can add additional behavior, check preconditions, save or execute post condition check.</p>
+                                                            <p>After the customer clicks the submit button during the <var>SummaryStep</var>, the <var>PlaceOrderStep</var> is started. This step takes the <var>QuoteTransfer</var> and starts the checkout workflow to store the order into the system. Zed Checkout module contains a number of plugins where you can add additional behavior, check preconditions, save or execute post condition check.</p>
+                                                            <h2>Workflows</h2>
+                                                            <p>Since Checkout 4.2.0 it's possible to define multiple checkout workflows with separate sets of plugins to allow order placement in other way than regular checkout (e.g. importing order from external system).</p>
                                                             <h2><a name="Plugins"></a>Plugins</h2>
-                                                            <p>Zed's Checkout module contains three types of plugins to extend the behavior on placing an order. Any plugin has access to <var>QuoteTransfer</var> that is supposed to be read only and <a href="#checkout_response_transfer">CheckoutResponseTransfer</a> data object that can be modified.</p>
+                                                            <p>Zed's Checkout module contains four types of plugins to extend the behavior on placing an order. Any plugin has access to <var>QuoteTransfer</var> that is supposed to be read only and <a href="#checkout_response_transfer">CheckoutResponseTransfer</a> data object that can be modified.</p>
                                                             <ul>
                                                                 <li class="bullet_list" value="1">PreCondition — is for checking if the order satisfies predefined constraints (e.g., if the quantity of items is still available).</li>
                                                                 <li class="bullet_list" value="2">OrderSavers — is for saving order, each plugin is responsible for saving certain parts of the order (sales module saves items, discount module saves discounts, product option module saves options etc..). Each <var>OrderSaver</var> plugin is wrapped into a single transaction; if exception is being thrown, transaction will be rolledback.</li>
                                                                 <li class="bullet_list" value="3">CheckPostConditions — is for checking conditions after saving, last time to react if something did not happen by the plan. It’s called after state machine execution.</li>
+                                                                <li value="4">
+                                                                    <p>PostSaveHook — is called after order placement, sets the success flag to false, if redirect should be headed to an error page afterwards.</p>
+                                                                </li>
                                                             </ul>
                                                             <h2><a name="checkout_response_transfer"></a>Checkout Response Transfer</h2>
                                                             <ul>
@@ -328,9 +334,22 @@
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>

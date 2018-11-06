@@ -4,6 +4,7 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title></title>
+		<link href="../Stylesheets/perfect-scrollbar.css" rel="stylesheet" MadCap:stylesheetType="text/css" />
         <link href="../Stylesheets/prism.css" rel="stylesheet" MadCap:stylesheetType="text/css" />
     </head>
     <body>
@@ -59,8 +60,22 @@
 			}
 			createGithubUrl();
 		</script>
-		<script src="../Scripts/script.js"></script>
+		<script>
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		</script>
 		<script src="../Scripts/perfect-scrollbar.js"></script>
+		<script src="../Scripts/script.js"></script>
+
 		<script src="../Scripts/prism.js"></script>
     </body>
 </html>

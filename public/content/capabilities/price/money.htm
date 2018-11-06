@@ -23,6 +23,7 @@
         <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
         <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
         <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
         <style>/*&lt;meta /&gt;*/
 
@@ -299,7 +300,7 @@ in your form Type:        <pre><code class="language-php line-numbers">
         <pre><code class="language-php line-numbers">
  {{ form_money_collection(mainForm.moneyValueCollection) }}
         </code></pre><p>This will render table with all currencies enabled in store. You have to handle persistence yourself, which means that you have to save and read data to MoneyValueTransfer collection.
-        Component provides only initial data.</p><p>&#160;</p><p><b>See also:</b></p><ul><li value="1">&#160;</li></ul><p>&#160;</p><p><i>Last review date: Oct. 6th, 2017 </i></p></div>
+        Component provides only initial data.</p><p>&#160;</p><p><i>Last review date: Oct. 6th, 2017 </i></p></div>
                                             </div>
                                         </div>
                                     </div>
@@ -316,9 +317,22 @@ in your form Type:        <pre><code class="language-php line-numbers">
 			}
 			createGithubUrl();
 		/* ]]> */</script>
-                                <script src="../../resources/scripts/script.js">
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
                                 </script>
-                                <script src="../../Resources/Scripts/perfect-scrollbar.js">
+                                <script src="../../resources/scripts/script.js">
                                 </script>
                                 <script src="../../resources/scripts/prism.js">
                                 </script>
