@@ -1,5 +1,4 @@
-﻿pl
-function ScrollToTop () {
+﻿function ScrollToTop () {
 
     const THRESHOLD = 500;
     const DIRECTION_UP = 'up';
@@ -183,4 +182,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         }, 500);
 });
-

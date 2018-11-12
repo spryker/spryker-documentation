@@ -1,6 +1,4 @@
-﻿ea
-
-'use strict';
+﻿'use strict';
 
 function get(element) {
     return getComputedStyle(element);
