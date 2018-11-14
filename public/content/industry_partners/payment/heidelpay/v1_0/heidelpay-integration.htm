@@ -167,8 +167,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="WK_IBLv7AUu9Xr-jjTPNnw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WK_IBLv7AUu9Xr-jjTPNnw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="hC4GDeOA8U-qZELgMVGdaA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="hC4GDeOA8U-qZELgMVGdaA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -206,7 +206,7 @@
                                                             <p>
                                                                 <p>You can copy over configs to your config from the Heidelpay's module<var>config.dist.php</var> file.
         </p>
-        The most important configuration items are explained in the table below,
+       The most important configuration items are explained in the table below,
         make sure to get the required configuration items from Heidelpay:<br /><br /></p>
                                                             <div class="u-is-scrollable">
                                                                 <table style="width: 100%;mc-table-style: url('../../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
@@ -273,40 +273,37 @@
                                                             <p>Please see example of the configuration below:</p>
                                                             <p><pre><code class="language-php line-numbers">
 
-         // ---------- Navigation
+// Navigation
 $YVES_HOST_PROTOCOL = 'http';
-
+ 
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_SUCCESS_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/checkout/success';
 $config[HeidelpayConstants::CONFIG_YVES_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES];
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_PAYMENT_FAILED_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/payment-failed?error_code=%s';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_IDEAL_AUTHORIZE_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/ideal-authorize';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_SUMMARY_STEP_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/checkout/summary';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_ASYNC_RESPONSE_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/cc-register-response';
-
-// ---------- Error handling
+ 
+// Error handling
 $config[ErrorHandlerConstants::DISPLAY_ERRORS] = true;
 $config[ErrorHandlerConstants::ERROR_RENDERER] = WebExceptionErrorRenderer::class;
-
-// Heidelpay related
-$YVES_HOST_PROTOCOL = 'http';
-$config[ApplicationConstants::HOST_YVES] = 'your.great-shop-site.com';
-
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_SECURITY_SENDER] = '31HA07BC8142C5A171745D00AD63D182';
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_USER_LOGIN] = '31ha07bc8142c5a171744e5aef11ffd3';
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_USER_PASSWORD] = '93167DE7';
-
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_CC_3D_SECURE] = '31HA07BC8142C5A171749A60D979B6E4';
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_PAYPAL] = '31HA07BC8142C5A171749A60D979B6E4';
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_IDEAL] = '31HA07BC8142C5A171744B56E61281E5';
-$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_SOFORT] = '31HA07BC8142C5A171749CDAA43365D2';
-
+ 
+// Heidelpay API
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_SECURITY_SENDER] = 'CONFIG_HEIDELPAY_SECURITY_SENDER';
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_USER_LOGIN] = 'CONFIG_HEIDELPAY_USER_LOGIN';
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_USER_PASSWORD] = 'CONFIG_HEIDELPAY_USER_PASSWORD';
+ 
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_CC_3D_SECURE] = 'CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_CC_3D_SECURE';
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_PAYPAL] = 'CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_PAYPAL';
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_IDEAL] = 'CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_IDEAL';
+$config[HeidelpayConstants::CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_SOFORT] = 'CONFIG_HEIDELPAY_TRANSACTION_CHANNEL_SOFORT';
+ 
 // Shop configuration values
 $config[HeidelpayConstants::CONFIG_HEIDELPAY_APPLICATION_SECRET] = 'application_secret';
 $config[HeidelpayConstants::CONFIG_HEIDELPAY_SANDBOX_REQUEST] = true;
-
+ 
 $config[HeidelpayConstants::CONFIG_HEIDELPAY_LANGUAGE_CODE] = 'DE';
 $config[HeidelpayConstants::CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/payment';
-
+ 
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_SUCCESS_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/checkout/success';
 $config[HeidelpayConstants::CONFIG_YVES_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES];
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_PAYMENT_FAILED_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/payment-failed?error_code=%s';
@@ -314,65 +311,13 @@ $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_IDEAL_AUTHORIZE_URL] = $YVES_HO
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_PAYMENT_STEP_PATH] = '/checkout/payment';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_SUMMARY_STEP_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/checkout/summary';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_ASYNC_RESPONSE_URL] = $YVES_HOST_PROTOCOL . '://' . $config[ApplicationConstants::HOST_YVES] . '/heidelpay/cc-register-response';
-
+ 
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_PAYMENT_FRAME_CUSTOM_CSS_URL] = '';
 $config[HeidelpayConstants::CONFIG_YVES_CHECKOUT_PAYMENT_FRAME_PREVENT_ASYNC_REDIRECT] = "FALSE";
 $config[HeidelpayConstants::CONFIG_ENCRYPTION_KEY] = "encryption_key";
-							
-$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
-	'Checkout' =&gt; [
-		'DummyPayment',
-		NopaymentConfig::PAYMENT_PROVIDER_NAME,
-		'Heidelpay',
-	],
-];
-$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
-	'Payment' =&gt; [
-		'DummyPayment',
-		GiftCardConfig::PROVIDER_NAME,
-		NopaymentConfig::PAYMENT_PROVIDER_NAME,
-		'Heidelpay',
-	],
-	'Oms' =&gt; [
-		'DummyPayment',
-		GiftCardConfig::PROVIDER_NAME,
-		'Heidelpay',
-	],
-];
-$config[NopaymentConstants::NO_PAYMENT_METHODS] = [
-	NopaymentConfig::PAYMENT_PROVIDER_NAME,
-];
-$config[NopaymentConstants::WHITELIST_PAYMENT_METHODS] = [
-	GiftCardConfig::PROVIDER_NAME,
-];
-// ---------- State machine (OMS)
-$config[OmsConstants::PROCESS_LOCATION] = [
-	OmsConfig::DEFAULT_PROCESS_LOCATION,
-	APPLICATION_ROOT_DIR . '/vendor/spryker-eco/heidelpay/config/Zed/Oms',
-];
-$config[OmsConstants::ACTIVE_PROCESSES] = [
-	'HeidelpaySofort01',
-	'HeidelpayPaypalAuthorize01',
-	'HeidelpayPaypalDebit01',
-	'HeidelpayIdeal01',
-	'HeidelpayCreditCardSecureAuthorize01',
-	'HeidelpayEasyCredit01',
-	'DummyPayment01',
-	'Nopayment01',
-];
-$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
-	DummyPaymentConfig::PAYMENT_METHOD_INVOICE =&gt; 'DummyPayment01',
-	DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD =&gt; 'DummyPayment01',
-	GiftCardConfig::PROVIDER_NAME =&gt; 'DummyPayment01',
-	NopaymentConfig::PAYMENT_PROVIDER_NAME =&gt; 'Nopayment01',
-	HeidelpayConfig::PAYMENT_METHOD_CREDIT_CARD_SECURE =&gt; 'HeidelpayCreditCardSecureAuthorize01',
-	HeidelpayConfig::PAYMENT_METHOD_SOFORT =&gt; 'HeidelpaySofort01',
-	HeidelpayConfig::PAYMENT_METHOD_PAYPAL_AUTHORIZE =&gt; 'HeidelpayPaypalAuthorize01',
-	HeidelpayConfig::PAYMENT_METHOD_PAYPAL_DEBIT =&gt; 'HeidelpayPaypalDebit01',
-	HeidelpayConfig::PAYMENT_METHOD_IDEAL =&gt; 'HeidelpayIdeal01',
-	HeidelpayConfig::PAYMENT_METHOD_EASY_CREDIT =&gt; 'HeidelpayEasyCredit01',
-];
-        </code></pre>
+ 
+// Heidelpay Split-payment marketplace logic
+$config[HeidelpayConstants::CONFIG_IS_SPLIT_PAYMENT_ENABLED_KEY] = true;</code></pre>
                                                             </p>
                                                         </li>
                                                         <li value="2">
@@ -555,27 +500,27 @@ protected function getControllerProviderStack($isSsl)
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1"><a href="../heidelpay.htm">Get a general idea about Heidelpay</a>
+                                                        <li value="1"><a href="../heidelpay.htm">Getting a general idea about Heidelpay</a>
                                                         </li>
-                                                        <li value="2"><a href="heidelpay-installation.htm">Install Heidelpay</a>
+                                                        <li value="2"><a href="heidelpay-installation.htm">Installing Heidelpay</a>
                                                         </li>
-                                                        <li value="3"><a href="heidelpay-error-workflow.htm">Configure Heidelpay error workflow</a>
+                                                        <li value="3"><a href="heidelpay-error-workflow.htm">Configuring Heidelpay error workflow</a>
                                                         </li>
-                                                        <li value="4"><a href="heidelpay-error-workflow.htm">Configure Heidelpay error workflow</a>
+                                                        <li value="4"><a href="heidelpay-error-workflow.htm">Configuring Heidelpay error workflow</a>
                                                         </li>
-                                                        <li value="5"><a href="heidelpay-credit-card.htm">Configure Credit Card Secure payment for Heidelpay</a>
+                                                        <li value="5"><a href="heidelpay-credit-card.htm">Configuring Credit Card Secure payment for Heidelpay</a>
                                                         </li>
-                                                        <li value="6"><a href="heidelpay-ideal.htm">Configure iDeal payment for Hedelpay</a>
+                                                        <li value="6"><a href="heidelpay-ideal.htm">Configuring iDeal payment for Hedelpay</a>
                                                         </li>
-                                                        <li value="7"><a href="heidelpay-paypal-debit.htm">Configure Paypal Debit Workflow for Heidelpay</a>
+                                                        <li value="7"><a href="heidelpay-paypal-debit.htm">Configuring Paypal Debit Workflow for Heidelpay</a>
                                                         </li>
-                                                        <li value="8"><a href="heidelpay-sofort.htm">Configure Sofort payment for Heidelay</a>
+                                                        <li value="8"><a href="heidelpay-sofort.htm">Configuring Sofort payment for Heidelay</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p>
     ,<i>Last
-        review date: Dec. 6th, 2017</i></p>
+        review date: November 13th, 2018</i></p>
                                                 </div>
                                             </div>
                                         </div>
