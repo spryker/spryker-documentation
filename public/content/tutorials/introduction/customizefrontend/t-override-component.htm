@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Features|Company Account Management">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.ShopSuite,Spryker.B2C,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|Tutorials|Introduction|Customizing Spryker Frontend">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Company Roles and Permissions Overview</title>
+        <meta name="author" content="" /><title>Tutorial - Frontend - Override a Component</title>
         <link href="../../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="6VA6G5jkFEm1fz7F944jsg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="6VA6G5jkFEm1fz7F944jsg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="o49gfdgLuEqqFC5equRufQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="o49gfdgLuEqqFC5equRufQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -196,44 +196,149 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer">
-                                                    <h1>Company Roles and Permissions Overview</h1>
-                                                    <p>Usually employees within a company have different roles (e.g. purchasing, administration, supervision, etc.). These roles are related to Company Users and are  referred to as <b>Company Roles</b>. A role can be default (“is_default” flag), which means that it is used for all new users automatically. Upon initial creation of the first Company User, the default role is Admin. After the Admin user has been created, he/she creates the structure of the company and can define the default role to be used further on.</p>
+                                                    <h1>Tutorial - Frontend - Override a Component  <img src="../../../resources/images/shoptype/b2b_shop.png" /><img src="../../../resources/images/shoptype/b2c_shop.png" /><img src="../../../resources/images/shoptype/mastersuite.png" /></h1>
+                                                    <p>If the implementation of any of the components shipped with Spryker frontend does not suite your needs, you can override it with a component of your own. The following article shows how to override a molecule called&#160;<b>simple-carousel</b>. By default, the component is used, for example, to display product suggestions at the bottom of the page:</p>
                                                     <p>
-                                                        <img src="../../../resources/images/roles.png" />
+                                                        <img src="../../../resources/images/frontend/old-simple-carousel.png" />
                                                     </p>
-                                                    <h2>Permissions</h2>
-                                                    <p>Each Company role contains a set of permissions in the form of <b>Permission</b> keys attributed to them. The Permissions key defines what the users are allowed to do: for example, a user can be allowed to add products to cart. Permissions that can be used are not limited in any way - you can create and integrate any permissions. Each of the permissions is represented as a plugin in the code.</p>
-                                                    <p>Here is another example of the connection between company roles and permissions. When a user registers a Company in the system, he/she actually creates a request for Company account registration. After the Company account has been approved, this first Company User becomes the Company administrator. Therefore, one of the roles within the Company will be Administrator who will have all the permissions with regard to creation and management of company profile, user accounts and user rights.</p>
-                                                    <p>One and the same user can have several Company Roles assigned to them. It means that the same user can be Junior Sales Manager and Team Leader, which in its turn implies that this user has permissions assigned to both roles: Junior Sales Manager and Team Leader. Here it should be noted that the permissions, entitling the user with more rights, win. For example,  suppose Junior Sales Managers are allowed to place an order for up to 1000 Euro, whereas Team Leaders can place orders for up to 2000 Euro. In this case, the user will be allowed to place orders for up to 2000 Euro, and not 1000 Euro. Or, for example, if Junior Sales Managers are not allowed to view specific products, but Team Leaders can, the users having both Junior Sales Manager and Team Leader roles will be allowed to view those products.</p>
+                                                    <p>Let us replace the default implementation of this molecule with our own version. It will look basically the same as the default one, but we'll use a different color for the left and right arrows; the current view number will be displayed in the browser&#160;console. Also, when reaching the last image in the set, the component will no longer be reset to the first view automatically by pressing the right button.</p>
+                                                    <h2>1. Create Component Folder on Project Level</h2>
+                                                    <p>On the global level, the molecule we want to override is located in the following folder:&#160;<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</var>. It is a part of the main&#160;<i>Shop UI</i> application. To override it, we need to place our implementation in the <var>Shop UI</var> folder on the project level, and also&#160;replicate the folder structure. In other words, we need to create the following folder for the component:&#160;<var>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</var>.</p>
+                                                    <p>Also, we need to create an entry point for Webpack. Create an empty&#160;<var>index.ts</var> file in the folder.</p>
+                                                    <h2>2. Override Component Template</h2>
+                                                    <p>The first thing we need to do is to override the Twig of the default component. To do this, we need to create a&#160;Twig file for the component on the project level. Since the project level has priority over the global level, the newly created project-side Twig will override the global one. In other words, whenever the component is used on a page, your implementation will be used instead of the default one.</p>
+                                                    <p>To override the global component, the Twig file name on the project level must be the same as on the global level. Also, component <i>name</i> and <i>tag name</i>&#160;specified in the <b>config&#160;</b>property must be the same as on the global level. In our case, the file name on the project level must be&#160;<var>simple-carousel.twig</var>, and the&#160;<b>config</b> property will look as follows:</p><pre><code class="language-Twig line-numbers">{% define config = {
+    name: 'simple-carousel',
+    tag: 'simple-carousel'
+} %}</code></pre>
+                                                    <p>Since the new component will be used everywhere instead of the global one, it is also recommended to replicate the data contracts. For this purpose, the&#160;<b>data</b> and&#160;<b>attributes</b> properties need to be configured the same as in the source component. If you are going to change the outlook of the component only, without changing its <i>data</i> property, attributes etc, you can copy the source Twig file, and then make changes to the&#160;<b>body</b> block only. The block contains the visual layout of a component.</p>
+                                                    <p>As we are not going to change the component template, let us copy the whole of the source twig implementation (<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel/simple-carousel.twig</var>) to the project level (<var>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel.twig</var>). The Twig file will look as follows:</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />simple-carousel.twig</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Twig line-numbers">{% extends model('component') %}
+
+{% define config = {
+    name: 'simple-carousel',
+    tag: 'simple-carousel'
+} %}
+
+{% define data = {
+    slides: [],
+    showDots: true
+} %}
+
+{% define attributes = {
+    'slides-to-show': 1,
+    'slides-to-scroll': 1
+} %}
+
+{% set slidesCount = data.slides | length %}
+{% set slideWidth = 100 / attributes['slides-to-show'] %}
+{% set dotsCount = (((slidesCount - attributes['slides-to-show']) / attributes['slides-to-scroll']) | round(0, 'ceil')) + 1 %}
+{% set showNavigation = data.slides | length &gt; 1 %}
+{% set showDots = data.showDots and dotsCount &gt; 1 %}
+
+{#
+    Insert customizations in the body of the component, if necessary
+#}
+{% block body %}
+    &lt;div class="{{config.name}}__container"&gt;
+        {% if showNavigation %}
+            &lt;div class="{{config.name}}__navigation {{config.name}}__navigation--prev"&gt;
+                &lt;a href="#prev" class="{{config.name}}__arrow {{config.jsName}}__prev"&gt;
+                    {% include atom('icon') with {
+                        modifiers: ['big'],
+                        data: {
+                            name: 'chevron-left'
+                        }
+                    } only %}
+                &lt;/a&gt;
+            &lt;/div&gt;
+        {% endif %}
+
+        &lt;div class="{{config.name}}__view"&gt;
+            &lt;div class="{{config.name}}__slider {{config.jsName}}__slider grid grid--stretch"&gt;
+                {% for slide in data.slides %}
+                    &lt;div class="{{config.jsName}}__slide col" style="width:{{slideWidth}}%;min-width:{{slideWidth}}%;"&gt;
+                        {% block slide %}{% endblock %}
+                    &lt;/div&gt;
+                {% endfor %}
+            &lt;/div&gt;
+            {% if showDots %}
+                &lt;div class="{{config.name}}__dots"&gt;
+                    {%- for dot in 1..dotsCount -%}
+                        &lt;a href="#" class="{{config.name}}__dot {{config.jsName}}__dot{% if loop.first %} {{config.name}}__dot--current{% endif %}"&gt;&lt;/a&gt;
+                    {%- endfor -%}
+                &lt;/div&gt;
+            {% endif %}
+        &lt;/div&gt;
+
+        {% if showNavigation %}
+            &lt;div class="{{config.name}}__navigation {{config.name}}__navigation--next"&gt;
+                &lt;a href="#next" class="{{config.name}}__arrow {{config.jsName}}__next"&gt;
+                    {% include atom('icon') with {
+                        modifiers: ['big'],
+                        data: {
+                            name: 'chevron-right'
+                        }
+                    } only %}
+                &lt;/a&gt;
+            &lt;/div&gt;
+        {% endif %}
+    &lt;/div&gt;
+{% endblock %}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>3. Define Component Styles</h2>
+                                                    <p>The next thing to do is to provide the styles to use in the component. We need to use the mixin of the default component and add our style customization within the mixin. For this purpose, create file&#160;<var>simple-carousel.scss</var> in the project folder with the following content:</p><pre><code class="language-Css line-numbers">@include shop-ui-simple-carousel {
+    color: $setting-color-alt;
+}</code></pre>
+                                                    <p>With the above code, we inherit all styles of the default component, and then override the arrow color with another one.&#160;The color is taken from global configuration. It can be found&#160;in the followig folder:<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/styles/settings</var>.</p>
+                                                    <p>Now, we need to make the style visible for Webpack using the <var>index.ts</var> file:</p><pre><code class="language-Javascript line-numbers">// Import component style
+import './simple-carousel.scss';</code></pre>
+                                                    <h2>4. Change Component Behavior</h2>
+                                                    <p>Finally, let us define what the component does. Create file&#160;<var>simple-carousel.ts</var> with the following content:</p><pre><code class="language-Javascript line-numbers">// Import the SimpleCarousel class
+import SimpleCarousel from 'ShopUi/components/molecules/simple-carousel/simple-carousel';
+
+// Export the extended class with additional behavior
+export default class SimpleCarouselExtended extends SimpleCarousel {
+    slide(): void {
+        console.log(`Showing view number ${this.viewCurrentIndex + 1}/${this.viewsCount}!`);
+
+        super.slide();
+
+        // If we've reached the last image, prevent automatic transfer to the 1st one
+        if (this.viewCurrentIndex + 1 === this.viewsCount) {
+            this.viewCurrentIndex = this.viewCurrentIndex -1;
+        }
+    }
+}</code></pre>
+                                                    <p>In the above example, first, we import class&#160;<b>SimpleCarousel</b> from the global level. After that, we declare and export a new class, <b>SimpleCarouselExtended</b>. Since it extends the class of the default component, it inherits all of its its behavior. The code contained inside the class adds behavior on its own.</p>
+                                                    <p class="tip">If you want to define the component behavior from scratch rather than importing the behavior of the default component, you need to extend the base&#160;<b>Component</b> class instead:
+<pre><code class="language-Javascript line-numbers">import Component from 'ShopUi/models/component';
+
+export default class SimpleCarouselExtended extends Component {
+&#160; &#160; &#160; &#160; &#160;// TODO: your code here
+}</code></pre></p>
+                                                    <p>After implementing the component behavior, let us bond it to the DOM element that represents the component. We need to use the same tag name as the default component, in our case, <b>simple-carousel</b>. Open the&#160;<var>index.ts</var> file again and add the following content:</p><pre><code class="language-Javascript line-numbers">// Import the 'register' function from the Shop Application
+import register from 'ShopUi/app/registry';
+ 
+// Register the component
+export default register(
+    'simple-carousel',
+    () =&gt; import(/* webpackMode: "lazy" */'./simple-carousel')
+);</code></pre>
+                                                    <h2>5. Build Frontend</h2>
+                                                    <p>Now, let us build the frontend. Run the following command in the console: <var>npm run yves</var>.</p>
+                                                    <p>As soon as&#160;<b>npm</b> finishes, you can see changes in the simple carousel component. The arrow color is changed and you cannot switch to the&#160;<b>1st</b> element after reaching the last one:</p>
                                                     <p>
-                                                        <img src="../../../resources/images/roles-permissions.png" />
+                                                        <img src="../../../resources/images/frontend/new-simple-carousel.png" />
                                                     </p>
-                                                    <p>Company roles and permissions and their relation to the organizational structure can be schematically represented as follows:</p>
+                                                    <p>If you open the browser&#160;console, you can see the current view number each time you press the left or the right arrow:</p>
                                                     <p>
-                                                        <img src="../../../resources/images/company_account/roles_structure.png" />
+                                                        <img src="../../../resources/images/frontend/new-carousel-console.png" />
                                                     </p>
-                                                    <h2>Permission Types</h2>
-                                                    <p>Permissions can be simple and complex. <b>Simple</b> permissions are those that do not have any logic behind them and answer the question “Does the customer have a permission?”. Example of a simple permission: a Company User is allowed (or not allowed) to access product details page.</p>
-                                                    <p>
-                                                        <img src="../../../resources/images/company_account/simple_permissions.png" />
+                                                    <p><i>Last review date: November 19th, 2018</i>
                                                     </p>
-                                                    <p><b>Complex</b> permissions have some logic behind them and answer the question “Does the customer have a permission with some parameters and business logic?” Example of a complex permission: a Company User is allowed (or not allowed) to place an order with grand total over 1000 Euro.</p>
-                                                    <p>
-                                                        <img src="../../../resources/images/company_account/complex_permissions.png" />
-                                                    </p>
-                                                    <p>Some of the Permissions can be configured for specific roles, for example, “allow adding no more than X items to cart” for junior support engineer, or, for example, some specific products are not allowed to be viewed by anyone, but Admin and Top Managers. These values are referred to as <b>Company Role Permissions</b>.</p>
-                                                    <p>Permission can also be <b>Yves-side</b> and <b>Zed-side</b>. <b>Yves permissions</b> do not need to get any data from the database. They refer to key-value storage, or to search to check the right for actions. For example, the permission to view a product, a page, or permission to place an order, permission to place an order with grand total less X, would be Yves-side permissions.</p>
-                                                    <p>Permissions that require some data from the database or some additional business-logic on top to check the rights for actions, are referred to as <b>Zed permissions</b>. For example, the permission to add to cart up to X [order value] would be the Zed-side permission. In this case the process of permissions check would be as follows: after the user clicked “Add to cart” button, the request comes to Zed and the pre-checks are made following the “add to cart” request. After that, the calculations are run. The calculations apply discounts per item, and then per cart (total). The logic behind this is simple: a user might have a discount for a specific item, and a discount for order starting from a specific order value. The order value would be calculated taken the discount per items into account, and therefore the discount per cart would be applied after all discounts per items have been calculated. After the calculations have been made, the cart is saved.</p>
-                                                    <p>Obviously, the permissions can not be checked at the step when user just clicked “Add to cart” button, because actual order value has not been calculated yet (pre-checks have not been made yet, discounts have not been calculated). Also, the permissions check request can not be started after the cart has been updated - that would be too late, as, the cart has already been persisted. The request for rights check is made somewhere in between - specifically, right after the discounts have been calculated. That is why the so-called “termination hooks” have been implemented deep in logic, where the permissions checks are made. The termination hooks (plugin stack) do not allow the permissions sneak into the business logic foundation so it will remain clean from the permissions and not overwhelmed with “can” “if not than…” etc.</p>
-                                                    <p>
-                                                        <img src="../../../resources/images/company_account/termination_hooks.png" />
-                                                    </p>
-                                                    <p>The termination hooks are performed one by one, and process termination can happen for any reason, and one of them would be the permissions.</p>
-                                                    <p>&#160;</p>
-                                                    <p><i>Last review date: August 15th, 2018 </i>
-                                                    </p>
-                                                    <p>&#160;</p>
-                                                    <p>&#160;</p>
                                                 </div>
                                             </div>
                                         </div>
