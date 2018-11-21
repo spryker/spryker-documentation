@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="LO6qL0whjUOkMsyDjucODA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="LO6qL0whjUOkMsyDjucODA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="kFXKWE2P4UmFGSvTfpopEg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="kFXKWE2P4UmFGSvTfpopEg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -197,18 +197,18 @@
                                                 </div>
                                                 <div class="js-anchorer">
                                                     <h1>Tutorial - Customer Import</h1>
-                                                    <p>This tutorial describes the steps you need to follow in order to extend the <var>Importer</var> module functionality.</p>
+                                                    <p>This tutorial describes the steps you need to follow in order to extend the <code>Importer</code> module functionality.</p>
                                                     <p>In this example, we’ll import customer data; of course you can update the code in this tutorial to fit your need.</p>
                                                     <h2>Customer Data File</h2>
                                                     <p>In order to import customer data from a legacy system, the data needs to be exported to a CSV file in a format that fits the new database schema.</p>
-                                                    <p>In the <var>Importer</var> module, we’ll place the <var>customers.csv</var> file under the <var>src/Pyz/Zed/Importer/Business/Internal/data/</var> folder.</p>
+                                                    <p>In the <code>Importer</code> module, we’ll place the <code>customers.csv</code> file under the <code>src/Pyz/Zed/Importer/Business/Internal/data/</code> folder.</p>
                                                     <p>The first line in the CSV file must describe the structure of the data we need to import. The other lines must respect this given structure and one row corresponds to one entry.</p><pre><code class="language-PHP line-numbers">customer_reference,email,first_name,last_name
 DE--1,test_customer1@mail.com,Test,Customer1
 DE--2,test_customer2@mail.com,Test,Customer2</code></pre>
                                                     <h2>Implement Customer Installer</h2>
                                                     <p>The data installer has knowledge on where to get the data from and which data importers are able to process it. The data installer receives one or more data importers, that are executing the actual import.</p>
-                                                    <p>Create the <var>CustomerInstaller</var> class under the <var>src/Pyz/Zed/Importer/Business/Installer/Customer/</var> folder.</p>
-                                                    <p>Place the following code in the <var>CustomerInstaller</var> class:</p>
+                                                    <p>Create the <code>CustomerInstaller</code> class under the <code>src/Pyz/Zed/Importer/Business/Installer/Customer/</code> folder.</p>
+                                                    <p>Place the following code in the <code>CustomerInstaller</code> class:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -244,7 +244,7 @@ class CustomerInstaller extends AbstractInstaller
                                                         </div>
                                                     </div>
                                                     <h3>InstallerFactory</h3>
-                                                    <p>Next, in the <var>InstallerFactory</var> we need to add a method that returns an instance of our new data installer.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Next, in the <code>InstallerFactory</code> we need to add a method that returns an instance of our new data installer.</p><pre><code class="language-PHP line-numbers">&lt;?php
  /**
      * @return \Pyz\Zed\Importer\Business\Installer\Customer\CustomerInstaller
      */
@@ -267,12 +267,12 @@ class CustomerInstaller extends AbstractInstaller
         ];
     }</code></pre>
                                                     <p>We’ll take care of the implementation of the customer importer further.</p>
-                                                    <p>Add the resource customer constant in the <var>ImporterConfig</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add the resource customer constant in the <code>ImporterConfig</code>:</p><pre><code class="language-PHP line-numbers">&lt;?php
 const RESOURCE_CUSTOMER = 'RESOURCE_CUSTOMER';</code></pre>
                                                     <h2>Implement Customer Importer</h2>
                                                     <p>The importer is the class responsible for processing and converting the data from a legacy format it can understand to the new format and then import it to the database. Also, it checks if the import was already executed.</p>
-                                                    <p>Create the <var>CustomerImporter</var> class under the <var>src/Pyz/Zed/Importer/Business/Importer/Customer/</var> folder.</p>
-                                                    <p>Place the following code in the <var>CustomerImporter</var> class:</p>
+                                                    <p>Create the <code>CustomerImporter</code> class under the <code>src/Pyz/Zed/Importer/Business/Importer/Customer/</code> folder.</p>
+                                                    <p>Place the following code in the <code>CustomerImporter</code> class:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="bash">&lt;?php
 
@@ -334,7 +334,7 @@ class CustomerImporter extends AbstractImporter
                                                         </div>
                                                     </div>
                                                     <h3>ImporterFactory</h3>
-                                                    <p>Next, in the <var>ImporterFactory</var> we need to add a method that creates an instance of our new data importer.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Next, in the <code>ImporterFactory</code> we need to add a method that creates an instance of our new data importer.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
     /**
      * @return \Pyz\Zed\Importer\Business\Importer\Customer\CustomerImporter
@@ -347,9 +347,9 @@ class CustomerImporter extends AbstractImporter
 
         return $customerImporter;
     }</code></pre>
-                                                    <h3>Add the Dependency to the <var>Customer</var> Module</h3>
-                                                    <p>Since we need to use the <var>CustomerFacade</var>, we need to add this dependency.</p>
-                                                    <p>In the <var>ImporterDependencyProvider</var> add the dependency to the <var>CustomerBundle</var> in the <var>provideBusinessLayerDependencies(Container $container)</var> method:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <h3>Add the Dependency to the <code>Customer</code> Module</h3>
+                                                    <p>Since we need to use the <code>CustomerFacade</code>, we need to add this dependency.</p>
+                                                    <p>In the <code>ImporterDependencyProvider</code> add the dependency to the <code>CustomerBundle</code> in the <code>provideBusinessLayerDependencies(Container $container)</code> method:</p><pre><code class="language-PHP line-numbers">&lt;?php
     const FACADE_CUSTOMER = 'FACADE_CUSTOMER';
 
     /**
@@ -368,7 +368,7 @@ class CustomerImporter extends AbstractImporter
 
         return $container;
     }</code></pre>
-                                                    <p>Add a method that returns an instance of the <var>CustomerFacade</var> in the <var>AbstractFactory</var>:</p><pre><code class="language-PHP line-numbers">    &lt;?php
+                                                    <p>Add a method that returns an instance of the <code>CustomerFacade</code> in the <code>AbstractFactory</code>:</p><pre><code class="language-PHP line-numbers">    &lt;?php
     /**
      * @return \Pyz\Zed\Category\Business\CustomerFacadeInterface
      */
@@ -377,9 +377,9 @@ class CustomerImporter extends AbstractImporter
         return $this-&gt;getProvidedDependency(ImporterDependencyProvider::FACADE_CUSTOMER);
     }</code></pre>
                                                     <h2>Extend Customer Module</h2>
-                                                    <p>As you can see, the importer calls some methods from the <var>CustomerFacade</var> that don’t exist yet.</p>
-                                                    <p>Next, we’ll need to extend the <var>CustomerFacade</var> so that it implements and exposes those 2 methods that we need for our data import.</p>
-                                                    <p>Create the <var>Business</var> layer in the <var>Customer</var> module. Add a <var>CustomerWriter</var> class, where we’ll implement the business logic for these 2 operations.</p>
+                                                    <p>As you can see, the importer calls some methods from the <code>CustomerFacade</code> that don’t exist yet.</p>
+                                                    <p>Next, we’ll need to extend the <code>CustomerFacade</code> so that it implements and exposes those 2 methods that we need for our data import.</p>
+                                                    <p>Create the <code>Business</code> layer in the <code>Customer</code> module. Add a <code>CustomerWriter</code> class, where we’ll implement the business logic for these 2 operations.</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -427,7 +427,7 @@ class CustomerWriter
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>To be able to get an instance of the <var>CustomerWriter</var> in our facade, add a <var>CustomerBusinessFactory</var> under the business layer with a method that creates the <var>CustomerWriter</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>To be able to get an instance of the <code>CustomerWriter</code> in our facade, add a <code>CustomerBusinessFactory</code> under the business layer with a method that creates the <code>CustomerWriter</code>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Zed\Customer\Business;
 
@@ -448,8 +448,8 @@ class CustomerBusinessFactory extends SprykerCustomerBusinessFactory
     }
 
 }</code></pre>
-                                                    <p>Next, we’ll need to extend the <var>CustomerFacade</var> so that it exposes the functionality we just added.</p>
-                                                    <p>First, add the <var>CustomerFacadeInterface</var> that extends the interface of the facade from the core level with 2 new operations.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Next, we’ll need to extend the <code>CustomerFacade</code> so that it exposes the functionality we just added.</p>
+                                                    <p>First, add the <code>CustomerFacadeInterface</code> that extends the interface of the facade from the core level with 2 new operations.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Zed\Customer\Business;
 
@@ -468,7 +468,7 @@ interface CustomerFacadeInterface extends SprykerCustomerFacadeInterface
      */
     public function createCustomer(CustomerTransfer $customerTransfer);
 }</code></pre>
-                                                    <p>Next, add the <var>CustomerFacade</var> that extends the facade defined on the core level:</p>
+                                                    <p>Next, add the <code>CustomerFacade</code> that extends the facade defined on the core level:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -503,7 +503,7 @@ class CustomerFacade extends SprykerCustomerFacade implements CustomerFacadeInte
                                                         </div>
                                                     </div>
                                                     <h2>Register the new data installer</h2>
-                                                    <p>Now we’re almost ready to test the new data installer; we just need to register it in the <var>ImporterBusinessFactory</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Now we’re almost ready to test the new data installer; we just need to register it in the <code>ImporterBusinessFactory</code>:</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
      * @return \Pyz\Zed\Importer\Business\Installer\InstallerInterface[]
      */

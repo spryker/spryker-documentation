@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Payment|BS PayOne|suite">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -156,21 +156,11 @@
                                 <div class="row collapse">
                                     <div class="top-bar">
                                         <div class="breadcrumbs-block">
-                                            <div class="nocontent">
-                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="lvEvEjQgRkSsM__U09AyOA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lvEvEjQgRkSsM__U09AyOA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
-                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
-                                                        </ul>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div>
@@ -201,9 +191,9 @@
                                                     </p>
                                                     <p>The payment using PayPal requires redirect to PayPal website. When the customer is redirected to PayPal’s website, they have to authorize and after that either cancel or validate the transaction.</p>
                                                     <p>A concern regarding payment flows that require redirection to third party website pages is that you loose control over the customer's action (the customer can close the browser before accepting or canceling the transaction). If this is the case, PayPal sends an instant payment notification (IPN) to Payone, then Payone notifies Spryker.</p>
-                                                    <h2>Front-end Integration</h2>
+                                                    <h2>Front-End Integration</h2>
                                                     <p>To adjust the frontend appearance, add the following templates in your theme directory:</p>
-                                                    <p><var>src/&lt;project_name&gt;/Yves/CartPage/Theme/default/components/molecules/cart-summary/cart-summary.twig</var>
+                                                    <p><code>src/&lt;project_name&gt;/Yves/CartPage/Theme/default/components/molecules/cart-summary/cart-summary.twig</code>
                                                     </p>
                                                     <p>Add the following code below the checkout button or anywhere you want depending on your design:</p>
                                                     <p><pre><code class="bash">{{ render(path('payone-checkout-with-paypal-button')) }}</code></pre>
@@ -211,12 +201,12 @@
                                                     <p>You can also implement your own button if you want the button to be loaded without separate call to the controller, or if you want to change the design.</p>
                                                     <h2>Paypal Express Checkout Flow Description:</h2>
                                                     <ul>
-                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <var>setexpresscheckout</var> action and success, failure and back URLs.</li>
+                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <code>setexpresscheckout</code> action and success, failure and back URLs.</li>
                                                         <li value="2"> In the response we receive a workorderid which is used for all other operations until the capture request and PayPal redirect URL.</li>
                                                         <li value="3"> We store wordorderid to quote and redirect customer to the URL provided by Payone.</li>
                                                         <li value="4"> On the PayPal page, customer has to log in and approve the intention of paying for the desired goods.</li>
                                                         <li value="5"> After the customer clicks the button, he is redirected to success or failure URL, provided by the shop in the first request to Payone.</li>
-                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <var>getexpresscheckoutdetails</var>.</li>
+                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <code>getexpresscheckoutdetails</code>.</li>
                                                         <li value="7"> Payone sends us information about the customer like email and shipment data.</li>
                                                         <li value="8"> User is redirected to the page(summary page as default) of standard checkout.</li>
                                                         <li value="9"> After placing the order, the pre-authorization call is sent to Payone (and through it to PayPal). Workorderid is sent to Payone with this request.</li>
@@ -235,7 +225,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'PayonePaypalExpressCheckout',
 ];
     </code></pre>
-                                                    <p>Note: You can find all needed configuration parameters in <var>config.dist.php</var> file inside Payone module.</p>
+                                                    <p>Note: You can find all needed configuration parameters in <code>config.dist.php</code> file inside Payone module.</p>
                                                     <h2>Configuration Parameters Description:</h2>
 
         To understand where to go, if control over express checkout process should be handed over to the project,

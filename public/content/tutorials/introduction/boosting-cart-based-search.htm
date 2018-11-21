@@ -59,7 +59,6 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -166,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="YMi_AUpk1kK_Q19N_j52bw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YMi_AUpk1kK_Q19N_j52bw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="YbTgmsr1l0SEuRg8HAZj2A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YbTgmsr1l0SEuRg8HAZj2A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -204,13 +203,13 @@
                                                     <h3>Preparation</h3>
                                                     <p>Fulltext search engines like Elasticsearch provide a possibility to influence sorting of products by tweaking the scoring function. The scoring function assigns weights to each result based on a formula, usually based on text similarity or synonyms, but we can change it to boost specific products higher than others. In this challenge we will try to affect the scoring function based on products that are already in the cart.</p>
                                                     <p>The second idea leverages the fact, that Spryker implementation of search is very flexible and allows to configure additional plugins which are used to build search queries. Please see <a href="../Developing with Spryker/Module Guide/Search/search.htm" class="MCXref xref">Search</a> for more details.</p>
-                                                    <p>To solve this task we will be working in the client layer of the Catalog moule located at <var>src/Pyz/Client/Catalog/</var>.</p>
+                                                    <p>To solve this task we will be working in the client layer of the Catalog moule located at <code>src/Pyz/Client/Catalog/</code>.</p>
                                                     <h3>Step by Step Solution</h3>
                                                     <ol>
-                                                        <li value="1">If we trace execution flow of search starting from <var>Pyz\Yves\Catalog\Controller\CatalogController</var>, we will find a <var>CatalogClient</var>. The client uses a stack of plugins which implement <var>\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface</var>. It is needed to create a new plugin, which will modify our search queries accordingly.</li>
-                                                        <li value="2">Implement <var>Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface</var>, and then replace the <var>SortedCategoryQueryExpanderPlugin</var> with your new plugin in <var>Pyz\Client\Catalog\CatalogDependencyProvider::createCatalogSearchQueryExpanderPlugins()</var>. Name the new plugin <var>Pyz\Client\Catalog\Plugin\Elasticsearch\QueryExpander\CartBoostQueryExpanderPlugin</var>. The final version of the plugin can be found at the bottom of this page.</li>
-                                                        <li value="3">We will use <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" title="function score elasticsearch" alt="function score elasticsearch">function_score query modifier function</a> which allows us to modify the scoring of the filtered results. Elastic search allows to combine multiple queries using <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/compound-queries.html" target="_blank" title="compound queries elasticsearch" alt="compound queries elasticsearch">different strategies</a>, filtering is needed in the catalog, therefore <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html" target="_blank" title="bool query information" alt="bool query information">bool query</a> strategy is used by the Search module to build the base query (see <var>Pyz\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin</var>). This means, we need to extend the boolean query with our custom scoring function. What is needed to be done in the plugin is checking for type of the incoming query and it would be then safe to extend it when instanceof BoolQuery is passed.</li>
-                                                        <li value="4">To get the content of the cart we can use the <var>Spryker\Client\Cart\CartClientInterface::getQuote()</var>. The client has to be added as dependency to <var>CatalogDependencyProvider</var> and provided to the <var>CartBoostQueryExpanderPlugin</var> through the client factory like:</li><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <li value="1">If we trace execution flow of search starting from <code>Pyz\Yves\Catalog\Controller\CatalogController</code>, we will find a <code>CatalogClient</code>. The client uses a stack of plugins which implement <code>\Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface</code>. It is needed to create a new plugin, which will modify our search queries accordingly.</li>
+                                                        <li value="2">Implement <code>Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface</code>, and then replace the <code>SortedCategoryQueryExpanderPlugin</code> with your new plugin in <code>Pyz\Client\Catalog\CatalogDependencyProvider::createCatalogSearchQueryExpanderPlugins()</code>. Name the new plugin <code>Pyz\Client\Catalog\Plugin\Elasticsearch\QueryExpander\CartBoostQueryExpanderPlugin</code>. The final version of the plugin can be found at the bottom of this page.</li>
+                                                        <li value="3">We will use <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" title="function score elasticsearch" alt="function score elasticsearch">function_score query modifier function</a> which allows us to modify the scoring of the filtered results. Elastic search allows to combine multiple queries using <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/compound-queries.html" target="_blank" title="compound queries elasticsearch" alt="compound queries elasticsearch">different strategies</a>, filtering is needed in the catalog, therefore <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html" target="_blank" title="bool query information" alt="bool query information">bool query</a> strategy is used by the Search module to build the base query (see <code>Pyz\Client\Catalog\Plugin\Elasticsearch\Query\CatalogSearchQueryPlugin</code>). This means, we need to extend the boolean query with our custom scoring function. What is needed to be done in the plugin is checking for type of the incoming query and it would be then safe to extend it when instanceof BoolQuery is passed.</li>
+                                                        <li value="4">To get the content of the cart we can use the <code>Spryker\Client\Cart\CartClientInterface::getQuote()</code>. The client has to be added as dependency to <code>CatalogDependencyProvider</code> and provided to the <code>CartBoostQueryExpanderPlugin</code> through the client factory like:</li><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Client\Catalog;
 
 use Pyz\Client\Catalog\Plugin\Elasticsearch\Query\FeaturedProductsQueryPlugin;
@@ -225,14 +224,14 @@ class CatalogFactory extends SprykerCatalogFactory
     }
     ...
 }</code></pre>
-                                                        <li value="5">To get the color of a product from the cart we need to read the product data from the key-value storage (Redis) using <var>\Spryker\Client\Product\ProductClientInterface::getProductConcreteByIdForCurrentLocale()</var> The product client needs to be added to the <var>CatalogDependencyProvider</var> and provided to the plugin in the very same way we did in the the previous step.</li>
-                                                        <li value="6">You can find the full source code of the <var>CartBoostQueryExpanderPlugin</var> below.</li>
-                                                        <li value="7">Cleanup: the example code below is good for educational purposes, but needs a minor adjustment to match Spryker architecture: <var>FunctionScore</var> and <var>MultiMatch</var> objects should be instantiated in the <var>CatalogFactory</var> of the catalog client. Now move the instantiation of these objects to the factory and use the factory inside the plugin.</li>
+                                                        <li value="5">To get the color of a product from the cart we need to read the product data from the key-value storage (Redis) using <code>\Spryker\Client\Product\ProductClientInterface::getProductConcreteByIdForCurrentLocale()</code> The product client needs to be added to the <code>CatalogDependencyProvider</code> and provided to the plugin in the very same way we did in the the previous step.</li>
+                                                        <li value="6">You can find the full source code of the <code>CartBoostQueryExpanderPlugin</code> below.</li>
+                                                        <li value="7">Cleanup: the example code below is good for educational purposes, but needs a minor adjustment to match Spryker architecture: <code>FunctionScore</code> and <code>MultiMatch</code> objects should be instantiated in the <code>CatalogFactory</code> of the catalog client. Now move the instantiation of these objects to the factory and use the factory inside the plugin.</li>
                                                     </ol>
                                                     <h3>Testing</h3>
                                                     <p>Now we can test the results, try to go to a category having products of different colors, e.g. “Cameras &amp; Camcoders”. Then add any red product to your cart and return to the catalog page. The ordering of products should change accordingly and you should see red products first.</p>
                                                     <h4>Snippet for Implementing Cart Boost Query Expander</h4>
-                                                    <p><var>src/Pyz/Client/Catalog/Plugin/Elasticsearch/QueryExpander/CartBoostQueryExpanderPlugin.php</var>
+                                                    <p><code>src/Pyz/Client/Catalog/Plugin/Elasticsearch/QueryExpander/CartBoostQueryExpanderPlugin.php</code>
                                                     </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="bash">&lt;?php
@@ -371,71 +370,23 @@ class CartBoostQueryExpanderPlugin extends AbstractPlugin implements QueryExpand
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <h2>References</h2>
-                                                    <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Documentation</th>
-                                                                <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p>Client</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Introduction about the Client layer</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p>Dependency Provider</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>	Introduction about Dependency Providers</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Search/search.htm">Search	</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Detailed manual about Search with Spryker</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/compound-queries.html" target="_blank" title="Compound queries in Elasticsearch" alt="Compound queries in Elasticsearch">Compound queries in Elasticsearch</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>Overview of query strategies</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank" title="Function score query modifier function" alt="Function score query modifier function">Function score query modifier function</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Function score query modifier function</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
-                                                                    <p><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html" target="_blank" title="bool query in Elasticsearch" alt="bool query in Elasticsearch">Bool query in Elasticsearch</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
-                                                                    <p>Bool query in Elasticsearch</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/content/yves/client.htm">Client</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/content/resources_and_developer_tools/dependency-provider.htm">Dependency Provider</a>
+                                                        </li>
+                                                        <li value="3"><a href="../Developing with Spryker/Module Guide/Search/search.htm">Search	</a>
+                                                        </li>
+                                                        <li value="4"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/compound-queries.html" target="_blank">Compound queries in Elasticsearch</a>
+                                                        </li>
+                                                        <li value="5"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html" target="_blank">Function score query modifier function</a>
+                                                        </li>
+                                                        <li value="6"><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-bool-query.html" target="_blank">Bool query in Elasticsearch</a>
+                                                        </li>
+                                                    </ul>
                                                     <p><![CDATA[		]]></p>
                                                 </div>
                                             </div>

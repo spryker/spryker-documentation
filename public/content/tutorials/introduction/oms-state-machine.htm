@@ -59,7 +59,6 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -166,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="s3hBFNre6UOkCnd0rGTe0g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="s3hBFNre6UOkCnd0rGTe0g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="qmx7KrTS4U6LVDDfsbaUhw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qmx7KrTS4U6LVDDfsbaUhw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -203,9 +202,9 @@
                                                     <h2>1. Create the State Machine Graph</h2>
                                                     <p>The first step is to create the graph that demonstrates the state machine and contains the states with their transitions, events, commands, and conditions. State machines in Spryker are built using easy and well structured XML files. Let’s get started and create the state machine.</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Create a new XML file in <var>\config\Zed\oms</var> and call it <var>Demo01.xml</var>.</li>
-                                                        <li class="bullet_list" value="2">Add the <var>Demo01</var> state machine as an active process in <var>config_default.php</var> under <var>\config\Shared\</var> by adding it to the <var>$config[OmsConstants::ACTIVE_PROCESSES]</var> array.</li>
-                                                        <li class="bullet_list" value="3">Now let’s go back to the XML file. To build the state machine main schema, use the <var>statemachine</var> and <var>process</var> elements and the Spryker OMS schema like following:</li>
+                                                        <li class="bullet_list" value="1">Create a new XML file in <code>\config\Zed\oms</code> and call it <code>Demo01.xml</code>.</li>
+                                                        <li class="bullet_list" value="2">Add the <code>Demo01</code> state machine as an active process in <code>config_default.php</code> under <code>\config\Shared\</code> by adding it to the <code>$config[OmsConstants::ACTIVE_PROCESSES]</code> array.</li>
+                                                        <li class="bullet_list" value="3">Now let’s go back to the XML file. To build the state machine main schema, use the <code>statemachine</code> and <code>process</code> elements and the Spryker OMS schema like following:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">    &lt;?xml version="1.0"?&gt;
     &lt;statemachine
         xmlns="spryker:oms-01"
@@ -223,9 +222,9 @@
         &lt;state name="new"/&gt;
     &lt;/states&gt;</code></pre>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">To see the state machine graph while, and after, building it, go to <a href="http://zed.de.demoshop.local/oms" target="_blank">Zed UI -&gt; Maintenance -&gt; OMS</a> and then you will see your state machine <var>Demo01</var>. Click on it and you will see the graph that represents your XML file.</li>
+                                                        <li class="bullet_list" value="1">To see the state machine graph while, and after, building it, go to <a href="http://zed.de.demoshop.local/oms" target="_blank">Zed UI -&gt; Maintenance -&gt; OMS</a> and then you will see your state machine <code>Demo01</code>. Click on it and you will see the graph that represents your XML file.</li>
                                                         <li class="bullet_list" value="2">Add the other states to you state machine and refresh the graph to see the new changes.</li>
-                                                        <li class="bullet_list" value="3">After adding all the states, you can now start adding the <var>transition</var> and their events. To do so use the transitions element like this:</li>
+                                                        <li class="bullet_list" value="3">After adding all the states, you can now start adding the <code>transition</code> and their events. To do so use the transitions element like this:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">    &lt;transition&gt;
         &lt;source&gt;new&lt;/source&gt;
         &lt;target&gt;paid&lt;/target&gt;
@@ -237,29 +236,29 @@
                                                     </ul><pre><code class="language-PHP line-numbers">    &lt;events&gt;
         &lt;event name="pay" onEnter="true"/&gt;
     &lt;/events&gt;</code></pre>
-                                                    <p><var>onEnter</var> event means that this transition will be triggered automatically. You can also use <var>manual</var> or <var>timeout</var>. A <var>manual</var> event will add a button in the order page to allow triggering the event manually. A <var>timeout</var> one will be triggered after the specified time is out. A timeout could be defined using natural language e.g. <var>14days</var>.</p>
+                                                    <p><code>onEnter</code> event means that this transition will be triggered automatically. You can also use <code>manual</code> or <code>timeout</code>. A <code>manual</code> event will add a button in the order page to allow triggering the event manually. A <code>timeout</code> one will be triggered after the specified time is out. A timeout could be defined using natural language e.g. <code>14days</code>.</p>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add all the other needed transitions and events until you have a logically working graph. Refresh every time you add something new to see the changes live.</li>
                                                     </ul>
                                                     <h2>2. Add Commands and Conditions to the State Machine</h2>
                                                     <p>In state machine real live scenarios, most probably you need to use PHP implementations for some specific logic like sending request to a payment provider or an ERP system. To do so, Spryker provides Commands and Conditions. Commands are triggered with events, therefore they are added to events, and conditions helps deciding to which state an item should move next, and therefore they are added to transitions.</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Add a command to the <var>pay</var> event like this:</li>
+                                                        <li class="bullet_list" value="1">Add a command to the <code>pay</code> event like this:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">    &lt;events&gt;
         &lt;event name="pay" onEnter="true" command="Demo/Pay"/&gt;
     &lt;/events&gt;</code></pre>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add the other commands to the other events.</li>
-                                                        <li class="bullet_list" value="2">Now add conditions where needed in order to make decisions where to move next. This works well with payments. So let’s add a conditions to the <var>paid-&gt;shipped </var>transition like this:</li>
+                                                        <li class="bullet_list" value="2">Now add conditions where needed in order to make decisions where to move next. This works well with payments. So let’s add a conditions to the <code>paid-&gt;shipped </code>transition like this:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">    &lt;transition condition="Demo/IsPaymentAuthorized"&gt;
         &lt;source&gt;paid&lt;/source&gt;
         &lt;target&gt;shipped&lt;/target&gt;
         &lt;event&gt;ship&lt;/event&gt;
     &lt;/transition&gt;</code></pre>
-                                                    <p>The state machine engine recognizes where to move next using the event name. In this case, the transitions <var>paid-&gt;shipped</var> and <var>paid-&gt;invalid</var> should use the same event name with a condition on one of the transitions. The machine then will examine the condition, if it returns <var>true</var> then go to <var>shipped</var> state, otherwise go to <var>invalid</var>. If you check the drafted state machine in Zed now, you can see that the conditions and commands are marked with red color (“not implemented”). So let’s implement them.</p>
+                                                    <p>The state machine engine recognizes where to move next using the event name. In this case, the transitions <code>paid-&gt;shipped</code> and <code>paid-&gt;invalid</code> should use the same event name with a condition on one of the transitions. The machine then will examine the condition, if it returns <code>true</code> then go to <code>shipped</code> state, otherwise go to <code>invalid</code>. If you check the drafted state machine in Zed now, you can see that the conditions and commands are marked with red color (“not implemented”). So let’s implement them.</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">In order to implement the commands and conditions, we use Spryker Command and Condition interfaces <var>CommandByOrderInterface</var> and <var>ConditionInterface</var>.</li>
-                                                        <li class="bullet_list" value="2">Go to <var>src/Pyz/Zed/Oms/Communication/Plugin/Oms/Command/</var> and create a new folder called <var>Demo</var>. Now create a new class and call it <var>PayCommand.php</var>. Then implement the command interface with the <var>run()</var> method like this:</li>
+                                                        <li class="bullet_list" value="1">In order to implement the commands and conditions, we use Spryker Command and Condition interfaces <code>CommandByOrderInterface</code> and <code>ConditionInterface</code>.</li>
+                                                        <li class="bullet_list" value="2">Go to <code>src/Pyz/Zed/Oms/Communication/Plugin/Oms/Command/</code> and create a new folder called <code>Demo</code>. Now create a new class and call it <code>PayCommand.php</code>. Then implement the command interface with the <code>run()</code> method like this:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">&lt;?php
     namespace Pyz\Zed\Oms\Communication\Plugin\Oms\Command\Demo;
 
@@ -284,10 +283,10 @@
         }
 
     }</code></pre>
-                                                    <p>You can add any implementation to the <var>PayCommand</var>, or just return an empty array for now.</p>
+                                                    <p>You can add any implementation to the <code>PayCommand</code>, or just return an empty array for now.</p>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Do the same thing for the other commands.</li>
-                                                        <li class="bullet_list" value="2">Follwing the same approach, add the condition to <var>src/Pyz/Zed/Oms/Communication/Plugin/Oms/Condition/</var> by creating a new <var>Demo</var> folder and a condition class in it called <var>IsPaymentAuthorizedCondition.php</var>. The condition can be implemented like this:</li>
+                                                        <li class="bullet_list" value="2">Follwing the same approach, add the condition to <code>src/Pyz/Zed/Oms/Communication/Plugin/Oms/Condition/</code> by creating a new <code>Demo</code> folder and a condition class in it called <code>IsPaymentAuthorizedCondition.php</code>. The condition can be implemented like this:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Oms\Communication\Plugin\Oms\Condition\Demo;
 
@@ -312,7 +311,7 @@ class IsPaymentAuthorizedCondition extends AbstractCondition implements Conditio
 
 }</code></pre>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">After implementing the command and conditions, you need now to register them in the OMS <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. To do so, go to <var>OmsDependencyProvider</var> in <var>src/Pyz/Zed/Oms/</var> and extend the <var>getConditionPlugins()</var> and <var>getCommandPlugins()</var> methods:</li>
+                                                        <li class="bullet_list" value="1">After implementing the command and conditions, you need now to register them in the OMS <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>. To do so, go to <code>OmsDependencyProvider</code> in <code>src/Pyz/Zed/Oms/</code> and extend the <code>getConditionPlugins()</code> and <code>getCommandPlugins()</code> methods:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">&lt;?php
     /**
      * @param \Spryker\Zed\Kernel\Container $container
@@ -342,60 +341,39 @@ class IsPaymentAuthorizedCondition extends AbstractCondition implements Conditio
                                                     <h2>3. Activate the State Machine</h2>
                                                     <p>The final step is to activate and use the state machine by hooking it into the checkout. To do so:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Open the configuration file: <var>config/Shared/config_default.php</var>.</li>
-                                                        <li class="bullet_list" value="2">Change the invoice payment configuration to use the <var>Demo01</var> state machine instead of <var>DummyPayment01</var>.</li>
+                                                        <li class="bullet_list" value="1">Open the configuration file: <code>config/Shared/config_default.php</code>.</li>
+                                                        <li class="bullet_list" value="2">Change the invoice payment configuration to use the <code>Demo01</code> state machine instead of <code>DummyPayment01</code>.</li>
                                                     </ul><pre><code class="language-PHP line-numbers">&lt;?php
 $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     DummyPaymentConfig::PAYMENT_METHOD_INVOICE =&gt; 'Demo01',
     ...
 ];</code></pre>
-                                                    <p>Next time you checkout with “Invoice” payment, the new <var>Demo01</var> state machine will be used.</p>
+                                                    <p>Next time you checkout with “Invoice” payment, the new <code>Demo01</code> state machine will be used.</p>
                                                     <h2>Testing the State Machine</h2>
                                                     <p>That’s it! You have just built a new order process. To test it:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Go to the <a href="http://www.de.demoshop.local/" target="_blank" title="demoshop" alt="demoshop">demoshop</a>, choose a product and add it to cart, checkout using <var>Invoice</var>, and complete the order.</li>
-                                                        <li class="bullet_list" value="2">Open the <a href="http://zed.de.demoshop.local/sales" target="_blank" title="demoshop orders page" alt="demoshop orders page">orders page</a> in Zed UI and then open your order. This order is now applying the process you have defined in the state machine. All the <var>manual</var> events add buttons using the event names you defined, while the <var>onEnter</var> ones move automatically.</li>
-                                                        <li class="bullet_list" value="3">You can click on the state machine name <var>Demo01</var> under the process column to see what the current state for a specific item is. The current state has a yellowish background color.</li>
-                                                        <li class="bullet_list" value="4">Now click on <var>ship</var> to move the item into the next state.</li>
-                                                        <li class="bullet_list" value="5">Click again on the state machine name <var>Demo01</var> and check the current state.</li>
+                                                        <li class="bullet_list" value="1">Go to the <a href="http://www.de.demoshop.local/" target="_blank" title="demoshop" alt="demoshop">demoshop</a>, choose a product and add it to cart, checkout using <code>Invoice</code>, and complete the order.</li>
+                                                        <li class="bullet_list" value="2">Open the <a href="http://zed.de.demoshop.local/sales" target="_blank" title="demoshop orders page" alt="demoshop orders page">orders page</a> in Zed UI and then open your order. This order is now applying the process you have defined in the state machine. All the <code>manual</code> events add buttons using the event names you defined, while the <code>onEnter</code> ones move automatically.</li>
+                                                        <li class="bullet_list" value="3">You can click on the state machine name <code>Demo01</code> under the process column to see what the current state for a specific item is. The current state has a yellowish background color.</li>
+                                                        <li class="bullet_list" value="4">Now click on <code>ship</code> to move the item into the next state.</li>
+                                                        <li class="bullet_list" value="5">Click again on the state machine name <code>Demo01</code> and check the current state.</li>
                                                         <li class="bullet_list" value="6">You can keep moving the item until the order is closed.</li>
                                                     </ul>
                                                     <h2>Nice Addition</h2>
-                                                    <p>Along with the nice representation of the state machine as graph, Spryker provides a flag called <var>happy</var> to add green arrows in the graph in order to define the happy path of an order item. To add this flag, just write <var>happy = true</var> on the transitions that are part of the happy path like this for example:</p><pre><code class="language-PHP line-numbers">    &lt;transition condition="Demo/IsPaymentAuthorized" happy="true"&gt;
+                                                    <p>Along with the nice representation of the state machine as graph, Spryker provides a flag called <code>happy</code> to add green arrows in the graph in order to define the happy path of an order item. To add this flag, just write <code>happy = true</code> on the transitions that are part of the happy path like this for example:</p><pre><code class="language-PHP line-numbers">    &lt;transition condition="Demo/IsPaymentAuthorized" happy="true"&gt;
         &lt;source&gt;paid&lt;/source&gt;
         &lt;target&gt;shipped&lt;/target&gt;
         &lt;event&gt;ship&lt;/event&gt;
     &lt;/transition&gt;</code></pre>
-                                                    <h2>References</h2>
-                                                    <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Documentation</th>
-                                                                <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p>OMS - Cook Book</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>State Machines - The Cook Book</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Checkout Process/OMS/oms.htm">OMS -  Documentation</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
-                                                                    <p>Order Management System Concepts</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="http://documentation.spryker.com/content/state_machine_cookbook/state-machine-cookbook.htm">State Machines - The Cook Book</a>
+                                                        </li>
+                                                        <li value="2"><a href="http://documentation.spryker.com/content/capabilities/order_management/oms-matrix.htm">Order Management System Matrix</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

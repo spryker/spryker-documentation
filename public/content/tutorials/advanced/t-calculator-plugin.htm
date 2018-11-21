@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="P5eP5hY1B0CekquSGrfGfQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="P5eP5hY1B0CekquSGrfGfQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="JF92xqSDaU26tXJH4r3GiA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="JF92xqSDaU26tXJH4r3GiA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -199,21 +199,21 @@
                                                     <h1>Tutorial - Calculator Plugin</h1>
                                                     <p>This tutorial explains how to add new calculation plugin to the calculator stack.</p>
                                                     <p>Requirement : display the tax amount per item.</p>
-                                                    <p>Right now, you can get the tax amount from <var>grandTotal</var>. For this, you have to add a new calculator into the existing stack for the  module.</p>
-                                                    <p>First, there are some data structure changes that you need to make. Modify <var>ItemTransfer</var> object by adding two new properties :</p>
+                                                    <p>Right now, you can get the tax amount from <code>grandTotal</code>. For this, you have to add a new calculator into the existing stack for the  module.</p>
+                                                    <p>First, there are some data structure changes that you need to make. Modify <code>ItemTransfer</code> object by adding two new properties :</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1"><var>unitTaxAmount</var> for single item</li>
-                                                        <li class="bullet_list" value="2"><var>sumTaxAmount</var> tax amount for sum of items</li>
+                                                        <li class="bullet_list" value="1"><code>unitTaxAmount</code> for single item</li>
+                                                        <li class="bullet_list" value="2"><code>sumTaxAmount</code> tax amount for sum of items</li>
                                                     </ul>
                                                     <p>As this is Tax related ,you have to add this to project level in the Tax module.</p>
-                                                    <p>Modify the transfer object <var>tax.transfer.xml</var> to reflect the new data model. Add the following changes to <var>Pyz/Shared/Tax/Transfer/tax.transfer.xml file</var>:</p><pre><code class="language-PHP line-numbers">&lt;transfer name="Item"&gt;
+                                                    <p>Modify the transfer object <code>tax.transfer.xml</code> to reflect the new data model. Add the following changes to <code>Pyz/Shared/Tax/Transfer/tax.transfer.xml file</code>:</p><pre><code class="language-PHP line-numbers">&lt;transfer name="Item"&gt;
      &lt;property name="unitTaxAmount" type="int" /&gt;
      &lt;property name="sumTaxAmount" type="int" /&gt;
  &lt;/transfer&gt;</code></pre>
-                                                    <p>run console command: <var>vendor/bin/console transfer:generate</var></p>
-                                                    <p>After this step, you should have in the <var>ItemTransfer</var> two new properties.</p>
+                                                    <p>run console command: <code>vendor/bin/console transfer:generate</code></p>
+                                                    <p>After this step, you should have in the <code>ItemTransfer</code> two new properties.</p>
                                                     <p>Next, create the new calculator plugin and register it to the calculator plugin stack.</p>
-                                                    <p>In the <var>Pyz/Zed/Tax</var> namespace, create a new module if it does not exist. Create new plugin class under <var>Pyz/Zed/Tax/Communication/Plugin/ItemTaxAmountCalculatorPlugin</var>, as you see in the example below:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>In the <code>Pyz/Zed/Tax</code> namespace, create a new module if it does not exist. Create new plugin class under <code>Pyz/Zed/Tax/Communication/Plugin/ItemTaxAmountCalculatorPlugin</code>, as you see in the example below:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Tax\Communication\Plugin;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -235,7 +235,7 @@ class ItemTaxAmountCalculatorPlugin extends AbstractPlugin implements Calculator
         $this-&gt;getFacade()-&gt;calculateItemTax($quoteTransfer);
     }
 }</code></pre>
-                                                    <p>Add new plugin into calculator stack <var>Pyz\Zed\Calculation\CalculationDependencyProvider::getCalculatorStack()</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add new plugin into calculator stack <code>Pyz\Zed\Calculation\CalculationDependencyProvider::getCalculatorStack()</code>:</p><pre><code class="language-PHP line-numbers">&lt;?php
    protected function getCalculatorStack(Container $container)
    {
        return [
@@ -243,7 +243,7 @@ class ItemTaxAmountCalculatorPlugin extends AbstractPlugin implements Calculator
            new ItemTaxAmountCalculatorPlugin(),
        ];
    }</code></pre>
-                                                    <p>Add new facade method: <var>Pyz\Zed\Tax\TaxFacade::calculateItemTax()</var> and create TaxFacade class extending Spryker Core TaxFacade if not present.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add new facade method: <code>Pyz\Zed\Tax\TaxFacade::calculateItemTax()</code> and create TaxFacade class extending Spryker Core TaxFacade if not present.</p><pre><code class="language-PHP line-numbers">&lt;?php
     /**
       * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
       *
@@ -253,7 +253,7 @@ class ItemTaxAmountCalculatorPlugin extends AbstractPlugin implements Calculator
    {
        $this-&gt;getFactory()-&gt;createItemTaxCalculator()-&gt;recalculate($quoteTransfer);
    }</code></pre>
-                                                    <p>Create the <var>ItemTaxCalculator</var> that implements the tax calculation business logic. Place this class under <var>\Pyz\Zed\Calculation\Business\Model\ItemTaxCalculator</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Create the <code>ItemTaxCalculator</code> that implements the tax calculation business logic. Place this class under <code>\Pyz\Zed\Calculation\Business\Model\ItemTaxCalculator</code>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Tax\Business\Model;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -270,7 +270,7 @@ class ItemTaxCalculator
         //tax calculator business logic
     }
 }</code></pre>
-                                                    <p>Add a new factory method for the new calculator into <var>Pyz\Zed\Tax\Business\TaxBusinessFactory</var>. Create the factory class if does not exist, extending the Spryker Core factory.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add a new factory method for the new calculator into <code>Pyz\Zed\Tax\Business\TaxBusinessFactory</code>. Create the factory class if does not exist, extending the Spryker Core factory.</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
     * @return \Pyz\Zed\Tax\Business\Model\ItemTaxCalculator
     */

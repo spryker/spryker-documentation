@@ -59,7 +59,6 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -166,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="SF-5ZS1axkGHc5IZnZXJJA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="SF-5ZS1axkGHc5IZnZXJJA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="p4zGzdjgd0W9hEbK4ZUQlg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="p4zGzdjgd0W9hEbK4ZUQlg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -213,110 +212,67 @@
                                                     <h3>1. Add the Voucher Step</h3>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Let’s get the step running first, then add the execution and the calculation of the discount.</li>
-                                                        <li class="bullet_list" value="2">Before adding the step, you need to define the route for the step. Go to the <var>CheckoutControllerProvider</var> under <var>src/Pyz/Yves/Checkout/Plugin/Provider</var> and add the route for the step.</li>
-                                                        <li class="bullet_list" value="3">Next, go to <var>src/Pyz/Yves/Checkout/Process/Steps</var> and create the step class. Call it <var>VoucherStep</var>. Don’t forget to extend the <var>AbstractBaseStep</var> to inherit all the necessary functionality.</li>
-                                                        <li class="bullet_list" value="4">Add the new step to <var>StepFactory</var> under <var>src/Pyz/Yves/Checkout/Process</var>.</li>
-                                                        <li class="bullet_list" value="5">Create a controller action in <var>src/Pyz/Yves/Checkout/Controller/CheckoutController</var> and call it <var>voucherAction</var>. You can return any string for now, just to make sure that the step works correctly. We will get back to this action once we build the form in the next step.</li>
+                                                        <li class="bullet_list" value="2">Before adding the step, you need to define the route for the step. Go to the <code>CheckoutControllerProvider</code> under <code>src/Pyz/Yves/Checkout/Plugin/Provider</code> and add the route for the step.</li>
+                                                        <li class="bullet_list" value="3">Next, go to <code>src/Pyz/Yves/Checkout/Process/Steps</code> and create the step class. Call it <code>VoucherStep</code>. Don’t forget to extend the <code>AbstractBaseStep</code> to inherit all the necessary functionality.</li>
+                                                        <li class="bullet_list" value="4">Add the new step to <code>StepFactory</code> under <code>src/Pyz/Yves/Checkout/Process</code>.</li>
+                                                        <li class="bullet_list" value="5">Create a controller action in <code>src/Pyz/Yves/Checkout/Controller/CheckoutController</code> and call it <code>voucherAction</code>. You can return any string for now, just to make sure that the step works correctly. We will get back to this action once we build the form in the next step.</li>
                                                         <li class="bullet_list" value="6">The step is now created; go to Demoshop, add any product to the cart and go to checkout. The Voucher step should be working now.</li>
                                                     </ul>
                                                     <h3>2. Add the Voucher Form</h3>
                                                     <p>Spryker uses Symfony forms as a foundation to build and handle forms. One of the main concepts in Symfony forms is binding form fields with data objects. This helps in setting and getting different data fields directly from/to the form. Spryker uses transfer objects as DTOs, you can directly bind them to your forms. Let’s build the form and get the customers input for the voucher.</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Create the form type in <var>src/Pyz/Yves/Checkout/Form/Steps/</var>. Call it <var>VoucherForm</var>.</li>
+                                                        <li class="bullet_list" value="1">Create the form type in <code>src/Pyz/Yves/Checkout/Form/Steps/</code>. Call it <code>VoucherForm</code>.</li>
                                                         <li class="bullet_list" value="2">Add an input field to the form for the voucher code.</li>
-                                                        <li class="bullet_list" value="3">Add the voucher form to the <var>FormFactory</var> under <var>src/Pyz/Yves/Checkout/Form/</var>. You can follow the other steps as an example to do so.</li>
-                                                        <li class="bullet_list" value="4">Create the form twig template under <var>src/Pyz/Yves/Checkout/Theme/default/checkout/</var>. Call it <var>voucher</var>. Add the form in the template and add a submit button into it.</li>
-                                                        <li class="bullet_list" value="5">The form is done, let’s bind it now to the transfer object. Go to <var>src/Pyz/Shared</var> and create the directories <var>Checkout/Transfer</var> so that path looks like this <var>src/Pyz/Shared/Checkout/Transfer</var>. Create the transfer object schema and call it <var>Quote</var>. The Quote transfer is the main transfer object which is used in the checkout. Now, add the voucher field with <var>type="string"</var> inside the transfer schema.</li>
-                                                        <li class="bullet_list" value="6">From the command line run <var>vendor/bin/console transfer:generate</var> to generate the new transfer object.</li>
-                                                        <li class="bullet_list" value="7">To finish the binding, add the property <var>property_path</var> to the voucher field inside the voucher form.</li>
+                                                        <li class="bullet_list" value="3">Add the voucher form to the <code>FormFactory</code> under <code>src/Pyz/Yves/Checkout/Form/</code>. You can follow the other steps as an example to do so.</li>
+                                                        <li class="bullet_list" value="4">Create the form twig template under <code>src/Pyz/Yves/Checkout/Theme/default/checkout/</code>. Call it <code>voucher</code>. Add the form in the template and add a submit button into it.</li>
+                                                        <li class="bullet_list" value="5">The form is done, let’s bind it now to the transfer object. Go to <code>src/Pyz/Shared</code> and create the directories <code>Checkout/Transfer</code> so that path looks like this <code>src/Pyz/Shared/Checkout/Transfer</code>. Create the transfer object schema and call it <code>Quote</code>. The Quote transfer is the main transfer object which is used in the checkout. Now, add the voucher field with <code>type="string"</code> inside the transfer schema.</li>
+                                                        <li class="bullet_list" value="6">From the command line run <code>vendor/bin/console transfer:generate</code> to generate the new transfer object.</li>
+                                                        <li class="bullet_list" value="7">To finish the binding, add the property <code>property_path</code> to the voucher field inside the voucher form.</li>
                                                         <li class="bullet_list" value="8">Back to the controller, modify the voucher action in order to return the form instead of the string.</li>
                                                         <li class="bullet_list" value="9">The step has a form now and receives the voucher code value from the customer. Go to Demoshop and try it out.</li>
                                                     </ul>
                                                     <h3>3. Add the Step Execution</h3>
                                                     <p>Finally, let’s apply the voucher discount.</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Implement the <var>execute()</var> method in the <var>VoucherStep</var> in order to calculate the new grand total after applying the discount.</li>
+                                                        <li class="bullet_list" value="1">Implement the <code>execute()</code> method in the <code>VoucherStep</code> in order to calculate the new grand total after applying the discount.</li>
                                                         <li class="bullet_list" value="2">Generate some voucher codes from Zed UI. Go to the <a href="http://zed.de.demoshop.local/discount/index/list" target="_blank" title="discount" alt="discount">Discount</a> back-end page, create a new discount and generate some voucher codes. To apply the voucher discount you added, deactivate all the exclusive discounts. To read more about how the Discount module works, visit this <a href="../Developing with Spryker/Module Guide/Discount/discount.htm" target="_blank">page</a>.</li>
                                                     </ul>
                                                     <p>The challenge is done and ready for testing! Go to the Demoshop, add any product to cart, go the checkout and enter any of the available voucher codes. You should receive a discount on your order.</p>
                                                     <h2>Bonus Challenge</h2>
                                                     <p>For adding a new shipment availability plugin:</p>
                                                     <ol>
-                                                        <li value="1">Add a new availability plugin inside the <var>Pyz/Zed/Shipment/Communication/Plugin/</var> folder, that implements <var>ShipmentMethodAvailabilityPluginInterface</var>.</li>
-                                                        <li value="2">Make the plugin is available through the <var>ShipmentDependencyProvider</var>.</li>
+                                                        <li value="1">Add a new availability plugin inside the <code>Pyz/Zed/Shipment/Communication/Plugin/</code> folder, that implements <code>ShipmentMethodAvailabilityPluginInterface</code>.</li>
+                                                        <li value="2">Make the plugin is available through the <code>ShipmentDependencyProvider</code>.</li>
                                                         <li value="3">Enable the availability plugin for one of the shipment methods.</li>
                                                     </ol>
                                                     <p>For adding a new shipment price plugin:</p>
                                                     <ol>
-                                                        <li value="1">Add a new price plugin inside the <var>Pyz/Zed/Shipment/Communication/Plugin/</var> folder, that implements <var>ShipmentMethodPricePluginInterface</var>.</li>
-                                                        <li value="2">Make the plugin available through the <var>ShipmentDependencyProvider</var>.</li>
+                                                        <li value="1">Add a new price plugin inside the <code>Pyz/Zed/Shipment/Communication/Plugin/</code> folder, that implements <code>ShipmentMethodPricePluginInterface</code>.</li>
+                                                        <li value="2">Make the plugin available through the <code>ShipmentDependencyProvider</code>.</li>
                                                         <li value="3">Enable the price plugin for one of the shipment methods.</li>
                                                     </ol>
                                                     <p>For adding a new shipment delivery time plugin:</p>
                                                     <ol>
-                                                        <li value="1">Add a new delivery time plugin inside the <var>Pyz/Zed/Shipment/Communication/Plugin/</var> folder, that implements <var>ShipmentMethodDeliveryTimePluginInterface</var>.</li>
-                                                        <li value="2">Make the plugin is available through the <var>ShipmentDependencyProvider</var>.</li>
+                                                        <li value="1">Add a new delivery time plugin inside the <code>Pyz/Zed/Shipment/Communication/Plugin/</code> folder, that implements <code>ShipmentMethodDeliveryTimePluginInterface</code>.</li>
+                                                        <li value="2">Make the plugin is available through the <code>ShipmentDependencyProvider</code>.</li>
                                                         <li value="3">Enable the delivery time plugin for one of the shipment methods.</li>
                                                     </ol>
-                                                    <h2>References</h2>
-                                                    <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Documentation	</th>
-                                                                <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
-                        Description
-                    </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Checkout Process/Checkout/checkout.htm" target="_blank">Checkout</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Checkout module Documentation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Step Engine/step_engine.htm" target="_blank">StepEngine</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>StepEngine module Documentation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Tutorials and HowTos/More Information/Advanced Tutorials/t_working_forms.htm" target="_blank">Symfony Forms</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Symfony Forms Documentation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p>Yves URL Routing	</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>Tutorial on setting up URL routing in Yves</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Checkout Process/Shipment/shipment.htm" target="_blank">Shipment</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
-                                                                    <p>Tutorial on setting up Shipment Plugins</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/content/capabilities/checkout/checkout.htm">Checkout</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/content/capabilities/checkout/checkout-functionality.htm">StepEngine</a>
+                                                        </li>
+                                                        <li value="3"><a href="../advanced/t-working-forms.htm">Symfony Forms
+</a>
+                                                        </li>
+                                                        <li value="4"><a href="https://documentation.spryker.com/content/yves/yves-url-routing.htm">Yves URL Routing</a>
+                                                        </li>
+                                                        <li value="5"><a href="../Developing with Spryker/Module Guide/Checkout Process/Shipment/shipment.htm" target="_blank">Shipment</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

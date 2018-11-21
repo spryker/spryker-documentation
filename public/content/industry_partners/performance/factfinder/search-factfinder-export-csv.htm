@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="u9CCyl1-TEOJ-BFXQnJNvg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="u9CCyl1-TEOJ-BFXQnJNvg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Ax4xBLV16US5txhsDYC80w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Ax4xBLV16US5txhsDYC80w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -203,13 +203,13 @@ $config[FactFinderSdkConstants::CSV_DIRECTORY] = APPLICATION_ROOT_DIR . '/path/t
                                                     <p class="note">Zed must have Read / Write access to this folder because  we will generate and read CSV files in that directory.</p>
                                                     <h2>Queries</h2>
                                                     <p>To export data to the CSV, we need to define the queries  executed in the database.</p>
-                                                    <p>All queries are located in the <var>SprykerEco\Zed\FactFinderSdk\Persistence\FactFinderSdkQueryContainer </var> directory.</p>
-                                                    <p>To change the query in <var>FactFinderSdk</var> module, we need to extend the <var>FactFinderSdkQueryContainer</var> in your project.</p>
+                                                    <p>All queries are located in the <code>SprykerEco\Zed\FactFinderSdk\Persistence\FactFinderSdkQueryContainer </code> directory.</p>
+                                                    <p>To change the query in <code>FactFinderSdk</code> module, we need to extend the <code>FactFinderSdkQueryContainer</code> in your project.</p>
                                                     <h2>How is my Query Mapped to CSV Output ?</h2>
-                                                    <p>If you need to modify the CSV column mapping for any reason, you will have to extend the <var>FactFinderSdkQueryContainer</var> from <var>FactFinderSdk</var> module and implement your own <var>addColumns</var> method.</p>
+                                                    <p>If you need to modify the CSV column mapping for any reason, you will have to extend the <code>FactFinderSdkQueryContainer</code> from <code>FactFinderSdk</code> module and implement your own <code>addColumns</code> method.</p>
                                                     <h3>Console</h3>
-                                                    <p>To export the products and categories using the queries we made before, we must register the <var>FactFinderSdk</var> console command in <a href="https://documentation.spryker.com/content/capabilities/development/console.htm">Console</a>.</p>
-                                                    <p>The <var>FactFinderSdk</var> module already includes everything though you will need to add <var>FactFinderSdkExportConsole</var> to <var>Pyz\Zed\Console\ConsoleDependencyProvider</var> like below:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>To export the products and categories using the queries we made before, we must register the <code>FactFinderSdk</code> console command in <a href="https://documentation.spryker.com/content/capabilities/development/console.htm">Console</a>.</p>
+                                                    <p>The <code>FactFinderSdk</code> module already includes everything though you will need to add <code>FactFinderSdkExportConsole</code> to <code>Pyz\Zed\Console\ConsoleDependencyProvider</code> like below:</p><pre><code class="language-php line-numbers">&lt;?php
 
 /**
 * @param \Spryker\Zed\Kernel\Container $container
@@ -247,17 +247,16 @@ public function getConsoleCommands(Container $container)
                 
             If additional attributes are available, they can also be used by the search process.
  </li>
-                                                        <li value="5">If you have attribute types that vary from item to item, it does not make sense to create a separate field for every possible attribute type. Instead, you can create an attribute field that is formatted according to the following pattern: <var>|attribute1=value|attribute2=value|attribute3=value|</var>. <p class="note">Please note that  for the Attribute field the pipe separator <var>(|)</var> appears between the attributes, as well as at the beginning and at the end of the field contents. Also note, that the symbols <var>|</var>, <var>#</var> and <var>=</var> are reserved symbols in attribute field data and therefore are not permitted here. For some attributes, it is desirable to include a unit or currency designator. You must separate the attribute name from the unit with a double tilde <var>(~~)</var>. Please note that there can only be one unit per attribute name (even if the attributes appear in different data records), so the values must be normalized beforehand.</p></li>
+                                                        <li value="5">If you have attribute types that vary from item to item, it does not make sense to create a separate field for every possible attribute type. Instead, you can create an attribute field that is formatted according to the following pattern: <code>|attribute1=value|attribute2=value|attribute3=value|</code>. <p class="note">Please note that  for the Attribute field the pipe separator <code>(|)</code> appears between the attributes, as well as at the beginning and at the end of the field contents. Also note, that the symbols <code>|</code>, <code>#</code> and <code>=</code> are reserved symbols in attribute field data and therefore are not permitted here. For some attributes, it is desirable to include a unit or currency designator. You must separate the attribute name from the unit with a double tilde <code>(~~)</code>. Please note that there can only be one unit per attribute name (even if the attributes appear in different data records), so the values must be normalized beforehand.</p></li>
                                                     </ul>
                                                     <h2>Checking Your Setup</h2>
-                                                    <p>If all the steps were correct you should be able to see the <var>fact-finder:export:products</var> command in the FACT-Finder section when you run <var>vendor/bin/console</var> from the project's root folder.</p>
-                                                    <p>Running <var>vendor/bin/console fact-finder:export:products</var> will create several CSV files (one per locale) in the folder you specified in <var>`$config[FactFinderSdkConstants::CSV_DIRECTORY]</var>.</p>
+                                                    <p>If all the steps were correct you should be able to see the <code>fact-finder:export:products</code> command in the FACT-Finder section when you run <code>vendor/bin/console</code> from the project's root folder.</p>
+                                                    <p>Running <code>vendor/bin/console fact-finder:export:products</code> will create several CSV files (one per locale) in the folder you specified in <code>`$config[FactFinderSdkConstants::CSV_DIRECTORY]</code>.</p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1"><a href="factfinder.htm"><li value="1">Get a general idea about FACT-Finder
-            </li></a>
+                                                        <li value="1"><a href="factfinder.htm">Get a general idea about FACT-Finder</a>
                                                         </li>
                                                         <li value="2"><a href="search-factfinder-recommendation.htm">Configure FACT-Finder recommendations widget</a><![CDATA[
             ]]></li>

@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="PBFQ4zbBd0SXurbUL80_KA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PBFQ4zbBd0SXurbUL80_KA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="aSHEeAOmYkmp_m-c3QIBSg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="aSHEeAOmYkmp_m-c3QIBSg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -232,9 +232,9 @@
                                                     <p>Now you can start to fill in some data into the new file. You should start with only a couple of entries to check after the first import run if all needed data is imported.</p>
                                                     <p>Save the new file under data/import/*.</p>
                                                     <h2>Configure the DataImporter</h2>
-                                                    <p>Every import type needs its own <var>DataImporterConfiguration</var>. Open the <var>DataImportConfig</var> class and add a constant for the import type and a method to get the configuration within your <var>DataImportBusinessFactory</var>.</p>
-                                                    <p>The constant is used to identify an import type. More information about it will follow later in this article. In our case we will use <var>const IMPORT_TYPE_PRODUCT_IMAGE = 'product-image';</var></p>
-                                                    <p>We also need a new method to get the configuration.<br />Copy the following code block into your <var>DataImportConfig</var> class.</p>
+                                                    <p>Every import type needs its own <code>DataImporterConfiguration</code>. Open the <code>DataImportConfig</code> class and add a constant for the import type and a method to get the configuration within your <code>DataImportBusinessFactory</code>.</p>
+                                                    <p>The constant is used to identify an import type. More information about it will follow later in this article. In our case we will use <code>const IMPORT_TYPE_PRODUCT_IMAGE = 'product-image';</code></p>
+                                                    <p>We also need a new method to get the configuration.<br />Copy the following code block into your <code>DataImportConfig</code> class.</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 /**
 * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
@@ -247,9 +247,9 @@ public function getProductImageDataImporterConfiguration()
                                                     </p>
                                                     <h2>Create a Writer Step</h2>
                                                     <p class="info"><strong>Steps</strong>
-                                                        <br />			Each importer needs at least one step to write the data from the file to a database. You can add as much steps as you need to your <var>DataSetStepBroker</var>.
+                                                        <br />			Each importer needs at least one step to write the data from the file to a database. You can add as much steps as you need to your <code>DataSetStepBroker</code>.
 		</p>
-                                                    <p>First we will create a new class called <var>ProductImageWriterStep</var> in "*/Zed/DataImport/Business/Model/ProductImage/" with this content:</p>
+                                                    <p>First we will create a new class called <code>ProductImageWriterStep</code> in "*/Zed/DataImport/Business/Model/ProductImage/" with this content:</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 &lt;?php
 
@@ -279,7 +279,7 @@ class ProductImageWriterStep implements DataImportStepInterface
                                                     <h2>Wire up the DataImporter</h2>
                                                     <p>We now have everything at hand to wire up the new DataImport and run it.</p>
                                                     <h3>DataImportBusinessFactory</h3>
-                                                    <p>In our <var>DataImportBusinessFactory</var> we add the following method:</p>
+                                                    <p>In our <code>DataImportBusinessFactory</code> we add the following method:</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 /**
  * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
@@ -298,9 +298,9 @@ protected function createProductImageImporter()
 }
 				</code></pre>
                                                     </p>
-                                                    <p>In the <var>DataImportBusinessFactory::getImporter()</var> we now add the new DataImporter with <var>$dataImporterCollection-&gt;addDataImporter($this-&gt;createProductImageImporter())</var>.</p>
+                                                    <p>In the <code>DataImportBusinessFactory::getImporter()</code> we now add the new DataImporter with <code>$dataImporterCollection-&gt;addDataImporter($this-&gt;createProductImageImporter())</code>.</p>
                                                     <h3>ConsoleDependencyProvider</h3>
-                                                    <p>To be able to execute the command from the console we need to register a new console command in the <var>ConsoleDependencyProvider</var></p>
+                                                    <p>To be able to execute the command from the console we need to register a new console command in the <code>ConsoleDependencyProvider</code></p>
                                                     <p>The DataImport module brings a generic console command which can be used several times to add a console command for each data import type. You only need to register it as follows:</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 /**
@@ -319,21 +319,21 @@ public function getConsoleCommands(Container $container)
 }
 				</code></pre>
                                                     </p>
-                                                    <p>You will now have a new console command <var>data:import:product-image</var> available. When you run <var>vendor/bin/console</var> you will see a new entry "data:import:product-image  This command executes your "product-image" importer." under data.</p>
+                                                    <p>You will now have a new console command <code>data:import:product-image</code> available. When you run <code>vendor/bin/console</code> you will see a new entry "data:import:product-image  This command executes your "product-image" importer." under data.</p>
                                                     <h2>Execute the DataImporter</h2>
                                                     <p>
-			As already mentioned, the DataImport module brings a generic command which can be used several times. You need to at least register it once without a constructor argument.<br />		This command will execute all the registered DataImporter in the <var>DataImportBusinessFactory</var> one after the other.
+			As already mentioned, the DataImport module brings a generic command which can be used several times. You need to at least register it once without a constructor argument.<br />		This command will execute all the registered DataImporter in the <code>DataImportBusinessFactory</code> one after the other.
 		</p>
                                                     <p>As you already made it in the example above, you can add it with a new name over and over again. This brings in the ability to execute only one specific data importer.</p>
-                                                    <p>When you now execute <var>vendor/bin/console data:import:product-image</var> you will see the debug output from the <var>ProductImageWriterStep</var>.</p>
-                                                    <p>There are a lot options you can set for an import. If you need to debug one specific line of an import file, you can use offset and limit like this <var>vendor/bin/console data:import:product-image -o 43 -l 1</var>. This will then only execute the data set at potion 43 of your import file.</p>
-                                                    <p>The DataImporter catches exceptions by default and continues to import data. In development mode you can use the throw-exception option to throw the occurred exception instead of catching it. There are a couple more options, you can see them when you execute <var>vendor/bin/console data:import:product-image -h</var>, the console command will then print the help page for the given command.</p>
+                                                    <p>When you now execute <code>vendor/bin/console data:import:product-image</code> you will see the debug output from the <code>ProductImageWriterStep</code>.</p>
+                                                    <p>There are a lot options you can set for an import. If you need to debug one specific line of an import file, you can use offset and limit like this <code>vendor/bin/console data:import:product-image -o 43 -l 1</code>. This will then only execute the data set at potion 43 of your import file.</p>
+                                                    <p>The DataImporter catches exceptions by default and continues to import data. In development mode you can use the throw-exception option to throw the occurred exception instead of catching it. There are a couple more options, you can see them when you execute <code>vendor/bin/console data:import:product-image -h</code>, the console command will then print the help page for the given command.</p>
                                                     <h2>Finalize the Data Importer</h2>
                                                     <p>We have proven that the data importer can be executed but we only print a debug message right now. We need to do some additional things to really save some data.</p>
                                                     <h3>Convert Logical Identifier to Foreign Keys</h3>
-                                                    <p>As described above, we can not use foreign keys in our import file - we need to use logical identifier which can now be used to get the foreign key of a related entity. There are several ways to achieve what we need. We could add a new Step e.g. <var>LocaleNameToIdLocaleStep</var> or the better way in our case is to use a <var>Repository</var> which provides us with a getter to retrieve the id_locale by it's name.</p>
+                                                    <p>As described above, we can not use foreign keys in our import file - we need to use logical identifier which can now be used to get the foreign key of a related entity. There are several ways to achieve what we need. We could add a new Step e.g. <code>LocaleNameToIdLocaleStep</code> or the better way in our case is to use a <code>Repository</code> which provides us with a getter to retrieve the id_locale by it's name.</p>
                                                     <h4>LocaleRepository</h4>
-                                                    <p>We will add now a <var>LocaleRepository</var> to get the foreign key of a locale by its name.</p>
+                                                    <p>We will add now a <code>LocaleRepository</code> to get the foreign key of a locale by its name.</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><pre><code class="language-PHP line-numbers">
@@ -385,9 +385,9 @@ class LocaleRepository
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <p>This <var>Repository</var> is very simple but does what we need right now.</p>
+                                                    <p>This <code>Repository</code> is very simple but does what we need right now.</p>
                                                     <h4>Add the Repository</h4>
-                                                    <p>We need to change our <var>ProductImageWriterStep</var> to make use of it. Add the following code:</p>
+                                                    <p>We need to change our <code>ProductImageWriterStep</code> to make use of it. Add the following code:</p>
                                                     <p><pre><code class="language-PHP line-numbers">
 /**
  * @var \Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepositoryInterface
@@ -403,12 +403,12 @@ public function __construct(LocaleRepositoryInterface $localeRepository)
 }
 				</code></pre>
                                                     </p>
-                                                    <p>Now we need to inject this new <var>Repository</var> into our <var>ProductImageWriterStep</var> inside of the business factory. When this is done we can use it like this: <var>$idLocale = $this-&gt;localeRepository-&gt;getIdLocaleByLocale($dataSet[static::KEY_LOCALE]);</var></p>
-                                                    <p>We need to add a similar <var>Repository</var> to retrieve the id of an abstract or concrete product by its sku. This is then also added to our <var>ProductImageWriterStep</var> as already done with the <var>LocaleRepository</var>.</p>
+                                                    <p>Now we need to inject this new <code>Repository</code> into our <code>ProductImageWriterStep</code> inside of the business factory. When this is done we can use it like this: <code>$idLocale = $this-&gt;localeRepository-&gt;getIdLocaleByLocale($dataSet[static::KEY_LOCALE]);</code></p>
+                                                    <p>We need to add a similar <code>Repository</code> to retrieve the id of an abstract or concrete product by its sku. This is then also added to our <code>ProductImageWriterStep</code> as already done with the <code>LocaleRepository</code>.</p>
                                                     <h3>Find or Create Entities</h3>
-                                                    <p>We will now create the <var>spy_product_image_set</var>, <var>spy_product_image</var>, <var>spy_product_image_set_to_product_image</var> and entities.</p>
-                                                    <p>With the first run of an importer all entities are new and we need to do an insert. When the importer is executed more than once, it does updates of the existing entities. To do this, we use Propel's <var>findOrCreate()</var> method.</p>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <var>spy_product_image_set</var>. Add the following code to the <var>ProductImageWriterStep</var>:</a></span>
+                                                    <p>We will now create the <code>spy_product_image_set</code>, <code>spy_product_image</code>, <code>spy_product_image_set_to_product_image</code> and entities.</p>
+                                                    <p>With the first run of an importer all entities are new and we need to do an insert. When the importer is executed more than once, it does updates of the existing entities. To do this, we use Propel's <code>findOrCreate()</code> method.</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <code>spy_product_image_set</code>. Add the following code to the <code>ProductImageWriterStep</code>:</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><pre><code class="language-PHP line-numbers">
 /**
@@ -459,10 +459,10 @@ protected function getIdLocaleByLocale(DataSetInterface $dataSet)
 }
 				</code></pre>
                                                             </p>
-                                                            <p>We want to allow the <var>fk_locale</var> to be null. One of <var>fk_product</var> or <var>fk_product_abstract</var> must be set. For performance reasons we only save the entity when it's new or modified.</p>
+                                                            <p>We want to allow the <code>fk_locale</code> to be null. One of <code>fk_product</code> or <code>fk_product_abstract</code> must be set. For performance reasons we only save the entity when it's new or modified.</p>
                                                         </div>
                                                     </div>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <var>spy_product_image</var>. Add the following code to the<br /> <var>ProductImageWriterStep</var>:</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <code>spy_product_image</code>. Add the following code to the<br /> <code>ProductImageWriterStep</code>:</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><pre><code class="language-PHP line-numbers">
 /**
@@ -491,7 +491,7 @@ protected function findOrCreateImage(DataSetInterface $dataSet)
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Add the relation  <var>spy_product_image_set_to_product_image</var>. Add the following code to the <var>ProductImageWriterStep</var>:</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Add the relation  <code>spy_product_image_set_to_product_image</code>. Add the following code to the <code>ProductImageWriterStep</code>:</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><pre><code class="language-PHP line-numbers">
 /**
@@ -535,7 +535,7 @@ public function execute(DataSetInterface $dataSet)
 				</code></pre>
                                                     </p>
                                                     <h2>Run the Importer</h2>
-                                                    <p>When you now run the console command <var>vendor/bin/console data:import:product-image</var>, you will see an output similar to this one:</p>
+                                                    <p>When you now run the console command <code>vendor/bin/console data:import:product-image</code>, you will see an output similar to this one:</p>
                                                     <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/product_image_import_console_output.png" data-mc-popup-alt="Console output"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="257" data-mc-height="155" src="../../resources/images/product_image_import_console_output_thumb_0_48.png" alt="Console output" title="Console output" tabindex="" /></a>
                                                     </p>
                                                 </div>

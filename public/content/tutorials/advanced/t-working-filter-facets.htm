@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="hPPeamDmvkGUwrTBzC1STg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="hPPeamDmvkGUwrTBzC1STg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="9__OXUNr5kOulc55_l35Ig">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="9__OXUNr5kOulc55_l35Ig:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -201,16 +201,16 @@
                                                     <p>The search engine should return a small number of items that match the query.</p>
                                                     <p>Facets provide aggregated data based on a search query. For example, let’s say we need to query for all the shirts that are in color blue. The search engine has configured a facet on category and one on the color attribute. Therefore, the search query will be executed using these 2 facets. The search result will return the entries that are aggregated both in the category facet with shirt category ID and in the color facet with value blue.</p>
                                                     <h2>Category Facet Filter</h2>
-                                                    <p><var>CatalogClient</var> enables creating a search query when a request is submitted. <var>CatalogClient</var> exposes 2 operations:</p>
+                                                    <p><code>CatalogClient</code> enables creating a search query when a request is submitted. <code>CatalogClient</code> exposes 2 operations:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1"><var>createFacetSearch(Request $request, array $category)</var>
+                                                        <li class="bullet_list" value="1"><code>createFacetSearch(Request $request, array $category)</code>
                                                         </li>
-                                                        <li class="bullet_list" value="2"><var>createFulltextSearch(Request $request)</var>
+                                                        <li class="bullet_list" value="2"><code>createFulltextSearch(Request $request)</code>
                                                         </li>
                                                     </ul>
                                                     <p>Both of the operation can contain in the request other facet filters(such as color or size).</p>
                                                     <p>The main difference is that the full-text search operation will add in the search query the search string contained in the request while the facet search will add a facet filter on category id.</p>
-                                                    <p>On the category detail page, the <var>createFulltextSearch(Request $request)</var> should be use, as in the example below:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>On the category detail page, the <code>createFulltextSearch(Request $request)</code> should be use, as in the example below:</p><pre><code class="language-PHP line-numbers">&lt;?php
  public function indexAction(array $categoryNode, Request $request)
     {
         $search = $this-&gt;getFactory()
@@ -226,15 +226,15 @@
         return $this-&gt;viewResponse($response);
     }</code></pre>
                                                     <p>Example:</p>
-                                                    <p data-mc-conditions="Spryker.DemoShop">Making a request on the URL <a href="http://www.de.demoshop.local/en/computers/notebooks" target="_blank" title="demoshop" alt="demoshop">http://www.de.demoshop.local/en/computers/notebooks</a> in Demoshop will be routed to the <var>CatalogController:indexAction</var> controller action, which is designated for category detail page.</p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">Making a request on the URL <a href="http://www.de.demoshop.local/en/computers/notebooks" target="_blank" title="demoshop" alt="demoshop">http://www.de.demoshop.local/en/computers/notebooks</a> in Demoshop will be routed to the <code>CatalogController:indexAction</code> controller action, which is designated for category detail page.</p>
                                                     <p>A facet search will be executed using the category facet with the provided category node as a parameter.</p>
                                                     <h2>Configuring Facet Filters</h2>
                                                     <p>As mentioned above, the category facet is a special case and needs to be handled this way because a call needs to be made to Redis to retrieve the category node ID when a category detail page is requested.</p>
-                                                    <p>Other then that, both <var>CatalogClient</var> operations can handle requests that contain other facet filters.</p>
-                                                    <p>You can integrate as many facet filters in your search query, as long as they are configured. The facet configuration is done in the <var>FacetConfig</var> class.</p>
-                                                    <p>Keep in mind that the configuration you make in the <var>FacetConfig</var> must be in sync with the structure of the data that’s exported to Elasticsearch.</p>
-                                                    <p>Also, keep in mind that even if you have the facets exported in Elasticsearch, without adding the necessary configuration in the <var>FacetConfig</var> you won’t be able to submit the correct queries.</p>
-                                                    <p>The search attributes must be configured in the <var>$attributes[]</var> in the <var>FacetConfig</var>.</p>
+                                                    <p>Other then that, both <code>CatalogClient</code> operations can handle requests that contain other facet filters.</p>
+                                                    <p>You can integrate as many facet filters in your search query, as long as they are configured. The facet configuration is done in the <code>FacetConfig</code> class.</p>
+                                                    <p>Keep in mind that the configuration you make in the <code>FacetConfig</code> must be in sync with the structure of the data that’s exported to Elasticsearch.</p>
+                                                    <p>Also, keep in mind that even if you have the facets exported in Elasticsearch, without adding the necessary configuration in the <code>FacetConfig</code> you won’t be able to submit the correct queries.</p>
+                                                    <p>The search attributes must be configured in the <code>$attributes[]</code> in the <code>FacetConfig</code>.</p>
                                                     <p>Example:</p><pre><code class="language-PHP line-numbers">&lt;?php
     protected static $attributes = [
     //..
@@ -250,7 +250,7 @@
     ];</code></pre>
                                                     <p>Having the price attribute added to configuration as an active facet enables us to filter the products on the value of this attribute.</p>
                                                     <p><a href="http://www.de.demoshop.local/en/computers/notebooks?price=0-300" target="_blank">http://www.de.demoshop.local/en/computers/notebooks?price=0-300</a> request will perform a search using the category and price facets. It will return the products that are under the notebooks category with price range between 0 and 300.</p>
-                                                    <p><a href="http://www.de.demoshop.local/search?q=tablet?price=0-300" target="_blank">http://www.de.demoshop.local/search?q=tablet&amp;price=0-300</a> request will perform a full-text search with search string <var>tablet</var> and with facet filter price(price in the range 0-300).</p>
+                                                    <p><a href="http://www.de.demoshop.local/search?q=tablet?price=0-300" target="_blank">http://www.de.demoshop.local/search?q=tablet&amp;price=0-300</a> request will perform a full-text search with search string <code>tablet</code> and with facet filter price(price in the range 0-300).</p>
                                                 </div>
                                             </div>
                                         </div>

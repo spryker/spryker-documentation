@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="DUfC9CqBB0i7iADJOxXc3A">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="DUfC9CqBB0i7iADJOxXc3A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="0yua_62vOkyjGVGlUKNQ3A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="0yua_62vOkyjGVGlUKNQ3A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -216,7 +216,7 @@
                                                     <h2><a name="Create"></a>Create the Transfer Object</h2>
                                                     <p class="info"><strong>Transfer Objects</strong>
                                                         <br />The communication between Yves and Zed is done using transfer objects.</p>
-                                                    <p>Create a new transfer object to facilitate the communication between Yves and Zed. The transfer object will be added under the <var>src/Pyz/Shared/HelloWorld/Transfer/</var> folder. We’ll call it <var>helloworld.transfer.xml</var> and it will contain one property:</p><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+                                                    <p>Create a new transfer object to facilitate the communication between Yves and Zed. The transfer object will be added under the <code>src/Pyz/Shared/HelloWorld/Transfer/</code> folder. We’ll call it <code>helloworld.transfer.xml</code> and it will contain one property:</p><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;transfers xmlns="spryker:transfer-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
@@ -227,7 +227,7 @@
 
 &lt;/transfers&gt;</code></pre>
                                                     <p>Now run the console command to generate the transfer object so that it’s ready to be used:</p><pre><code class="language-PHP line-numbers">console transfer:generate</code></pre>
-                                                    <p>Add an operation to your <var>HelloWorldFacade</var> that will return the random salutation message using the transfer object you just defined :</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add an operation to your <code>HelloWorldFacade</code> that will return the random salutation message using the transfer object you just defined :</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
  * @return \Generated\Shared\Transfer\HelloWorldMessageTransfer
  */
@@ -237,7 +237,7 @@ public function getSalutationMessage()
 }</code></pre>
                                                     <p>More information about transfer objects and how to define them in Spryker can be read here.</p>
                                                     <h2><a name="Create2"></a>Create the Gateway Controller</h2>
-                                                    <p>Create the <var>GatewayController</var> in Zed under <var>Pyz\Zed\HelloWorld\Communication\Controller</var>; the <var>GatewayController</var> is dedicated for communication with Yves. It must extend the <var>AbstractGatewayController</var> class.</p>
+                                                    <p>Create the <code>GatewayController</code> in Zed under <code>Pyz\Zed\HelloWorld\Communication\Controller</code>; the <code>GatewayController</code> is dedicated for communication with Yves. It must extend the <code>AbstractGatewayController</code> class.</p>
                                                     <p>Add an action to this controller, that will call the functionality you have exposed through your facade:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Communication\Controller;
 
@@ -258,7 +258,7 @@ class GatewayController extends AbstractGatewayController
     }
 }</code></pre>
                                                     <h2><a name="Implemen"></a>Implement the stub</h2>
-                                                    <p>Now let’s move to the client part, to add support to call the controller action we just added. Create a <var>HelloWorldStub</var> under <var>src/Pyz/Client/HelloWorld/Zed</var>.</p>
+                                                    <p>Now let’s move to the client part, to add support to call the controller action we just added. Create a <code>HelloWorldStub</code> under <code>src/Pyz/Client/HelloWorld/Zed</code>.</p>
                                                     <p>This stub will enable us to submit an HTTP request to Zed.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Client\HelloWorld\Zed;
@@ -297,8 +297,8 @@ class HelloWorldStub implements HelloWorldStubInterface
 </code></pre>
                                                     <p class="info"><strong>Request parameter</strong>
                                                         <br />Through the second parameter you can pass a transfer object as a request parameter to the request client call.</p>
-                                                    <p>Add the corresponding interface for it (<var>HelloWorldStubInterface</var>), that contains the <var>getSalutationMessage()</var> method defined.</p>
-                                                    <p>Our stub depends on the <var>ZedRequestClient</var> what we can provide by implementing <var>HelloWorldDependencyProvider</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Add the corresponding interface for it (<code>HelloWorldStubInterface</code>), that contains the <code>getSalutationMessage()</code> method defined.</p>
+                                                    <p>Our stub depends on the <code>ZedRequestClient</code> what we can provide by implementing <code>HelloWorldDependencyProvider</code>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Client\HelloWorld;
 
@@ -338,7 +338,7 @@ class HelloWorldDependencyProvider extends SprykerCustomerDependencyProvider
 
 }
 </code></pre>
-                                                    <p>To be able to get an instance of the <var>HelloWorldStub</var>, create the <var>HelloWorldFactory</var> :</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>To be able to get an instance of the <code>HelloWorldStub</code>, create the <code>HelloWorldFactory</code> :</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Client\HelloWorld;
 
@@ -366,8 +366,8 @@ class HelloWorldFactory extends AbstractFactory
 
 }</code></pre>
                                                     <h2><a name="Implemen2"></a>Implement the Client</h2>
-                                                    <p>Now that we have the <var>HelloWorldStub</var>, we can create the client that consumes this service.</p>
-                                                    <p>Create the <var>HelloWorldClient</var> under <var>src/Pyz/Client/HelloWorld</var> together with its corresponding interface.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Now that we have the <code>HelloWorldStub</code>, we can create the client that consumes this service.</p>
+                                                    <p>Create the <code>HelloWorldClient</code> under <code>src/Pyz/Client/HelloWorld</code> together with its corresponding interface.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Client\HelloWorld;
 
 use Spryker\Client\Kernel\AbstractClient;
@@ -389,7 +389,7 @@ class HelloWorldClient extends AbstractClient implements HelloWorldClientInterfa
     }
 }</code></pre>
                                                     <h2><a name="Create3"></a>Create controller and view in Yves</h2>
-                                                    <p>Now that we have everything setup, we can move to Yves and create the controller and the twig template that will render the random message. Under <var>src/Pyz/Yves/HelloWorld/Controller</var> create the <var>IndexController</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Now that we have everything setup, we can move to Yves and create the controller and the twig template that will render the random message. Under <code>src/Pyz/Yves/HelloWorld/Controller</code> create the <code>IndexController</code>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\HelloWorld\Controller;
 
 use Spryker\Yves\Kernel\Controller\AbstractController;
@@ -411,12 +411,12 @@ class IndexController extends AbstractController
     }
 
 }</code></pre>
-                                                    <p>Under <var>src/Pyz/Yves/HelloWorld/Theme/default/index</var> create the <var>index.twig</var> file.</p><pre><code class="language-PHP line-numbers">{% extends "@application/layout/layout.twig" %}
+                                                    <p>Under <code>src/Pyz/Yves/HelloWorld/Theme/default/index</code> create the <code>index.twig</code> file.</p><pre><code class="language-PHP line-numbers">{% extends "@application/layout/layout.twig" %}
 
 {% block content %}
     {{ salutationMessage.value }}
 {% endblock %}</code></pre>
-                                                    <p>Now, the only thing left to do is to take care of the URL routing. Add the <var>HelloWorldControllerProvider</var> under <var>src/Pyz/Yves/HelloWorld/Plugin/Provider</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Now, the only thing left to do is to take care of the URL routing. Add the <code>HelloWorldControllerProvider</code> under <code>src/Pyz/Yves/HelloWorld/Plugin/Provider</code>.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\HelloWorld\Plugin\Provider;
 
 use Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider;
@@ -432,7 +432,7 @@ class HelloWorldControllerProvider extends AbstractYvesControllerProvider
     }
 
 }</code></pre>
-                                                    <p>Register your controller provider under <var>YvesBootstrap</var></p><pre><code class="language-PHP line-numbers">
+                                                    <p>Register your controller provider under <code>YvesBootstrap</code></p><pre><code class="language-PHP line-numbers">
 	protected function getControllerProviderStack($isSsl)
 	  {
 		 return [

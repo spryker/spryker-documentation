@@ -166,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Ic9AXryklUmBtwChK7Mstg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Ic9AXryklUmBtwChK7Mstg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="_PBh1opC7UmQWR-xHakD-A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_PBh1opC7UmQWR-xHakD-A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,7 +240,7 @@ b/config/Shared/config_default.php
             </code></pre>
                                                     <h3>Yves </h3>
                                                     <h4>Customer Setup</h4>
-                                                    <p>In Yves  <var>CustomerStep</var> needs to be extended by calling the <var>BillpayCustomerHandlerPlugin</var>:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>In Yves  <code>CustomerStep</code> needs to be extended by calling the <code>BillpayCustomerHandlerPlugin</code>:</p><pre><code class="language-php line-numbers">&lt;?php
 /**
      * Update QuoteTransfer with customer step handler plugin.
      *
@@ -256,7 +256,7 @@ b/config/Shared/config_default.php
 
         return $quoteTransfer;
     }</code></pre>
-                                                    <p>Next, extend the <var>CheckoutDependencyProvider </var>to return the <var>StepHandlerPluginCollection</var>:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>Next, extend the <code>CheckoutDependencyProvider</code> to return the <code>StepHandlerPluginCollection</code>:</p><pre><code class="language-php line-numbers">&lt;?php
   /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -272,7 +272,7 @@ b/config/Shared/config_default.php
             $plugins-&gt;add(new CustomerStepHandler(), self::CUSTOMER_STEP_HANDLER);
             return $plugins;
         };</code></pre>
-                                                    <p>Lastly, change the <var>CustomerStep </var>constructor:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>Lastly, change the <code>CustomerStep</code> constructor:</p><pre><code class="language-php line-numbers">&lt;?php
  /**
      * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $customerStepHandler
@@ -307,7 +307,7 @@ b/config/Shared/config_default.php
             ApplicationControllerProvider::ROUTE_HOME
         );
     }</code></pre>
-                                                    <p>Then register the client in <var>CheckoutDependencyProvider</var>.</p>
+                                                    <p>Then register the client in <code>CheckoutDependencyProvider</code>.</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
 
@@ -419,7 +419,7 @@ b/config/Shared/config_default.php
          return $quoteTransfer;
      }</code></pre>
                                                     <h3>Twig Extension (Optional)</h3>
-                                                    <p>To populate the Billpay JS widget (<a href="https://techdocs.billpay.de/en/For_developers/JavaScript-Widget.html" target="_blank">https://techdocs.billpay.de/en/For_developers/JavaScript-Widget.html</a>) with data, use the Twig extension provided in the Billpay <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</p>
+                                                    <p>To populate the <a href="https://techdocs.billpay.de/en/For_developers/JavaScript-Widget.htm" target="_blank">Billpay JS widget</a>  with data, use the Twig extension provided in the Billpay module.</p>
                                                     <p>To register the Twig extension:</p>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add it to YvesBootstrap as follows: </li>
@@ -631,9 +631,9 @@ b/config/Shared/config_default.php
                                                         </tbody>
                                                     </table>
                                                     <h3>Checking Your Setup</h3>
-                                                    <p>You should be able to see the Billpay invoice on payment step of your checkout step. If you receive the "method not available" message when you select<strong> Billpay invoice</strong> at the payment step, check the <var>spy_payment_billpay_api_log</var> table in your database for logs.</p>
+                                                    <p>You should be able to see the Billpay invoice on payment step of your checkout step. If you receive the "method not available" message when you select <strong>Billpay invoice</strong> at the payment step, check the <code>spy_payment_billpay_api_log</code> table in your database for logs.</p>
                                                     <h2>Zed</h2>
-                                                    <p>In Zed  <var>BillpaySaveOrderPlugin </var>has to be registered in the <var>CheckoutDependencyProvider</var>:</p><pre><code class="language-php line-numbers"> &lt;?php
+                                                    <p>In Zed  <code>BillpaySaveOrderPlugin</code> has to be registered in the <code>CheckoutDependencyProvider</code>:</p><pre><code class="language-php line-numbers"> &lt;?php
  /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -647,7 +647,7 @@ b/config/Shared/config_default.php
             new BillpaySaveOrderPlugin(),
         ];
     }</code></pre>
-                                                    <p>Then the following should be added in <var>OmsDependencyProvider</var>:</p><pre><code class="language-php line-numbers"> &lt;?php
+                                                    <p>Then the following should be added in <code>OmsDependencyProvider</code>:</p><pre><code class="language-php line-numbers"> &lt;?php
 /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -683,7 +683,7 @@ b/config/Shared/config_default.php
     }
  </code></pre>
                                                     <h3>Check Your Settings</h3>
-                                                    <p>In your checkout process you can now see the Billapay as a payment method in the payment checkout step. If you log in to ZED, you will find the OMS state machine registered under <a href="http://zed.de.demoshop.local/oms/index/draw?process=BillpayInvoice01&amp;format=svg&amp;font=14&amp;state=" target="_blank">http://zed.de.demoshop.local/oms/index/draw?process=BillpayInvoice01&amp;format=svg&amp;font=14&amp;state=</a>. </p>
+                                                    <p data-mc-conditions="Spryker.DemoShop">In your checkout process you can now see the Billapay as a payment method in the payment checkout step. If you log in to ZED, you will find the OMS state machine registered under <a href="http://zed.de.demoshop.local/oms/index/draw?process=BillpayInvoice01&amp;format=svg&amp;font=14&amp;state=" target="_blank">http://zed.de.demoshop.local/oms/index/draw?process=BillpayInvoice01&amp;format=svg&amp;font=14&amp;state=</a>. </p>
                                                     <p>If the link does not work, just click <strong>Maintenance-&gt;OMS</strong> to list all registered OMS state machines.</p>
                                                     <p>Basic state machine will look somewhat like this and you can use it as sample in your project. </p>
                                                     <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/basic_oms_state_machine.png" data-mc-popup-alt="State Machine"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="991" data-mc-height="1088" src="../../../resources/images/basic_oms_state_machine_thumb_0_48.png" alt="State Machine" title="Click Me" tabindex="" /></a>
@@ -692,9 +692,8 @@ b/config/Shared/config_default.php
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1"><![CDATA[
-                ]]><a href="billpay-integration.htm"><li value="1">Integrate Billpay Payment
-            </li></a></li>
+                                                        <li value="1"><a href="billpay-integration.htm">Integrate Billpay Payment</a>
+                                                        </li>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p><i>Last

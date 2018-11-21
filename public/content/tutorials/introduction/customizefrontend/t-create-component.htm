@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="IIGjU-MFmEm5kcV_xyO-XQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="IIGjU-MFmEm5kcV_xyO-XQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="boQjc425tUK1zrbeUSyzpg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="boQjc425tUK1zrbeUSyzpg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -199,23 +199,23 @@
                                                     <h1>Tutorial - Frontend - Create a Component  <img src="../../../resources/images/shoptype/b2b_shop.png" /><img src="../../../resources/images/shoptype/b2c_shop.png" /><img src="../../../resources/images/shoptype/mastersuite.png" /></h1>
                                                     <p>As Spryker Shop implements&#160;the <a href="../../../front-end_developer_guide/atomic_frontend/overview.htm#component-model" target="_blank">Component Model</a>, adding new functionality to it usually means implementing a new component. In this document, we shall review creation of a new component on the example of a simple block that displays the count of DOM elements of a certain type. To implement it:</p>
                                                     <h2>1. Create Component Folder</h2>
-                                                    <p>First of all, you need to create a folder on&#160;the file system where all component files will be located. By default,&#160;project level components are located under&#160;<var>src/Pyz/Yves/ShopUi/Theme/default/components</var>. This folder should contain subfolders for each component type (<i>atoms</i>, <i>molecules</i>, <i>organisms</i>). A links counter is a simple molecule, so it will be created under the <b>molecules</b>&#160;subfolder. Per naming conventions, the folder name follows <a href="http://wiki.c2.com/?KebabCase" target="_blank">Kebab Case</a>:&#160;<i>src/Pyz/Yves/ShopUi/Theme/default/components/<b>molecules</b>/new-component-counter</i>.</p>
-                                                    <p>Open the <var>new-component-counter</var>&#160;folder and create the following files:</p>
+                                                    <p>First of all, you need to create a folder on&#160;the file system where all component files will be located. By default,&#160;project level components are located under&#160;<code>src/Pyz/Yves/ShopUi/Theme/default/components</code>. This folder should contain subfolders for each component type (<i>atoms</i>, <i>molecules</i>, <i>organisms</i>). A links counter is a simple molecule, so it will be created under the <b>molecules</b>&#160;subfolder. Per naming conventions, the folder name follows <a href="http://wiki.c2.com/?KebabCase" target="_blank">Kebab Case</a>:&#160;<i>src/Pyz/Yves/ShopUi/Theme/default/components/<b>molecules</b>/new-component-counter</i>.</p>
+                                                    <p>Open the <code>new-component-counter</code>&#160;folder and create the following files:</p>
                                                     <ul>
-                                                        <li value="1"><var>index.ts</var> - Webpack entry point;</li>
-                                                        <li value="2"><var>new-component-counter.scss</var> - styles;</li>
-                                                        <li value="3"><var>new-component-counter.ts</var> - Javascript code;</li>
-                                                        <li value="4"><var>new-component-counter.twig</var> - component template.</li>
+                                                        <li value="1"><code>index.ts</code> - Webpack entry point;</li>
+                                                        <li value="2"><code>new-component-counter.scss</code> - styles;</li>
+                                                        <li value="3"><code>new-component-counter.ts</code> - Javascript code;</li>
+                                                        <li value="4"><code>new-component-counter.twig</code> - component template.</li>
                                                     </ul>
                                                     <h2>2. Define Template</h2>
-                                                    <p>The first thing to do when creating a component is to define a template for it. A template specifies which blocks a component consists of and how they are arranged. This is done in Twig. Open the&#160;<var>new-component-counter.twig</var> file.</p>
+                                                    <p>The first thing to do when creating a component is to define a template for it. A template specifies which blocks a component consists of and how they are arranged. This is done in Twig. Open the&#160;<code>new-component-counter.twig</code> file.</p>
                                                     <p>First, we need to define the inheritance of the component. A component can inherit from a model or another component. Since we are creating a new component, it can be inherited from the following models defined in Spryker Shop Application:</p>
                                                     <ul>
                                                         <li value="1">
-                                                            <p>atoms, molecules and organisms extend model <b>component</b>:<br /><var>{% extends model('component') %}</var></p>
+                                                            <p>atoms, molecules and organisms extend model <b>component</b>:<br /><code>{% extends model('component') %}</code></p>
                                                         </li>
                                                         <li value="2">
-                                                            <p>templates and views extend model <b>template</b><br /><var>{% extends model('template') %}</var></p>
+                                                            <p>templates and views extend model <b>template</b><br /><code>{% extends model('template') %}</code></p>
                                                         </li>
                                                     </ul>
                                                     <p>As we are creating a molecule, it must inherit the <b>component</b> model. For this purpose, add the following:</p><pre><code class="language-Twig line-numbers">{% extends model('component') %}</code></pre>
@@ -269,7 +269,7 @@
 {% endblock %}</code></pre>
                                                     <h2>3. Create Styles</h2>
                                                     <p>Now, let us create visual styles used to display the component on a page. When creating styles, use <a href="https://en.bem.info/methodology/css/" target="_blank">BEM methodology</a>. To link the style to the new component, the class name must be the same as the component name, also in <i>Kebab Case</i>.</p>
-                                                    <p>Open file&#160;<var>new-component-counter.scss</var>&#160;file and add the following code:</p><pre><code class="language-Css line-numbers">.new-component-counter {
+                                                    <p>Open file&#160;<code>new-component-counter.scss</code>&#160;file and add the following code:</p><pre><code class="language-Css line-numbers">.new-component-counter {
     &amp;__name {
         display: block;
     }
@@ -287,10 +287,10 @@
         @include helper-font-size(big);
     }
 }</code></pre>
-                                                    <p class="info">As shown in the example, you can use global variables, functions and mixins&#160;in your styles, for example&#160;<i>$setting-color-alt</i> or&#160;<i>$setting-color-dark</i>. They can be found in the <var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/styles</var>&#160;folder. For more details, see section&#160;<b>SASS Layer</b> in <a href="../../../front-end_developer_guide/atomic_frontend/overview.htm">Atomic Frontend</a>.</p>
+                                                    <p class="info">As shown in the example, you can use global variables, functions and mixins&#160;in your styles, for example&#160;<i>$setting-color-alt</i> or&#160;<i>$setting-color-dark</i>. They can be found in the <code>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/styles</code>&#160;folder. For more details, see section&#160;<b>SASS Layer</b> in <a href="../../../front-end_developer_guide/atomic_frontend/overview.htm">Atomic Frontend</a>.</p>
                                                     <p>Also, the styles must be locatable by Webpack. For this purpose, we need to add them to the entry point of the component. Open the&#160;<i>index.ts</i> file and add the following line:</p><pre><code class="language-Css line-numbers">import './new-component-counter.scss';</code></pre>
                                                     <h2>4. Implement Behavior</h2>
-                                                    <p>Finally, we need to implement the actual code that will count the elements. Open the&#160;<var>new-component-counter.ts</var>&#160;file.</p>
+                                                    <p>Finally, we need to implement the actual code that will count the elements. Open the&#160;<code>new-component-counter.ts</code>&#160;file.</p>
                                                     <p>The component we are creating is a molecule which is inherited from the&#160;<i>Component</i> model. Because of this, it must extend the&#160;<b>Component</b> base class defined in the <i>ShopUI</i> module. First, we need to import the base class:</p><pre><code class="language-Css line-numbers">import Component from 'ShopUi/models/component';</code></pre>
                                                     <p>After that, we need to create the new component class extending the base&#160;class. The new component class must implement a DOM callback.&#160;You can use any callback defined by the <a href="https://developer.mozilla.org/en-US/docs/Web/Web_Components" target="_blank">Web Components Specification</a>.&#160;When the component receives the callback you define, it should execute the behavioral logic.</p>
                                                     <p class="tip">It is recommended to use&#160;<b>ready&#160;</b>callback. This callback is triggered when the component is ready and all other components have already been loaded in the DOM. It is the safest approach from the point of view of DOM manipulation.</p>
@@ -307,12 +307,12 @@
                         string { return this.getAttribute('element-selector'); } }</code></pre>
                                                     <p>After implementing the behavior, we also need to bind the Javascript class to the DOM. For this purpose, we need to use the&#160;<b>register</b> function of the Spryker Shop application. It accepts&#160;<b>2</b> arguments:</p>
                                                     <ul>
-                                                        <li value="1"><b>name</b> - specifies the component name.<br />This name will be associated with the component and can be used in Twig to insert the component in a template. Also, it will be used in the DOM as a tag name. Whenever a tag with the specified name occurs in the DOM, the Shop Application will load the component. It must be the same as the&#160;<var>data.tag</var> specified in the component Twig on step&#160;<b>2</b>.</li>
+                                                        <li value="1"><b>name</b> - specifies the component name.<br />This name will be associated with the component and can be used in Twig to insert the component in a template. Also, it will be used in the DOM as a tag name. Whenever a tag with the specified name occurs in the DOM, the Shop Application will load the component. It must be the same as the&#160;<code>data.tag</code> specified in the component Twig on step&#160;<b>2</b>.</li>
                                                         <li value="2">
                                                             <p><b>importer</b> - must be a call of Webpack's&#160;<b>import</b> function to import Typescript code for the component.<br />The call must include a Webpack magic comment that specifies which type of import you want for the component, 'lazy' or 'eager'. For details, see&#160;<a href="https://webpack.js.org/guides/code-splitting/#dynamic-imports" target="_blank">Dynamic Imports</a>.</p>
                                                         </li>
                                                     </ul>
-                                                    <p>In twig, we used tag name <var>new-component-counter</var>. Let us bind it to the Javascript class we created and use 'lazy' import. To do this, open file&#160;<var>index.ts</var> again and attach the following code:</p><pre><code class="language-Javascript line-numbers">// Import the 'register' function from the Shop Application
+                                                    <p>In twig, we used tag name <code>new-component-counter</code>. Let us bind it to the Javascript class we created and use 'lazy' import. To do this, open file&#160;<code>index.ts</code> again and attach the following code:</p><pre><code class="language-Javascript line-numbers">// Import the 'register' function from the Shop Application
 import register from 'ShopUi/app/registry';
 
 // Register the component
@@ -321,12 +321,12 @@ export default register(
     () =&gt; import(/* webpackMode: "lazy" */'./new-component-counter')
 );</code></pre>
                                                     <h2>5. Compile and Use the Component</h2>
-                                                    <p>Our component is almost complete. The only thing left is to compile it. Execute the following line in the console: <var>npm run yves</var></p>
+                                                    <p>Our component is almost complete. The only thing left is to compile it. Execute the following line in the console: <code>npm run yves</code></p>
                                                     <p>When done, you can include it into other components, views and templates.</p>
                                                     <ul>
-                                                        <li value="1">Copy file&#160;<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/page-layout-main/page-layout-main.twig</var> to&#160;<var>src/Pyz/Yves/ShopUi/Theme/default/page-layout-main/page-layout-main.twig</var>. Doing so overrides the default main page on the project level.</li>
+                                                        <li value="1">Copy file&#160;<code>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/page-layout-main/page-layout-main.twig</code> to&#160;<code>src/Pyz/Yves/ShopUi/Theme/default/page-layout-main/page-layout-main.twig</code>. Doing so overrides the default main page on the project level.</li>
                                                         <li value="2">
-                                                            <p>Add the following&#160;code to the very beginning of the&#160;<var>&lt;main&gt;</var> block. It will include our new component&#160;and configure it to count&#160;<b>a</b> tags:</p><pre><code class="language-Twig line-numbers">{% include molecule('new-component-counter') with {
+                                                            <p>Add the following&#160;code to the very beginning of the&#160;<code>&lt;main&gt;</code> block. It will include our new component&#160;and configure it to count&#160;<b>a</b> tags:</p><pre><code class="language-Twig line-numbers">{% include molecule('new-component-counter') with {
     modifiers: ['big'],
     data: {
         name: 'Counting a tags...',

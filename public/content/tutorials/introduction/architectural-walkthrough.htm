@@ -59,7 +59,6 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -166,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="JKgKMftfIkCjDCPGda3zng">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="JKgKMftfIkCjDCPGda3zng:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="PhjnQe2wSEq_wXFSoaptdw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PhjnQe2wSEq_wXFSoaptdw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -201,8 +200,8 @@
                                                     <p>This is an architecture walkthrough as a coding exercise.</p>
                                                     <h2>Challenge Description</h2>
                                                     <ol>
-                                                        <li value="1">Build a <strong>HelloSpryker</strong> module in Zed that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. The string must be retrieved from the config.</li>
-                                                        <li value="2">Build a <strong>HelloSpryker</strong> module in Yves that will render the <var>Hello Spryker!</var> string, in reverse order, on the screen. Yves must communicate with Zed in order to retrieve the string.</li>
+                                                        <li value="1">Build a <strong>HelloSpryker</strong> module in Zed that will render the <code>Hello Spryker!</code> string, in reverse order, on the screen. The string must be retrieved from the config.</li>
+                                                        <li value="2">Build a <strong>HelloSpryker</strong> module in Yves that will render the <code>Hello Spryker!</code> string, in reverse order, on the screen. Yves must communicate with Zed in order to retrieve the string.</li>
                                                         <li value="3">Add Zed persistence layer in <strong>HelloSpryker</strong> module</li>
                                                         <li value="4">Move the functionality that returns a string in reverse order to a new module (<strong>StringFormat</strong>). Use this functionality from the <strong>HelloSpryker</strong> module.</li>
                                                     </ol>
@@ -210,25 +209,25 @@
                                                     <h3>1. Building the HelloSpryker Module in Zed</h3>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add the module folder in Zed.</li>
-                                                        <li class="bullet_list" value="2">Add the config class with a method <var>getString</var> holding the default string <var>'Hello Spryker!'</var>.</li>
-                                                        <li class="bullet_list" value="3">Add the logic for returning the string reversed under the business layer in <var>/Model</var> sub-folder.</li>
+                                                        <li class="bullet_list" value="2">Add the config class with a method <code>getString</code> holding the default string <code>'Hello Spryker!'</code>.</li>
+                                                        <li class="bullet_list" value="3">Add the logic for returning the string reversed under the business layer in <code>/Model</code> sub-folder.</li>
                                                         <li class="bullet_list" value="4">Create a business factory under the business layer to create this class.</li>
-                                                        <li class="bullet_list" value="5">Create a <var>HelloSprykerFacade</var> under the business layer and call the business class here.</li>
-                                                        <li class="bullet_list" value="6">Create a controller with an <var>indexAction()</var> method that will use the facade.</li>
-                                                        <li class="bullet_list" value="7">Create the Twig template <var>index.twig</var> under the presentation layer inside a <var>HelloSpryker</var> subfolder.</li>
-                                                        <li class="bullet_list" value="8">Display the string on the screen, navigate to the URL <var>/hello-spryker/hello-spryker</var> for this.</li>
-                                                        <li class="bullet_list" value="9">Add the controller in your navigation on the left by providing a <var>navigation.xml</var> file in the Communication folder (see references at the bottom).</li>
-                                                        <li class="bullet_list" value="10">Run <var>vendor/bin/console application:build-navigation-cache</var> to generate the new navigation tree.</li>
+                                                        <li class="bullet_list" value="5">Create a <code>HelloSprykerFacade</code> under the business layer and call the business class here.</li>
+                                                        <li class="bullet_list" value="6">Create a controller with an <code>indexAction()</code> method that will use the facade.</li>
+                                                        <li class="bullet_list" value="7">Create the Twig template <code>index.twig</code> under the presentation layer inside a <code>HelloSpryker</code> subfolder.</li>
+                                                        <li class="bullet_list" value="8">Display the string on the screen, navigate to the URL <code>/hello-spryker/hello-spryker</code> for this.</li>
+                                                        <li class="bullet_list" value="9">Add the controller in your navigation on the left by providing a <code>navigation.xml</code> file in the Communication folder (see references at the bottom).</li>
+                                                        <li class="bullet_list" value="10">Run <code>vendor/bin/console application:build-navigation-cache</code> to generate the new navigation tree.</li>
                                                     </ul>
                                                     <h4>Implementation Tips</h4>
                                                     <p>Make sure you facade only delegates and the factory itself creates the HelloSpryker business class including the necessary constructor arguments:</p><pre><code class="language-PHP line-numbers">&lt;?php
 return new HelloSpryker($this-&gt;getConfig());</code></pre>
                                                     <p>The facade method should then just call</p><pre><code class="language-PHP line-numbers">&lt;?php
 return $this-&gt;getFactory()-&gt;createHelloSpryker()-&gt;getReversedString();</code></pre>
-                                                    <p>Make the Config class configurable in a way that you can provide any string via <var>config_default.php</var>. You would use a <var>HelloSprykerConstants</var> class and inside the <var>getString()</var> method you would use <var>$this-&gt;get(HelloSprykerConstants::STRING, 'Hello Spryker!')</var>. The second argument is the default string in case no config has yet been provided. Constants classes are put into the <var>Pyz\Shared\</var> namespace.</p>
-                                                    <p>To test if you can use any string via config now, add this to <var>config_default.php</var>, for example:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Make the Config class configurable in a way that you can provide any string via <code>config_default.php</code>. You would use a <code>HelloSprykerConstants</code> class and inside the <code>getString()</code> method you would use <code>$this-&gt;get(HelloSprykerConstants::STRING, 'Hello Spryker!')</code>. The second argument is the default string in case no config has yet been provided. Constants classes are put into the <code>Pyz\Shared\</code> namespace.</p>
+                                                    <p>To test if you can use any string via config now, add this to <code>config_default.php</code>, for example:</p><pre><code class="language-PHP line-numbers">&lt;?php
 $config[HelloSprykerConstants::STRING] = 'Foo Bar';</code></pre>
-                                                    <p>Your <var>index.twig</var> template ideally extends from the Gui layout to have the complete layout included:</p><pre><code class="language-PHP line-numbers">{% extends '@Gui/Layout/layout.twig' %}
+                                                    <p>Your <code>index.twig</code> template ideally extends from the Gui layout to have the complete layout included:</p><pre><code class="language-PHP line-numbers">{% extends '@Gui/Layout/layout.twig' %}
 
 {% block content %}
 &lt;div class="row"&gt;
@@ -242,24 +241,24 @@ $config[HelloSprykerConstants::STRING] = 'Foo Bar';</code></pre>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add the module folder in Yves.</li>
                                                         <li class="bullet_list" value="2">Add controller + action.</li>
-                                                        <li class="bullet_list" value="3">Create the Twig template under the presentation layer (<var>/HelloSpryker/Theme/default/hello-spryker/index.twig</var>).</li>
-                                                        <li class="bullet_list" value="4">Add route in the controller provider (for URL <var>/hello-spryker</var>).</li>
+                                                        <li class="bullet_list" value="3">Create the Twig template under the presentation layer (<code>/HelloSpryker/Theme/default/hello-spryker/index.twig</code>).</li>
+                                                        <li class="bullet_list" value="4">Add route in the controller provider (for URL <code>/hello-spryker</code>).</li>
                                                         <li class="bullet_list" value="5">Register the controller provider in YvesBootstrap.</li>
                                                     </ul>
                                                     <p>Communicate with Zed:</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Create a <var>hello_spryker.transfer.xml</var> file in <var>Shared/HelloSpryker/Transfer</var> building a <var>HelloSprykerTransfer</var> object which contains a <var>reversedString</var> property.</li>
-                                                        <li class="bullet_list" value="2">Run <var>vendor/bin/console transfer:generate</var> to generate the class.</li>
-                                                        <li class="bullet_list" value="3">Create client directory for Zed (<var>/Pyz/Client/HelloSpryker/Zed</var>).</li>
+                                                        <li class="bullet_list" value="1">Create a <code>hello_spryker.transfer.xml</code> file in <code>Shared/HelloSpryker/Transfer</code> building a <code>HelloSprykerTransfer</code> object which contains a <code>reversedString</code> property.</li>
+                                                        <li class="bullet_list" value="2">Run <code>vendor/bin/console transfer:generate</code> to generate the class.</li>
+                                                        <li class="bullet_list" value="3">Create client directory for Zed (<code>/Pyz/Client/HelloSpryker/Zed</code>).</li>
                                                         <li class="bullet_list" value="4">Add client and stub (see references at the bottom).</li>
-                                                        <li class="bullet_list" value="5">Add a <var>HelloSprykerDependencyProvider</var> for Client layer.</li>
+                                                        <li class="bullet_list" value="5">Add a <code>HelloSprykerDependencyProvider</code> for Client layer.</li>
                                                         <li class="bullet_list" value="6">Add a gateway call in client/stub with an empty transfer object</li>
-                                                        <li class="bullet_list" value="7">Add a <var>GatewayController</var> with a <var>getReversedStringAction()</var> method in Zed which calls the facade and returns the filled transfer object.</li>
+                                                        <li class="bullet_list" value="7">Add a <code>GatewayController</code> with a <code>getReversedStringAction()</code> method in Zed which calls the facade and returns the filled transfer object.</li>
                                                     </ul>
                                                     <h4>Implementation Tips</h4>
                                                     <p>The Yves route you need to set up, can look like this:</p><pre><code class="language-PHP line-numbers">&lt;?php
 $this-&gt;createController('/hello-spryker', 'hello-spryker', 'HelloSpryker', 'HelloSpryker', 'index');</code></pre>
-                                                    <p>The <var>HelloSprykerStub</var> class must have a constructor argument and property for <var>zedStub</var> which will be passed in from the Client layer factory. The gateway call could look like this:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>The <code>HelloSprykerStub</code> class must have a constructor argument and property for <code>zedStub</code> which will be passed in from the Client layer factory. The gateway call could look like this:</p><pre><code class="language-PHP line-numbers">&lt;?php
 $helloSprykerTransfer = new HelloSprykerTransfer();
 
 return $this-&gt;zedStub-&gt;call(
@@ -286,7 +285,7 @@ public function getReversedStringAction(HelloSprykerTransfer $helloSprykerTransf
                                                     <h3>3. Make <strong>HelloSpryker</strong> Module Read from Database</h3>
                                                     <ul>
                                                         <li class="bullet_list" value="1">In Zed add a persistence layer and a schema XML file with a very basic table holding the string.</li>
-                                                        <li class="bullet_list" value="2">Run <var>vendor/bin/console propel:install</var> to generate the table and classes.</li>
+                                                        <li class="bullet_list" value="2">Run <code>vendor/bin/console propel:install</code> to generate the table and classes.</li>
                                                         <li class="bullet_list" value="3">Also pass the new QueryContainer into the HelloSpryker class as a second constructor dependency.</li>
                                                         <li class="bullet_list" value="4">You can populate the database from the config, e.g. in the constructor of the HelloSpryker class.</li>
                                                         <li class="bullet_list" value="5">Read inside the Zed business logic from the QueryContainer now instead of config.</li>
@@ -305,7 +304,7 @@ protected function initDatabaseFromConfig(HelloSprykerConfig $helloSprykerConfig
     $helloSprykerEntity-&gt;save();
 }</code></pre>
                                                     <p>It will always update the database according to your config.</p>
-                                                    <p>The <var>/Pyz/Zed/HelloSpryker/Persistence/Propel/Schema/pyz_hello_spryker.schema.xml</var> could look like this:</p><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+                                                    <p>The <code>/Pyz/Zed/HelloSpryker/Persistence/Propel/Schema/pyz_hello_spryker.schema.xml</code> could look like this:</p><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
     namespace="Orm\Zed\HelloSpryker\Persistence"
@@ -326,9 +325,9 @@ protected function initDatabaseFromConfig(HelloSprykerConfig $helloSprykerConfig
                                                     <h3>4. <strong>StringFormat</strong> Module</h3>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Create the <strong>StringFormat</strong> module in Zed.</li>
-                                                        <li class="bullet_list" value="2">In the HelloSpryker module, create a dependency provider class and call it <var>HelloSprykerDependencyProvider</var>.</li>
+                                                        <li class="bullet_list" value="2">In the HelloSpryker module, create a dependency provider class and call it <code>HelloSprykerDependencyProvider</code>.</li>
                                                         <li class="bullet_list" value="3">Extract the functionality that formats the string and move it to the new module.</li>
-                                                        <li class="bullet_list" value="4">Create <var>StringFormatFacade</var> class.</li>
+                                                        <li class="bullet_list" value="4">Create <code>StringFormatFacade</code> class.</li>
                                                         <li class="bullet_list" value="5">Provide the business layer dependency to the <strong>HelloSpryker</strong> module and internally use this other facade now.</li>
                                                     </ul>
                                                     <h4>Implementation Tips</h4>
@@ -338,8 +337,8 @@ protected function initDatabaseFromConfig(HelloSprykerConfig $helloSprykerConfig
                                                         <li class="bullet_list" value="3">Try to add interfaces for your classes so that the constructor typehints are abstract instead of concrete.</li>
                                                     </ul>
                                                     <h2>More Tips</h2>
-                                                    <p>Run <var>vendor/bin/console dev:ide:generate-auto-completion </var>to also get IDE typehinting for the new module for both Yves and Zed.</p>
-                                                    <p>Add <var>@method</var> annotations to your classes to get complete IDE type-hinting and clickability:</p>
+                                                    <p>Run <code>vendor/bin/console dev:ide:generate-auto-completion </code>to also get IDE typehinting for the new module for both Yves and Zed.</p>
+                                                    <p>Add <code>@method</code> annotations to your classes to get complete IDE type-hinting and clickability:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 /**
@@ -373,63 +372,20 @@ class HelloSprykerClient extends AbstractClient
                                                         </div>
                                                     </div>
                                                     <p>This is useful for all OS internal “locatable” classes.</p>
-                                                    <h2>Reference</h2>
-                                                    <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Documentation</th>
-                                                                <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/develping_with_spryker.htm" class="MCXref xref">Developing with Spryker Commerce OS</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Development Guide to start developing with Spryker</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p>URL Routing</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>URL Routing in Yves</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Tutorials and HowTos/More Information/Advanced Tutorials/t_add_new_bundle.htm" target="_blank">How to Add a New Module</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Tutorial on creating a new module in Zed</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p><a href="../Tutorials and HowTos/More Information/Advanced Tutorials/t_add_navigation_zed.htm" target="_blank">How to Add Navigation in Zed	</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>Adding navigation in Zed</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
-                                                                    <p><a href="../Tutorials and HowTos/More Information/Advanced Tutorials/t_transfer_data_yves_zed.htm" target="_blank">Communication Between Yves and Zed</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
-                                                                    <p>Transfer Data from Yves to Zed</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p style="font-weight: bold;">See also:</p>
+                                                    <ul>
+                                                        <li value="1"><a href="../advanced/t-add-new-bundle.htm">How to Add a New Module
+        
+</a>
+                                                        </li>
+                                                        <li value="2"><a href="http://documentation.spryker.com/content/capabilities/navigation/t-add-navigation-zed.htm">How to Add Navigation in Zed</a><![CDATA[
+        ]]></li>
+                                                        <li value="3"><a href="../advanced/t-transfer-data-yves-zed.htm">Communication Between Yves and Zed
+        
+</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

@@ -193,7 +193,7 @@
                                                     <p>A concern regarding payment flows that require redirection on third party website pages is that you loose control over the customer's action (the customer can close the browser before accepting or canceling the transaction). If this is the case, PayPal sends an instant payment notification (IPN) to Payone, then Payone notifies Spryker.</p>
                                                     <h2>Front-end Integration</h2>
                                                     <p>To adjust the frontend appearance, add the following templates in your theme directory:</p>
-                                                    <p><var>src/&lt;project_name&gt;/Yves/Cart/Theme/&lt;custom_theme_name&gt;/cart/parts/cart-summary.twig</var>
+                                                    <p><code>src/&lt;project_name&gt;/Yves/Cart/Theme/&lt;custom_theme_name&gt;/cart/parts/cart-summary.twig</code>
                                                     </p>
                                                     <p>Add the following code below the checkout button or anywhere you want depending on your design:</p>
                                                     <p><pre><code class="language-php line-numbers">{{ render(path('payone-checkout-with-paypal-button')) }}</code></pre>
@@ -201,12 +201,12 @@
                                                     <p>You can also implement your own button if you want the button to be loaded without separate call to the controller, or if you want to change the design.</p>
                                                     <h2>Paypal Express Checkout Integration Description:</h2>
                                                     <ul>
-                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <var>setexpresscheckout</var> action and success, failure and back URLs.</li>
+                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <code>setexpresscheckout</code> action and success, failure and back URLs.</li>
                                                         <li value="2"> In the response we receive a workorderid which is used for all other operations until the capture request and PayPal redirect URL.</li>
                                                         <li value="3"> We store wordorderid to quote and redirect customer to the URL provided by Payone.</li>
                                                         <li value="4"> On the PayPal page, customer has to log in and approve the intention of paying for the desired goods.</li>
                                                         <li value="5"> After the customer clicks the button, he is redirected to success or failure URL, provided by the shop in the first request to Payone.</li>
-                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <var>getexpresscheckoutdetails</var>.</li>
+                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <code>getexpresscheckoutdetails</code>.</li>
                                                         <li value="7"> Payone sends us information about the customer like email and shipment data.</li>
                                                         <li value="8"> Then the order is placed in our shop.</li>
                                                         <li value="9"> After placing the order, the pre-authorization call is sent to Payone (and through it to PayPal). Workorderid is sent to Payone with this request.</li>
@@ -225,7 +225,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'PayonePaypalExpressCheckout',
 ];
     </code></pre>
-                                                    <p>Note: You can find all needed configuration parameters in <var>config.dist.php</var> file inside Payone module.</p>
+                                                    <p>Note: You can find all needed configuration parameters in <code>config.dist.php</code> file inside Payone module.</p>
                                                     <h2>Extra Configuration</h2>
 Express checkout redirects customer to the cart page if something goes wrong, so project developer should specify the cart route in project config:
 <br /><pre>

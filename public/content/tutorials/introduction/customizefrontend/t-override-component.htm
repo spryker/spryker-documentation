@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="o49gfdgLuEqqFC5equRufQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="o49gfdgLuEqqFC5equRufQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="7-9LWmKvnkqYs_YBzSJsrg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="7-9LWmKvnkqYs_YBzSJsrg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -203,16 +203,16 @@
                                                     </p>
                                                     <p>Let us replace the default implementation of this molecule with our own version. It will look basically the same as the default one, but we'll use a different color for the left and right arrows; the current view number will be displayed in the browser&#160;console. Also, when reaching the last image in the set, the component will no longer be reset to the first view automatically by pressing the right button.</p>
                                                     <h2>1. Create Component Folder on Project Level</h2>
-                                                    <p>On the global level, the molecule we want to override is located in the following folder:&#160;<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</var>. It is a part of the main&#160;<i>Shop UI</i> application. To override it, we need to place our implementation in the <var>Shop UI</var> folder on the project level, and also&#160;replicate the folder structure. In other words, we need to create the following folder for the component:&#160;<var>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</var>.</p>
-                                                    <p>Also, we need to create an entry point for Webpack. Create an empty&#160;<var>index.ts</var> file in the folder.</p>
+                                                    <p>On the global level, the molecule we want to override is located in the following folder:&#160;<code>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</code>. It is a part of the main&#160;<i>Shop UI</i> application. To override it, we need to place our implementation in the <code>Shop UI</code> folder on the project level, and also&#160;replicate the folder structure. In other words, we need to create the following folder for the component:&#160;<code>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel</code>.</p>
+                                                    <p>Also, we need to create an entry point for Webpack. Create an empty&#160;<code>index.ts</code> file in the folder.</p>
                                                     <h2>2. Override Component Template</h2>
                                                     <p>The first thing we need to do is to override the Twig of the default component. To do this, we need to create a&#160;Twig file for the component on the project level. Since the project level has priority over the global level, the newly created project-side Twig will override the global one. In other words, whenever the component is used on a page, your implementation will be used instead of the default one.</p>
-                                                    <p>To override the global component, the Twig file name on the project level must be the same as on the global level. Also, component <i>name</i> and <i>tag name</i>&#160;specified in the <b>config&#160;</b>property must be the same as on the global level. In our case, the file name on the project level must be&#160;<var>simple-carousel.twig</var>, and the&#160;<b>config</b> property will look as follows:</p><pre><code class="language-Twig line-numbers">{% define config = {
+                                                    <p>To override the global component, the Twig file name on the project level must be the same as on the global level. Also, component <i>name</i> and <i>tag name</i>&#160;specified in the <b>config&#160;</b>property must be the same as on the global level. In our case, the file name on the project level must be&#160;<code>simple-carousel.twig</code>, and the&#160;<b>config</b> property will look as follows:</p><pre><code class="language-Twig line-numbers">{% define config = {
     name: 'simple-carousel',
     tag: 'simple-carousel'
 } %}</code></pre>
                                                     <p>Since the new component will be used everywhere instead of the global one, it is also recommended to replicate the data contracts. For this purpose, the&#160;<b>data</b> and&#160;<b>attributes</b> properties need to be configured the same as in the source component. If you are going to change the outlook of the component only, without changing its <i>data</i> property, attributes etc, you can copy the source Twig file, and then make changes to the&#160;<b>body</b> block only. The block contains the visual layout of a component.</p>
-                                                    <p>As we are not going to change the component template, let us copy the whole of the source twig implementation (<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel/simple-carousel.twig</var>) to the project level (<var>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel.twig</var>). The Twig file will look as follows:</p>
+                                                    <p>As we are not going to change the component template, let us copy the whole of the source twig implementation (<code>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/components/molecules/simple-carousel/simple-carousel.twig</code>) to the project level (<code>src/Pyz/Yves/ShopUi/Theme/default/components/molecules/simple-carousel.twig</code>). The Twig file will look as follows:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />simple-carousel.twig</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-Twig line-numbers">{% extends model('component') %}
 
@@ -289,14 +289,14 @@
                                                         </div>
                                                     </div>
                                                     <h2>3. Define Component Styles</h2>
-                                                    <p>The next thing to do is to provide the styles to use in the component. We need to use the mixin of the default component and add our style customization within the mixin. For this purpose, create file&#160;<var>simple-carousel.scss</var> in the project folder with the following content:</p><pre><code class="language-Css line-numbers">@include shop-ui-simple-carousel {
+                                                    <p>The next thing to do is to provide the styles to use in the component. We need to use the mixin of the default component and add our style customization within the mixin. For this purpose, create file&#160;<code>simple-carousel.scss</code> in the project folder with the following content:</p><pre><code class="language-Css line-numbers">@include shop-ui-simple-carousel {
     color: $setting-color-alt;
 }</code></pre>
-                                                    <p>With the above code, we inherit all styles of the default component, and then override the arrow color with another one.&#160;The color is taken from global configuration. It can be found&#160;in the followig folder:<var>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/styles/settings</var>.</p>
-                                                    <p>Now, we need to make the style visible for Webpack using the <var>index.ts</var> file:</p><pre><code class="language-Javascript line-numbers">// Import component style
+                                                    <p>With the above code, we inherit all styles of the default component, and then override the arrow color with another one.&#160;The color is taken from global configuration. It can be found&#160;in the followig folder:<code>vendor/spryker-shop/shop-ui/src/SprykerShop/Yves/ShopUi/Theme/default/styles/settings</code>.</p>
+                                                    <p>Now, we need to make the style visible for Webpack using the <code>index.ts</code> file:</p><pre><code class="language-Javascript line-numbers">// Import component style
 import './simple-carousel.scss';</code></pre>
                                                     <h2>4. Change Component Behavior</h2>
-                                                    <p>Finally, let us define what the component does. Create file&#160;<var>simple-carousel.ts</var> with the following content:</p><pre><code class="language-Javascript line-numbers">// Import the SimpleCarousel class
+                                                    <p>Finally, let us define what the component does. Create file&#160;<code>simple-carousel.ts</code> with the following content:</p><pre><code class="language-Javascript line-numbers">// Import the SimpleCarousel class
 import SimpleCarousel from 'ShopUi/components/molecules/simple-carousel/simple-carousel';
 
 // Export the extended class with additional behavior
@@ -319,7 +319,7 @@ export default class SimpleCarouselExtended extends SimpleCarousel {
 export default class SimpleCarouselExtended extends Component {
 &#160; &#160; &#160; &#160; &#160;// TODO: your code here
 }</code></pre></p>
-                                                    <p>After implementing the component behavior, let us bond it to the DOM element that represents the component. We need to use the same tag name as the default component, in our case, <b>simple-carousel</b>. Open the&#160;<var>index.ts</var> file again and add the following content:</p><pre><code class="language-Javascript line-numbers">// Import the 'register' function from the Shop Application
+                                                    <p>After implementing the component behavior, let us bond it to the DOM element that represents the component. We need to use the same tag name as the default component, in our case, <b>simple-carousel</b>. Open the&#160;<code>index.ts</code> file again and add the following content:</p><pre><code class="language-Javascript line-numbers">// Import the 'register' function from the Shop Application
 import register from 'ShopUi/app/registry';
  
 // Register the component
@@ -328,7 +328,7 @@ export default register(
     () =&gt; import(/* webpackMode: "lazy" */'./simple-carousel')
 );</code></pre>
                                                     <h2>5. Build Frontend</h2>
-                                                    <p>Now, let us build the frontend. Run the following command in the console: <var>npm run yves</var>.</p>
+                                                    <p>Now, let us build the frontend. Run the following command in the console: <code>npm run yves</code>.</p>
                                                     <p>As soon as&#160;<b>npm</b> finishes, you can see changes in the simple carousel component. The arrow color is changed and you cannot switch to the&#160;<b>1st</b> element after reaching the last one:</p>
                                                     <p>
                                                         <img src="../../../resources/images/frontend/new-simple-carousel.png" />

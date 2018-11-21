@@ -59,6 +59,7 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -165,8 +166,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="3zlHDu3dtken3PMibYFjKw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="3zlHDu3dtken3PMibYFjKw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="YkZ1toKYJUCAL_s84kIolA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YkZ1toKYJUCAL_s84kIolA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -201,27 +202,27 @@
                                                     <p>Publish and Synchronization (P&amp;S) allows exporting data from Spryker backend (<i>Zed</i>) to external endpoints (by default, <i>Redis</i> and <i>Elasticsearch</i>). The endpoints are usually consumed by frontend applications (including <i>Yves</i>).</p>
                                                     <p>In this step-by-step tutorial, you will understand how P&amp;S works and learn how to export data on the example of a simple <b>Hello World</b> P&amp;S module. It will synchronize data stored in a <i>Zed</i> database table to <i>Redis</i>. In other words, once a record is created, updated or deleted in the table, the module will automatically make changes in <i>Redis</i>.</p>
                                                     <h2>1. Creating Module</h2>
-                                                    <p>First, let us create a Module that will be responsible for exporting data to <i>Redis</i>. The module name will be <var>HelloWorldStorage</var>. Create a folder with the same name in <b>Zed</b>. It will host our module.</p>
+                                                    <p>First, let us create a Module that will be responsible for exporting data to <i>Redis</i>. The module name will be <code>HelloWorldStorage</code>. Create a folder with the same name in <b>Zed</b>. It will host our module.</p>
                                                     <p class="info"><b>Naming</b>
-                                                        <br />The following naming conventions are applied: all P&amp;S modules should use the <var>Storage</var> suffix, if they are related to <i>Redis</i>, or the <var>Search</var> suffix, if they are related to <i>Elasticsearch</i>.
+                                                        <br />The following naming conventions are applied: all P&amp;S modules should use the <code>Storage</code> suffix, if they are related to <i>Redis</i>, or the <code>Search</code> suffix, if they are related to <i>Elasticsearch</i>.
         </p>
-                                                    <p>Also, let us create a simple table inside the module. The contents of the table will be synchronized to <i>Redis</i>. The name will be <var>SpyHelloWorldMessage</var>.</p>
-                                                    <p>Place the following content in <var>HelloWorldStorage\Persistence\Propel\Schema\spy_hello_world.schema.xml</var>:</p><pre><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message" idMethod="native" allowPkInsert="true"&gt;
+                                                    <p>Also, let us create a simple table inside the module. The contents of the table will be synchronized to <i>Redis</i>. The name will be <code>SpyHelloWorldMessage</code>.</p>
+                                                    <p>Place the following content in <code>HelloWorldStorage\Persistence\Propel\Schema\spy_hello_world.schema.xml</code>:</p><pre><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message" idMethod="native" allowPkInsert="true"&gt;
     &lt;column name="id_hello_world_message" type="INTEGER" autoIncrement="true" primaryKey="true"/&gt;
     &lt;column name="name" required="true" type="VARCHAR" /&gt;
     &lt;column name="message" required="false" type="LONGVARCHAR" /&gt;
     &lt;id-method-parameter value="spy_hello_world_message_pk_seq"/&gt;
 &lt;/table&gt;</code></pre>
-                                                    <p>After creating the schema file, run <var>console propel:install</var> to actually create the table.</p>
+                                                    <p>After creating the schema file, run <code>console propel:install</code> to actually create the table.</p>
                                                     <h2>2. Data Structure</h2>
                                                     <p>Usually, data is stored in <i>Yves</i> differently than in <i>Zed</i>, as the data model used in <i>Redis</i> and <i>Elasticsearch </i>is more optimized for use by the frontend. So, we need to transform it before sending. In P&amp;S, data is always designed with the help of <b>Transfer Objects</b> as a dual contract between <i>Zed</i> and <i>Yves</i>.</p>
-                                                    <p>Let us start with a simple transfer object. Create <var>hello_wrold.transfer.xml</var> in <var>Shared\HelloWorld\Transfer</var>. It will be easier to display data on the frontend, if we store information in <i>Redis</i> as name-message pairs. For this reason, we will create a Transfer Object that holds a <var>name</var> and a <var>message</var>.</p><pre><code class="language-XML line-numbers">&lt;transfer name="HelloWorldStorage"&gt;
+                                                    <p>Let us start with a simple transfer object. Create <code>hello_wrold.transfer.xml</code> in <code>Shared\HelloWorld\Transfer</code>. It will be easier to display data on the frontend, if we store information in <i>Redis</i> as name-message pairs. For this reason, we will create a Transfer Object that holds a <code>name</code> and a <code>message</code>.</p><pre><code class="language-XML line-numbers">&lt;transfer name="HelloWorldStorage"&gt;
     &lt;property name="name" type="string"/&gt;
     &lt;property name="message" type="string"/&gt;
 &lt;/transfer&gt;</code></pre>
-                                                    <p>Save the file and run <var>console transfer:generate</var> to create the object.</p>
+                                                    <p>Save the file and run <code>console transfer:generate</code> to create the object.</p>
                                                     <h2>3. Events</h2>
-                                                    <p>Now we need to enable events for the table we want to synchronize, and then react to them. For this purpose, we need to activate Event Propel Behavior for the <var>SpyHelloWorldMessage</var> table. Let us open <var>spy_hello_world.schema.xml</var> we created on step <b>1</b> and make the following changes:</p><pre><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message" idMethod="native" allowPkInsert="true"&gt;
+                                                    <p>Now we need to enable events for the table we want to synchronize, and then react to them. For this purpose, we need to activate Event Propel Behavior for the <code>SpyHelloWorldMessage</code> table. Let us open <code>spy_hello_world.schema.xml</code> we created on step <b>1</b> and make the following changes:</p><pre><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message" idMethod="native" allowPkInsert="true"&gt;
     ...
     ...
     &lt;behavior name="event"&gt;
@@ -229,8 +230,8 @@
     &lt;/behavior&gt;
 &lt;/table&gt;</code></pre>
                                                     <p class="info">In our example, we will track changes in <b>all</b> columns. For this reason, we use the asterisk ('<b>*</b>') for the <b>column</b> attribute. If you want to track changes only in certain columns, insert their name in the attribute value instead of the asterisk.</p>
-                                                    <p>When done, save the file and run <var>console propel:install</var> to update the database schema.</p>
-                                                    <p>The <var>SpyHelloWorldMessage</var> entity model now has <b>3</b> events for creating, updating and deleting a record. Let us map them to some constants for use in our code later. For this purpose, we will create a new interface, <span><var>HelloWorldEvents</var>, in the <var>Dependency</var> folder:</span></p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>When done, save the file and run <code>console propel:install</code> to update the database schema.</p>
+                                                    <p>The <code>SpyHelloWorldMessage</code> entity model now has <b>3</b> events for creating, updating and deleting a record. Let us map them to some constants for use in our code later. For this purpose, we will create a new interface, <span><code>HelloWorldEvents</code>, in the <code>Dependency</code> folder:</span></p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Spryker\Zed\HelloWorld\Dependency;
 
 interface HelloWorldEvents
@@ -239,9 +240,9 @@ interface HelloWorldEvents
     const ENTITY_SPY_HELLO_WORLD_MESSAGE_UPDATE = "Entity.spy_hello_world_message.update";
     const ENTITY_SPY_HELLO_WORLD_MESSAGE_DELETE = "Entity.spy_hello_world_message.delete";
 }</code></pre>
-                                                    <p>Now, we have enabled events for the <var>SpyHelloWorldMessage</var> entity.</p>
+                                                    <p>Now, we have enabled events for the <code>SpyHelloWorldMessage</code> entity.</p>
                                                     <h1 id="HandlingData-PublishandSynchronization-4.Listeners">4. Listeners</h1>
-                                                    <p>Events only are not enough for Publish &amp; Synchronize to work. We also need listeners to catch the events and run the appropriate code. Let us create <var>HelloWorldMessageStorageListener.php</var> in the <var>Communication\Plugin\Event\Listener</var> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Events only are not enough for Publish &amp; Synchronize to work. We also need listeners to catch the events and run the appropriate code. Let us create <code>HelloWorldMessageStorageListener.php</code> in the <code>Communication\Plugin\Event\Listener</code> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Spryker\Zed\HelloWorld\Communication\Plugin\Event\Listener;
 
@@ -255,7 +256,7 @@ class HelloWorldMessageStorageListener extends AbstractPlugin implements EventBu
         echo "Hello World!";
     }
 }</code></pre>
-                                                    <p>We also need to subscribe the listener to the events we created. Create <var>HelloWorldEventSubscriber.php</var> in  <var>Communication\Plugin\Event\Subscriber</var> and add the listener to each of the events:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>We also need to subscribe the listener to the events we created. Create <code>HelloWorldEventSubscriber.php</code> in  <code>Communication\Plugin\Event\Subscriber</code> and add the listener to each of the events:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Spryker\Zed\HelloWorld\Communication\Plugin\Event\Subscriber;
 
 use Spryker\Zed\HelloWorld\Communication\Plugin\Event\Listener\HelloWorldMessageStorageListener;
@@ -275,7 +276,7 @@ class HelloWorldEventSubscriber extends AbstractPlugin implements EventSubscribe
         return $eventCollection;
     }
 }</code></pre>
-                                                    <p>We also need to add the subscriber to <var>EventDependencyProvider.php</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>We also need to add the subscriber to <code>EventDependencyProvider.php</code>:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Event;
 
 use Spryker\Zed\HelloWorld\Communication\Plugin\Event\Subscriber\HelloWorldEventSubscriber;
@@ -297,8 +298,8 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
 </code></pre>
                                                     <p>That's it. Now we can test the events and the listeners. To do so:</p>
                                                     <ol>
-                                                        <li value="1">Stop all Cron jobs or disable Jenkins using the following command: <var>console setup:jenkins:disable</var>.</li>
-                                                        <li value="2">Create <var>IndexController.php</var> as follows and run it:</li>
+                                                        <li value="1">Stop all Cron jobs or disable Jenkins using the following command: <code>console setup:jenkins:disable</code>.</li>
+                                                        <li value="2">Create <code>IndexController.php</code> as follows and run it:</li>
                                                     </ol><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Spryker\Zed\HelloWorld\Communication\Controller;
 
@@ -345,7 +346,7 @@ class IndexController extends AbstractController
 </code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>The data inside the message has all information required for the listener to process it. Now, it's time to run the listener and catch the event. To execute listeners, we need to run a queue command: <var>console queue:task:start event</var>.</p><pre><code class="language-Bash line-numbers">{vagrant@spryker-vagrant ➜  current git:(master) ✗  console queue:task:start event
+                                                    <p>The data inside the message has all information required for the listener to process it. Now, it's time to run the listener and catch the event. To execute listeners, we need to run a queue command: <code>console queue:task:start event</code>.</p><pre><code class="language-Bash line-numbers">{vagrant@spryker-vagrant ➜  current git:(master) ✗  console queue:task:start event
 Store: DE | Environment: development
 Hello World!
 </code></pre>
@@ -353,10 +354,10 @@ Hello World!
                                                     <p>
                                                         <img src="../../resources/images/publish-and-synchronize/event-queue-no-events.png" />
                                                     </p>
-                                                    <p class="tip">You can use the <var>-k</var> option when running the command to keep messages in the queue for debugging purposes: <var>queue:task:start event -k</var>.</p>
+                                                    <p class="tip">You can use the <code>-k</code> option when running the command to keep messages in the queue for debugging purposes: <code>queue:task:start event -k</code>.</p>
                                                     <p>The next step is to publish the data in <i>Redis</i>.</p>
                                                     <h2>5. Storage Table</h2>
-                                                    <p>To publish data, we need an intermediate table where data will be stored before sending it to <i>Redis</i>. This table has data already structured in a format suitable for <i>Redis</i>, however it is stored in <i>Zed</i>. Let us create a schema file for the table (<var>spy_hello_world.schema.xml</var>):</p><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message_storage" idMethod="native" allowPkInsert="true"&gt;
+                                                    <p>To publish data, we need an intermediate table where data will be stored before sending it to <i>Redis</i>. This table has data already structured in a format suitable for <i>Redis</i>, however it is stored in <i>Zed</i>. Let us create a schema file for the table (<code>spy_hello_world.schema.xml</code>):</p><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;table name="spy_hello_world_message_storage" idMethod="native" allowPkInsert="true"&gt;
     &lt;column name="id_hello_world_message_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/&gt;
     &lt;column name="fk_hello_world_message" type="INTEGER" required="true"/&gt;
     &lt;index name="spy_hello_world_message_storage-fk_hello_world_message"&gt;
@@ -371,28 +372,28 @@ Hello World!
         &lt;id-method-parameter value="spy_hello_world_message_storage_pk_seq"/&gt;
     &lt;/behavior&gt;
 &lt;/table&gt;</code></pre>
-                                                    <p> Save the file and run <var>console propel:install</var> to create the table. Let us look at the schema file in more detail. It defines the table as follows:</p>
+                                                    <p> Save the file and run <code>console propel:install</code> to create the table. Let us look at the schema file in more detail. It defines the table as follows:</p>
                                                     <ul>
-                                                        <li value="1"><b>ID - </b>the primary key of the table (in our case, <var>id_hello_world_message_storage</var>);</li>
-                                                        <li value="2"><b>ForeignKey</b> - foreign key to the main resource that we want to export (<var>fk_hello_world_message</var> for <var>spy_hello_world_message</var>);</li>
-                                                        <li value="3"><b>SynchronizationBehaviour </b>will modify the table as follows:<ul><li value="1">Add <var>Data</var> column to the table. It will store the data formatted in such a way that it can be sent directly to <i>Redis</i>. Data type: <var>TEXT</var>;</li><li value="2">Add <var>Key</var> column to the table. It will store the <b>Redis Key</b>. Data type: <var>VARCHAR</var>;</li><li value="3">Define<b> Resource </b>name for key generation;</li><li value="4">Define <b>Key Suffix Column</b> value for key generation;</li><li value="5">Define a <b>queue_group</b> where to send a copy of the <b>data</b> column;</li></ul></li>
+                                                        <li value="1"><b>ID - </b>the primary key of the table (in our case, <code>id_hello_world_message_storage</code>);</li>
+                                                        <li value="2"><b>ForeignKey</b> - foreign key to the main resource that we want to export (<code>fk_hello_world_message</code> for <code>spy_hello_world_message</code>);</li>
+                                                        <li value="3"><b>SynchronizationBehaviour </b>will modify the table as follows:<ul><li value="1">Add <code>Data</code> column to the table. It will store the data formatted in such a way that it can be sent directly to <i>Redis</i>. Data type: <code>TEXT</code>;</li><li value="2">Add <code>Key</code> column to the table. It will store the <b>Redis Key</b>. Data type: <code>VARCHAR</code>;</li><li value="3">Define<b> Resource </b>name for key generation;</li><li value="4">Define <b>Key Suffix Column</b> value for key generation;</li><li value="5">Define a <b>queue_group</b> where to send a copy of the <b>data</b> column;</li></ul></li>
                                                         <li value="4"><b>Timestamp</b> Behavior will be added for keeping timestamps and using incremental synchronization strategy.</li>
                                                     </ul>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Key Generation Strategy</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>Redis Keys will be generated automatically based on the column and Synchronization Behavior parameters. The generation algorithm is as follows:<br /><div class="u-is-scrollable"><table><thead><tr><th>Resource</th><th>Store</th><th>Locale</th><th>Key Suffix Column</th><th>Redis Key</th></tr></thead><tbody><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td>-</td><td>message</td></tr><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td>-</td><td>message.de.de_de</td></tr><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td>fk_hello_world_message</td><td>message.1, message.2, ...</td></tr><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td>fk_hello_world_message</td><td>message.de.1, message.de.2, ...</td></tr><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td>fk_hello_world_message</td><td>message.de.de_de.1, message.de.de_de.2, ..</td></tr><tr><td>message</td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td>fk_hello_world_message</td><td>message.de_de.1, message.de_de.2, message.de_de.1</td></tr></tbody></table><p>To create complex keys to use more than one column, do the following:</p><ol><li value="1">Create a custom column.</li><li value="2">Create a custom key there (for example, <i>price_key</i>).</li><li value="3">Pass the <i>custom_key</i> column as the suffix.</li></ol></div></p>
+                                                            <p>Redis Keys will be generated automatically based on the column and Synchronization Behavior parameters. The generation algorithm is as follows:<br /><div class="u-is-scrollable"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows" cellspacing="0"><thead><tr class="TableStyle-PatternedRows-Head-Header1"><th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Resource</th><th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Store</th><th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Locale</th><th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Key Suffix Column</th><th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Redis Key</th></tr></thead><tbody><tr class="TableStyle-PatternedRows-Body-LightRows"><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">-</td><td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">message</td></tr><tr class="TableStyle-PatternedRows-Body-DarkerRows"><td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">-</td><td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">message.de.de_de</td></tr><tr class="TableStyle-PatternedRows-Body-LightRows"><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">fk_hello_world_message</td><td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">message.1, message.2, ...</td></tr><tr class="TableStyle-PatternedRows-Body-DarkerRows"><td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">fk_hello_world_message</td><td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">message.de.1, message.de.2, ...</td></tr><tr class="TableStyle-PatternedRows-Body-LightRows"><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">fk_hello_world_message</td><td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">message.de.de_de.1, message.de.de_de.2, ..</td></tr><tr class="TableStyle-PatternedRows-Body-DarkerRows"><td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">message</td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/error.png" /></td><td style="text-align: center;" class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><img src="../../resources/images/publish-and-synchronize/check.png" /></td><td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">fk_hello_world_message</td><td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">message.de_de.1, message.de_de.2, message.de_de.1</td></tr></tbody></table><p>To create complex keys to use more than one column, do the following:</p><ol><li value="1">Create a custom column.</li><li value="2">Create a custom key there (for example, <i>price_key</i>).</li><li value="3">Pass the <i>custom_key</i> column as the suffix.</li></ol></div></p>
                                                         </div>
                                                     </div>
                                                     <h2>6. Models and Facade</h2>
                                                     <p>Now, we are ready to complete the publishing part of our tutorial. First, we need follow the standard conventions and let listeners delegate the execution process through the Facade to the Models behind. For this reason, we will create facade and model classes to handle the logic for the publish part.</p>
                                                     <p>Our facade methods are:</p>
                                                     <ul>
-                                                        <li value="1"><var>publish($messageIds)</var>
+                                                        <li value="1"><code>publish($messageIds)</code>
                                                         </li>
-                                                        <li value="2"><var>unpublish($messageIds)</var>
+                                                        <li value="2"><code>unpublish($messageIds)</code>
                                                         </li>
                                                     </ul>
-                                                    <p>Create the <var>MessageStorageWriter</var> Model and implement the following two methods. Then, bind facade methods to them.</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Create the <code>MessageStorageWriter</code> Model and implement the following two methods. Then, bind facade methods to them.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Spryker\Zed\HelloWorld\Business\Message;
 
 use Generated\Shared\Transfer\HelloWorldStorageTransfer;
@@ -436,7 +437,7 @@ class MessageStorageWriter
     }
 }
 </code></pre>
-                                                    <p>Then, create two facade methods in <var>HelloWorldFacade.php</var> to expose the model:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Then, create two facade methods in <code>HelloWorldFacade.php</code> to expose the model:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Spryker\Zed\HelloWorld\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -457,7 +458,7 @@ class HelloWorldFacade extends AbstractFacade implements HelloWorldFacadeInterfa
     }
 }
 </code></pre>
-                                                    <p>Now, we need to refactor the listener class in <var>HelloWorldFacade.php</var> and call the facade methods:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Now, we need to refactor the listener class in <code>HelloWorldFacade.php</code> and call the facade methods:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Spryker\Zed\HelloWorld\Communication\Plugin\Event\Listener;
 
@@ -481,8 +482,8 @@ class HelloWorldMessageStorageListener extends AbstractPlugin implements EventBu
 </code></pre>
                                                     <p>Everything is ready and in place. Now, we only need to create a queue to synchronize data to <i>Redis</i>.</p>
                                                     <h2>7. Queue</h2>
-                                                    <p>The last step we need to perform is create a sync queue called <var>sync.storage.hello</var> as follows:</p>
-                                                    <p>1. Add queue configuration to RabbitMq client (<var>RabbitMqConfig.php</var>):</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>The last step we need to perform is create a sync queue called <code>sync.storage.hello</code> as follows:</p>
+                                                    <p>1. Add queue configuration to RabbitMq client (<code>RabbitMqConfig.php</code>):</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Client\RabbitMq;
 ..
 
@@ -502,7 +503,7 @@ class RabbitMqConfig extends SprykerRabbitMqConfig
 }
 
 </code></pre>
-                                                    <p>2.Add <var>MessageProcessor</var> to <var>QueueDependencyProvider</var> for our queue:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>2.Add <code>MessageProcessor</code> to <code>QueueDependencyProvider</code> for our queue:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Queue;
 ...
 class QueueDependencyProvider extends SprykerDependencyProvider
@@ -517,40 +518,40 @@ class QueueDependencyProvider extends SprykerDependencyProvider
 }
 
 </code></pre>
-                                                    <p>When done, run the <var>IndexController</var> class we created on step <b>4</b> again to update the table and cause a new event to appear in the <i>Event Queue</i>. Then, run the queue:</p><pre><code class="language-Bash line-numbers">{vagrant@spryker-vagrant ➜  current git:(master) ✗  console queue:task:start event
+                                                    <p>When done, run the <code>IndexController</code> class we created on step <b>4</b> again to update the table and cause a new event to appear in the <i>Event Queue</i>. Then, run the queue:</p><pre><code class="language-Bash line-numbers">{vagrant@spryker-vagrant ➜  current git:(master) ✗  console queue:task:start event
 Store: DE | Environment: development
 </code></pre>
-                                                    <p>After that, let us check if we managed to store a record in the storage table. Open table <var>spy_hello_world_message_storage</var> and check the table. You should see one record per message:</p>
+                                                    <p>After that, let us check if we managed to store a record in the storage table. Open table <code>spy_hello_world_message_storage</code> and check the table. You should see one record per message:</p>
                                                     <div class="u-is-scrollable">
-                                                        <table>
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
                                                             <thead>
-                                                                <tr>
-                                                                    <th>id_hello_world_message_storage</th>
-                                                                    <th>fk_hello_world_message</th>
-                                                                    <th>data</th>
-                                                                    <th>key</th>
-                                                                    <th>created_at</th>
-                                                                    <th>updated_at</th>
+                                                                <tr class="TableStyle-PatternedRows-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">id_hello_world_message_storage</th>
+                                                                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">fk_hello_world_message</th>
+                                                                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">data</th>
+                                                                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">key</th>
+                                                                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">created_at</th>
+                                                                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">updated_at</th>
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
-                                                                <tr>
-                                                                    <td>1</td>
-                                                                    <td>2</td>
-                                                                    <td>{"name":"John","message":"Hello World!"} </td>
-                                                                    <td>message:2</td>
-                                                                    <td>2018-06-04 14:59:33.063645</td>
-                                                                    <td>2018-06-04 14:59:33.063645</td>
+                                                                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">1</td>
+                                                                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">2</td>
+                                                                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">{"name":"John","message":"Hello World!"} </td>
+                                                                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">message:2</td>
+                                                                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">2018-06-04 14:59:33.063645</td>
+                                                                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">2018-06-04 14:59:33.063645</td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <p>Now, the publish part is done. Let us also check whether the data has been exported to a secondary queue for the Synchronize part. The <var>sync.storage.hello</var> queue should now have at least one message:</p>
+                                                    <p>Now, the publish part is done. Let us also check whether the data has been exported to a secondary queue for the Synchronize part. The <code>sync.storage.hello</code> queue should now have at least one message:</p>
                                                     <p>
                                                         <img src="../../resources/images/publish-and-synchronize/sync-queue-event.png" />
                                                     </p>
-                                                    <p>The very last step is to send the data to <i>Redis</i>. This can be done by running the following command:  <var>console queue:task:start sync.storage.hello</var>. When it completes, the sync queue should be empty.</p>
-                                                    <p class="tip">To run all queues at once, you can run the following command: <var>console queue:worker:start -vvv</var>.</p>
+                                                    <p>The very last step is to send the data to <i>Redis</i>. This can be done by running the following command:  <code>console queue:task:start sync.storage.hello</code>. When it completes, the sync queue should be empty.</p>
+                                                    <p class="tip">To run all queues at once, you can run the following command: <code>console queue:worker:start -vvv</code>.</p>
                                                     <h2>8. Redis</h2>
                                                     <p>Let us check <i>Redis</i> and see whether the data has really been exported and has a good structure:</p>
                                                     <p>
@@ -559,7 +560,7 @@ Store: DE | Environment: development
                                                     </p>
                                                     <p class="tip">To explore <i>Redis</i> storage, connect Redis Desktop Manager to <a href="http://zed.de.suite.local:10009" class="_blank">http://zed.de.suite.local:10009</a>.</p>
                                                     <h2>9. Client</h2>
-                                                    <p>Finally, we can read the data from Redis. For this purpose, we will create a Client layer and create the <var>MessageStorageReader</var> class in <var>the Client\Storage</var> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>Finally, we can read the data from Redis. For this purpose, we will create a Client layer and create the <code>MessageStorageReader</code> class in <code>the Client\Storage</code> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Spryker\Client\HelloWorld\Storage;
 
@@ -591,7 +592,9 @@ class MessageStorageReader
     }
 }
 </code></pre>
-                                                    <h3>References:</h3>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
                                                     <ul>
                                                         <li value="1">General information on Publish &amp; Synchronize: <a href="../../about_spryker/understanding_spryker/architecture_concepts/publish-and-synchronization.htm">Publish and Synchronization</a></li>
                                                         <li value="2"><a href="../../about_spryker/resources_and_developer_tools/publish-and-synchronization-reference.htm">Publish and Synchronization Reference</a>

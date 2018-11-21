@@ -59,7 +59,6 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="../../resources/tablestyles/patternedrows.css" rel="stylesheet" />
         <script src="../../../Resources/Scripts/custom.modernizr.js">
         </script>
         <script src="../../../Resources/Scripts/jquery.min.js">
@@ -166,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="TspHNVxA0UKJRVuHKjuvxg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TspHNVxA0UKJRVuHKjuvxg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="bzY0aKk4rk-tvadg5IsMMg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="bzY0aKk4rk-tvadg5IsMMg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -204,36 +203,36 @@
                                                     <h4>Static page</h4>
                                                     <p>For creating a CMS page, follow these steps:</p>
                                                     <ol>
-                                                        <li value="1">Create a CMS template called <var>personalized_products.twig</var> under <var>src/Pyz/Shared/Cms/Theme/default/template/</var>. The template must contain at least one placeholder that will represent the marketing text.</li>
-                                                        <li value="2">Go to Zed UI and open the <a href="http://zed.de.demoshop.local/cms/page" target="_blank" title="CMS pages" alt="CMS pages">CMS Pages</a> backend. Add a CMS page that uses the <var>/my-offers</var> URL and the <var>personalized_products</var> template that we’ve just created.</li>
+                                                        <li value="1">Create a CMS template called <code>personalized_products.twig</code> under <code>src/Pyz/Shared/Cms/Theme/default/template/</code>. The template must contain at least one placeholder that will represent the marketing text.</li>
+                                                        <li value="2">Go to Zed UI and open the <a href="http://zed.de.demoshop.local/cms/page" target="_blank" title="CMS pages" alt="CMS pages">CMS Pages</a> backend. Add a CMS page that uses the <code>/my-offers</code> URL and the <code>personalized_products</code> template that we’ve just created.</li>
                                                         <li value="3">Then add the text you would like to show on the static page.</li>
                                                         <li value="4">Activate the page.</li>
-                                                        <li value="5">Run the storage collectors to export the static page by running <var>vendor/bin/console collector:storage:export</var> from your command line. You can have a look into Redis from the <a href="http://zed.de.demoshop.local/storage/maintenance/list" target="_blank" title="storage" alt="storage">Storage</a> backend page.</li>
+                                                        <li value="5">Run the storage collectors to export the static page by running <code>vendor/bin/console collector:storage:export</code> from your command line. You can have a look into Redis from the <a href="http://zed.de.demoshop.local/storage/maintenance/list" target="_blank" title="storage" alt="storage">Storage</a> backend page.</li>
                                                         <li value="6">You can see the page <a href="http://www.de.demoshop.local/my-offers" target="_blank" title="my offers" alt="my offers">here</a>.</li>
                                                     </ol>
                                                     <h4>Personalized Offers</h4>
                                                     <p>To display some personalized product offers, follow the steps below:</p>
                                                     <ol>
-                                                        <li value="1">Create a new Yves module called <var>SpecialOffers</var>.</li>
-                                                        <li value="2">Create <var>Pyz\Yves\SpecialOffers\Plugin\Provider\SpecialOffersControllerProvider</var> that defines a new route to get the list of offers. The route should accept an integer parameter for the <var>limit</var> of how many offers we’d like to display.</li>
-                                                        <li value="3">In order to make the <var>SpecialOffersControllerProvider</var> work, it needs to be registered under <var>Pyz\Yves\Application\YvesBootstrap::registerControllerProviders()</var>.</li>
+                                                        <li value="1">Create a new Yves module called <code>SpecialOffers</code>.</li>
+                                                        <li value="2">Create <code>Pyz\Yves\SpecialOffers\Plugin\Provider\SpecialOffersControllerProvider</code> that defines a new route to get the list of offers. The route should accept an integer parameter for the <code>limit</code> of how many offers we’d like to display.</li>
+                                                        <li value="3">In order to make the <code>SpecialOffersControllerProvider</code> work, it needs to be registered under <code>Pyz\Yves\Application\YvesBootstrap::registerControllerProviders()</code>.</li>
                                                         <li value="4">Create a controller and a template for the defined route. At this point you should be able to display template you’ve created through the URL of your new route.</li>
-                                                        <li value="5">To get products, we’ll need to query Elasticsearch. For querying we can use the <var>Spryker\Client\Search\SearchClient::search()</var> method from the <var>SearchClient</var>. We’ll create <var>Pyz\Client\SpecialOffers\SpecialOffersClient</var> class with <var>getPersonalizedProducts()</var> method that will call the <var>search()</var> of the search client. (Read here about how to implement a client.)</li>
-                                                        <li value="6">The <var>search()</var> method requires us to implement <var>Spryker\Client\Search\Dependency\Plugin\QueryInterface</var> that returns an <var>Elastica\Query</var> object. This is the pure representation of our Elasticsearch query. <span>Below</span> you’ll find a code snippet for the full implementation of a query that returns random products based on the session ID, e.g. listed products will be different for every user. (In real life this of course shouldn’t be a random list of products, but should contain some filters based on collected user information instead. For detailed info about the query, check <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/random-scoring.html" target="_blank" title="random scoring" alt="random scoring">Random scoring</a> documentation page from Elasticsearch.)</li>
-                                                        <li value="7">The second parameter of the <var>search()</var> method is a stack of result formatter plugins. For our case it’s enough to provide only an instance of <var>Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\RawCatalogSearchResultFormatterPlugin</var> that will return only necessary product data from Elasticsearch.</li>
+                                                        <li value="5">To get products, we’ll need to query Elasticsearch. For querying we can use the <code>Spryker\Client\Search\SearchClient::search()</code> method from the <code>SearchClient</code>. We’ll create <code>Pyz\Client\SpecialOffers\SpecialOffersClient</code> class with <code>getPersonalizedProducts()</code> method that will call the <code>search()</code> of the search client. (Read here about how to implement a client.)</li>
+                                                        <li value="6">The <code>search()</code> method requires us to implement <code>Spryker\Client\Search\Dependency\Plugin\QueryInterface</code> that returns an <code>Elastica\Query</code> object. This is the pure representation of our Elasticsearch query. <span>Below</span> you’ll find a code snippet for the full implementation of a query that returns random products based on the session ID, e.g. listed products will be different for every user. (In real life this of course shouldn’t be a random list of products, but should contain some filters based on collected user information instead. For detailed info about the query, check <a href="https://www.elastic.co/guide/en/elasticsearch/guide/current/random-scoring.html" target="_blank" title="random scoring" alt="random scoring">Random scoring</a> documentation page from Elasticsearch.)</li>
+                                                        <li value="7">The second parameter of the <code>search()</code> method is a stack of result formatter plugins. For our case it’s enough to provide only an instance of <code>Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\RawCatalogSearchResultFormatterPlugin</code> that will return only necessary product data from Elasticsearch.</li>
                                                         <li value="8">Returning back to our controller, now we can execute the search request and provide the result as it is for our template.</li>
-                                                        <li value="9">In the template we should be able to access and iterate through the <var>products</var> variable (provided by the <var>RawCatalogSearchResultFormatterPlugin</var>) and display the products. Check template snippet below, that uses the catalog template to render products.</li>
+                                                        <li value="9">In the template we should be able to access and iterate through the <code>products</code> variable (provided by the <code>RawCatalogSearchResultFormatterPlugin</code>) and display the products. Check template snippet below, that uses the catalog template to render products.</li>
                                                         <li value="10">Checking the URL (defined under step 2.) should now show a list of personalized product offers.</li>
                                                     </ol>
                                                     <h4>Putting Everything Together</h4>
                                                     <p>Now that we have a CMS page and can have a list of personalized product offers, we can finish our task by the following steps:</p>
                                                     <ol>
-                                                        <li value="1">Open our <var>personalized_products.twig</var> template and place a <var>{{ render() }}</var> method call where you’d like to display the personalized product offer list.</li>
-                                                        <li value="2">The <var>render()</var> twig method is provided by Silex (check documentation <a href="https://silex.sensiolabs.org/doc/2.0/cookbook/sub_requests.html#rendering-pages-in-twig-templates" target="_blank" title="Silex documentation" alt="Silex documentation">here</a>). All we need to provide as parameter is a path to our personalized products route and the limit of the list (i.e. <var>{{ render(path('personalized-products', {'limit': 12})) }}</var>). This will create an internal sub-request to any of the paths that can be matched by the application router.</li>
+                                                        <li value="1">Open our <code>personalized_products.twig</code> template and place a <code>{{ render() }}</code> method call where you’d like to display the personalized product offer list.</li>
+                                                        <li value="2">The <code>render()</code> twig method is provided by Silex (check documentation <a href="https://silex.sensiolabs.org/doc/2.0/cookbook/sub_requests.html#rendering-pages-in-twig-templates" target="_blank" title="Silex documentation" alt="Silex documentation">here</a>). All we need to provide as parameter is a path to our personalized products route and the limit of the list (i.e. <code>{{ render(path('personalized-products', {'limit': 12})) }}</code>). This will create an internal sub-request to any of the paths that can be matched by the application router.</li>
                                                         <li value="3">As the final result you should be able to see the CMS page with the marketing text you defined on the backend, and a limited list of personalized product offers.</li>
                                                     </ol>
                                                     <h4><a name="Snippet"></a>Snippet for Implementing Elasticsearch Query with Personalized (Random) Results</h4>
-                                                    <p><var>src/Pyz/Client/SpecialOffers/Plugin/Elasticsearch/Query/PersonalizedProductsQueryPlugin.php</var>
+                                                    <p><code>src/Pyz/Client/SpecialOffers/Plugin/Elasticsearch/Query/PersonalizedProductsQueryPlugin.php</code>
                                                     </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Code Sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -290,7 +289,7 @@ class PersonalizedProductsQueryPlugin implements QueryInterface
                                                         </div>
                                                     </div>
                                                     <h4><a name="Snippet2"></a>Snippet for Product Offers Template</h4>
-                                                    <p><var>src/Pyz/Yves/SpecialOffers/Theme/default/personalized-products/index.twig</var>
+                                                    <p><code>src/Pyz/Yves/SpecialOffers/Theme/default/personalized-products/index.twig</code>
                                                     </p><pre><code class="language-PHP line-numbers">&lt;div class="row"&gt;
     {% if products is defined %}
         {% for product in products %}
@@ -305,53 +304,20 @@ class PersonalizedProductsQueryPlugin implements QueryInterface
         {% endfor %}
     {% endif %}
 &lt;/div&gt;</code></pre>
-                                                    <h2>References</h2>
-                                                    <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../resources/tablestyles/patternedrows.css');" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Documentation</th>
-                                                                <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/CMS/CMS Page/content_fields_max_size.htm">CMS Manual</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Tutorial on using CMS in Spryker</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">
-                                                                    <p>URL Routing in Yves</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">
-                                                                    <p>URL Routing in Yves</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
-                                                                    <p><a href="../Developing with Spryker/Module Guide/Search/search.htm">Search</a>
-                                                                    </p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
-                                                                    <p>Detailed manual about Search with Spryker</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
-                                                                    <p>Cronjob Scheduling</p>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
-                                                                    <p>Setup cronjobs in Jenkins</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="http://documentation.spryker.com/content/capabilities/cms/cms_page/content-fields-max-size.htm">CMS Manual</a><![CDATA[
+        ]]></li>
+                                                        <li value="2"><a href="http://documentation.spryker.com/content/yves/yves-url-routing.htm">URL Routing in Yves</a>
+                                                        </li>
+                                                        <li value="3"><a href="http://documentation.spryker.com/content/capabilities/search_and_filter/search-4-0.htm">Search</a>
+                                                        </li>
+                                                        <li value="4"><a href="http://documentation.spryker.com/content/resources_and_developer_tools/cronjob-scheduling.htm">Cronjob Scheduling
+</a>
+                                                        </li>
+                                                    </ul>
                                                 </div>
                                             </div>
                                         </div>

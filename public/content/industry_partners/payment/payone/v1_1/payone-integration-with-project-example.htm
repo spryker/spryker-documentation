@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="NBv4mYH6DEKYHACQOtAhWw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="NBv4mYH6DEKYHACQOtAhWw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="S9b5MfgrM0eopNvnWBcKTQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="S9b5MfgrM0eopNvnWBcKTQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -202,7 +202,7 @@
                                                     <p>First of all we need to provide a URL to Payone module, which will be used to redirect user when the quote is filled with data obtained from PayPal.
  To achieve this, make the following steps:</p>
                                                     <ol>
-                                                        <li value="1">Add custom controller action to <var>"src/Pyz/Yves/Checkout/Controller/CheckoutController.php"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="1">Add custom controller action to <code>src/Pyz/Yves/Checkout/Controller/CheckoutController.php</code>:</li><pre><code class="language-php line-numbers">
 /**
 * @return \Symfony\Component\HttpFoundation\RedirectResponse
 */
@@ -228,7 +228,7 @@ $this-&gt;createController('/{checkout}/paypal-express-checkout-entry-point', se
 ...
 }
 </code></pre>
-                                                        <li value="3">Create <var>ExpressCheckoutHandler</var> class <var>"src/Pyz/Yves/Checkout/Handler/ExpressCheckoutHandler.php"</var> with corresponding interface:</li><pre><code class="language-php line-numbers">
+                                                        <li value="3">Create <code>ExpressCheckoutHandler</code> class <code>src/Pyz/Yves/Checkout/Handler/ExpressCheckoutHandler.php</code> with corresponding interface:</li><pre><code class="language-php line-numbers">
 namespace Pyz\Yves\Checkout\Handler;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Spryker\Client\Cart\CartClientInterface;
@@ -258,7 +258,7 @@ $quoteTransfer-&gt;addExpense(
 }
 }
 </code></pre>
-                                                        <li value="4">Add <var>ExpressCheckoutHandler</var> related method in <var>"src/Pyz/Yves/Checkout/CheckoutFactory.php"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="4">Add <code>ExpressCheckoutHandler</code> related method in <code>src/Pyz/Yves/Checkout/CheckoutFactory.php</code>:</li><pre><code class="language-php line-numbers">
 /**
 * @return \Pyz\Yves\Checkout\Handler\ExpressCheckoutHandler
 */
@@ -269,7 +269,7 @@ $this-&gt;getCartClient()
 );
 }
 </code></pre>
-                                                        <li value="5">Extend <var>ShipmentForm</var> class to override a property_path option (create <var>"src/Pyz/Yves/Shipment/Form/ShipmentSubForm.php"</var>):</li><pre><code class="language-php line-numbers">
+                                                        <li value="5">Extend <code>ShipmentForm</code> class to override a property_path option (create <code>src/Pyz/Yves/Shipment/Form/ShipmentSubForm.php</code>):</li><pre><code class="language-php line-numbers">
 namespace Pyz\Yves\Shipment\Form;
 class ShipmentSubForm extends ShipmentForm
 {
@@ -279,7 +279,7 @@ class ShipmentSubForm extends ShipmentForm
 const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_SELECTION;
 }
 </code></pre>
-                                                        <li value="6">Adjust summary form by adding a shipment subform in <var>"src/Pyz/Yves/Checkout/Form/Steps/SummaryForm.php"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="6">Adjust summary form by adding a shipment subform in <code>src/Pyz/Yves/Checkout/Form/Steps/SummaryForm.php</code>:</li><pre><code class="language-php line-numbers">
 class SummaryForm extends AbstractType
 {
 /**
@@ -332,7 +332,7 @@ return 'summaryForm';
 }
 }
 </code></pre>
-                                                        <li value="7">Create shipment subform template for summary page in <var>"src/Pyz/Yves/Checkout/Theme/default/checkout/partials/shipment.twig"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="7">Create shipment subform template for summary page in <code>src/Pyz/Yves/Checkout/Theme/default/checkout/partials/shipment.twig</code>:</li><pre><code class="language-php line-numbers">
 
 &lt;div class="row columns"&gt;
 
@@ -359,8 +359,8 @@ return 'summaryForm';
 &lt;/div&gt;
 
 </code></pre>
-                                                        <li value="8">Update summary twig template in <var>"src/Pyz/Yves/Checkout/Theme/default/checkout/summary.twig"</var>.
-            Move <var>"form_start"</var> expression to the top of a content section and <var>"form_end"</var> to the end:</li><pre><code class="language-php line-numbers">
+                                                        <li value="8">Update summary twig template in <code>src/Pyz/Yves/Checkout/Theme/default/checkout/summary.twig</code>.
+            Move <code>form_start</code> expression to the top of a content section and <code>form_end</code> to the end:</li><pre><code class="language-php line-numbers">
 ...
 {% block content %}
 {{ form_start(summaryForm, {'attr': {'class': 'row'}}) }}
@@ -370,13 +370,13 @@ return 'summaryForm';
 {{ form_end(summaryForm) }}
 {% endblock %}
 </code></pre>
-                                                        <li value="9">Remove <var>"{% include '@checkout/checkout/partials/voucher-form.twig' %}"</var> include from summary template. Include <var>checkout/partials/shipment.twig</var> in your summary template:</li><pre><code class="language-php line-numbers">
+                                                        <li value="9">Remove <code>{% include '@checkout/checkout/partials/voucher-form.twig' %}</code> include from summary template. Include <code>checkout/partials/shipment.twig</code> in your summary template:</li><pre><code class="language-php line-numbers">
       ...
       <li value="1"><strong>{{ 'checkout.step.summary.shipping' | trans }}</strong></li>
       {% include '@checkout/checkout/partials/shipment.twig' %}
       ...
 </code></pre>
-                                                        <li value="10">Add shipment form data provider and remove voucher form from summary form collection(It is just an example, if you need voucher form, you need to adjust summary page on your own).            In <var>"src/Pyz/Yves/Checkout/Form/FormFactory.php"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="10">Add shipment form data provider and remove voucher form from summary form collection(It is just an example, if you need voucher form, you need to adjust summary page on your own).            In <code>src/Pyz/Yves/Checkout/Form/FormFactory.php</code>:</li><pre><code class="language-php line-numbers">
 /**
 * @param \Generated\Shared\Transfer\QuoteTransfer
 *
@@ -401,7 +401,7 @@ $this-&gt;createSummaryForm(),
 ];
 }
 </code></pre>
-                                                        <li value="11">Handle shipment form data, when summary form is submitted. Inject two dependencies into <var>"src/Pyz/Yves/Checkout/Process/Steps/SummaryStep.php"</var>:</li><pre><code class="language-php line-numbers">
+                                                        <li value="11">Handle shipment form data, when summary form is submitted. Inject two dependencies into <code>src/Pyz/Yves/Checkout/Process/Steps/SummaryStep.php</code>:</li><pre><code class="language-php line-numbers">
 /**
 * @var \Spryker\Client\Calculation\CalculationClientInterface
 */
@@ -433,7 +433,7 @@ $this-&gt;calculationClient = $calculationClient;
 $this-&gt;shipmentPlugins = $shipmentPlugins;
 }
 </code></pre>
-                                                        <li value="12">Extend <var>execute</var> method:</li><pre><code class="language-php line-numbers">
+                                                        <li value="12">Extend <code>execute</code> method:</li><pre><code class="language-php line-numbers">
 /**
 * @param \Symfony\Component\HttpFoundation\Request $request
 * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -460,7 +460,8 @@ return $quoteTransfer;
 </a><![CDATA[            ]]></li>
                                                         <li value="2"><![CDATA[
               ]]><a href="payone-integration-security-invoice.htm">Security Invoice Payment - Payone</a><![CDATA[
-            ]]></li>
+]]></li>
+                                                        <li value="3"><a href="../suite/payone-paypal-express-checkout-suite.htm">Integrate Payone in Demo Shop </a><![CDATA[          ]]></li>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: Nov. 6th, 2017 </i>

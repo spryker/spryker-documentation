@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="WfV6I3f_EEWOjROxhIq0Gw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WfV6I3f_EEWOjROxhIq0Gw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ghayRDSVmUSqKgqUXoHMEA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ghayRDSVmUSqKgqUXoHMEA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -197,7 +197,7 @@
                                                 </div>
                                                 <div class="js-anchorer">
                                                     <h1>Tutorial - Set Up a "Hello World" Queue</h1>
-                                                    <p>This Tutorial demonstrates a simple <var>Hello, World</var> queue use case. We will create a <var>hello </var>queue and send/receive our messages to/from this queue with <var>Hello, World</var> content. </p>
+                                                    <p>This Tutorial demonstrates a simple <code>Hello, World</code> queue use case. We will create a <code>hello </code>queue and send/receive our messages to/from this queue with <code>Hello, World</code> content. </p>
                                                     <p>For this purpose, we will be using our default queue engine RabbitMQ.
 
 </p>
@@ -215,13 +215,13 @@
 
 </p>
                                                     <ol>
-                                                        <li value="1">Go to the RabbitMQ management UI: <var>http://zed.de.demoshop.local:15672/</var> and login.
+                                                        <li value="1">Go to the RabbitMQ management UI: <code>http://zed.de.demoshop.local:15672/</code> and login.
 </li>
-                                                        <li value="2">Go to the <var>Admin </var>tab and select <var>admin </var>from user table under All users.
+                                                        <li value="2">Go to the <code>Admin </code>tab and select <code>admin </code>from user table under All users.
 </li>
-                                                        <li value="3">From <var>Virtual Host</var> select /<var>DE_development_zed</var> (for other stores it might be different).
+                                                        <li value="3">From <code>Virtual Host</code> select /<code>DE_development_zed</code> (for other stores it might be different).
 </li>
-                                                        <li value="4">Click <var>Set permission</var>.
+                                                        <li value="4">Click <code>Set permission</code>.
 </li>
                                                         <li value="5">You will now see the new permission in the table.
 </li>
@@ -241,7 +241,7 @@
                                                     <p><strong>To check if the RabbitMQ adapter is already registered in the Queue module</strong>:
 
 </p>
-                                                    <p>In the Demoshop, open <var>QueueDependencyProvider.php</var> and check/add the RabbitMQ adapter inside <var>createQueueAdapters()</var>:
+                                                    <p>In the Demoshop, open <code>QueueDependencyProvider.php</code> and check/add the RabbitMQ adapter inside <code>createQueueAdapters()</code>:
 
 </p>
                                                     <p><strong>Example</strong>:
@@ -263,7 +263,7 @@ class QueueDependencyProvider extends BaseQueueDependencyProvider
 </code></pre>
                                                     <h2>Creating a Simple Queue
 </h2>
-                                                    <p>Before sending our messages to the <var>hello </var>queue, we need to first configure the Queue Adapter and then add queue configuration to RabbitMQ.
+                                                    <p>Before sending our messages to the <code>hello </code>queue, we need to first configure the Queue Adapter and then add queue configuration to RabbitMQ.
         <p class="info"><strong>Default Queue Adapter</strong>
             You can skip this part if you want to use the default queue adapter:
             $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION_DEFAULT]
@@ -273,7 +273,7 @@ class QueueDependencyProvider extends BaseQueueDependencyProvider
                                                     <p>As mentioned, we can have different queue adapters for different queues, in this example we will configure our hello queue to work with the RabbitMQ adapter.
 </p>
                                                     <p>
-To configure a queue work with a queue adapter, add the following lines to <var>config_default.php</var>:
+To configure a queue work with a queue adapter, add the following lines to <code>config_default.php</code>:
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -290,7 +290,7 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
 ?&gt;
 Adding Queue Configuration to RabbitMQ
 </code></pre>
-                                                    <p>The next step is to extend <var>RabbitMqConfig.php</var> in our project and then pass our configuration to <var>getQueueOptions()</var>:
+                                                    <p>The next step is to extend <code>RabbitMqConfig.php</code> in our project and then pass our configuration to <code>getQueueOptions()</code>:
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -343,8 +343,8 @@ The following image shows how the RabbitMQ exchange and queue work together. You
                                                     <p>Place a trigger to the queue API by creating a simple controller/action in the Demoshop.
 
 </p>
-                                                    <p>This code creates a <var>QueueSendMessageTransfer</var> and sets <var>Hello, World</var> into the body of message. </p>
-                                                    <p>The final step is to call <var>QueueClient::sendMessage()</var> and the trigger will be set.
+                                                    <p>This code creates a <code>QueueSendMessageTransfer</code> and sets <code>Hello, World</code> into the body of message. </p>
+                                                    <p>The final step is to call <code>QueueClient::sendMessage()</code> and the trigger will be set.
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -382,9 +382,9 @@ class QueueController extends AbstractController
 
 </p>
                                                     <ol>
-                                                        <li value="1">Open a browser and call the following url <var>http://www.de.demoshop.local/queue/send</var>.
+                                                        <li value="1">Open a browser and call the following url <code>http://www.de.demoshop.local/queue/send</code>.
 </li>
-                                                        <li value="2">Check the RabbitMQ management UI <var>http://zed.de.project.local:15672/#/queues</var> to see if the hello queue is created and there is a message in there.
+                                                        <li value="2">Check the RabbitMQ management UI <code>http://zed.de.project.local:15672/#/queues</code> to see if the hello queue is created and there is a message in there.
 </li>
                                                     </ol>
                                                     <p>
@@ -394,13 +394,13 @@ class QueueController extends AbstractController
                                                         <img src="../../resources/images/rabbitmq_message.png" />
                                                     </p>
                                                     <p><![CDATA[ 
-]]><strong>Result</strong>: You successfully created the <var>hello </var>queue and sent one message with <var>Hello, World!</var> inside.
+]]><strong>Result</strong>: You successfully created the <code>hello </code>queue and sent one message with <code>Hello, World!</code> inside.
 
 </p>
                                                     <h2>Receiving Messages</h2>
-                                                    <p>To receive messages, you need to create another action for receiving messages from the <var>hello </var>queue.
+                                                    <p>To receive messages, you need to create another action for receiving messages from the <code>hello </code>queue.
 
-To create another action for receiving a message from the <var>hello </var>queue:
+To create another action for receiving a message from the <code>hello </code>queue:
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -435,7 +435,7 @@ To create another action for receiving a message from the <var>hello </var>queue
 </code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Now, open a browser and call the following url <var>http://www.de.demoshop.local/queue/receive</var>.
+                                                    <p>Now, open a browser and call the following url <code>http://www.de.demoshop.local/queue/receive</code>.
 
 </p>
                                                     <p><strong>Result</strong>: you should be able to see this:
@@ -458,7 +458,7 @@ This chapter includes three parts. Parts one and two demonstrate Task and Plugin
 
 The command syntax is:</p><pre><code class="language-PHP line-numbers">/vendor/bin/console queue:task:start &lt;queue-name&gt;
 </code></pre>
-                                                    <p>Let’s run this command for <var>hello </var>queue and see what happens:
+                                                    <p>Let’s run this command for <code>hello </code>queue and see what happens:
 
 </p><pre><code class="language-PHP line-numbers">./vendor/bin/console queue:task:start hello
 Store: DE | Environment: development
@@ -473,7 +473,7 @@ Store: DE | Environment: development
                                                     <p>Plugins in queue are used to give more focus on message processing to developers by hiding the queue implementation.
 
 </p>
-                                                    <p>We will start by writing a simple plugin which will write a <var>Hello, World!</var> message to output:
+                                                    <p>We will start by writing a simple plugin which will write a <code>Hello, World!</code> message to output:
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -509,7 +509,7 @@ class HelloQueueMessageProcessorPlugin implements QueueMessageProcessorPluginInt
 </code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Now, register the plugin to <var>QueueDependencyProvider::getProcessorMessagePlugins()</var>:
+                                                    <p>Now, register the plugin to <code>QueueDependencyProvider::getProcessorMessagePlugins()</code>:
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
@@ -538,7 +538,7 @@ class QueueDependencyProvider extends SprykerQueueDependencyProvider
             You can skip this part if you want to use the default queue consumer:
             QueueConstants::QUEUE_DEFAULT_RECEIVER
         </p>
-                                                    <p>and provide basic configuration for listening to the <var>hello </var>queue:
+                                                    <p>and provide basic configuration for listening to the <code>hello </code>queue:
 </p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="bash">&lt;?php
@@ -579,13 +579,13 @@ Store: DE | Environment: development
 [x] Hello, World!</code></pre>
                                                     <h3>Queue Workers
 </h3>
-                                                    <p>A queue <var>Worker </var>is another useful command that brings the <var>Task </var>to a background process and provides parallel processing. By adjusting the <var>Worker </var>config we can run tasks with different time slot and different amount of processes.
+                                                    <p>A queue <code>Worker </code>is another useful command that brings the <code>Task </code>to a background process and provides parallel processing. By adjusting the <code>Worker </code>config we can run tasks with different time slot and different amount of processes.
 
 </p>
                                                     <p>
                                                         <img src="../../resources/images/rabbitmq_worker.png" />
                                                     </p>
-                                                    <p>Lets start <var>Worker </var>for our <var>hello </var>queue, first we need to adjust worker config in <var>config_default.php</var>:
+                                                    <p>Lets start <code>Worker </code>for our <code>hello </code>queue, first we need to adjust worker config in <code>config_default.php</code>:
 
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
@@ -602,7 +602,7 @@ $config[QueueConstants::QUEUE_ADAPTER_CONFIGURATION] = [
 
 ?&gt;
 </code></pre>
-                                                    <p>In the example above, we adjusted our config to let the worker run for 1 minute and execute 2 <var>hello </var>task processes every 1 second. We can scale-up this in production by adding more and more processors, but we always need to keep in mind resources and limitations.
+                                                    <p>In the example above, we adjusted our config to let the worker run for 1 minute and execute 2 <code>hello </code>task processes every 1 second. We can scale-up this in production by adding more and more processors, but we always need to keep in mind resources and limitations.
 
 </p>
                                                     <p>Now run:
@@ -612,7 +612,7 @@ Store: DE | Environment: development
 01) New: 2 Busy: 0 [hello]
 Main Queue Process &lt;execution round #1&gt;: 59/59 sec [============================] 100%%
 </code></pre>
-                                                    <p><strong>To run the worker command every minute, enable the command in <var>jobs.php</var></strong>:
+                                                    <p><strong>To run the worker command every minute, enable the command in <code>jobs.php</code></strong>:
 
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
@@ -634,16 +634,21 @@ $jobs[] = [
 		]]><b>See also:
 </b></p>
                                                     <ul>
-                                                        <li value="1"><a href="../Developing with Spryker/Module Guide/Queue/queue.htm" class="MCXref xref">Queue</a>
-                                                        </li>
-                                                        <li value="2"><a href="../Developing with Spryker/Module Guide/Queue/queue_adapter.htm" class="MCXref xref">Default Queue Adapter</a>
-                                                        </li>
-                                                        <li value="3"><a href="../Developing with Spryker/Module Guide/Queue/queue_workers.htm" class="MCXref xref">Queue Workers</a>
-                                                        </li>
-                                                        <li value="4"><a href="../Developing with Spryker/Module Guide/Queue/queue_task.htm" class="MCXref xref">Queue Task</a>
-                                                        </li>
-                                                        <li value="5"><a href="../Developing with Spryker/Migration Guides/mg_rabbitmq.htm" class="MCXref xref">Migration Guide - RabbitMQ</a>
-                                                        </li>
+                                                        <li value="1"><![CDATA[
+                ]]><a href="https://documentation.spryker.com/content/capabilities/development/queue/queue.htm">Queue</a><![CDATA[
+            ]]></li>
+                                                        <li value="2"><![CDATA[
+                ]]><a href="https://documentation.spryker.com/content/capabilities/development/queue/queue-adapter.htm">Default Queue Adapter</a><![CDATA[
+            ]]></li>
+                                                        <li value="3"><![CDATA[
+                ]]><a href="https://documentation.spryker.com/content/capabilities/development/queue/queue-workers.htm">Queue Workers</a><![CDATA[
+            ]]></li>
+                                                        <li value="4"><![CDATA[
+                ]]><a href="https://documentation.spryker.com/content/capabilities/development/queue/queue-task.htm">Queue Task</a><![CDATA[
+            ]]></li>
+                                                        <li value="5"><![CDATA[
+                ]]><a href="https://documentation.spryker.com/content/module_migration_guides/mg-rabbitmq.htm">Migration Guide - RabbitMQ</a><![CDATA[
+            ]]></li>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: Oct. 18th, 2017 </i><![CDATA[    ]]></p>
