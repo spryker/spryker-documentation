@@ -109,9 +109,12 @@ function Anchorer () {
         this.$targets.each(function (index, element) {
             const $element = $(element);
             const text = $element.text().trim() || '';
+            $element.contents().filter(function () {
+                return this.nodeType === 3;
+            }).remove();
             const id = that.normalize(text);
 
-            $element.html(that.createAnchor(id, text));
+            $element.prepend(that.createAnchor(id, text));
         });
     };
 

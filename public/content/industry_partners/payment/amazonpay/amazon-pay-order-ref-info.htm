@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="5cyduuvP4UKR0IXqRvZVBQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="5cyduuvP4UKR0IXqRvZVBQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="D-ToxA_0KUi0kwgVvUaJaQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="D-ToxA_0KUi0kwgVvUaJaQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -207,22 +207,21 @@
                                                     <p>Configuration would be used from your current settings profile.</p>
                                                     <p><b>Place order</b> button should look like this:</p><pre><code class="language-xml">&lt;a href="{{ path('amazonpay_confirm_purchase') }}" disabled="true" id="amazonpayPlaceOrderLink" class="button expanded __no-margin-bottom"&gt;Place order&lt;/a&gt;
             </code></pre>
-                                                    <p>Both widgets are similar to the <code>paybutton</code> widget that we described earlier.</p>
+                                                    <p>Both widgets are similar to the <var>paybutton</var> widget that we described earlier.</p>
                                                     <p>All necessary credentials have to be specified the same way and in order to retrieve the selected information, Amazon provides JavaScript callbacks.</p>
-                                                    <p>The first of them to use is <code>onOrderReferenceCreate</code>, which provides an Amazon order reference ID.</p>
+                                                    <p>The first of them to use is <var>onOrderReferenceCreate</var>, which provides an Amazon order reference ID.</p>
                                                     <p>This ID is a unique identifier of an order, created on Amazon's side and is required for Amazon Pay API calls.</p>
-                                                    <p>Other important callbacks are <code>onAddressSelect</code> and <code>onPaymentSelect</code>. These callbacks are triggered after selecting shipment address information and payment method respectively. Callbacks are client side notifications informing that an event has happened.</p>
+                                                    <p>Other important callbacks are <var>onAddressSelect</var> and <var>onPaymentSelect</var>. These callbacks are triggered after selecting shipment address information and payment method respectively. Callbacks are client side notifications informing that an event has happened.</p>
                                                     <p>Use the Amazon Pay API to retrieve data and run order operations.</p>
                                                     <h3>Checkout Step Rendering</h3>
-                                                    <p>Since payment module is generic, <code>PaymentController</code> provides method <code>getItems</code> in order to extend display of items.</p>
+                                                    <p>Since payment module is generic, <var>PaymentController</var> provides method <var>getItems</var> in order to extend display of items.</p>
                                                     <p>For example, in order to handle bundled products, follow these steps: </p>
-                                                    <p>Create template on project level <code>AmazonPay/Theme/default/payment/patials/checkout-item.twig</code>:</p><pre><code class="language-twig line-numbers">{% if item.bundleProduct is defined %}
+                                                    <p>Create template on project level <var>AmazonPay/Theme/default/payment/patials/checkout-item.twig</var>:</p><pre><code class="language-twig line-numbers">{% if item.bundleProduct is defined %}
         {% include '@checkout/checkout/partials/summary-item.twig' with {'item': item.bundleProduct, 'bundleItems' : item.bundleItems} %}
  {% else %}
           {% include '@checkout/checkout/partials/summary-item.twig' %}
- {% endif %}
-            </code></pre>
-                                                    <p>Extend <code>AmazonPay/Controller/PaymentController</code> and add the following method:</p><pre><code class="language-php line-numbers">
+ {% endif %}</code></pre>
+                                                    <p>Extend <var>AmazonPay/Controller/PaymentController</var> and add the following method:</p><pre><code class="language-php line-numbers">
 
     /**
      * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
@@ -235,9 +234,8 @@
             $quoteTransfer-&gt;getItems(),
             $quoteTransfer-&gt;getBundleItems()
         );
-    }
-        </code></pre>
-                                                    <p>Add corresponding method to AmazonPayFactory:</p><pre><code class="language-php line-numbers">
+    }</code></pre>
+                                                    <p>Add corresponding method to <var>AmazonPayFactory</var>:</p><pre><code class="language-php line-numbers">
 
     /**
      * @return \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface
@@ -245,31 +243,22 @@
     public function createProductBundleGrouper()
     {
         return new ProductBundleGrouper();
-    }
-        </code></pre>
+    }</code></pre>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
                                                         <li value="1"><a href="amazon-pay.htm">Get a general idea about Amazon Pay</a><![CDATA[
             ]]></li>
-                                                        <li value="2"><a href="amazon-pay-api.htm">Configure Amazon Pay API
-            
-</a>
+                                                        <li value="2"><a href="amazon-pay-api.htm">Configure Amazon Pay API</a>
                                                         </li>
                                                         <li value="3"><a href="amazon-pay-configuration.htm">Configure Amazon Pay</a><![CDATA[
             ]]></li>
-                                                        <li value="4"><a href="#">Obtaining Amazon Order Reference and Shipping Addresses details
-            
-</a>
+                                                        <li value="4"><a href="#">Obtaining Amazon Order Reference and Shipping Addresses details</a>
                                                         </li>
-                                                        <li value="5"><a href="amazon-pay-refund.htm">Learn how Amazon Pay Refund works
-            
-</a>
+                                                        <li value="5"><a href="amazon-pay-refund.htm">Learn how Amazon Pay Refund works</a>
                                                         </li>
-                                                        <li value="6"><a href="amazon-pay-rendering-pay.htm">Rendering the "Pay with Amazon" button on the Cart page
-            
-</a>
+                                                        <li value="6"><a href="amazon-pay-rendering-pay.htm">Rendering the "Pay with Amazon" button on the Cart page</a>
                                                         </li>
                                                         <li value="7"><a href="amazon-pay-simulations.htm">Learn how Amazon Pay Sandbox Simulations work
             

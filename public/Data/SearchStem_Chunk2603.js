@@ -1,0 +1,1 @@
+define({"∑tax_":{"∑tax_amount":[317],},"∑tax_a":{"∑tax_amount":[317],},"∑tax_am":{"∑tax_amount":[317],},"∑tax_amo":{"∑tax_amount":[317],},"∑tax_amou":{"∑tax_amount":[317],},"∑tax_amoun":{"∑tax_amount":[317],},"∑tax_amount":{"∑tax_amount":[317],},"✓":{"✓":[363],},"✗":{"✗":[372,617],},"➜":{"➜":[372,617],},});
