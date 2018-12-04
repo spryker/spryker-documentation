@@ -1,10 +1,10 @@
 ﻿function ScrollToTop () {
 
-    const THRESHOLD = 500;
-    const DIRECTION_UP = 'up';
-    const DIRECTION_DOWN = 'down';
-    const SCROLL_DELAY = 500;
-    const SCROLL_EASE = 'swing';
+    var THRESHOLD = 500;
+    var DIRECTION_UP = 'up';
+    var DIRECTION_DOWN = 'down';
+    var SCROLL_DELAY = 500;
+    var SCROLL_EASE = 'swing';
 
     this.init = function () {
         this.$window = $(window);
@@ -72,10 +72,10 @@ topScroll.init();
 
 function Anchorer () {
 
-    const TEXT_TO_ID_REGEX = /(\W)/igm;
-    const GO_TO_ANCHOR_DELAY = 100;
-    const SCROLL_DELAY = 500;
-    const SCROLL_EASE = 'swing';
+    var TEXT_TO_ID_REGEX = /(\W)/igm;
+    var GO_TO_ANCHOR_DELAY = 100;
+    var SCROLL_DELAY = 500;
+    var SCROLL_EASE = 'swing';
 
     this.$container = $('html, body');
     this.$el = $('.js-anchorer');
@@ -93,8 +93,8 @@ function Anchorer () {
     };
 
     this.onClick = function(e) {
-        const that = this;
-        const href = $(e.currentTarget).attr('href');
+        var that = this;
+        var href = $(e.currentTarget).attr('href');
 
         this.scrollToAnchor(href, function () {
             that.setHash(href);
@@ -104,15 +104,15 @@ function Anchorer () {
     };
 
     this.appendAnchors = function() {
-        const that = this;
+        var that = this;
 
         this.$targets.each(function (index, element) {
-            const $element = $(element);
-            const text = $element.text().trim() || '';
+            var $element = $(element);
+            var text = $element.text().trim() || '';
             $element.contents().filter(function () {
                 return this.nodeType === 3;
             }).remove();
-            const id = that.normalize(text);
+            var id = that.normalize(text);
 
             $element.prepend(that.createAnchor(id, text));
         });
@@ -138,13 +138,13 @@ function Anchorer () {
             return;
         }
 
-        const $anchor = $(href);
+        var $anchor = $(href);
 
         if ($anchor.length < 1) {
             return;
         }
 
-        const top = $anchor.offset().top - this.headerHeight;
+        var top = $anchor.offset().top - this.headerHeight;
         console.log(top);
         this.$container.animate({
             scrollTop: top
@@ -185,3 +185,79 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         }, 500);
 });
+
+function AsideNavCloser(bodyOverlay, container) {
+    this.bodyOverlay = document.querySelector(bodyOverlay);
+    this.container = document.getElementById(container);
+
+    this.init = function () {
+        var closeButton = this.createButton();
+        this.container.appendChild(closeButton);
+        this.mapEvents(closeButton);
+    };
+    
+    this.mapEvents = function (elem) {
+        var self = this;
+        elem.addEventListener('click', function (e) {
+            if(self.bodyOverlay == null){
+                var context = self;
+                var int = setInterval(function () {
+                    if(context.bodyOverlay == null){
+                        context.bodyOverlay = document.querySelector('.js-off-canvas-exit');
+                    } else {
+                        context.bodyOverlay.click();
+                        clearInterval(int);
+                    }
+                }, 100);
+            } else {
+                self.bodyOverlay.click();
+            }
+        })
+    };
+    
+    this.createButton = function () {
+        var closeButton = document.createElement('span');
+        closeButton.classList.add('aside-close-button');
+        return closeButton;
+    }
+}
+
+var asideNavCloseButton = new AsideNavCloser('.js-off-canvas-exit', 'offCanvas');
+document.addEventListener("DOMContentLoaded", asideNavCloseButton.init());
+
+
+function ToggleSearch() {
+
+    this.search = document.querySelector('.main-section .search');
+    this.container = document.querySelector('.title-bar-section .menu-icon-container');
+    this.toggleButton = document.createElement('span');
+    this.toggleOverlay = document.createElement('div');
+
+    this.init = function () {
+
+        this.appendElements();
+        this.mapEvents();
+    };
+
+    this.mapEvents = function () {
+        this.toggleButton.addEventListener('click' , this.toggleButtonAction.bind(this));
+        this.toggleOverlay.addEventListener('click', this.toggleButtonAction.bind(this));
+    };
+
+    this.toggleButtonAction = function (event) {
+        event.stopPropagation();
+        this.search.classList.toggle('is-visible');
+        this.toggleOverlay.classList.toggle('active');
+
+    }
+
+    this.appendElements = function () {
+        this.toggleButton.classList.add('search-toggle-button');
+        this.toggleOverlay.classList.add('search-toggle-overlay');
+        this.container.appendChild(this.toggleButton);
+        this.search.parentNode.appendChild(this.toggleOverlay);
+    }
+}
+
+var showSearchButton = new ToggleSearch();
+document.addEventListener("DOMContentLoaded", showSearchButton.init());

@@ -165,8 +165,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Dd8ypMCX0Ei0PNLzcKZKNA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Dd8ypMCX0Ei0PNLzcKZKNA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="EXYnOP4DKUynd6t46vp-eA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="EXYnOP4DKUynd6t46vp-eA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,8 +239,7 @@ protected function addPaymentMethodHandlerPluginCollection(Container $container)
 	};
  
 	return $container;
-}
-				</code></pre>
+}</code></pre>
                                                     <p>Add controller provider to <var>\Pyz\Yves\ShopApplication\YvesBootstrap</var>:</p><pre><code class="language-php line-numbers">	
 	
 protected function getControllerProviderStack($isSsl)
@@ -249,8 +248,7 @@ protected function getControllerProviderStack($isSsl)
 			...   
 			new AdyenControllerProvider($isSsl),
 		];
-	}
-				</code></pre>
+	}</code></pre>
                                                     <p>Add checkout plugins to <var>\Pyz\Zed\Checkout\CheckoutDependencyProvider</var></p><pre><code class="language-php line-numbers">
 	protected function getCheckoutOrderSavers(Container $container)
 	{
@@ -268,8 +266,7 @@ protected function getControllerProviderStack($isSsl)
 			...
 			new AdyenPostSaveHookPlugin(),
 		];
-	}
-				</code></pre>
+	}</code></pre>
                                                     <p>Add OMS commands and conditions to <var>\Pyz\Zed\Oms\OmsDependencyProvider</var>:</p><pre><code class="language-php line-numbers">
 protected function extendCommandPlugins(Container $container)
 {
@@ -307,8 +304,7 @@ protected function extendConditionPlugins(Container $container)
 	});
  
 	return $container;
-}
-		</code></pre>
+}</code></pre>
                                                     <p>Frontend Integration</p>
                                                     <p>To make Eco module work with your project, it's necessary to extend the frontend part:</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />tsconfig.json</a></span>
@@ -317,8 +313,7 @@ protected function extendConditionPlugins(Container $container)
 		"./vendor/spryker/spryker-shop/**/*",
 		"./vendor/spryker-eco/**/*",
 		"./src/Pyz/Yves/**/*"
-	],
-				</code></pre>
+	],</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />frontend/settings.js</a></span>
@@ -335,8 +330,7 @@ protected function extendConditionPlugins(Container $container)
 			...
 			path.join(context, paths.eco.modules),
 			...
-		],
-				</code></pre>
+		],</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</a></span>
@@ -367,9 +361,9 @@ protected function extendConditionPlugins(Container $container)
 		{% block fieldset %}
 			{% for name, choices in data.form.paymentSelection.vars.choices %}
 				{% set paymentProviderIndex = loop.index %}
-				<h5>{{ ('checkout.payment.provider.' ~ name) | trans }}</h5><ul class="list spacing-y">
+				&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;&lt;ul class="list spacing-y"&gt;
 					{% for key, choice in choices %}
-						<li class="list__item spacing-y clear" value="1">
+						&lt;li class="list__item spacing-y clear"&gt;
 							{% embed molecule('form') with {
 								data: {
 									form: data.form[data.form.paymentSelection[key].vars.value],
@@ -390,7 +384,7 @@ protected function extendConditionPlugins(Container $container)
 											'class-to-toggle': 'is-hidden'
 										}
 									}) }}
-									<div class="col col--sm-12 is-hidden js-payment-method-{{embed.index}}"><div class="col col--sm-12 col--md-6">
+									&lt;div class="col col--sm-12 is-hidden js-payment-method-{{embed.index}}"&gt;&lt;div class="col col--sm-12 col--md-6"&gt;
 											{% if data.form.vars.template_path is defined %}
 												{% set viewName = data.form.vars.template_path | split('/') %}
 												{% include view(viewName[1], viewName[0]) with {
@@ -399,17 +393,16 @@ protected function extendConditionPlugins(Container $container)
 											{% else %}
 												{{parent()}}
 											{% endif %}
-										</div></div>
+										&lt;/div&gt;&lt;/div&gt;
 								{% endblock %}
 							{% endembed %}
-						</li>
+						&lt;/li&gt;
 					{% endfor %}
-				</ul>
+				&lt;/ul&gt;
 			{% endfor %}
 		{% endblock %}
 	{% endembed %}
-{% endblock %}
-				</code></pre>
+{% endblock %}</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/Twig/TwigConfig.php</a></span>
@@ -420,8 +413,7 @@ protected function addCoreTemplatePaths(array $paths)
 	$paths[] = APPLICATION_VENDOR_DIR . '/spryker-eco/%1$s/src/SprykerEco/Yves/%1$s/Theme/' . $themeName;
  
 	return $paths;
-}
-				</code></pre>
+}</code></pre>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
