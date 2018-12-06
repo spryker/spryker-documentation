@@ -13,6 +13,18 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Performance Monitoring - Minubo   </title>
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
         <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -165,8 +177,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="991gdScJKkWJidZYm0XYyw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="991gdScJKkWJidZYm0XYyw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="tl3XRVF4q0eMmWjHtg2QzA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="tl3XRVF4q0eMmWjHtg2QzA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -246,8 +258,7 @@
                                                     <ol>
                                                         <li value="1">To install Minubo run next command in the console:
 			<pre><code class="language-bash">composer require spryker-eco/minubo</code></pre></li>
-                                                        <li value="2">Copy over the content from config/config.dist.php to config_default.php and add the values:<pre><code class="language-PHP line-numbers">
-	...
+                                                        <li value="2">Copy over the content from config/config.dist.php to config_default.php and add the values:<pre><code class="language-PHP line-numbers">...
 	use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
 	use Spryker\Shared\FileSystem\FileSystemConstants;
 	use SprykerEco\Shared\Minubo\MinuboConstants;
@@ -274,8 +285,7 @@
 	'registration_key',
 	];
 	...</code></pre></li>
-                                                        <li value="3">Copy over the content from config/jobs.dist.php to jobs.php:<pre><code class="language-PHP line-numbers">
-	...
+                                                        <li value="3">Copy over the content from config/jobs.dist.php to jobs.php:<pre><code class="language-PHP line-numbers">...
 	$jobs[] = [
 	'name' =&gt; 'minubo-export',
 	'command' =&gt; '$PHP_BIN vendor/bin/console minubo:export:data',
@@ -285,8 +295,7 @@
 	'stores' =&gt; ['DE'],
 	];
 	...</code></pre></li>
-                                                        <li value="4">Add Minubo console to ConsoleDependencyProder:<pre><code class="language-PHP line-numbers">
-	...
+                                                        <li value="4">Add Minubo console to ConsoleDependencyProder:<pre><code class="language-PHP line-numbers">...
 	use SprykerEco\Zed\Minubo\Communication\Console\MinuboConsole;
  
 	class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
@@ -301,37 +310,32 @@
 	return $commands;
 	}
 	...</code></pre></li>
-                                                        <li value="5">Add or update FlysystemDependencyProvider to project Service Layer:<pre><code class="language-PHP line-numbers">
-	&lt;?php
- 
-	namespace Pyz\Service\Flysystem;
- 
-	use Spryker\Service\Flysystem\FlysystemDependencyProvider as SprykerFlysystemDependencyProvider;
-	use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
-	use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
-	use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
-	use Spryker\Service\Kernel\Container;
- 
-	class FlysystemDependencyProvider extends SprykerFlysystemDependencyProvider
-	{
-	/**
-	* @param \Spryker\Service\Kernel\Container $container
-	*
-	* @return \Spryker\Service\Kernel\Container
-	*/
-	protected function addFilesystemBuilderPluginCollection($container)
-	{
-	$container[self::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container) {
-	return [
-	new FtpFilesystemBuilderPlugin(),
-	new LocalFilesystemBuilderPlugin(),
-	new Aws3v3FilesystemBuilderPlugin(),
-	];
-	};
- 
-	return $container;
-	}
-	}</code></pre></li>
+                                                        <li value="5">Add or update FlysystemDependencyProvider to project Service Layer:<pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Service\Flysystem;
+
+use Spryker\Service\Flysystem\FlysystemDependencyProvider as SprykerFlysystemDependencyProvider;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Service\Kernel\Container;
+
+class FlysystemDependencyProvider extends SprykerFlysystemDependencyProvider
+{
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFilesystemBuilderPluginCollection($container)
+    {
+        $container[self::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container)
+        {
+            return [new FtpFilesystemBuilderPlugin() , new LocalFilesystemBuilderPlugin() , new Aws3v3FilesystemBuilderPlugin() , ];
+        };
+
+        return $container;
+    }
+}</code></pre></li>
                                                     </ol>
                                                     <p>&#160;</p>
                                                     <h2>Copyright and Disclaimer</h2>

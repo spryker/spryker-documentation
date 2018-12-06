@@ -261,3 +261,41 @@ function ToggleSearch() {
 
 var showSearchButton = new ToggleSearch();
 document.addEventListener("DOMContentLoaded", showSearchButton.init());
+
+function TextTooltipCleaner() {
+
+    this.containers = [];
+
+    this.findContainers = function (toolTips) {
+        var self = this;
+        var prevParent = '';
+        toolTips.forEach(function (item) {
+            var currParent = item.parentElement;
+            prevParent === currParent ? '' : self.containers.push(currParent);
+            prevParent = item.parentElement;
+        });
+    }
+
+     this.cleanUpContainers = function(containers, containerClass) {
+        containers.forEach(function (item) {
+            item.classList.contains(containerClass) ? true : item.classList.add(containerClass);
+
+            item.childNodes.forEach(function (elem) {
+                elem.nodeType == 3 ? elem.remove() : '';
+            })
+        })
+    }
+
+    this.init = function(){
+
+        var toolTips = document.querySelectorAll('.MCTextPopup');
+        var containerClass = 'MCTextPopupContainer';
+
+        this.findContainers(toolTips);
+        this.cleanUpContainers(this.containers, containerClass);
+
+    };
+}
+
+var textTooltipCleaner = new TextTooltipCleaner();
+document.addEventListener("DOMContentLoaded", textTooltipCleaner.init());
