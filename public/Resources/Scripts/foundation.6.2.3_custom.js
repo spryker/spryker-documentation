@@ -961,7 +961,7 @@
     * @function
     * @private
     */
-    $(window).load(function () {
+    $(window).on('load', function () {
         checkListeners();
     });
 
@@ -1909,7 +1909,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
                 this.$links = this.$element.find('a');
                 var hashArray = this.$links.map(function () { return this.hash; })
                 this.$targets = $('[data-magellan-target]').filter(function (i) {
-                    return $.inArray('#' + this.id, hashArray) != -1;
+                    return $.inArray('#' + encodeURIComponent(this.id), hashArray) != -1;
                 });
                 this.$element.attr({
                     'data-resize': id,
