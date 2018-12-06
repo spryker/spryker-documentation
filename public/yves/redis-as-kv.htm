@@ -13,6 +13,18 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Using Redis as a KV Storage</title>
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
         <link href="../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -166,8 +178,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="RBbgGh27HUm_zuHQzAGhFw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="RBbgGh27HUm_zuHQzAGhFw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="FBfQ01jur0yYXEzIhr0ong">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="FBfQ01jur0yYXEzIhr0ong:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -277,7 +289,7 @@ Data Storage</h2>
 
 </p><pre><code class="language-PHP line-numbers">console collector:storage:export
 </code></pre>
-                                                    <p>Click here to find out more about how the Collector <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> works and how to extend it.</p>
+                                                    <p>Click here to find out more about how the Collector module works and how to extend it.</p>
                                                     <h2>How Data is Kept in Sync
 </h2>
                                                     <p>Of course, the data stored in the SQL database is the subject of change; data can be updated or deleted or new entries can be added. The data currently stored in Redis is a snapshot of the data in the SQL database from when the last update was run.
@@ -288,7 +300,7 @@ The key-value data storage must be kept in sync with the data persisted in the S
                                                     <p>For more information see <a href="../resources_and_developer_tools/cronjob-scheduling.htm" target="_blank">Cronjob Scheduling</a>.
 
 </p>
-                                                    <p>Also, you must find out which data has changed because you don’t want to completely reload the content stored in Redis. The Touch <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span> takes care of marking the items that were updated in the mean time. You must keep in mind that every time you make an update/delete/insert for data that’s also stored in Redis, you must touch that data so that it’s marked for export when the next storage update task will run.
+                                                    <p>Also, you must find out which data has changed because you don’t want to completely reload the content stored in Redis. The Touch module takes care of marking the items that were updated in the mean time. You must keep in mind that every time you make an update/delete/insert for data that’s also stored in Redis, you must touch that data so that it’s marked for export when the next storage update task will run.
 
 </p>
                                                     <h2>How to Browse the Data from Redis
@@ -361,7 +373,7 @@ Using the Data Stored in Redis
                                                     <p>Redis data storage is accessed using the <var>StorageClient</var>.
 
 </p>
-                                                    <p>The <var>StorageClient </var>can be obtained as an external dependency for Yves, in the client layer. In the dependency provider of the client layer from your <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>, add the <var>StorageClient </var>dependency as in the example below:
+                                                    <p>The <var>StorageClient </var>can be obtained as an external dependency for Yves, in the client layer. In the dependency provider of the client layer from your module, add the <var>StorageClient </var>dependency as in the example below:
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -381,7 +393,7 @@ Using the Data Stored in Redis
         return $container;
     }
 </code></pre>
-                                                    <p>Add a method that retrieves an instance of the key value storage in the factory of the client layer of your <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>:
+                                                    <p>Add a method that retrieves an instance of the key value storage in the factory of the client layer of your module:
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
 

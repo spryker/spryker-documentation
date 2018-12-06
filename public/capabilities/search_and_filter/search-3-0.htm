@@ -13,6 +13,18 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Search 3.0</title>
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
         <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -232,7 +244,7 @@
                                                     <p>For more on for more on how collectors work in general, see Collector.</p>
                                                     <p>First, you need to implement <var>\Spryker\Zed\Search\Dependency\Plugin\PageMapInterface</var> interface in the desired module of your project as a plugin. This interface contains the <var>buildPageMap()</var> method which will be called for each collected document and its responsibility is to create a <var>PageMapTransfer</var> object and fill it with the mapped data. Basically this transfer object represents one document in the page type.</p>
                                                     <p>The <var>buildPageMap()</var> method provides an instance of <var>\Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface</var> to help to fill this transfer object with the correct data in the correct format. It’s really easy to use, all you need to do is to tell the <i>PageMapBuilder</i> which data you need to have in the search result data, which data you want to filter by, which data you want to sort by, etc.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
 /**
@@ -271,7 +283,7 @@
                                                     </div>
                                                     <p>In the example above you can see that first we create the <var>PageMapTransfer</var> instance, add some metadata to it, then with the help of the <var>PageMapBuilderInterface</var> we can easily map some data to the transfer.</p>
                                                     <p>At the end, we’ll get the data for a document similar to the example below:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">{
    "store": "DE",
    "locale": "en_US",
@@ -321,7 +333,7 @@
                                                     <p>The collector has the <var>collectItem()</var> method which has the data for our <i>PageMap</i> plugin to generate the <var>PageMapTransfer</var>. The <var>collectItem()</var> by definition needs to return an array which is exactly the final data for one document pushed to <var>Elasticsearch</var>.</p>
                                                     <p>To transform the generated <var>PageMapTransfer</var> into the final document in the right format, use the <var>transformPageMapToDocument()</var> method of the <var>SearchFacade</var>.</p>
                                                     <p>In the example below you can see how the <i>PageMap</i> plugin is used in the <var>ProductCollector</var> from Demoshop.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Collector\Business\Search;
 
@@ -410,7 +422,7 @@ class ProductCollector extends AbstractSearchPdoCollector
                                                     <p>Inside the <var>QueryInterface</var> you need to create an instance of <var>\Elastica\Query</var>, configure it to fit your needs, then return it with <var>getSearchQuery()</var>.</p>
                                                     <p>This is the point where configuring the query is completely up to you, use Elastica to alter the query for your needs, add filters, aggregations, boosts, sorting, pagination or anything else you like and Elasticsearch enables you.</p>
                                                     <p class="info">The <var>QueryInterface</var> instance is a stateful class; sometimes <var>getSearchQuery()</var> method is called multiple times and alters the original query (see: Expandig queries), so you need to make sure that it returns the same instance. This can be achieved by creating the <var>\Elastica\Query</var> instance at construction time and just return it in the getSearchQuery() method.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Client\Catalog\Plugin\Query;
 
@@ -571,7 +583,7 @@ class DummyResultFormatterPlugin extends AbstractElasticsearchResultFormatterPlu
                                                     <p>When you use result formatter plugins, the result of the <var>SearchClient::search()</var> method will be an associative array, where the keys are the name of each result formatters (provided by <var>getName()</var> method) and the values are the response for each result formatter.</p>
                                                     <p>This way in your controller where at the end you get the response you can simply provide everything you got right to the template to care of.</p>
                                                     <h2>Configure Search Features</h2>
-                                                    <p>In this section you’ll learn how to configure faceted navigation, filters, pagination and sorting, so all the important search features that are provided by the <var>Search</var> <span class="Generalbundle/module">(Undefined variable: General.bundle/module)</span>.</p>
+                                                    <p>In this section you’ll learn how to configure faceted navigation, filters, pagination and sorting, so all the important search features that are provided by the <var>Search</var> module.</p>
                                                     <p>This configuration is only relevant if you enable the three query expanders and result formatters mentioned above.</p>
                                                     <p>Indirectly, they all require you to provide an instance of <var>\Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface</var> by <var>\Spryker\Client\Search\SearchDependencyProvider::createSearchConfigPlugin()</var> method. So first of all you’ll need to implement this interface.</p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -623,7 +635,7 @@ use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
                                                         <li value="5"><strong>setIsMultiValued()</strong>: <i>Optional</i> field, if set to <var>true</var> multiple values can be filtered with logical OR comparison.</li>
                                                     </ul>
                                                     <p>The next method we’ll implement is the <var>buildSortConfig()</var>, where we configure our sorting options. Let’s assume we’d like to sort by name and price and we’ve already added them when we implemented <var>PageMapInterface</var> (note the use of <var>addStringSort()</var> and <var>addIntegerSort()</var> in the example above).</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Client\Catalog\Plugin\Config;

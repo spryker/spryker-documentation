@@ -13,6 +13,18 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Seven Senders - the Delivery Platform</title>
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
         <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -165,8 +177,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="MX_fEHUA80Gi3PZkR8j4uQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="MX_fEHUA80Gi3PZkR8j4uQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="qcQl6W_PIk2WSrpeh9772g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qcQl6W_PIk2WSrpeh9772g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,8 +253,7 @@
                                                     <p>To install Seven Senders, run the command in the console:</p><pre><code class="language-php">composer require spryker-eco/sevensenders:1.0.0</code></pre>
                                                     <h2>Configuration</h2>
                                                     <p>To set up the Seven Senders initial configuration, use the credentials you received from your Seven Senders server. Space id, key id and secret you can get from Settings → API keys panel on Seven Senders server:</p><pre><code class="language-php">$config[SevensendersConstants::API_KEY] = '';
-$config[SevensendersConstants::API_URL] = '';
-		</code></pre>
+$config[SevensendersConstants::API_URL] = '';</code></pre>
                                                     <h2>Integration</h2>
                                                     <h3>Oms Commands</h3>
                                                     <p>Seven Senders module has two different commands:</p>
@@ -252,8 +263,7 @@ $config[SevensendersConstants::API_URL] = '';
                                                         <li value="2"><code>\SprykerEco\Zed\Sevensenders\Communication\Plugin\Oms\Command\SevensendersShipmentPlugin</code>
                                                         </li>
                                                     </ul>
-                                                    <p>You can use this commands in <code>\Pyz\Zed\Oms\OmsDependencyProvider::getCommandPlugins</code></p><pre xml:space="preserve"><code class="language-php line-numbers">
-...
+                                                    <p>You can use this commands in <code>\Pyz\Zed\Oms\OmsDependencyProvider::getCommandPlugins</code></p><pre xml:space="preserve"><code class="language-php line-numbers">...
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\SendOrderConfirmationPlugin;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\SendOrderShippedPlugin;
 ...
@@ -274,12 +284,10 @@ protected function getCommandPlugins(Container $container)
  
 	return $collection;
 }</code></pre>
-                                                    <p>After you are ready to use commands in OMS setup:</p><pre><code class="language-xml line-numbers">
-&lt;events&gt;
+                                                    <p>After you are ready to use commands in OMS setup:</p><pre><code class="language-xml line-numbers">&lt;events&gt;
 	&lt;event name="shipping_confirmed" onEnter="true" command="Sevensenders/NewOrder"/&gt;
 	&lt;event name="shipping_delivered" manual="true" command="Sevensenders/NewShipment"/&gt;
-&lt;/events&gt;
-</code></pre>
+&lt;/events&gt;</code></pre>
                                                     <h3>Oms Conditions</h3>
                                                     <p>Sevensenders module has two different conditions:</p>
                                                     <ul>
@@ -288,8 +296,7 @@ protected function getCommandPlugins(Container $container)
                                                         <li value="2"><code>SprykerEco\Zed\Sevensenders\Communication\Plugin\Oms\Condition\IsSuccessfulPreviousShipmentResponseConditionPlugin</code>
                                                         </li>
                                                     </ul>
-                                                    <p>You can use these commands in <code>\Pyz\Zed\Oms\OmsDependencyProvider::getConditionPlugins</code></p><pre xml:space="preserve"><code class="language-php line-numbers">
-...
+                                                    <p>You can use these commands in <code>\Pyz\Zed\Oms\OmsDependencyProvider::getConditionPlugins</code></p><pre xml:space="preserve"><code class="language-php line-numbers">...
 use SprykerEco\Zed\Sevensenders\Communication\Plugin\Oms\Condition\IsSuccessfulPreviousOrderResponseConditionPlugin;
 use SprykerEco\Zed\Sevensenders\Communication\Plugin\Oms\Condition\IsSuccessfulPreviousShipmentResponseConditionPlugin;
 ...
@@ -315,11 +322,10 @@ protected function getConditionPlugins(Container $container)
 	&lt;source&gt;new&lt;/source&gt;
 	&lt;target&gt;shipping confirmed&lt;/target&gt;
 	&lt;event&gt;shipping_confirmed&lt;/event&gt;
-&lt;/transition&gt;
-</code></pre>
+&lt;/transition&gt;</code></pre>
                                                     <h2>API Requests</h2>
                                                     <p><code>\SprykerEco\Zed\Inxmail\Business\Api\Adapter\EventAdapter</code> extending <code>\SprykerEco\Zed\Sevensenders\Business\Api\Adapter\SevensendersApiAdapter</code> contains everything for sending data to Seven Senders system for events.</p>
-                                                    <p>You should use <code>\Generated\Shared\Transfer\SevensendersRequestTransfer</code> for request and <code>\Generated\Shared\Transfer\SevensendersResponseTransfer</code></p><pre xml:space="preserve"><code class="language-xml line-numbers">&amp;?xml version="1.0"?&gt;
+                                                    <p>You should use <code>\Generated\Shared\Transfer\SevensendersRequestTransfer</code> for request and <code>\Generated\Shared\Transfer\SevensendersResponseTransfer</code></p><pre xml:space="preserve"><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;transfers xmlns="http://xsd.spryker.com"
 	    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	    xsi:schemaLocation="http://static.spryker.com http://static.spryker.com/transfer-01.xsd"&gt;
@@ -334,10 +340,9 @@ protected function getConditionPlugins(Container $container)
 		&lt;property name="status" type="int"/&gt;
 		&lt;property name="status" type="int"/&gt;
 	&lt;/transfer&gt;
-&lt;/transfers&gt;
-		</code></pre>
+&lt;/transfers&gt;</code></pre>
                                                     <h2>Mappers</h2>
-                                                    <p>For mapping data from Spryker to Seven Senders <code>\SprykerEco\Zed\Sevensenders\Business\Mapper\OrderMapper</code> and <code>\SprykerEco\Zed\Sevensenders\Business\Mapper\ShipmentMapper</code> are used by default.</p><pre xml:space="preserve"><code class="language-php line-numbers">&amp;?php
+                                                    <p>For mapping data from Spryker to Seven Senders <code>\SprykerEco\Zed\Sevensenders\Business\Mapper\OrderMapper</code> and <code>\SprykerEco\Zed\Sevensenders\Business\Mapper\ShipmentMapper</code> are used by default.</p><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
  
 namespace SprykerEco\Zed\Sevensenders\Business\Mapper;
  
@@ -368,11 +373,10 @@ class OrderMapper implements MapperInterface
  
 		return $transfer;
 	}
-}
-		</code></pre>
+}</code></pre>
                                                     <p>You can extend <code>OrderMapper</code> on the project level and map fields as you need. If you want to create a new mapper you should implement <code>SprykerEco\Zed\Sevensenders\Business\Mapper\MapperInterface</code>.</p>
                                                     <h2>Persistence layer</h2>
-                                                    <p>There is a table in the database for saving response and request data:</p><pre xml:space="preserve"><code class="language-xml line-numbers">&amp;?xml version="1.0"?&gt;
+                                                    <p>There is a table in the database for saving response and request data:</p><pre xml:space="preserve"><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   name="zed"
 	   xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
@@ -401,8 +405,7 @@ class OrderMapper implements MapperInterface
 		&lt;column name="token" type="VARCHAR" required="true"/&gt;
 		&lt;column name="created_at" type="VARCHARv required="true"/&gt;
 	&lt;/table&gt;
-&lt;/database&gt;	
-				</code></pre>
+&lt;/database&gt;</code></pre>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: November, 16th, 2018 </i>
                                                     </p>
