@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Payment|BS PayOne|Integration for SCOS">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.ShopSuite" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Payment|Heidelpay">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="Heidelpay Integration into SCOS contains two steps: back-end and front-end integration. To integrate Heidelpay into SCOs, follow the steps described in the article." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Payone - Risk Check and Address Check</title>
+        <meta name="author" content="" /><title>Heidelpay - Integration into SCOS | Spryker</title>
         <script>/* <![CDATA[ */
 			var s = document.createElement("script");
 			s.type = "text/javascript";
@@ -177,8 +178,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="T3TjWB1MJkeqPhDKeKFnBg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="T3TjWB1MJkeqPhDKeKFnBg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="wbSojmiy7U2T30WycaCOtg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="wbSojmiy7U2T30WycaCOtg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -208,290 +209,233 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer">
-                                                    <h1> Risk Check and Address Check - Payone</h1>
-                                                    <p>On the project level, you should override execute and postCondition methods of <var>SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep</var>.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/Steps/AddressStep.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
- 
-namespace Pyz\Yves\CheckoutPage\Process\Steps;
- 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use SprykerEco\Client\Payone\PayoneClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep as SprykerAddressStep;
-use Symfony\Component\HttpFoundation\Request;
- 
-class AddressStep extends SprykerAddressStep
+                                                    <h1>Heidelpay - Integration into Project</h1>
+                                                    <p>To integrate Heidelpay, follow the steps below:</p>
+                                                    <h2>Back-end Integration</h2>
+                                                    <ol>
+                                                        <li value="1">Add sub form plugins and payment method handlers:
+				<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">protected function addSubFormPluginCollection(Container $container): Container
 {
-	protected const ADDRESS_CHECK_STATUS_VALID = 'VALID';
- 
-	/**
-	 * @var \SprykerEco\Client\Payone\PayoneClientInterface
-	 */
-	protected $payoneClient;
- 
-	public function __construct(CheckoutPageToCustomerClientInterface $customerClient, CheckoutPageToCalculationClientInterface $calculationClient, string $stepRoute, string $escapeRoute, PayoneClientInterface $payoneClient)
-	{
-		parent::__construct($customerClient, $calculationClient, $stepRoute, $escapeRoute);
-		$this-&gt;payoneClient = $payoneClient;
-	}
- 
-	public function execute(Request $request, AbstractTransfer $quoteTransfer)
-	{
+	$container[self::PAYMENT_SUB_FORMS] = function () {
+		$subFormPluginCollection = new SubFormPluginCollection();
 		...
-		$responseTransfer = $this-&gt;payoneClient-&gt;sendAddressCheckRequest($quoteTransfer);
-		$quoteTransfer-&gt;setIsAddressValid($responseTransfer-&gt;getStatus() === static::ADDRESS_CHECK_STATUS_VALID);
-		...
-	}
+		$subFormPluginCollection-&gt;add(new HeidelpaySofortSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayPaypalAuthorizeSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayPaypalDebitSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayIdealSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayCreditCardSecureSubFormPlugin());
  
-	/**
-	 * @param \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
-	 *
-	 * @return bool
-	 */
-	public function postCondition(AbstractTransfer $quoteTransfer)
-	{
-		...
+		return $subFormPluginCollection;
+	};
  
-		if (!$quoteTransfer-&gt;getIsAddressValid()) {
-			return false;
+	return $container;
+}
+ 
+protected function addPaymentMethodHandlerPluginCollection(Container $container): 
+{
+	$container[self::PAYMENT_METHOD_HANDLER] = function () {
+		$stepHandlerPluginCollection = new StepHandlerPluginCollection();
+		... 
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_SOFORT);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_PAYPAL_AUTHORIZE);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_PAYPAL_DEBIT);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_IDEAL);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayCreditCardHandlerPlugin(), PaymentTransfer::HEIDELPAY_CREDIT_CARD_SECURE);
+ 
+		return $stepHandlerPluginCollection;
+	};
+ 
+	return $container;
+}</code></pre></div></div></li>
+                                                        <li value="2">Add controller provider:
+				<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\ShopApplication\YvesBootstrap</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">protected function getControllerProviderStack($isSsl)
+{
+	return [
+		...   
+		new HeidelpayControllerProvider($isSsl),
+	];&gt;
+}</code></pre></div></div></li>
+                                                        <li value="3">Add checkout plugins:
+				<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Checkout\CheckoutDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">protected function getCheckoutOrderSavers(Container $container)
+{
+	$plugins = [
+		...
+		new HeidelpaySaveOrderPlugin(),
+	];
+ 
+	return $plugins;
+}
+ 
+protected function getCheckoutPostHooks(Container $container)
+{
+	return [
+		...
+		new HeidelpayPostSavePlugin(),
+	];
+}</code></pre></div></div></li>
+                                                        <li value="4">Add OMS commands and conditions:</li>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Oms\OmsDependencyProvider</a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">public function provideBusinessLayerDependencies(Container $container)
+{
+	$container = parent::provideBusinessLayerDependencies($container);
+	$container = $this-&gt;addCommandPlugins($container);
+	$container = $this-&gt;addConditionPlugins($container);
+ 
+	return $container;
+}
+protected function addConditionPlugins(Container $container): Container
+{
+	$container[self::CONDITION_PLUGINS] = function () {
+		$conditionCollection = new ConditionCollection();
+		$conditionCollection-&gt;add(new IsAuthorizationCompletedPlugin(), 'Heidelpay/IsAuthorizationCompleted');
+		$conditionCollection-&gt;add(new IsDebitCompletedPlugin(), 'Heidelpay/IsDebitCompleted');
+		$conditionCollection-&gt;add(new IsCaptureApprovedPlugin(), 'Heidelpay/IsCaptureApproved');
+ 
+		return $conditionCollection;
+	};
+ 
+	return $container;
+}
+ 
+protected function addCommandPlugins(Container $container): Container
+{
+	$container[self::COMMAND_PLUGINS] = function () {
+		$commandCollection = new CommandCollection();
+		$commandCollection-&gt;add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
+		$commandCollection-&gt;add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
+		$commandCollection-&gt;add(new AuthorizePlugin(), 'Heidelpay/Authorize');
+		$commandCollection-&gt;add(new DebitPlugin(), 'Heidelpay/Debit');
+		$commandCollection-&gt;add(new CapturePlugin(), 'Heidelpay/Capture');
+ 
+		return $commandCollection;
+	};
+ 
+	return $container;
+}</code></pre>
+                                                            </div>
+                                                        </div>
+                                                    </ol>
+                                                    <h2>Front-end Integration</h2>
+                                                    <p>To make Heidelpay module work with your project, it's necessary to extend the frontend part:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />tsconfig.json</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-bash">"include": [
+	"./vendor/spryker/spryker-shop/**/*",
+	"./vendor/spryker-eco/**/*",
+	"./src/Pyz/Yves/**/*"
+],</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />frontend/settings.js</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-bash">// eco folders
+eco: {
+	// all modules
+	modules: './vendor/spryker-eco'
+},
+...
+	componentEntryPoints: {
+		// absolute dirs in which look for
+		dirs: [
+			...
+			path.join(context, paths.eco.modules),
+			...
+		],</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-twig">...
+ 
+{% block content %}
+	{% embed molecule('form') with {
+		class: 'box',
+		data: {
+			form: data.forms.payment,
+			options: {
+				attr: {
+					id: 'payment-form'
+				}
+			},
+			submit: {
+				enable: true,
+				text: 'checkout.step.summary' | trans
+			},
+			cancel: {
+				enable: true,
+				url: data.backUrl,
+				text: 'general.back.button' | trans
+			}
 		}
- 
-		...
-	}
-}</code></pre>
+	} only %}
+		{% block fieldset %}
+			{% for name, choices in data.form.paymentSelection.vars.choices %}
+				{% set paymentProviderIndex = loop.index %}
+				&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+				&lt;ul class="list spacing-y"&gt;
+					{% for key, choice in choices %}
+						&lt;li class="list__item spacing-y clear"&gt;
+							{% embed molecule('form') with {
+								data: {
+									form: data.form[data.form.paymentSelection[key].vars.value],
+									enableStart: false,
+									enableEnd: false
+								},
+								embed: {
+									index: loop.index ~ '-' ~ paymentProviderIndex,
+									toggler: data.form.paymentSelection[key]
+								}
+							} only %}
+								{% block fieldset %}
+									{% for name, choices in data.form.paymentSelection.vars.choices %}
+										{% set paymentProviderIndex = (loop.index0) %}
+										&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+										&lt;ul class="list spacing-y"&gt;
+											{% if choices is iterable %}
+												{% for key, choice in choices %}
+													&lt;li class="list__item spacing-y clear"&gt;
+														{% include molecule('payment-method', 'CheckoutPage') with {
+															data: {
+																form: data.form[data.form.paymentSelection[key].vars.value],
+																index: loop.index ~ '-' ~ paymentProviderIndex,
+																toggler: data.form.paymentSelection[key],
+															}
+														} only %}
+													&lt;/li&gt;
+												{% endfor %}
+											{% else %}
+												&lt;li class="list__item spacing-y clear"&gt;
+													{% include molecule('payment-method', 'CheckoutPage') with {
+														data: {
+															form: data.form[data.form.paymentSelection[paymentProviderIndex].vars.value],
+															index: loop.index ~ '-' ~ paymentProviderIndex,
+															toggler: data.form.paymentSelection[paymentProviderIndex],
+															parentFormId: data.options.attr.id
+														}
+													} only %}
+												&lt;/li&gt;
+											{% endif %}
+										&lt;/ul&gt;
+									{% endfor %}
+								{% endblock %}
+							{% endembed %}
+						&lt;/li&gt;
+					{% endfor %}
+				&lt;/ul&gt;
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Also, <var>src/Pyz/Yves/CheckoutPage/Process/StepFactory.php</var> should be updated on the project level.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/StepFactory.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
-  
-namespace Pyz\Yves\CheckoutPage\Process;
- 
-...
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
-...
- 
-class StepFactory extends SprykerStepFactory
-{
-	/**
-	 * @var PayoneClientInterface
-	 */
-	protected $payoneClient;
-     
-	public function __construct(PayoneClientInterface $payoneClient)
-	{
-		$this-&gt;payoneClient = $payoneClient;
-	}
- 
-	...
- 
-	/**
-	 * @return \Pyz\Yves\CheckoutPage\Process\Steps\AddressStep
-	 */
-	public function createAddressStep()
-	{
-		return new AddressStep(
-			$this-&gt;getCustomerClient(),
-			$this-&gt;getCalculationClient(),
-			CheckoutPageControllerProvider::CHECKOUT_ADDRESS,
-			HomePageControllerProvider::ROUTE_HOME,
-			$this-&gt;payoneClient
-		);
-	}
- 
-	...
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <h2>Consumer Score Integration</h2>
-                                                    <p>On the project level, you should override the execute method of <var>SprykerShop\Yves\CheckoutPage\Process\Steps\AddressStep</var>.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/Steps/ShipmentStep.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
- 
-namespace Pyz\Yves\CheckoutPage\Process\Steps;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use SprykerEco\Client\Payone\PayoneClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep as SprykerShipmentStep;
-use Symfony\Component\HttpFoundation\Request;
- 
-class ShipmentStep extends SprykerShipmentStep
-{
-	/**
-	 * @var PayoneClientInterface
-	 */
-	protected $payoneClient;
- 
-	public function __construct(
-		CheckoutPageToCalculationClientInterface $calculationClient,
-		StepHandlerPluginCollection $shipmentPlugins,
-		string $stepRoute,
-		string $escapeRoute,
-		PayoneClientInterface $payoneClient
-	) {
-		parent::__construct($calculationClient, $shipmentPlugins, $stepRoute, $escapeRoute);
-		$this-&gt;payoneClient = $payoneClient;
-	}
- 
-	public function execute(Request $request, AbstractTransfer $quoteTransfer)
-	{
-		$responseTransfer = $this-&gt;payoneClient-&gt;sendConsumerScoreRequest($quoteTransfer);
-		$quoteTransfer-&gt;setConsumerScore($responseTransfer-&gt;getScore());
-		return parent::execute($request, $quoteTransfer);
-	}
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p><var>src/Pyz/Yves/CheckoutPage/Process/StepFactory.php</var> should be updated:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/Steps/ShipmentStep.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
- 
-namespace Pyz\Yves\CheckoutPage\Process\Steps;
-use Generated\Shared\Transfer\QuoteTransfer;
-use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
-use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
-use SprykerEco\Client\Payone\PayoneClientInterface;
-use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
-use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep as SprykerShipmentStep;
-use Symfony\Component\HttpFoundation\Request;
- 
-class ShipmentStep extends SprykerShipmentStep
-{
-	/**
-	 * @var PayoneClientInterface
-	 */
-	protected $payoneClient;
- 
-	public function __construct(
-		CheckoutPageToCalculationClientInterface $calculationClient,
-		StepHandlerPluginCollection $shipmentPlugins,
-		string $stepRoute,
-		string $escapeRoute,
-		PayoneClientInterface $payoneClient
-	) {
-		parent::__construct($calculationClient, $shipmentPlugins, $stepRoute, $escapeRoute);
-		$this-&gt;payoneClient = $payoneClient;
-	}
- 
-	public function execute(Request $request, AbstractTransfer $quoteTransfer)
-	{
-		$responseTransfer = $this-&gt;payoneClient-&gt;sendConsumerScoreRequest($quoteTransfer);
-		$quoteTransfer-&gt;setConsumerScore($responseTransfer-&gt;getScore());
-		return parent::execute($request, $quoteTransfer);
-	}
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p><var>src/Pyz/Yves/CheckoutPage/Process/StepFactory.php</var> should be updated:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/StepFactory.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
-  
-namespace Pyz\Yves\CheckoutPage\Process;
- 
-...
-use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
-...
- 
-class StepFactory extends SprykerStepFactory
-{
-	/**
-	 * @var PayoneClientInterface
-	 */
-	protected $payoneClient;
-     
-	public function __construct(PayoneClientInterface $payoneClient)
-	{
-		$this-&gt;payoneClient = $payoneClient;
-	}
- 
-	...
- 
-	public function createShipmentStep()
-	{
-		return new ShipmentStep(
-			$this-&gt;getCalculationClient(),
-			$this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_HANDLER),
-			CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
-			HomePageControllerProvider::ROUTE_HOME,
-			$this-&gt;payoneClient
-		);
-	}
- 
-	...
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p><var>src/Pyz/Zed/Payment/PaymentDependencyProvider.php</var> should be updated:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Payment/PaymentDependencyProvider.php
-                </a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
- 
-...
-use SprykerEco\Zed\Payone\Communication\Plugin\Payment\PayonePaymentMethodFilterPlugin;
-...
- 
-class PaymentDependencyProvider extends SprykerPaymentDependencyProvider
+                                                    <p>src/Pyz/Yves/Twig/TwigConfig.php</p><pre xml:space="preserve"><code class="language-twig">protected function addCoreTemplatePaths(array $paths)
 {
 	...
+	$paths[] = APPLICATION_VENDOR_DIR . '/spryker-eco/%1$s/src/SprykerEco/Yves/%1$s/Theme/' . $themeName;
  
-	/**
-	 * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
-	 */
-	protected function getPaymentMethodFilterPlugins(): array
-	{
-		return [
-			new PayonePaymentMethodFilterPlugin(),
-		];
-	}
-	...
+	return $paths;
 }</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Now Payone is ready for filtering Payment methods. Configuration for each score result should be defined in the config:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Example of configuration for score results</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
- 
-	... 
- 
-	PayoneConstants::PAYONE_GREEN_SCORE_AVAILABLE_PAYMENT_METHODS =&gt; [
-		PayoneConfig::PAYMENT_METHOD_INVOICE,
-		PayoneConfig::PAYMENT_METHOD_CREDIT_CARD,
-	],
-	PayoneConstants::PAYONE_YELLOW_SCORE_AVAILABLE_PAYMENT_METHODS =&gt; [
-		PayoneConfig::PAYMENT_METHOD_EPS_ONLINE_TRANSFER
-	],
-	PayoneConstants::PAYONE_RED_SCORE_AVAILABLE_PAYMENT_METHODS =&gt; [
-		PayoneConfig::PAYMENT_METHOD_PRE_PAYMENT
-	],
-	PayoneConstants::PAYONE_UNKNOWN_SCORE_AVAILABLE_PAYMENT_METHODS =&gt; [
-		PayoneConfig::PAYMENT_METHOD_CREDIT_CARD,
-		PayoneConfig::PAYMENT_METHOD_EPS_ONLINE_TRANSFER,
-		PayoneConfig::PAYMENT_METHOD_PRE_PAYMENT,
-	],
- 
-	//Also you should define the check types for bot requests
-	PayoneConstants::PAYONE_ADDRESS_CHECK_TYPE =&gt; 'BA',
-	PayoneConstants::PAYONE_CONSUMER_SCORE_TYPE =&gt; 'IH',
-...</code></pre>
-                                                        </div>
-                                                    </div>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last
+        review date: Dec. 7th, 2018</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
