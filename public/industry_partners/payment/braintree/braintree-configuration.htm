@@ -177,8 +177,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="UvHwAsYrRUiHnmlfJaZVWg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UvHwAsYrRUiHnmlfJaZVWg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="iLZ5-zxkkEy2392cv6FdIQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iLZ5-zxkkEy2392cv6FdIQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -210,7 +210,7 @@
                                                 <div class="js-anchorer">
                                                     <h1>Braintree — Configuration <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <p>
-    Add <code>spryker-eco/braintree</code> to your project by running <code>composer require spryker-eco/braintree</code></p>
+    Add <var>spryker-eco/braintree</var> to your project by running <var>composer require spryker-eco/braintree</var></p>
                                                     <p>
     Please refer to <code>config/config.dist.php</code> for example of module configuration.
 </p>
@@ -240,26 +240,25 @@ $config[BraintreeConstants::IS_VAULTED] = true;
 $config[BraintreeConstants::IS_3D_SECURE] = true;
         </code></pre>
                                                     <h2>Checkout Configuration</h2>
-                                                    <p>To use Braintree in frontend, Braintree payment method handlers and subforms should be added to <code>Pyz/Yves/Checkout/CheckoutDependencyProvider.php</code></p><pre><code class="language-php line-numbers">
-        $container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = function () {
-            $paymentHandlerPlugins = new StepHandlerPluginCollection();
+                                                    <p>To use Braintree in frontend, Braintree payment method handlers and subforms should be added to <var>Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var></p><pre xml:space="preserve"><code class="language-php line-numbers">
+$container[CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER] = function () {
+	$paymentHandlerPlugins = new StepHandlerPluginCollection();
 
-            $paymentHandlerPlugins-&gt;add(new BraintreeHandlerPlugin(), PaymentTransfer::BRAINTREE_CREDIT_CARD);
-            $paymentHandlerPlugins-&gt;add(new BraintreeHandlerPlugin(), PaymentTransfer::BRAINTREE_PAY_PAL);
+		$paymentHandlerPlugins-&gt;add(new BraintreeHandlerPlugin(), PaymentTransfer::BRAINTREE_CREDIT_CARD);
+		$paymentHandlerPlugins-&gt;add(new BraintreeHandlerPlugin(), PaymentTransfer::BRAINTREE_PAY_PAL);
 
-            return $paymentHandlerPlugins;
+	return $paymentHandlerPlugins;
         };
 
-        $container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = function () {
-            $paymentSubFormPlugins = new SubFormPluginCollection();
+$container[CheckoutDependencyProvider::PAYMENT_SUB_FORMS] = function () {
+	$paymentSubFormPlugins = new SubFormPluginCollection();
 
-            $paymentSubFormPlugins-&gt;add(new BraintreeCreditCardSubFormPlugin());
-            $paymentSubFormPlugins-&gt;add(new BraintreePayPalSubFormPlugin());
+		$paymentSubFormPlugins-&gt;add(new BraintreeCreditCardSubFormPlugin());
+		$paymentSubFormPlugins-&gt;add(new BraintreePayPalSubFormPlugin());
 
-            return $paymentSubFormPlugins;
-        };
-        </code></pre>
-                                                    <p>All subform and handler plugins are located in <code>SprykerEco\Yves\Braintree\Plugin\</code> namespace.</p>
+ 	return $paymentSubFormPlugins;
+        };</code></pre>
+                                                    <p>All subform and handler plugins are located in <var>SprykerEco\Yves\Braintree\Plugin\</var> namespace.</p>
                                                     <h2>OMS Configuration</h2>
                                                     <p>Activate the following Braintree process:</p><pre><code class="language-php line-numbers">
 $config[OmsConstants::ACTIVE_PROCESSES] = [
@@ -277,7 +276,7 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
     \SprykerEco\Shared\Braintree\BraintreeConfig::PAYMENT_METHOD_PAY_PAL =&gt; 'BraintreePayPal01',
 ];
 </code></pre>
-                                                    <p>Default implementation for commands and options should be added to <code>Pyz/Zed/Oms/OmsDependencyProvider.php</code></p>
+                                                    <p>Default implementation for commands and options should be added to <var>Pyz/Zed/Oms/OmsDependencyProvider.php</var></p>
                                                     <ol>
                                                         <li value="1">Commands:
         <pre><code class="language-php line-numbers">
@@ -305,9 +304,9 @@ $container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (Condit
 });
                 </code></pre></li>
                                                     </ol>
-                                                    <p>All commands and conditions are located in <code>SprykerEco\Zed\Braintree\Communication\Plugin\Oms\</code> namespace.</p>
+                                                    <p>All commands and conditions are located in <var>SprykerEco\Zed\Braintree\Communication\Plugin\Oms\</var> namespace.</p>
                                                     <h2>Payment Configuration</h2>
-                                                    <p>Default implementation for checkout payment plugins should be added to <code>Pyz/Zed/Payment/PaymentDependencyProvider.php</code></p><pre><code class="language-php line-numbers">
+                                                    <p>Default implementation for checkout payment plugins should be added to <var>Pyz/Zed/Payment/PaymentDependencyProvider.php</var></p><pre><code class="language-php line-numbers">
         $container-&gt;extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
             $pluginCollection
                 -&gt;add(new BraintreePreCheckPlugin(), BraintreeConfig::PROVIDER_NAME, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS)
@@ -317,7 +316,7 @@ $container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (Condit
             return $pluginCollection;
         });
             </code></pre>
-                                                    <p>All payment plugins are located in <code>SprykerEco\Zed\Braintree\Communication\Plugin\Checkout\</code> namespace.</p>
+                                                    <p>All payment plugins are located in <var>SprykerEco\Zed\Braintree\Communication\Plugin\Checkout\</var> namespace.</p>
                                                     <p>&#160;</p>
                                                     <p><strong>See also:</strong>
                                                     </p>

@@ -178,8 +178,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="9kgBMxGsj0Kj4m0MO-9abQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="9kgBMxGsj0Kj4m0MO-9abQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Y9RjJhsKKk-XzUUcuyOJzg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Y9RjJhsKKk-XzUUcuyOJzg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -226,7 +226,7 @@
                                                     <h4>Checkout Payment Step Display</h4>
                                                     <p>With the credit card, two payment options are possible - using the already existing
     registration (if available) or creating a new registration (always available) with the payment frame.
-    <code>CreditCardSecureDataProvider</code> in Yves is responsible for that (<code>getOptions()</code> method). It makes
+    <var>CreditCardSecureDataProvider</var> in Yves is responsible for that (<var>getOptions()</var> method). It makes
     a request into Zed in order to get available payment options, available for the current quote.&#160;</p>
                                                     <ul>
                                                         <li value="1">
@@ -250,18 +250,18 @@
     special permit) to process/store credit card data directly on it's website.&#160;</sub>
                                                     </p>
                                                     <p>Each payment option has its own template. You can find and customize it under
-    <code>Yves/Theme/default/credit-card/</code>.</p>
+    <var>Yves/Theme/default/credit-card/</var>.</p>
                                                     <h4>Payment Step Submitting</h4>
                                                     <ul>
                                                         <li value="1">When customer chooses a new registration (fills in the payment form in the iframe)
         and clicks "Go To Summary" button, data inside the payment iframe will be
         serialised and sent as a POST request to Heidelpay payment system*. Heidelpay then processes the
         request and sends asynchronous POST request to the shop's
-        <code>CONFIG_YVES_CHECKOUT_ASYNC_RESPONSE_URL</code> in Yves (<code>CreditCardController::registrationRequestAction</code>).
+        <var>CONFIG_YVES_CHECKOUT_ASYNC_RESPONSE_URL</var> in Yves (<var>CreditCardController::registrationRequestAction</var>).
         This request will contain an anonymized customer credit card data and registration number (hash).
         This data will be persisted in Zed for future customer recognition and for the next step. In
         response, Heidelpay expects to get a plain URL where to redirect customer. In case of failure it
-        is <code>HeidelpayController::paymentFailedAction()</code>, and in case of success - <code>CreditCardController::registrationSuccessAction()</code>. <code>RegistrationSuccessAction()</code>
+        is <var>HeidelpayController::paymentFailedAction()</var>, and in case of success - <var>CreditCardController::registrationSuccessAction()</var>. <var>RegistrationSuccessAction()</var>
         will find customer registration (through Zed) and set it to quote. Then customer is redirected
         to summary page**
     </li>
@@ -270,21 +270,21 @@
     </li>
                                                     </ul>
                                                     <p><sub>*&#160;This javascript behavior can be found and customized under
-    <code>assets/Yves/js/modules/creditCardFrame.js</code> file.<br /></sub><span><sub>** This overhead with payment-&gt;registrationRequest-&gt;registrationSuccess-&gt;summary is necessary, because <code>registrationRequest</code> is called asynchronously from the outside, where customer session is not available. Later on, <code>registrationSuccess</code> action is called already where customer session is available, so we can add registration to quote there.&#160;</sub></span>
+    <var>assets/Yves/js/modules/creditCardFrame.js</var> file.<br /></sub><span><sub>** This overhead with payment-&gt;registrationRequest-&gt;registrationSuccess-&gt;summary is necessary, because <var>registrationRequest</var> is called asynchronously from the outside, where customer session is not available. Later on, <var>registrationSuccess</var> action is called already where customer session is available, so we can add registration to quote there.&#160;</sub></span>
                                                     </p>
                                                     <h4 id="UsageandImplementationdetails-Summaryreviewandordersubmit.4">Summary Review and Order Submitting</h4>
-                                                    <p><u><span style="text-decoration: none;"><b>On the review page</b></span></u><span>, it might be necessary to display customer registration details (like anonymised credit card data, etc). For that use <code>Yves/Heidelpay/Theme/default/partial/summary.twig</code> as a reference and include it to your summary page template.</span>
+                                                    <p><u><span style="text-decoration: none;"><b>On the review page</b></span></u><span>, it might be necessary to display customer registration details (like anonymised credit card data, etc). For that use <var>Yves/Heidelpay/Theme/default/partial/summary.twig</var> as a reference and include it to your summary page template.</span>
                                                     </p>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">On "save order" event</span></u> save Heidelpay payment
     per order and items, as usual.</p>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">When state machine is initialized</span></u>, an event "send
     authorize request" will trigger the authorize request. In case of success, the payment system will
     return a redirect URL for customer, where the payment can be completed. Request and response will be
-    fully persisted in the database (<code>spy_payment_heidelpay_transaction_log</code>).&#160;</p>
+    fully persisted in the database (<var>spy_payment_heidelpay_transaction_log</var>).&#160;</p>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">On "post save hook" event</span></u>, we check in
     transaction log table if the authorize request was sent successfully and if so, we set external
     redirect response (URL is obtained from the previous step) and redirect the customer to the payment website,
-		where customer confirms the payment using 3D secure validation and so on.<br />Below is the code sample from <code>HeidelpayPostSavePlugin</code>:</p><pre><code class="language-bash line-numbers">/**
+		where customer confirms the payment using 3D secure validation and so on.<br />Below is the code sample from <var>HeidelpayPostSavePlugin</var>:</p><pre><code class="language-bash line-numbers">/**
  * @method \SprykerEco\Zed\Heidelpay\Business\HeidelpayFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Heidelpay\Business\HeidelpayBusinessFactory getFactory()
  */
@@ -303,20 +303,20 @@ class HeidelpayPostSavePlugin extends BaseAbstractPlugin implements CheckoutPost
 }</code></pre>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">On payment confirmation</span></u>, response is sent to the Heidelpay
     and Heidelpay makes an asynchronous POST request to the shop's "CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL"
-    URL (Yves), with the result of payment (see <code>HeidelpayController::paymentAction()</code>). This is called
+    URL (Yves), with the result of payment (see <var>HeidelpayController::paymentAction()</var>). This is called
     "external response transaction", the result will be persisted in
-    <code>spy_payment_heidelpay_transaction_log</code> as usual.</p>
+    <var>spy_payment_heidelpay_transaction_log</var> as usual.</p>
         The most important data here - is the payment
         reference ID which can be used for further transactions like capture/cancel/etc.&#160;
    
         <p>In the response Heidelpay expects an URL string which defines where customer has to be redirected. In case
     if customer successfully confirmed payment, it should be a link to checkout order success step, in
     case of failure - checkout payment failed action with error code
-    (See&#160;See <code>HeidelpayController::paymentFailedAction()</code> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section).&#160;Heidelpay
+    (See&#160;See <var>HeidelpayController::paymentFailedAction()</var> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section).&#160;Heidelpay
     redirects customer to the given URL and payment process is finished.&#160;</p><p><u><span style="text-decoration: none; font-weight: bold;">Capture the money</span></u>&#160;- later on, when the item is shipped to the
     customer, it is time to call "capture" command of the state machine to capture money
     from the customer's account. It is done in CapturePlugin of the OMS command. In the provided basic
-    order state machine for <code>CreditCardSecureAuthorize</code> method, command will be executed automatically,
+    order state machine for <var>CreditCardSecureAuthorize</var> method, command will be executed automatically,
     when order is manually moved into the "shipped" state. Now order can be considered as
     "paid".</p><p>&#160;</p><p><b>See also:</b></p><ul><li value="1"><a href="../heidelpay.htm">Get a general idea about Heidelpay</a></li><li value="2"><a href="heidelpay-installation.htm">Install Heidelpay</a></li><li value="3"><a href="heidelpay-integration.htm">Integrate Heidelpay</a></li><li value="4"><a href="heidelpay-error-workflow.htm">Configure error workflow</a></li><li value="5"><a href="heidelpay-paypal-debit.htm">Configure Paypal Debit Workflow for Heidelpay</a></li><li value="6"><a href="heidelpay-sofort.htm">Configure Sofort payment for Heidelay</a></li><li value="7"><a href="heidelpay-ideal.htm">Configure iDeal payment for Heidelpay</a></li><li value="8"><a href="heidelpay-error-workflow.htm">Configure error workflow for Heidelpay</a></li></ul><p>&#160;</p><p><i>Last review date: Nov. 16th, 2017</i></p></div>
                                             </div>

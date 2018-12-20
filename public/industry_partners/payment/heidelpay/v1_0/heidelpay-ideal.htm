@@ -177,8 +177,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="18qhvmirb0CrpHWMYnnjqg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="18qhvmirb0CrpHWMYnnjqg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="p_-hbdDrmk-PCmDlWCH6vQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="p_-hbdDrmk-PCmDlWCH6vQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -226,18 +226,18 @@
                                                     <p><b>When state machine is initialized</b>, an event "send
     authorize request" will trigger the authorize request. In case of success, the payment system will
     return a redirect URL for customer, where the payment can be completed. Request and response will be
-    fully persisted in the database (<code>spy_payment_heidelpay_transaction_log</code>).&#160;</p>
+    fully persisted in the database (<var>spy_payment_heidelpay_transaction_log</var>).&#160;</p>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">On "post save hook" event</span></u> we check in
     transaction log table if the authorize request was sent successfully and if so, we set an external
-    redirect response to the next step (<code>IdealController::authorizeAction()</code>) where the form will be
+    redirect response to the next step (<var>IdealController::authorizeAction()</var>) where the form will be
     displayed with 3 fields: bank country, bank name and account holder name. The URL obtained in the
     previous step will be a "form action". When customer submits the form, he will be redirected
     to the iDeal website to complete the payment.&#160;</p>
                                                     <p><u><span style="text-decoration: none; font-weight: bold;">On payment confirmation</span></u>, response from iDeal is sent to the
-    Heidelpay and Heidelpay makes an asynchronous POST request to the shop's "CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL"
-    URL (Yves), with the result of payment (see <code>HeidelpayController::paymentAction()</code>). This is called
+    Heidelpay and Heidelpay makes an asynchronous POST request to the shop's <var>CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL</var>
+    URL (Yves), with the result of payment (see <var>HeidelpayController::paymentAction()</var>). This is called
     "external response transaction", the result will be persisted in
-    <code>spy_payment_heidelpay_transaction_log</code> as usual.</p>
+    <var>spy_payment_heidelpay_transaction_log</var> as usual.</p>
         
             The most important data here - is the payment
         reference ID which can be used for further transactions like capture/cancel/etc.&#160;
@@ -245,7 +245,7 @@
         <p style="text-decoration: none;">In the response Heidelpay expects an URL string which defines where customer has to be redirected. In case
     if customer successfully confirmed payment, it should be a link to the checkout order success step, in
     case of the failure - checkout payment failed action with the error code
-    (see <code>HeidelpayController::paymentFailedAction()</code> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section).&#160;Heidelpay
+    (see <var>HeidelpayController::paymentFailedAction()</var> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section).&#160;Heidelpay
     redirects customer to the given URL and the payment process is finished.&#160;</p><p style="text-decoration: none;"><u><span style="text-decoration: none; font-weight: bold;">Capture the money</span></u> - later on, when the item is shipped to the
     customer, it is time to call "capture" command of the state machine to capture the money
     from the customer's account. This is done in CapturePlugin of the OMS command. In the provided basic
