@@ -178,8 +178,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="RtndhGxAK0q-1TzvAnRGKQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="RtndhGxAK0q-1TzvAnRGKQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UUsXVNJJ3Eq-C5ru9IGwlg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UUsXVNJJ3Eq-C5ru9IGwlg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -226,10 +226,7 @@ b/config/Shared/config_default.php
 +$config[BillpayConstants::BILLPAY_SECURITY_KEY] = '[your pre-authorize security key]';//pre-authorize
 ....
 -$config[BillpayConstants::USE_PRESCORE] = 1;
-+$config[BillpayConstants::USE_PRESCORE] = 0;
-
-
-            </code></pre>
++$config[BillpayConstants::USE_PRESCORE] = 0;</code></pre>
                                                     <h2>Billpay Invoice Payment with Prescoring</h2>
                                                     <p>Using the “prescore” scoring model, the identity and credit check is performed before the payment method is selected. The results of the check are then used to display or hide the available payment methods accordingly. This eliminates the negative purchasing experience of a “rejection”.</p>
                                                     <h3>Configuration </h3>
@@ -246,13 +243,10 @@ b/config/Shared/config_default.php
 +//$config[BillpayConstants::BILLPAY_SECURITY_KEY] = '[your pre-authorize security key]';//pre-authorize
 ....
 +$config[BillpayConstants::USE_PRESCORE] = 1;
--$config[BillpayConstants::USE_PRESCORE] = 0;
-
-
-            </code></pre>
+-$config[BillpayConstants::USE_PRESCORE] = 0;</code></pre>
                                                     <h3>Yves </h3>
                                                     <h4>Customer Setup</h4>
-                                                    <p>In Yves  <code>CustomerStep</code> needs to be extended by calling the <code>BillpayCustomerHandlerPlugin</code>:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>In Yves  <var>CustomerStep</var> needs to be extended by calling the <var>BillpayCustomerHandlerPlugin</var>:</p><pre><code class="language-php line-numbers">&lt;?php
 /**
      * Update QuoteTransfer with customer step handler plugin.
      *
@@ -268,7 +262,7 @@ b/config/Shared/config_default.php
 
         return $quoteTransfer;
     }</code></pre>
-                                                    <p>Next, extend the <code>CheckoutDependencyProvider</code> to return the <code>StepHandlerPluginCollection</code>:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>Next, extend the <var>CheckoutDependencyProvider</var> to return the <code>StepHandlerPluginCollection</code>:</p><pre><code class="language-php line-numbers">&lt;?php
   /**
      * @param \Spryker\Yves\Kernel\Container $container
      *
@@ -284,7 +278,7 @@ b/config/Shared/config_default.php
             $plugins-&gt;add(new CustomerStepHandler(), self::CUSTOMER_STEP_HANDLER);
             return $plugins;
         };</code></pre>
-                                                    <p>Lastly, change the <code>CustomerStep</code> constructor:</p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>Lastly, change the <var>CustomerStep</var> constructor:</p><pre><code class="language-php line-numbers">&lt;?php
  /**
      * @param \Pyz\Client\Customer\CustomerClientInterface $customerClient
      * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $customerStepHandler
@@ -319,7 +313,7 @@ b/config/Shared/config_default.php
             ApplicationControllerProvider::ROUTE_HOME
         );
     }</code></pre>
-                                                    <p>Then register the client in <code>CheckoutDependencyProvider</code>.</p>
+                                                    <p>Then register the client in <var>CheckoutDependencyProvider</var>.</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand the code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
 
@@ -466,7 +460,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
-                                                                    <p>firstName</p>
+                                                                    <p><var>firstName</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
                                                                     <p>Customer first name</p>
@@ -477,7 +472,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>lastName	</p>
+                                                                    <p><var>lastName</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
                                                                     <p>Customer last name</p>
@@ -499,7 +495,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>addressNo	</p>
+                                                                    <p><var>addressNo</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
                                                                     <p>Customer billing address street name extension</p>
@@ -543,7 +540,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>dateOfBirth	</p>
+                                                                    <p><var>dateOfBirth</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
                                                                     <p>Customer date of birth	</p>
@@ -554,7 +552,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
-                                                                    <p>cartAmount	</p>
+                                                                    <p><var>cartAmount</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
                                                                     <p>Total value of cart items with discounts</p>
@@ -565,7 +564,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>orderAmount	</p>
+                                                                    <p><var>orderAmount</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
                                                                     <p>Total value of order</p>
@@ -598,7 +598,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
-                                                                    <p>countryIso3Code	</p>
+                                                                    <p><var>countryIso3Code</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
                                                                     <p>Country iso3 code i.e deu	</p>
@@ -609,7 +610,8 @@ b/config/Shared/config_default.php
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>countryIso2Code	</p>
+                                                                    <p><var>countryIso2Code</var>
+                                                                    </p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
                                                                     <p>Country iso2 code i.e de	</p>
@@ -643,9 +645,9 @@ b/config/Shared/config_default.php
                                                         </tbody>
                                                     </table>
                                                     <h3>Checking Your Setup</h3>
-                                                    <p>You should be able to see the Billpay invoice on payment step of your checkout step. If you receive the "method not available" message when you select <strong>Billpay invoice</strong> at the payment step, check the <code>spy_payment_billpay_api_log</code> table in your database for logs.</p>
+                                                    <p>You should be able to see the Billpay invoice on payment step of your checkout step. If you receive the "method not available" message when you select <strong>Billpay invoice</strong> at the payment step, check the <var>spy_payment_billpay_api_log</var> table in your database for logs.</p>
                                                     <h2>Zed</h2>
-                                                    <p>In Zed  <code>BillpaySaveOrderPlugin</code> has to be registered in the <code>CheckoutDependencyProvider</code>:</p><pre><code class="language-php line-numbers"> &lt;?php
+                                                    <p>In Zed  <var>BillpaySaveOrderPlugin</var> has to be registered in the <var>CheckoutDependencyProvider</var>:</p><pre><code class="language-php line-numbers"> &lt;?php
  /**
      * @param \Spryker\Zed\Kernel\Container $container
      *
@@ -659,7 +661,7 @@ b/config/Shared/config_default.php
             new BillpaySaveOrderPlugin(),
         ];
     }</code></pre>
-                                                    <p>Then the following should be added in <code>OmsDependencyProvider</code>:</p><pre><code class="language-php line-numbers"> &lt;?php
+                                                    <p>Then the following should be added in <var>OmsDependencyProvider</var>:</p><pre><code class="language-php line-numbers"> &lt;?php
 /**
      * @param \Spryker\Zed\Kernel\Container $container
      *

@@ -177,8 +177,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="u4D0aEAwskSTxPO--SCOyQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="u4D0aEAwskSTxPO--SCOyQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="-zAD19_mjUeSYkHn7-XG-Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="-zAD19_mjUeSYkHn7-XG-Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -215,7 +215,7 @@
                                                     <p>A concern regarding payment flows that require redirection to third party website pages is that you loose control over the customer's action (the customer can close the browser before accepting or canceling the transaction). If this is the case, PayPal sends an instant payment notification (IPN) to Payone, then Payone notifies Spryker.</p>
                                                     <h2>Front-End Integration</h2>
                                                     <p>To adjust the frontend appearance, add the following templates in your theme directory:</p>
-                                                    <p><code>src/&lt;project_name&gt;/Yves/CartPage/Theme/default/components/molecules/cart-summary/cart-summary.twig</code>
+                                                    <p><var>src/&lt;project_name&gt;/Yves/CartPage/Theme/default/components/molecules/cart-summary/cart-summary.twig</var>
                                                     </p>
                                                     <p>Add the following code below the checkout button or anywhere you want depending on your design:</p>
                                                     <p><pre><code class="bash">{{ render(path('payone-checkout-with-paypal-button')) }}</code></pre>
@@ -223,12 +223,12 @@
                                                     <p>You can also implement your own button if you want the button to be loaded without separate call to the controller, or if you want to change the design.</p>
                                                     <h2>Paypal Express Checkout Flow Description:</h2>
                                                     <ul>
-                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <code>setexpresscheckout</code> action and success, failure and back URLs.</li>
+                                                        <li value="1"> Once you click on the "Checkout with PayPal" button, the genericpayment request is sent to Payone with <var>setexpresscheckout</var> action and success, failure and back URLs.</li>
                                                         <li value="2"> In the response we receive a workorderid which is used for all other operations until the capture request and PayPal redirect URL.</li>
                                                         <li value="3"> We store wordorderid to quote and redirect customer to the URL provided by Payone.</li>
                                                         <li value="4"> On the PayPal page, customer has to log in and approve the intention of paying for the desired goods.</li>
                                                         <li value="5"> After the customer clicks the button, he is redirected to success or failure URL, provided by the shop in the first request to Payone.</li>
-                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <code>getexpresscheckoutdetails</code>.</li>
+                                                        <li value="6"> After redirection to success action, one more genericpayment request to Payone is made with action <var>getexpresscheckoutdetails</var>.</li>
                                                         <li value="7"> Payone sends us information about the customer like email and shipment data.</li>
                                                         <li value="8"> User is redirected to the page(summary page as default) of standard checkout.</li>
                                                         <li value="9"> After placing the order, the pre-authorization call is sent to Payone (and through it to PayPal). Workorderid is sent to Payone with this request.</li>
@@ -247,14 +247,15 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     'PayonePaypalExpressCheckout',
 ];
     </code></pre>
-                                                    <p>Note: You can find all needed configuration parameters in <code>config.dist.php</code> file inside Payone module.</p>
+                                                    <p>Note: You can find all needed configuration parameters in <var>config.dist.php</var> file inside Payone module.</p>
                                                     <h2>Configuration Parameters Description:</h2>
-
-        To understand where to go, if control over express checkout process should be handed over to the project,
-        Payone module needs several urls to be confgured in the global config:
-        <p><b>PayoneConstants::PAYONE_STANDARD_CHECKOUT_ENTRY_POINT_URL</b> - URL, which is used when express checkout details are loaded to quote.
+                                                    <p>To understand where to go, if control over express checkout process should be handed over to the project,
+        Payone module needs several urls to be confgured in the global config:</p>
+                                                    <p><var>PayoneConstants::PAYONE_STANDARD_CHECKOUT_ENTRY_POINT_URL</var> - URL, which is used when express checkout details are loaded to quote.
             Normally, its an URL to summary page or to some middleware URL, where additional logic can be added before going to checkout (e.g. filling some post conditions which are required to get to summary page in Spryker step-engine).
-        </p><p><b>PayoneConstants::PAYONE_EXPRESS_CHECKOUT_FAILURE_URL</b> - URL where user is redirected when payone fails for some reason.</p><p><b>PayoneConstants::PAYONE_EXPRESS_CHECKOUT_BACK_URL</b> - URL where user is redirected when he/she goes back to Paypal side. </p><pre><code class="bash">
+        </p>
+                                                    <p><var>PayoneConstants::PAYONE_EXPRESS_CHECKOUT_FAILURE_URL</var> - URL where user is redirected when payone fails for some reason.</p>
+                                                    <p><var>PayoneConstants::PAYONE_EXPRESS_CHECKOUT_BACK_URL</var> - URL where user is redirected when he/she goes back to Paypal side. </p><pre><code class="bash">
     $config[PayoneConstants::PAYONE][PayoneConstants::PAYONE_STANDARD_CHECKOUT_ENTRY_POINT_URL] = sprintf(
     '%s/checkout/paypal-express-checkout-entry-point',
     $config[ApplicationConstants::BASE_URL_YVES]
@@ -267,10 +268,11 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
     '%s/cart',
     $config[ApplicationConstants::BASE_URL_YVES]
 );
-                <br /></code></pre><h2>Extra Configuration:</h2>
+                <br /></code></pre>
+                                                    <h2>Extra Configuration:</h2>
 
        To add possibility to skip standard checkout steps for guest user, customer step should be extended:
-        <p>Open <b>Yves/CheckoutPage/Process/Steps/CustomerStep.php</b> file in your project and add the following code to <b>postCondition</b> and <b>requireInput</b> methods:</p><pre><code class="bash">
+        <p>Open <var>Yves/CheckoutPage/Process/Steps/CustomerStep.php</var> file in your project and add the following code to <var>postCondition</var> and <var>requireInput</var> methods:</p><pre><code class="bash">
   public function requireInput(AbstractTransfer $quoteTransfer)
   {
       if ($this-&gt;isCustomerLoggedIn() || $quoteTransfer-&gt;getIsGuestExpressCheckout()) {

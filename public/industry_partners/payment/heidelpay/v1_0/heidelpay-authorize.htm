@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="Integrate Paypal Authorize payment through Heidelpay into Spryker Legacy Demoshop" />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Heidelpay - Paypal Authorize  </title>
+        <meta name="author" content="" /><title>Heidelpay Partner Integration - Paypal Authorize | Spryker</title>
         <script>/* <![CDATA[ */
 			var s = document.createElement("script");
 			s.type = "text/javascript";
@@ -177,8 +178,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="isqrNcYM6UO62bMCWQKNaw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="isqrNcYM6UO62bMCWQKNaw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="nez3t5CCKEibeYcMvSC7HQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="nez3t5CCKEibeYcMvSC7HQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -227,11 +228,11 @@
                                                     <p><b>When state machine is initialized</b>, a "send
     authorize request" event will trigger the authorize request. In case of success, payment system will
     return a redirect URL to customer, where the payment can be completed. Request and response will be
-    fully persisted in the database (<code>spy_payment_heidelpay_transaction_log</code>).&#160;</p>
+    fully persisted in the database (<var>spy_payment_heidelpay_transaction_log</var>).&#160;</p>
                                                     <p><b>On "post save hook" event</b>, we check in
     the transaction log table if the authorize request was sent successfully and if so, we set external
     redirect response (URL is obtained from the previous step) and redirect the customer to Paypal website,
-    where customer confirms the payment. <br /> Below is the code sample from <code>HeidelpayPostSavePlugin</code>:</p><pre><code class="language-php line-numbers">
+    where customer confirms the payment. <br /> Below is the code sample from <var>HeidelpayPostSavePlugin</var>:</p><pre><code class="language-php line-numbers">
 /**
  * @method \SprykerEco\Zed\Heidelpay\Business\HeidelpayFacadeInterface getFacade()
  * @method \SprykerEco\Zed\Heidelpay\Business\HeidelpayBusinessFactory getFactory()
@@ -247,34 +248,47 @@ class HeidelpayPostSavePlugin extends BaseAbstractPlugin implements CheckoutPost
    public function execute(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
    {
 	  $this-&gt;getFacade()-&gt;postSaveHook($quoteTransfer, $checkoutResponseTransfer);
-   }
-}
-				</code></pre>
+   }</code></pre>
                                                     <p><u style="font-weight: bold; text-decoration: none;">On payment confirmation</u>, the response is sent to Heidelpay
-    and Heidelpay makes an asynchronous POST request to the shop's <code>CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL</code>
-    URL (Yves), with the result of payment (see <code>HeidelpayController::paymentAction()</code>). This is called
-    "external response transaction", and its result will be persisted in
-    <code>spy_payment_heidelpay_transaction_log</code> as usual.</p>
-        The most important data here is the payment
-        reference ID which can be used for further transactions like capture/cancel/etc.&#160;
-   
-        <p>In the response Heidelpay expects an URL string which defines where customer has to be redirected. In case
-    if customer successfully confirmed payment, it should be a link to checkout order success step, in
-    case of failure - checkout payment failed action with error code
-    (see <code>HeidelpayController::paymentFailedAction()</code> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section). Heidelpay
-    redirects customer to the given URL and the payment process is finished.&#160;</p><p><b>Capture the money</b> - later on, when the item is shipped to the
-    customer, it is time to call "capture" command of the state machine to capture the money
-    from the customer's account. It is done in CapturePlugin of the OMS command. In the provided basic
-    order of state machine for Paypal authorize method, the command will be executed automatically, when order
-    is manually moved into the "shipped" state. Now the order can be considered as "paid".
-</p><p>&#160;</p><p><b>See also:</b></p><ul><li value="1"><a href="../heidelpay.htm">Get a general idea about Heidelpay</a></li><li value="2"><a href="heidelpay-installation.htm">Install Heidelpay</a></li><li value="3"><a href="heidelpay-integration.htm">Integrate Heidelpay</a></li><li value="4"><a href="heidelpay-credit-card.htm">Configure Credit Card Secure for Heidelpay
-</a></li><li value="5"><a href="heidelpay-ideal.htm">Configure iDeal for Hedelpay
-</a></li><li value="6"><a href="heidelpay-paypal-debit.htm">Check Paypal Debit Workflow for Heidelpay
-</a></li><li value="7"><a href="heidelpay-sofort.htm">Configure Sofort payment for Heidelay
-</a></li><li value="8">Configure Easy Credit payment for Heidelpay
-</li></ul><p>&#160;</p><p><![CDATA[
+    and Heidelpay makes an asynchronous POST request to the shop's <var>CONFIG_HEIDELPAY_PAYMENT_RESPONSE_URL</var>
+    URL (Yves), with the result of payment (see <var>HeidelpayController::paymentAction()</var>). This is called "external response transaction", and its result will be persisted in
+    <var>spy_payment_heidelpay_transaction_log</var> as usual.</p>
+                                                    <p> The most important data here is the payment reference ID which can be used for further transactions like <var>capture/cancel/etc</var>.</p>
+                                                    <p>In the response Heidelpay expects an URL string which defines where customer has to be redirected. In case if customer successfully confirmed payment, it should be a link to checkout order success step, in case of failure - checkout payment failed action with error code (see <var>HeidelpayController::paymentFailedAction()</var> and <a href="heidelpay-error-workflow.htm">Heidelpay - Workflow for Errors</a> section). Heidelpay
+    redirects customer to the given URL and the payment process is finished.&#160;</p>
+                                                    <p><b>Capture the money</b> - later on, when the item is shipped to the customer, it is time to call "capture" command of the state machine to capture the money
+    from the customer's account. It is done in CapturePlugin of the OMS command. In the provided basic order of state machine for Paypal authorize method, the command will be executed automatically, when order is manually moved into the "shipped" state. Now the order can be considered as "paid".
+</p>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="../heidelpay.htm">Get a general idea about Heidelpay</a>
+                                                        </li>
+                                                        <li value="2"><a href="heidelpay-installation.htm">Install Heidelpay</a>
+                                                        </li>
+                                                        <li value="3"><a href="heidelpay-integration.htm">Integrate Heidelpay</a>
+                                                        </li>
+                                                        <li value="4"><a href="heidelpay-credit-card.htm">Configure Credit Card Secure for Heidelpay
+</a>
+                                                        </li>
+                                                        <li value="5"><a href="heidelpay-ideal.htm">Configure iDeal for Hedelpay
+</a>
+                                                        </li>
+                                                        <li value="6"><a href="heidelpay-paypal-debit.htm">Check Paypal Debit Workflow for Heidelpay
+</a>
+                                                        </li>
+                                                        <li value="7"><a href="heidelpay-sofort.htm">Configure Sofort payment for Heidelay
+</a>
+                                                        </li>
+                                                        <li value="8">Configure Easy Credit payment for Heidelpay
+</li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><![CDATA[
     ]]><i>Last
-        review date: Nov. 15th, 2017</i></p></div>
+        review date: Nov. 15th, 2017</i></p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
