@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
-        <meta name="description" content="The article provides a step-by-step guide on how to implement a REST API resource into the project. There is a code sample and explanation for each step to help users better understand and instantiates the implementation flow." />
+        <meta name="description" content="This article provides step-by-step instructions on how to implement a REST API resource in a project." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
@@ -179,8 +179,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="iMEU_gpIKECA8HTOZVLxzw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iMEU_gpIKECA8HTOZVLxzw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UVL8ujEzwESxZRVoU8ghVA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UVL8ujEzwESxZRVoU8ghVA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -214,13 +214,13 @@
                                                     <p>The following guide provides step-by-step instructions on how to implement a REST API resource in your project.</p>
                                                     <div class="tip"><b>Before you begin</b>
                                                         <br />Consider studying the following documents before you begin:<br /><ul class="disk"><li value="1"><a href="https://jsonapi.org/format/" target="_blank">JSON API Specification</a> implemented in Spryker;</li><li value="2"><a href="https://swagger.io/" target="_blank">Swagger Tools Reference</a> to know how to document your API;</li><li value="3"><a href="https://www.thoughtworks.com/insights/blog/rest-api-design-resource-modeling" target="_blank">REST API Modelling Reference</a></li></ul></div>
-                                                    <h2>1. Create Feature Glue Module</h2>
+                                                    <h2>1. Create a Glue Feature Module</h2>
                                                     <p>
-			The <b>1st</b> step is to create an empty Feature Glue Module. For naming convention, all the feature module names have to consist of the feature name in plural followed by the <b>RestApi</b> suffix. For example, module <i>WishlistsRestApi</i> represents a resource for managing the wishlists feature. 
-			To create the module:
+			The first step is to create an empty Glue Feature Module. For naming convention, all the feature module names have to consist of the feature name in plural followed by the <b>RestApi</b> suffix. For example, module <i>WishlistsRestApi</i> represents a resource for managing the wishlists feature. 
+			To create a module:
 		</p>
                                                     <ul class="disk">
-                                                        <li value="1">Create a new module in <i>src/Pyz/Glue/ResourcesRestApi</i>, if you want to have a project-level resource.</li>
+                                                        <li value="1">Create a new module in <var>src/Pyz/Glue/ResourcesRestApi</var>, if you want to have a project-level resource.</li>
                                                         <li value="2">Create the following folder and file structure:</li>
                                                         <div class="u-is-scrollable">
                                                             <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
@@ -275,7 +275,7 @@
                                                             </table>
                                                         </div>
                                                         <li value="3">
-				Add a transfer file that will be used to automatically map JSON data. Transfers are defined in the <b>Shared</b> layer (e.g. <i>src/Pyz/Shared/ResourcesRestApi/Transfer</i>) as it needs to be accessible to any layer, including <i>Glue</i>. The name of the transfer file is <i><b>resources</b>_rest_api.transfer.xml</i>, where the first part is the name of your resource.
+				Add a transfer file that will be used to automatically map JSON data. Transfers are defined in the <b>Shared</b> layer (e.g. <var>src/Pyz/Shared/ResourcesRestApi/Transfer</var>) as it needs to be accessible to any layer, including <i>Glue</i>. The name of the transfer file is <i><b>resources</b>_rest_api.transfer.xml</i>, where the first part is the name of your resource.
 			</li>
                                                     </ul>
                                                     <p>
@@ -286,7 +286,7 @@
                                                     </p>
                                                     <h2>2. Create a Configuration Class</h2>
                                                     <p>
-			It is good practice to create a configuration class that provides general module information. The class can be used to store types of resources, custom error codes used in your module, and other configuration data. Let us open the <i>WishlistsRestApiConfig.php</i> file and provide some initial configuration:
+			It is a good practice to create a configuration class that provides general module information. The class can be used to store types of resources, custom error codes used in your module, and other configuration data. Let us open the <i>WishlistsRestApiConfig.php</i> file and provide some initial configuration:
 		</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
 			WishlistsRestApiConfig.php
@@ -318,15 +318,12 @@
 			Factory is used for instantiating module classes and dependencies and provides access to the resource builder.
 		</p>
                                                     <p>
-			The factory must be inherited from <i>Spryker\Glue\Kernel\AbstractFactory</i>. This abstract factory exposes the <b>getResourceBuilder()</b> method that is used to construct resource and response objects. The following example shows how to correctly instantiate a resource reader using the <b>getResourceBuilder()</b> method:
+			The factory must be inherited from <var>Spryker\Glue\Kernel\AbstractFactory</var>. This abstract factory exposes the <var>getResourceBuilder()</var> method that is used to construct resource and response objects. The following example shows how to correctly instantiate a resource reader using the <var>getResourceBuilder()</var> method:
 		</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
 			WishlistRestApiFactory.php
 		</a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>(This is the Drop-down text)</p>
-                                                        </div>
-                                                    </div><pre><code class="language-PHP line-numbers">
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 	&lt;?php
 	namespace Spryker\Glue\WishlistsRestApi;
  
@@ -344,19 +341,21 @@
 		}
 	}
 		</code></pre>
-                                                    <h2>4. Create Resource Controller</h2>
+                                                        </div>
+                                                    </div>
+                                                    <h2>4. Create a Resource Controller</h2>
                                                     <p>
-			The next step in implementing a resource module is creating a controller for it. A controller is a PHP class that receives all requests call business logic and return responses. To implement a controller:
+			The next step in implementing a resource module is creating a controller for it. A controller is a PHP class that receives all requests call business logic and returns responses. To implement a controller:
 		</p>
                                                     <ol>
                                                         <li value="1">
 				Create a new class in the <i>Controller</i> folder. The naming convention is that the class name must start with the name of the resource it controls and end with the <i>ResourceController</i> suffix.
 			</li>
                                                         <li value="2">
-				Add inheritance of the <i>\Spryker\Glue\Kernel\Controller\AbstractController</i> class.
+				Add inheritance of the <var>\Spryker\Glue\Kernel\Controller\AbstractController</var> class.
 			</li>
                                                         <li value="3">
-				Add a <b>use</b> clause to include the <i>RestResponseInterface</i>. It will provide you the possibility to pass responses to Glue. Any action method in a resource controller has to take <i>\Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface</i> as a parameter and return <i>\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface</i>.
+				Add a <b>use</b> clause to include the <var>RestResponseInterface</var>. It will provide you the possibility to pass responses to Glue. Any action method in a resource controller has to take <var>\Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface</var> as a parameter and return <var>\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface</var>.
 			</li>
                                                         <li value="4">
 				Implement actions that will be used to handle all possible HTTP verbs (<b>GET, POST, DELETE, PATCH</b>) for the given resource.
@@ -366,10 +365,10 @@
 			The controller must only provide the request handling flow, and not contain any actual business logic. All operations must be delegated to the corresponding layers.
 		</p>
                                                     <p class="tip">
-			Requests will be passed to the controller as instances of <i>RestRequestInterface</i>, and responses must be provided as <i>RestResponseInterface</i> objects.
+			Requests will be passed to the controller as instances of <var>RestRequestInterface</var>, and responses must be provided as <var>RestResponseInterface</var> objects.
 		</p>
                                                     <p>Sample controller implementation:</p>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHead MCDropDownHotSpot_"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceController.php</a>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceController.php</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 	&lt;?php
  
@@ -436,7 +435,7 @@
                                                     </div>
                                                     <h2>5. Describe Fields for Post an Patch Calls</h2>
                                                     <p>
-			The <b>POST</b> and the <b>PATCH</b> verbs allow you to pass the body in your request. Such parameters can be used in your resource module to manipulate Spryker entities. For example, when changing an entity via REST API, you can pass the modified values as fields of a <b>POST</b> or <b>PATCH</b> request.
+			The <b>POST</b> and the <b>PATCH</b> verbs allow you to pass the body in your request. Such parameters can be used in your resource module to manipulate Spryker entities. For example, when changing an entity via REST API, you can pass the modified values as fields of a <b>POST</b> or a <b>PATCH</b> request.
 		</p>
                                                     <p>
 			The same as with any other data source, you can use containers called <b>Transfer Objects</b> for the convenience of dealing with data retrieved from <b>POST</b> requests. The objects are defined in the XML transfer file located on the <b>Shared</b> layer. Names of the transfer objects need to start with <b>Rest</b>.
@@ -445,7 +444,7 @@
 			For information on how to define the objects and syntax, see <a href="https://documentation.spryker.com/resources_and_developer_tools/transfer-objects.htm?Highlight=how%20to%20create%20transfer%20objects" target="_blank">How to create transfer objects</a>.
 		</p>
                                                     <p>
-			In the below example, Transfer Object <i>RestWishlistsAttributesTransfer</i> will have three string attributes automatically mapped from a POST request:
+			In the below example, Transfer Object <var>RestWishlistsAttributesTransfer</var> will have three string attributes automatically mapped from a POST request:
 		</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
 			wishlists_rest_api.transfer.xml
@@ -466,8 +465,7 @@
                                                         </div>
                                                     </div>
                                                     <p>
-			To generate the respective transfer objects, run the <b>vendor/bin/console transfer:generate</b> console command.
-		</p>
+			To generate the respective transfer objects, run <code><pre>vendor/bin/console transfer:generate</pre></code></p>
                                                     <h2>6. Route Requests to Your Controller</h2>
                                                     <p>
 			Now, you need to route requests to your module. For this purpose, you need to create a route plugin that calls a certain function of the resource controller depending on the method configured in your resource. Then, you need to add the plugin to the <i>Glue</i> Module dependency provider.
@@ -476,7 +474,7 @@
                                                     <p><b>Resource Route Plugin</b>
                                                     </p>
                                                     <p>
-			The route plugin must be inherited from <i>AbstractPlugin</i> and implement <i>ResourceRoutePluginInterface</i>. Let us create one in the <b style="font-style: italic; font-weight: normal;">Plugin</b> folder:
+			The route plugin must be inherited from <i>AbstractPlugin</i> and implement <var>ResourceRoutePluginInterface</var>. Let us create one in the <b style="font-style: italic; font-weight: normal;">Plugin</b> folder:
 		</p>
                                                     <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceRoutePlugin.php</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
@@ -495,7 +493,7 @@
                                                         </div>
                                                     </div>
                                                     <p>
-			Now, we can map the controller actions to the verbs they implement. For this purpose, implement function <b>ResourceRoutePluginInterface::configure()</b>. To map the actions, you can use methods <i>addPost</i>, <i>addDelete</i>, <i>addPatch</i> and <i>addGet</i> supported by <i>ResourceRouteCollectionInterface</i>. Each function has <b>3</b> parameters:
+			Now, we can map the controller actions to the verbs they implement. For this purpose, implement function <var>ResourceRoutePluginInterface::configure()</var>. To map the actions, you can use methods <var>addPost</var>, <i>addDelete</i>, <var>addPatch</var> and <var>addGet</var> supported by <var>ResourceRouteCollectionInterface</var>. Each function has 3 parameters:
 		</p>
                                                     <ol>
                                                         <li value="1"><b>action</b> - specifies the action name to map the verb to the Resource controller method;</li>
@@ -527,7 +525,7 @@
 	...
 		</code></pre>
                                                     <p>
-			Now, implement function <b>ResourceRoutePluginInterface::getResourceType()</b>. It must return the name of your resource in plural (which is a resource URI):
+			Now, implement function <var>ResourceRoutePluginInterface::getResourceType()</var>. It must return the name of your resource in plural (which is a resource URI):
 		</p><pre><code class="language-PHP line-numbers">
 		/**
 		* @api
@@ -539,8 +537,7 @@
 			return WishlistsRestApiConfig::RESOURCE_WISHLISTS;
 		}	
 		</code></pre>
-                                                    <p>T
-			hen, you need to specify the name of the controller class for your resource. We created it on step <b>4</b>. The name must be specified in lowercase, separated by hyphens, and without the <i>Controller</i> suffix. Thus, for example, if you named the controller class <i>WishlistsResourceController</i>, you need to implement a function as follows:
+                                                    <p>Then, you need to specify the name of the controller class for your resource. We created it on step <b>4</b>. The name must be specified in lowercase, separated by hyphens, and without the <i>Controller</i> suffix. Thus, for example, if you named the controller class <var>WishlistsResourceController</var>, you need to implement a function as follows:
 		</p><pre><code class="language-PHP line-numbers">
 		/**
 		* @api
@@ -640,16 +637,18 @@
 			return RestWishlistsAttributesTransfer::class;
 		}
 	}
-				</code></pre>
-                                                            <h2>7. Process REST Requests</h2>
-                                                            <p>
-					After you've routed requests to your module, you can process them. For this purpose, you can make use of the <b>Spryker\Glue\Kernel\AbstractFactory::getResourceBuilder()</b> method. It returns the <i>Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface</i>. This builder interface instantiates the <b>RestResourceInterface</b> and <b>RestResponseInterface</b> objects necessary to correctly build REST responses.
+			</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>7. Process REST Requests</h2>
+                                                    <p>
+					After you've routed requests to your module, you can process them. For this purpose, you can make use of the <var>Spryker\Glue\Kernel\AbstractFactory::getResourceBuilder()</var> method. It returns the <var>Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface</var>. This builder interface instantiates the <var>RestResourceInterface</var> and <var>RestResponseInterface</var> objects necessary to correctly build REST responses.
 				</p>
-                                                            <p>
+                                                    <p>
 					To build the responses, you need to create classes that will be responsible for the request processing. You can place them in the <i>Processor</i> folder. You can create various separate models for reading, creating, updating, and deleting modules.
 				</p>
-                                                            <h2>8. Invoke Processors in Your Code</h2>
-                                                            <p>
+                                                    <h2>8. Invoke Processors in Your Code</h2>
+                                                    <p>
 					Finally, when you have a processor in place, you can use it in your code. To invoke them, use the factory created on step <b>3</b>. Let us reopen the resource controller created on step <b>4</b> (<i>WishlistsResourceController.php</i>) and add code that handles <b>GET</b> requests:
 				</p><pre><code class="language-PHP line-numbers">
 	public function getAction(RestRequestInterface $restRequest): RestResponseInterface
@@ -658,15 +657,15 @@
 			// This line passes the request to the actual class that handles data. It will return an instance of RestResponseInterface
 		}
 				</code></pre>
-                                                            <h2>9. Register Resources in GlueApplicationDependencyProvider</h2>
-                                                            <p>
+                                                    <h2>9. Register Resources in GlueApplicationDependencyProvider</h2>
+                                                    <p>
 					You need to register your resource route plugin in <i>Glue</i>:
 				</p>
-                                                            <ol>
-                                                                <li value="1">Open file <i>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</i>.</li>
-                                                                <li value="2">Add the route plugin to <b>getResourceRoutePlugins(</b>).</li>
-                                                                <li value="3">Save the file.</li>
-                                                            </ol><pre><code class="language-PHP line-numbers">
+                                                    <ol>
+                                                        <li value="1">Open file <var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var>.</li>
+                                                        <li value="2">Add the route plugin to <var>getResourceRoutePlugins(</var>).</li>
+                                                        <li value="3">Save the file.</li>
+                                                    </ol><pre><code class="language-PHP line-numbers">
 	&lt;?php
  
 	namespace Pyz\Glue\GlueApplication;
@@ -686,8 +685,9 @@
 			];
 		}
 				</code></pre>
-                                                        </div>
-                                                    </div>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Dec 19, 2018</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
