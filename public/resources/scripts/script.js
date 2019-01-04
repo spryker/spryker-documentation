@@ -299,3 +299,54 @@ function TextTooltipCleaner() {
 
 var textTooltipCleaner = new TextTooltipCleaner();
 document.addEventListener("DOMContentLoaded", textTooltipCleaner.init());
+
+
+
+function FeatureLinksHandler() {
+
+    function checkElementHeight(elems, height) {
+        elems.forEach(elem => {
+            if (countHeight(elem) > height) {
+                addToggleButton(elem);
+            }
+        });
+    }
+
+    function countHeight(tile) {
+        var count = 0;
+        Array.prototype.forEach.call(tile.children, function (item) {
+            count += item.clientHeight;
+        });
+        return count;
+    }
+
+    function addToggleButton(tile) {
+        tile.setAttribute('expandable', true);
+        tile.appendChild(createToggleButton(tile));
+    }
+
+    function createToggleButton(tile) {
+        var button = document.createElement('div');
+        button.classList.add('toggle-btn');
+        button.innerHTML = 'View All';
+        button.addEventListener('click', function () {
+            tile.classList.toggle('expanded');
+            if (tile.classList.contains('expanded')) {
+                button.innerHTML = 'Hide';
+                return button;
+            }
+            button.innerHTML = 'View All'
+        })
+        return button;
+    }
+
+    this.init = function () {
+        this.linksContainer = document.querySelector('.fl-container');
+        this.links = this.linksContainer.querySelectorAll('.fl-tile');
+        this.moduleReference = document.querySelectorAll('.js-mr-container');
+        if(this.linksContainer != null) checkElementHeight(this.links, 400);
+        if(this.moduleReference != null) checkElementHeight(this.moduleReference, 345);
+    }
+}
+var flHandler = new FeatureLinksHandler();
+document.addEventListener("DOMContentLoaded", flHandler.init());

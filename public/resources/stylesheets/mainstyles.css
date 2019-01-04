@@ -254,12 +254,6 @@ div.top-bar	/*Contains the breadcrumbs and toolbar*/
 	/*Min-height is necessary for topics that are not included in a TOC*/
 }
 
-div.search-container
-{
-	float: right;
-	max-width: 25%;
-}
-
 /*==Elements for the left side of Master Page layout==*/
 
 div.side-menu	/*This is the div that the menu proxy is contained in*/
@@ -1284,5 +1278,154 @@ div.info
 .side-menu .sticky-container
 {
 	min-height: 100vh;
+}
+
+/*Mobile search for other topics*/
+
+.top-bar
+{
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.search-toggle-button
+{
+	display: none;
+}
+
+.search-bar._Skins_SearchTopics.mc-component .search-field
+{
+	border: none;
+	box-shadow: 0 2px 13px 0 rgba(200, 200, 200, 0.5);
+}
+
+.search-bar._Skins_SearchTopics.mc-component .search-submit
+{
+	margin-top: 0;
+}
+
+.search-bar._Skins_SearchHome.mc-component .search-field
+{
+	border: none;
+	box-shadow: 0 2px 13px 0 rgba(200, 200, 200, 0.5);
+	color: #b1bbc7;
+}
+
+.search-bar.search-bar-container._Skins_SearchHome.mc-component .search-submit
+{
+	border: none;
+}
+
+.search-bar._Skins_SearchHome.mc-component
+{
+	height: auto;
+}
+
+.nav-search-wrapper
+{
+	display: none;
+}
+
+@media only screen and (max-width: 992px)
+{
+	/*burger icon*/
+
+	nav.title-bar .menu-icon
+	{
+		right: 0;
+	}
+
+	.title-bar .menu-icon span
+	{
+		height: 40px;
+		width: 30px;
+		display: block;
+		background: transparent url('../icons/menu-burger.svg') no-repeat center center;
+		background-size: cover;
+	}
+}
+
+@media screen and (max-width: 767px)
+{
+	.main-section .search
+	{
+		visibility: hidden;
+		transition: opacity 0.4s ease-in-out;
+		opacity: 0;
+		z-index: 99;
+		position: fixed;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50% , 0);
+	}
+
+	.main-section .search.is-visible
+	{
+		visibility: visible;
+		opacity: 1;
+	}
+
+	.search-toggle-overlay
+	{
+		visibility: hidden;
+		opacity: 0;
+		transition: opacity 0.4s ease-in-out;
+	}
+
+	.search-toggle-overlay.active
+	{
+		visibility: visible;
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		top: 0;
+		opacity: 0.46;
+		background-color: #101010;
+		left: 0;
+		z-index: 9;
+	}
+
+	.search-toggle-button
+	{
+		display: block;
+		width: 30px;
+		height: 30px;
+		background: url('../icons/search.svg') center no-repeat;
+		background-size: contain;
+		position: absolute;
+		right: 65px;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+}
+
+@media screen and (min-width: 766px)
+{
+	.search-bar._Skins_SearchHome.mc-component .search-submit
+	{
+		height: 34px;
+		width: 40px;
+	}
+
+	.search-bar._Skins_SearchHome.mc-component .search-field
+	{
+		height: 34px;
+		font-size: 14px;
+	}
+
+	.search-bar._Skins_SearchHome.mc-component
+	{
+		margin-top: 0;
+		width: 100%;
+	}
+
+	.top-bar .search
+	{
+		float: right;
+		max-width: 266px;
+		order: 3;
+		margin: 0;
+	}
 }
 

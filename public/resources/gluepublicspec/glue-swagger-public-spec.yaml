@@ -6,153 +6,152 @@ info:
         name: MIT
 servers:
     -
-        url: http://spryker-vagrant:10001
-        
+        url: http://spryker-vagrant:10001/
 paths:
     /abstract-products/{sku}/abstract-product-availabilities:
         get:
-            summary: 'Retrieves abstract product availability by the given SKU'
+            summary: 'Retrieve Abstract product availabilities data for given sku.'
             tags:
                 - abstract-product-availabilities
             parameters:
               - name: sku
                 in: path
                 required: true
-                description: 'SKU of the abstract product'
+                description: 'Sku of an abstract product'
                 schema:
                   type: string
             responses:
                 200:
-                    description: 'Returns availability of an abstract product with the given SKU.'
+                    description: 'Expected response to a valid request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestAbstractProductAvailabilityResponse'
                 400:
-                    description: 'Product SKU is not specified or incorrect'
+                    description: 'Abstract product sku is not specified'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 404:
-                    description: 'There is no availability data for a product with the given SKU'
+                    description: 'Abstract product availability is not found'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
     /abstract-products/{sku}/abstract-product-image-sets:
         get:
-            summary: 'Retrieves image sets for an abstract product'
+            summary: 'Retrieve abstract product`s image sets.'
             tags:
                 - abstract-product-image-sets
             parameters:
               - name: sku
                 in: path
                 required: true
-                description: 'SKU of the abstract product'
+                description: sku of an abstract product
                 schema:
                   type: string
             responses:
                 200:
-                    description: 'Returns image sets for an abstract product with the given SKU'
+                    description: 'Expected response to a valid request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestProductImageSetsResponse'
                 400:
-                    description: 'Product SKU is not specified or incorrect'
+                    description: 'Abstract product sku is not specified'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 404:
-                    description: 'There are no image sets for a product with the given SKU'
+                    description: 'Abstract product image sets are not found'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
     /abstract-products/{sku}/abstract-product-prices:
         get:
-            summary: 'Retrieves abstract product prices by the given SKU'
+            summary: 'Retrieve prices of abstract products.'
             tags:
                 - abstract-product-prices
             parameters:
               - name: sku
                 in: path
                 required: true
-                description: 'SKU of the abstract product'
+                description: sku of abstract product
                 schema:
                   type: string
             responses:
                 200:
-                    description: 'Returns the prices of an abstract product with the given SKU'
+                    description: 'Expected response to a valid request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestProductPricesResponse'
                 400:
-                    description: 'Product SKU is not specified or incorrect'
+                    description: 'Abstract product sku is not specified or incorrect'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 404:
-                    description: 'There are no prices for a product with the given SKU'
+                    description: 'Abstract product prices are not found'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
     /abstract-products/{sku}:
         get:
-            summary: 'Gets abstract product data'
+            summary: 'Retreve product abstract data'
             tags:
                 - abstract-products
             parameters:
               - name: sku
                 in: path
                 required: true
-                description: 'SKU of the abstract product'
+                description: sku of an abstract product
                 schema:
                   type: string
             responses:
                 200:
-                    description: 'Returns a information on the requested abstract product in JSON format'
+                    description: 'Expected response to a valid request'
                     content:
                         application/json:
                             schema:
                                $ref: '#/components/schemas/RestAbstractProductsResponse'
                 400:
-                    description: 'Product SKU is not specified or incorrect'
+                    description: 'Abstract product identifier is missing'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 404:
-                    description: 'There are no abstract products with the given SKU'
+                    description: 'Abstract product is not found'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -177,7 +176,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestTaxSetsResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -208,7 +207,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -240,9 +239,9 @@ paths:
                         schema:
                             $ref: '#/components/schemas/RestAddressesResponse'
             security:
-              - BearerAuth: []    
+              - BearerAuth: []
             responses:
-                201:
+                200:
                     description: 'Expected response to a valid request'
                     content:
                         application/json:
@@ -267,11 +266,11 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RestErrorMessage'    
+                                $ref: '#/components/schemas/RestErrorMessage'
         get:
             summary: 'Retrieve one customer address.'
             tags:
@@ -306,7 +305,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -341,7 +340,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -386,7 +385,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -443,7 +442,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -477,7 +476,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -505,7 +504,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -525,7 +524,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestCartsListResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -557,7 +556,230 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    '/guest-carts/{guestCartId}':
+        get:
+            summary: 'Get guest cart by UUID'
+            tags:
+                - guest-carts
+            parameters:
+                -
+                    name: guestCartId
+                    in: path
+                    required: true
+                    description: 'Id of guest cart.'
+                    schema:
+                        type: string
+                -
+                    name: X-Anonymous-Customer-Unique-Id
+                    in: header
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCartsResponse'
+                404:
+                    description: 'Cart with given uuid not found.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    /guest-carts:
+        get:
+            summary: 'Get guest cart'
+            tags:
+                - guest-carts
+            parameters:
+                -
+                    name: X-Anonymous-Customer-Unique-Id
+                    in: header
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCartsResponse'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    '/guest-cart-items':
+        post:
+            summary: 'Create guest cart items'
+            tags:
+                - guest-cart-items
+            parameters:
+                -
+                    name: X-Anonymous-Customer-Unique-Id
+                    in: header
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                description: 'Expected request body.'
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RestCartItemsRequest'
+            responses:
+                201:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCartsResponse'
+                404:
+                    description: 'Cart with given uuid not found.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                422:
+                    description: 'Product "{sku}" not found'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    '/guest-carts/{guestCartId}/guest-cart-items/{guestCartItemId}':
+        patch:
+            summary: 'Update guest cart items'
+            tags:
+                - guest-cart-items
+            parameters:
+                -
+                    name: guestCartId
+                    in: path
+                    required: true
+                    description: 'Id of guest cart.'
+                    schema:
+                        type: string
+                -
+                    name: guestCartItemId
+                    in: path
+                    required: true
+                    description: 'Id of guest cart item.'
+                    schema:
+                        type: string
+                -
+                    name: X-Anonymous-Customer-Unique-Id
+                    in: header
+                    required: true
+                    schema:
+                        type: string
+            requestBody:
+                description: 'Expected request body.'
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RestCartItemsPatchRequest'
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCartsResponse'
+                400:
+                    description: 'Cart uuid or item group key is not specified.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                404:
+                    description: 'Item with the given group key not found in the cart.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                422:
+                    description: 'Product "{sku}" not found'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+        delete:
+            summary: 'Delete guest cart items'
+            tags:
+                - guest-cart-items
+            parameters:
+                -
+                    name: guestCartId
+                    in: path
+                    required: true
+                    description: 'Id of guest cart.'
+                    schema:
+                        type: string
+                -
+                    name: guestCartItemId
+                    in: path
+                    required: true
+                    description: 'Id of guest cart item.'
+                    schema:
+                        type: string
+                -
+                    name: X-Anonymous-Customer-Unique-Id
+                    in: header
+                    required: true
+                    schema:
+                        type: string
+            responses:
+                204:
+                    description: 'Expected response to a valid request.'
+                400:
+                    description: 'Cart uuid or item group key is not specified.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                404:
+                    description: 'Item with the given group key not found in the cart.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                422:
+                    description: 'Cart item could not be deleted.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
                     content:
                         application/json:
                             schema:
@@ -592,7 +814,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -627,7 +849,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -652,7 +874,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestCategoryNodeResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -670,7 +892,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestCategoryTreesResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -695,7 +917,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestConcreteProductAvailabilityResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -720,7 +942,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestProductImageSetsResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -745,7 +967,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestProductPricesResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -782,7 +1004,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -827,7 +1049,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -853,7 +1075,7 @@ paths:
             security:
               - BearerAuth: []
             responses:
-                202:
+                200:
                     description: 'Expected response to a valid request'
                     content:
                         application/json:
@@ -884,7 +1106,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -924,7 +1146,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -963,7 +1185,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1010,7 +1232,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1043,7 +1265,7 @@ paths:
             security:
               - BearerAuth: []
             responses:
-                202:
+                200:
                     description: 'Expected response to a valid request'
                     content:
                         application/json:
@@ -1056,7 +1278,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1094,7 +1316,60 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    /orders:
+        get:
+            summary: 'Get collection of orders'
+            tags:
+            - orders
+            security:
+            - BearerAuth: []
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestOrderListResponse'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    '/orders/{orderId}':
+        get:
+            summary: 'Get order by reference'
+            tags:
+            - orders
+            parameters:
+            - name: orderId
+              in: path
+              required: true
+              description: 'Id of order.'
+              schema:
+                  type: string
+            security:
+            - BearerAuth: []
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestOrderResponse'
+                404:
+                    description: 'Can not find order by the given order reference'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
                     content:
                         application/json:
                             schema:
@@ -1125,7 +1400,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1143,7 +1418,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestStoresResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1191,7 +1466,7 @@ paths:
                                 $ref: '#/components/schemas/RestErrorMessage'
 
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1234,7 +1509,7 @@ paths:
                                 $ref: '#/components/schemas/RestErrorMessage'
 
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1251,7 +1526,7 @@ paths:
                 description: Id of a wishlist
                 schema:
                   type: string
-                  format: uuid                
+                  format: uuid
             requestBody:
                 description: Update customer`s wishlist
                 required: true
@@ -1262,7 +1537,7 @@ paths:
             security:
               - BearerAuth: []
             responses:
-                202:
+                200:
                     description: 'Expected response to a valid request'
                     content:
                         application/json:
@@ -1287,11 +1562,11 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/RestErrorMessage'    
+                                $ref: '#/components/schemas/RestErrorMessage'
         get:
             summary: 'Retrieve wishlist data.'
             tags:
@@ -1320,7 +1595,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1349,7 +1624,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1369,7 +1644,7 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestWishlistsListResponse'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1407,80 +1682,61 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
-    /customer-password-forgot:
+    /customer-forgotten-password:
         post:
-            summary: 'Password forgot request.'
+            summary: 'Password forgotten request, Send password restore mail for registred customers.'
             tags:
-                - password-forgot
+                - forgotten-password
             requestBody:
-                description: Create restore password request
+                description: 'Forgotten password request.'
                 required: true
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/RestPasswordForgotRequest'
+                            $ref: '#/components/schemas/RestCustomerForgottenPasswordRequest'
             responses:
-                201:
+                204:
                     description: 'Expected response to a valid request'
-                404:
-                    description: 'Email not found'
+                422:
+                    description: 'Unprocessable Entity'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
-    /customer-password-restore/{restorePasswordKey}:
-        post:
-            summary: 'Password restore request.'
+    /customer-restore-password:
+        patch:
+            summary: 'Password restore request. Set up new customer password.'
             tags:
-                - password-restore
-            parameters:
-              - name: restorePasswordKey
-                in: path
-                required: true
-                description: Restore password key
-                schema:
-                  type: string
+                - restore-password
             requestBody:
-                description: Restore password
+                description: 'Restore password request.'
                 required: true
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/RestPasswordRestoreRequest'
+                            $ref: '#/components/schemas/RestCustomerRestorePasswordRequest'
             responses:
-                201:
+                204:
                     description: 'Expected response to a valid request'
-                400:
-                    description: 'Passwords don`t match'
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/RestErrorMessage'
-                404:
-                    description: 'Invalid Restore password key'
-                    content:
-                        application/json:
-                            schema:
-                                $ref: '#/components/schemas/RestErrorMessage'
-                406:
-                    description: 'Invalid password.'
+                422:
+                    description: 'Unprocessable entity.'
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
-                    description: 'Bad request'
+                    description: 'Expected response to a bad request'
                     content:
                         application/json:
                             schema:
@@ -1500,7 +1756,7 @@ paths:
             security:
               - BearerAuth: []
             responses:
-                202:
+                204:
                     description: 'Expected response to a valid request'
                 400:
                     description: 'Passwords don`t match'
@@ -1527,7 +1783,106 @@ paths:
                             schema:
                                 $ref: '#/components/schemas/RestErrorMessage'
                 default:
+                    description: 'Expected response to a bad request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    /product-labels/{key}:
+        get:
+            summary: 'Retreve product label data.'
+            tags:
+                - product-labels
+            parameters:
+              - name: key
+                in: path
+                required: true
+                description: 'Key of product label.'
+                schema:
+                  type: string
+            responses:
+                200:
+                    description: 'Expected response to a valid request'
+                    content:
+                        application/json:
+                            schema:
+                               $ref: '#/components/schemas/RestProductLabelsResponse'
+                400:
                     description: 'Bad request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                404:
+                    description: 'Product label is not found'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    /checkout-data:
+        post:
+            summary: 'Get checkout data.'
+            tags:
+                - checkout
+            requestBody:
+                description: 'Get checkout data filtered based on the input.'
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RestCheckoutRequest'
+            responses:
+                200:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCheckoutDataResponse'
+                500:
+                    description: 'Internal server error.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+    /checkout:
+        post:
+            summary: 'Place order.'
+            tags:
+                - checkout
+            requestBody:
+                description: 'Place order with the passed quote, addresses and shipping and payment methods.'
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RestCheckoutRequest'
+            responses:
+                201:
+                    description: 'Expected response to a valid request.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestCheckoutResponse'
+                500:
+                    description: 'Internal server error.'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/RestErrorMessage'
+                default:
+                    description: 'Expected response to a bad request.'
                     content:
                         application/json:
                             schema:
@@ -1551,7 +1906,7 @@ components:
                     items: {}
                 superAttributesDefinition:
                     type: array
-                    items: 
+                    items:
                       type: string
                 attributeMap:
                     type: object
@@ -1574,7 +1929,7 @@ components:
                     type: object
                 superAttributesDefinition:
                     type: array
-                    items: 
+                    items:
                         type: string
                 metaTitle:
                     type: string
@@ -1697,13 +2052,13 @@ components:
                     items:
                         type: object
                         properties:
-                            abstract_sku: 
+                            abstract_sku:
                                 type: string
-                            abstract_name: 
+                            abstract_name:
                                 type: string
                             price:
                                 type: integer
-                            images: 
+                            images:
                                 type: array
                                 items:
                                     type: object
@@ -1717,7 +2072,7 @@ components:
                     items:
                         type: object
                         properties:
-                            name: 
+                            name:
                                 type: string
                 cmsPages:
                     type: array
@@ -1795,6 +2150,8 @@ components:
                     type: string
                 lastName:
                     type: string
+                email:
+                    type: string
                 gender:
                     type: string
                 dateOfBirth:
@@ -1837,7 +2194,7 @@ components:
             properties:
                 prices:
                     type: array
-                    items: 
+                    items:
                         $ref: '#/components/schemas/RestProductPrice'
         RestProductPrice:
             properties:
@@ -1851,7 +2208,7 @@ components:
                     $ref: '#/components/schemas/RestCartsRequestData'
         RestCartsRequestData:
             properties:
-                type: 
+                type:
                     type: string
                 attributes:
                     $ref: '#/components/schemas/RestCartsRequestAttributes'
@@ -1869,6 +2226,10 @@ components:
                         $ref: '#/components/schemas/RestCartsDiscounts'
                 totals:
                     $ref: '#/components/schemas/RestCartsTotals'
+                name:
+                    type: string
+                isDefault:
+                    type: boolean
         RestCartsRequestAttributes:
             properties:
                 priceMode:
@@ -2095,13 +2456,15 @@ components:
             properties:
                 refreshToken:
                     type: string
-        RestPasswordForgotAttributes:
+        RestCustomerForgottenPasswordAttributes:
             properties:
                 email:
                     type: string
-        RestPasswordRestoreAttributes:
+        RestCustomerRestorePasswordAttributes:
             properties:
-                newPassword:
+                restorePasswordKey:
+                    type: string
+                password:
                     type: string
                 confirmPassword:
                     type: string
@@ -2181,6 +2544,10 @@ components:
                     $ref: '#/components/schemas/AbstractProductsRestAttributes'
                 links:
                     $ref: '#/components/schemas/RestLinks'
+                relationships:
+                  properties:
+                      product-labels:
+                          $ref: '#/components/schemas/RestProductLabelsRelationships'
         RestConcreteProductsResponse:
             properties:
                 data:
@@ -2273,13 +2640,13 @@ components:
                     $ref: '#/components/schemas/RestCartsRelationships'
         RestCartsRelationships:
             properties:
-                items: 
+                items:
                     type: array
-                    items: 
+                    items:
                         $ref: '#/components/schemas/RestCartsItemsRelationshipData'
         RestCartsItemsRelationshipData:
             properties:
-                id: 
+                id:
                     type: integer
                 type:
                     type: string
@@ -2382,7 +2749,7 @@ components:
                 type:
                     type: string
                 id:
-                    type: string                    
+                    type: string
                 attributes:
                     $ref: '#/components/schemas/RestCustomersAttributes'
                 links:
@@ -2459,16 +2826,16 @@ components:
                     $ref: '#/components/schemas/RestLinks'
         RestWishlistRelationships:
             properties:
-                wishlist-items: 
+                wishlist-items:
                     type: array
-                    items: 
+                    items:
                         $ref: '#/components/schemas/RestWishlistItemsRelationshipData'
         RestWishlistItemsRelationshipData:
             properties:
-                id: 
+                id:
                     type: integer
                 type:
-                    type: string                    
+                    type: string
         RestWishlistItemRequest:
             properties:
                 data:
@@ -2523,26 +2890,26 @@ components:
                     type: string
                 attributes:
                     $ref: '#/components/schemas/RestWishlistsRequestAttributes'
-        RestPasswordForgotRequest:
+        RestCustomerForgottenPasswordRequest:
             properties:
                 data:
-                    $ref: '#/components/schemas/RestPasswordForgotRequestData'
-        RestPasswordForgotRequestData:
+                    $ref: '#/components/schemas/RestCustomerForgottenPasswordRequestData'
+        RestCustomerForgottenPasswordRequestData:
             properties:
                 type:
                     type: string
                 attributes:
-                    $ref: '#/components/schemas/RestPasswordForgotAttributes'
-        RestPasswordRestoreRequest:
+                    $ref: '#/components/schemas/RestCustomerForgottenPasswordAttributes'
+        RestCustomerRestorePasswordRequest:
             properties:
                 data:
-                    $ref: '#/components/schemas/RestPasswordRestoreRequestData'
-        RestPasswordRestoreRequestData:
+                    $ref: '#/components/schemas/RestCustomerRestorePasswordRequestData'
+        RestCustomerRestorePasswordRequestData:
             properties:
                 type:
                     type: string
                 attributes:
-                    $ref: '#/components/schemas/RestPasswordRestoreAttributes'
+                    $ref: '#/components/schemas/RestCustomerRestorePasswordAttributes'
         RestCustomerPasswordRequest:
             properties:
                 data:
@@ -2553,7 +2920,433 @@ components:
                     type: string
                 attributes:
                     $ref: '#/components/schemas/RestCustomerPasswordAttributes'
+        RestCalculatedDiscount:
+            properties:
+                unitAmount:
+                    type: integer
+                sumAmount:
+                    type: integer
+                displayName:
+                    type: string
+                description:
+                    type: string
+                voucherCode:
+                    type: string
+                quantity:
+                    type: integer
+        RestOrderAddress:
+            properties:
+                salutation:
+                    type: string
+                firstName:
+                    type: string
+                middleName:
+                    type: string
+                lastName:
+                    type: string
+                address1:
+                    type: string
+                address2:
+                    type: string
+                address3:
+                    type: string
+                company:
+                    type: string
+                city:
+                    type: string
+                zipCode:
+                    type: string
+                poBox:
+                    type: string
+                phone:
+                    type: string
+                cellPhone:
+                    type: string
+                description:
+                    type: string
+                comment:
+                    type: string
+                email:
+                    type: string
+                isBilling:
+                    type: boolean
+                isShipping:
+                    type: boolean
+        RestOrderAttributes:
+            properties:
+                createdAt:
+                    type: string
+                totals:
+                    $ref: '#/components/schemas/RestOrderTotalsAttributes'
+                currencyIsoCode:
+                    type: string
+                items:
+                    items:
+                        $ref: '#/components/schemas/RestOrderItemsAttributes'
+                expenses:
+                    items:
+                        $ref: '#/components/schemas/RestOrderExpensesAttributes'
+                billingAddress:
+                    $ref: '#/components/schemas/RestOrderAddress'
+                shippingAddress:
+                    $ref: '#/components/schemas/RestOrderAddress'
+                priceMode:
+                    type: string
+                payments:
+                    items:
+                        $ref: '#/components/schemas/RestOrderPayment'
+                calculatedDiscounts:
+                    items:
+                        $ref: '#/components/schemas/RestCalculatedDiscount'
+        RestOrderListResponse:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestOrderListResponseData'
+                links:
+                    $ref: '#/components/schemas/RestLinks'
+        RestOrderListResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestOrderListDetailsAttributes'
+                links:
+                    $ref: '#/components/schemas/RestLinks'
+        RestOrderListDetailsAttributes:
+            properties:
+                createdAt:
+                    type: string
+                totals:
+                    $ref: '#/components/schemas/RestOrderTotalsAttributes'
+                currencyIsoCode:
+                    type: string
+                items:
+                    items:
+                        $ref: '#/components/schemas/RestOrderItemsAttributes'
+                expenses:
+                    items:
+                        $ref: '#/components/schemas/RestOrderExpensesAttributes'
+        RestOrderResponse:
+            properties:
+                data:
+                    items:
+                        $ref: '#/components/schemas/RestOrderResponseData'
+                links:
+                    $ref: '#/components/schemas/RestLinks'
+        RestOrderResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestOrderAttributes'
+                links:
+                    $ref: '#/components/schemas/RestLinks'
+        RestOrderExpensesAttributes:
+            properties:
+                type:
+                    type: string
+                name:
+                    type: string
+                sumPrice:
+                    type: integer
+                unitGrossPrice:
+                    type: integer
+                sumGrossPrice:
+                    type: integer
+                taxRate:
+                    type: number
+                unitNetPrice:
+                    type: integer
+                sumNetPrice:
+                    type: integer
+                canceledAmount:
+                    type: integer
+                unitDiscountAmountAggregation:
+                    type: integer
+                sumDiscountAmountAggregation:
+                    type: integer
+                unitTaxAmount:
+                    type: integer
+                sumTaxAmount:
+                    type: integer
+                unitPriceToPayAggregation:
+                    type: integer
+                sumPriceToPayAggregation:
+                    type: integer
+                taxAmountAfterCancellation:
+                    type: integer
+        RestOrderItemMetadata:
+            properties:
+                superAttributes:
+                    type: array
+                image:
+                    type: string
+        RestOrderItemsAttributes:
+            properties:
+                name:
+                    type: string
+                sku:
+                    type: string
+                sumPrice:
+                    type: integer
+                sumPriceToPayAggregation:
+                    type: integer
+                quantity:
+                    type: integer
+                metadata:
+                    $ref: '#/components/schemas/RestOrderItemMetadata'
+                calculatedDiscounts:
+                    items:
+                        $ref: '#/components/schemas/RestCalculatedDiscount'
+        RestOrderPayment:
+            properties:
+                amount:
+                    type: integer
+                paymentProvider:
+                    type: string
+                paymentMethod:
+                    type: string
+        RestOrderTotalsAttributes:
+            properties:
+                expenseTotal:
+                    type: integer
+                discountTotal:
+                    type: integer
+                taxTotal:
+                    type: integer
+                subtotal:
+                    type: integer
+                grandTotal:
+                    type: integer
+                canceledTotal:
+                    type: integer
+        RestCartItemsRequest:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestCartItemsRequestData'
+        RestCartItemsRequestData:
+            properties:
+                type:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestCartItemsRequestAttributes'
+        RestCartItemsRequestAttributes:
+            properties:
+                sku:
+                    type: string
+                quantity:
+                    type: integer
+            required:
+                - sku
+                - quantity
+        RestCartItemsPatchRequest:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestCartItemsPatchRequestData'
+        RestCartItemsPatchRequestData:
+            properties:
+                type:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestCartItemsPatchRequestAttributes'
+        RestCartItemsPatchRequestAttributes:
+            properties:
+                quantity:
+                    type: integer
+            required:
+                - quantity
+        RestCheckoutRequest:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestCheckoutRequestData'
+        RestCheckoutRequestData:
+            properties:
+                type:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestCheckoutRequestAttributes'
+        RestCheckoutRequestAttributes:
+            properties:
+                customer:
+                    $ref: '#/components/schemas/RestCustomer'
+                idCart:
+                    type: string
+                billingAddress:
+                    $ref: '#/components/schemas/RestAddress'
+                shippingAddress:
+                    $ref: '#/components/schemas/RestAddress'
+                payments:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestPayment'
+                shipping:
+                    $ref: '#/components/schemas/RestShipment'
+        RestCustomer:
+            properties:
+                email:
+                    type: string
+                salutation:
+                    type: string
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+        RestAddress:
+            properties:
+                id:
+                    type: string
+                salutation:
+                    type: string
+                firstName:
+                    type: string
+                lastName:
+                    type: string
+                address1:
+                    type: string
+                address2:
+                    type: string
+                address3:
+                    type: string
+                zipCode:
+                    type: string
+                city:
+                    type: string
+                country:
+                    type: string
+                company:
+                    type: string
+                phone:
+                    type: string
+                iso2Code:
+                    type: string
+        RestPayment:
+            properties:
+                paymentProviderName:
+                    type: string
+                paymentMethodName:
+                    type: string
+        RestShipment:
+            properties:
+                idShipmentMethod:
+                    type: integer
+        RestCheckoutDataResponse:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestCheckoutDataResponseData'
+        RestCheckoutDataResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestCheckoutDataAttributes'
+        RestCheckoutResponse:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestCheckoutResponseData'
+        RestCheckoutResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestCheckoutResponseAttributes'
+        RestCheckoutDataAttributes:
+            properties:
+                addresses:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestAddress'
+                paymentProviders:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestPaymentProviderAttributes'
+                shipmentMethods:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestShipmentMethodAttributes'
+        RestPaymentProviderAttributes:
+            properties:
+                paymentProviderName:
+                    type: string
+                paymentMethods:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestPaymentMethodAttributes'
+        RestPaymentMethodAttributes:
+            properties:
+                paymentMethodName:
+                    type: string
+                requiredRequestData:
+                    type: object
+        RestShipmentMethodAttributes:
+            properties:
+                carrierName:
+                    type: string
+                id:
+                    type: string
+                name:
+                    type: string
+                price:
+                    type: integer
+                taxRate:
+                    type: number
+                shipmentDeliveryTime:
+                    type: string
+        RestCheckoutResponseAttributes:
+            properties:
+                orderReference:
+                    type: string
+                relationships:
+                    properties:
+                        orders:
+                            $ref: '#/components/schemas/RestOrderResponse'
         RestLinks:
             properties:
-                self: 
+                self:
                     type: string
+        RestProductLabelsResponse:
+            properties:
+                data:
+                    $ref: '#/components/schemas/RestProductLabelsResponseData'
+        RestProductLabelsResponseData:
+            properties:
+                type:
+                    type: string
+                id:
+                    type: string
+                attributes:
+                    $ref: '#/components/schemas/RestProductLabelsAttributes'
+                links:
+                    $ref: '#/components/schemas/RestLinks'
+        RestProductLabelsAttributes:
+            properties:
+                name:
+                    type: string
+                isExclusive:
+                    type: boolean
+                position:
+                    type: number
+                frontEndReference:
+                    type: string
+        RestProductLabelsRelationships:
+            properties:
+                data:
+                    type: array
+                    items:
+                        $ref: '#/components/schemas/RestProductLabelsRelationshipsData'
+        RestProductLabelsRelationshipsData:
+            properties:
+                id:
+                    type: string
+                type:
+                    type: string
+ 
