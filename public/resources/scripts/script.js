@@ -229,7 +229,7 @@ var asideNavCloseButton = new AsideNavCloser('.js-off-canvas-exit', 'offCanvas')
 
 function ToggleSearch() {
 
-    this.search = document.querySelector('.main-section .search');
+    this.search = document.querySelector('.home-page .main-section .search') || document.querySelector('.top-bar .search') || document.querySelector('.searchTopic .search');
     this.container = document.querySelector('.title-bar-section .menu-icon-container');
     this.toggleButton = document.createElement('span');
     this.toggleOverlay = document.createElement('div');
@@ -360,6 +360,7 @@ var flHandler = new FeatureLinksHandler();
  function HomeSliderIniter () {
     this.init = function () {
         var sliderContainer = document.getElementById('slider-home-page');
+        if(sliderContainer == null) return;
         $(sliderContainer).slick({
             infinite: true,
             dots: true,
@@ -386,4 +387,3 @@ document.addEventListener("DOMContentLoaded", function (){
     flHandler.init();
     sliderInit.init();
 } );
-
