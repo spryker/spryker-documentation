@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This article describes the process of installing and enabling the GLUE API infrastructure and explains the details of integrating the REST API resources." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>API Installation and Configuration | Spryker</title>
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <link href="resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="jac1KxeIS0KUg-YDGMJ1rw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="jac1KxeIS0KUg-YDGMJ1rw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer">
+                                                    <h1>Glue API Installation and Configuration</h1>
+                                                    <p>Functionally, Spryker API can be split into 2 parts: API infrastructure (GLUE) and feature modules. The infrastructure provides the general functionality of the API layer, while each feature module implements a specific resource or resource relation.</p>
+                                                    <p>To integrate GLUE API in your project, you need to:</p>
+                                                    <ol>
+                                                        <li value="1"><a href="#1.">Install GLUE</a>
+                                                        </li>
+                                                        <li value="2"><a href="#2.">Enable GLUE</a>
+                                                        </li>
+                                                    </ol>
+                                                    <h2><a name="1."></a>1. Installing GLUE</h2>
+                                                    <p>GLUE infrastructure is shipped with the following modules:</p>
+                                                    <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Module</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><a href="https://github.com/spryker/glue-application">GlueApplication</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Provides API infrastructure for Spryker features.</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><a href="https://github.com/spryker/glue-application-extension">GlueApplicationExtension</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Provides extension point/plugin interfaces for the Glue Application module.</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><a href="https://github.com/spryker/auth-rest-api">AuthRestApi </a><i>(optional)</i>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Provides API endpoints to obtain an authentication token to use for subsequent requests.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>To install it, you need to do the following:</p>
+                                                    <p class="note">Spryker Shop Suite contains GLUE out of the box. If your project has the latest Shop Suite master merged, you can proceed directly to step <a href="#2.">2. Enabling GLUE</a>.</p>
+                                                    <p style="font-weight: bold;">1. Install the necessary modules using composer:</p><pre><code class="language-PHP line-numbers">composer update "spryker/*" "spryker-shop/*" --update-with-dependencies
+composer require spryker/glue-application --update-with-dependencies</code></pre>
+                                                    <p style="font-weight: bold;">2. Add a Front Controller for GLUE:</p>
+                                                    <ul>
+                                                        <li value="1">In the directory where your code is installed, locate directory <b>public</b> and create subdirectory <b>Glue</b> in it.</li>
+                                                        <li value="2">Create file <b>index.php</b> in the <i>Glue</i> directory with the following content:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">&lt;?php
+use Pyz\Glue\GlueApplication\Bootstrap\GlueBootstrap;
+use Spryker\Shared\Config\Application\Environment;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
+ 
+define('APPLICATION', 'GLUE');
+defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', realpath(__DIR__ . '/../..'));
+ 
+require_once APPLICATION_ROOT_DIR . '/vendor/autoload.php';
+ 
+Environment::initialize();
+ 
+$errorHandlerEnvironment = new ErrorHandlerEnvironment();
+$errorHandlerEnvironment-&gt;initialize();
+ 
+$bootstrap = new GlueBootstrap();
+$bootstrap
+    -&gt;boot()
+    -&gt;run();</code></pre>
+                                                    <p style="font-weight: bold;">3. Create GLUE application bootstrap:</p>
+                                                    <ul>
+                                                        <li value="1">In the <i>src/Pyz</i> directory of your Spryker code installation, create folder <b>Glue</b>, then create subfolder <b>GlueApplication/Bootstrap</b> in it.</li>
+                                                        <li value="2">In the <i>GlueApplication/Bootstrap</i> folder, create file <b>GlueBootstrap.php</b> with the following content:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication\Bootstrap;
+ 
+use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Spryker\Glue\GlueApplication\Bootstrap\AbstractGlueBootstrap;
+use Spryker\Glue\GlueApplication\Plugin\Rest\GlueServiceProviderPlugin;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueApplicationServiceProvider;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueResourceBuilderService;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueRoutingServiceProvider;
+ 
+class GlueBootstrap extends AbstractGlueBootstrap
+{
+    /**
+     * @return void
+     */
+    protected function registerServiceProviders(): void
+    {
+        $this-&gt;application
+            -&gt;register(new GlueResourceBuilderService())
+            -&gt;register(new GlueApplicationServiceProvider())
+            -&gt;register(new SessionServiceProvider())
+            -&gt;register(new ServiceControllerServiceProvider())
+            -&gt;register(new GlueServiceProviderPlugin())
+            -&gt;register(new GlueRoutingServiceProvider());
+    }
+}</code></pre>
+                                                    <p style="font-weight: bold;">4. Create GLUE dependency provider:</p>
+                                                    <p>In the <i>src/Pyz/GlueApplication</i> directory of your Spryker code installation, create file <b>GlueApplicationDependencyProvider.php</b> and add the following code:</p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function getResourceRoutePlugins(): array
+    {
+        return [
+        ];
+    }
+ 
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ValidateRestRequestPluginInterface[]
+     */
+    protected function getValidateRestRequestPlugins(): array
+    {
+        return [
+        ];
+    }
+ 
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+     */
+    protected function getFormatResponseHeadersPlugins(): array
+    {
+        return [
+        ];
+    }
+ 
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+     */
+    protected function getControllerBeforeActionPlugins(): array
+    {
+        return [
+        ];
+    }
+}</code></pre>
+                                                    <p style="font-weight: bold;">5. Add GLUE application constants to your environment</p>
+                                                    <p>Finally, you need to add GLUE application constants to your environment configuration file. The following is an example of the development environment:</p><pre><code class="language-PHP line-numbers">use Spryker\Shared\GlueApplication\GlueApplicationConstants;
+...
+// ----------- Glue Application
+$config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = '&lt;your_glue_domain&gt;';
+$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;</code></pre>
+                                                    <p>where &lt;<i>your_glue_domain</i>&gt; is the URL domain you want to use for GLUE. If you want to use the default domain of the Spryker shop, you can leave it empty.</p>
+                                                    <p class="tip">If you want to enable GLUE application debugging, set the GLUE_APPLICATION_REST_DEBUG variable to <b>true</b>.</p>
+                                                    <p style="font-weight: bold;">6. Enable customer authentication via OAuth tokens (optional)</p>
+                                                    <p>GLUE provides the possibility to authenticate customer users with the help of OAuth tokens. If you are going to use customer authentication, you will also need to perform the following additional steps:</p>
+                                                    <ul>
+                                                        <li value="1">Install the <i>AuthRestApi</i> and <i>OauthCustomerConnector</i> modules:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">composer require spryker/auth-rest-api spryker/oauth-customer-connector --update-with-dependencies</code></pre>
+                                                    <ul>
+                                                        <li value="1">Add OAuth plugins to the GLUE dependency provider. To do this, open file <i>src/Pyz/GlueApplication/GlueApplicationDependencyProvider.php</i> and make the following changes:<br />Add <b>use</b> closes for the required OAuth plugins:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">...
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\AuthRestApi\Plugin\AccessTokensResourceRoutePlugin;
+use Spryker\Glue\AuthRestApi\Plugin\AccessTokenValidatorPlugin;
+use Spryker\Glue\AuthRestApi\Plugin\FormatAuthenticationErrorResponseHeadersPlugin;
+use Spryker\Glue\AuthRestApi\Plugin\RefreshTokensResourceRoutePlugin;...</code></pre>
+                                                    <p>Add OAuth resource plugins:</p><pre><code class="language-PHP line-numbers">protected function getResourceRoutePlugins(): array
+{
+    return [
+        new AccessTokensResourceRoutePlugin(),
+        new RefreshTokensResourceRoutePlugin(),
+    ];
+}</code></pre>
+                                                    <p>Add token validation plugin:</p><pre><code class="language-PHP line-numbers">protected function getValidateRestRequestPlugins(): array
+{
+    return [
+        new AccessTokenValidatorPlugin(),
+    ];
+}</code></pre>
+                                                    <p>Add error response plugin:</p><pre><code class="language-PHP line-numbers">protected function getFormatResponseHeadersPlugins(): array
+{
+    return [
+        new FormatAuthenticationErrorResponseHeadersPlugin(),
+    ];
+}</code></pre>
+                                                    <ul>
+                                                        <li value="1">Add OAuth dependency provider. To do this, create file <i>Pyz/Zed/Oauth/OauthDependencyProvider.php</i> as follows:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Oauth;
+ 
+use Spryker\Zed\Oauth\OauthDependencyProvider as SprykerOauthDependencyProvider;
+use Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth\CustomerOauthScopeProviderPlugin;
+use Spryker\Zed\OauthCustomerConnector\Communication\Plugin\Oauth\CustomerOauthUserProviderPlugin;
+ 
+class OauthDependencyProvider extends SprykerOauthDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthUserProviderPluginInterface[]
+     */
+    protected function getUserProviderPlugins(): array
+    {
+        return [
+            new CustomerOauthUserProviderPlugin(),
+        ];
+    }
+ 
+    /**
+     * @return \Spryker\Zed\OauthExtension\Dependency\Plugin\OauthScopeProviderPluginInterface[]
+     */
+    protected function getScopeProviderPlugins(): array
+    {
+        return [
+            new CustomerOauthScopeProviderPlugin(),
+        ];
+    }
+}</code></pre>
+                                                    <ul>
+                                                        <li value="1">Add OAuth public and private keys. For development purposes, you can use the keys supplied with Spryker Shop Suite. In production, you will need your own keys generated per the following instructions: <a href="https://oauth2.thephpleague.com/installation/#generating-public-and-private-keys">Generating public and private keys</a>. The keys need to be placed in the <i>config/Zed</i> directory of your code installation (in the Shop Suite, <i>dev_only_private.key</i> and <i>dev_only_public.key</i> are used).</li>
+                                                        <li value="2">Add OAuth constants to your environment configuration file. In the development environment, you can use the following:</li>
+                                                    </ul><pre><code class="language-PHP line-numbers">use Spryker\Shared\Oauth\OauthConstants;
+...
+// ----------- OAUTH
+$config[OauthConstants::PRIVATE_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_private.key';
+$config[OauthConstants::PUBLIC_KEY_PATH] = 'file://' . APPLICATION_ROOT_DIR . '/config/Zed/dev_only_public.key';
+$config[OauthConstants::ENCRYPTION_KEY] = 'lxZFUEsBCJ2Yb14IF2ygAHI5N4+ZAUXXaSeeJm6+twsUmIen';
+ 
+// ----------- AuthRestApi
+$config[OauthCustomerConnectorConstants::OAUTH_CLIENT_IDENTIFIER] = 'frontend';
+$config[OauthCustomerConnectorConstants::OAUTH_CLIENT_SECRET] = 'abc123';</code></pre>
+                                                    <h2><a name="2."></a>2. Enabling GLUE</h2>
+                                                    <p>To be able to use GLUE in your project, you need to configure a Nginx host to serve REST API requests:</p>
+                                                    <p style="font-weight: bold;">1. Create Nginx VHOST configuration</p><pre><code class="language-PHP line-numbers">sudo nano /etc/nginx/sites-enabled/DE_development_glue</code></pre>
+                                                    <p>In the <i>nano</i> console that opens, paste the following:</p><pre><code class="language-PHP line-numbers">server {
+    # Listener for production/staging - requires external LoadBalancer directing traffic to this port
+    listen 10001;
+  
+    # Listener for testing/development - one host only, doesn't require external LoadBalancer
+    listen 80;
+  
+    server_name ~^glue\\.de\\..+\\.local$;
+  
+    keepalive_timeout 0;
+    access_log  /data/logs/development/glue-access.log extended;
+  
+    root /data/shop/development/current/public/Glue;
+  
+    set $application_env development;
+    set $application_store DE;
+    include "spryker/zed.conf";
+}</code></pre>
+                                                    <p>Restart nginx</p><pre><code class="language-PHP line-numbers">sudo /etc/init.d/nginx restart</code></pre>
+                                                    <p style="font-weight: bold;">2. Change the machine hosts configuration</p><pre><code class="language-PHP line-numbers">sudo nano /etc/hosts</code></pre>
+                                                    <p>add the following line to the end of the file:</p><pre><code class="language-PHP line-numbers">ip glue.de.project-name.local</code></pre>
+                                                    <p>After performing this change, you should be able to access <a href="http://glue.de.project-name.local/">http://glue.de.project-name.local/</a> URL with a 404 error and JSON response indicating that resource is not found.</p>
+                                                    <p>If you are running your project in the Spryker VM, you also need to make changes to the Vagrant file of the virtual machine. To do so:</p>
+                                                    <ol>
+                                                        <li value="1">Open file <tt>~/.vagrant.d/boxes/devvm<b>[version]</b>/0/virtualbox/include/_Vagrantfile</tt>, where <b style="font-style: italic;">[version]</b> is the VM version. On Windows, you can find the .vagrant.d folder in your user profile folder.</li>
+                                                        <li value="2">Find the following line:<br /><pre><code class="language-PHP line-numbers">HOSTS.push [ "www#{host_suffix}.#{store}.#{domain}", "zed#{host_suffix}.#{store}.#{domain}",]</code></pre></li>
+                                                        <li value="3">
+                                                            <p>Change it as follows:<br /><pre><code class="language-PHP line-numbers">HOSTS.push [ "www#{host_suffix}.#{store}.#{domain}", "glue#{host_suffix}.#{store}.#{domain}", "zed#{host_suffix}.#{store}.#{domain}",]</code></pre></p>
+                                                        </li>
+                                                    </ol>
+                                                    <p style="font-weight: bold;">3. Set correct OAuth key permissions</p>
+                                                    <p>If you are using the OAuth module for user authentication, change permissions for the OAuth keys:</p><pre><code class="language-PHP line-numbers">chmod 660 config/Zed/dev_only_public.key
+chmod 660 config/Zed/dev_only_private.key</code></pre>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Module</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/auth-rest-api">AuthRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to obtain an authentication token to use for subsequent requests.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Module</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/customers-rest-api">CustomersRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to manage customers.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Module</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Endpoints Provided</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/products-rest-api">ProductsRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides REST access to products.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><i>/abstract-products
+</i>
+                                                                    <br style="font-style: italic;" /><i>/concrete-products</i>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/product-availabilities-rest-api">ProductAvailabilitiesRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to get abstract and concrete product availability.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><i>/abstract-products/{{sku}}/abstract-product-availabilities
+</i>
+                                                                    <br style="font-style: italic;" /><i>/concrete-products/{{sku}}/concrete-product-availabilities</i>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/products-product-availabilities-resource-relationship">ProductsProductAvailabilitiesResourceRelationship</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides relationship between products (abstract and concrete) and product availabilities resources.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">-</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/product-prices-rest-api">ProductPricesRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to retrieve abstract and concrete product prices.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">/<i>abstract-products/{{sku}}/abstract-product-prices
+</i><br style="font-style: italic;" /><i>/concrete-products/{{sku}}/concrete-product-prices</i></td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/products-product-prices-resource-relationship">ProductsProductPricesResourceRelationship</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides relationship between products (abstract and concrete) and product prices resources.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">-</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/product-tax-sets-rest-api">ProductTaxSetsRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to retrieve product tax sets.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" style="font-style: italic;" data-mc-conditions="General.Hidden Comment">/abstract-products/{{SKU}}/product-tax-sets</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/products-product-tax-sets-resource-relationship">ProductsProductTaxSetsResourceRelationship</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides relationship between abstract products and tax sets resources.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">	-</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/product-prices-rest-api">ProductImageSetsRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Provides API endpoints to retrieve product image sets.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows" data-mc-conditions="General.Hidden Comment"><i>/abstract-products/{{sku}}/abstract-product-image-sets
+</i>
+                                                                    <br style="font-style: italic;" /><i>/concrete-products/{{sku}}/concrete-product-image-sets</i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/stores-rest-api">StoresRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides REST API endpoints to stores.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/catalog-search-rest-api">CatalogSearchRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides REST API endpoints to search products and search suggestions.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/categories-rest-api">CategoriesRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides REST API endpoints to fetch category tree and category nodes by node ID.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/carts-rest-api">CartsRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">Provides REST API endpoints to create, get, delete carts for registered customers (using persistent storage), as well as manage cart items.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Endpoints Provided</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/product-labels-rest-api">ProductLabelsRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">	Provides REST API endpoints for product labels.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><i>/product-labels/{{label-id}}
+						</i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Endpoints Provided</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">CheckoutRestApi</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><![CDATA[	]]></td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">&#160;</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <table style="width: 100%;mc-table-style: url('../../Feature Integration Guides/Glue API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Modules</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Description</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" data-mc-conditions="General.Hidden Comment">Endpoints Provided</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><a href="https://github.com/spryker/customers-rest-api">CustomersRestApi</a>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment">	Provides endpoints that allow you to manage customers.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows" data-mc-conditions="General.Hidden Comment"><i>/customers
+</i>
+                                                                    <br style="font-style: italic;" /><i>/customers/{{customer_id}}
+</i>
+                                                                    <br style="font-style: italic;" /><i>/customers/{{customer_id}}/addresses
+</i>
+                                                                    <br style="font-style: italic;" /><i>/customers/{{customer_id}}/addresses/{{address_id}}</i>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>&#160;</p>
+                                                    <p style="font-style: italic;">Last review date: Dec 24, 2018 </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
