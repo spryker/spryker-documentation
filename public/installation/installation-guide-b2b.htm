@@ -66,24 +66,24 @@
 
 .needs-pie
 {
-	behavior: url('../resources/scripts/PIE-no-motw.htc');
+	behavior: url('../Resources/Scripts/PIE-no-motw.htc');
 }
 
 </style>
         <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <script src="../resources/scripts/custom.modernizr.js">
+        <script src="../Resources/Scripts/custom.modernizr.js">
         </script>
-        <script src="../resources/scripts/jquery.min.js">
+        <script src="../Resources/Scripts/jquery.min.js">
         </script>
-        <script src="../resources/scripts/require.min.js">
+        <script src="../Resources/Scripts/require.min.js">
         </script>
-        <script src="../resources/scripts/require.config.js">
+        <script src="../Resources/Scripts/require.config.js">
         </script>
-        <script src="../resources/scripts/foundation.6.2.3_custom.js">
+        <script src="../Resources/Scripts/foundation.6.2.3_custom.js">
         </script>
-        <script src="../resources/scripts/plugins.min.js">
+        <script src="../Resources/Scripts/plugins.min.js">
         </script>
-        <script src="../resources/scripts/MadCapAll.js">
+        <script src="../Resources/Scripts/MadCapAll.js">
         </script>
     </head>
     <body>
@@ -197,8 +197,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="ZlLo_U1ixE-iAEnjreKLuw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ZlLo_U1ixE-iAEnjreKLuw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="D-Frj3NBg0W40vxl8T0oVA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="D-Frj3NBg0W40vxl8T0oVA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -227,7 +227,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="js-anchorer">
+                                                <div class="js-anchorer main-content">
                                                     <h1>B2B Demo Shop Installation Guide <img src="../resources/images/shoptype/b2b_shop.png" /></h1>
                                                     <p>To install the Demo Shop for B2B implementations, follow the steps below:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Mac OS or Linux, with Development Virtual Machine</a></span>
@@ -246,12 +246,10 @@
                                                             </ul><pre><code class="language-Bash">vagrant plugin install vagrant-vbguest
 vagrant plugin install vagrant-hostmanager</code></pre>
                                                             <h3>2. Install Spryker Virtual Machine</h3>
-                                                            <p>
-					Run the following commands in your favorite shell (e.g. <var>Bash</var>):
-				</p>
+                                                            <p>Run the following commands in your favorite shell (e.g. <var>Bash</var>):</p>
                                                             <p>1. <b>Create the folder in which you want the source code to be placed:</b></p><pre><code class="language-Bash">mkdir devvm
 cd devvm						</code></pre>
-                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.1.0 https://github.com/spryker/devvm/releases/download/v2.1.0/spryker-devvm.box</code></pre>
+                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.2.1 https://github.com/spryker/devvm/releases/download/v2.2.1/spryker-devvm.box</code></pre>
                                                             <p>3. <strong>Update the Vagrantfile</strong>:</p>
                                                             <p>Add hostmanager plugin configuration:</p><pre><code class="language-Bash">mv Vagrantfile Vagrantfile.bak
 awk '/^end/{print "  config.hostmanager.enabled = true\n  config.hostmanager.manage_host = true"}1' Vagrantfile.bak &gt; Vagrantfile</code></pre>
@@ -259,9 +257,9 @@ awk '/^end/{print "  config.hostmanager.enabled = true\n  config.hostmanager.man
                                                             <p>When the VM is built and running, your local copy of the repository will be placed in the <var>project</var> subfolder of the folder where the VM is located (e.g. <var>~/devvm/project</var>). The subfolder will be mounted inside the VM to <var>/data/shop/development/current</var>.</p>
                                                             <h3>3. Install the Shop</h3>
                                                             <p>1. <b>Log into the VM:</b></p><pre><code class="language-Bash">vagrant ssh</code></pre>
-                                                            <p>2. <b>Run the installation commands:</b></p><pre><code class="language-Bash">ulimit -n 65535
-composer install
+                                                            <p>2. <b>Run the installation commands:</b></p><pre><code class="language-Bash">composer install
 vendor/bin/install</code></pre>
+                                                            <div class="note">If you are using a devvm version lower than 2.2.0, run the <i>ulimit -n 65535</i> command at first.</div>
                                                             <p>Executing these steps will install all required dependencies,  and run the installation process. Also, this will install the demo data and export it to <var>Redis</var> and <var>Elasticsearch</var>.</p>
                                                             <p>When the installation process is complete, Spryker Commerce OS is ready to use. It can be accessed via the following links:</p>
                                                             <ul>
@@ -302,11 +300,11 @@ vagrant plugin install vagrant-hostmanager</code></pre>
                                                             </div>
                                                             <p>1. <b>Create the folder in which you want the source code to be placed:</b></p><pre><code class="language-Bash">mkdir devvm
 cd devvm</code></pre>
-                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.1.0 https://github.com/spryker/devvm/releases/download/v2.1.0/spryker-devvm.box</code></pre>
+                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.2.1 https://github.com/spryker/devvm/releases/download/v2.2.1/spryker-devvm.box</code></pre>
                                                             <p>3. <strong>Update the Vagrantfile</strong>:</p>
                                                             <p>Add hostmanager plugin configuration:</p><pre><code class="language-Bash">mv Vagrantfile Vagrantfile.bak
 awk '/^end/{print "  config.hostmanager.enabled = true\n  config.hostmanager.manage_host = true"}1' Vagrantfile.bak &gt; Vagrantfile</code></pre>
-                                                            <p>4. <b>Build and start the virtual machine</b>:</p><pre xml:space="preserve"><code class="language-Bash">VM_SKIP_SF="1" VM_PROJECT=b2b-demo-shop SPRYKER_REPOSITORY="git@github.com:spryker-shop/b2b-demo-shop" vagrant up</code></pre>
+                                                            <p>4. <b><a name="build"></a>Build and start the virtual machine</b>:</p><pre xml:space="preserve"><code class="language-Bash">VM_SKIP_SF="1" VM_PROJECT=b2b-demo-shop SPRYKER_REPOSITORY="git@github.com:spryker-shop/b2b-demo-shop" vagrant up</code></pre>
                                                             <h3>3. Install the Shop</h3>
                                                             <p>1. <b>Log into the VM:</b></p><pre><code class="language-Bash">vagrant ssh</code></pre>
                                                             <p>2. <b>Update network configuration of the VM:</b></p><pre><code class="language-Bash">sudo sed -i "s/eth1/eth1 $(ip -o -4 route show to default | cut -d ' ' -f 5)/g; s/create mask = 0775/create mask = 0777/g; s/directory mask = 0775/directory mask = 0777\n  force user = vagrant\n  force group = vagrant/g"  /etc/samba/smb.conf</code></pre>
@@ -321,9 +319,9 @@ sudo chmod og+rwx .</code></pre>
                                                             <p>7. <b>Connect to the share in Windows. For example, you can enter the following in the address bar of Windows Explorer:</b></p><pre><code class="language-Bash">\\spryker-vagrant\project\current</code></pre>
                                                             <p>In addition to that, you can mount the share as a network drive in your system so that you have it always a available. For example, to mount the project codebase as the <var>s:</var> drive, execute the following in Windows Command Prompt:</p><pre><code class="language-Bash">net use s: \\spryker-vagrant\project\current /persistent:yes</code></pre>
                                                             <p>8. <b>Copy the contents of the <var>project</var> subfolder of the VM folder to the <var>current</var> folder on the share (or to the root of the drive you've mounted).</b></p>
-                                                            <p>9. <b>Run the installation commands:</b></p><pre><code class="language-Bash">ulimit -n 65535
-composer install
+                                                            <p>9. <b>Run the installation commands:</b></p><pre><code class="language-Bash">composer install
 vendor/bin/install</code></pre>
+                                                            <div class="note">If you are using a devvm version lower than 2.2.0, run the <i>ulimit -n 65535</i> command at first.</div>
                                                             <p>Executing these steps will install all required dependencies,  and run the installation process. Also, this will install the demo data and export it to <var>Redis</var> and <var>Elasticsearch</var>.</p>
                                                             <p>When the installation process is complete, Spryker Commerce OS is ready to use. It can be accessed via the following links:</p>
                                                             <ul>
@@ -501,13 +499,13 @@ $config[ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME] = 'de_development_
                                                                 <li value="1">Clone the <a href="https://github.com/spryker-shop/b2b-demo-shop" target="_blank">Store Repository</a>.</li>
                                                                 <li value="2">
                                                                     <p>Run the installation commands inside the project folder:
-                        </p><pre><code class="language-Bash">ulimit -n 65535
-composer install
+                        </p><pre><code class="language-Bash">composer install
 vendor/bin/install</code></pre>
                                                                 </li>
                                                             </ol>
                                                         </div>
                                                     </div>
+                                                    <p>&#160;</p>
                                                     <p><strong>See also</strong>: </p>
                                                     <ul>
                                                         <li value="1"><a href="installation-guide-b2c.htm" class="MCXref xref">B2C Demo Shop Installation Guide </a>
@@ -520,9 +518,9 @@ vendor/bin/install</code></pre>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: November 9th, 2018</i>
-                                                    </p>
                                                     <p>&#160;</p>
+                                                    <p><i>Last review date: January 17th, 2018</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

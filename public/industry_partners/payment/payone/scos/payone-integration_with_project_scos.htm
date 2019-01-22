@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Payment|BS PayOne">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.ShopSuite" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Industry Partners|Payment|BS PayOne">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Integration With Project - Payone</title>
+        <meta name="author" content="" /><title>Integration With Project - Payone </title>
         <script>/* <![CDATA[ */
 			var s = document.createElement("script");
 			s.type = "text/javascript";
@@ -66,24 +66,24 @@
 
 .needs-pie
 {
-	behavior: url('../../../../resources/scripts/PIE-no-motw.htc');
+	behavior: url('../../../../Resources/Scripts/PIE-no-motw.htc');
 }
 
 </style>
         <link href="../../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <script src="../../../../resources/scripts/custom.modernizr.js">
+        <script src="../../../../Resources/Scripts/custom.modernizr.js">
         </script>
-        <script src="../../../../resources/scripts/jquery.min.js">
+        <script src="../../../../Resources/Scripts/jquery.min.js">
         </script>
-        <script src="../../../../resources/scripts/require.min.js">
+        <script src="../../../../Resources/Scripts/require.min.js">
         </script>
-        <script src="../../../../resources/scripts/require.config.js">
+        <script src="../../../../Resources/Scripts/require.config.js">
         </script>
-        <script src="../../../../resources/scripts/foundation.6.2.3_custom.js">
+        <script src="../../../../Resources/Scripts/foundation.6.2.3_custom.js">
         </script>
-        <script src="../../../../resources/scripts/plugins.min.js">
+        <script src="../../../../Resources/Scripts/plugins.min.js">
         </script>
-        <script src="../../../../resources/scripts/MadCapAll.js">
+        <script src="../../../../Resources/Scripts/MadCapAll.js">
         </script>
     </head>
     <body>
@@ -197,8 +197,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="mJNYThA8RUiDBq7aCcyreA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="mJNYThA8RUiDBq7aCcyreA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="AT-4yWcZ9U-4M8g5xgg79w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="AT-4yWcZ9U-4M8g5xgg79w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -227,11 +227,105 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="js-anchorer">
-                                                    <h1>Integration With Project - Payone</h1>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Integration With Project - Payone </h1>
                                                     <ul><b>Objectives:</b><![CDATA[
  ]]><li value="2">Place order with PayPal express checkout.</li><li value="3">Be redirected to summary page of standard checkout.</li><li value="4">Have shipping a method selector on summary page.</li></ul>
                                                     <p>&#160;</p>
+                                                    <h2>Frontend Update</h2>
+                                                    <p>To make JavaScript and CSS styles enabled in the Suite, please update:</p>
+                                                    <p><var>&lt;root&gt;/tsconfig.json</var> in section "include":</p><pre><code class="language-PHP">./vendor/spryker-eco/**/*",</code></pre>
+                                                    <p>Update <var>&lt;root&gt;/frontend/settings.js</var>:</p>
+                                                    <p>add entry to 'paths':</p><pre><code class="language-PHP line-numbers">// eco folders
+eco: {
+    // all modules
+    modules: './vendor/spryker-eco'
+},</code></pre>
+                                                    <p>add one more directory into <var>module.exports.find.componentEntryPoints.dirs</var>:</p><pre><code class="language-PHP">path.join(context, paths.eco.modules)</code></pre>
+                                                    <p>Run <var>npm run yves</var> after applying these changes.</p>
+                                                    <p>Due to the pending update to Suite, you also have to apply Checkout template <var>.../src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</var> update:</p><pre xml:space="preserve"><code class="language-XML line-numbers">{% extends template('page-layout-checkout', 'CheckoutPage') %}
+ 
+{% define data = {
+	backUrl: _view.previousStepUrl,
+	forms: {
+		payment: _view.paymentForm
+	},
+	title: 'checkout.step.payment.title' | trans
+} %}
+ 
+{% block content %}
+	{% embed molecule('form') with {
+		class: 'box',
+		data: {
+			form: data.forms.payment,
+			options: {
+				attr: {
+					id: 'payment-form'
+				}
+			},
+			submit: {
+				enable: true,
+				text: 'checkout.step.summary' | trans
+			},
+			cancel: {
+				enable: true,
+				url: data.backUrl,
+				text: 'general.back.button' | trans
+			}
+		}
+	} only %}
+		{% block fieldset %}
+			{% for name, choices in data.form.paymentSelection.vars.choices %}
+				{% set paymentProviderIndex = loop.index0 %}
+				&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+				&lt;ul&gt;
+					{% for key, choice in choices %}
+						&lt;li class="list__item spacing-y clear"&gt;
+							{% embed molecule('form') with {
+								data: {
+									form: data.form[data.form.paymentSelection[key].vars.value],
+									enableStart: false,
+									enableEnd: false
+								},
+								embed: {
+									index: loop.index ~ '-' ~ paymentProviderIndex,
+									toggler: data.form.paymentSelection[key],
+								}
+							} only %}
+								{% block fieldset %}
+									{{ form_row(embed.toggler, {
+										required: false,
+										component: molecule('toggler-radio'),
+										attributes: {
+											'target-selector': '.js-payment-method-' ~ embed.index,
+											'class-to-toggle': 'is-hidden'
+										}
+									}) }}
+									&lt;div class="col col--sm-12 is-hidden js-payment-method-{{embed.index}}"&gt;
+										&lt;div class="col col--sm-12 col--md-6"&gt;
+											{% if data.form.vars.template_path is defined %}
+												{% set paymentPath = data.form.vars.template_path | split('/') %}
+												{% set nameTemplate = paymentPath[1] | replace('_', '-') %}
+												{% include view(nameTemplate, paymentPath[0]) ignore missing with {
+													form: data.form.parent
+												} only %}
+											{% else %}
+												{{parent()}}
+											{% endif %}
+										&lt;/div&gt;
+									&lt;/div&gt;
+								{% endblock %}
+							{% endembed %}
+						&lt;/li&gt;
+					{% endfor %}
+				&lt;/ul&gt;
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}</code></pre>
+                                                    <p>Run <var>console cache:empty</var> afterwards to make this template used during rendering.</p>
+                                                    <p>&#160;</p>
+                                                    <h2>Backend Update</h2>
                                                     <p>First of all we need to provide a URL to Payone module, which will be used to redirect user when the quote is filled with data obtained from PayPal.
  To achieve this, make the following steps:</p>
                                                     <ol>
@@ -495,7 +589,7 @@ return $quoteTransfer;
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: <i>Aug. 10th, 2018</i></i>
+                                                    <p><i>Last review date: <i>Jan. 16th, 2018</i></i>
                                                     </p>
                                                 </div>
                                             </div>
