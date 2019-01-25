@@ -210,6 +210,11 @@ a:visited
 	text-decoration: none;
 }
 
+.main-content a:visited[target="_blank"]
+{
+	background-image: url('../icons/new-tab-used-icon.svg');
+}
+
 a:hover
 {
 	font-weight: normal;
@@ -233,6 +238,11 @@ ul.navigation li > a:hover
 .searchTopic #pagination a:hover::after
 {
 	background: #e6eaed;
+}
+
+.main-content a:hover[target="_blank"]
+{
+	background-image: url('../icons/new-tab-hover-icon.svg');
 }
 
 a:active
@@ -284,9 +294,10 @@ ul.menu._Skins_SideMenuNotFixed.mc-component li > a
 	font-weight: bold;
 	font-style: normal;
 	font-stretch: normal;
-	line-height: normal;
+	line-height: 29px;
 	letter-spacing: 0.2px;
 	color: #494c4f;
+	padding: 5px 10px;
 }
 
 ul.menu._Skins_SideMenu.mc-component li > a:hover,
@@ -300,18 +311,14 @@ ul.menu._Skins_SideMenuNotFixed.mc-component li > a:hover
 ul.menu._Skins_SideMenu.mc-component li > a.selected,
 ul.menu._Skins_SideMenuNotFixed.mc-component li > a.selected
 {
-	padding-bottom: 10px;
-	padding-top: 10px;
-	background: 4FC2A0;
-	text-color: #fff;
 	border-radius: 4px;
+	padding: 5px 30px;
 }
 
 ul.menu._Skins_SideMenu.mc-component li > a.selected:hover,
 ul.menu._Skins_SideMenuNotFixed.mc-component li > a.selected:hover
 {
 	border-radius: 4px;
-	text-color: #28bea1;
 	background-color: #f5f6f8;
 }
 
@@ -324,7 +331,7 @@ ul.menu._Skins_SideMenuNotFixed.mc-component ul > li > a
 	font-stretch: normal;
 	line-height: 29px;
 	letter-spacing: 0.2px;
-	text-color: #686e76;
+	padding: 5px 10px;
 }
 
 ul.menu._Skins_SideMenu.mc-component ul > li > a:hover,
@@ -412,7 +419,7 @@ Styles after this point are styles that are for specific mediums. If any additio
 [@media mobile] declares styles that will apply when the screen is in mobile view
 ===========================================================================================================================================================*/
 
-@media only screen and (max-width: 992px)
+@media only screen and (max-width: 1279px)
 {
 	.row.nav-search
 	{
@@ -475,10 +482,16 @@ span.MCBreadcrumbsPrefix
 	position: relative;
 }
 
+.main-section > .outer-row
+{
+	padding-top: 0;
+}
+
 .breadcrumbs-block
 {
 	position: absolute;
 	left: 0;
+	top: 0;
 	width: 100vw;
 	background: #f5f6f8;
 }
@@ -524,6 +537,45 @@ a.MCBreadcrumbsLink
 {
 	text-decoration: none;
 	color: #28bea1;
+}
+
+@media screen and (min-width: 767px)
+{
+	.MCBreadcrumbsBox_0.breadcrumbs
+	{
+		padding-right: 270px;
+	}
+}
+
+@media screen and (max-width: 767px)
+{
+	span.MCBreadcrumbsSelf,
+	a.MCBreadcrumbsLink
+	{
+		display: none;
+	}
+
+	a.MCBreadcrumbsLink:last-of-type
+	{
+		display: block;
+	}
+
+	div.MCBreadcrumbsBox_0
+	{
+		text-align: center;
+		position: relative;
+	}
+
+	span.MCBreadcrumbsSelf:not(:last-child)::after,
+	a.MCBreadcrumbsLink::after
+	{
+		position: absolute;
+		left: 0;
+		transform: rotate(180deg);
+		width: 6px;
+		height: 14px;
+		background-size: contain;
+	}
 }
 
 .widget-github
@@ -783,7 +835,7 @@ div.search-container
 .side-menu ._Skins_SideMenu .has-children .sub-menu li:not(.tree-node-leaf) a
 {
 	position: relative;
-	padding-right: 30px;
+	padding: 5px 30px;
 }
 
 .side-menu ._Skins_SideMenu .has-children .sub-menu li:not(.tree-node-leaf) a::after
@@ -794,7 +846,7 @@ div.search-container
 	height: 10px;
 	right: 22px;
 	position: absolute;
-	top: 11px;
+	top: 15px;
 	background: url('../icons/chevron-right.svg') center no-repeat;
 	background-size: contain;
 }
@@ -1705,5 +1757,66 @@ div.example
 	{
 		width: 100%;
 	}
+}
+
+/*search result message on results page ac-375*/
+
+#results-heading a.a-anchor
+{
+	display: none;
+}
+
+/*home page upates ac-376*/
+
+.title-bar-layout a.logo
+{
+	background-size: contain;
+	height: 67px;
+}
+
+.menu-icon-container
+{
+	min-height: 67px;
+}
+
+.title-bar-layout .logo-wrapper
+{
+	min-height: 67px;
+}
+
+/*Header mobile collapse*/
+
+@media screen and (max-width: 767px)
+{
+	.sticky-container.scrolled-down
+	{
+		transform: translate(0, -100%);
+	}
+
+	.sticky-container
+	{
+		transition: transform .5s ease-in-out;
+		position: fixed;
+		top: 0;
+		width: 100%;
+	}
+
+	.off-canvas-content
+	{
+		padding-top: 85px;
+	}
+}
+
+/*AC-404 Add icon to "Open in new tab" link*/
+
+.main-content a[target="_blank"]
+{
+	display: inline-block;
+	padding-right: 20px;
+	position: relative;
+	background-image: url('../icons/new-tab-new-icon.svg');
+	background-position: 98% 5px;
+	background-size: 13px 13px;
+	background-repeat: no-repeat;
 }
 
