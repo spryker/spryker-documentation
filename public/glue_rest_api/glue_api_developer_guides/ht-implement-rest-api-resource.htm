@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Developer Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This article provides step-by-step instructions on how to implement a REST API resource in a project." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>How To Implement a REST API Resource | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="wqmqpiNKxkSIy8loonr0Kw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="wqmqpiNKxkSIy8loonr0Kw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>How To Implement a REST API Resource</h1>
+                                                    <p>The following guide provides step-by-step instructions on how to implement a REST API resource in your project.</p>
+                                                    <div class="tip"><b>Before you begin</b>
+                                                        <br />Consider studying the following documents before you begin:<br /><ul class="disk"><li value="1"><a href="https://jsonapi.org/format/" target="_blank">JSON API Specification</a> implemented in Spryker;</li><li value="2"><a href="https://swagger.io/" target="_blank">Swagger Tools Reference</a> to know how to document your API;</li><li value="3"><a href="https://www.thoughtworks.com/insights/blog/rest-api-design-resource-modeling" target="_blank">REST API Modelling Reference</a>.</li></ul></div>
+                                                    <h2>1. Create a Glue Resource Module</h2>
+                                                    <p>
+			The first step is to create an empty Glue Resource Module. For naming convention, all the resource module names have to consist of the feature name in plural followed by the <b>RestApi</b> suffix. For example, the <i>WishlistsRestApi</i> module represents a resource for managing the wishlists feature. 
+			To create a module:
+		</p>
+                                                    <ul class="disk">
+                                                        <li value="1">Create a new module in <var>src/Pyz/Glue/ResourcesRestApi</var> if you want to have a project-level resource.</li>
+                                                        <li value="2">Create the following folder and file structure:</li>
+                                                        <div class="u-is-scrollable">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">ResourcesRestApi</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><i>/Controller</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Folder for resource controllers. Controllers are used to handle JSON requests and responses.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><i>/Dependency</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bridges to other clients.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><i>/Plugin</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Glue API plugins.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><i>/Processor</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Folder where all the resource processing logic, data mapping code and calls to other clients are located.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><i>ResourcesRestApiConfig.php</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Contains resource-related configuration, such as the resource type, error code constants etc.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><i>ResourcesRestApiFactory.php</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Factory to construct objects.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><i>ResourcesDependencyProvider.php</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Provides external dependencies to this module.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><i>ResourcesRestApiResource.php</i>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Locatable class that provides resource objects to other modules as a dependency.</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <li value="3">
+				Add a transfer file that will be used to automatically map JSON data. Transfers are defined in the <b>Shared</b> layer (e.g. <var>src/Pyz/Shared/ResourcesRestApi/Transfer</var>) as it needs to be accessible to any layer, including <i>Glue</i>. The name of the transfer file is <i><b>resources</b>_rest_api.transfer.xml</i>, where the first part is the name of your resource.
+			</li>
+                                                    </ul>
+                                                    <p>
+			The resulting folder structure in the example of the Wishlists REST API module:</p>
+                                                    <p>
+                                                        <img src="../../resources/images/implementing_a_resource/wishlist.png" />
+                                                        <br />
+                                                    </p>
+                                                    <h2>2. Create a Configuration Class</h2>
+                                                    <p>
+			It is a good practice to create a configuration class that provides general module information. The class can be used to store types of resources, custom error codes used in your module, and other configuration data. Let us open the <i>WishlistsRestApiConfig.php</i> file and provide some initial configuration:
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
+			WishlistsRestApiConfig.php
+		</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">	&lt;?php
+	namespace Spryker\Glue\WishlistsRestApi;
+  
+	use Spryker\Glue\Kernel\AbstractBundleConfig;
+  
+	class WishlistsRestApiConfig extends AbstractBundleConfig
+	{
+		// Define names of resources handled by this module
+		public const RESOURCE_WISHLISTS = 'wishlists';
+      
+		// Define names of related resources used in this module
+		public const RESOURCE_RELATION_PRODUCTS = 'products';
+  
+		// Define business validation response codes
+		// The codes will be set manually when building error responses
+		public const RESPONSE_CODE_WISHLIST_NOT_FOUND = '101';
+		public const RESPONSE_CODE_WISHLIST_VALIDATION = '102';
+	}
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>3. Create a Factory</h2>
+                                                    <p>
+			Factory is used for instantiating module classes and dependencies and provides access to the resource builder.
+		</p>
+                                                    <p>
+			The factory must be inherited from <var>Spryker\Glue\Kernel\AbstractFactory</var>. This abstract factory exposes the <var>getResourceBuilder()</var> method that is used to construct resource and response objects. The following example shows how to correctly instantiate a resource reader using the <var>getResourceBuilder()</var> method:
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
+			WishlistRestApiFactory.php
+		</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">	&lt;?php
+	namespace Spryker\Glue\WishlistsRestApi;
+ 
+	use Spryker\Glue\Kernel\AbstractFactory;
+ 
+	class WishlistsRestApiFactory extends AbstractFactory
+	{
+		/**
+		*
+		* @return \Spryker\Glue\WishlistsRestApi\Processor\Wishlists\WishlistsReaderInterface
+		*/
+		public function createWishlistsReader(): WishlistsReaderInterface
+		{
+			return new WishlistsReader($this-&gt;getResourceBuilder());
+		}
+	}
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>4. Create a Resource Controller</h2>
+                                                    <p>
+			The next step in implementing a resource module is creating a controller for it. The controller is a PHP class that receives all the requests, calls business logic and returns responses. To implement a controller:
+		</p>
+                                                    <ol>
+                                                        <li value="1">
+				Create a new class in the <i>Controller</i> folder. The naming convention is that the class name must start with the name of the resource it controls and end with the <i>ResourceController</i> suffix.
+			</li>
+                                                        <li value="2">
+				Inherit from the <var>\Spryker\Glue\Kernel\Controller\AbstractController</var> class.
+			</li>
+                                                        <li value="3">
+				Add a <b>use</b> clause to include <var>RestResponseInterface</var>. It will give you the possibility to pass responses to Glue. Any action method in a resource controller has to take <var>\Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface</var> as a parameter and return <var>\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface</var>.
+			</li>
+                                                        <li value="4">
+				Implement actions that will be used to handle all the possible HTTP verbs (<b>GET, POST, DELETE, PATCH</b>) for the given resource.
+			</li>
+                                                    </ol>
+                                                    <p class="important">
+			The controller must only provide the request handling flow and must not contain any actual business logic. All operations must be delegated to the corresponding layers.
+		</p>
+                                                    <p class="tip">
+			Requests will be passed to the controller as instances of <var>RestRequestInterface</var>, and responses must be provided as <var>RestResponseInterface</var> objects.
+		</p>
+                                                    <p>Sample controller implementation:</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceController.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">	&lt;?php
+ 
+	namespace Spryker\Glue\WishlistsRestApi\Controller;
+ 
+	use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
+	use Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface;
+	use Spryker\Glue\Kernel\Controller\AbstractController;
+ 
+	/**
+	* @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
+	*/
+	class WishlistsResourceController extends AbstractController
+	{
+		/**
+		* Handles the GET verb.
+		*
+		* @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+		*/
+		public function getAction(): RestResponseInterface
+		{
+			//TODO: call factory, do data handling
+		}
+ 
+		/**
+		* Handles the POST verb.
+		*
+		* @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer
+		*
+		* @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+		*/
+		public function postAction(RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer): RestResponseInterface
+		{
+			$restWishlistsAttributesTransfer; //This variable is automatically mapped from request POST data
+ 
+			//TODO: call factory, do data handling
+		}
+ 
+		/**
+		* Handles the DELETE verb.
+		*
+		* @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+		*/
+		public function deleteAction(): RestResponseInterface
+		{
+			//TODO: call factory, do data handling
+		}
+ 
+		/**
+		* Handles the PATCH verb.
+		*
+		* @param \Generated\Shared\Transfer\RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer
+		*
+		* @return \Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface
+		*/
+		public function patchAction(RestWishlistsAttributesTransfer $restWishlistsAttributesTransfer): RestResponseInterface
+		{
+			$restWishlistsAttributesTransfer; //This variable is automatically mapped from request PATCH data
+ 
+			//TODO: call factory, do data handling
+		}
+	}	</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>5. Describe Fields for Post and Patch Calls</h2>
+                                                    <p>
+			The <b>POST</b> and the <b>PATCH</b> verbs allow you to pass the body in your request. Such parameters can be used in your resource module to manipulate Spryker entities. For example, when changing an entity via REST API, you can pass the modified values as fields of a <b>POST</b> or a <b>PATCH</b> request.
+		</p>
+                                                    <p>
+			The same as with any other data source, you can use containers called <b>Transfer Objects</b> for the convenience of dealing with data retrieved from <b>POST</b> requests. The objects are defined in the XML transfer file located in the <b>Shared</b> layer. The names of the transfer objects need to start with <b>Rest</b>.
+		</p>
+                                                    <p class="info">
+			For information on how to define the objects and syntax, see <a href="https://documentation.spryker.com/resources_and_developer_tools/transfer-objects.htm?Highlight=how%20to%20create%20transfer%20objects" target="_blank">How to create transfer objects</a>.
+		</p>
+                                                    <p>
+			In the example below, the <var>RestWishlistsAttributesTransfer</var> Transfer Object will have three string attributes automatically mapped from a POST request:
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
+			wishlists_rest_api.transfer.xml
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+	&lt;transfers xmlns="spryker:transfer-01"
+				xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
+ 
+			&lt;transfer name="RestWishlistsAttributesTransfer"&gt;
+				&lt;property name="attribute1" type="string" /&gt;
+				&lt;property name="attribute2" type="string" /&gt;
+				&lt;property name="attribute3" type="string" /&gt;
+			&lt;/transfer&gt;
+	&lt;/transfers&gt;
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+			To generate the respective transfer objects, run <code><pre>vendor/bin/console transfer:generate</pre></code></p>
+                                                    <h2><a name="6."></a>6. Route Requests to Your Controller</h2>
+                                                    <p>
+			Now you need to route requests to your module. For this purpose, you need to create a route plugin that calls a certain function of the resource controller depending on the method configured in your resource. Then you need to add the plugin to the <i>Glue</i> Module dependency provider.
+		</p>
+                                                    <br />
+                                                    <p><b>Resource Route Plugin</b>
+                                                    </p>
+                                                    <p>
+			The route plugin must be inherited from <i>AbstractPlugin</i> and implement <var>ResourceRoutePluginInterface</var>. Let us create one in the <b style="font-style: italic; font-weight: normal;">Plugin</b> folder:
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceRoutePlugin.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">	&lt;?php
+	namespace Spryker\Glue\WishlistsRestApi\Plugin;
+  
+	use Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface;
+  
+	/**
+	* @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
+	*/
+	class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+	{
+	}
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+			Now we can map the controller actions to the verbs they implement. For this purpose, implement the function <var>ResourceRoutePluginInterface::configure()</var>. To map the actions, you can use such methods as <var>addPost</var>, <i>addDelete</i>, <var>addPatch</var> and <var>addGet</var> supported by <var>ResourceRouteCollectionInterface</var>. Each function has 3 parameters:
+		</p>
+                                                    <ol>
+                                                        <li value="1"><b>action</b> — specifies the action name to map the verb to the Resource controller method;</li>
+                                                        <li value="2"><b>protected</b> <i>(optional)</i> — specifies whether authentication is required to access the resource. If this parameter is not specified, then the verb requires authentication;</li>
+                                                        <li value="3"><b>context</b> <i>(optional)</i> — an array of additional parameters that can be passed to the action. Use this parameter if you want to perform additional configuration of your actions.</li>
+                                                    </ol>
+                                                    <p>
+			In the following example, the plugin maps the <b>GET</b>, <b>POST</b>, <b>DELETE</b> and <b>PATCH</b> verbs to the controller actions we created in step <b>4</b>. All the verbs except <b>GET</b> require authentication. This means that unauthenticated users will be able to read the resource, but will not be able to create, modify or delete items.
+		</p><pre><code class="language-PHP line-numbers">	...
+	class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+	{
+		/**
+		* @api
+		*
+		* @param \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface  $resourceRouteCollection
+		*
+		* @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRouteCollectionInterface
+		*/
+		public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
+		{
+			$resourceRouteCollection-&gt;addPost('post')
+				-&gt;addDelete('delete')
+				-&gt;addPatch('patch')
+				-&gt;addGet('get', false);
+  
+			return $resourceRouteCollection;
+		}
+	...
+		</code></pre>
+                                                    <p>
+
+			Now, implement the function <var>ResourceRoutePluginInterface::getResourceType()</var>. It must return the name of your resource in plural (which is a resource URI):
+		</p><pre><code class="language-PHP line-numbers">		/**
+
+		* @api
+		*
+		* @return string
+		*/
+		public function getResourceName(): string
+		{
+			return WishlistsRestApiConfig::RESOURCE_WISHLISTS;
+		}	
+		</code></pre>
+                                                    <p>Then you need to specify the name of the controller class for your resource. We created it in step <b>4</b>. The name must be specified in lowercase, separated by hyphens, and without the <i>Controller</i> suffix. Thus, for example, if you named the controller class <var>WishlistsResourceController</var>, you need to implement a function as follows:
+		</p><pre><code class="language-PHP line-numbers">		/**
+		* @api
+		*
+		* @return string
+		*/
+		public function getController(): string
+		{
+			return 'wishlists-resource';
+		}
+		</code></pre>
+                                                    <p>
+			Finally, you need to specify a fully-qualified class name of the Transfer Object created in step <b>5</b>. It will be used by Glue to map attributes from the REST API calls (works with the POST and the PATCH actions only).
+		</p><pre><code class="language-PHP line-numbers">		/**
+		* @api
+		*
+		* @return string
+		*/
+		public function getResourceAttributesClassName(): string
+		{
+			return RestWishlistsAttributesTransfer::class;
+		}
+		</code></pre>
+                                                    <p>
+			Now the plugin is complete. It should look something like this:
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />WishlistsResourceRoutePlugin.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">	&lt;?php
+ 
+	namespace Spryker\Glue\WishlistsRestApi\Plugin;
+ 
+	use Generated\Shared\Transfer\RestWishlistsAttributesTransfer;
+	use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
+	use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+	use Spryker\Glue\WishlistsRestApi\WishlistsRestApiConfig;
+	use Spryker\Glue\Kernel\AbstractPlugin;
+ 
+	/**
+	* @method \Spryker\Glue\WishlistsRestApi\WishlistsRestApiFactory getFactory()
+	*/
+	class WishlistsResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+	{
+		/**
+		* {@inheritdoc}
+		*
+		* @api
+		*
+		* @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface $resourceRouteCollection
+		*
+		* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface
+		*/
+		public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
+		{
+			$resourceRouteCollection-&gt;addPost('post')
+				-&gt;addDelete('delete')
+				-&gt;addPatch('patch')
+				-&gt;addGet('get');
+ 
+			return $resourceRouteCollection;
+		}
+ 
+		/**
+		* {@inheritdoc}
+		*
+		* @api
+		*
+		* @return string
+		*/
+		public function getResourceType(): string
+		{
+			return WishlistsRestApiConfig::RESOURCE_WISHLISTS;
+		}
+ 
+		/**
+		* {@inheritdoc}
+		*
+		* @api
+		*
+		* @return string
+		*/
+		public function getController(): string
+		{
+			return 'wishlists-resource';
+		}
+ 
+		/**
+		* {@inheritdoc}
+		*
+		* @api
+		*
+		* @return string
+		*/
+		public function getResourceAttributesClassName(): string
+		{
+			return RestWishlistsAttributesTransfer::class;
+		}
+	}
+			</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>7. Process REST Requests</h2>
+                                                    <p>
+					After you've routed requests to your module, you can process them. For this purpose, you can make use of the <var>Spryker\Glue\Kernel\AbstractFactory::getResourceBuilder()</var> method. It returns <var>Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceBuilderInterface</var>. This builder interface instantiates the <var>RestResourceInterface</var> and <var>RestResponseInterface</var> objects that are necessary to build the REST responses correctly.
+				</p>
+                                                    <p>
+					To build the responses, you need to create classes responsible for the request processing. You can place them in the <i>Processor</i> folder. You can create various separate models for reading, creating, updating, and deleting modules.
+				</p>
+                                                    <h2>8. Invoke Processors in Your Code</h2>
+                                                    <p>
+					Finally, when you have a processor in place, you can use it in your code. For the processor invoking, use the factory created in step <b>3</b>. Let us reopen the resource controller created in step <b>4</b> (<i>WishlistsResourceController.php</i>) and add code that handles <b>GET</b> requests:
+				</p><pre><code class="language-PHP line-numbers">	public function getAction(RestRequestInterface $restRequest): RestResponseInterface
+		{
+			return $this-&gt;getFactory()-&gt;createWishlistsReader()-&gt;readByIdentifier($restRequest);
+			// This line passes the request to the actual class that handles data. It will return an instance of RestResponseInterface
+		}
+				</code></pre>
+                                                    <h2>9. Register Resources in GlueApplicationDependencyProvider</h2>
+                                                    <p>
+					You need to register your resource route plugin in <i>Glue</i>:
+				</p>
+                                                    <ol>
+                                                        <li value="1">Open the <var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var> file.</li>
+                                                        <li value="2">Add the route plugin to <var>getResourceRoutePlugins(</var>).</li>
+                                                        <li value="3">Save the file.</li>
+                                                    </ol><pre><code class="language-PHP line-numbers">	&lt;?php
+ 
+	namespace Pyz\Glue\GlueApplication;
+ 
+	use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+	use Spryker\Glue\WishlistsRestApi\Plugin\WishlistsResourceRoutePlugin;
+ 
+	class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+	{
+		/**
+		* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+		*/
+		protected function getResourceRoutePlugins(): array
+		{
+			return [
+				new WishlistsResourceRoutePlugin(),
+			];
+		}
+				</code></pre>
+                                                    <h2>See also:</h2>
+                                                    <ul class="disk">
+                                                        <li value="1"><a href="https://jsonapi.org/format/" target="_blank">JSON API Specification</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://swagger.io/" target="_blank">Swagger Tools Reference</a>
+                                                        </li>
+                                                        <li value="3"><a href="https://www.thoughtworks.com/insights/blog/rest-api-design-resource-modeling" target="_blank">REST API Modelling Reference</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Dec 19, 2018</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
