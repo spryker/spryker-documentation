@@ -13,6 +13,25 @@
         <meta charset="utf-8" />
         <meta name="description" content="" />
         <meta name="author" content="" /><title>Amazon Pay - API</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
         <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
         <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
@@ -133,6 +152,10 @@
                                 </div>
                             </div>
                             <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
                                 <div class="search-container">
                                     <form class="search" action="#">
                                         <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
@@ -161,12 +184,32 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
                                     </div>
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="AsWwTYbDiU6ka3mBJC7k0A">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="AsWwTYbDiU6ka3mBJC7k0A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="bNr7D_dotUaP5FcSnuFjbQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="bNr7D_dotUaP5FcSnuFjbQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -195,7 +238,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <div class="js-anchorer">
+                                                <div class="js-anchorer main-content">
                                                     <h1>Amazon Pay - API <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <p>So far we discussed the client side implementation provided by Amazon Pay. On the Spryker OS side, the module provides tools for rendering Amazon Pay widgets.</p>
                                                     <p>Another part of the implementation is the Amazon Pay API function wrapper, implemented as a Facade.</p>
@@ -312,7 +355,7 @@ return $amazonpayCallTransfer;</code></pre>
                                                                 <li value="2"><var>handleAmazonPayIpnRequest(AbstractTransfer $ipnRequestTransfer)</var> should be called. It has <var>AbstractTransfer</var> type for its argument and it works with all types of IPN related transfer objects. A typical flow of a successful flow usually involves pending statuses of authorization and capture requests.</li>
                                                             </ul>
                                                             <p>Therefore, related IPN messages have to be received and processed correctly. For retrieving the same information Amazon also provides <var>GetAuthorizationDetails</var> and <var>GetCaptureDetails</var> functions and in Spryker OS it is possible to update the pending statuses with State machine buttons. Once the button is clicked, the shop makes a related API call, receives a response and if the state is not pending then it updates order status according to the response message. The final status of a success flow is "capture completed". After that only Refund is available and refund workflow is asynchronous only and works in a similar way as asynchronous authorization.</p>
-                                                            <p>The more tricky case is authorization declined workflow. It is similar to synchronous decline which was described above but everything goes asynchronously and involves additional IPN messages. First of all, Authorization IPN comes with "Declined" state of authorization status. Another important information here is <strong>ReasonCode </strong>and it affects all further steps of the process. For the reason codes <var>TransactionTimedOut</var> and <var>AmazonRejected</var> the order simply goes to <var>authorization declined</var> state but for the <var>InvalidPaymentMethod</var> the customer has to change the payment method to the correct one. In this case, order receives <var>authorization suspended</var> status and Amazon sends two additional IPN messages: <var>OrderNotification</var> with the state "Open" comes in after payment method is changed by buyer and Authorization notification as a result of authorization of a new payment method. If new payment method passes authorization successfully then order goes to the <var>auth open</var> state and it is possible to request a capture. In both decline cases, it is important to notify the buyer about it by email since it's the only one way for him to know that payment is not possible. The text of the email letter has to be different for <var>InvalidPaymentMethod</var> case.</p>
+                                                            <p>The more tricky case is authorization declined workflow. It is similar to synchronous decline which was described above but everything goes asynchronously and involves additional IPN messages. First of all, Authorization IPN comes with "Declined" state of authorization status. Another important information here is <strong>ReasonCode</strong> and it affects all further steps of the process. For the reason codes <var>TransactionTimedOut</var> and <var>AmazonRejected</var> the order simply goes to <var>authorization declined</var> state but for the <var>InvalidPaymentMethod</var> the customer has to change the payment method to the correct one. In this case, order receives <var>authorization suspended</var> status and Amazon sends two additional IPN messages: <var>OrderNotification</var> with the state "Open" comes in after payment method is changed by buyer and Authorization notification as a result of authorization of a new payment method. If new payment method passes authorization successfully then order goes to the <var>auth open</var> state and it is possible to request a capture. In both decline cases, it is important to notify the buyer about it by email since it's the only one way for him to know that payment is not possible. The text of the email letter has to be different for <var>InvalidPaymentMethod</var> case.</p>
                                                             <p>Another tricky moment about asynchronous flow is "Authorization expired" situation. Each time the shop requests capture in asynchronous mode, it should check the current status of an authorization. Capture is only possible when the status of authorization is "Open". If authorization has status <var>Closed</var> and <var>ReasonCode</var> is either <var>ExpiredUnused</var> or <var>SellerClosed</var> then an order should be reauthorized with <var>CaptureNow</var> setting enabled.</p>
                                                             <p>&#160;</p>
                                                         </div>
@@ -346,6 +389,9 @@ return $amazonpayCallTransfer;</code></pre>
 </a><![CDATA[            ]]></li>
                                                         <li value="8"><a href="amazon-pay-email-notification.htm">Check out Amazon Pay example email notifications</a><![CDATA[
             ]]></li>
+                                                        <li value="9"><a href="amazon-pay-support-bundled-products.htm">Check
+				support of bundled products with Amazon</a>
+                                                        </li>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: Oct 17th, 2018 </i>
