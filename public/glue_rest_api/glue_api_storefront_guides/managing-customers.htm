@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This article explains how to manage customer accounts and provides detailed information on which endpoints to use to create, anonymize, etc. a customer." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Managing Customers | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../Resources/Scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../Resources/Scripts/custom.modernizr.js">
+        </script>
+        <script src="../../Resources/Scripts/jquery.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.min.js">
+        </script>
+        <script src="../../Resources/Scripts/require.config.js">
+        </script>
+        <script src="../../Resources/Scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../Resources/Scripts/plugins.min.js">
+        </script>
+        <script src="../../Resources/Scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="_kk1WCjb70GxcIS29_juZw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_kk1WCjb70GxcIS29_juZw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Managing Customers</h1>
+                                                    <p>
+			The Customer API provides functionality for the creation of customers and administration of their account data. This administration includes the possibility to maintain a set of customer addresses as separate resources. In checkout process, these address resources can be retrieved and used to speed up the buying process. On the authentication side, the API supports authentication via OAuth 2.0 protocol and password restoring functionality.
+		</p>
+                                                    <p>
+			In your development, these resources can help you to:
+		</p>
+                                                    <ul class="disk">
+                                                        <li value="1">Retrieve relevant customer information for any page where customer information is needed</li>
+                                                        <li value="2">Enable customer registration</li>
+                                                        <li value="3">Allow customer login/authentication</li>
+                                                        <li value="4">Enrich customer profiles with additional data such as addresses</li>
+                                                    </ul>
+                                                    <h2>Installation</h2>
+                                                    <p>
+			For details on the modules that provide the API functionality and how to install them, see&#160;Customer API.
+		</p>
+                                                    <h2>Creating a Customer</h2>
+                                                    <p>
+			To create a new customer user, send a <em>POST</em> request to the following endpoint:
+		</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/customers/post_customers">/customers</a></b>
+                                                    </p>
+                                                    <p>			Sample request: <em>POST http://mysprykershop.com/customers</em></p>
+                                                    <p><b>Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 100px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>acceptedTerms</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>Boolean</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the customer has accepted the terms of service. For a new customer to be created, this parameter needs to be set to <b>true</b>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>confirmPassword</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies a password confirmation for the account of the new customer.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>email</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies customer's last email address. The address must be unique in the system.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>firstName</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies customer's first name.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>lastName</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies customer's last name.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>password</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies a password (7 characters or more) for the account of the new customer. This password will be used by the customer to access their account.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>salutation</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Specifies a salutation for a new customer.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample request body</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">			{
+  "data": {
+    "type": "customers",
+    "attributes": {
+        "salutation": "Mr",
+        "firstName":"John",
+        "lastName":"Doe",
+        "email":"jdoe@example.com",
+        "password":"change123",
+        "confirmPassword":"change123",
+        "acceptedTerms":true
+    }
+  }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+				If a customer was created successfully, the endpoint will respond with a <b>RestCustomersResponse</b>.
+			</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">			{
+	"data": {
+		"type": "customers",
+		"id": "DE--25",
+		"attributes": {
+			"firstName": "John",
+			"lastName": "Doe",
+			"gender": null,
+			"dateOfBirth": null,
+			"salutation": "Mr",
+			"createdAt": "2018-11-06 08:15:02.694668",
+			"updatedAt": "2018-11-06 08:15:02.694668"
+		},
+		"links": {
+			"self": "http://mysprykershop.com/customers/DE--25"
+		}
+	}
+}
+					</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+			After a customer has been created, you can authenticate them in the REST API and perform actions on their behalf. For details, see Authentication and Authorization. 
+			The <b>id</b> attribute of the <em>RestCustomersResponse</em> specifies a unique customer identifier that can later be used to access the new customer via REST API requests.
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">gender</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Gender of the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">dateOfBirth</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's date of birth</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">createdAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Account creation date</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">updatedAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Date of the last update</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">422</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Terms of service were not accepted</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">A customer with the same email address already exists</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">414</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">The provided gender is invalid</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Retrieving Customer Information</h2>
+                                                    <p>
+			To retrieve information about a customer, use the following endpoint:
+		</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/customers/get_customers__customerReference_"><b>/customers/{{customerReference}}</b></a>
+                                                    </p>
+                                                    <p>			Sample request: <em>GET http://mysprykershop.com/customers/<b>DE-25</b></em></p>
+                                                    <p>
+			where <b>DE-25</b> is the unique identifier of the customer you want to retrieve.
+		</p>
+                                                    <p class="note"><b>Authentication</b><![CDATA[
+        ]]><br />To use this endpoint, customers need to authenticate first. For details, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/563019879/Authentication+and+Authorization" target="_blank">Authentication and Authorization</a>.
+		</p>
+                                                    <p>
+			If a customer with the specified ID was found, the endpoint will respond with a <b>RestCustomersRequest</b>.
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	{
+		"data": {
+			"type": "customers",
+			"id": "DE--25",
+			"attributes": {
+				"firstName": "John",
+				"lastName": "Doe",
+				"gender": null,
+				"dateOfBirth": null,
+				"salutation": "Mr",
+				"createdAt": "2018-11-06 08:15:02.694668",
+				"updatedAt": "2018-11-06 08:15:02.694668"
+			},
+			"links": {
+				"self": "http://mysprykershop.com/customers/DE--25"
+			}
+		}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">email</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's email address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">gender</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's gender</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">dateOfBirth</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's date of birth</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">createdAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Account creation date</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">updatedAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Date of the last update</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+                                                    <h3>Possible Errors:</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">402</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">A customer with the specified ID was not found</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">405</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Customer reference is missing</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Editing a Customer</h2>
+                                                    <p>
+			To modify an existing customer account, send a <i>PATCH</i> request to the following endpoint:
+		</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/customers/get_customers__customerReference_"><b>/customers/{{customerReference}}</b></a>
+                                                    </p>
+                                                    <p class="info"><b>Modifying Customer Addresses</b>
+                                                        <br />You need to use specialized endpoints to retrieve and manage addresses registered for a customer. For details, see <b><a href="#Managing">Managing the List of Customer Addresses</a></b>.
+		
+        </p>
+                                                    <p>Sample request: <i>PATCH http://mysprykershop.com/customers/<b>DE-25</b></i><![CDATA[
+
+]]><br />where <b>DE-25</b> is the unique identifier of the customer you want to modify.</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first. For details, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/563019879/Authentication+and+Authorization" target="_blank">Authentication and Authorization</a>.
+		
+        </p>
+                                                    <p>
+			To modify a customer, the client must send a <b>RestCustomersRequest</b>.
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample request</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	{
+		"data" : {
+			"type": "customers"
+			"attributes": {
+					"lastName": "Johnson",
+					"email": "example@mail.com",
+				}
+		}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+			If a customer is modified successfully, the endpoint will respond with a <b>RestCustomersResponse</b>.
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	{
+		"data": {
+			"type": "customers",
+			"id": "DE--25",
+			"attributes": {
+				"firstName": null,
+				"lastName": "Johnson",
+				"salutation": null,
+				"email": "example@mail.com"
+			},
+			"links": {
+				"self": "http://mysprykershop.com/customers/DE--25"
+			}
+		}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">email</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's email address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">gender</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's gender</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">dateOfBirth</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's date of birth</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">createdAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Account creation date</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">updatedAt</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Date of the last update</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">402</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">A customer with the specified ID was not found</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">405</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer reference is missing</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">410</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Failed to save changes</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">414</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The provided gender is invalid</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2><a name="Managing"></a>Managing the List of Customer Addresses</h2>
+                                                    <p>Customers can provide a set of addresses used for billing, goods delivery, and other purposes. 
+			The <b>Customer API</b> provides a set of endpoints to manage addresses of a registered customer.
+		</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />Only authenticated users can manage customer addresses. For details on how to authenticate a customer, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/563019879/Authentication+and+Authorization" target="_blank">Authentication and Authorization</a>.
+		</p>
+                                                    <h2>Adding an Address</h2>
+                                                    <p>
+			To add an address to a customer, send a <i>POST</i> request to the following endpoint:
+		</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/addresses/post_customers__customerId__addresses"><b>/customers/{{customer_id}}/addresses</b></a>
+                                                    </p>
+                                                    <p>
+			Sample request: <i>POST http://mysprykershop.com/customers/<b>DE-25</b>/addresses</i></p>
+                                                    <p>
+			where <b>DE-25</b> is the unique identifier of the customer you want to add an address to.<br /><br /></p>
+                                                    <p>
+			The POST data must contain a <b>RestAddressesRequest</b>.
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </th>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 1st line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">address2</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The 2nd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address3</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 3rd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">zipCode</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">ZIP code</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">city</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the city</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">country</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the country</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">company</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's company</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">phone</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's phone number</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">isDefaultShipping</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>Boolean</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies whether the address should be used as the default shipping address of the customer. If the parameter is not set, the default value is <b>true</b>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">isDefaultBilling</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>Boolean</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/error.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the address should be used as the default billing address of the customer. If the parameter is not set, the default value is <b>true</b>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">iso2Code	</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies an ISO 2 Country Code to use</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample request body</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	{
+		"data" : {
+			"type": "addresses",
+			"attributes": {
+					"salutation": "Mr",
+					"firstName": "John",
+					"lastName": "Doe",
+					"address1": "11 Second Street",
+					"address2": "4th Floor",
+					"address3": "Suite 555",
+					"zipCode": "12312",
+					"city": "Berlin",
+					"country": "Germany",
+					"iso2Code": "DE"
+					"phone": "22111-3-4-5",
+					"isDefaultShipping": false,
+					"isDefaultBilling": false
+				}
+		}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>
+			If the address was created successfully, the endpoint will respond with a <b>RestAddressesResponse</b>.
+		</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	{
+		"data": {
+			"type": "addresses",
+			"id": 3a6ee102-007f-5245-aaec-af5b6e05685b,
+			"attributes": {
+				"salutation": "Mr",
+				"firstName": "John",
+				"lastName": "Doe",
+				"address1": "11 Second Street",
+				"address2": "4th Floor",
+				"address3": "Suite 555",
+				"zipCode": "12312",
+				"city": "Berlin",
+				"country": "United States",
+				"iso2Code": "US",
+				"company": null,
+				"phone": "22111-3-4-5",
+				"isDefaultShipping": false,
+				"isDefaultBilling": false
+			},
+			"links": {
+				"self": "http://mysprykershop.com.com/customers/DE--25/addresses/"
+			}
+		}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>The <b>id</b> attribute of the response will contain a unique identifier of the address that was created. You can use the ID to view and edit the address in the future.</p>
+                                                    <p><b>Sample response</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing to the customer.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's first name.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's last name.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 1st line of the customer's address.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">address2</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The 2nd line of the customer's address.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address3</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 3rd line of the customer's address.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">zipCode</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">ZIP code.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">city</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the city.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">country</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the country.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">iso2Code</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies an ISO 2 Country Code to use.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">company</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the customer's company.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">phone</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the customer's phone number.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">isDefaultShipping</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the address should be used as the default shipping address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">isDefaultBilling</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies whether the address should be used as the default billing address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.<br /></p>
+                                                    <h2>Modifying an Address</h2>
+                                                    <p>
+			To modify an address, send a <i>PATCH</i> request to the following endpoint:
+		</p>
+                                                    <p><![CDATA[
+			]]><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/addresses/patch_customers__customerId__addresses__addressId_">/customers/{{customer_id}}/addresses/{{address_id}}</a></b><br /></p>
+                                                    <p>
+			Sample request: <i>PATCH http://mysprykershop.com/customers/<b>DE-25</b>/addresses/<b>3a6ee102-007f-5245-aaec-af5b6e05685b</b></i></p>
+                                                    <p>
+			where <b>DE-25</b> is the unique identifier of the customer you want to modify an address for, and <b>3a6ee102-007f-5245-aaec-af5b6e05685b</b> is the ID of the address you want to change.<br /></p>
+                                                    <p>The POST data must contain a <b>RestAddressesRequest</b>. The attributes and format of the request are the same as when creating an address.</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 1st line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">address2</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The 2nd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address3</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 3rd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">zipCode</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">ZIP code</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">city</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the city</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">country</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the country</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">iso2Code</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String
+						</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies an ISO 2 Country Code to use</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">company</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the customer's company</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">phone</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the customer's phone number</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">isDefaultShipping</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the address should be used as the default shipping address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">isDefaultBilling</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies whether the address should be used as the default billing address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The fields mentioned are all attributes in the response. Type and ID are not mentioned.<br /></p>
+                                                    <p style="font-weight: bold;">Sample response</p>
+                                                    <p>The same as when creating an address, in case, if the request is successful, the endpoint returns a <b>RestAddressesResponse</b> with updated data.</p>
+                                                    <h2>Getting all Addresses of a Customer</h2>
+                                                    <p>To get all the addresses of a user, use the following endpoint:</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/addresses/get_customers__customerId__addresses"><b>/customers/{{customer_id}}/addresses</b></a>
+                                                    </p>
+                                                    <p>
+			Sample request: <i>GET http://mysprykershop.com/customers/<b>DE-25</b>/addresses</i></p>
+                                                    <p>where <b>DE-25</b> is the unique identifier of the customer whose address you want to get.</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 1st line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">address2</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The 2nd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address3</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 3rd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">zipCode</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">ZIP code</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">city</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the city</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">country</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the country</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">iso2Code</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String
+						</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies an ISO 2 Country Code to use.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">company</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies customer's company</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">phone</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies customer's phone number</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">isDefaultShipping</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the address should be used as the default shipping address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">isDefaultBilling</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies whether the address should be used as the default billing address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The fields mentioned are all attributes in the response. Type and ID are not mentioned.<br /></p>
+                                                    <p><b>Sample response</b>
+                                                    </p>
+                                                    <p>If the request was successful, the endpoint would return <b>RestAddressesResponse</b> with all the customer's addresses.<br /></p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Example</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">			
+	{
+			"data": [
+				{
+					"type": "addresses",
+					"id": "3a6ee102-007f-5245-aaec-af5b6e05685b",
+					"attributes": {
+						"salutation": "Mr",
+						"firstName": "Jason",
+						"lastName": "Voorhees",
+						"address1": "123 Sleep Street",
+						"address2": "123",
+						"address3": null,
+						"zipCode": "12345",
+						"city": "Dresden",
+						"country": "Germany",
+						"iso2Code": "DE",
+						"company": null,
+						"phone": null,
+						"isDefaultShipping": true,
+						"isDefaultBilling": true
+					},
+					"links": {
+						"self": "http://mysprykershop.com/customers/DE--25/addresses/3a6ee102-007f-5245-aaec-af5b6e05685b"
+					}
+				},
+				{
+					"type": "addresses",
+					"id": "5f00ce65-dd64-5b49-ad3c-f5fae475e7e6",
+					"attributes": {
+						"salutation": "Mr",
+						"firstName": "John",
+						"lastName": "Doe",
+						"address1": "11 Second Street",
+						"address2": "4th Floor",
+						"address3": "Suite 555",
+						"zipCode": "12312",
+						"city": "Berlin",
+						"country": "United States",
+						"iso2Code": "US",
+						"company": null,
+						"phone": "22111-3-4-5",
+						"isDefaultShipping": false,
+						"isDefaultBilling": false
+					},
+					"links": {
+						"self": "http://mysprykershop.com/customers/DE--25/addresses/5f00ce65-dd64-5b49-ad3c-f5fae475e7e6"
+					}
+				}
+			],
+			"links": {
+				"self": "http://mysprykershop.com/customers/DE--25/addresses"
+			}
+	}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h2>Getting a Specific Address</h2>
+                                                    <p>To get a specific address by ID, use the following endpoint:</p>
+                                                    <p style="font-weight: bold;"><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/addresses/get_customers__customerId__addresses__addressId_">/customers/{{customer_id}}/addresses/{{address_id}}</a>
+                                                    </p>
+                                                    <p>Sample request: <i>GET http://mysprykershop.com/customers/<b>DE-25</b>/addresses/<b>3a6ee102-007f-5245-aaec-af5b6e05685b</b></i></p>
+                                                    <p>where <b>DE-25</b> is the unique identifier of the customer whose address you want to get, and <b>3a6ee102-007f-5245-aaec-af5b6e05685b</b> is the ID of the address you need.<br /></p>
+                                                    <p><b>Sample response</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">salutation</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Salutation to use when addressing the customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">firstName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Customer's first name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">lastName</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer's last name</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 1st line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">address2</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The 2nd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">address3</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The 3rd line of the customer's address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">zipCode</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">ZIP code</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">city</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the city</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">country</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the country</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">iso2Code</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String
+						</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies an ISO 2 Country Code to use</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">company</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the customer's company</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">phone</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the customer's phone number</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">isDefaultShipping</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies whether the address should be used as the default shipping address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">isDefaultBilling</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies whether the address should be used as the default billing address of the customer. If the parameter is not set, the default value is <b>true</b>. This is also the case for the first address to be saved.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The fields mentioned are all attributes in the response. Type and ID are not mentioned.<br /><br /></p>
+                                                    <p>If the request is successful, the endpoint returns <b>RestAddressesResponse</b> with the requested address.</p>
+                                                    <h2>Deleting an Address</h2>
+                                                    <p>To delete an address, use the following endpoint:</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/addresses/delete_customers__customerId__addresses__addressId_"><b>/customers/{{customer_id}}/addresses/{{address_id}}</b></a>
+                                                    </p>
+                                                    <p>Sample request: <i>DELETE http://mysprykershop.com/customers/<b>DE-25</b>/addresses/<b>3a6ee102-007f-5245-aaec-af5b6e05685b</b></i></p>
+                                                    <p>where <b>DE-25</b> is the unique identifier of the customer whose address you want to delete, and <b>3a6ee102-007f-5245-aaec-af5b6e05685b</b> is the ID of the necessary address.</p>
+                                                    <p><b>Sample response</b>
+                                                    </p>
+                                                    <p>If the address is deleted successfully, the endpoint will respond with the <b>204 No Content</b> status code.<br /></p>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">402</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">A customer with the specified ID was not found</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The specified address could not be found</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">405</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer reference is missing</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">409</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Failed to update an address</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">411</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthorized request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">412</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">No address ID provided</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Changing Customer's Password</h2>
+                                                    <p>To change a password for a customer, use <i>PATCH</i> method and the following endpoint:</p>
+                                                    <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/customer-password/patch_customer_password"><b>/customer-password</b></a>
+                                                    </p>
+                                                    <p>Sample request: <i>PATCH http://mysprykershop.com/customer-password</i></p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first. For details, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/563019879/Authentication+and+Authorization" target="_blank">Authentication and Authorization</a>.
+		</p>
+                                                    <p><b>Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>password</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p style="text-align: left;">
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </th>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies old password of a customer</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>newPassword</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the new password</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>confirmPassword</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><em>String</em>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                        <p>
+                                                                            <img src="../../resources/images/check.png" />
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Specifies  password confirmation for password change.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample request body</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+{
+    "data": {
+        "type": "customer-password",
+        "attributes": {
+            "password": "change123",
+            "newPassword": "321egnahc",
+            "confirmPassword": "321egnahc"
+        }
+    }
+}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p><b>Sample Response</b>
+                                                    </p>
+                                                    <p>If password is changed successfully, the endpoint will respond with the <b>204 No Content</b> status code.</p>
+                                                    <h3>Possible Errors:</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">406</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The new password and password confirmation do not match</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">407</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Password change failed</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">408</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Invalid password</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Resetting Customer's Password</h2>
+                                                    <p>In case customer forgets their password, Glue API also provides the possibility to reset it. For this purpose, you need to use the following procedure:</p>
+                                                    <ol>
+                                                        <li value="1">Send a POST request to the following endpoint:
+				<b><br /><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/forgotten-password/post_customer_forgotten_password">/customer-forgotten-password</a></b><![CDATA[
+				]]><br /><br />Sample request: <em>POST http://mysprykershop.com/customer-forgotten-password</em><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Request Body</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+{
+  "data": {
+    "type": "customer-forgotten-password",
+    "attributes": {
+        "email":"jdo@example.com"
+    }
+  }
+						</code></pre></div></div>
+				If the request was successful, the endpoint will respond with the <b>204 No Content</b> status point, an email with a password reset link will be sent to the customer. The email will contain a <b>Password Reset Key</b>.
+			</li>
+                                                        <li value="2">Send a PATCH request to the following endpoint:
+			<a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/restore-password/patch_customer_restore_password"><b><br />/customer-restore-password</b></a><![CDATA[
+]]><br /><br />				Sample request: <em>PATCH http://mysprykershop.com/customer-restore-password</em><b><br /><br />Attributes:</b><div class="u-is-scrollable"><table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>restorePasswordKey</b></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><em>String</em></td><th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><p style="text-align: left;"><img src="../../resources/images/check.png" /></p></th><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the <b>Password Reset Key</b> provided in the email sent to the customer.</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>password</b></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><em>String</em></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><p><img src="../../resources/images/check.png" /></p></td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the password.</td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>passwordConfirmation</b></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><em>String</em></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><p><img src="../../resources/images/check.png" /></p></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Specifies a password confirmation for password change.</td></tr></tbody></table></div><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample request body</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+{
+  "data": {
+    "type": "customer-restore-password",
+    "attributes": {
+        "restorePasswordKey":"9de02f7a4e08dcdf06e6b24add1e01da",
+        "password":"new_pssword",
+        "confirmPassword":"new_pssword"
+    }
+  }
+}</code></pre></div></div>
+				If the password reset was successful, the endpoint will respond with the <b>204 No Content</b> status code.
+				</li>
+                                                    </ol>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../Glue REST API/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">406</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The new password and password confirmation do not match</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">408</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Invalid password</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">411</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthorized request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">415</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The Password Reset Key is invalid</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Anonymizing a Customer</h2>
+                                                    <p>To anonymize a customer account, send a DELETE request to the following endpoint:
+		<a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/customers/delete_customers__customerReference_"><b><br />/customers/{{customerReference}}</b></a></p>
+                                                    <p>
+                                                        <br />Sample request: <em>DELETE http://mysprykershop.com/customers/<b>DE-25</b></em></p>
+                                                    <p>where <b>DE-25</b> is the unique identifier of the customer you want to anonymize.</p>
+                                                    <p><b>Sample response</b>
+                                                    </p>
+                                                    <p>If the customer is anonymized successfully, the endpoint will respond with the <b>204 No Content</b> status code.</p>
+                                                    <p><b><br />See also:</b>
+                                                    </p>
+                                                    <ul class="disk">
+                                                        <li value="1">
+                                                            <p><a href="managing-wishlists.htm">Managing Wishlists</a>
+                                                            </p>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p>Retrieving Customer's Order History</p>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Dec 13, 2018</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
