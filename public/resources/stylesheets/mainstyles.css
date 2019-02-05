@@ -788,7 +788,7 @@ a.MCBreadcrumbsLink
 
 ul.navigation .has-children > .sub-menu.ps
 {
-	max-height: calc(100vh - 95px) !important;
+	max-height: 50vh !important;
 }
 
 div.search-container
@@ -1570,28 +1570,6 @@ div.example
 	border: none;
 }
 
-.fl-tile.expanded
-{
-	max-height: 100%;
-}
-
-.toggle-btn
-{
-	cursor: pointer;
-	color: #4fc2a0;
-	padding: 10px 15px;
-	font-size: 15px;
-	line-height: 1.47;
-	letter-spacing: 0.4px;
-	text-align: center;
-	position: absolute;
-	bottom: 0;
-	left: 0;
-	background: white;
-	width: 100%;
-	border-top: 1px solid #e9ecf1;
-}
-
 .fl-title
 {
 	font-size: 19px;
@@ -1643,7 +1621,7 @@ div.example
 {
 	.fl-tile
 	{
-		min-width: 100%;
+		min-width: calc(100% - 34px);
 	}
 }
 
@@ -1656,19 +1634,36 @@ div.example
 	padding-right: 34px;
 }
 
-.mr-container
+.clearfix::after
 {
-	float: right;
-	box-shadow: 0 2px 13px 0 rgba(200, 200, 200, 0.5);
-	width: 320px;
-	border-radius: 4px;
-	background-color: #f5f6f8;
-	padding: 15px 20px;
-	border-top: 4px solid #0461b1;
-	position: relative;
+	content: '';
+	clear: both;
+	display: table;
 }
 
-.mr-title
+.mr-container,
+.mr-aside-container
+{
+	width: 100%;
+	border-radius: 4px;
+	background-color: #f5f6f8;
+	padding: 10px;
+	margin: 20px 0;
+}
+
+.mr-aside-container
+{
+	position: relative;
+	width: 320px;
+	float: right;
+	margin: 0;
+	border-top: 4px solid #0461b1;
+	box-shadow: 0 2px 13px 0 rgba(200, 200, 200, 0.5);
+	padding: 15px 20px;
+}
+
+.mr-title,
+.mr-aside-title
 {
 	font-size: 16px;
 	font-weight: bold;
@@ -1685,7 +1680,8 @@ div.example
 	padding-left: 17px;
 }
 
-.mr-link
+.mr-link,
+.mr-aside-link
 {
 	word-break: break-word;
 	font-size: 15px;
@@ -1700,30 +1696,17 @@ div.example
 	text-decoration: none;
 }
 
-.mr-container[expandable='true']
-{
-	overflow: hidden;
-	padding-bottom: 45px;
-	max-height: 400px;
-}
-
 .mr-container.expanded
 {
 	max-height: 100%;
 }
 
-.mr-container .toggle-btn
-{
-	background-color: #f5f6f8;
-}
-
-.mr-container-full
+.mr-col
 {
 	width: 100%;
-	margin: 20px 0;
 }
 
-.mr-container-full .mr-title
+.mr-container .mr-title
 {
 	text-align: center;
 	padding: 15px 0;
@@ -1757,13 +1740,129 @@ div.example
 	{
 		width: 100%;
 	}
+
+	.mr-aside-container
+	{
+		width: 100%;
+	}
 }
 
-/*search result message on results page ac-375*/
-
-#results-heading a.a-anchor
+.mr-list-container .mr-list-primary
 {
-	display: none;
+	border-top: 4px solid #0461b1;
+	border-radius: 4px;
+	background: white;
+	padding: 0;
+	list-style: none;
+	margin: 20px;
+}
+
+.mr-list-container .mr-list-primary.expanded
+{
+	padding-bottom: 40px;
+}
+
+.mr-list-container .mr-list-primary li
+{
+	padding: 11px 16px;
+	border-top: 1px solid #e9ecf1;
+	margin: 0;
+}
+
+.mr-container .mr-col.mr-col--4
+{
+	max-width: 300px;
+}
+
+/*js toggler styles*/
+
+.toggle-btn
+{
+	cursor: pointer;
+	color: #4fc2a0;
+	padding: 10px 15px;
+	font-size: 15px;
+	line-height: 1.47;
+	letter-spacing: 0.4px;
+	text-align: center;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background: white;
+	width: 100%;
+	border-top: 1px solid #e9ecf1;
+}
+
+.mr-container .toggle-btn
+{
+	background-color: white;
+}
+
+.mr-aside-container .toggle-btn
+{
+	background-color: #f5f6f8;
+}
+
+.js-expandable-container
+{
+	position: relative;
+}
+
+[expandable='true']
+{
+	overflow: hidden;
+	padding-bottom: 45px;
+	max-height: 400px;
+}
+
+.js-expandable-container.expanded
+{
+	max-height: 100%;
+}
+
+.mr-list-primary[expandable="ture"]
+{
+	padding-bottom: 35px;
+}
+
+/*Grid Helper*/
+
+.grid
+{
+	display: flex;
+}
+
+.grid--center
+{
+	justify-content: center;
+}
+
+.col--4
+{
+	width: 33.3%;
+}
+
+.col--6
+{
+	width: 50%;
+}
+
+@media screen and (max-width: 1170px)
+{
+	.mr-col.col--4,
+	.mr-col.col--6
+	{
+		width: auto;
+	}
+}
+
+@media screen and (max-width: 769px)
+{
+	.mr-col.col--4,
+	.mr-col.col--6
+	{
+		width: 100%;
+	}
 }
 
 /*home page upates ac-376*/
@@ -1782,6 +1881,13 @@ div.example
 .title-bar-layout .logo-wrapper
 {
 	min-height: 67px;
+}
+
+/*search result message on results page ac-375*/
+
+#results-heading a.a-anchor
+{
+	display: none;
 }
 
 /*Header mobile collapse*/
@@ -1818,5 +1924,13 @@ div.example
 	background-position: 98% 5px;
 	background-size: 13px 13px;
 	background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 992px)
+{
+	div.topic-layout > div:nth-child(2)
+	{
+		margin-left: 0;
+	}
 }
 

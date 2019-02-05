@@ -1,6 +1,4 @@
 ﻿
-//slider slick backup
-
 function getSlick ($) {
     'use strict';
     var Slick = window.Slick || {};
@@ -3014,7 +3012,8 @@ function getSlick ($) {
 
 getSlick($);
 
-//----------------------------------------------
+
+
 
 function ScrollToTop () {
 
@@ -3251,7 +3250,7 @@ function AsideNavCloser(bodyOverlay, container) {
         this.container.appendChild(closeButton);
         this.mapEvents(closeButton);
     };
-    
+
     this.mapEvents = function (elem) {
         var self = this;
         elem.addEventListener('click', function (e) {
@@ -3270,7 +3269,7 @@ function AsideNavCloser(bodyOverlay, container) {
             }
         })
     };
-    
+
     this.createButton = function () {
         var closeButton = document.createElement('span');
         closeButton.classList.add('aside-close-button');
@@ -3333,7 +3332,7 @@ function TextTooltipCleaner() {
         });
     };
 
-     this.cleanUpContainers = function(containers, containerClass) {
+    this.cleanUpContainers = function(containers, containerClass) {
         containers.forEach(function (item) {
             item.classList.contains(containerClass) ? true : item.classList.add(containerClass);
 
@@ -3358,31 +3357,63 @@ var textTooltipCleaner = new TextTooltipCleaner();
 
 //========================================
 
-function FeatureLinksHandler() {
 
-    function checkElementHeight(elems, height) {
-        elems.forEach(elem => {
+function GridHelper() {
+
+    this.checkGrid = function(containerSelector, tilesSelector) {
+
+        this.container = document.querySelector(containerSelector);
+        if(this.container == null) return;
+        this.tiles = this.container.querySelectorAll(tilesSelector);
+
+        switch (this.tiles.length) {
+            case 2:
+                addClassToItems(this.tiles, 'col--6');
+                break;
+            case 3:
+                addClassToItems(this.tiles, 'col--4');
+                break;
+            case 4:
+                addClassToItems(this.tiles, 'col--3');
+                break;
+            default:
+                break;
+        }
+    };
+
+    function addClassToItems(items, className) {
+        items.forEach((item)=>{
+            item.classList.add(className);
+        })
+    }
+}
+
+new GridHelper().checkGrid('.fl-container', '.fl-tile');
+new GridHelper().checkGrid('.mr-container', '.mr-col');
+
+//============================================
+
+function TogglerAppender() {
+
+    function checkElementHeight(containers, height) {
+        containers.forEach(elem => {
             if (countHeight(elem) > height) {
                 addToggleButton(elem);
             }
         });
     }
 
-    function checkTilesGrid(tiles, container) {
-        if(tiles.length == 4) container.classList.add('fl-container-2');
-    }
-
-    function countHeight(tile) {
+    function countHeight(container) {
         var count = 0;
-        Array.prototype.forEach.call(tile.children, function (item) {
+        Array.prototype.forEach.call(container.children, function (item) {
             count += item.clientHeight;
         });
         return count;
     }
 
-    function addToggleButton(tile) {
-        tile.setAttribute('expandable', true);
-        tile.appendChild(createToggleButton(tile));
+    function addToggleButton(container) {
+        container.setAttribute('expandable', true);
+        container.appendChild(createToggleButton(container));
     }
 
     function createToggleButton(tile) {
@@ -3401,18 +3432,14 @@ function FeatureLinksHandler() {
     }
 
     this.init = function () {
-        this.linksContainer = document.querySelector('.fl-container');
-        if(this.linksContainer != null) {
-            this.links = this.linksContainer.querySelectorAll('.fl-tile');
-            checkTilesGrid(this.links, this.linksContainer);
-            checkElementHeight(this.links, 400);
+        this.linksContainers = document.querySelectorAll('.js-expandable-container');
+        if(this.linksContainers != null) {
+            checkElementHeight(this.linksContainers, 400);
         }
-        this.moduleReference = document.querySelectorAll('.js-mr-container');
-        if(this.moduleReference != null) checkElementHeight(this.moduleReference, 345);
     }
 }
 
-var flHandler = new FeatureLinksHandler();
+var flHandler = new TogglerAppender();
 
 //========================================
 
@@ -3499,7 +3526,7 @@ function MobileHeaderScroll (){
     var scrollPosition = 0;
 
     this.container = document.querySelector('.title-bar-container.sticky-container');
-    
+
     function checkScrollDirection() {
         if((document.body.getBoundingClientRect()).top > scrollPosition){
             this.container.classList.remove('scrolled-down');
@@ -3524,6 +3551,29 @@ function MobileHeaderScroll (){
 var mobileHeaderScrollToggler = new MobileHeaderScroll();
 
 
+//===============================================================
+
+
+function ModuleRefGridHelper (){
+
+    this.mrLists = document.querySelectorAll('.mr-list');
+
+    function checkLists(lists) {
+        lists.forEach((list)=>{
+            if(list.innerText == ""){
+                list.parentElement.remove()
+            }
+        })
+    }
+
+    this.init = function () {
+        if(document.querySelector('.mr-container') == null) return;
+        checkLists(this.mrLists);
+    }
+}
+
+var moduleRefContent = new ModuleRefGridHelper();
+
 //========================================
 
 document.addEventListener("DOMContentLoaded", function (){
@@ -3536,7 +3586,6 @@ document.addEventListener("DOMContentLoaded", function (){
     sliderInit.init();
     searchResultMessageChecker.init();
     mobileHeaderScrollToggler.init();
-
+    moduleRefContent.init();
 } );
-
 
