@@ -251,6 +251,16 @@ a:active
 	text-decoration: underline;
 }
 
+.link-list-popup.needs-pie a:active
+{
+	color: #eb553d;
+}
+
+.MCHelpControlList.MCRelatedTopicsControlList a:active
+{
+	color: #eb553d;
+}
+
 var
 {
 	font-size: 14px;
@@ -874,41 +884,40 @@ ul.navigation li > a
 	}
 }
 
-a.MCHelpControl.MCHelpControl-Related.relatedTopics
+/*Versions element*/
+
+.MCHelpControl.MCHelpControl-Related.relatedTopics
 {
-	display: block;
+	display: inline-block;
 	background: #f5f6f8;
-	padding: 19px 34px;
+	padding: 11px 40px 11px 14px;
 	border-radius: 4px;
-	border-left: 8px solid #eb553d;
-	height: 62px !important;
+	height: 45px !important;
 	position: relative;
+	cursor: pointer;
 }
 
-a.MCHelpControl.MCHelpControl-Related.relatedTopics:hover
+.MCHelpControl.MCHelpControl-Related.relatedTopics::after
 {
-	height: 62px !important;
+	content: '';
+	display: block;
+	width: 8px;
+	height: 4px;
+	position: absolute;
+	top: calc(50% + 2px);
+	right: 16px;
+	transform: translate(0 , -50%);
+	border: 4px solid transparent;
+	border-top: 4px solid #494c4f;
+}
+
+.MCHelpControl.MCHelpControl-Related.relatedTopics:hover
+{
+	height: 45px !important;
 	text-decoration: none;
 }
 
-a.MCHelpControl.MCHelpControl-Related.relatedTopics:after
-{
-	position: absolute;
-	content: 'Click Here!';
-	top: 50%;
-	right: 34px;
-	transform: translateY(-50%);
-	font-size: 14px;
-	color: #eb553d;
-	border-radius: 18px;
-	background-color: rgba(235, 85, 61, 0.1);
-	height: 34px;
-	width: 90px;
-	text-align: center;
-	line-height: 34px;
-}
-
-a.MCHelpControl.MCHelpControl-Related.relatedTopics .MCHelpControl-RelatedHotSpot_
+.MCHelpControl.MCHelpControl-Related.relatedTopics .MCHelpControl-RelatedHotSpot_
 {
 	background-image: none;
 	font-size: 16px !important;
@@ -917,16 +926,9 @@ a.MCHelpControl.MCHelpControl-Related.relatedTopics .MCHelpControl-RelatedHotSpo
 	line-height: 24px !important;
 }
 
-a.MCHelpControl.MCHelpControl-Related.relatedTopics img.MCHelpControl_Image_Icon
+.MCHelpControl.MCHelpControl-Related.relatedTopics img.MCHelpControl_Image_Icon
 {
 	display: none;
-}
-
-/* double scroll reset */
-
-.off-canvas-content
-{
-	overflow: unset;
 }
 
 /* version button popup */
@@ -946,42 +948,9 @@ a.MCHelpControl.MCHelpControl-Related.relatedTopics img.MCHelpControl_Image_Icon
 	padding: 6px 18px;
 }
 
-.link-list-popup.needs-pie:after
+.link-list-popup.needs-pie li:hover a
 {
-	content: '';
-	display: block;
-	position: absolute;
-	top: -4px;
-	left: calc(50% - 4px);
-	transform: rotate(45deg);
-	background: white;
-	width: 8px;
-	height: 8px;
-}
-
-.link-list-popup.needs-pie:hover
-{
-	background-color: #4fc2a0;
-}
-
-.link-list-popup.needs-pie:hover:after
-{
-	background-color: #4fc2a0;
-}
-
-.link-list-popup.needs-pie:active
-{
-	background-color: #eb553d;
-}
-
-.link-list-popup.needs-pie:active:after
-{
-	background-color: #eb553d;
-}
-
-.link-list-popup.needs-pie:hover ul li a
-{
-	color: white;
+	color: #4fc2a0;
 }
 
 .link-list-popup.needs-pie ul li:hover
@@ -995,7 +964,54 @@ a.MCHelpControl.MCHelpControl-Related.relatedTopics img.MCHelpControl_Image_Icon
 	font-weight: normal;
 	line-height: 1.54;
 	letter-spacing: normal;
+	color: #686e76;
+}
+
+/* version button list */
+
+.MCHelpControlList.MCRelatedTopicsControlList
+{
+	background-color: #fff;
+	border: none;
+	margin: 0;
+	list-style: none;
+	box-shadow: 0 2px 8px 0 rgba(185, 185, 185, 0.5);
+	padding: 6px 18px;
+	position: absolute;
+	z-index: 10;
+	width: 100%;
+	left: 0;
+	top: calc(100% + 4px);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity .2s ease-in-out;
+}
+
+.MCHelpControl.MCHelpControl-Related.relatedTopics.active .MCHelpControlList.MCRelatedTopicsControlList
+{
+	opacity: 1;
+	visibility: visible;
+}
+
+.MCHelpControlList.MCRelatedTopicsControlList li:hover a
+{
 	color: #4fc2a0;
+}
+
+.MCHelpControlList.MCRelatedTopicsControlList a
+{
+	font-size: 13px;
+	font-weight: normal;
+	line-height: 1.54;
+	letter-spacing: normal;
+	color: #686e76;
+}
+
+/* double scroll reset */
+
+.off-canvas-content
+{
+	overflow: unset;
 }
 
 /* dropdowns */
@@ -1007,6 +1023,12 @@ a.MCHelpControl.MCHelpControl-Related.relatedTopics img.MCHelpControl_Image_Icon
 	position: relative;
 	background-color: #f5f6f8;
 	margin: 0;
+	padding-left: 16px;
+}
+
+.MCDropDown_Image_Icon
+{
+	display: none;
 }
 
 .MCDropDown_Open > .MCDropDownHead > .MCDropDownHotSpot_.MCHotSpotImage::after,
@@ -1414,6 +1436,8 @@ div.example
 .search-bar.search-bar-container._Skins_SearchHome.mc-component .search-submit
 {
 	border: none;
+	background-size: 15px;
+	width: 50px;
 }
 
 .search-bar._Skins_SearchHome.mc-component
@@ -1590,7 +1614,6 @@ div.example
 	font-size: 15px;
 	line-height: 1.47;
 	letter-spacing: 0.4px;
-	color: #686e76;
 	border-bottom: 1px solid #e9ecf1;
 	text-decoration: none;
 	text-align: left;
@@ -1599,9 +1622,7 @@ div.example
 .fl-link:hover,
 .fl-link:visited:hover
 {
-	color: #4fc2a0;
 	background: #f5f6f8;
-	text-decoration: none;
 }
 
 .fl-container-2 .fl-tile
@@ -1687,13 +1708,6 @@ div.example
 	font-size: 15px;
 	line-height: 1.47;
 	letter-spacing: 0.4px;
-	color: #686e76;
-}
-
-.mr-link:hover
-{
-	color: #4fc2a0;
-	text-decoration: none;
 }
 
 .mr-container.expanded
@@ -1932,5 +1946,18 @@ div.example
 	{
 		margin-left: 0;
 	}
+}
+
+/*AC-426
+Remove arrows from top nav*/
+
+ul.navigation ul > li.has-children > a:after
+{
+	display: none;
+}
+
+ul.navigation ul ul
+{
+	top: -10px;
 }
 

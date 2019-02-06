@@ -3013,7 +3013,20 @@ function getSlick ($) {
 getSlick($);
 
 
+function GetAsyncElementHelper(parent, selector, callback){
 
+    this.elem = parent.querySelector(selector) || findElem(parent, selector);
+
+    function findElem(parent, selector) {
+        var interval = setInterval(()=>{
+            this.elem = parent.querySelector(selector);
+            if(this.elem !== null){
+                callback(this.elem);
+                clearInterval(interval);
+            }
+        },100);
+    }
+}
 
 function ScrollToTop () {
 
@@ -3096,7 +3109,7 @@ function Anchorer () {
 
     this.$container = $('html, body');
     this.$el = $('.js-anchorer');
-    this.$targets = $('h1, h2, h3', this.$el);
+    this.$targets = $('h1, h2, h3, .drop-anchor', this.$el);
     this.headerHeight = document.querySelector('.title-bar').clientHeight;
 
     this.init = function() {
@@ -3576,6 +3589,32 @@ var moduleRefContent = new ModuleRefGridHelper();
 
 //========================================
 
+function versionsElemToggle () {
+
+    var versionElem = document.querySelector('.MCHelpControl.MCHelpControl-Related.relatedTopics');
+
+    var init = ()=>{
+        if(versionElem == null) return;
+        versionElem.addEventListener('click', function(e) {
+            e.currentTarget.classList.toggle('active');
+        })
+    };
+
+
+    var findElem = ()=>{
+        var interval = setInterval(()=>{
+            versionElem = document.querySelector('.MCHelpControl.MCHelpControl-Related.relatedTopics');
+            if(versionElem !== null){
+                init();
+                clearInterval(interval);
+            }
+        }, 100)
+    };
+
+    versionElem ? init() : findElem();
+}
+
+
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
     anchorer.init();
@@ -3587,5 +3626,6 @@ document.addEventListener("DOMContentLoaded", function (){
     searchResultMessageChecker.init();
     mobileHeaderScrollToggler.init();
     moduleRefContent.init();
+    versionsElemToggle();
 } );
 
