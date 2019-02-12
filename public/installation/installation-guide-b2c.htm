@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="zrsVuioGV0uw15O9f_IlOg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="zrsVuioGV0uw15O9f_IlOg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="GEv_LgaOhkOcShKr7oerMA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="GEv_LgaOhkOcShKr7oerMA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -260,7 +260,7 @@ vagrant plugin install vagrant-hostmanager</code></pre>
                                                             <p>Run the following commands in your favorite shell (e.g. <var>Bash</var>):</p>
                                                             <p>1. <b>Create the folder in which you want the source code to be placed:</b></p><pre><code class="language-Bash">mkdir devvm
 cd devvm						</code></pre>
-                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.2.1 https://github.com/spryker/devvm/releases/download/v2.2.1/spryker-devvm.box</code></pre>
+                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.3.0 https://github.com/spryker/devvm/releases/download/v2.3.0/spryker-devvm.box</code></pre>
                                                             <p>3. <strong>Update the Vagrantfile</strong>:</p>
                                                             <p>Add hostmanager plugin configuration:</p><pre><code class="language-Bash">mv Vagrantfile Vagrantfile.bak
 awk '/^end/{print "  config.hostmanager.enabled = true\n  config.hostmanager.manage_host = true"}1' Vagrantfile.bak &gt; Vagrantfile</code></pre>
@@ -311,7 +311,7 @@ vagrant plugin install vagrant-hostmanager</code></pre>
                                                             </div>
                                                             <p>1. <b>Create the folder in which you want the source code to be placed:</b></p><pre><code class="language-Bash">mkdir devvm
 cd devvm</code></pre>
-                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.2.1 https://github.com/spryker/devvm/releases/download/v2.2.1/spryker-devvm.box</code></pre>
+                                                            <p>2. <strong>Initialize the Vagrant environment</strong>:</p><pre xml:space="preserve"><code class="language-Bash">vagrant init devvm2.3.0 https://github.com/spryker/devvm/releases/download/v2.3.0/spryker-devvm.box</code></pre>
                                                             <p>3. <strong>Update the Vagrantfile</strong>:</p>
                                                             <p>Add hostmanager plugin configuration:</p><pre><code class="language-Bash">mv Vagrantfile Vagrantfile.bak
 awk '/^end/{print "  config.hostmanager.enabled = true\n  config.hostmanager.manage_host = true"}1' Vagrantfile.bak &gt; Vagrantfile</code></pre>
@@ -326,21 +326,15 @@ sudo chown -R vagrant:vagrant /data/shop/devtest/shared/data/common/jenkins</cod
                                                             <p>5. <b>Restart PHP and Jenkins:</b></p><pre><code class="language-Bash">sudo /etc/init.d/php7.2-fpm restart
 sudo /etc/init.d/jenkins-devtest restart</code></pre>
                                                             <p>6. <b>Change permissions for the project directory:</b></p><pre><code class="language-Bash">sudo chown vagrant:vagrant .
-sudo chmod og+rwx .</code></pre>
-                                                            <p>7. <b>Connect to the share in Windows. For example, you can enter the following in the address bar of Windows Explorer:</b></p><pre><code class="language-Bash">\\spryker-vagrant\project\current</code></pre>
-                                                            <p>In addition to that, you can mount the share as a network drive in your system so that you have it always a available. For example, to mount the project codebase as the <var>s:</var> drive, execute the following in Windows Command Prompt:</p><pre><code class="language-Bash">net use s: \\spryker-vagrant\project\current /persistent:yes</code></pre>
-                                                            <p>8. <b>Copy the contents of the <var>project</var> subfolder of the VM folder to the <var>current</var> folder on the share (or to the root of the drive you've mounted).</b></p>
-                                                            <p>9. <b>Run the installation commands:</b></p><pre><code class="language-Bash">composer install
-vendor/bin/install</code></pre>
-                                                            <div class="note">If you are using a devvm version lower than 2.2.0, run the <i>ulimit -n 65535</i> command at first.</div>
-                                                            <p>Executing these steps will install all required dependencies,  and run the installation process. Also, this will install the demo data and export it to <var>Redis</var> and <var>Elasticsearch</var>.</p>
-                                                            <p>When the installation process is complete, Spryker Commerce OS is ready to use. It can be accessed via the following links:</p>
-                                                            <ul>
-                                                                <li value="1"><a href="http://www.de.b2c-demo-shop.local/" target="_blank">http://www.de.b2c-demo-shop.local</a> - front-end;</li>
-                                                                <li value="2"><a href="http://zed.de.b2c-demo-shop.local/" target="_blank">http://zed.de.b2c-demo-shop.local</a> - backend (administrator interface).</li>
-                                                            </ul>
-                                                            <p>Credentials to access the administrator interface: user <var>admin@spryker.com</var> and password <var>change123</var>.</p>
-                                                        </div>
+sudo chmod og+rwx .</code></pre><a name="mountshare"></a>7. <b>Mount the share in Windows:</b><ol><li value="1">
+						Start Windows Command Prompt. To do this, press <var>Win+R</var>, type <var>cmd</var> and press <var>Enter</var>.
+					</li><li value="2">
+						Execute the following command to mount the share as a network drive:<pre><code class="language-Bash">net use s: \\spryker-vagrant\project\current /persistent:yes</code></pre><p class="info">The share will be mounted as the <var>s:</var> drive.</p></li></ol><p>8. <b>Copy the codebase to the VM:</b></p><p>Execute the following commands in the Windows Command Prompt console you opened on step <b>8</b>:</p><pre><code class="language-Bash">cd "%USERPROFILE%\Documents\devvm"
+xcopy project s: /e</code></pre><p>where:
+					<ul><li value="1"><b>%USERPROFILE%\Documents\devvm</b> - is the <var>dvvm</var> directory you created on step <b>3.1</b>.
+						</li><li value="2"><b>s:</b> - is the network drive you mounted on the previous step.
+						</li></ul></p><p>9. <b>Run the installation commands:</b></p><p>After performing steps <b>7</b> and <b>8</b> and making sure that copying is complete, switch back to the <b>Git Bash</b> console and run the following commands:</p><pre><code class="language-Bash">composer install
+vendor/bin/install</code></pre><div class="note">If you are using a devvm version lower than 2.2.0, run the <i>ulimit -n 65535</i> command first.</div><p>Executing these steps will install all required dependencies,  and run the installation process. Also, this will install the demo data and export it to <var>Redis</var> and <var>Elasticsearch</var>.</p><p>When the installation process is complete, Spryker Commerce OS is ready to use. It can be accessed via the following links:</p><ul><li value="1"><a href="http://www.de.b2c-demo-shop.local/" target="_blank">http://www.de.b2c-demo-shop.local</a> - front-end;</li><li value="2"><a href="http://zed.de.b2c-demo-shop.local/" target="_blank">http://zed.de.b2c-demo-shop.local</a> - backend (administrator interface).</li></ul><p>Credentials to access the administrator interface: user <var>admin@spryker.com</var> and password <var>change123</var>.</p></div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Without Development Virtual Machine</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><a name="novm"></a>
@@ -362,8 +356,7 @@ vendor/bin/install</code></pre>
 </li>
                                                                 <li class="bullet_list" value="6">Redis v3.x<br />                Make sure it runs on <b>localhost:10009</b>, otherwise update config.
 </li>
-                                                                <li class="bullet_list" value="7">PostgreSQL v9.6<![CDATA[
-]]></li>
+                                                                <li class="bullet_list" value="7">PostgreSQL v9.6</li>
                                                                 <li value="8">
                                                                     <p>RabbitMQ v3.6+</p>
                                                                 </li>
@@ -530,7 +523,7 @@ vendor/bin/install</code></pre>
                                                     </ul>
                                                     <p>&#160;</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: January 17th, 2018</i>
+                                                    <p><i>Last review date: Feb 11, 2019</i>
                                                     </p>
                                                 </div>
                                             </div>

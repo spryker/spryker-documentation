@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="VTxAZ-QYjkKiUT4OJrm8LA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="VTxAZ-QYjkKiUT4OJrm8LA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="SCeqV2e7Fk6P4D6N-Sg6jQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="SCeqV2e7Fk6P4D6N-Sg6jQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -243,7 +243,7 @@
                                                     <h2>Infrastructure Preparation</h2>
                                                     <p class="info">This has to be done only once for Demoshop (not for every feature.)</p>
                                                     <p>&#160;</p>
-                                                    <h3>Shop App</h3>
+                                                    <h2>Shop App</h2>
                                                     <p>These steps are required to install features which use the new <a href="https://github.com/spryker-shop">shop pages and widgets</a> i.e. the shop app.</p>
                                                     <p>&#160;</p>
                                                     <h4>Add infrastructure modules</h4>
@@ -257,11 +257,11 @@
                                                     <p>Remove</p>
                                                     <p><pre><code class="language-PHP line-numbers">$config[EventBehaviorConstants::EVENT_BEHAVIOR_TRIGGERING_ACTIVE] = false;</code></pre>
                                                     </p>
-                                                    <p>from config_default.php</p>
+                                                    <p>from <var>config_default.php</var></p>
                                                     <p>Remove</p>
                                                     <p><pre><code class="language-PHP line-numbers">new EventBehaviorTriggerTimeoutConsole(),</code></pre>
                                                     </p>
-                                                    <p>from \<var>Pyz\Zed\Console\ConsoleDependencyProvider</var></p>
+                                                    <p>from <var>\Pyz\Zed\Console\ConsoleDependencyProvider</var></p>
                                                     <p>Install the required modules for Shop-App:</p>
                                                     <p><pre><code class="language-PHP line-numbers">composer require "spryker/kernel":"^3.24.0" spryker-shop/shop-router:"^1.0.0" <br />spryker-shop/shop-application:"^1.3.0" spryker-shop/shop-ui:"^1.0.0" --update-with-all-dependencies</code></pre>
                                                     </p>
@@ -282,22 +282,23 @@
                                                         <br style="font-style: italic;" /><i>spryker/product-set-storage:"^1.0.0" spryker/product-storage:"^1.0.0" </i>
                                                         <br style="font-style: italic;" /><i>spryker/url-storage:"^1.0.0"  spryker/product-quantity-storage:"^0.1.1" --update-with-all-dependencies</i><![CDATA[
 		
-        ]]></p>
+		]]></p>
                                                     <p>
                                                         <h4>Add namespace to configuration</h4>
                                                     </p>
                                                     <p>To let the kernel find your files within the SprykerShop Organization namespace, you need to add SprykerShop as a new namespace to <var>Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES in your ./config/Shared/config_default.php </var></p>
                                                     <p class="info"><code class="language-PHP line-numbers">$config[\Spryker\Shared\Kernel\KernelConstants::CORE_NAMESPACES] = [
-	'SprykerEco',
-	'Spryker',
-	'SprykerShop'
-];</code>
+				'SprykerEco',
+				'Spryker',
+				'SprykerShop'
+			];</code>
                                                     </p>
                                                     <p>&#160;</p>
                                                     <h4>Add service providers</h4>
                                                     <p>To make all the features available from the newly added Modules, you need to add the following lines to <var>Pyz\Yves\Application\YvesBootstrap::registerServiceProviders()</var> between the registration of the TwigServiceProvider and the SprykerTwigServiceProvider.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Click to expand the code sample</b></a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><b>src/Pyz/Yves/Application/YvesBootstrap.php</b><pre xml:space="preserve"><code class="language-PHP line-numbers">...
+                                                        <div class="MCDropDownBody dropDownBody"><b>src/Pyz/Yves/Application/YvesBootstrap.php</b><pre xml:space="preserve"><code class="language-PHP line-numbers">
+...
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\ShopApplicationServiceProvider;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\ShopControllerEventServiceProvider;
 use SprykerShop\Yves\ShopApplication\Plugin\Provider\ShopTwigServiceProvider;
@@ -307,25 +308,25 @@ use SprykerShop\Yves\ShopUi\Plugin\Provider\ShopUiTwigServiceProvider;
  
 class YvesBootstrap
 {
-    ...
+	...
  
-    protected function registerServiceProviders()
-    {
-        ...
+	protected function registerServiceProviders()
+	{
+		...
  
-        $this-&gt;application-&gt;register(new TwigServiceProvider()); // existing registration
+		$this-&gt;application-&gt;register(new TwigServiceProvider()); // existing registration
  
-        $this-&gt;application-&gt;register(new ShopApplicationServiceProvider());
-        $this-&gt;application-&gt;register(new ShopControllerEventServiceProvider());
-        $this-&gt;application-&gt;register(new ShopTwigServiceProvider());
-        $this-&gt;application-&gt;register(new WidgetServiceProvider());
-        $this-&gt;application-&gt;register(new WidgetTagServiceProvider());
-        $this-&gt;application-&gt;register(new ShopUiTwigServiceProvider());
+		$this-&gt;application-&gt;register(new ShopApplicationServiceProvider());
+		$this-&gt;application-&gt;register(new ShopControllerEventServiceProvider());
+		$this-&gt;application-&gt;register(new ShopTwigServiceProvider());
+		$this-&gt;application-&gt;register(new WidgetServiceProvider());
+		$this-&gt;application-&gt;register(new WidgetTagServiceProvider());
+		$this-&gt;application-&gt;register(new ShopUiTwigServiceProvider());
  
-        $this-&gt;application-&gt;register(new SprykerTwigServiceProvider()); // existing registration
+		$this-&gt;application-&gt;register(new SprykerTwigServiceProvider()); // existing registration
  
-        ...
-    }
+		...
+	}
 }</code></pre>
                                                         </div>
                                                     </div>
@@ -333,14 +334,16 @@ class YvesBootstrap
                                                     <h4>Inherit YvesBootstrap</h4>
                                                     <p>You need to inherit YvesBootstrap from SprykerShop\Yves\ShopApplication\YvesBootstrap</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Click to expand the code sample</b></a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><b>src/Pyz/Yves/Application/YvesBootstrap.php</b><pre><code class="language-PHP line-numbers">use SprykerShop\Yves\ShopApplication\YvesBootstrap as SprykerYvesBootstrap;
+                                                        <div class="MCDropDownBody dropDownBody"><b>src/Pyz/Yves/Application/YvesBootstrap.php</b><pre><code class="language-PHP line-numbers">
+use SprykerShop\Yves\ShopApplication\YvesBootstrap as SprykerYvesBootstrap;
  
 class YvesBootstrap extends SprykerYvesBootstrap{</code></pre>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
                                                     <h4>Adopt routers in YvesBootstrap</h4>
-                                                    <p>You will also need to change the applied SilexRouter so that the new controllers from the SprykerShop namespace can be used.</p><pre><code class="language-PHP line-numbers">// use Pyz\Shared\Application\Business\Routing\SilexRouter;
+                                                    <p>You will also need to change the applied SilexRouter so that the new controllers from the SprykerShop namespace can be used.</p><pre><code class="language-PHP line-numbers">
+// use Pyz\Shared\Application\Business\Routing\SilexRouter;
 use SprykerShop\Yves\ShopRouter\Plugin\Router\SilexRouter;</code></pre>
                                                     <p>&#160;</p>
                                                     <h4>Change layout for new shop app modules</h4>
@@ -350,8 +353,8 @@ use SprykerShop\Yves\ShopRouter\Plugin\Router\SilexRouter;</code></pre>
                                                         <div class="MCDropDownBody dropDownBody"><b>src/Pyz/Yves/ShopUi/Theme/default/templates/page-layout-main/page-layout-main.twig</b><pre><code class="language-PHP line-numbers">{% extends "@application/layout/layout.twig" %}</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Don't forget to flush the cache afterwards.</p><pre><code class="language-PHP line-numbers">console cache:empty-all</code></pre>
-                                                    <h3>&#160;</h3>
+                                                    <p>Don't forget to flush the cache afterwards.</p><pre xml:space="preserve"><code class="language-PHP line-numbers">console cache:empty-all</code></pre>
+                                                    <p>&#160;</p>
                                                     <h3>Publish &amp; Synchronize</h3>
                                                     <p>By following this document and adjusting all the necessary changes in Demoshop, you will be able to set up the infrastructure for Publish &amp; Synchronize. If you need to learn more about any requirements needed and changes made to each particular feature, then read their own installation guides.</p>
                                                     <p>&#160;</p>
