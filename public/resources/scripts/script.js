@@ -1,4 +1,4 @@
-﻿
+
 function getSlick ($) {
     'use strict';
     var Slick = window.Slick || {};

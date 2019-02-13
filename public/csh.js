@@ -1,8 +1,8 @@
-/// <reference path="../Scripts/jquery.js" />
-/// <reference path="../Scripts/MadCapUtilities.js" />
-/// <reference path="../Scripts/MadCapGlobal.js" />
-/// <reference path="../Scripts/MadCapDom.js" />
-/// <reference path="Scripts/MadCapHelpSystem.js" />
+/// <reference path="../scripts/jquery.js" />
+/// <reference path="../scripts/MadCapUtilities.js" />
+/// <reference path="../scripts/MadCapGlobal.js" />
+/// <reference path="../scripts/MadCapDom.js" />
+/// <reference path="scripts/MadCapHelpSystem.js" />
 
 /*!
 * Copyright MadCap Software
