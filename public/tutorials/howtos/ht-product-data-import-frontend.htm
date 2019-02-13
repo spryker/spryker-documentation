@@ -73,24 +73,24 @@
 
 .needs-pie
 {
-	behavior: url('../../Resources/Scripts/PIE-no-motw.htc');
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
 }
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <script src="../../Resources/Scripts/custom.modernizr.js">
+        <script src="../../resources/scripts/custom.modernizr.js">
         </script>
-        <script src="../../Resources/Scripts/jquery.min.js">
+        <script src="../../resources/scripts/jquery.min.js">
         </script>
-        <script src="../../Resources/Scripts/require.min.js">
+        <script src="../../resources/scripts/require.min.js">
         </script>
-        <script src="../../Resources/Scripts/require.config.js">
+        <script src="../../resources/scripts/require.config.js">
         </script>
-        <script src="../../Resources/Scripts/foundation.6.2.3_custom.js">
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
         </script>
-        <script src="../../Resources/Scripts/plugins.min.js">
+        <script src="../../resources/scripts/plugins.min.js">
         </script>
-        <script src="../../Resources/Scripts/MadCapAll.js">
+        <script src="../../resources/scripts/MadCapAll.js">
         </script>
     </head>
     <body>
@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="SlzG1SAi80-STFRt70WtuQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="SlzG1SAi80-STFRt70WtuQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="edjVkGb5s0mFlE72gCiKtw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="edjVkGb5s0mFlE72gCiKtw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -251,26 +251,17 @@
 </p>
                                                     <p>The products can also be imported separately, by running the dedicated command below:
 
-</p><pre><code class="language-PHP line-numbers">vendor/bin/console data:import:product-abstract
-</code></pre>
-                                                    <p>In the Demoshop we import abstract (<code>product_abstract.csv</code>) and concrete (<code>product_concrete.csv</code>) products separately. The first line in the CSV files describes the structure of the entries stored in database.
+</p><pre><code class="language-PHP line-numbers">vendor/bin/console data:import:product-abstract</code></pre>
+                                                    <p>In the Demoshop we import abstract (<var>product_abstract.csv</var>) and concrete (<var>product_concrete.csv</var>) products separately. The first line in the CSV files describes the structure of the entries stored in database.
 
 </p>
-                                                    <p>Both abstract and concrete products have some attributes that are localized and non-localized. In the csv files the localized attributes contains the locales as suffix, such as <code>abstract_sku</code> which is a non-localized attribute of the product or <code>name.en_US</code> which is the localized name of the product.
+                                                    <p>Both abstract and concrete products have some attributes that are localized and non-localized. In the csv files the localized attributes contains the locales as suffix, such as <var>abstract_sku</var> which is a non-localized attribute of the product or <var>name.en_US</var> which is the localized name of the product.
 </p>
-                                                    <p>
-There are also several fields such as <code>attribute_key_1</code> and <code>value_1</code> which represent a non-localized product attribute and it’s value. Localized product attributes also contain the locales as a suffix in the header of the csv file. These product attributes are stored in json format in the database as key-value pairs.
-
-</p>
-                                                    <h3>Load Products Into the Redis Data Store
-</h3>
-                                                    <p>To have this data available on front-end, we must collect it and export to Redis; Yves has no connection to the SQL database and it retrieves the product information through the Redis and Elasticsearch data stores.
-
-</p>
+                                                    <p>There are also several fields such as <var>attribute_key_1</var> and <var>value_1</var> which represent a non-localized product attribute and it’s value. Localized product attributes also contain the locales as a suffix in the header of the csv file. These product attributes are stored in json format in the database as key-value pairs.</p>
+                                                    <h3>Load Products Into the Redis Data Store</h3>
+                                                    <p>To have this data available on front-end, we must collect it and export to Redis; Yves has no connection to the SQL database and it retrieves the product information through the Redis and Elasticsearch data stores.</p>
                                                     <p>The export is done by the collectors. You can manually execute the export to the key-value data stores by running the following command from console:
-
-</p><pre><code class="language-PHP line-numbers">vendor/bin/console collector:storage:export
-</code></pre>
+</p><pre><code class="language-bash">vendor/bin/console collector:storage:export</code></pre>
                                                     <h3>Display Product Information in Front-end
 </h3>
                                                     <p>Now that we have the data in the key-value storage, we are able to show the product details in the front-end views.
@@ -285,20 +276,19 @@ There are also several fields such as <code>attribute_key_1</code> and <code>val
                                                     <p><strong>Example</strong>:
 
 </p>
-                                                    <p>When in Demoshop we request this page: <code>/en/canon-1200d-+-efs-1855mm-89</code>, the <code>StorageRouter</code> will try to find the route for this request. This is done in the <code>StorageRouter::match($pathInfo)</code> operation.
+                                                    <p>When in Demoshop we request this page: <var>/en/canon-1200d-+-efs-1855mm-89</var>, the <var>StorageRouter</var> will try to find the route for this request. This is done in the <var>StorageRouter::match($pathInfo)</var> operation.
 
 </p>
                                                     <p>The <code>UrlMatcher</code> will get the URL details for this request; it will decode the URL and generate a key and it will try to retrieve the value for this key from Redis:
 
-</p><pre><code class="language-PHP line-numbers">{"reference_key":"de.en_us.resource.product_abstract.89","type":"product_abstract"}
-</code></pre>
-                                                    <p>If it succeeds in finding a key-value entry for this URL, it will get the value for the returned reference key (in this example <code>de.en_us.resource.product_abstract.89</code>). Now that we have the data, the resource creator according to the resource type will transform the returned JSON in a more understandable format (<code>ProductResourceCreator</code>).
+</p><pre><code class="language-bash">{"reference_key":"de.en_us.resource.product_abstract.89","type":"product_abstract"}</code></pre>
+                                                    <p>If it succeeds in finding a key-value entry for this URL, it will get the value for the returned reference key (in this example <var>de.en_us.resource.product_abstract.89</var>). Now that we have the data, the resource creator according to the resource type will transform the returned JSON in a more understandable format (<var>ProductResourceCreator</var>).
 
 </p>
                                                     <p>After building the product, the resource creator will route the request to the corresponding controller action and will pass the built product to it.
 
 </p>
-                                                    <p>In Demoshop, product details requests are routed to <code>ProductController::detailAction(ProductAbstractInterface $product)</code> from the Product module.
+                                                    <p>In Demoshop, product details requests are routed to <var>ProductController::detailAction(ProductAbstractInterface $product)</var> from the Product module.
 
 </p>
                                                     <p>You can find the view associated with this controller action under <code>Pyz\Yves\Product\Theme\demoshop\product\detail.twig</code>.
@@ -326,8 +316,7 @@ In the <code>product_abstract.csv</code> file add the “waterproof” key to on
 </p>
                                                     <p>The process of importing products can only happen once so in order to re-import every product we’ll need to reset the data stores and reinstall it with the following command:<![CDATA[
 
-]]></p><pre><code class="language-PHP line-numbers">./setup -i
-</code></pre>
+]]></p><pre><code class="language-PHP line-numbers">./setup -i</code></pre>
                                                     <p>Now you have the data containing your changes imported in the SQL database and in the Redis data store, and the product detail page should also display the new attribute we’ve just added.
 </p>
                                                     <p>&#160;</p>
