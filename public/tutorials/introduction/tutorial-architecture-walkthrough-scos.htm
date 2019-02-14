@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|Introduction">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Tutorial - Architectural Walkthrough - Spryker Commerce OS</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="2Xk2HzDjYEyOtL_Ouo8eQw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="2Xk2HzDjYEyOtL_Ouo8eQw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Tutorial - Architectural Walkthrough - <span class="GeneralProductName">Spryker Commerce OS</span></h1>
+                                                    <p class="info">This tutorial is also available on the Spryker Training web-site. For more information and hands-on exercises, visit the <a href="https://training.spryker.com/courses/developer-bootcamp">Spryker Training</a> web-site.</p>
+                                                    <p>The main idea of this task is to understand the Spryker architecture and how things work all together. </p>
+                                                    <p>We will implement a very simple functionality in the back-end application to reverse a string. Then we will let the front-end application connect to the back-end one in order to use this functionality and show the result on a webpage in the shop.</p>
+                                                    <h2>Challenge Description</h2>
+                                                    <ul>
+                                                        <li value="1">Build a <b>HelloSpryker</b> module in Zed that will render the "Hello Spryker!" string in <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_ MCHotSpotImage">reverse order<img class="MCExpanding_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody">"!rekyrpS olleH"</span></span> on the screen.</li>
+                                                        <li value="2">Build a <b>HelloSpryker</b> module in Yves that communicates with Zed using the Client to retrieve the same <span class="MCExpanding MCExpanding_Open expanding"><a href="javascript:void(0);" class="MCExpandingHead MCExpandingHotSpot expandingHead MCExpandingHotSpot_ MCHotSpotImage">reversed string<img class="MCExpanding_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /></a><span class="MCExpandingBody expandingBody">"!rekyrpS olleH" </span></span> and shows on a webpage in the shop.</li>
+                                                        <li value="3">Add Zed persistence layer in <b>HelloSpryker</b> module to store and get the reversed string to and from the database.</li>
+                                                        <li value="4">Move the functionality that returns the reversed string to a new module (<i>StringFormat</i>), then provide the string to the <b>HelloSpryker</b> module. </li>
+                                                    </ul>
+                                                    <p class="info">This means building a dependency from the HelloSpryker module to the StringFormat one.</p>
+                                                    <h2>Challenge Solving Highlights</h2>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Build the HelloSpryker module in Zed to reverse the string</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ol>
+                                                                <li value="1">
+						To add a new module in Zed, go to <code>/src/Pyz/Zed</code> and add a new folder called <i>HelloSpryker</i>.
+                        <p class="info">A new module is simply a new folder.</p></li>
+                                                                <li value="2">The communication layer in a module is its entry point, so we will add it first and check if your <a name="module_"></a>module responds:
+							<p>1. Create a new folder under <i>HelloSpryker</i> called <b>Communication</b>.</p><p>2. Create a folder called <b>Controller</b> inside the <b>Communication</b> folder.</p><p>3. Create a new controller called <code>IndexController</code>. This controller has an action that returns only "HelloSpryker!" for now:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker\Communication\Controller;
+								
+use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+ 
+class IndexController extends AbstractController
+{
+	/**
+	* @param Request $request
+	*
+	* @return array
+	*/
+	public function indexAction(Request $request)
+	{
+	return ['string' =&gt; 'Hello Spryker!'];
+	}
+}						
+						</code></pre></p></li>
+                                                                <li value="3">To render the text in the Zed UI template, add the presentation layer with the twig file that loads as the action's response.
+						<p>1. Add a new folder called <b>Presentation</b>.</p><p>2. Inside it add a folder for the controller and the twig file for the action. So this would be: <code>Index/index.twig</code>.</p><p>The twig file for your action looks like this:</p><p><pre><code class="language-PHP line-numbers">
+{% extends '@Gui/Layout/layout.twig' %}
+{% block content %}
+	{{ string }}
+{% endblock %}																			
+						</code></pre></p></li>
+                                                                <li value="4">To see "Hello Spryker!", go to <a href="http://zed.de.suite.local/hello-spryker">http://zed.de.suite.local/hello-spryker</a>.</li>
+                                                            </ol>
+                                                            <p>As reversing a string belongs to the business logic, you need to build a Business layer for your module.</p>
+                                                            <ol>
+                                                                <li value="1">Add a folder called <i>Business</i> inside the <b>HelloSpryker</b> module.</li>
+                                                                <li value="2">Business layer needs three main classes:
+					<ul><li value="1"><b><a href="#facade_class">Facade</a></b> to work as the main API</li><li value="2"><b><a href="#factory">Factory</a></b> to instantiate the needed objects and inject their dependencies</li><li value="3"><b><a href="#model_folder">Model</a></b> to perform the actual business logic</li></ul><p>Following that, first build the <a name="facade_class"></a>facade class, and don't forget the facade interface:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker\Business;
+ 
+use Spryker\Zed\Kernel\Business\AbstractFacade;
+ 
+class HelloSprykerFacade extends AbstractFacade implements HelloSprykerFacadeInterface
+{
+	// Your code goes here
+}
+						</code></pre></p><p>Second, add the <a name="factory"></a>factory:</p><p><pre><code class="language-PHP line-numbers">
+	namespace Pyz\Zed\HelloSpryker\Business;
+ 
+use Pyz\Zed\HelloSpryker\Business\Model\StringReverser;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+ 
+class HelloSprykerBusinessFactory extends AbstractBusinessFactory
+{
+	// Your code goes here
+}
+						</code></pre></p><p>And thirdly, add your <a name="model_folder"></a>model folder inside the business layer and add class to handle reversing the string. Call the method as <code>reverseString()</code>.</p><p class="info">To reverse the string, you can simply use method <code>strrev()</code>.</p></li>
+                                                            </ol>
+                                                            <p>It's time to hook things together.</p>
+                                                            <ol>
+                                                                <li value="1">Instantiate an object from your class in the factory and let a facade method use the new factory method in order to get the needed object. Then call the <code>reverseString()</code> method from the object.
+					<p>Your facade method should look like this:</p><p><pre><code class="language-PHP line-numbers">
+/**
+* @return StringReverser
+*/
+public function createStringReverser()
+{
+	return new StringReverser();
+}						
+									</code></pre></p><p><pre><code class="language-PHP line-numbers">
+/**
+* @param string $originalString
+*
+* @return string
+*/
+public function reverseString($originalString)
+{
+	return $this-&gt;getFactory()
+		-&gt;createStringReverser()
+		-&gt;reverseString($originalString);
+}					
+						</code></pre></p></li>
+                                                                <li value="2">Finally, let's call the facade method from the controller <a href="#module_">we built in the very begging</a>.
+                    <p><pre><code class="language-PHP line-numbers">
+/**
+* @param Request $request
+*
+* @return array
+*/
+public function indexAction(Request $request)
+{
+	$originalString = "Hello Spryker!";
+	$reversedString = $this-&gt;getFacade()-&gt;reverseString($originalString);
+     
+	return ['string' =&gt; $reversedString];
+}
+					</code></pre></p><p>To summarize, when accessing a URL in Zed UI the action responds to the requests, then it calls the facade which finally calls the model to perform the needed business logic.</p></li>
+                                                                <li value="3">Go to <a href="http://zed.de.suite.local/hello-spryker">http://zed.de.suite.local/hello-spryker</a> to see "!rekyrpS olleH"</li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />2. Build the HelloSpryker module in Yves</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ol>
+                                                                <li value="1">Add a new Yves module called <b>HelloSpryker</b> in <code>/src/Pyz/Yves</code>.</li>
+                                                                <li value="2">Add a new controller for the module.
+					<ol><li value="1">Add a new folder called <i>Controller</i> inside the <b>HelloSpryker</b> module.</li><li value="2">Add the following controller class called <code>IndexController</code>:</li><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Yves\HelloSpryker\Controller;
+ 
+use Generated\Shared\Transfer\HelloSprykerTransfer;
+use Spryker\Yves\Kernel\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+ 
+	/**
+	* @method \Pyz\Client\HelloSpryker\HelloSprykerClientInterface getClient()
+	*/
+	class IndexController extends AbstractController
+	{
+	/**
+	* @param Request $request
+	*
+	* @return \Spryker\Yves\Kernel\View\View
+	*/
+	public function indexAction(Request $request)
+	{
+		$data = ['reversedString' =&gt; 'Hello Spryker!'];
+ 
+		return $this-&gt;view(
+			$data,
+			[],
+			'@HelloSpryker/views/index/index.twig'
+		);
+	}
+}
+							</code></pre></p></ol></li>
+                                                                <li value="3">Add the route to the controller:
+					<ol><li value="1">Add a new folder inside the <b>HelloSpryker</b> module called <i>Plugin</i>,</li><li value="2">Inside the <i>Plugin</i> folder, add a folder called <i>Provider</i>.</li><li value="3">Add your <code>ControllerProvider</code> class with the name <code>HelloSprykerControllerProvider</code>:</li><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Yves\HelloSpryker\Plugin\Provider;
+ 
+use Silex\Application;
+use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
+ 
+class HelloSprykerControllerProvider extends AbstractYvesControllerProvider
+{
+	const HELLO_SPRYKER_INDEX = 'hello-spryker-index';
+ 
+	/**
+	* @param \Silex\Application $app
+	*
+	* @return void
+	*/
+	protected function defineControllers(Application $app)
+	{
+		$this-&gt;createGetController('/hello-spryker', static::HELLO_SPRYKER_INDEX, 'HelloSpryker', 'Index', 'index');
+	}
+}
+							</code></pre></p></ol></li>
+                                                                <li value="4">Register the <code>ControllerProvider</code> in the application, so the application knows about your controller action. 
+					<p>Go to <code>YvesBootstrap::getControllerProviderStack</code> method in <b>ShopApplication</b> module and add <code>HelloSprykerControllerProvider</code> to the array.</p></li>
+                                                                <li value="5">Finally add the twig file to render your Hello Spryker page.
+					<p>Add the following folder structure inside the <b>HelloSpryker</b> module: <code>Theme/default/views/index</code>.</p><p>This folder structure reflects your theme and controller names. Default is the theme name, and index is the controller name. For every action there is a template with the same name.</p><p>As your action is called <i>index</i>, add a twig file for your action called <code>index.twig</code>:</p><p><pre><code class="language-PHP line-numbers">
+{% extends template('page-layout-main') %}
+ 
+{% define data = {
+	reversedString: _view.reversedString
+} %}
+ 
+{% block content %}
+	&lt;div&gt;&lt;h2&gt;{{ data.reversedString }}&lt;/h2&gt;&lt;/div&gt;
+{% endblock %}
+						</code></pre></p></li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />3. Create HelloSpryker transfer object and use it</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>Transfer objects are a great way to send data from Yves to Zed, and for communication between different objects in general. Transfer object definitions are located in Shared directories as these objects are shared between Yves and Zed.</p>
+                                                            <ol>
+                                                                <li value="1">To add a HelloSpryker transfer, add a new folder inside <code>/src/Shared</code> and call it <i>HelloSpryker</i>. Then add another folder called <i>Transfer</i>.</li>
+                                                                <li value="2">Transfer objects utilize XML to define their schemas. Add an XML file inside <i>Transfer</i> directory and call it <code>hello_spryker.transfer.xml</code> then add the following transfer schema:
+					<p><pre><code class="language-PHP line-numbers">
+&lt;?xml version="1.0"?&gt;
+&lt;transfers xmlns="spryker:transfer-01"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
+     
+	&lt;transfer name="HelloSpryker"&gt;
+		&lt;property name="originalString" type="string" /&gt;
+		&lt;property name="reversedString" type="string" /&gt;
+		&lt;/transfer&gt;
+&lt;/transfers&gt;
+						</code></pre></p></li>
+                                                                <li value="3">Run the console command: <code>console transfer:generate</code>.
+					<p>The transfer object is generated and ready to use.</p></li>
+                                                                <li value="4">Update the <b>Facade</b> to use the transfer object instead of sting as a parameter:
+					<p><pre><code class="language-PHP line-numbers">
+/**
+* @param HelloSprykerTransfer $helloSprykerTransfer
+*
+* @return HelloSprykerTransfer
+*/
+public function reverseString(HelloSprykerTransfer $helloSprykerTransfer)
+{
+	return $this-&gt;getFactory()
+		-&gt;createStringReverser()
+		-&gt;reverseString($helloSprykerTransfer);
+}
+									</code></pre></p></li>
+                                                                <li value="5">Update your model and <code>IndexController</code> accordingly.</li>
+                                                                <p class="info">You should still get "!rekyrpS olleH" when accessing <a href="http://zed.de.suite.local/hello-spryker">http://zed.de.suite.local/hello-spryker</a>.</p>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />4. Build a HelloSpryker Client to connect Yves to Zed</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>To build the communication between Yves and Zed, we need the <b>Client</b>. Building a client for <i>HelloSpryker</i> is similar to building a module in Zed or Yves. </p>
+                                                            <ol>
+                                                                <li value="1">Add a new folder under <code>/src/Pyz/Client</code> and call it <i>HelloSpryker</i>.</li>
+                                                                <li value="2">The Client structure consists also of three main classes: 
+					<ul><li value="1"><b><a href="#client_class">Client</a></b> to function as the main API to the clilent</li><li value="2"><b><a href="#factory_1">Factory</a></b>  to instantiate the needed objects and inject their dependencies</li><li value="3"><b><a href="#stub">Stub</a></b> to do the actual call to Zed with the right payload.</li></ul><p>Create the <a name="client_class"></a>client class inside the <i>HelloSpryker</i> client folder like this:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Client\HelloSpryker;
+ 
+use Spryker\Client\Kernel\AbstractClient;
+ 
+class HelloSprykerClient extends AbstractClient implements HelloSprykerClientInterface
+{
+	// Your code goes here
+}		
+									</code></pre></p><p>Now add the <a name="factory_1"></a>factory:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Client\HelloSpryker;
+ 
+use Pyz\Client\HelloSpryker\Zed\HelloSprykerStub;
+use Spryker\Client\Kernel\AbstractFactory;
+ 
+class HelloSprykerFactory extends AbstractFactory
+{
+	// Your code goes here
+}
+						</code></pre></p><p>Then add the <a name="stub"></a>stub. As the client is calling Zed, create a folder called <i>Zed</i> and add the stub inside it:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Client\HelloSpryker\Zed;
+ 
+use Spryker\Client\ZedRequest\Stub\ZedRequestStub;
+ 
+class HelloSprykerStub extends ZedRequestStub implements HelloSprykerStubInterface
+{
+	// Your code goes here
+}									
+									</code></pre></p></li>
+                                                                <li value="3">Add the class <code>HelloSprykerDependencyProvider</code> inside the <b>HelloSpryker</b> module in order to provide the <i>ZedRequest Client</i> to our <i>HelloSpryker Client</i>.
+					<div class="info">Any client that calls Zed from Yves uses the <b>ZedRequest</b> module. This module is responsible, as the name suggest, for the request to Zed from Yves, and uses its own client to do so. The client name is <b>ZedRequest Client</b>. 
+						<p>Following the modular approach in Spryker, all other modules need to use the ZedRequest Client whenever a request is to be sent to Zed from Yves.</p><p>As <b>ZedRequest</b> is a separated module, a dependency is needed between the calling module, HelloSpryker in our case, and ZedRequest module.</p><p>An architectural concept in Spryker called <code>DependencyProvider</code> is used to inject these dependencies between different modules.</p></div><p><pre><code class="language-PHP line-numbers">
+									
+namespace Pyz\Client\HelloSpryker;
+ 
+use Spryker\Client\Kernel\AbstractDependencyProvider;
+use Spryker\Client\Kernel\Container;
+ 
+class HelloSprykerDependencyProvider extends AbstractDependencyProvider
+{
+	const CLIENT_ZED_REQUEST = 'CLIENT_ZED_REQUEST';
+ 
+	/**
+	 * @param \Spryker\Client\Kernel\Container $container
+	 *
+	 * @return \Spryker\Client\Kernel\Container
+	 */
+	public function provideServiceLayerDependencies(Container $container)
+	{
+		$container = $this-&gt;addZedRequestClient($container);
+ 
+		return $container;
+	}
+ 
+	/**
+	 * @param \Spryker\Client\Kernel\Container $container
+	 *
+	 * @return \Spryker\Client\Kernel\Container
+	 */
+	protected function addZedRequestClient(Container $container)
+	{
+		$container[static::CLIENT_ZED_REQUEST] = function (Container $container) {
+			return $container-&gt;getLocator()-&gt;zedRequest()-&gt;client();
+		};
+ 
+		return $container;
+	}
+}
+									</code></pre></p><p>As the factory is responsible for dependency injection inside our module (the DependencyProvider on the other hand is responsible for the dependencies between modules and not inside one module), inject the ZedRequest Client into the stub using the factory:</p><p><pre><code class="language-PHP line-numbers">
+/**
+ * @return \Pyz\Client\HelloSpryker\Zed\HelloSprykerStubInterface
+ */
+public function createZedHelloSprykerStub()
+{
+	return new HelloSprykerStub($this-&gt;getZedRequestClient());
+}
+ 
+/**
+ * @return \Spryker\Client\ZedRequest\ZedRequestClientInterface
+ */
+protected function getZedRequestClient()
+{
+	return $this-&gt;getProvidedDependency(HelloSprykerDependencyProvider::CLIENT_ZED_REQUEST);
+}								
+									</code></pre></p><p>Now, you have all the objects you need and the client is ready to call Zed.</p></li>
+                                                                <li value="4">Add a method to the stub to call Zed and pass the transfer object as a pay load like this:
+					<p><pre><code class="language-PHP line-numbers">
+/**
+ * @param HelloSprykerTransfer $helloSprykerTransfer
+ *
+ * @return HelloSprykerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+ */
+public function reverseString(HelloSprykerTransfer $helloSprykerTransfer)
+{
+	return $this-&gt;zedStub-&gt;call(
+		'/hello-spryker/gateway/reverse-string',
+		$helloSprykerTransfer
+	);
+}
+									</code></pre></p><div class="info">This method will call the Zed module HelloSpryker. 
+							<p>The first parameter in the <i>call()</i> method is the endpoint of the request which is divided into three main sections: <code>moduleName/controllerName/ActionName</code>. Here, we are calling the module <b>HelloSpryker</b>, the <i>GatewayController</i>, and the <i>ReverseStringAction</i>.</p><p>By convention, clients send requests to <i>GatewayControllers</i>. The second parameter is the payload of the request which is always a transfer object, any transfer object.</p></div></li>
+                                                                <li value="5">Add a client method in the <i>HelloSprykerClient</i> to call the <code>reverseString()</code> method in the stub.
+<p><pre><code class="language-PHP line-numbers">
+/**
+ * @param HelloSprykerTransfer $helloSprykerTransfer
+ *
+ * @return HelloSprykerTransfer|\Spryker\Shared\Kernel\Transfer\TransferInterface
+ */
+public function reverseSting(HelloSprykerTransfer $helloSprykerTransfer)
+{
+	return $this-&gt;getFactory()
+		-&gt;createZedHelloSprykerStub()
+		-&gt;reverseString($helloSprykerTransfer);
+}									
+									</code></pre></p><p>That's it from the client side.</p></li>
+                                                            </ol>
+				Let's get everything hooked together:
+				<ol><li value="1">First, create the <i>GatewayController</i> in the communication layer of Zed, the one that responds to the client's request. 
+<p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker\Communication\Controller;
+ 
+use Generated\Shared\Transfer\HelloSprykerTransfer;
+use Spryker\Zed\Kernel\Communication\Controller\AbstractGatewayController;
+ 
+class GatewayController extends AbstractGatewayController
+{
+	/**
+	 * @param HelloSprykerTransfer $helloSprykerTransfer
+	 *
+	 * @return HelloSprykerTransfer
+	 */
+	public function reverseStringAction(HelloSprykerTransfer $helloSprykerTransfer)
+	{
+		return $this-&gt;getFacade()
+			-&gt;reverseString($helloSprykerTransfer);
+	}
+}									</code></pre></p></li><li value="2">
+						Second, call the client from the <i>IndexController</i> in Yves to reverse the string.
+						<p><pre><code class="language-PHP line-numbers">
+					
+/**
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *
+ * @return array|\Symfony\Component\HttpFoundation\RedirectResponse
+ */
+public function indexAction(Request $request)
+{
+	$helloSprykerTransfer = new HelloSprykerTransfer();
+	$helloSprykerTransfer-&gt;setOriginalString('Hello Spryker!');
+ 
+	$helloSprykerTransfer = $this-&gt;getClient()
+		-&gt;reverseSting($helloSprykerTransfer);
+ 
+	return ['reversedString' =&gt; $helloSprykerTransfer-&gt;getRefersedString()];
+}			
+						</code></pre></p></li><li value="3">Finally, update the twig template in Yves to use <i>reversedString</i>.</li></ol><p>Done! Now go to <a href="http://www.de.suite.local/hello-spryker">http://www.de.suite.local/hello-spryker</a>. You should see: "!rekyrpS olleH".</p></div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />5. Make HelloSpryker Module Read from Database</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ol>
+                                                                <li value="1">Working with the database means working with the persistence layer in Zed. Go back to Zed and add a new folder inside the <b>HelloSpryker</b> module and call it <i>Persistence</i>. Inside <i>Persistence</i>, add the directories <i>Propel</i>/<i>Schema</i>.</li>
+                                                                <li value="2">Propel uses XML, thus Spryker uses XML as well. Inside the Schema directory, add the database XML schema file and call it <code>pyz_hello_spryker.schema.xml</code>:
+					<p><pre><code class="language-PHP line-numbers">
+&lt;?xml version="1.0"?&gt;
+&lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+	namespace="Orm\Zed\HelloSpryker\Persistence"
+	namespaceAutoPackage="false"
+	package="src.Orm.Zed.HelloSpryker.Persistence"&gt;
+ 
+		&lt;table name="pyz_hello_spryker" idMethod="native"&gt;
+			&lt;column name="id_hello_spryker" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/&gt;
+			&lt;column name="reversed_string" required="true" size="128" type="VARCHAR"/&gt;
+ 
+			&lt;id-method-parameter value="pyz_hello_spryker_pk_seq"/&gt;
+		&lt;/table&gt;
+&lt;/database&gt;
+					</code></pre></p></li>
+                                                                <li value="3">Run the console command: <code>console propel:install</code>. Now you have the HelloSpryker table in the database.
+					<p class="tip"> To make sure, open the database and check if the table is there.</p></li>
+                                                                <li value="4">Let's write the reversed string into the database. Modify your model in the Business layer to do so after reversing the string:
+					<p><pre><code class="language-PHP line-numbers">
+/**
+ * @param HelloSprykerTransfer $helloSprykerTransfer
+ *
+ * @return void
+ */
+protected function saveReversedString(HelloSprykerTransfer $helloSprykerTransfer)
+{
+	$helloSprykerEntity = new PyzHelloSpryker();
+ 
+	$helloSprykerEntity-&gt;setReversedString($helloSprykerTransfer-&gt;getReversedString())-&gt;save();
+}	
+					</code></pre></p></li>
+                                                                <li value="5">To read from the database, Spryker provides a concept called <i>QueryContainer</i>. It's the place where you create query objects to get data from the database. 
+					<p>Inside the Persistence directory, create the <code>HelloSprykerPersistenceFactory</code> and <code>HelloSprykerQueryContainer</code>:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker\Persistence;
+ 
+use Orm\Zed\HelloSpryker\Persistence\PyzHelloSprykerQuery;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+ 
+class HelloSprykerPersistenceFactory extends AbstractPersistenceFactory
+{
+	/**
+	 * @return PyzHelloSprykerQuery
+	 */
+	public function createHelloSprykerQuery()
+	{
+		return PyzHelloSprykerQuery::create();
+	}
+}									
+</code></pre></p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker\Persistence;
+ 
+use Spryker\Zed\Kernel\Persistence\AbstractQueryContainer;
+ 
+class HelloSprykerQueryContainer extends AbstractQueryContainer implements HelloSprykerQueryContainerInterface
+{
+	/**
+	 * @param $idHelloSpryker
+	 *
+     * @throws \Spryker\Zed\Propel\Business\Exception\AmbiguousComparisonException
+	 *
+	 * @return \Orm\Zed\HelloSpryker\Persistence\PyzHelloSprykerQuery
+	 */
+	public function queryHelloSprykerById($idHelloSpryker)
+	{
+		return $this-&gt;getFactory()
+			-&gt;createHelloSprykerQuery()
+			-&gt;filterByIdHelloSpryker($idHelloSpryker);
+	}
+ 
+	/**
+	 * @api
+	 *
+	 * @return \Orm\Zed\HelloSpryker\Persistence\PyzHelloSprykerQuery
+	 */
+	public function queryHelloSpryker()
+	{
+		return $this-&gt;getFactory()
+			-&gt;createHelloSprykerQuery();
+	}
+}									
+</code></pre></p></li>
+                                                                <li value="6">Now, let the <i>IndexController</i> in Zed read from the database. 
+					<p>To do so, add a facade method with a model to read and from the database in the business layer.</p><p>Call the model <i>StringReader</i>. Then call the facade method from the <i>IndexController</i> in the communication layer.</p><p>To read from the database, you need to inject the <i>HelloSprykerQueryContainer</i> inside the <i>StringReader</i> using the <i>HelloSprykerBusinessFactory</i> like this:</p><p><pre><code class="language-PHP line-numbers">
+/**
+ * @return StringReader
+ */
+public function createStringReader()
+{
+	 return new StringReader($this-&gt;getQueryContainer());
+}						
+</code></pre></p><p>And the <code>readString()</code>method looks like this:</p><p><pre><code class="language-PHP line-numbers">
+/**
+ * @param int $id
+ *
+ * @return HelloSprykerTransfer
+ */
+public function readString($id)
+{
+	$helloSprykerEntity = $this-&gt;helloSprykerQueryContainer
+		-&gt;queryHelloSprykerById($id)
+		-&gt;findOne();
+ 
+	$helloSprykerTransfer = new HelloSprykerTransfer();
+	$helloSprykerTransfer-&gt;fromArray($helloSprykerEntity-&gt;toArray(), true);
+ 
+ 
+	return $helloSprykerTransfer;
+}							
+</code></pre></p></li>
+                                                            </ol>
+                                                            <p>Now go to <a href="http://zed.de.suite.local/hello-spryker">http://zed.de.suite.local/hello-spryker</a> to see "!rekyrpS olleH".</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />6. Bonus: HelloSpryker Module Dependency with StringReverser</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>The idea of this bonus task is to handle module dependency using the concept of Dependency Providers.</p>
+                                                            <p>As mentioned before, Dependency Providers provide dependencies in a module level, from one module to another. Mainly they provide facades and clients only.</p>
+                                                            <ol>
+                                                                <li value="1">One module can't access other classes form another module. To use Dependency Providers, create a new module in Zed and call it <i>StringReverser</i>.</li>
+                                                                <li value="2">Move the logic of reversing a string from <i>HelloSpryker</i> to <i>StringReverser</i>. 
+					<p class="info">You need to build a business later inside <i>StringReverser</i> with a facade and a model to revers the string.</p></li>
+                                                                <li value="3">In the <b>HelloSpryker</b> module, create a dependency provider class and call it <i>HelloSprykerDependencyProvider</i>.</li>
+                                                                <li value="4">Provide the business layer dependency to the <b>HelloSpryker</b> module and internally use the <i>StringReverser</i> facade to provide the string reversing functionality. 
+						<p>The <i>HelloSprykerDependencyProvider</i> will look like this:</p><p><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\HelloSpryker;
+ 
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+ 
+class HelloSprykerDependencyProvider extends AbstractBundleDependencyProvider
+{
+	const FACADE_STRING_REVERSER = 'FACADE_STRING_REVERSER';
+ 
+	/**
+	 * @param \Spryker\Zed\Kernel\Container $container
+	 *
+	 * @return \Spryker\Zed\Kernel\Container
+	 */
+	public function provideBusinessLayerDependencies(Container $container)
+	{
+		$container = $this-&gt;addStringReverserFacade($container);
+ 
+		return $container;
+	}
+ 
+	/**
+	 * @param \Spryker\Zed\Kernel\Container $container
+	 *
+	 * @return \Spryker\Zed\Kernel\Container
+	*/
+	protected function addStringReverserFacade(Container $container)
+	{
+		$container[static::FACADE_STRING_REVERSER] = function (Container $container) {
+			return $container-&gt;getLocator()-&gt;stringReverser()-&gt;facade();
+		};
+ 
+		return $container;
+	}
+}									
+</code></pre></p></li>
+                                                                <li value="5">Inject the dependency using the <code>HelloSprykerBusinessFactory</code>.
+<p><pre><code class="language-PHP line-numbers">
+/**
+ * @return StringReverserFacade
+ */
+protected function getStringReverserFacade()
+{
+	return $this-&gt;getProvidedDependency(HelloSprykerDependencyProvider::FACADE_STRING_REVERSER);
+}						
+</code></pre></p></li>
+                                                                <li value="6">Use the <i>StringReverserFacade</i> to reverse the string instead of using the logic directly inside the <b>HelloSpryker</b> module.</li>
+                                                            </ol>
+                                                            <p>Go to <a href="http://zed.de.suite.local/hello-spryker">http://zed.de.suite.local/hello-spryker</a> and <a href="http://www.de.suite.local/hello-spryker">http://www.de.suite.local/hello-spryker</a>. You should see: "!rekyrpS olleH".</p>
+                                                        </div>
+                                                    </div>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Jul 20, 2018 </i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
