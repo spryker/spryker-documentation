@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="With the CMS draft feature the shop administrator can create drafts of CMS pages without affecting the current live version of the page." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>CMS Page Drafts and Previews </title>
+        <meta name="author" content="" /><title>CMS Page Drafts and Previews | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="IYgGYoiLTUSpk7rMr7vhAg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="IYgGYoiLTUSpk7rMr7vhAg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="CIUrqVyX5ka4KjQmKdSxZw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="CIUrqVyX5ka4KjQmKdSxZw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,17 +240,15 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>CMS Page Drafts and Previews </h1>
-                                                    <p>
-                                                        <img src="../../resources/images/shoptype/b2b_shop.png" /> <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/demoshop.png" /></p>
+                                                    <h1>CMS Page Drafts and Previews <img src="../../resources/images/shoptype/b2b_shop.png" /> <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <p>With the CMS draft feature the shop administrator can create drafts of CMS pages without affecting the current live version of the page. It is possible to preview draft version of content before publishing it to see how the page will look like when it is live. This article will tell you how to enable the preview draft page feature.</p>
                                                     <h2>Prerequisites</h2>
                                                     <ul>
                                                         <li value="1">Upgrade <var>spryker/cms</var> module to at least 6.2 version. Additional information on how to migrate the <var>spryker/cms</var> module can be found <a href="http://academy.spryker.com/enablement/migration_guides/mg_cms.html">here</a>.</li>
                                                         <li value="2">If you have <var>spryker/cms-collector</var> module installed, upgrade it to at least 2.0 version. Additional information on how to migrate the <var>spryker/cms-collector</var> module can be found <a href="http://academy.spryker.com/enablement/migration_guides/mg_cms_collector.html">here</a>.</li>
-                                                        <li value="3">If you do not have <var>spryker/cms-collector</var> module installed, register your CMS page data expander plugins to <var>spryker/cms</var> module in the <var>CmsDependencyProvider</var> dependency provider.</li>
-            Example of CMS page data expander plugin registration:
-                <pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <li value="3">If you do not have <var>spryker/cms-collector</var> module installed, register your CMS page data expander plugins to <var>spryker/cms</var> module in the <var>CmsDependencyProvider</var> dependency provider.
+            <p class="example"><b>Example of CMS page data expander plugin registration:</b><![CDATA[
+            ]]><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Cms;
 
 use Spryker\Zed\Cms\CmsDependencyProvider as SprykerCmsDependencyProvider;
@@ -266,13 +265,14 @@ class CmsDependencyProvider extends SprykerCmsDependencyProvider
             new CmsPageParameterMapExpanderPlugin(),
         ];
     }
-}
-                        </code></pre><li value="4">Optionally upgrade <var>spryker/cms-gui</var> module to at least 4.3 version if you want to have <a href="#configure-preview-page-access">access to the Yves preview pages from Administration Interface</a>.</li></ul>
+}</code></pre></p></li>
+                                                        <li value="4">Optionally upgrade <var>spryker/cms-gui</var> module to at least 4.3 version if you want to have <a href="#configure-preview-page-access">access to the Yves preview pages from Administration Interface</a>.</li>
+                                                    </ul>
                                                     <h2>Usage in Yves</h2>
-                                                    <ul>
+                                                    <ol>
                                                         <li value="1">Create a controller action for preview pages in Yves.</li>
-                                                        <li value="2">Use <var>CmsClientInterface::getFlattenedLocaleCmsPageData</var> to retrieve the flattened draft data for a specific locale.</li>
-            Example of data retrieval:
+                                                        <li value="2">Use <var>CmsClientInterface::getFlattenedLocaleCmsPageData</var> to retrieve the flattened draft data for a specific locale.
+            <p class="example"><b>Example of data retrieval</b>:
 <pre><code class="language-PHP line-numbers">&lt;?php
     /**
     * @param int $idCmsPage
@@ -288,66 +288,66 @@ class CmsDependencyProvider extends SprykerCmsDependencyProvider
         );
 
         return $localeCmsPageDataRequestTransfer-&gt;getFlattenedLocaleCmsPageData();
-    }
-</code></pre><li value="3">The retrieved CMS data structure should match the Storage's data structure at this point.</li><li value="4">You can use your original CMS page rendering twig to display the preview version.</li><li value="5" data-mc-conditions="Spryker.DemoShop">Check out our <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a> for more detailed examples and ideas regarding the complete Yves integration.</li></ul>
+    }</code></pre></p></li>
+                                                        <li value="3">The retrieved CMS data structure should match the Storage's data structure at this point.</li>
+                                                        <li value="4">You can use your original CMS page rendering twig to display the preview version.</li>
+                                                        <li value="5" data-mc-conditions="Spryker.DemoShop">Check out our <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a> for more detailed examples and ideas regarding the complete Yves integration.</li>
+                                                    </ol>
                                                     <p><a href="#" name="configure-preview-page-access"></a>
                                                     </p>
                                                     <h2>Configuring Yves Preview Page Access From Administration Interface - Optional</h2>
-                                                    <ul>
-                                                        <li value="1">Define the Yves preview page URI in configuration with a numeric sprintf placeholder which stands for the CMS page id.</li>
-           Example of preview page URI registration:
-<pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <ol>
+                                                        <li value="1">Define the Yves preview page URI in configuration with a numeric sprintf placeholder which stands for the CMS page id.
+           <p class="example"><b>Example of preview page URI registration:</b><![CDATA[
+]]><pre><code class="language-PHP line-numbers">&lt;?php
     config_default.php
 
     ...
     $config[CmsGuiConstants::CMS_PAGE_PREVIEW_URI] = '/en/cms/preview/%d';
-    ...
-</code></pre><li value="2">Optionally add "Preview" view button group item to  "List of CMS pages" in the Administration Interface by registering the <var>CmsPageTableExpanderPlugin</var> plugin to access the preview page.</li>
-            Example of page table expander plugin registration:
-               <pre><code class="language-PHP line-numbers">&lt;?php
-    namespace Pyz\Zed\CmsGui;
+    ...</code></pre></p></li>
+                                                        <li value="2">Optionally add "Preview" view button group item to  "List of CMS pages" in the Administration Interface by registering the <var>CmsPageTableExpanderPlugin</var> plugin to access the preview page.
+         <p class="example"><b>Example of page table expander plugin registration:</b><![CDATA[
+         ]]><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsGui;
 
-    use Spryker\Zed\CmsGui\CmsGuiDependencyProvider as SprykerCmsGuiDependencyProvider;
-    use Spryker\Zed\CmsGui\Communication\Plugin\CmsPageTableExpanderPlugin;
+use Spryker\Zed\CmsGui\CmsGuiDependencyProvider as SprykerCmsGuiDependencyProvider;
+use Spryker\Zed\CmsGui\Communication\Plugin\CmsPageTableExpanderPlugin;
 
-    class CmsGuiDependencyProvider extends SprykerCmsGuiDependencyProvider
-    {
-        /**
-         * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
-         */
-        protected function getCmsPageTableExpanderPlugins()
-        {
-            return [
-                new CmsPageTableExpanderPlugin(),
-            ];
-        }
+class CmsGuiDependencyProvider extends SprykerCmsGuiDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CmsPageTableExpanderPluginInterface[]
+     */
+   protected function getCmsPageTableExpanderPlugins()
+   {
+       return [
+         new CmsPageTableExpanderPlugin(),
+       ];
     }
-                    </code></pre><li value="3">Optionally add "Preview" action button to "Edit Placeholders" in the Administration Interface by registering the <var>CreateGlossaryExpanderPlugin</var> plugin to access the preview page.</li>
-           Example of glossary expander plugin registration:
-                <pre><code class="language-PHP line-numbers">&lt;?php
-    namespace Pyz\Zed\CmsGui;
+}</code></pre></p></li>
+                                                        <li value="3">Optionally add "Preview" action button to "Edit Placeholders" in the Administration Interface by registering the <var>CreateGlossaryExpanderPlugin</var> plugin to access the preview page.
+        <p class="example"><b>Example of glossary expander plugin registration:
+</b><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsGui;
 
-    use Spryker\Zed\CmsGui\CmsGuiDependencyProvider as SprykerCmsGuiDependencyProvider;
-    use Spryker\Zed\CmsGui\Communication\Plugin\CreateGlossaryExpanderPlugin;
+use Spryker\Zed\CmsGui\CmsGuiDependencyProvider as SprykerCmsGuiDependencyProvider;
+use Spryker\Zed\CmsGui\Communication\Plugin\CreateGlossaryExpanderPlugin;
 
-    class CmsGuiDependencyProvider extends SprykerCmsGuiDependencyProvider
-    {
-        /**
-         * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
-         */
-        protected function getCreateGlossaryExpanderPlugins()
-            {
-                return [
-                    new CreateGlossaryExpanderPlugin(),
-                ];
-            }
-    }
-                    </code></pre></ul>
+class CmsGuiDependencyProvider extends SprykerCmsGuiDependencyProvider
+{
+   /**
+    * @return \Spryker\Zed\CmsGui\Dependency\Plugin\CreateGlossaryExpanderPluginInterface[]
+    */
+   protected function getCreateGlossaryExpanderPlugins()
+     {
+       return [
+         new CreateGlossaryExpanderPlugin(),
+       ];
+     }
+}</code></pre></p></li>
+                                                    </ol>
                                                     <h2>Restricting Access to Preview Page</h2>
-                                                    <p>
-            You can restrict customer access to the preview page by
-            installing and configuring <var>spryker/customer-user-connector</var> module.
-</p>
+                                                    <p>You can restrict customer access to the preview page by installing and configuring <var>spryker/customer-user-connector</var> module.</p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

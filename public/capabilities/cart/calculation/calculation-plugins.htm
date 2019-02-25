@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The information in this topic covers the available calculator plugins along with their examples." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Calculator Plugins    </title>
+        <meta name="author" content="" /><title>Calculator Plugins | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Xkcjiv64ZE22zGtRAstRqw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Xkcjiv64ZE22zGtRAstRqw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="turiqtRdeEWenu7bO9gryQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="turiqtRdeEWenu7bO9gryQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,93 +240,62 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <ul>
-                                                        <ul>
-                                                            <li value="1">
-                                                                <h1>Calculator Plugins <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
-                                                                <p>Calculator plugins are registered in the <var>CalculationDependencyProvider::getQuoteCalculatorPluginStack()</var> for <var>QuoteTransfer</var> and <var>CalculationDependencyProvider::getOrderCalculatorPluginStack()</var> or in later versions of the Calculation module 4.00 and above <var>CalculationDependencyProvider::getQuoteCalculatorPluginStack()</var> for <var>OrderTransfer</var>.</p>
-                                                                <p>This method can be extended on the project level and the plugin stack can be updated with your own plugins.</p>
-                                                                <p>Each calculator must implement <var>CalculatorPluginInterface</var>. </p>
-                                                                <p>For more information see:&#160;</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <h1>Calculator Plugins <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
+                                                    <p>Calculator plugins are registered in the <var>CalculationDependencyProvider::getQuoteCalculatorPluginStack()</var> for <var>QuoteTransfer</var> and <var>CalculationDependencyProvider::getOrderCalculatorPluginStack()</var> or in later versions of the Calculation module 4.00 and above <var>CalculationDependencyProvider::getQuoteCalculatorPluginStack()</var> for <var>OrderTransfer</var>.</p>
+                                                    <p>This method can be extended on the project level and the plugin stack can be updated with your own plugins.</p>
+                                                    <p>Each calculator must implement <var>CalculatorPluginInterface</var>.
+			<pre><code class="language-PHP line-numbers">&lt;?php
 interface CalculationPluginInterface
 {
-    /**
-     * @api
-     *
-     * @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
-     *
-     * @return void
-     */
-    public function recalculate(CalculableObjectTransfer $calculableObjectTransfer);
-}</code></pre>
-                                                                <p>&#160;</p>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><![CDATA[
-]]><strong>RemoveTotalsCalculatorPlugin</strong> - Resets quote totals, sets TotalsTransfer empty.
-</li>
-                                                                    <li class="bullet_list" value="2"><strong>RemoveAllCalculatedDiscountsCalculatorPlugin </strong>- Resets every CalculatedDiscountTransfer.
-
-</li>
-                                                                    <li class="bullet_list" value="3"><strong>ItemGrossAmountsCalculatorPlugin</strong> - Calculates <var>sumGrossPrice</var> for each ItemTransfer.
-</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">ItemTransfer::sumGrossPrice = ItemTransfer::unitGrossPrice * ItemTransfer::quantity</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>ProductOptionGrossSumCalculatorPlugin</strong> - <var>Calculates unitGrossPriceWithProductOptions</var>, <var>sumGrossPriceWithProductOptions </var>for ItemTransfer and <var>sumGrossPrice</var> for ProductOptionTransfer.
-</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">ProductOptionTransfer::sumGrossPrice = ProductOptionTransfer::unitGrossPrice * ProductOptionTransfer::quantity
+/**
+* @api
+*
+* @param \Generated\Shared\Transfer\CalculableObjectTransfer $calculableObjectTransfer
+*
+* @return void
+*/
+public function recalculate(CalculableObjectTransfer $calculableObjectTransfer);
+}</code></pre></p>
+                                                    <ul>
+                                                        <li value="1"><strong>RemoveTotalsCalculatorPlugin</strong> - Resets quote totals, sets TotalsTransfer empty.</li>
+                                                        <li value="2"><strong>RemoveAllCalculatedDiscountsCalculatorPlugin </strong>- Resets every CalculatedDiscountTransfer.</li>
+                                                        <li value="3"><strong>ItemGrossAmountsCalculatorPlugin</strong> - Calculates <var>sumGrossPrice</var> for each ItemTransfer.</li>
+                                                        <p><pre><code class="language-bash">ItemTransfer::sumGrossPrice = ItemTransfer::unitGrossPrice * ItemTransfer::quantity</code></pre>
+                                                        </p>
+                                                        <li value="4"><strong>ProductOptionGrossSumCalculatorPlugin</strong> - <var>Calculates unitGrossPriceWithProductOptions</var>, <var>sumGrossPriceWithProductOptions </var>for ItemTransfer and <var>sumGrossPrice</var> for ProductOptionTransfer.
+				<p><pre><code class="language-bash">ProductOptionTransfer::sumGrossPrice = ProductOptionTransfer::unitGrossPrice * ProductOptionTransfer::quantity
 ItemTransfer::unitGrossPriceWithProductOptions = sum(ProductOptionTransfer::unitGrossPrice) + ItemTransfer::unitGrossPrice
-ItemTransfer::sumGrossPriceWithProductOptions = sum(ProductOptionTransfer::sumGrossPrice) + ItemTransfer:sumGrossPrice
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>SubtotalTotalsCalculatorPlugin</strong> - Sums each of the <var>sumGrossPriceWithProductOptions</var> items.</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">TotalsTransfer::subtotal = sum(ItemTransfer::sumGrossPriceWithProductOptions)
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>ExpensesGrossSumAmountCalculatorPlugin</strong> - Calculates <var>sumGrossPrice</var> for each item.
-</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">ExpenseTransfer::sumGrossPrice = ExpenseTransfer::unitGrossPrice * ExpenseTransfer::quantity
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>ExpenseTotalsCalculatorPlugin</strong> - Calculates <var>expenseTotal</var> in TotalsTransfer.</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">TotalsTransfer::expenseTotal = sum(ExpenseTransfer::sumGrossPrice)
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>DiscountCalculatorPlugin</strong> - Applies discounts to current QuoteTransfer each discountable item with property <var>calculatedDiscounts</var>, gets discounts filled. Also <var>voucherDiscounts </var>and <var>cartRuleDiscounts</var> are populated with additional used discount data for order level.</li>
-                                                                </ul>
-                                                                <p class="info">Discount Calculation
-<br />Discount calculation is a separate topic and is explained here <a href="../../promotions_and_discounts/discount.htm" class="MCXref xref">Discount    </a>.
-</p>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>SumGrossCalculatedDiscountAmountCalculatorPlugin</strong> - Calculates and sets <var>ItemTransfer</var> amounts after discounts to <var>sumGrossPriceWithProductOptionAndDiscountAmounts</var> and <var>unitGrossPriceWithProductOptionAndDiscountAmounts;</var> sets expense amounts after discounts to <var>unitGrossPriceWithDiscounts</var> and <var>sumGrossPriceWithDiscounts</var>.</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">ItemTransfer::unitGrossPriceWithProductOptionAndDiscountAmounts = ItemTransfer::unitGrossPriceWithProductOptions -  (sum(ItemTransfer:calculatedDiscounts::unitGrossPrice) + sum(ProductOptionTransfer::calculatedDiscounts::unitGrossPrice))
-ItemTransfer::sumGrossPriceWithProductOptionAndDiscountAmounts = ItemTransfer::sumGrossPriceWithProductOptions -  (sum(ItemTransfer:calculatedDiscounts::sumGrossPrice) + sum(ProductOptionTransfer::calculatedDiscounts::sumGrossPrice))
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>DiscountTotalsCalculatorPlugin</strong> - Calculates total for discounts used and sets it to <var>totalDiscount</var> in <var>TotalsTransfer</var>. Sum all discountable item <var>CalculatedDiscountTransfer</var> gross amounts:</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">TotalsTransfer:discountTotal += sum(ItemTransfer::CalculateDiscountTransfer::sumGrossAmount +
+ItemTransfer::sumGrossPriceWithProductOptions = sum(ProductOptionTransfer::sumGrossPrice) + ItemTransfer:sumGrossPrice</code></pre></p></li>
+                                                        <li value="5"><strong>SubtotalTotalsCalculatorPlugin</strong> - Sums each of the <var>sumGrossPriceWithProductOptions</var> items.
+			<p><pre><code class="language-bash">TotalsTransfer::subtotal = sum(ItemTransfer::sumGrossPriceWithProductOptions)</code></pre></p></li>
+                                                        <li value="6"><strong>ExpensesGrossSumAmountCalculatorPlugin</strong> - Calculates <var>sumGrossPrice</var> for each item.
+			<p><pre><code class="language-bash">ExpenseTransfer::sumGrossPrice = ExpenseTransfer::unitGrossPrice * ExpenseTransfer::quantity</code></pre></p></li>
+                                                        <li value="7"><strong>ExpenseTotalsCalculatorPlugin</strong> - Calculates <var>expenseTotal</var> in TotalsTransfer.
+			<p><pre><code class="language-bash">TotalsTransfer::expenseTotal = sum(ExpenseTransfer::sumGrossPrice)</code></pre></p></li>
+                                                        <li value="8"><strong>DiscountCalculatorPlugin</strong> - Applies discounts to current QuoteTransfer each discountable item with property <var>calculatedDiscounts</var>, gets discounts filled. Also <var>voucherDiscounts </var>and <var>cartRuleDiscounts</var> are populated with additional used discount data for order level.
+				<div class="info">Discount Calculation
+			<p>Discount calculation is a separate topic and is explained here <a href="../../promotions_and_discounts/discount.htm" class="MCXref xref">Discount    </a>.</p></div></li>
+                                                        <li value="9"><strong>SumGrossCalculatedDiscountAmountCalculatorPlugin</strong> - Calculates and sets <var>ItemTransfer</var> amounts after discounts to <var>sumGrossPriceWithProductOptionAndDiscountAmounts</var> and <var>unitGrossPriceWithProductOptionAndDiscountAmounts;</var> sets expense amounts after discounts to <var>unitGrossPriceWithDiscounts</var> and <var>sumGrossPriceWithDiscounts</var>.
+					<p><pre><code class="language-bash">ItemTransfer::unitGrossPriceWithProductOptionAndDiscountAmounts = ItemTransfer::unitGrossPriceWithProductOptions -  (sum(ItemTransfer:calculatedDiscounts::unitGrossPrice) + sum(ProductOptionTransfer::calculatedDiscounts::unitGrossPrice))
+ItemTransfer::sumGrossPriceWithProductOptionAndDiscountAmounts = ItemTransfer::sumGrossPriceWithProductOptions -  (sum(ItemTransfer:calculatedDiscounts::sumGrossPrice) + sum(ProductOptionTransfer::calculatedDiscounts::sumGrossPrice))</code></pre></p></li>
+                                                        <li value="10"><strong>DiscountTotalsCalculatorPlugin</strong> - Calculates total for discounts used and sets it to <var>totalDiscount</var> in <var>TotalsTransfer</var>. Sum all discountable item <var>CalculatedDiscountTransfer</var> gross amounts:
+				<p><pre><code class="language-PHP line-numbers">TotalsTransfer:discountTotal += sum(ItemTransfer::CalculateDiscountTransfer::sumGrossAmount +
 ItemTransfer::ProductOptionTransfer::CalculateDiscountTransfer::sumGrossAmount + ExpenseTransfer::sumGrossAmount)
 GrandTotalTotalsCalculatorPlugin - Calculates grandTotal in TotalsTransfer.
-TotalsTransfer:grandTotal = TotalsTransfer::subtotal + TotalsTransfer:expenseTotal
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>GrandTotalWithDiscountsCalculatorPlugin</strong> - Calculates <var>GrandTotal </var>after discounts in <var>TotalsTransfer</var>.</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">TotalsTransfer:grandTotal = TotalsTransfer::subtotal + TotalsTransfer:expenseTotal - TotalsTransfer::discountTotal
-</code></pre>
-                                                                <ul>
-                                                                    <li class="bullet_list" value="1"><strong>TaxTotalsCalculatorPlugin</strong> - Calculates <var>taxTotal </var>and <var>taxRate</var> used from T<var>otalTransfer::grandTotal</var>, sets it in <var>TotalsTransfer::TaxTotalsTransfer</var>.</li>
-                                                                </ul><pre><code class="language-PHP line-numbers">TaxableItems = ItemTransfer, ProductOptionTransfer, ExpenseTransfer. TaxTotalsTransfer::taxRate = sum(TaxableItems) / TaxableItems TaxTotalsTransfer::taxAmount = round((TotalsTransfer::grandTotal * TaxTotalsTransfer::taxRate) / TaxTotalsTransfer::taxRate / 100)
-</code></pre>
-                                                                <p>&#160;</p>
-                                                                <p><b>See also:</b>
-                                                                </p>
-                                                                <ul>
-                                                                    <li value="1"><a href="calculation.htm">Calculation</a>
-                                                                    </li>
-                                                                    <li value="2"><a href="calculation-data-structure.htm">Calculation Data Structure</a>
-                                                                    </li>
-                                                                </ul>
-                                                            </li>
-                                                        </ul>
+TotalsTransfer:grandTotal = TotalsTransfer::subtotal + TotalsTransfer:expenseTotal</code></pre></p></li>
+                                                        <li value="11"><strong>GrandTotalWithDiscountsCalculatorPlugin</strong> - Calculates <var>GrandTotal </var>after discounts in <var>TotalsTransfer</var>.
+		<p><pre><code class="language-bash">TotalsTransfer:grandTotal = TotalsTransfer::subtotal + TotalsTransfer:expenseTotal - TotalsTransfer::discountTotal</code></pre></p></li>
+                                                        <li value="12"><strong>TaxTotalsCalculatorPlugin</strong> - Calculates <var>taxTotal </var>and <var>taxRate</var> used from T<var>otalTransfer::grandTotal</var>, sets it in <var>TotalsTransfer::TaxTotalsTransfer</var>.
+                    <p><pre><code class="language-bash">TaxableItems = ItemTransfer, ProductOptionTransfer, ExpenseTransfer. TaxTotalsTransfer::taxRate = sum(TaxableItems) / TaxableItems TaxTotalsTransfer::taxAmount = round((TotalsTransfer::grandTotal * TaxTotalsTransfer::taxRate) / TaxTotalsTransfer::taxRate / 100)</code></pre></p></li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="calculation.htm">Calculation</a>
+                                                        </li>
+                                                        <li value="2"><a href="calculation-data-structure.htm">Calculation Data Structure</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>

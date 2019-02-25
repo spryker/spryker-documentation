@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This topic covers the information related to the migration procedure for PriceProduct module when upgrading from Version 1.* to Version 2.*." />
         <link rel="apple-touch-icon" sizes="180x180" href="../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Migration Guide - PriceProduct</title>
+        <meta name="author" content="" /><title>Migration Guide - PriceProduct | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -78,6 +79,7 @@
 
 </style>
         <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../resources/scripts/jquery.min.js">
@@ -208,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="zhaF2gvpf02zvndXCtjYJQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="zhaF2gvpf02zvndXCtjYJQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="mEEfNA2IVk6Qj6smvWbG3w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="mEEfNA2IVk6Qj6smvWbG3w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -250,12 +252,12 @@
                                                     <p>To migrate the changes to the module, do the following:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Upgrade your Database structure</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>Run </p><pre><code>console propel:install</code></pre>
+                                                            <p>Run </p><pre><code class="language-bash">console propel:install</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>2. Enable the new PriceProductDataImport module</b></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>To enable the new price importer you need to remove project level PriceProductDataImport (<var>Pyz\Zed\DataImport\Business\Model\ProductPrice\ProductPriceWriterStep</var>) from <var>\Pyz\Zed\DataImport\Business\DataImportBusinessFactory</var>, install the new importer module:</p><pre><code>composer install spryker/price-product-data-import</code></pre>
+                                                            <p>To enable the new price importer you need to remove project level PriceProductDataImport (<var>Pyz\Zed\DataImport\Business\Model\ProductPrice\ProductPriceWriterStep</var>) from <var>\Pyz\Zed\DataImport\Business\DataImportBusinessFactory</var>, install the new importer module:</p><pre><code class="language-bash">composer install spryker/price-product-data-import</code></pre>
                                                             <p>and enable it by adding</p>
                                                             <p>\<var>Spryker\Zed\PriceProductDataImport\Communication\Plugin\PriceProductDataImportPlugin</var> to <var>\Pyz\Zed\DataImport\DataImportDependencyProvider::getDataImporterPlugins()</var></p>
                                                             <p>If you have customized PriceProductDataImport on project level, You able to continue use it. The only one change needed:</p>
@@ -277,30 +279,32 @@ protected function savePriceProductDefault(string $idPriceProductStore): void
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>3. Update PriceProductStorage</b></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>Run</p><pre><code>composer require spryker/price-product-storage:"^2.0.0"</code></pre>
+                                                            <p>Run</p><pre><code class="language-bash">composer require spryker/price-product-storage:"^2.0.0"</code></pre>
                                                             <p>
 		Now that the module supports plugins for reading prices from different price dimensions, you can put your own plugins here: <var>\Pyz\Client\PriceProductStorage\PriceProductStorageDependencyProvider::getPriceDimensionStorageReaderPlugins()</var><![CDATA[
 ]]></p>
                                                         </div>
                                                     </div>
                                                     <h3>PriceProductService</h3>
-                                                    <p>In this new version of PriceProduct module we have added Service layer with PriceProductService. Its purpose is to choose only <b>one</b> price from the list of prices available for the current customer, taking into account the provided filter, which could contain selected Store, Currency, Price mode (gross or net) and Quote (with customer information inside).</p>
+                                                    <p>In this new version of <var>PriceProduct</var> module we have added Service layer with <var>PriceProductService</var>. Its purpose is to choose only <b>one</b> price from the list of prices available for the current customer, taking into account the provided filter, which could contain selected Store, Currency, Price mode (gross or net) and Quote (with customer information inside).</p>
                                                     <p>The prices list can come from Yves (Storage) and Zed (DB).</p>
-                                                    <p>In case with Yves, we have to create <b>PriceProductFilterTransfer</b> object for filtering which contains named values (store name, currency code, named price mode, named price type).</p>
-                                                    <p>In case with Zed, we have to create <b>PriceProductCriteriaTransfer</b> object for filtering which contains IDs as values (store ID, currency ID, price type id, etc.).</p>
+                                                    <ul>
+                                                        <li value="1">In case with Yves, we have to create <b>PriceProductFilterTransfer</b> object for filtering which contains named values (store name, currency code, named price mode, named price type).</li>
+                                                        <li value="2">In case with Zed, we have to create <b>PriceProductCriteriaTransfer</b> object for filtering which contains IDs as values (store ID, currency ID, price type id, etc.).</li>
+                                                    </ul>
                                                     <p>If you need to add additional fields to one of these objects, add it to another one (if you added QTY to filter, criteria must be updated etc). So that <b>PriceProductFilterTransfer</b> could always be converted to <b>PriceProductCriteriaTransfer</b>.</p>
-                                                    <p>PriceProductService has plugins with <var>\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface</var> which allows to filter price for price dimension. This filter can be really simple and filter price only by price dimension name, but it can also bear some logic, for example finding minimum price from this price dimension.</p>
-                                                    <p>After that the list of prices passed to service will be decreased to the list of filtered prices which fits the Filter object only and filters plugins logic. Then <var>\Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface</var> is applied for filtered prices to find only ONE price (now there is only one built-in strategy SinglePriceProductFilterMinStrategy which finds MIN price).</p>
+                                                    <p><var>PriceProductService</var> has plugins with <var>\Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface</var> which allows to filter price for price dimension. This filter can be really simple and filter price only by price dimension name, but it can also bear some logic, for example finding minimum price from this price dimension.</p>
+                                                    <p>After that the list of prices passed to service will be decreased to the list of filtered prices which fits the Filter object only and filters plugins logic. Then <var>\Spryker\Service\PriceProduct\FilterStrategy\SinglePriceProductFilterStrategyInterface</var> is applied for filtered prices to find only ONE price (now there is only one built-in strategy <var>SinglePriceProductFilterMinStrategy</var> which finds MIN price).</p>
                                                     <p>There is Quote in a filter/criteria without items since this is additional information about the environment from where prices are requested.</p>
                                                     <p>That filter/criteria is a flat object, so we filter only by its properties, however plugins can use additional information (e.g. Quote) for filtering.</p>
                                                     <h3>Using the Price Dimensions</h3>
-                                                    <p>In new PriceProduct module we have added a set of plugins necessary fo work with price dimensions. All new plugin interfaces are now in the new module PriceProductExtension. They are as follows:</p>
+                                                    <p>In new <var>PriceProduct</var> module we have added a set of plugins necessary fo work with price dimensions. All new plugin interfaces are now in the new module PriceProductExtension. They are as follows:</p>
                                                     <ul>
                                                         <li value="1">
                                                             <p>Zed:</p>
                                                             <p><var>PriceDimensionAbstractSaverPluginInterface</var> - saves price for abstract product in the DB for the selected price dimension (based on <var>PriceProductTransfer-&gt;getPriceDimension()</var>)</p>
                                                             <p><var>PriceDimensionConcreteSaverPluginInterface</var> - saves price for concrete product in the DB for the selected price dimension (based on <var>PriceProductTransfer→getPriceDimension()</var>)</p>
-                                                            <p><var>PriceDimensionQueryCriteriaPluginInterface </var>is used for expanding <var>PriceProductStoreQuery </var>using new transfer object QueryCriteriaTransfer. Basing on <var>PriceProductCriteria</var>, you can build your own QueryCriteria to get prices using joins - all prices can be selected from needed price dimensions using only one SQL query. See the DB scheme:</p>
+                                                            <p><var>PriceDimensionQueryCriteriaPluginInterface </var>is used for expanding <var>PriceProductStoreQuery </var>using new transfer object <var>QueryCriteriaTransfer</var>. Basing on <var>PriceProductCriteria</var>, you can build your own <var>QueryCriteria</var> to get prices using joins - all prices can be selected from needed price dimensions using only one SQL query. See the DB scheme:</p>
                                                             <p>
                                                                 <img src="../resources/images/migration_guides/priece-dimensions-diagram.png" />
                                                             </p>
@@ -308,7 +312,7 @@ protected function savePriceProductDefault(string $idPriceProductStore): void
                                                         <li value="2">
                                                             <p>Service:</p>
                                                             <p><var>PriceProductFilterPluginInterface </var>- filters array of prices based on <var>PriceProductFilterTransfer</var></p>
-                                                            <p><var>PriceProductDimensionExpanderStrategyPluginInterface </var>- expands <var>PriceProductDimension </var>transfer basing on some properties of this transfer (like idPriceProductDefault).</p>
+                                                            <p><var>PriceProductDimensionExpanderStrategyPluginInterface </var>- expands <var>PriceProductDimension </var>transfer basing on some properties of this transfer (like <var>idPriceProductDefault</var>).</p>
                                                             <p>As mentioned above, reading prices from Storage is implemented in <var>PriceProductStorage </var>module, plugins for reading prices reside in <var>PriceProductStorageExtension </var>module (<i>\Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface</i>) which has two methods for reading prices from Storage: <var>findProductConcretePrices($id</var>) and <var>findProductAbstractPrices($id)</var>. Prices for price dimension inside Storage are supposed to be stored as a separate key-value for each product abstract and concrete. (as example you can check kv:price_product_abstract:X (X = ID of product)</p>
                                                             <p>All plugins can be added on project level in <var>PriceProductDependencyProvider </var>for each layer (Zed, Service) and in <var>PriceProductStorageDependencyProvider </var>for Client layer.</p>
                                                         </li>
@@ -317,28 +321,25 @@ protected function savePriceProductDefault(string $idPriceProductStore): void
                                                     <p><b>PriceProduct:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1">Added dependency to PriceProductExtension and QuoteClient.</li>
-                                                        <li value="2">PriceProductService service injected to PriceProductFacade and PriceProductClient (in new method resolvePriceTransfer(PriceProductTransfer[] $pPriceProductTransfers).</li>
+                                                        <li value="1">Added dependency to <var>PriceProductExtension</var> and <var>QuoteClient</var>.</li>
+                                                        <li value="2"><var>PriceProductService</var> service injected to <var>PriceProductFacade</var> and <var>PriceProductClient</var> (in new method <i>resolvePriceTransfer(PriceProductTransfer[] $pPriceProductTransfers)</i>.</li>
                                                         <li value="3">Now if customer has multiple prices (e.g. from Store (default prices) and from Merchants) minimum price is resolved.</li>
-                                                        <li value="4">ProductPriceClient::resolveProductPrice() is deprecated and now works only with default prices (prices from Store).</li>
-                                                        <li value="5">Added new ProductPriceClient:resolveProductPriceTransfer() method which can work with multi dimension prices.</li>
-                                                        <li value="6">Added PriceProductDimensionTransfer and added  transfer objects to PriceProduct, PriceProductFilter, PriceProductCriteria.</li>
+                                                        <li value="4"><var>ProductPriceClient::resolveProductPrice()</var> is deprecated and now works only with default prices (prices from Store).</li>
+                                                        <li value="5">Added new <var>ProductPriceClient:resolveProductPriceTransfer()</var> method which can work with multi dimension prices.</li>
+                                                        <li value="6">Added <var>PriceProductDimensionTransfer</var> and added  transfer objects to <var>PriceProduct</var>, <var>PriceProductFilter</var>, <var>PriceProductCriteria</var>.</li>
                                                         <li value="7">Changes in Client models:
-        
-        <li value="1">ProductPriceResolver constructor now requires QuoteClient, PriceProductService</li></li>
+        		<ul><li value="1"><var>ProductPriceResolver</var> constructor now requires <var>QuoteClient</var>, <var>PriceProductService</var></li></ul></li>
                                                         <li value="8">Changes in Zed models:
-        <li value="1">PriceProductAbstractReader constructor now requires PriceProductRepository (new), PriceProductService, PriceProductExpander (new)</li><li value="2">PriceProductAbstractReader interface changed for findProductAbstractPricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer) and findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer (before array was returned)</li><li value="3">PriceProductAbstractWriter constructor now requires PriceProductDefaultWriter (new),</li><li value="4">PriceProductService, PriceProductExpander (new), PriceDimensionAbstractSaverPlugin[], PriceProductEntityManager (new), PriceProductConfig</li><li value="5">PriceProductConcreteReader constructor now requires PriceProductRepository (new), PriceProductService, PriceProductExpander (new)</li><li value="6">PriceProductConcreteReader interface changed for findProductAbstractPricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer) and findPriceForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer; (before array was returned)</li><li value="7">PriceProductConcreteWriter constructor now requires PriceProductDefaultWriter (new), PriceProductService, PriceProductExpander (new), PriceDimensionConcreteSaverPluginInterface[], PriceProductEntityManager (new), PriceProductConfig</li><li value="8">PriceProductMapper constructor requires PriceProductConfig, mapPriceProductTransferCollection() removed and added new one mapPriceProductStoreEntitiesToPriceProductTransfers()</li><li value="9">PriceProductStoreWriter::persistPriceProductStore() now returns PriceProductTransfer</li><li value="10">PriceGrouper constructor requires PriceProductConfig</li><li value="11">Reader constructor requires PriceProductConfig</li><li value="12">Writer constructor requires PriceProductDefaultWriter (new), PriceDimensionAbstractSaverPlugin[], PriceDimensionConcreteSaverPlugin[]</li></li>
+        		<ul><li value="1"><var>PriceProductAbstractReader</var> constructor now requires <var>PriceProductRepository</var> (new), <var>PriceProductService</var>, <var>PriceProductExpander</var> (new)</li><li value="2"><var>PriceProductAbstractReader</var> interface changed for <i>findProductAbstractPricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer)</i> and <i>findPriceForProductAbstract(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer</i> (before array was returned)</li><li value="3"><var>PriceProductAbstractWriter</var> constructor now requires <var>PriceProductDefaultWriter</var> (new)</li><li value="4"><var>PriceProductService</var>, <var>PriceProductExpander</var> (new), <var>PriceDimensionAbstractSaverPlugin[]</var>, <var>PriceProductEntityManager</var> (new), <var>PriceProductConfig</var></li><li value="5"><var>PriceProductConcreteReader</var> constructor now requires <var>PriceProductRepository</var> (new), <var>PriceProductService</var>, <var>PriceProductExpander</var> (new)</li><li value="6"><var>PriceProductConcreteReader</var> interface changed for <i>findProductAbstractPricesBySkuForCurrentStore(string $sku, PriceProductDimensionTransfer $priceProductDimensionTransfer)</i> and <i>findPriceForProductConcrete(string $sku, PriceProductCriteriaTransfer $priceProductCriteriaTransfer): ?PriceProductTransfer;</i> (before array was returned)</li><li value="7"><var>PriceProductConcreteWriter</var> constructor now requires <var>PriceProductDefaultWriter</var> (new), <var>PriceProductService</var>, <var>PriceProductExpander (new)</var>, <var>PriceDimensionConcreteSaverPluginInterface[]</var>, <var>PriceProductEntityManager</var> (new), <var>PriceProductConfig</var></li><li value="8"><var>PriceProductMapper</var> constructor requires <var>PriceProductConfig</var>, <var>mapPriceProductTransferCollection()</var> removed and added new one <var>mapPriceProductStoreEntitiesToPriceProductTransfers()</var></li><li value="9"><var>PriceProductStoreWriter::persistPriceProductStore()</var> now returns <var>PriceProductTransfer</var></li><li value="10"><var>PriceGrouper</var> constructor requires <var>PriceProductConfig</var></li><li value="11">Reader constructor requires <var>PriceProductConfig</var></li><li value="12">Writer constructor requires <var>PriceProductDefaultWriter</var> (new), <var>PriceDimensionAbstractSaverPlugin[]</var>, <var>PriceDimensionConcreteSaverPlugin[]</var></li></ul></li>
                                                     </ul>
-                                                    <p><![CDATA[
-		]]><b>PriceProductStorage:
-</b></p>
+                                                    <p><b>PriceProductStorage:</b>
+                                                    </p>
                                                     <ul>
-                                                        <li value="1">
-		Added dependency to PriceProductStorageExtension
-		</li>
-                                                        <li value="2">PriceAbstractStorageReader constructor requires PriceProductMapper (new), PriceProductStoragePriceDimensionPlugin[]	</li>
+                                                        <li value="1">Added dependency to <var>PriceProductStorageExtension</var></li>
+                                                        <li value="2"><var>PriceAbstractStorageReader</var> constructor requires <var>PriceProductMapper</var> (new), <var>PriceProductStoragePriceDimensionPlugin[]</var></li>
                                                     </ul>
-                                                    <p />
+                                                    <p>&#160;</p>
+                                                    <p>&#160;</p>
                                                     <p><i>Last review date: September 14th, 2018 </i>
                                                     </p>
                                                 </div>
