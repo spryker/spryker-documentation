@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B">
+    <head>
+    </head>
+    <body>
+        <h1>Feature Configuration - Product Reviews <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /></h1><a href="#" name="configure-maximum-rating"></a>
+        <h2>Configuring the Maximum Rating</h2>
+        <p>To change the maximum allowed rating, alter the Client configuration by extending the <var>\Spryker\Client\ProductReview\ProductReviewConfig</var> class in your project directory.</p>
+        <p>Override <var>getMaximumRating</var> method to return the desired selectable maximum rating value.</p>
+        Example of client config extension:			<pre><code class="language-PHP line-numbers">&lt;?php
+            namespace Pyz\Client\ProductReview;
+
+            use Spryker\Client\ProductReview\ProductReviewConfig as ProductReviewProductReviewConfig;
+
+            class ProductReviewConfig extends ProductReviewProductReviewConfig
+            {
+
+                /**
+                 * @return int
+                 */
+                public function getMaximumRating()
+                {
+                    return 10;
+                }
+
+            }
+                            </code></pre><a href="#" name="configure-elements-per-page"></a><h2>Configuring the Number of Reviews Displayed per Page</h2><p>To change the maximum number of reviews displayed per page, alter the Client configuration by extending the <var>\Spryker\Client\ProductReview\ProductReviewConfig</var> class in your project directory.</p><p>Override <var>PAGINATION_DEFAULT_ITEMS_PER_PAGE</var> and <var>PAGINATION_VALID_ITEMS_PER_PAGE</var> constants to the desired number of reviews to be displayed per page.</p>Example of client config extension:<pre><code class="language-PHP line-numbers">&lt;?php
+            namespace Pyz\Client\ProductReview;
+
+            use Spryker\Client\ProductReview\ProductReviewConfig as ProductReviewProductReviewConfig;
+
+            class ProductReviewConfig extends ProductReviewProductReviewConfig
+            {
+
+                const PAGINATION_DEFAULT_ITEMS_PER_PAGE = 5;
+                const PAGINATION_VALID_ITEMS_PER_PAGE = [
+                    5,
+                ];
+
+            }
+                            </code></pre><p>&#160;</p><p><![CDATA[
+		
+		]]><i>Last review date: Aug. 28, 2017 </i><MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner</i></MadCap:conditionalText><![CDATA[    ]]></p></body>
+</html>

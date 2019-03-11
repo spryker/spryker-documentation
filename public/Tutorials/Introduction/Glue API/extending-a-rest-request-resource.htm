@@ -1,0 +1,148 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Extending a REST API Resource | Spryker</title>
+        <meta name="description" content="This tutorial describes how to extend the Glue API modules to give you the possibility to customize them for your own needs." />
+    </head>
+    <body>
+        <h1>Extending a REST API Resource</h1>
+        <p>Spryker Glue REST API comes with a set of predefined APIs out of the box. You have the possibility to extend and customize them to your own project needs. For this purpose, you need to extend the Glue API modules that provide the relevant functionality on your project level.</p>
+        <p class="info"><b>Before You Begin</b>
+            <br />The following guide relies on your knowledge of the structure of a Glue REST API resource module and the behavior of its constituents. For more details, see section <b>Resource Modules</b> in <a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/glue-infrastructure.htm?Highlight=Glue%20Infrastructure">Glue Infrastructure</a>.</p>
+        <h2>Prerequisites:</h2>
+        <p>To complete this tutorial, you need to comply with the following prerequisites:</p>
+        <ul>
+            <li>Install <a href="https://documentation.spryker.com/capabilities/development/devvm.htm?Highlight=devvm">Spryker Development Machine</a>;</li>
+            <li><a href="https://documentation.spryker.com/feature_integration_guides/glue_api/glue-api-installation-and-configuration.htm">Enable</a> Glue Rest API;</li>
+            <li>
+                <MadCap:annotation MadCap:createDate="2019-01-18T15:28:02.5685726+02:00" MadCap:creator="dmitry.beirak" MadCap:initials="DM" MadCap:comment="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/609452251/GLUE%3A+Product+API+feature+integration" MadCap:editor="dmitry.beirak" MadCap:editDate="2019-01-18T15:28:07.9530644+02:00">Integrate </MadCap:annotation>Products API</li>
+        </ul>
+        <p class="info">If you have a development virtual machine with the <a href="https://documentation.spryker.com/about_spryker/understanding_spryker/demoshops.htm">B2C Demo Shop</a> installed, all the required components will be available out of the box.</p>
+        <p>Also, let us assume that you modified the product storage data to match your product requirements. For example, let's assume that you added the <b>manufacturerCountry</b> field to the product data not as an attribute, but as another field in the database.</p>
+        <p class="tip">For more details, see <a href="https://documentation.spryker.com/database_schema_guide/db-schema-catalog.htm#Product3">Product Attributes</a> and <a href="https://documentation.spryker.com/tutorials/advanced/t-extend-db-schema.htm">Extending the Database Schema</a>.</p>
+        <p>Now, let us add this field to responses of the <i>Products API</i> endpoints:</p>
+        <h2>1. Extend Glue Transfers</h2>
+        <p>First of all, we need to extend the existing Glue <a href="https://documentation.spryker.com/resources_and_developer_tools/transfer-objects.htm">Transfers</a> that describe Glue attributes. Attributes of <i>Products</i> resources are defined in a transfer file named <i>products_rest_api.transfer.xml</i>. To extend it, do the following:</p>
+        <ul>
+            <li>Create file <i>src/Pyz/Shared/ProductsRestApi/Transfer/products_rest_api.transfer.xml</i> that will extend the transfer on the project level</li>
+        </ul>
+        <blockquote>
+            <p class="tip">All transfer file names end with <b>.transfer.xml</b>.</p>
+        </blockquote>
+        <ul>
+            <li>In the newly created file, define only the field(s) you want to add, in our case, <b>manufacturerCountry</b>:</li>
+        </ul>
+        <blockquote>
+            <MadCap:dropDown>
+                <MadCap:dropDownHead>
+                    <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+                </MadCap:dropDownHead>
+                <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
+ 
+    &lt;transfer name="AbstractProductsRestAttributes"&gt;
+        &lt;property name="manufacturerCountry" type="string"/&gt;
+    &lt;/transfer&gt;
+ 
+    &lt;transfer name="ConcreteProductsRestAttributes"&gt;
+        &lt;property name="manufacturerCountry" type="string"/&gt;
+    &lt;/transfer&gt;
+ 
+&lt;/transfers&gt;</code></pre>
+                </MadCap:dropDownBody>
+            </MadCap:dropDown>
+        </blockquote>
+        <ul>
+            <li>Run <i>vendor/bin/console transfer:generate</i> to generate the transfers.</li>
+            <li>Check that the generated transfers contain the attribute you added<ul><li><i>src/Generated/Shared/Transfer/AbstractProductsRestAttributesTransfer.php</i> - for abstract products;</li><li><i>src/Generated/Shared/Transfer/ConcreteProductsRestAttributesTransfer.php</i> - for concrete products;</li></ul></li>
+        </ul>
+        <h2>2. Put data</h2>
+        <p>If automatic transfer-to-transfer conversion can be performed, you do not need to take extra steps to put data in the attribute you added on step <b>1</b>. Automatic conversion occurs when the attribute name defined in the REST transfer matches exactly the name of the respective field in the storage transfer.</p>
+        <p>In more complicated cases, when, for example, you need to pull data from alternative storage or map data differently from what automapping does, you need to override the processor classes. Let us override the <i>AbstractProductsResourceMapper</i> class in order to add the <b>manufacturerCountry</b> attribute data. For this purpose, we need to extend, on the project level, the <i>ProductsRestApi</i> module that implements the Products API. To do this:</p>
+        <ul>
+            <li>Create the src/Pyz/Glue/ProductsRestApi directory.</li>
+            <li>Implement \Pyz\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper as follows:</li>
+        </ul>
+        <blockquote>
+            <MadCap:dropDown>
+                <MadCap:dropDownHead>
+                    <MadCap:dropDownHotspot style="font-weight: bold;">AbstractProductsResourceMapper.php</MadCap:dropDownHotspot>
+                </MadCap:dropDownHead>
+                <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\ProductsRestApi\Processor\Mapper;
+ 
+use Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer;
+use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper as SprykerAbstractProductsResourceMapper;
+ 
+class AbstractProductsResourceMapper extends SprykerAbstractProductsResourceMapper
+{
+    /**
+     * @param array $abstractProductData
+     *
+     * @return \Generated\Shared\Transfer\AbstractProductsRestAttributesTransfer
+     */
+    public function mapAbstractProductsDataToAbstractProductsRestAttributes(array $abstractProductData): AbstractProductsRestAttributesTransfer
+    {
+        $restAbstractProductsAttributesTransfer = parent::mapAbstractProductsDataToAbstractProductsRestAttributes($abstractProductData);
+ 
+        $restAbstractProductsAttributesTransfer-&gt;setManufacturerCountry('Portugal');
+ 
+        return $restAbstractProductsAttributesTransfer;
+    }
+}</code></pre>
+                </MadCap:dropDownBody>
+            </MadCap:dropDown>
+        </blockquote>
+        <p>As you can see from the code, the mapper that you implemented extends the original core mapper (located in <i>Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper</i>) and calls the parent method in the method we override. This way, we can avoid re-defining the whole class and define only the things we want to override.</p>
+        <h2>3. Override mapper initialization</h2>
+        <p>Now, we need to override the initialization of the mapper we created on the previous step. For this purpose, we need to extend the factory of the <i>ProductsRestApi</i> module. A factory is used to create objects and processor classes of a module, thus, by overriding it, we can invoke our new mapper. To do this:</p>
+        <ul>
+            <li>Create the Glue factory on the project level: \Pyz\Glue\ProductsRestApi\ProductsRestApiFactory.</li>
+            <li>Implement the factory as follows:</li>
+        </ul>
+        <blockquote>
+            <MadCap:dropDown>
+                <MadCap:dropDownHead>
+                    <MadCap:dropDownHotspot style="font-weight: bold;">ProductsRestApiFactory.php</MadCap:dropDownHotspot>
+                </MadCap:dropDownHead>
+                <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\ProductsRestApi;
+ 
+use Pyz\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapper;
+use Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiFactory as SprykerProductsRestApiFactory;
+ 
+class ProductsRestApiFactory extends SprykerProductsRestApiFactory
+{
+    /**
+     * @return \Spryker\Glue\ProductsRestApi\Processor\Mapper\AbstractProductsResourceMapperInterface
+     */
+    public function createAbstractProductsResourceMapper(): AbstractProductsResourceMapperInterface
+    {
+        return new AbstractProductsResourceMapper();
+    }
+}</code></pre>
+                </MadCap:dropDownBody>
+            </MadCap:dropDown>
+        </blockquote>
+        <p>The same as the mapper, <i>ProductsRestApiFactory</i> extends the core factory and only overrides the mapper creation.</p>
+        <h2>4. Verify implementation</h2>
+        <p>No, you can query the Products API to check whether the attribute has been added to the API response. For example, you can query information on one of the products with the <b>manufacturerCountry</b> field populated. For details, see <a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/retrieving-product-information.htm?Highlight=Retrieving%20Product%20Information">Retrieving Product Information</a>.</p>
+        <h2>See also:</h2>
+        <ul>
+            <li><a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/ht-implement-rest-api-resource.htm?Highlight=How%20To%20Implement%20a%20REST%20API%20Resource">How To Implement a REST API Resource</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/tutorials/advanced/t-add-new-bundle.htm">Adding a New Module</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/tutorials/advanced/t-extend-spryker.htm">Extending Spryker</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/tutorials/advanced/t-extend-db-schema.htm">Extending the Database Schema</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan 18, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

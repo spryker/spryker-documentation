@@ -1,0 +1,161 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.B2C">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>File System <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>The FileSystem Service provides an abstraction for file systems. It uses the same interface to access different types of file systems, regardless of their location or protocol.</p>
+        <p>The Flysystem module provides plugins for <a href="https://github.com/thephpleague/flysystem" target="_blank">thephpleague/flysystem</a> vendor package and implement FileSystem's plugin interfaces. For more details, see <MadCap:xref href="../flysystem.htm">Flysystem</MadCap:xref>.</p>
+        <h2>FileSystem Module</h2>
+        <p>The FileSystem module uses the <var>FileSystemReaderPluginInterface</var> to execute read operations, the <var>FileSystemWriterPluginInterface</var> to execute write operations and the <var>FileSystemStreamPluginInterface</var> to handle big read or write operations.</p>
+        <p>
+            <img src="../../../Resources/Images/file_system_dependencies.png" title="File System Dependencies" />
+        </p>
+        <h3>FileSystem Plugin Interfaces system</h3>
+        <table style="mc-table-style: url('../../../Resources/TableStyles/PatternedRows.css');margin-left: 0;margin-right: auto;width: 100%;" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin Interface</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">FileSystemReaderPluginInterface</td>
+                    <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">Reading operations</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">FileSystemWriterPluginInterface</td>
+                    <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">Writing operations</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">FileSystemWriterPluginInterface</td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">Stream handling operations</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3><a name="Plugin"></a>Plugin Configuration</h3>
+        <p>The FileSystem plugins are loaded via <var>FileSystemDependencyProvider</var> by the methods: <var>addFileSystemReaderPlugin()</var>, <var>addFileSystemWriterPlugin()</var> and <var>addFileSystemStreamPlugin()</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Spryker\Service\FileSystem;
+
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemReaderPlugin;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemStreamPlugin;
+use Spryker\Service\Flysystem\Plugin\FileSystem\FileSystemWriterPlugin;
+use Spryker\Service\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Service\Kernel\Container;
+
+class FileSystemDependencyProvider extends AbstractBundleDependencyProvider
+{
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemReaderPlugin(Container $container)
+    {
+        $container[static::PLUGIN_READER] = function (Container $container) {
+            return new FileSystemReaderPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemWriterPlugin(Container $container)
+    {
+        $container[static::PLUGIN_WRITER] = function (Container $container) {
+            return new FileSystemWriterPlugin();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFileSystemStreamPlugin(Container $container)
+    {
+        $container[static::PLUGIN_STREAM] = function (Container $container) {
+            return new FileSystemStreamPlugin();
+        };
+
+        return $container;
+    }</code></pre>
+        <h3>Service Configuration</h3>
+        <p>You can use multiple <var>FileSystems</var> at once. They are identified by name, and contain all the configurations required by the specific <var>FileSystem</var> adapter and type defined under <var>sprykerAdapterClass</var>.</p>
+        <p class="note">The <var>sprykerAdapterClass</var> should point to the builder plugin used to create the <var>FileSystem</var>.</p>
+        <h4>Separate FileSystems for media and documents</h4>
+        <p>It is entirely possible to create separate file systems for media content and documents. </p>
+        <p>For example,  you can define two <var>FileSystems</var>. One called "media", that only contains media specific content like: images, video and audio and another called "customer" that contains customer-sensitive information that should not be stored in the cloud.</p>
+        <p>We use local file systems for development purposes, but config for staging or production environments. Therefore, you could for example provide, an AWS3 adapter without having to change any code. More precisely, with only configuration you can read/write files from AWS3 no need to change any code mirroring your development environment's logic for writing to the local file system.</p>
+        <p><strong>Development environment example</strong>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    'media' =&gt; [
+        'sprykerAdapterClass' =&gt; LocalFilesystemBuilderPlugin::class,
+        'root' =&gt; APPLICATION_ROOT_DIR . '/data/DE/media/',
+        'path' =&gt; 'images/categories/',
+    ],
+    'customer' =&gt; [
+        'sprykerAdapterClass' =&gt; LocalFilesystemBuilderPlugin::class,
+        'root' =&gt; APPLICATION_ROOT_DIR . '/data/DE/customer_storage/',
+        'path' =&gt; 'documents/',
+    ],
+];</code></pre>
+        <p><strong>Staging/Production environment example</strong>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+use Spryker\Shared\FileSystem\FileSystemConstants;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
+
+$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+    'media' =&gt; [
+        'sprykerAdapterClass' =&gt; Aws3v3FilesystemBuilderPlugin::class,
+        'root' =&gt; '/DE/',
+        'path' =&gt; 'media/',
+        'key' =&gt; '..',
+        'secret' =&gt; '..',
+        'bucket' =&gt; '..',
+        'version' =&gt; '..',
+        'region' =&gt; '..',
+    ],
+    'customer' =&gt; [
+        'sprykerAdapterClass' =&gt; FtpFilesystemBuilderPlugin::class,
+        'host' =&gt; '..',
+        'username' =&gt; '..',
+        'password' =&gt; '..',
+    ],
+];</code></pre>
+        <h2>FileSystem Usage</h2>
+        <p>Now that we have defined some <var>FileSystems</var>, we can start using them. For example, getting metedata information of a media file stored under "foo/bar.jpg".</p><pre><code class="language-PHP line-numbers">&lt;?php
+use Generated\Shared\Transfer\FileSystemQueryTransfer;
+
+$fileSystemQueryTransfer = new FileSystemQueryTransfer();
+$fileSystemQueryTransfer-&gt;setFileSystemName('media');
+$fileSystemQueryTransfer-&gt;setPath('/foo/bar.jpg');
+
+$metadataTransfer = $fileSystemService-&gt;getMetadata($fileSystemQueryTransfer);</code></pre>
+        <p><strong>To get metadata</strong>:</p>
+        <p>Define the <var>FileSystem</var> name provided in the configuration and set the path to the filename you want to extract metadata from.</p>
+        <p class="note">The read methods use mostly <var>FileSystemQueryTransfer</var>, the write methods use mostly <var>FileSystemContentTransfer </var>and stream methods use <var>FileSystemStreamTransfer</var>.</p>
+        <p>&#160;</p>
+        <p><b>See also</b>:</p>
+        <ul>
+            <li><a href="filesystem-api.htm">Learn about Filesystem API</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+    </body>
+</html>

@@ -1,0 +1,273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Draft">
+    <head>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Tutorial - Search Product Attributes</h1>
+        <p MadCap:conditions="General.Hidden Comment">used to be: http://spryker.github.io/tutorials/yves/search-product-attributes/</p>
+        <p>There’s a built-in way to easily provide product attribute data for the search. Product attributes are stored as simple JSON encoded objects. Spryker provides a number of so called operations to be performed on these attribute objects. This article will show how to set up operations and give a brief preview how they could be utilized to create a facet search.</p>
+        <p>Operations</p>
+        <p>There are four operations available</p>
+        <ul>
+            <li class="bullet_list">AddToResult</li>
+            <li class="bullet_list">CopyToFacet</li>
+            <li class="bullet_list">CopyToField</li>
+            <li class="bullet_list">CopyToMultiField</li>
+        </ul>
+        <p>The names are pretty much self explanatory if we take a closer look at the mapping for the product document</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">[
+    'store' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'locale' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'full-text' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'full-text-boosted' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'search-result-data' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'sku' =&gt; [
+                'type' =&gt; 'string',
+                'index' =&gt; 'not_analyzed',
+            ],
+            'name' =&gt; [
+                'type' =&gt; 'string',
+            ],
+            'url' =&gt; [
+                'type' =&gt; 'string',
+                'index' =&gt; 'not_analyzed',
+            ],
+        ],
+    ],
+    'string-facet' =&gt; [
+        'type' =&gt; 'nested',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'facet-name' =&gt; ['type' =&gt; 'string', 'index' =&gt; 'not_analyzed'],
+            'facet-value' =&gt; ['type' =&gt; 'string', 'index' =&gt; 'not_analyzed'],
+        ],
+    ],
+    'integer-facet' =&gt; [
+        'type' =&gt; 'nested',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'facet-name' =&gt; ['type' =&gt; 'string', 'index' =&gt; 'not_analyzed'],
+            'facet-value' =&gt; ['type' =&gt; 'integer'],
+        ],
+    ],
+    'float-facet' =&gt; [
+        'type' =&gt; 'nested',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'facet-name' =&gt; [
+                'type' =&gt; 'string', 'index' =&gt; 'not_analyzed',
+            ],
+            'facet-value' =&gt; ['type' =&gt; 'float'],
+        ],
+    ],
+    'completion-terms' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'suggestion-terms' =&gt; [
+        'type' =&gt; 'string',
+        'include_in_all' =&gt; false,
+    ],
+    'string-sort' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'name' =&gt; [
+                'type' =&gt; 'string',
+                'index' =&gt; 'not_analyzed',
+            ],
+        ],
+    ],
+    'integer-sort' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'name' =&gt; ['type' =&gt; 'integer'],
+        ],
+    ],
+    'float-sort' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'name' =&gt; ['type' =&gt; 'float'],
+        ],
+    ],
+    'bool-sort' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'name' =&gt; ['type' =&gt; 'boolean'],
+        ],
+    ],
+    'category' =&gt; [
+        'type' =&gt; 'object',
+        'include_in_all' =&gt; false,
+        'properties' =&gt; [
+            'direct_parents' =&gt; ['type' =&gt; 'integer'],
+            'all_parents' =&gt; ['type' =&gt; 'integer'],
+        ],
+    ],
+]</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p class="info">The Mapping definition can be found in: <var>vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Business/Internal/InstallProductSearch.php</var></p>
+        <p>As you can see there are specific fields to hold searchable data (e.g. <var>full-text</var>), fields to build facets (e.g. <var>string-facet</var>) and fields for sorting (e.g. <var>integer-sort</var>)</p>
+        <h3>AddToResult</h3>
+        <p>TBD</p>
+        <h3>CopyToField</h3>
+        <p>This operation copies attribute information to a specific field in the product document. If you want to have certain product attributes looked up by full-text search use this operation to copy them to the <var>full-text</var> field.</p>
+        <h3>CopyToFacet</h3>
+        <p>The mapping for facets is a bit different from search fields. This is due to the fact that Spryker will take care of facets for you and to have them extensible. The <var>CopyToFacet</var> operation can be used to use product attributes as facets and it will take care of properly copying product attribute data to the search document.</p>
+        <h3>CopyToMultiField</h3>
+        <p>This operation can be used to copy attribute information to object-type fields (e.g. <var>integer-sort</var>). It works pretty much like <var>CopyToField</var> but will take care of the nested character of the file definition.</p>
+        <h2>Defining operations</h2>
+        <p>Lets assume we have the following product attributes stored with a product</p><pre><code class="language-PHP line-numbers">{
+    "color": "blue",
+    "size": "m",
+    "fabric": "cotton",
+    "price": 1999,
+    "description": "Cozy blue t-shirt"
+}</code></pre>
+        <p>We want the <var>color</var> and <var>size</var> attributes to be used as facets, the <var>price</var> attribute to be used for sorting and the <var>description</var> attribute to be used for full-text search.</p>
+        <p>Operations can be stored in the database which gives the advantage of having them configurable through a content management system. They get stored in <var>spy_product_search_attributes_operation</var> table and will be red from there when the Elasticsearch index gets populated. To help with adding operations in that table Spryker provides an <var>OperationManager</var> that is located in the <var>ProductSearch</var> module<var> vendor/spryker/spryker/Bundles/ProductSearch/src/Spryker/Zed/ProductSearch/Business/Operation/OperationManager.php</var></p>
+        <p>To set up an operation for an attribute we can use the <var>OperationManager</var> to create a relation using the attribute’s ID that’s taken from <var>spy_product_attributes_metadata</var> table. A simple script that utilizes <var>OperationManager</var> could look something like this:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+$operationSetup = [
+    'color' =&gt; [
+        'CopyToFacet' =&gt; [
+            'string-facet',
+        ],
+    ],
+    'size' =&gt; [
+        'CopyToFacet' =&gt; [
+            'string-facet',
+        ],
+    ],
+    'price' =&gt; [
+        'CopyToMultiField' =&gt; [
+            'integer-sort',
+        ],
+    ],
+    'description' =&gt; [
+        'CopyToField' =&gt; [
+            'full-text',
+        ],
+    ],
+];
+
+foreach ($operationSetup as $sourceFieldName =&gt; $operations) {
+    $attribute = SpyProductAttributesMetadataQuery::create()-&gt;findOneByKey($sourceFieldName);
+
+    foreach ($operation as $operationName =&gt; $targetFieldNames) {
+        foreach ($targetFieldNames as $targetFieldName) {
+            $operationManager-&gt;createAttributeOperation(
+                $idAttribute, 
+                $targetFieldName, 
+                $operationName, 
+                1
+            );
+        }
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>The setup is pretty simple and the outcome in the database table <var>spy_product_search_attributes_operation</var> will look like this:</p>
+        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">source_attribute_id</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">operation</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">target_field</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">weighting</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>1</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>CopyToFacet</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>string-facet</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>2</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>CopyToFacet</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>string-facet</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>CopyToMultiField</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>	integer-sort</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>1</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                        <p>4</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                        <p>CopyToField</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                        <p>full-text</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                        <p>1</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

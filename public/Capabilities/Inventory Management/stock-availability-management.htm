@@ -1,0 +1,196 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditionTagExpression="include[Default.MS] " style="mc-master-page: url('..\..\Resources\MasterPages\OtherTopics.flmsp');" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite,Spryker.MultiStore">
+    <head>
+    </head>
+    <body>
+        <h1>Stock and Availability Management <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <MadCap:popup>
+                <MadCap:popupHead>MS</MadCap:popupHead>
+                <MadCap:popupBody>Multi-store</MadCap:popupBody>
+            </MadCap:popup>
+        </p>
+        <p>The fully automated Stock calculation takes into consideration products that are reserved in open orders when defining availability. Also, you can define never-out-of-stock products, such as digital downloads.
+In contrast to Stock, Availability considers not only the number of products in the warehouse, but currently open orders, too. Product Availability defines if a product can or cannot be sold in the shop.
+</p>
+        <ul>
+            <li>Pre-calculated availabilities for optimized performance
+</li>
+            <li>Aggregated availability for abstract products
+</li>
+            <li>Is-never-out-of stock products</li>
+        </ul>
+        <h2>Availability</h2>
+        <p>For most of the e-commerce platforms stock does not reflect real availability of products, since stock is just the physical number of products in your warehouse which does not take reserved products into account. In contrast to stock, availability considers not just number of products in the warehouse, but current open orders as well.</p>
+        <p>In general, product availability defines if the product can or cannot be sold in the shop.</p>
+        <p>From this article you will get to know how product availability is checked and calculated, how products are reserved, what the availability collector does, how availability can be imported to the database as well as how availability per store works.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Availability Check
+</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>The process of checking product's availability implies several operations described in the list below.</p>
+                <ul>
+                    <li class="bullet_list">Product details page won’t show the <strong>Add to cart </strong>button when concrete product is out of stock. <br />Instead informational message is displayed.
+</li>
+                    <li class="bullet_list">Pre-check plugin in cart. <br />\<var>Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CheckAvailabilityPlugin</var><br />checks if all items in cart are available. It’s executed after "Add to cart" operation. <br />If an item is not available, an error message is sent to Yves.
+</li>
+                    <li class="bullet_list">Checkout pre-condition when order is placed in last step. <var>Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPre<br />ConditionPlugin</var> checks all items in cart. If any of them is not available anymore, order <br />placing is aborted and error message is displayed.
+</li>
+                </ul>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>"Reserved" Flag
+</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>When order is placed, payment state machine is executed and item is moved through states. Some states have a “reserved” flag which means that the state influences the item availability.
+
+</p>
+                <p>When items are moved to state with the "reserved" flag, <var>ReservationHandlerPluginInterface::handle()</var> is triggered. This call means that the product availability has to be updated. State machine is also tracking products in "reserved" state, and database table <var>spy_oms_product_reservation</var> is used for this.
+
+</p>
+                <p>Below you can see dummy payment state machine, which is a sample implementation with "reserved" flags: </p>
+                <p>
+                    <img src="../../Resources/Images/dummy_payment.jpg" title="Click Me" alt="Dummy Payment" class="Thumbnail" />
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Availability Collector
+</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>The availability collector collects all availability information from abstract product to concrete. Items are grouped by abstract product.
+
+</p>
+                <p>The collector is touched:
+</p>
+                <p>
+Case1: if there no record in availability table and availability is created, it needs to be touched.
+
+</p>
+                <p>Case 2: if availability amount was 0 and now it’s more than 0, it needs to be touched.
+
+</p>
+                <p>Case 3: if availability amount was more than 0 and now it’s 0, it needs to be touched.
+
+</p>
+                <p>Collected data example in JSON.
+
+</p><pre><code class="language-PHP line-numbers">{
+    "abstractProductAvailability": true,
+    "concreteProductAvailabilityItems": {
+        "27003893-1": true,
+        "27003893-2": true
+    }
+}
+</code></pre>
+                <p>This information is used on product details page when <b>Add to cart</b> button is rendered.
+
+</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Availability Calculation
+</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Product availability can have flag <var>is_never_out_of_stock</var>. This indicates that the product is always available for sale and does not have a finite stock. In this situation the availability calculation is not needed anymore.
+
+</p>
+                <p><var>Availability = max(0, sum of all stock types(Stock) - Reserved Items)</var><![CDATA[
+
+]]></p>
+                <p>In state machine items get reserved for an open order. There are certain states that release item, for example when payment fails and order is canceled. But if order is successfully fulfilled and item is delivered, item stays reserved till the next stock update.
+
+</p>
+                <p>Stock update triggers the event <var>stock update</var>. For example in our dummy payment’s implementation this will move the items from “Shipped” state to next state. As the consecutive state is not reserved, the items that were already shipped, will not be reserved any more.
+
+</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Import / Change Stock
+</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>It’s possible to use <var>vendor/bin/console data:import:product-stock</var> command to import stocks into database. The default stock importer uses <var>csv </var>file from <var>src/Pyz/Zed/Updater/Business/Internal/data/import/product_stock.csv</var>which imports stocks for demoshop.</p>
+                <p>Administration Interface is provided to allow assigning stocks to products. This can be accessed at (zed.domain.tld)/availability.</p>
+                <p>Stock update considers the stock from the stock file to be the absolute value. On stock update the stock is overwritten with the values from the file. If a certain product does not have a record in the stock file, then it is considered that the stock of this product does not have to be updated.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Availability Per Store</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+          Since Availability module version 6.* we have added support for multi-store availability. That means that you can now have availability calculated per store basis.
+          In the Administration Interface you can change from which store you want to see availability.</p>
+                <p>The main change in Availability in that <var>spy_availability</var> and <var>spy_availability_abstract</var> now have foreign key to store table which indicates to which store it is applicable.
+          Reservations in OMS have also undergone a few changes to support multiple multi-store scenarios.
+</p>
+                <p>With Spryker shop, you can actually have several scenarios pertain to product warehouses in a multi-store environment. Each scenario is configured and enabled manually. The possible scenarios are listed below.</p>
+                <ol>
+                    <li>
+                Each store has own database and own warehouse. This means that stores have separate independent stocks and therefore separated product reservations and availability.<p><img src="../../Resources/Images/Inventory/Scenario_1.png" /></p></li>
+                    <li>Each store has own database, but warehouse is shared between the stores. This means that reservation and availabilities are synced.For the case when stores do not share database, but reservations must be shared, three new database tables have been created.
+                   
+                        <p><img src="../../Resources/Images/Inventory/Scenario_2.png" /></p><ul><li><var>spy_oms_product_reservation_store</var> - this table will store reservation request from other stores.</li><li><var>spy_oms_reservation_change_version</var> - this table will store information about when last reservation occurred.</li><li><var>spy_oms_reservation_last_exported_version</var> - this table will store information about when reservations were exported to other stores last time.</li></ul><p>Also, we provide a few plugins to help implement synchronization:</p><ul><li><![CDATA[
+               ]]><var>\Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationHandler\ReservationVersionHandlerPlugin</var> - this plugin will be called when customer makes an order and reservation is made. It will store reservation to <var>spy_oms_reservation_change_version</var> database table.
+               This plugin should be registered in <var>\Pyz\Zed\Oms\OmsDependencyProvider::getReservationHandlerPlugins</var> plugin stack.
+</li><li><![CDATA[
+               ]]><var>\Spryker\Zed\Oms\Communication\Plugin\Oms\ReservationImport\ReservationExportPlugin</var> - is the plugin which will be called when reservation export to other store is called. This plugin should decide if the export should be accepted.
+               The delivery mechanism is not provided, it could be done with files or queue.
+               For example, when <var>ReservationExportPlugin</var> is called, you could write a file copy to other server and then read it there. Similar would be with queue "publish", then "consume" on other end.
+             </li><li>When reading export data on other store, you can then use <var>\Spryker\Zed\Oms\Business\OmsFacadeInterface::importReservation</var> which will store reservation information to <var>spy_oms_product_reservation_store</var> table and update all timestamps accordingly.</li></ul><p>There is a console command to export all reservations: <var>\Spryker\Zed\Oms\Communication\Console\ExportReservationConsole</var>. It will trigger ReservationExportPlugin with reservations amounts to export. This command can be added to cronjob and run periodically.
+</p></li>
+                    <li>Database is shared between stores, but warehouses are separated by store. This means, that reservations and availability are separated per store and the warehouses (and their stocks) belong to specific stores. 
+
+				Assume there are DE and AT stores. DE store has Warehouse 1 and Warehouse 2, and AT has Warehouse 2. If user wants to buy some product from Warehouse 2 which is not available for AT store, but available in DE store, he/she would not be able to buy it in AT store (since the warehouses are separated), but could buy it in DE store (since the database is shared and it’s possible to switch between stores).
+
+				When orders are placed, each reservation in <p><img src="../../Resources/Images/Inventory/Scenario_3.png" /></p><var>spy_oms_product_reservation</var> table will also store information about store, the relation <var>fk_store</var>, to <var>spy_store table</var>. When adding a product to cart and displaying it there, the store identifier <var>fk_store</var> is used to define the correct availability value for the specific store.
+			</li>
+                    <p>From Availability module version 6.0 we have added a new configuration option to store.php file to have information about store with shared persistence. Add <var>'sharedPersistenceWithStores' =&gt; []</var>  to stores.php, where array is store names,
+          for example:
+			<pre><code class="language-PHP line-numbers">  'storesWithSharedPersistence' =&gt; ['DE', 'AT']
+          $stores['DE'] = [
+              ... //other options
+              'storesWithSharedPersistence' =&gt; ['AT']
+          ]
+          $stores['AT'] = [
+              ... //other options
+              'storesWithSharedPersistence' =&gt; ['DE']
+          ]</code></pre>
+          That means that DE and AT both share database. This information will be used when updating OMS reservations.</p>
+                    <li>Database is shared between stores, warehouses are shared by the stores. In this case the reservation must be synchronized. <p><img src="../../Resources/Images/Inventory/Scenario_4.png" /></p>
+				When placing an order in Store A, the reservation is stored with the store identifier <var>fk_store</var>. An event is created and published in the queue, and synchronization with Store B happens.
+See scenario 3 above for information about how reservations are handled as well learn about the new configuration option for shared database in store.php file.			</li>
+                </ol>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="about-inventory.htm">Get a general idea of what inventory is and what differs product stock from availability</a>
+            </li>
+            <li><a href="http://documentation.spryker.com/module_migration_guides/mg-availability.htm">Learn how to migrate to a newer version of Availability module</a>
+            </li>
+            <li><a href="http://documentation.spryker.com/module_migration_guides/mg-oms.htm">Learn how to migrate to a newer version of OMS module</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb. 26th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Aurimas Ličkus</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

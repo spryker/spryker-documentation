@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.ShopSuite,General.Draft">
+    <head>
+        <link href="../../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Merchants and Merchant Relations Feature Integration</h1>
+        <p>The Merchants and Merchant Relations feature is shipped with following modules:</p>
+        <table style="width: 100%;">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold;">Module</td>
+                    <td style="font-weight: bold;">Description</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/Merchant">Merchant </a>
+                    </td>
+                    <td> Implements logic of Merchants (adding, editing, removal)</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/MerchantGui">MerchantGui </a>
+                    </td>
+                    <td>Provides table with merchants along with Create and Edit merchants pages in the Administration Interface</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/MerchantRelationship">MerchantRelationship </a>
+                    </td>
+                    <td>Implements logic of merchant relations</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/MerchantRelationshipGui">MerchantRelationshipGui </a>
+                    </td>
+                    <td>Provides table with merchant relations along with Create and Edit merchant relations pages in the Administration Interface</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/MerchantDataImport">MerchantDataImport </a>
+                    </td>
+                    <td>Implements importer for merchants</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/MerchantRelationshipDataImport">MerchantRelationshipDataImport </a>
+                    </td>
+                    <td>Implements importer for merchant relations</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To install the Merchants and Merchant relations feature, follows the steps below.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot style="font-weight: bold;">1. Install necessary modules using composer</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Update existing and install the required modules:</p>
+                <p><i>composer update "spryker/*" "spryker-shop/*"</i>
+                </p>
+                <p><i>composer require spryker/company-business-unit-data-import:"^0.2.0" spryker/merchant:"^1.0.0" spryker/merchant-data-import:"^0.1.0" spryker/merchant-gui:"^1.0.0" spryker/merchant-relationship:"^1.0.0" spryker/merchant-relationship-data-import:"^0.1.0" spryker/merchant-relationship-gui:"^1.0.0" --update-with-dependencies</i>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot style="font-weight: bold;">2. Run the commands</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code>console transfer:generate
+console propel:install
+navigation:build-cache</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot style="font-weight: bold;">3. Add plugins to Zed's DataImportDependencyProvider</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <thead>
+                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Module</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Plugin</th>
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">DataImport</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">MerchantDataImportPlugin</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Imports merchants</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">getDataImporterPlugins</td>
+                        </tr>
+                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">DataImport</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">MerchantRelationshipDataImportPlugin</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Imports merchant relations</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">getDataImporterPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot style="font-style: italic;">src\Pyz\Zed\DataImport\DataImportDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-PHP line-numbers">
+...
+use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
+use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
+...									
+protected function getDataImporterPlugins(): array
+{
+    return [
+        ...
+        new MerchantDataImportPlugin(),
+        new MerchantRelationshipDataImportPlugin(),
+		...
+    ];
+}
+					</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><i>Last reivew date: July 9th, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Valeriy Pravoslavny</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

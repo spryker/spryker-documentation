@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B">
+    <head>
+    </head>
+    <body>
+        <h1>Tutorial - Optimizing Search Results with Boosting <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p MadCap:conditions="General.Hidden Comment">used to be: http://spryker.github.io/tutorials/yves/search-boosting/</p>
+        <p>Spryker provides a convenient way to search product data. You’re enabled to easily setup full-text and facet search. In this tutorial we will show you how to optimize the search results you get by configuring boosts.</p>
+        <h2>Why Use Boost?</h2>
+        <p>The search engine is one of the most important and critical components in an online shop since it facilitates the customer to find the products that he/she is interested on. So it’s important to get relevant search results to ease up the process.</p>
+        <p>The search engine uses an algorithm for scoring which takes care for ordering the matched entries based on their relevance. However, when a very large set of data is involved, it might be that the search results are not as relevant as they are for smaller sets.</p>
+        <p>Boosting allows us to optimize the search results and to increase the relevance of the search ranking. For example, we can specify that the title of a product is 3 times more important than the colour.</p>
+        <p>Since we have an understanding of the structure of the data that’s stored in Elasticsearch, we can improve the results based on this knowledge.</p>
+        <h2>Implementing Boosts</h2>
+        <p>Boosts can be applied at index time ( when data is loaded in Elasticsearch storage by running the collectors job) or at query time(when the search is performed).</p>
+        <p>Using pre-boosted documents offers a better performance but there are some boosts that can be applied only at query time, because maybe you don’t have enough information in the data store( for example: using the current time and a timestamp that tells when a product was last updated).</p>
+        <h2>Boosting at Index Time</h2>
+        <p>Boosting on specific fields can be added at index time. For example, we can configure that the product name is 3 times more important than other fields that are stored.</p>
+        <p>The Elasticsearch mapping is set in <var>InstallProductSearch:createProductType()</var>. If you want to adjust this configuration, you should overwrite it on project level.</p>
+        <p>Considering the actual mapping that’s configured for Demoshop, the <var>full-text-boosted</var> field corresponds to the name of the product. If we want to add boost on this field, we should enrich it as in the example below:</p><pre><code class="language-PHP line-numbers">'full-text-boosted' =&gt; [
+    'type' =&gt; 'string',
+    'include_in_all' =&gt; false,
+     'boost' =&gt; 3.0
+],</code></pre>
+        <h2>Multiple Levels of Boosting</h2>
+        <p>You can also configure to have multiple levels of boosting. You can configure a boost factor of 3 for product name and a boost factor of 2 for the short description of the product. By doing this, we specify that the name and the short description are the most important fields that should be configured when ranking the search results, but the name of the product is more relevant than the short description.</p>
+        <p>Similar to <var>full-text-boosted</var> you can define other fields as well and map them to other product fields. In the mapping, you can specify different levels of boost for each of them.</p>
+        <h2>Boosting at Query Time</h2>
+        <p>Boosting can be applied at query time, when the query is built and then submitted to the search engine.</p>
+        <p>When using the <var>multi_match</var> query, the boost factor can be plugged in-line, using the caret(^) notation.</p>
+        <p>The full-text search query is built in <var>FulltextSearch:addFulltextSearchToQuery(Request $request, Query $searchQuery)</var>. You can overwrite it to enrich the query with a boosting factor on specific fields.</p>
+        <p>Example:</p><pre><code class="language-PHP line-numbers">&lt;?php
+ $searchQuery-&gt;setQuery(
+         (new Query\MultiMatch())-&gt;setFields(['full-text', 'full-text-boosted^4'], $searchString)
+        );</code></pre>
+        <p>In this example, the same match query is executed across two different fields. By using the caret notation, we specified that the <var>full-text-boosted</var> field is 4 times more relevant/important than the other one, that has no boost applied.</p>
+    </body>
+</html>

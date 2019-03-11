@@ -1,0 +1,145 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop">
+    <head><title>Installing the Product CMS Block | Spryker</title>
+        <meta name="description" content="The steps described in this article guide you through the process that you need to perform to install the Product CMS Block in your project." />
+    </head>
+    <body>
+        <h1>Installing the Product CMS Block </h1>
+        <p>Product blocks are blocks that can be embedded in the product template, for which we can specify on which specific product we want them to be rendered.
+		</p>
+        <p>To install the Product CMS Bloxk in your project, follow the steps described in this procedure:</p>
+        <ol>
+            <li>Install the CMS Block Product Connector module with composer:&#160;
+			<var>"spryker/cms-block-product-connector": "^1.0.0"</var></li>
+            <li>Register the form plugin by adding the <var>CmsBlockProductFormPlugin</var> to the CMS Block GUI dependency provider (<var>\Pyz\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductFormPlugin;
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+{
+    /**
+    * @return array
+    */
+    protected function getCmsBlockFormPlugins()
+    {
+        return = array_merge(parent::getCmsBlockFormPlugins(), [
+            new CmsBlockProductFormPlugin(),
+        ]);
+    }
+}</code></pre></p></li>
+            <li>Register the form handler plugin by adding the <var>CmsBlockProductConnectorUpdatePlugin</var> to the CMS Block dependency provider (<var>Pyz\Zed\CmsBlock\CmsBlockDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlock;
+
+use Spryker\Zed\CmsBlockProductConnector\Communication\Plugin\CmsBlockProductConnectorUpdatePlugin;
+
+
+class CmsBlockDependencyProvider extends CmsBlockCmsBlockDependencyProvider
+{
+    protected function getCmsBlockUpdatePlugins()
+    {
+        return array_merge(parent::getCmsBlockUpdatePlugins(), [
+            new CmsBlockProductConnectorUpdatePlugin()
+        ]);
+    }
+}</code></pre></p></li>
+            <li>Register the collector plugin by adding the <var>CmsBlockProductConnectorCollectorPlugin</var> to the Collector dependency provider (<var>\Pyz\Zed\Collector\CollectorDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Collector;
+
+...
+
+class CollectorDependencyProvider extends SprykerCollectorDependencyProvider
+{
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        ...
+        $container[self::STORAGE_PLUGINS] = function (Container $container) {
+            return [
+                ...
+                CmsBlockProductConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_PRODUCT_CONNECTOR =&gt; new CmsBlockProductConnectorCollectorPlugin(),
+            ];
+        };
+    }
+}</code></pre></p></li>
+            <li>Register the product list plugin - optional:<br />To show which product abstracts are assigned to a block on a block view page, add the <var>CmsBlockProductAbstractListViewPlugin</var> to the CMS Block GUI dependency provider.
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+...
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+{
+    ...
+
+    /**
+    * @return array
+    */
+    protected function getCmsBlockViewPlugins()
+    {
+       return array_merge(parent::getCmsBlockViewPlugins(), [
+           new CmsBlockProductAbstractListViewPlugin(),
+       ]);
+    }
+}</code></pre></p></li>
+            <li>Register block list to product abstract view - optional:<br />To show which blocks are assigned to a product abstract on a product abstract view page, add the <var>CmsBlockProductAbstractBlockListViewPlugin</var> to the Product Management dependency provider.
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\ProductManagement;
+
+...
+
+class ProductManagementDependencyProvider extends SprykerProductManagementDependencyProvider
+{
+    protected function getProductAbstractViewPlugins()
+    {
+        return array_merge(parent::getProductAbstractViewPlugins(), [
+            new CmsBlockProductAbstractBlockListViewPlugin()
+        ]);
+    }
+}</code></pre></p></li>
+        </ol>
+        <h3 MadCap:conditions="Spryker.DemoShop">Usage for Demoshop</h3>
+        <p MadCap:conditions="Spryker.DemoShop">Adding a template for a new block is done in the same way as for static blocks see <a href="cms-block.htm">CMS Block</a>.</p>
+        <p MadCap:conditions="Spryker.DemoShop">Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. Call it <var>productSale.twig</var> and it will contain the following structure:</p><pre MadCap:conditions="Spryker.DemoShop"><code class="language-html line-numbers">&lt;!-- CMS_BLOCK_PLACEHOLDER : "saleMessage" --&gt;
+&lt;!-- CMS_BLOCK_PLACEHOLDER : "saleInterval" --&gt;
+&lt;blockquote&gt;
+    {{ spyCmsBlockPlaceholder('saleMessage') | raw }}
+    &lt;footer&gt;
+        {{ spyCmsBlockPlaceholder('saleInterval') | raw }}
+    &lt;/footer&gt;
+&lt;/blockquote&gt;</code></pre>
+        <p MadCap:conditions="Spryker.DemoShop"><strong>To configure the block</strong>: </p>
+        <ol MadCap:conditions="Spryker.DemoShop">
+            <li>In Zed, go to the CMS section and navigate to the blocks section.</li>
+            <li>Click <strong>Create CMS Block</strong>, to create a new block. </li>
+            <li>From the template drop-down select the new added template and  name the new block.</li>
+            <li>Set a product or a list of product the <strong>ProductField</strong> field. While typing, the product  search will offer suggestions from the product list.
+        <p MadCap:conditions="Spryker.DemoShop"><img src="../../../Resources/Images/cms-block-product-edit-page.png" title="CMS Block Product Edit Page" /></p></li>
+            <li>Set the block active if you need to use it straight away.</li>
+            <li>After clicking <strong>Save </strong>, similar to static blocks and pages, you'll be asked to provide the glossary keys for the placeholders that are included in the Twig template. For this part, follow the steps described for creating a static page here .</li>
+            <li>Embed the block in the product page by adding the following code in a product page template (e.g "detail.twig" in Spryker Demoshop):
+<pre MadCap:conditions="Spryker.DemoShop"><code class="language-bash">{% if product is defined %}
+    {{ spyCmsBlock({product: product.id}) }}
+{% endif %}</code></pre></li>
+            <li>To see the page in Yves, the client data storage (Redis) must be up-to-date. This is handled through cronjobs.</li>
+            <li>To manually execute this step,  run the collectors to update the frontend data storage:
+<pre MadCap:conditions="Spryker.DemoShop"><code class="language-bash">vendor/bin/console collector:storage:export</code></pre></li>
+        </ol>
+        <p MadCap:conditions="Spryker.DemoShop"><strong>Results</strong>:</p>
+        <p MadCap:conditions="Spryker.DemoShop">After running the collectors you should be able to see the block only on the page to which you configured it to be shown.</p>
+        <p style="font-weight: bold;"><span style="font-weight: normal;">See also:</span>
+        </p>
+        <ul>
+            <li><a href="cms-block.htm">Learn what CMS blocks are and what they are needed for</a>
+            </li>
+            <li><a href="cms-block.htm">Learn how to create and use a CMS Block</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block.htm">Learn how to migrate to a newer version of a CMS Block</a>
+            </li>
+            <li><a href="http://documentation.spryker.com/module_migration_guides/mg-cms-block-gui.htm">Learn how to migrate to a newer version of a CMS Block GUI</a>
+            </li>
+        </ul>
+    </body>
+</html>

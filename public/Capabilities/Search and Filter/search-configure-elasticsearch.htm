@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1><a name="Configur"></a>Configure Elasticsearch <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /><img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>Elasticsearch is a <var>NoSQL</var> data store which allows us to predefine the structure of the data we’ll be storing in it.</p>
+        <p>Since the data structure we use is static, we would like to define it in advance. The definitions of the indexes and mapping types are written in <var>JSON</var> format, just as you’ll find it in the <var>Elasticsearch</var> documentation.</p>
+        <p>The content of the configuration files needs to follow the conventions of the official <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-create-index.html" target="_blank" title="Elasticsearch index creation" alt="Elasticsearch index creation">Elasticsearch index creation</a> documentation. Note that the current search installer support only settings and mappings but if you need more, feel free to extend it on the project level.</p>
+        <p class="info"><strong>Default Schema</strong>
+            <br />You can find the default schema configuration file at <var>vendor/spryker/search/src/Spryker/Shared/Search/IndexMap/search.json</var>.<br /></p>
+        <p class="tip">If you want to disable the installation of the default mapping, you need to override the core configuration defined in <var>Spryker\Zed\Search\SearchConfig::getJsonIndexDefinitionDirectories()</var> by implementing it on the project level (e.g. <var>Pyz\Zed\Search\SearchConfig</var>).</p>
+        <p>Each configured store will have its own index installed automatically. The name of the indexes are composed from store name + underscore + configuration file name (e.g.: <var>de_search</var>).</p>
+        <h2>Defining New Indexes and Mapping Types</h2>
+        <p>You can define new indexes and mapping types by creating new configuration files under the <var>Shared</var> namespace of any module.</p>
+        <p>Example:</p>
+        <ul>
+            <li class="bullet_list"><var>src/Shared/MyBundleName/IndexMap/myindex.json</var>
+            </li>
+        </ul>
+        <p>You are able to extend or overwrite existing configurations by creating a new file with the same name you wish to modify and provide only the differences compared to the original one.</p>
+        <p>When the search installer runs, it will first read all the available configuration files and merge them by index name per each store. This might be handy if you have bundles which are not tightly coupled together but both need to use the same index for some reason or you just need to extend or override the default configuration provided on the Core level.</p>
+        <p>It’s also possible to extend or modify indexes and mapping types for specific stores. All you need to do is to create a new configuration file along with the name of the store (e.g. <var>de_search.json</var>) and it will be only used for that store. For example, you might have a different analyzing strategy for your stores, so you’ll need to define it separately.</p>
+        <h2>Installing Indexes and Mapping Types</h2>
+        <p>Execute the following command to run the installation process:</p><pre><code class="language-PHP line-numbers">vendor/bin/console setup:search</code></pre>
+        <p>This will install indexes which are not yet created and <a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/indices-put-mapping.html" target="_blank" title="update the mapping types" alt="update the mapping types">update the mapping types</a> based on the <var>JSON</var> configurations.</p>
+        <p>Note that if an index is created with the given settings, it won’t be changed by running this process, but the mapping can be modified and will be changed.</p>
+        <p>In development environment, if you need to create new analysers or change the index settings, you need to delete the index first and run the install process again.</p>
+        <p>When you run the search installer for every mapping type, a helper class will be auto-generated. You can find these classes under the <var>\Generated\Search\IndexMap </var>namespace. The name of the generated class starts with the name of the mapping type and is suffixed with <var>IndexMap</var>.</p>
+        <p>For the default <i>page</i> mapping type, the class is <var>\Generated\Search\IndexMap\PageIndexMap</var>.</p>
+        <p>These classes provide some information from the mapping type, such as the fields and the metadata. Use these classes for references when you need to program against something related to the schema of that mapping type.</p>
+        <p>If you change a mapping type and run the installer, the auto-generated classes will also change accordingly.</p>
+    </body>
+</html>

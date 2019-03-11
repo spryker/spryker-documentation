@@ -1,0 +1,310 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B,Spryker.DemoShop,Spryker.ShopSuite">
+    <head><title>Discount - Version 2.0 | Spryker</title>
+        <link href="../../Resources/TableStyles/VerticalTable.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="The Discount module is responsible of managing discounts in the Spryker OS. This topics coveres the information related to the v2 of Discount module." />
+    </head>
+    <body>
+        <h1>Discount - Version 2.0 <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <MadCap:relatedTopics style="mc-label: 'Versions';mc-help-control-display: list;">
+                <MadCap:relatedTopic src="discount-module-overview.htm" />
+            </MadCap:relatedTopics>
+        </p>
+        <p class="important">The latest version of this module can be found here <MadCap:xref href="discount-module-overview.htm">Discount</MadCap:xref></p>
+        <p>The Discount module is responsible of managing discounts in the Spryker OS. The schema below illustrates how discounts are modeled in Zed’s database.</p>
+        <p>
+            <img src="../../Resources/Images/discount_schema.png" title="Click me" alt="Discount schema diagram" class="Thumbnail" />
+        </p>
+        <h2>Discount Types</h2>
+        <p>There are two types of discounts:</p>
+        <ul>
+            <li>fixed amount discount ( e.g. 10€ off)<br />the currency in which the discount is calculated is the currency used by the shop</li>
+            <li>percentage discount ( e.g. 10% off)<br />the discount has an interval of validity attached - it can be redeemed starting from Valid_From date and it expires after the Valid_To date.</li>
+        </ul>
+        <h2>Privileged and Unprivileged Discounts</h2>
+        <p><var>Is_Privileged </var>flag assures that a discount can be redeemed by the customer if every discount decision rule associated to it is satisfied. If the cart includes more than one discount, a filter is being applied on the discounts, that executes the following two steps:</p>
+        <ol>
+            <li>select all privileged discounts.</li>
+            <li>select one unprivileged discount with highest amount.</li>
+        </ol>
+        <p>Example 1 : the cart for an order with total amount of €100 contains the following discounts</p>
+        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 12px;" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">&#160;</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Discount amount</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Discount type</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Is_Privileged</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Discounted amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>D1</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>15</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>Percentage</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>True</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>15</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>D2</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>5</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>Amount</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>False</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>5</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>D3</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>10</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>Percentage</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>False</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                        <p>10</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li>	Maximum discount amount : D1</li>
+            <li>Privileged discounts : D1</li>
+            <li>Result : D1 and D3 is applied</li>
+        </ul>
+        <p>Example 2 : the cart for an order with total amount of €10 contains the following discounts</p>
+        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">&#160;</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Discount amount</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">	Discount type</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">	Is_Privileged</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Discounted amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>D1</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>20</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>Percentage</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>True</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>2</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>D2</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>3</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>Amount</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>False</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>D3</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>10</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>Percentage</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>False</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                        <p>1</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <ul>
+            <li>	Maximum discount amount : D2</li>
+            <li>Privileged discounts : D1</li>
+            <li>Result : D1 and D2 are applied</li>
+        </ul>
+        <h2>Applying a Discount</h2>
+        <p>There two ways of applying a discount to an order :</p>
+        <ul>
+            <li>by having a cart rule : these discounts are contained in the cart and are calculated automatically</li>
+            <li>by having a voucher code : these discounts must be added by the customer and they are calculated once they are entered</li>
+        </ul>
+        <h2>Discount Decision Rules</h2>
+        <p>Every discount can have associated one or more decision rules. A discount decision rule entity is defined by a name that corresponds to a decision rule plugin and a value that’s passed as a parameter to the plugin’s operation that checks if the discount can be redeemed.</p>
+        <p>Example: a discount has associated the following decision rules:</p>
+        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 13px;" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Decision Rule Plugin</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>MinimumCartItems</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>3</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                        <p>DayOfWeek</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                        <p>Wednesday</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p><![CDATA[		]]></p>
+        <p>The discount can be redeemed only if both rules are satisfied: the cart contains at least 3 items and the purchase is made on a Wednesday.</p>
+        <h2>Cart Rule Discounts</h2>
+        <p class="info"><strong>Cart Rules Discounts</strong>
+            <br />Cart Rule discounts are discounts that exist in the cart and don't need any input from the customer.<br /></p>
+        <p><strong>Cart Rule</strong> discounts are not linked to a voucher pool; they are contained in the cart and are calculated automatically.</p>
+        <p>Example of cart rule discount : 10% discount on order items in category X, for orders with total amount higher than 50 euros.</p>
+        <table class="TableStyle-VerticalTable" style="mc-table-style: url('../../Resources/TableStyles/VerticalTable.css');" cellspacing="0">
+            <col class="TableStyle-VerticalTable-Column-Column1" style="width: 12px;" />
+            <col class="TableStyle-VerticalTable-Column-Column2" />
+            <tbody>
+                <tr class="TableStyle-VerticalTable-Body-Body1">
+                    <td class="TableStyle-VerticalTable-BodyE-Column1-Body1">
+                        <p><strong>Discount Decision Rules</strong>
+                        </p>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyD-Column2-Body1">
+                        <p>total amount of the order is higher than 50 euros</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-VerticalTable-Body-Body2">
+                    <td class="TableStyle-VerticalTable-BodyE-Column1-Body2">
+                        <p><strong>Collector Plugin</strong>
+                        </p>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyD-Column2-Body2">
+                        <p>collect the order items that are in the category X</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-VerticalTable-Body-Body1">
+                    <td class="TableStyle-VerticalTable-BodyB-Column1-Body1">
+                        <p><strong>Calculator Plugin</strong>
+                        </p>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyA-Column2-Body1">
+                        <p>calculate the 10% discount on collected items (if the decision rule is satisfied)</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The discount is included in the cart so it is being calculated automatically, without any other input from the customer.</p>
+        <h2>Voucher Code Discounts</h2>
+        <p><strong>Voucher Code</strong> discounts are discounts that are linked to a voucher pool. In order to be applied, the associated voucher code must be entered by the customer. Once the voucher code is submitted, the calculation of the discount is being performed.</p>
+        <p>The voucher codes associated to a discount voucher pool can be used once ( Is_Infinitely_Usable = false ) or can be used many time as long as the discount is valid ( Is_Infinitely_Usable = true )</p>
+        <p>Example of infinitely usable voucher codes : a 50% discount is offered to registered customers on orders containing at least 3 items, on the least expensive item ( a voucher code is sent by email to registered customers) The voucher code sent to the customers is the same and it’s linked to a voucher pool that has the flag Is_Infinitely_Usable set to true.</p>
+        <p>Discount Decision Rules : order contains at least 3 items The collector plugin associated to this discount will select the least expensive order item added to the cart. The calculator plugin associated to this discount would calculated the discount ( 20 %) on the collected order item, if the associated discount decision rule is satisfied. The discount is calculated once the voucher code is entered by the user.</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/VerticalTable.css');" class="TableStyle-VerticalTable" cellspacing="0">
+            <col class="TableStyle-VerticalTable-Column-Column1" />
+            <col class="TableStyle-VerticalTable-Column-Column2" />
+            <tbody>
+                <tr class="TableStyle-VerticalTable-Body-Body1">
+                    <td class="TableStyle-VerticalTable-BodyE-Column1-Body1"><strong>Discount Decision Rules</strong>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyD-Column2-Body1">order contains at least 3 order items</td>
+                </tr>
+                <tr class="TableStyle-VerticalTable-Body-Body2">
+                    <td class="TableStyle-VerticalTable-BodyE-Column1-Body2"><strong>Collector Plugin</strong>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyD-Column2-Body2">select the least expensive order item added to the cart</td>
+                </tr>
+                <tr class="TableStyle-VerticalTable-Body-Body1">
+                    <td class="TableStyle-VerticalTable-BodyB-Column1-Body1"><strong>Calculator Plugin</strong>
+                    </td>
+                    <td class="TableStyle-VerticalTable-BodyA-Column2-Body1">calculate the 20% discount on the collected order item</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>Example of voucher codes that can be used once : customer receives a 20 euro discount after a complaint is filed.</p>
+        <p>The voucher code is intended to be used only once, so it’s linked to a voucher pool that has the Is_Infinitely_Usable flag set to false.</p>
+        <h2>Discount Voucher Pools</h2>
+        <p>A discount voucher pool is linked to a voucher pool category, which is used to distinguish between voucher pool types ( e.g. : Customer Care, Marketing voucher pool categories) Discount voucher pools are intended to be used for bulk generation and management of discount voucher codes. A voucher is a code that can be sent out to customers by email or can be printed. As it can be observed in the above database schema, the voucher codes are linked to discount through the voucher pool.</p>
+        <p>The discount voucher codes contained in a discount voucher pool behave the same :</p>
+        <ul>
+            <li>common discount decision rules</li>
+            <li>common interval of validity in which they can be redeemed.</li>
+            <li>same amount and discount type ( percentage/fixed amount)</li>
+        </ul>
+        <p>The discount vouchers can be redeemed once or multiple times ( this is marked by the value of the flag <var>Is_Infinitely_Usable</var> from the discount voucher pool).</p>
+        <h2>Discount Calculation</h2>
+        <p>The discounts are calculated on discountable objects ( e.g. : order item, order expense, item expense, item options) and are distributed in order to reduce the amount the customer has to pay. The discount calculation is done in the cart for <var>Cart Rule</var> discounts or at checkout for <var>Voucher Code</var> discounts.</p>
+        <p>The discount calculation flow is similar in both cases and follows the steps described below:</p>
+        <ol>
+            <li>Select active discounts from the discounts available with the purchase. If the count of active discounts is higher than 0, then discount calculation is needed.</li>
+            <li>for each discount in the active discounts list, validate the decision rules :<ol><li>check if the date interval is valid ( current date is between Valid_From and Valid_To dates )</li><li>check every decision rule associated with the discount</li><li>if all of the associated decision rules checks returned true and the date interval is valid, the discount is kept in the discount calculation flow.</li></ol></li>
+            <li>if the cart contains more than one discount, filter the discounts ( See Privileged and unprivileged discounts section )</li>
+        </ol>
+        <p>&#160;</p>
+        <p><i>Last review date: Sep. 1, 2017</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Aurimas Ličkus</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

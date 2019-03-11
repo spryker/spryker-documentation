@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.DemoShop,Spryker.B2C">
+    <head>
+    </head>
+    <body>
+        <h1>FACT-Finder - Tracking <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Prerequisites</h2>
+        <p>Tracking information lets the FACT-Finder Search tool automatically learn from the user behavior.</p>
+        <p>The data provided through this interface can be used for a variety of purposes. They include the tracking of events such as users clicking on a detail page, placing a product into the shopping cart and purchasing it. The information can form the basis for automated search optimization. It automatically improves the search result on the basis of the established consumer behavior. Information about product clicks, shopping cart, and purchase events, in other words, the user behavior, is required for the Personalization module, which provides tailored search results for each user. The information on product purchases can also be used as a basis for the Recommendation Engine module.
+
+        </p>
+        <p class="important">
+            Please note, that the personalization can only work if a proper session ID is sent with each search request.
+        </p>
+        <h2>Usage</h2>
+        <p>By default, you can use the <code>/fact-finder/track</code> route. According to the FACT-Finder documentation, you can use tracking <code>GET</code> parameters . The user session ID will be appended on a server side.</p>
+        <ul>
+            <li><strong>General Parameters</strong>:<ul><li><code>id</code> - ID of the item for which information is to be sent.</li><li><code>masterId</code> (optional) - If your shop contains item versions and you need to transmit the item version number with the id parameter, you will need to transmit the master item number using this parameter to ensure that the products and the possible events can be assigned to each other.</li><li><code>channel</code> - The name of the FACT-Finder channel in which the search was conducted.</li><li><code>sid</code> - Use it to pass the user’s session identifier.</li><li><code>event</code> - This parameter specifies the event type. Use the following values for the various types:<ul><li>click</li><li>cart</li><li>checkout</li><li>login</li><li>recommendationClick</li><li>feedback</li></ul></li><li><code>title</code> (optional) - The item name.</li><li><code>userId</code> (optional) - Use it to pass a user identifier. As with the session ID, it can be anonymized.</li><li><code>cookieId</code> (optional) - You use this parameter to pass a token that identifies the user over a longer period of time, even when not being logged in to the shop.</li></ul></li>
+            <li><b>Click on the detail page</b>:<ul><li><code>sid</code> - Use it to pass the user’s session identifier.</li><li><code>query</code> - The search term for which the user has searched.</li><li><code>pos</code> - The position of the product in the search results.</li><li><code>origPos</code> - It transmits the original position of the item in the search result.</li><li><code>page</code> - The number of the search result page on which the selected product was displayed.</li><li><code>pageSize</code> (optional) - The number of products per search result page at the time the click was executed.</li><li><code>origPageSize</code> - The default number of products per search result page.</li><li><code>simi</code> (optional) - The FACT-Finder similarity value for the respective product.</li><li><code>campaign</code> - This field has the campaign ID as its value.</li></ul></li>
+            <li><b>Shopping basket and purchase information</b>:<ul><li><code>count</code> - Quantity of product purchased.</li><li><code>price</code> (optional) - Product price.</li><li><code>campaign</code> - The search result via a campaign. This field has the campaign ID as its value.</li></ul></li>
+            <li><b>User login</b>:<ul><li><code>sid</code> - Use this to pass the user’s session identifier.</li><li><code>userId</code> - Use this to pass a user identifier. Like the session ID, this can be anonymized.</li></ul></li>
+            <li><b>Recommendation Engine click</b>:<ul><li><code>mainId</code> - ID of the article for which the clicked article was recommended.</li></ul></li>
+            <li><b>Search result feedback</b>:<ul><li><code>query</code> - The search term for which a search was conducted and on which feedback has been provided.</li><li><code>positive</code> - Send the value true at this point if the customer provided positive feedback. Send false if negative feedback was provided on the result.</li><li><code>message</code> (optional) - If the customer left a message as justification of their opinion, you can send it using this parameter.</li></ul></li>
+            <li><b>Shop cachehit</b>:<ul><li><code>page</code> - The number of the search result page on which the selected product was displayed.</li><li><code>pageSize</code> - The number of products per search result page at the time the click was executed.</li><li><code>query</code> - The search term for which a search was conducted and on which feedback has been provided.</li><li><code>hitCount</code> - The amount of products found in the search result.</li><li><code>searchTime</code> - The time which was needed to create the search result.</li><li><code>bestSimi</code> - Similarity of the best product.</li><li><code>minSimi</code> - Similarity of the last product.</li><li><code>filterfieldName</code> (optional) - Information about active filters in the search result.</li><li><code>searchField</code> (optional) - The field for which the search was performed in case the search was limited to a specific field.</li><li><code>customSorting</code> (optional) - If the default sorting was not used for the search result, then please send a true.</li><li><code>additionalInfo</code>` (optional) - You may use this parameter to add something to the log entry, such as to enable searching the log for a specific entry.</li></ul></li>
+            <li><b>Suggest Tracking</b>:<ul><li><code>queryFromSuggest</code> - This parameter indicates that the FACT-Finder query was triggered through a selection from the suggestion list. In this case send the parameter with the value true.</li><li><code>userInput</code> - Please use this parameter to send the order of letters the shop user entered until the search query was triggered.</li></ul></li>
+        </ul>
+        <p>To use tracking on the back-end, provide the dependency to your module dependency provider.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click here to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-php line-numbers">&lt;?php
+
+    /**
+     * @param \Spryker\Yves\Kernel\Container $container
+     *
+     * @return \Spryker\Yves\Kernel\Container
+     */
+    public function provideDependencies(Container $container) {
+        $container[self::FACT_FINDER_CLIENT] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;factFinderSdk()-&gt;client();
+        };
+
+        return $container;
+    }
+
+{% endhighlight %}
+
+Add a new function to your module factory.
+
+{% highlight php linenos %}
+&lt;?php
+
+    /**
+     * @return \SprykerEco\Client\FactFinderSdk\FactFinderSdkClient
+     */
+    public function getFactFinderSdkClient()
+    {
+        return $this-&gt;getProvidedDependency(YourBundleDependencyProvider::FACT_FINDER_CLIENT);
+    }
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Login tracking could be added to a <code>Pyz\Yves\Customer\Plugin\Provider\CustomerAuthenticationSuccessHandler</code> on <code>AuthenticationSuccess</code> function</p>
+        <p>Example of a user login tracking function:</p><pre><code class="language-php line-numbers">&lt;?php
+
+    /**
+     * @param \Generated\Shared\Transfer\CustomerTransfer $customer
+     * @param Request $request
+     *
+     * @return void
+     */
+    protected function trackLogin(CustomerTransfer $customer, Request $request)
+    {
+        $trackingTransfer = new FactFinderSdkTrackingRequestTransfer();
+        $trackingTransfer-&gt;setEvent(CustomerConstants::LOGIN_TRACKING);
+        $trackingTransfer-&gt;setSid($request-&gt;cookies-&gt;get(FactFinderConstants::COOKIE_SID_NAME));
+        $trackingTransfer-&gt;setUserId(md5($customer-&gt;getEmail()));
+
+        $this-&gt;factFinderSdkClient-&gt;track($trackingTransfer);
+    }</code></pre>
+        <p>Shopping basket tracking function could be added to a <code>Yves\Cart\Handler\CartOperationHandler</code> changeQuantity and add functions.</p>
+        <p>Add a session client and a fact finder sdk client to the <code>CartOperationHandler</code> class via a <code>DependencyProvider</code>.</p>
+        <p>Example of an add to cart tracking function</p><pre><code class="language-php line-numbers">&lt;?php
+
+        /**
+         * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+         * @param $sku
+         * @param $quantity
+         *
+         * @return \Generated\Shared\Transfer\FactFinderSdkTrackingResponseTransfer
+         */
+        protected function trackAddToCart(QuoteTransfer $quoteTransfer, $sku, $quantity)
+        {
+            $trackItemTransfer = $this-&gt;getCurrentItemTransfer($quoteTransfer, $sku);
+
+            if ($trackItemTransfer) {
+                $trackRequestTransfer = new FactFinderSdkTrackingRequestTransfer();
+                $trackRequestTransfer-&gt;setId($trackItemTransfer-&gt;getSku())
+                    -&gt;setMasterId() // generate and add an abstract product sku
+                    -&gt;setEvent(static::CART_TRACK_EVENT_NAME) // static::CART_TRACK_EVENT_NAME === 'cart'
+                    -&gt;setCount($quantity)
+                    -&gt;setPrice($trackItemTransfer-&gt;getUnitPrice() / 100)
+                    -&gt;setSid($this-&gt;sessionClient-&gt;getId());
+
+                return $this-&gt;factFinderSdkClient-&gt;track($trackRequestTransfer);
+            }
+
+            return new FactFinderSdkTrackingResponseTransfer();
+        }</code></pre>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="factfinder.htm">Get a general idea about FACT-Finder</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-recommendation.htm">Configure FACT-Finder recommendations widget</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-search.htm">Configure FACT-Finder Search</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-suggest.htm">Configure FACT-Finder Suggest module</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-campaigns.htm">Configure FACT-Finder Campaign Manager module</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-export-csv.htm">Learn how to export CSVs to FACT-Finder</a><![CDATA[
+            ]]></li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec. 22nd, 2017</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Mykhailo Kozii</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

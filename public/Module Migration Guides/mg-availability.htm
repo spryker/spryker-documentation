@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Demoshop,Spryker.B2B,Spryker.B2C">
+    <head><title>Module Migration Guide - Availability | Spryker</title>
+        <meta name="description" content="Availability Module Migration guide contains instructions on how to migrate the Availability module to major versions in Spryker Commerce OS." />
+    </head>
+    <body>
+        <h1>Migration Guide - Availability <a href="../Resources/Images/shoptype/B2C_Shop.png"><img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></a></h1>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">
+                    <div class="drop-anchor">Upgrading from Version 5.* to Version 6.*</div>
+                </div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+         In Availability module version 6 we have added support for multi-store. Administrtion Interface has undergone some changes to allow selecting stores and update database tables to store relations to store.</p>
+                <p>To upgrade, first you need to run database migrations:
+         <pre><code class="language-PHP line-numbers">
+           ALTER TABLE "spy_availability"
+               ADD "fk_store" INTEGER;
+
+           ALTER TABLE "spy_availability" ADD CONSTRAINT "spy_availability-fk_store"
+              FOREIGN KEY ("fk_store")
+              REFERENCES "spy_store" ("id_store");
+
+           ALTER TABLE "spy_availability_abstract"
+              ADD "fk_store" INTEGER;
+
+           ALTER TABLE "spy_availability_abstract" ADD CONSTRAINT "spy_availability_abstract-fk_store"
+             FOREIGN KEY ("fk_store")
+             REFERENCES "spy_store" ("id_store");
+         </code></pre></p>
+            
+
+         Then:
+		<ul><li>Run <var>vendor/bin/console propel:model:build</var> - this will update models.</li><li>Run  <var>vendor/bin/console transfer:generate</var> - this will create new transfer objects.</li></ul><p>We have changed public API for methods in:
+
+         <var>\Spryker\Zed\Availability\Business\AvailabilityFacade::findProductAbstractAvailability</var> received a third argument for <var>idStore</var>.</p><p>We have also changed the way data is collected by collector, now it has to filter data by current store.
+
+         <ul><li>Change: <var>\Pyz\Zed\Collector\Business\Storage\AvailabilityCollector</var>:<pre><code class="language-PHP line-numbers">
+          $productConcreteAvailability = SpyAvailabilityQuery::create()
+            -&gt;filterByFkStore($this-&gt;getCurrentStore()-&gt;getIdStore()) //note the new filter by method.
+            -&gt;findByFkAvailabilityAbstract($idAvailabilityAbstract);
+         </code></pre></li><li>Change: <var>\Pyz\Zed\Collector\Persistence\Storage\Propel\AvailabilityCollectorQuery</var> to collect only current store availability:         <pre><code class="language-PHP line-numbers">
+         $this-&gt;touchQuery-&gt;addJoin(
+            [
+                SpyAvailabilityAbstractTableMap::COL_ABSTRACT_SKU,
+                SpyAvailabilityAbstractTableMap::COL_FK_STORE,
+            ],
+            [
+                SpyProductAbstractTableMap::COL_SKU,
+                $this-&gt;getStoreTransfer()-&gt;getIdStore(),
+            ],
+            Criteria::INNER_JOIN
+        );
+			</code></pre></li></ul></p></MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">
+                    <div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div>
+                </div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>All <var>Availability </var>UI has been moved to <var>AvailabilitGui</var> module, mostly Communication or Persistence were changed. If you have overwritten any of moved classes from those layers please change base class namespace from <var>Availability </var>to <var>AvailabilityGui</var> root.
+
+</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">
+                    <div class="drop-anchor">Upgrading from Version 2.* to Version 3.*</div>
+                </div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>With Availability version 3 we have changed the way availability is calculated. </p>
+                <p>Two new tables have been added:
+
+</p><pre><code class="language-PHP line-numbers">CREATE TABLE "spy_availability_abstract"
+(
+    "id_availability_abstract" INTEGER NOT NULL,
+    "abstract_sku" VARCHAR(255) NOT NULL,
+    "quantity" INTEGER DEFAULT 0 NOT NULL,
+    PRIMARY KEY ("id_availability_abstract"),
+    CONSTRAINT "spy_availability_abstract-sku" UNIQUE ("abstract_sku")
+);
+
+CREATE SEQUENCE "spy_availability_pk_seq";
+
+CREATE TABLE "spy_availability"
+(
+    "id_availability" INTEGER NOT NULL,
+    "fk_availability_abstract" INTEGER NOT NULL,
+    "sku" VARCHAR(255) NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "is_never_out_of_stock" BOOLEAN DEFAULT \'f\',
+    PRIMARY KEY ("id_availability"),
+    CONSTRAINT "spy_availability-sku" UNIQUE ("sku")
+);
+
+ALTER TABLE "spy_availability" ADD CONSTRAINT "spy_availability-fk_spy_availability_abstract"
+    FOREIGN KEY ("fk_availability_abstract")
+    REFERENCES "spy_availability_abstract" ("id_availability_abstract");
+',
+</code></pre>
+                <p>As this involves more than availability module, to start using it some configuration needed per module basis.
+</p>
+                <p>
+Oms version &gt;= 4 is required. Check <a href="mg-oms.htm">OMS migration</a> to version 4 step by step guide how to migrate OMS to have new availability integrated.
+
+</p>
+                <p>Cart &gt; 2.1 and AvailabilityCartConnector &gt; 2.0. To have cart availability pre check. You will need to add new plugin <var>Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CheckAvailabilityPlugin</var> into Cart project dependency provider. <var>Pyz\Zed\Cart\CartDependencyProvider::getCartPreCheckPlugins()</var> which is core implementation of cart availability check.
+
+</p>
+                <p>New availability collector is required. Take it from demoshop, <var>Pyz\Zed\Collector\Business\Storage\AvailabilityCollector</var>, this have to be added to <var>Pyz\Zed\Collector\CollectorDependencyProvider</var> storage plugin stack.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li>Get a general idea about stock and availability</li>
+            <li>Learn what Availability module does and how it works</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb. 26th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Aurimas Ličkus</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

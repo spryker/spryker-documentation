@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Postgres Index Generator</h1>
+        <p>Postgres doesn't automatically add indexes to foreign key columns. This can lead to performance issues with the database. In MySQL, you will get the indexes for the foreign key columns without the need to do something.  Most likely no one adds indexes for the foreign key columns manually when they use Postgres.</p>
+        <p>For an almost automated way of adding the (missing) indexes for the foreign key columns, in Postgres, we added a new index generator module which does add them.</p>
+        <p>To get indexes for the foreign key columns, you need to:</p>
+        <ul>
+            <li>Install the IndexGenerator module</li>
+            <li>Add these console commands to the ConsoleDependencyProvider class in the Projects namespace:<ul><li><var>Spryker\Zed\IndexGenerator\Communication\Console\PostgresIndexGeneratorConsole</var> </li><li><var>Spryker\Zed\IndexGenerator\Communication\Console\PostgresIndexRemoverConsole</var></li></ul></li>
+            <li>Run <var>console propel:schema:copy</var> to copy and merge all schema files from the core and the project</li>
+            <li>Run <var>console propel:postgres-indexes:generate</var> to generate new schema files with the missing indexes.</li>
+            <li>Check the generated schema files in <var>src/{PROJECT-NAMESPACE}/Zed/IndexGenerator/Persistence/Propel/Schema/*</var></li>
+            <li>Run <var>console propel:schema:copy</var> again to merge the generated index schema files</li>
+        </ul>
+        <p>When the Propel setup is done, you will get the indexes for all the foreign key columns where they are missing.</p>
+        <p>&#160;</p>
+        <p><i>Last review date: October 17th, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by René Klatt, Dmitry Beirak </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

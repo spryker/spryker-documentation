@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="6" MadCap:lastHeight="1405" MadCap:lastWidth="1278" MadCap:conditions="General.Demoshop">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Product Option Cart Connector</h1>
+        <h2>Upgrading from Version 4.* to Version 5.*</h2>
+        <ol>
+            <li>Update <var>spryker/product-option</var> to at least version 6.0.0. You can find additional information to product option module upgrade: <a href="mg-product-option.htm">here</a>.</li>
+            <li>Install/Update <var>spryker/price</var> to at least version 5.0.0. <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">You can find additional information to price module upgrade: <a href="../Developing with Spryker/Migration Guides/[[MISSING LINK]]">here</a>.</MadCap:conditionalText></li>
+            <li>Update <var>spryker/product-option-cart-connector</var> to version 5.0.0.</li>
+            <li>
+                Optionally add <var>ProductOptionValuePriceExistsCartPreCheckPlugin</var> to your <var>CartPreCheckPlugin</var> list to pre-check product option value price if it exists before switching currency.
+                </li>
+            Example of plugin registration:<pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Cart;
+
+use Spryker\Zed\Cart\CartDependencyProvider as SprykerCartDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductOptionCartConnector\Communication\Plugin\ProductOptionValuePriceExistsCartPreCheckPlugin;
+
+class CartDependencyProvider extends SprykerCartDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Cart\Dependency\CartPreCheckPluginInterface[]
+     */
+    protected function getCartPreCheckPlugins(Container $container)
+    {
+        return [
+            ...
+            new ProductOptionValuePriceExistsCartPreCheckPlugin(),
+            ...
+        ];
+    }
+}
+                            </code></pre><li><var>ProductOptionCartConnectorToProductOptionInterface</var> was renamed to <var>ProductOptionCartConnectorToProductOptionFacadeInterface</var>. If you have implemented this interface, amend your implementation to use the new name.</li><li>Additional changes were made to <var>ProductOptionValueExpander</var> and to its factory method. Amend your code if you have customized or extended this class.</li></ol>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li>Learn more about Product options</li>
+            <li><a href="mg-product-option.htm">Learn how to migrate Product option</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Nov. 10th, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner</i>
+            </MadCap:conditionalText>
+        </p>
+        <p>&#160;</p>
+    </body>
+</html>

@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.MultiStore">
+    <head>
+    </head>
+    <body>
+        <h1>Multi-store CMS Block <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <MadCap:popup>
+                <MadCap:popupHead>MS</MadCap:popupHead>
+                <MadCap:popupBody>Multi-store</MadCap:popupBody>
+            </MadCap:popup>
+        </p>
+        <h2>Overview</h2>
+        <p>The multi-store CMS block feature enables you to manage CMS blocks display per stores through a store toggle element on CMS Block management pages in the Administration Interface. By default CMS Blocks are available in all stores. This feature provides additional configuration when</p>
+        <ul>
+            <li>you have multiple stores,</li>
+            <li>and you want to manage the appearance of CMS Blocks per Store.</li>
+        </ul>
+        <p>This feature will help you to reach new international markets by create more personalized content for different countries as well as increase SEO results.</p>
+        <p>Read on to get to know how to enable multi-store CMS Blocks functionality for your project.</p>
+        <h2>
+            <MadCap:annotation MadCap:createDate="2018-09-18T20:37:52.1757453+03:00" MadCap:creator="oksana.karasyova" MadCap:initials="OK" MadCap:comment="Needs to be moved to Integration" MadCap:editor="oksana.karasyova" MadCap:editDate="2018-09-18T20:38:04.3656329+03:00">Feature Integration</MadCap:annotation>
+        </h2>
+        <p>To prepare your project to work with multi-store CMS Blocks, the following minimum module versions are required:</p>
+        <ul>
+            <li><var>spryker/cms-block</var> <var>2.0.0</var></li>
+            <li><var>spryker/cms-block-collector</var> <var>2.0.0</var></li>
+            <li><var>spryker/cms-block-gui</var> <var>2.0.0</var></li>
+            <li><var>spryker/store</var> <var>1.2.0</var></li>
+            <li><var>spryker/kernel</var> <var>3.13.0</var></li>
+            <li><var>spryker/collector</var> <var>6.0.0</var></li>
+            <li><var>spryker/touch</var> <var>4.0.0</var></li>
+        </ul>
+        <p>To enable multi-store management within the CMS Block Zed Admin UI, override <var>Spryker\Zed\Store\StoreConfig::isMultiStorePerZedEnabled()</var> in your project to return <var>true</var>. This will enable the store management inside the CMS Block Zed Admin UI.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Example override</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Store;
+
+use Spryker\Zed\Store\StoreConfig as SprykerStoreConfig;
+
+class StoreConfig extends SprykerStoreConfig
+{
+    /**
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled()
+    {
+        return true;
+    }
+}
+            </code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>You should now be able to use the CMS Block in the administration interface to manage CMS Block-store relations.</p>
+        <p MadCap:conditions="Spryker.DemoShop">Check out our <a href="https://github.com/spryker/demoshop">Demoshop implementation</a> for implementation example and idea.</p>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="cms-block.htm">Learn what CMS blocks are and what they are needed for</a>
+            </li>
+            <li>Learn how to create and use a CMS Block</li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block.htm">Learn how to migrate to a newer version of CMS Block module</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block-gui.htm">Learn how to migrate to a newer version of CMS Block GUI module</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block-collector.htm">Learn how to migrate to a newer version of CMS Block Collector module</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan. 31st, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,84 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop,Spryker.ShopSuite,Spryker.B2C">
+    <head>
+        <link href="../../../../Resources/TableStyles/KBTable2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Arvato  2.0 - Store Order</title>
+    </head>
+    <body>
+        <h1>Arvato  2.0 - Store Order <img src="../../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+    As soon as the order is activated in the eShop it has to be directly delivered by the service call StoreOrder in risk solution services. Based on the transmitted data a limit check is processed again. The result and action codes returned by <code>StoreOrder</code> should be analyzed and the order process should be stopped if applicable.
+</p>
+        <p>
+    The store order call can be added to OMS. ArvatoRss module provides <b>command</b> <var>(SprykerEco\Zed\ArvatoRss\Communication\Plugin\Oms\Command\StoreOrderPlugin)</var> to invoke store order call
+    and <b>condition</b> <var>(SprykerEco\Zed\ArvatoRss\Communication\Plugin\Oms\Command\IsStoreOrderSuccessfulPlugin)</var> which checks whether the call has been successful or not.
+</p>
+        <p>
+    In case of obtaining the success result with <var>RiskCheck</var> call, <var>CommunicationToken</var> will be present in response. And need to be stored to quote and provided to store order call by developer.
+    All the operations over the communication token are processed by project.</p>
+        <p><b>Data, which is sent to Arvato RSS and must be present in quote:</b>
+        </p>
+        <table style="mc-table-style: url('../../../../Resources/TableStyles/KBTable2.css');" class="TableStyle-KBTable2" cellspacing="0">
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">RegisteredOrder</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Shows if order is placed with registered customer or not.</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">OrderNumber</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">OrderReference is set here.</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">Debitor number</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Customer id from the database.</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">Payment type</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Payment type which is mapped to existing payment methods via configuration. See <var>config.dist.php</var> to get an example.</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">Currency</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Is taken from store configuration</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">GrossTotalBill</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Total value of order incl. delivery fee, rebates/ credit notes and VAT (Grand Total)</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">TotalOrderValue</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Value of goods for this order incl. VAT (Subtotal)</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">ProductNumber</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1"> Product number, defined by customer(default value 1). Sku is set there. </td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">ProductGroupId</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Product group number/product type (default value 1). 1 is set.</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">UnitPrice</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Value of units incl. VAT</td>
+            </tr>
+            <tr class="TableStyle-KBTable2-Body-Body1">
+                <td class="TableStyle-KBTable2-BodyE-ColumnBlue-Body1">UnitCount</td>
+                <td class="TableStyle-KBTable2-BodyD-ColumnGrey-Body1">Quantity of units (maximum value 99999999)</td>
+            </tr>
+        </table>
+        <p><a href="../../../../Resources/Images/arvato-rss-result-codes.xlsm">Result codes, returned by Arvato RSS</a><![CDATA[
+        ]]></p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="arvato-2-0.htm">Arvato Risk Solution Services Integration</a>
+            </li>
+            <li><a href="arvato-risk-check-2-0.htm">Arvato Risk Check</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date:
+    Oct. 16th, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Serhii Sikachov </i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

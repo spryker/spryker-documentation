@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>Wishlist Items Management <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2><var>addItem(WishlistItemTransfer $wishlistItemTransfer)</var>
+        </h2>
+        <p>Adds item to wishlist.</p>
+        <p>Required values: <var>fkCustomer</var>, <var>fkProduc</var>t. Optional: <var>wishlistName</var>. In case wishlist name is not provided the <var>default</var> value will be used.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistItemTransfer = (new WishlistItemTransfer())
+    -&gt;setWishlistName('foobar')
+    -&gt;setFkCustomer(1)
+    -&gt;setFkProduct(2);
+
+$wishlistItemTransfer = $wishlistFacade-&gt;addItem($wishlistItemTransfer);</code></pre>
+        <h2><var>removeItem(WishlistItemTransfer $wishlistItemTransfer)</var>
+        </h2>
+        <p>Removes item from wishlist.</p>
+        <p>Required values: <var>fkCustomer</var>, <var>fkProduct</var>. Optional: <var>wishlistName</var>. In case wishlist name is not provided the <var>default</var> value will be used.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistItemTransfer = (new WishlistItemTransfer())
+    -&gt;setWishlistName('foobar')
+    -&gt;setFkCustomer(1)
+    -&gt;setFkProduct(2);
+
+$wishlistItemTransfer = $wishlistFacade-&gt;removeItem ($wishlistItemTransfer);</code></pre>
+        <h2><var>addItemCollection(WishlistTransfer $wishlistTransfer, array $wishlistItemCollection)</var>
+        </h2>
+        <p>Adds collection of items to a wishlist.</p>
+        <p>Required values of <var>WishlistTransfer</var>: <var>fkCustomer</var>, <var>name</var>.</p>
+        <p>Required values of <var>WishlistItemTransfer</var>: <var>fkProduct</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setFkCustomer(1)
+    -&gt;setName('foobar');
+
+$item1 = (new WishlistItemTransfer())
+    -&gt;setFkProduct(1);
+$item1 = (new WishlistItemTransfer())
+    -&gt;setFkProduct(2);
+
+$itemCollection = [$item1, $item2];
+$wishlistFacade-&gt;addItemCollection($wishlistTransfer, $itemCollection);</code></pre>
+        <h2><var>emptyWishlist(WishlistTransfer $wishlistTransfer)</var>
+        </h2>
+        <p>Removes all wishlist items.</p>
+        <p>Required values: <var>idWishlist</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setIdWishlist(1);
+
+$wishlistFacade-&gt;emptyWishlist($wishlistTransfer);</code></pre>
+    </body>
+</html>

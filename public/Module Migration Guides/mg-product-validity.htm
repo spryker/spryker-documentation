@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="4" MadCap:lastHeight="2356" MadCap:lastWidth="2745" MadCap:conditions="General.Demoshop">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Product Validity</h1>
+        <h2>Installing Version 1.*</h2>
+        <p>The Product Validity module is responsible for (de)activation of products for (or starting from) a certain period of time. Follow the instructions below to have the module up and running in your shop.</p>
+        <h3>Database Changes</h3>
+        <p>
+            We have added a new <var><a href="https://github.com/spryker/demoshop/commit/4fff838#diff-dbd7f860d235b1eaf9516e5127e656db" target="_blank">spy_product_validity</a></var> database table (the query can be checked <a href="https://github.com/spryker/demoshop/commit/4fff838#diff-99a822ed42bf42d4e81be47bc8e9829c" target="_blank">here</a>).
+        To start the database migration, run the following commands:</p>
+        <ul>
+            <li><var>vendor/bin/console propel:diff</var> - manual review is necessary for the generated migration file.
+            </li>
+            <li><var>vendor/bin/console propel:migrate</var>
+            </li>
+            <li><var>vendor/bin/console propel:model:build</var>
+            </li>
+        </ul>
+        <p>
+            After that, add table files to<var> src/Orm/Zed/ProductValidity/Persistence</var> folder.
+        </p>
+        <h3>Auto-check Enabling</h3>
+        To have the scheduler running to auto update products in accordance with the time settings for the product validity, you need to add cronjob and console command.
+The instructions below demonstrate how to do that.
+        <ol><li><b>Enable the console command</b><p>
+            We have added a new console command <var>product:check-validity</var>.
+The command checks validity by date ranges and active status for products. Then it updates (for demoshop it will be <var>touch</var>) the ones for which the activity state changes.. To enable it, add <var>ProductValidityConsole</var> to <var>ConsoleDependencyProvider</var>. Check out our <a href="https://github.com/spryker/demoshop/commit/4fff838#diff-e854f9b396bdaa07ca6276f168aaa76a" target="_blank">Demoshop implementation</a> for implementation example and idea.  </p></li><li><b>Enable the cronjob</b><p> Add the following job to <var>config/Zed/cronjobs/jobs.php</var> file:</p><pre><code class="language-PHP line-numbers">
+            $jobs[] = [
+                'name' =&gt; 'check-product-validity',
+                'command' =&gt; '$PHP_BIN vendor/bin/console product:check-validity',
+                'schedule' =&gt; '* * * * *',
+                'enable' =&gt; true,
+                'run_on_non_production' =&gt; true,
+                'stores' =&gt; $allStores,
+            ];
+        </code></pre></li></ol><p>Check out our <a href="https://github.com/spryker/demoshop/commit/4fff838#diff-c1676e93a12b1edc23bd32cc28cababc" target="_blank">Demoshop implementation</a> for implementation example.</p><h3>Product Plugins</h3><p>For correct work of the Time to Live feature, you need to sync validity data with products concrete. Add the following plugins for that:</p><ul><li><var>ProductValidityReadPlugin</var> to
+                <var>ProductDependencyProvider::getProductConcreteReadPlugins()</var></li><li><var>ProductValidityUpdatePlugin</var> to
+                <var>ProductDependencyProvider::getProductConcreteAfterUpdatePlugins()</var></li></ul><p>Check out our <a href="https://github.com/spryker/demoshop/commit/4fff838#diff-85798d5c2007ab7bd9c7b22146ed0840" target="_blank">Demoshop implementation</a> for implementation example and idea. </p><p>&#160;</p><p><b>See also:</b></p><ul><li>Get a general idea of the TTL feature</li><li>Familiarize yourself with the feature details and its usage scenarios</li></ul><p>&#160;</p><p><i>Last review date: Feb. 23rd, 2018 </i><MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Kyrylo Khatsko</i></MadCap:conditionalText></p></body>
+</html>

@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Versioning REST API Resources | Spryker</title>
+        <meta name="description" content="This tutorial describes how to implement the versioning system for the REST API resources to provide backward compatibility. " />
+    </head>
+    <body>
+        <h1>Versioning REST API Resources</h1>
+        <p>In the course of development of your REST APIs, you may need to change the data contracts of API resources. However, you can also have clients that rely on the existing contracts. To preserve backward compatibility for such clients, we recommend implementing a versioning system for REST API resources. In this case, each resource version has its own contract in terms of data, and various clients can request the exact resource versions they are designed for.</p>
+        <p class="info">Resources provided by Spryker out of the box do not have a version. When developing resources, only new resources, attributes etc are added without removing anything, which ensures backward compatibility for all clients. <br />If necessary, you can implement versioning for built-in resources as well by <a href="extending-a-rest-request-resource.htm">extending</a> the corresponding resource module on your project level.</p>
+        <p>To implement versioning for a REST API resource, you need to do the following:</p>
+        <h2>Prerequisites</h2>
+        <p>To implement resource versioning, you need to have at least version <b>2.1.0</b> of the <b>spryker/silex</b> module installed in your project.</p>
+        <h2>1. Implement ResourceVersionableInterface</h2>
+        <p>To add versioning to a resource, the route plugin of the resource module needs to implement not only <i>ResourceRoutePluginInterface</i>, but also <i>\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface</i>. The latter exposes a method called <b>getVersion</b> that allows you to set the resource version.</p>
+        <p class="tip">For more information on route plugins, see section <b>Resource Routing</b> in <a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/glue-infrastructure.htm?Highlight=Glue%20Infrastructure">Glue Infrastructure</a>.</p>
+        <p>Let us consider the following implementation of a route plugin:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot style="font-weight: bold;">CustomerRestorePasswordResourceRoutePlugin.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Spryker\Glue\CustomersRestApi\Plugin;
+ 
+use Generated\Shared\Transfer\RestCustomerRestorePasswordAttributesTransfer;
+use Generated\Shared\Transfer\RestVersionTransfer;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiConfig;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRouteCollectionInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface;
+use Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface;
+use Spryker\Glue\Kernel\AbstractPlugin;
+ 
+/**
+ * @method \Spryker\Glue\CustomersRestApi\CustomersRestApiFactory getFactory()
+ */
+class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceVersionableInterface
+{
+    public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
+    {
+        $resourceRouteCollection
+            -&gt;addPatch('patch', false);
+ 
+        return $resourceRouteCollection;
+    }
+ 
+    public function getResourceType(): string
+    {
+        return CustomersRestApiConfig::RESOURCE_CUSTOMER_RESTORE_PASSWORD;
+    }
+ 
+    public function getController(): string
+    {
+        return CustomersRestApiConfig::CONTROLLER_CUSTOMER_RESTORE_PASSWORD;
+    }
+ 
+    public function getResourceAttributesClassName(): string
+    {
+        return RestCustomerRestorePasswordAttributesTransfer::class;
+    }
+ 
+    public function getVersion(): RestVersionTransfer
+    {
+        return (new RestVersionTransfer())
+            -&gt;setMajor(2)
+            -&gt;setMinor(0);
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>As you can see, the <b>CustomerRestorePasswordResourceRoutePlugin</b> class implements both the <i>ResourceRoutePluginInterface</i> and <i>ResourceVersionableInterface</i> interfaces. The resource supports only one HTTP verb: PATCH. Also, the <b>getVersion</b> function sets version 2.0 for the resource:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">class CustomerRestorePasswordResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceVersionableInterface
+{
+    ...
+    public function getVersion(): RestVersionTransfer
+    {
+        return (new RestVersionTransfer())
+            -&gt;setMajor(2)
+            -&gt;setMinor(0);
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p class="important">It is important that you set both the major and the minor version of a resource, otherwise, requests to it will fail.</p>
+        <p>&#160;</p>
+        <h2>2. Query specific resource version</h2>
+        <p>Now, that you've implemented a specific resource version, you can query the resource specifying the version you need. Let us send a PATCH request to the <i>/customer-restore-password</i> endpoint that now has version 2.0. The payload is as follows:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+  "data": {
+    "type": "customer-restore-password",
+    "attributes": {
+        "email":"jdoe@example.com"
+   }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Also, let us specify the exact version we need. For this purpose, you need to specify the resource version in the HTTP header of your request:</p><pre><code class="language-PHP line-numbers">Content-Type: application/vnd.api+json; version=2.0</code></pre>
+        <p>In the example above, version <b>2.0</b> is specified. If you repeat the request with such headers, you will receive a valid response with resource version <b>2.0</b>. However, if you specify a non-existent version, for example, <b>3.0</b>, the request will fail.</p><pre><code class="language-PHP line-numbers">Content-Type: application/vnd.api+json; version=3.0</code></pre>
+        <p>In this case, the endpoint will respond with the <b>404 Not Found</b> error.</p>
+        <p class="info">If a version is not specified, the latest available version will be returned.</p>
+        <h2>3. Add more versions</h2>
+        <p>Now, if you want to implement a new version, you can create a new route plugin in your module. For example, to support version <b>3.0</b>, you can use the following code in your plugin:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">class CustomerRestorePasswordResourceRouteVersion3Plugin extends AbstractPlugin implements ResourceRoutePluginInterface, ResourceVersionableInterface
+{
+    ...
+    public function getVersion(): RestVersionTransfer
+    {
+        return (new RestVersionTransfer())
+            -&gt;setMajor(3)
+            -&gt;setMinor(0);
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>In the new plugin, you can configure routing differently. For example, you can use a different controller class, use a different transfer for the resource attributes etc, for example:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">...
+public function getResourceAttributesClassName(): string
+{
+    return RestCustomerRestorePasswordVersion3AttributesTransfer::class;
+}
+...</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>After implementing the plugin and the required functionality, you need to register the new plugin in <i>Pyz\Glue\GlueApplication\GlueApplicationDependencyProvider</i>:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function getResourceRoutePlugins(): array
+    {
+        return [
+            ...
+            new CustomerRestorePasswordResourceRouteVersion3Plugin(),
+        ];
+    }</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>You can add as many plugins as required by your project needs.</p>
+        <h2>See Also:</h2>
+        <ul>
+            <li><a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/glue-infrastructure.htm?Highlight=Glue%20Infrastructure">Glue Infrastructure</a>
+            </li>
+            <li><a href="extending-a-rest-request-resource.htm">Extending a REST API Resource</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/ht-implement-rest-api-resource.htm">How To Implement a REST API Resource</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan 17, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

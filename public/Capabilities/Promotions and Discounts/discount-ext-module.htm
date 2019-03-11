@@ -1,0 +1,376 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B,Spryker.DemoShop,Spryker.ShopSuite">
+    <head><title>Extending the Discount Module | Spryker</title>
+        <meta name="description" content="Discount module contains a set of discount collectors and decision rules, but you can extend it with your own ones. And this topic explains how to do this." />
+    </head>
+    <body>
+        <h1>Extending the Discount Module</h1>
+        <p>The main components that describe a discount are:</p>
+        <ul>
+            <li class="bullet_list"><strong>discount collector</strong>: Specifies for which items discount is being applied/calculated.<br />Example: The discount can be applied for a specific set of products or for orders that contain a minimum number of items or for orders that have a minimum grand total value.</li>
+            <li class="bullet_list"><strong>discount decision</strong> rule: Specifies the conditions that need to be satisfied for the discount to be applied.<br />Example: The discount can be used on specific days of the week or on specific time intervals in a day.</li>
+            <li class="bullet_list"><strong>discount filter</strong> is applied to disountable items after collector had been run, filters are executed after each discount allowed explicit filtering.</li>
+            <li class="bullet_list"><strong>discount collector strategy</strong>: It's possible to change what collector strategy is used when collecting items for discounts, by default query string strategy is used. Collecting items by defined rule.</li>
+            <li class="bullet_list"><strong>discount post save</strong>: This extension allows to add more behaviour to discounts after discount saved. </li>
+            <li class="bullet_list"><strong>discount post update</strong>: This extension allows to add more behaviour to discounts after discount updated. </li>
+            <li class="bullet_list"><strong>discount configuration expander</strong>: This extension allows to add more data to DiscountConfigurationTransfer object. This object later mapped to discount form. </li>
+            <li class="bullet_list"><strong>discount form expander</strong>: This extension allows to extend the discount form. </li>
+            <li class="bullet_list"><strong>discount form data provider expander</strong>: This extension allows adding additional data to discount form data provider. </li>
+            <li class="bullet_list"><strong>discount view block provider</strong>: This extension allows adding additional blocks to discount view page. </li>
+            <li class="bullet_list"><strong>discount applicable filter plugin</strong>: This extension allows to filter quote items before passing to query builder (decision rule). For example you can filter items you don't want to match all your rules. </li>
+        </ul>
+        <p>The decision rule associated with the discount always runs first; if it is satisfied, the collector is run so that the discount calculation can be performed on the collected items.</p>
+        <p>The <var>Discount</var> module already contains a set of discount collectors and decision rules, but depending on your needs, you can extend it with your own ones.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a New Decision Rule</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>The decision rules are placed in the <var>Business/DecisionRule/</var> folder from the <var>Discount</var> module in Zed.</p>
+                <p>A decision rule must implement the <var>DecisionRuleInterface</var>. You’ll need to implement the <var>isSatisfiedBy()</var> method that returns a boolean value that states if the decision rule is satisfied.</p>
+                <p>Example:</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $currentItemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @throws \Spryker\Zed\Discount\Business\Exception\ComparatorException
+     *
+     * @return bool
+     */
+    public function isSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $currentItemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this-&gt;comparators-&gt;compare($clauseTransfer, $currentItemTransfer-&gt;getSku());
+    }</code></pre>
+                <p>In the example above, we are checking if the given item is matching the clause (has the same SKU).</p>
+                <p>To use the query comparators, you need to inject them in the constructor of your new decision rule.</p>
+                <p>The next step is to expose the new decision rule through the facade: extend the <var>DiscountFacade</var> by adding a new operation that exposes its functionality.</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isItemSkuSatisfiedBy(
+        QuoteTransfer $quoteTransfer,
+        ItemTransfer $itemTransfer,
+        ClauseTransfer $clauseTransfer
+    ) {
+        return $this-&gt;getFactory()
+            -&gt;createSkuDecisionRule()
+            -&gt;isSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }</code></pre>
+                <p>Create a plugin that calls the facade operation you have just added. The plugin must be placed inside the <var>Communication/Plugin/DecisionRule/</var> folder from the <var>Discount</var> module . The decision rule plugin must implement the <var>DecisionRulePluginInterface</var>.</p>
+                <p>Besides calling the discount decision rule to check if the discount can be applied, the plugin also defines the name of the field to which we’re performing the comparison, as well as the accepted data types.</p><pre><code class="language-PHP line-numbers">&lt;?php
+class SkuDecisionRulePlugin extends AbstractPlugin implements DecisionRulePluginInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ItemTransfer $itemTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return bool
+     */
+    public function isSatisfiedBy(QuoteTransfer $quoteTransfer, ItemTransfer $itemTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this-&gt;getFacade()
+            -&gt;isItemSkuSatisfiedBy($quoteTransfer, $itemTransfer, $clauseTransfer);
+    }
+
+    /**
+     * Name of field as used in query string
+     *
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return 'sku';
+    }
+
+    /**
+     * @return array
+     */
+    public function acceptedDataTypes()
+    {
+        return [
+            ComparatorOperators::TYPE_STRING,
+            ComparatorOperators::TYPE_LIST,
+        ];
+    }
+
+}</code></pre>
+                <p>The last step is to register the plugin so that it’s available in the discount plugin stack.</p>
+                <p>Extend the <var>DiscountDependencyProvider::getDecisionRulePlugins()</var> and add the new decision rule to the stack.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a New Collector</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Adding a new collector is similar to adding a new decision rule.</p>
+                <p>The discount collectors are placed inside the <var>Business/Collector/</var> folder from the <var>Discount</var> module in Zed.</p>
+                <p>A collector must implement the <var>CollectorInterface</var> and must extend the <var>BaseCollector</var> class that offers support for creating the discountable items. You’ll need to implement the <var>collect()</var> method that returns the set of items on which the discount can be applied.</p>
+                <p>Example:</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return \Generated\Shared\Transfer\DiscountableItemTransfer[]
+     */
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        $discountableItems = [];
+        foreach ($quoteTransfer-&gt;getItems() as $itemTransfer) {
+            if ($this-&gt;comparators-&gt;compare($clauseTransfer, $itemTransfer-&gt;getSku()) === false) {
+                continue;
+            }
+
+            $discountableItems[] = $this-&gt;createDiscountableItemTransfer(
+                $itemTransfer-&gt;getUnitGrossPrice(),
+                $itemTransfer-&gt;getQuantity(),
+                $itemTransfer-&gt;getCalculatedDiscounts()
+            );
+        }
+
+        return $discountableItems;
+    }</code></pre>
+                <p>In the example above, we are looking over the items included in the order and select the ones that have the SKU specified in the collector clause.</p>
+                <p>To use the query comparators, you need to inject them in the constructor of your new discount collector.</p>
+                <p>The next step is to expose the new collector through the facade: extend the <var>DiscountFacade</var> by adding a new operation that exposes its functionality.</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return array
+     */
+    public function collectBySku(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this-&gt;getFactory()
+            -&gt;createSkuCollector()
+            -&gt;collect($quoteTransfer, $clauseTransfer);
+    }</code></pre>
+                <p>Create a plugin that calls the facade operation you have just added. The plugin must be placed inside the <var>Communication/Plugin/Collector/ </var>folder from the <var>Discount</var> module. The discount collector plugin must implement the <var>CollectorPluginInterface</var>.</p>
+                <p>Besides calling the discount collector to retrieve the items for which the discount can be applied, the plugin also defines the name of the field to which we’re performing the comparison, as well as the accepted data types.</p><pre><code class="language-PHP line-numbers">&lt;?php
+class ItemBySkuCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\ClauseTransfer $clauseTransfer
+     *
+     * @return array
+     */
+    public function collect(QuoteTransfer $quoteTransfer, ClauseTransfer $clauseTransfer)
+    {
+        return $this-&gt;getFacade()-&gt;collectBySku($quoteTransfer, $clauseTransfer);
+    }
+
+    /**
+     * Name of field as used in query string
+     *
+     * @return string
+     */
+    public function getFieldName()
+    {
+        return 'sku';
+    }
+
+    /**
+     * @return array
+     */
+    public function acceptedDataTypes()
+    {
+        return [
+            ComparatorOperators::TYPE_STRING,
+            ComparatorOperators::TYPE_LIST,
+        ];
+    }
+
+}</code></pre>
+                <p>The last step is to register the plugin so that it’s available in the discount plugin stack.</p>
+                <p>Extend the <var>DiscountDependencyProvider::getCollectorPlugins()</var> and add the new discount collector to the stack.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Filter Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>If you extended <var>\Spryker\Zed\Discount\Business\Calculator\Calculator</var> in your project code, change it to <var>\Spryker\Zed\Discount\Business\Calculator\FilteredCalculator</var>, as it also includes filtering related logic.</p>
+                <p>To add a new filter plugin, create a plugin in your respective module which implements <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountableItemFilterPluginInterface</var>.</p>
+                <p>The filter will send <var>\Generated\Shared\Transfer\CollectedDiscountTransfer</var> to your plugin for each applicable discount. To filter out discounts, remove items from <var>\Generated\Shared\Transfer\CollectedDiscountTransfer::$discountableItems</var>.</p>
+                <p>If you return an empty collection, then this discount will not be applied.</p>
+                <p>Add your plugin to the plugin stack <var>\Spryker\Zed\Discount\DiscountDependencyProvider::getDiscountableItemFilterPlugins</var> extended by a project. After this all discounts will be filtered by the provided plugins.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Creating a New Discount Collector Strategy Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                    Discount module distributes discount amount to discountable items. For this there is a collector which returns the list of items to which discount can be applied. If you want to have custom logic how this is collected, then you can implement a different collector strategy.
+                </p>
+                <p>
+                    You will need to implement <var>\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface</var>. This interface has two methods, the first <var>\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface::accept(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)</var></p>
+                <p><![CDATA[
+                   ]]>must return true for a given discount if current strategy is applicable. DiscountTransfer and QuoteTransfer are provided for additional context when making decision.
+                </p>
+                <p>
+                    The second, <var>\Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface::collect(DiscountTransfer $discountTransfer, QuoteTransfer $quoteTransfer)</var> must return DiscountableItemTransfer array, this is the items to which discount will be applied.
+                </p>
+                <p>
+                    You have to create a new plugin in your module and place it to for example <var>Communication/Plugins/Discount/NameOfPlugin.php</var>, add this plugin to Discount module dependency provider, by modifying <var>\Pyz\Zed\Discount\DiscountDependencyProvider::getCollectorStrategyPlugins()</var></p>
+                <p>
+                   The method would look like:
+                   <code>
+                       /**
+                         * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorStrategyPluginInterface[]
+                         */
+                        protected function getCollectorStrategyPlugins()
+                        {
+                            return [
+                                new NameOfPlugin(),
+                            ];
+                        }
+                   </code></p>
+                <p>
+                    After this the new collector should be ready for use.
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Post Save Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>If you want to add more behavior after the discount is saved, you can implement <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostSavePluginInterface</var> plugin interface. </p>
+                <p>
+                   Create a new plugin which implements the interface, place plugin in your module under <var>Communication/Plugins/Discount/NameOfPlugin()</var>.
+                </p>
+                <p>
+                   Add this plugin to <var>`\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountPostSavePlugins`</var> plugin stack.
+                </p>
+                <p>
+                   After this the new post save plugin should be ready for use.
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Post Update Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>If you want to add more behavior after discount is updated, you can implement <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountPostUpdatePluginInterface</var> plugin interface. </p>
+                <p>
+                   Create a new plugin which implements the interface, place plugin in your module under <var>Communication/Plugins/Discount/NameOfPlugin()</var>.
+                </p>
+                <p>
+                   Add this plugin to <var>`\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountPostUpdatePlugins`</var> plugin stack.
+                </p>
+                <p>
+                   After this the new post save plugin should be ready for use.
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Configuration Expander Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>If you want to expand <var>DiscountConfigurationTransfer</var> with additional data, you can create a new plugin implementing <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountConfigurationExpanderPluginInterface</var> </p>
+                <p>
+                   Create a new plugin which implements the interface, place plugin in your module under <var>Communication/Plugins/Discount/NameOfPlugin()</var>.
+                </p>
+                <p>
+                   Add this plugin to <var>`\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountConfigurationExpanderPlugins`</var> plugin stack.
+                </p>
+                <p>
+                   After this the new expander pluing should be ready for use.
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Form Expander Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                       It's possible to extend ZED discount administration form.
+                   </p>
+                <p>
+                       To inject new form fields, you have to implement <var>\Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormExpanderPluginInterface</var> plugin interface.
+                   </p>
+                <p>
+                       This plugin has 1 method:
+                       <ol><li><var>public function expandFormType(FormBuilderInterface $builder, array $options)</var> is the method used to add new properties to Discount form.</li></ol>
+
+                      You have to use $builder object to extend Discount form.
+                      reference you can check implementation of <var>\Spryker\Zed\DiscountPromotion\Communication\Plugin\Discount\DiscountPromotionCalculationFormExpanderPlugin</var> which adds two new form fields to Discount Calculation form.
+                   </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Adding a Discount Form Data Expander Plugin</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                       This plugin allows to add additional data to discount form data provider
+                   </p>
+                <p>
+                       To add additional data to discount form, <var>\Spryker\Zed\Discount\Dependency\Plugin\Form\DiscountFormDataProviderExpanderPluginInterface</var> plugin interface should be implemented.
+                   </p>
+                <p>
+                       This plugin has 2 methods:
+
+                       <ol><li><var>public function expandDataProviderOptions(array $options);</var>: This method must return extended option array which will be passed to DiscountForm.</li><li><var>public function expandDataProviderData(array $data);</var>: This method must return extended data array which will be passed to DiscountForm.</li></ol>
+
+                      Add this plugin to: <var>\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountFormDataProviderExpanderPlugins</var></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Rendering Additional Data Inside Discount View Page</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                       You can provide URL to your action which will include rendered html at the bottom of the discount view page.
+                   </p>
+                <p>
+                      It is necessary to implement  <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountViewBlockProviderPluginInterface</var> plugin interface.
+                   </p>
+                <p>
+                      This plugin has single method <var> public function getUrl()</var> which must return URL path to controller action, for example <var>"/discount/block/index"</var>.
+                      Add this plugin to: <var>\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountViewTemplateProviderPlugins</var></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Filter Applicable Discounts Before Query Rule Engine</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                       You can filter out  quote items before making them match your decision rule. For example, you don't want matching promotion items.
+                       This filter will be applicable to all decision rules. Each plugin is narrowing down applicable items. For example when you have two plugins, second plugin will receive items filtered by the first one.
+                   </p>
+                <p>
+                      It is necessary to implement  <var>\Spryker\Zed\Discount\Dependency\Plugin\DiscountApplicableFilterPluginInterface</var> plugin interface.
+                   </p>
+                <p>
+                      This plugin has single method <var> public function filter(array $discountApplicableItems, QuoteTransfer $quoteTransfer, $idDiscount);</var> which must return array of <var>ItemTransfer[]</var> object applicable for discount.
+                      Add this plugin to: <var>\Pyz\Zed\Discount\DiscountDependencyProvider::getDiscountApplicableFilterPlugins</var></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><![CDATA[
+		]]><i>Last review date: Sep. 1, 2017</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Aurimas Ličkus</MadCap:conditionalText><![CDATA[
+    ]]></p>
+    </body>
+</html>

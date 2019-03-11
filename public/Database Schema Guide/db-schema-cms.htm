@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head><title>CMS Schema</title>
+    </head>
+    <body>
+        <h1>CMS Schema</h1>
+        <h2><b>CMS</b>
+        </h2>
+        <h3>Glossary</h3>
+        <p class="info">Every textual information can be provided in multiple languages. Languages are identified by a locale. For instance, the locale de_DE means "German language in Germany" which is different from de_CH "German language in Switzerland".</p>
+        <p class="note">The Glossary is used for the translation of all customer-facing texts that appear on the website, in emails, invoices,... It is not used for Administration Interface translation.</p>
+        <p>
+            <img src="../Resources/Images/Databaase Schema Guide/glossary.png" />
+        </p>
+        <p><b>Structure</b>:</p>
+        <ul>
+            <li>Every single text is identified by a key and has a value per locale.</li>
+        </ul>
+        <h3>CMS Pages</h3>
+        <p class="info">Create localized CMS pages based on predefined templates.</p>
+        <p>There is a clear separation of the layout and the content of a CMS Page. The layout is hardcoded in a Twig Template and cannot be changed without deployment. The Template contains Markup with Placeholders (e.g. &lt;h3&gt;{{ spyCms('title') | raw }}&lt;/h3&gt;) which needs to be linked to Glossary Keys.</p>
+        <p>
+            <img src="../Resources/Images/Databaase Schema Guide/cms-pages.png" />
+        </p>
+        <p><b>Structure</b>:</p>
+        <ul>
+            <li>A CMS Page has:</li>
+            <ul>
+                <li>a localized name, some meta information and a validity date.</li>
+                <li>a URL per locale.</li>
+                <li>a Template as a path to a Twig file which contains Markup with Placeholders</li>
+                <li>a Mapping of Placeholders to Glossary Keys.</li>
+                <li><i>is_searchable</i> - Flags if the CMS Page is included in the search results</li>
+            </ul>
+            <li>Each revision of a CMS Page is archived as JSON data in <i>spy_cms_version::data</i></li>
+        </ul>
+        <h3>CMS Blocks</h3>
+        <p class="info">Create localized CMS content blocks that can be included on dynamic pages like the Cart- or Checkout.</p>
+        <p>CMS Blocks are very similar to CMS Pages with the main difference that they are referenced by the name and there is no URL.</p>
+        <p>
+            <img src="../Resources/Images/Databaase Schema Guide/cms-blocks.png" />
+        </p>
+        <p><b>Structure</b>:</p>
+        <ul>
+            <li>A CMS Block has:</li>
+            <ul>
+                <li>a unique name which is used as a reference.</li>
+                <li>a validity date.</li>
+                <li>a Template as a path to a Twig file which contains Markup with Placeholders.</li>
+                <li>a Mapping of Placeholders to Glossary Keys.</li>
+                <li><i>type</i>, <i>fk_page</i>, and <i>value</i> are deprecated fields.</li>
+            </ul>
+            <li>CMS Blocks can be toggled per Store.</li>
+        </ul>
+        <h3>CMS Block connection with Products and Categories</h3>
+        <p class="info">CMS Blocks can be integrated into other pages with a Twig function. But there are also other ways to integrate CMS Blocks on Category and Product Pages</p>
+        <p>
+            <img src="../Resources/Images/Databaase Schema Guide/cms-block-connection-products-categories.png" />
+        </p>
+        <p><b>Structure</b>:</p>
+        <ul>
+            <li>CMS Blocks are connected to Abstract Products and Categories via <i>*_connector</i> tables.</li>
+        </ul>
+    </body>
+</html>

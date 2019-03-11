@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.MultiStore,Spryker.MultiLanguage,Spryker.MultiCurrency,Spryker.B2B">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Company Roles and Permissions Feature Overview | Spryker</title>Get a general idea of the feature<meta name="description" content="Usually employees within a company have different roles (purchasing, administration, supervision, etc.). These roles are referred to as Company Roles." /></head>
+    <body>
+        <h1>Company Roles and Permissions Feature Overview <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /></h1>
+        <p>
+            <MadCap:popup>
+                <MadCap:popupHead>ML</MadCap:popupHead>
+                <MadCap:popupBody>Multi-language</MadCap:popupBody>
+            </MadCap:popup> <MadCap:popup><MadCap:popupHead>MS</MadCap:popupHead><MadCap:popupBody>Multi-store</MadCap:popupBody></MadCap:popup> <MadCap:popup><MadCap:popupHead>MC</MadCap:popupHead><MadCap:popupBody>Multi-currency</MadCap:popupBody></MadCap:popup></p>
+        <p>Usually employees within a company have different roles (e.g. purchasing, administration, supervision, etc.). These roles are related to Company Users and are  referred to as <b>Company Roles</b>. A role can be default (“is_default” flag), which means that it is used for all new users automatically. </p>
+        <p>Upon initial creation of the first Company User, the default role is Admin. After the Admin user has been created, he/she creates the structure of the company and can define the default role to be used further on.</p>
+        <p>
+            <img src="../../../Resources/Images/roles.png" style="max-width: 70%;" />
+        </p>
+        <h2>Permissions</h2>
+        <p>Each Company role contains a set of permissions in the form of <b>Permission</b> keys attributed to them. </p>
+        <p>The Permission keys define what the users are allowed to do. </p>
+        <p class="example">For example, a user can be allowed to add products to cart. </p>
+        <p>Permissions that can be used are not limited in any way - you can create and integrate any permissions. Each of the permissions is represented as a plugin in the code.</p>
+        <p>Here is another example of the connection between company roles and permissions: </p>
+        <ul>
+            <li>When a user registers a Company in the system, he/she actually creates a request for Company account registration. </li>
+            <li>After the Company account has been approved, this first Company User becomes the Company administrator. </li>
+            <li>Therefore, one of the roles within the Company will be Administrator who will have all the permissions with regard to creation and management of company profile, user accounts and user rights.</li>
+        </ul>
+        <p>One and the same user can have several Company Roles assigned to them. It means that the same user can be Junior Sales Manager and Team Leader, which in its turn implies that this user has permissions assigned to both roles: Junior Sales Manager and Team Leader. Here it should be noted that the permissions, entitling the user with more rights, win. </p>
+        <div class="example">For example,  suppose Junior Sales Managers are allowed to place an order for up to 1000 Euro, whereas Team Leaders can place orders for up to 2000 Euro. If a user has both roles assigned to him, he/she will be allowed to place orders for up to 2000 Euro, and not 1000 Euro. 
+		<p>Or, for example, if Junior Sales Managers are not allowed to view specific products, but Team Leaders can, the users having both Junior Sales Manager and Team Leader roles will be allowed to view those products.</p></div>
+        <p>
+            <img src="../../../Resources/Images/roles-permissions.png" style="max-width: 70%;" />
+        </p>
+        <p>Company roles and permissions and their relation to the organizational structure can be schematically represented as follows:</p>
+        <p>
+            <img src="../../../Resources/Images/Company Account/roles_structure.png" />
+        </p>
+        <h2>Permission Types</h2>
+        <p>Permissions can be simple and complex. </p>
+        <div class="wrap">
+            <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 144px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 310px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Permission Type</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>Simple</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Simple permissions are those that do not have any logic behind them and answer the question “Does the customer have a permission?”. </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">A Company User is allowed (or not allowed) to access product details page.
+							<p><img src="../../../Resources/Images/Company Account/simple_permissions.png" /></p></td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>Complex</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Complex permissions have some logic behind them and answer the question “Does the customer have a permission with some parameters and business logic?”.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">A Company User is allowed (or not allowed) to place an order with grand total over 1000 Euro.
+							<p><img src="../../../Resources/Images/Company Account/complex_permissions.png" /></p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="info">Some of the Permissions can be configured for specific roles, for example, “allow adding no more than X items to cart” for junior support engineer.
+		<p>Or for example, some specific products are not allowed to be viewed by anyone, but Admin and Top Managers.</p><p>These values are referred to as <b>Company Role Permissions</b>.</p></div>
+        <p>Permission can also be <b>Yves-side</b> and <b>Zed-side</b>. </p>
+        <ul>
+            <li><b>Yves permissions</b> do not need to get any data from the database. They refer to key-value storage, or to search to check the right for actions. 
+			<p class="example">For example, the permission to view a product, a page, or permission to place an order, permission to place an order with grand total less X, would be Yves-side permissions.</p></li>
+            <li>Permissions that require some data from the database or some additional business-logic on top to check the rights for actions, are referred to as <b>Zed permissions</b>. 
+			<div class="example">For example, the permission to add to cart up to X [order value] would be the Zed-side permission. In this case the process of permissions check would be as follows: 
+				<ul><li>After the user clicked <b>Add to cart</b>, the request comes to Zed and the pre-checks are made following the “add to cart” request.</li><li>After that, the calculations are run. The calculations apply discounts per item, and then per cart (total).
+				<p>The logic behind this is simple: a user might have a discount for a specific item, and a discount for order starting from a specific order value. The order value would be calculated taken the discount per items into account, and therefore the discount per cart would be applied after all discounts per items have been calculated.</p></li><li>After the calculations have been made, the cart is saved.</li></ul></div></li>
+        </ul>
+        <p>Obviously, the permissions can not be checked at the step when user just clicks <b>Add to cart</b>, because actual order value has not been calculated yet (pre-checks have not been made yet, discounts have not been calculated). Also, the permissions check request can not be started after the cart has been updated - that would be too late, as, the cart has already been persisted. The request for rights check is made somewhere in between - specifically, right after the discounts have been calculated. That is why the so-called “termination hooks” have been implemented deep in logic, where the permissions checks are made. </p>
+        <p>The termination hooks (plugin stack) do not allow the permissions sneak into the business logic foundation so it will remain clean from the permissions and not overwhelmed with “can” “if not; then…” etc.</p>
+        <p>
+            <img src="../../../Resources/Images/Company Account/termination_hooks.png" style="max-width: 70%;" />
+        </p>
+        <p>The termination hooks are performed one by one, and process termination can happen for any reason, and one of them would be the permissions.</p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 8, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Denis Turkov, Anastasija Datsun</i>
+            </MadCap:conditionalText>
+        </p>
+        <p>&#160;</p>
+    </body>
+</html>

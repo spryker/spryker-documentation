@@ -1,0 +1,349 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head><title>Fact Finder Web Components  Partner Integration | Spryker</title>
+        <meta name="description" content="Integrate FACT Finder Web Components into your project based on Spryker Commerce OS." />
+    </head>
+    <body>
+        <h1>Fact Finder Web Components </h1>
+        <h2>Installation</h2>
+        <p>To install the fact-finder-web-components module, run the following command:</p><pre><code class="language-php">composer require spryker-eco/fact-finder-web-components</code></pre>
+        <h2>Configuration</h2>
+        <p>Authorization config:</p><pre><code class="language-php line-numbers">...
+// ---------- FACT-Finder widgets
+$config[FactFinderWebComponentsConstants::COMMUNICATION_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+		'url' =&gt; 'http://search-web-components.fact-finder.de/FACT-Finder-7.2',
+		'version' =&gt; '7.2',
+		'default-query' =&gt; 'trousers',
+		'channel' =&gt; 'heroku-fact-finder-de_DE',
+		'search-immediate' =&gt; false,
+	],
+];
+		...</code></pre>
+        <p>Widgets config example:</p><pre xml:space="preserve"><code class="language-php line-numbers">...
+$config[FactFinderWebComponentsConstants::BREADCRUMB_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+		'show-only' =&gt; false,
+	],
+	'items' =&gt; [
+		'search',
+		'filter',
+		'advisor',
+	],
+];
+
+$config[FactFinderWebComponentsConstants::SEARCH_BOX_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+		'suggest-onfocus' =&gt; 'true',
+		'use-suggest' =&gt; 'true',
+	],
+];
+
+$config[FactFinderWebComponentsConstants::SEARCH_BUTTON_WIDGET_CONFIG] = [
+	'suggest-onfocus' =&gt; false,
+	'hidesuggest-onblur' =&gt; true,
+	'select-onclick' =&gt; false,
+	'use-suggest' =&gt; false,
+	'suggest-delay' =&gt; 0,
+];
+
+$config[FactFinderWebComponentsConstants::HEADER_NAVIGATION_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+		'group-count' =&gt; 4,
+		'group-size' =&gt; 4,
+		'hide-empty-groups' =&gt; '1',
+		'fetch-initial' =&gt; '1',
+	],
+];
+
+$config[FactFinderWebComponentsConstants::SUGGEST_CONFIG] = [
+	'properties' =&gt; [],
+		'productItemType' =&gt; 'productName',
+		'searchItems' =&gt; [
+		[
+			'type' =&gt; 'searchTerm',
+			'title' =&gt; 'Search term',
+		],
+		[
+			'type' =&gt; 'category',
+			'title' =&gt; 'Category',
+		],
+		[
+			'type' =&gt; 'brand',
+			'title' =&gt; 'Brand',
+		],
+	],
+];
+
+$config[FactFinderWebComponentsConstants::RECORD_LIST_WIDGET_CONFIG] = [
+	'properties' =&gt; [],
+	'record' =&gt; '',
+];
+
+$config[FactFinderWebComponentsConstants::CHECKOUT_TRACKING_CONFIG] = [
+	'properties' =&gt; [
+		'disable-auto-tracking' =&gt; true,
+	],
+	'items' =&gt; [
+		[
+			'recordId' =&gt; 'd44c3c7b5e52f7a6b27041c1e789e954',
+			'count' =&gt; '2',
+		],
+		[
+			'recordId' =&gt; '19532fa96a8e60a27328f01520cc4',
+			'count' =&gt; '4',
+		],
+	],
+];
+
+$config[FactFinderWebComponentsConstants::RECORD_WIDGET_CONFIG] = [
+	'subscribe' =&gt; 'true',
+	'is-recommendation' =&gt; false,
+	'infinite-scrolling' =&gt; true,
+	'infinite-debounce-delay' =&gt; 32,
+	'infinite-scroll-margin' =&gt; 0,
+];
+
+$config[FactFinderWebComponentsConstants::ASN_GROUP_WIDGET_CONFIG] = [
+	'opened' =&gt; false,
+	'collapsible' =&gt; true,
+	'lazy-load' =&gt; true,
+];
+
+$config[FactFinderWebComponentsConstants::ASN_GROUP_ELEMENT_CONFIG] = [
+	'selected' =&gt; true,
+];
+
+$config[FactFinderWebComponentsConstants::ASN_REMOVE_ALL_FILTER_CONFIG] = [
+	'align' =&gt; 'vertical',
+	'show-always' =&gt; true,
+	'remove-params' =&gt; false,
+];
+
+$config[FactFinderWebComponentsConstants::ASN_SLIDER_CONFIG] = [
+	'properties' =&gt; [
+		'align' =&gt; 'vertical',
+	],
+];
+
+$config[FactFinderWebComponentsConstants::ASN_SLIDER_CONTROL_CONFIG] = [
+	'submit-on-input' =&gt; true,
+];
+
+$config[FactFinderWebComponentsConstants::PAGING_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+];
+
+$config[FactFinderWebComponentsConstants::PRODUCTS_PER_PAGE_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+	'dropdown' =&gt; '',
+	'list' =&gt; '',
+	'item' =&gt; '',
+];
+
+$config[FactFinderWebComponentsConstants::SORT_BOX_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+		'items' =&gt; [
+		[
+			'key' =&gt; 'default.template',
+			'title' =&gt; 'factfinder.web-components.sort.box.default.style',
+		],
+		[
+			'key' =&gt; 'Price.asc',
+			'title' =&gt; 'factfinder.web-components.sort.box.overriden.for',
+		],
+		[
+			'key' =&gt; 'null.desc',
+			'title' =&gt; 'factfinder.web-components.sort.box.relevance',
+		],
+	],
+];
+
+$config[FactFinderWebComponentsConstants::SIMILAR_PRODUCTS_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+		'max-results' =&gt; 4,
+	],
+	'list' =&gt; '',
+	'record' =&gt; '',
+];
+
+$config[FactFinderWebComponentsConstants::SIMILAR_PRODUCT_ID_CONFIG] = [
+	'recordId' =&gt; 'd44c3c7b5e52f7a6b27041c1e789e954',
+];
+
+$config[FactFinderWebComponentsConstants::RECOMMENDATION_CONFIG] = [
+	'properties' =&gt; [
+		'max-results' =&gt; 4,
+	],
+	'list' =&gt; '',
+	'record' =&gt; '',
+];
+
+$config[FactFinderWebComponentsConstants::RECOMMENDATION_RECORD_ID_CONFIG] = [
+	'recordId' =&gt; '19532fa96a8e60a27328f01520cc4',
+];
+
+$config[FactFinderWebComponentsConstants::TAG_CLOUD_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+];
+
+$config[FactFinderWebComponentsConstants::PUSHED_PRODUCTS_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+	'list' =&gt; '',
+	'record' =&gt; '',
+];
+
+$config[FactFinderWebComponentsConstants::CAMPAIGN_WIDGET_CONFIG] = [
+	'properties' =&gt; [
+	],
+	'answer' =&gt; '',
+	'question' =&gt; '',
+	'feedbacktext' =&gt; '',
+];
+...</code></pre>
+        <h2>Integration into Project</h2>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>frontend/settings.js</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-js line-numbers">// define project relative paths to context
+const paths = {
+	...
+ 
+	// eco folders
+	eco: {
+		// all modules
+		modules: './vendor/spryker-eco'
+	},
+ 
+	// project folders
+	project: {
+		...
+	}
+};
+ 
+...
+ 
+// export settings
+module.exports = {
+	...
+ 
+	// define settings for suite-frontend-builder finder
+	find: {
+		// webpack entry points (components) finder settings
+		componentEntryPoints: {
+			// absolute dirs in which look for
+			dirs: [
+				...
+				path.join(context, paths.eco.modules),
+				...
+			],
+			...
+		},
+ 
+		...
+	}
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/ShopUi/Theme/default/es6-polyfill.ts</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-js line-numbers">// add es6 polyfill
+import 'core-js/fn/promise';
+import 'core-js/fn/array';
+import 'core-js/fn/set';
+import 'core-js/fn/map';
+ 
+// check if the browser natively supports webcomponents (and es6)
+const hasNativeCustomElements = !!window.customElements;
+ 
+// then load a shim for es5 transpilers (typescript or babel)
+// https://github.com/webcomponents/webcomponentsjs#custom-elements-es5-adapterjs
+if (hasNativeCustomElements) {
+	import(/* webpackMode: "eager" */'@webcomponents/webcomponentsjs/custom-elements-es5-adapter');
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/ShopUi/Theme/default/vendor.ts</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-js line-numbers">// add es6 polyfill
+import 'core-js/fn/promise';
+import 'core-js/fn/array';
+import 'core-js/fn/set';
+import 'core-js/fn/map';
+ 
+// check if the browser natively supports webcomponents (and es6)
+const hasNativeCustomElements = !!window.customElements;
+ 
+// then load a shim for es5 transpilers (typescript or babel)
+// https://github.com/webcomponents/webcomponentsjs#custom-elements-es5-adapterjs
+if (hasNativeCustomElements) {
+	import(/* webpackMode: "eager" */'@webcomponents/webcomponentsjs/custom-elements-es5-adapter');
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/ShopUi/Theme/default/vendor.ts</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-js line-numbers">// add webcomponents polyfill
+import '@webcomponents/webcomponentsjs/custom-elements-es5-adapter';
+import '@webcomponents/webcomponentsjs/webcomponents-loader';
+import '@webcomponents/webcomponentsjs/webcomponents-bundle';
+import 'ff-web-components/dist/bundle';</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Update in Core "@webcomponents/webcomponentsjs": "^2.0.4",</p>
+        <p>package.json</p><pre xml:space="preserve"><code class="language-json line-numbers">"dependencies": {
+	"ff-web-components": "git+https://github.com/FACT-Finder-Web-Components/ff-web-components.git#release/3.0"
+},</code></pre>
+        <h2>Frontend Integration</h2>
+        <p>Add the required Communication element:</p><pre xml:space="preserve"><code class="language-json line-numbers">{% block content %}
+	{% include atom('communication', 'FactFinderWebComponents') with {
+		data: {
+			properties: {
+			component: 'url=“http://search-web-components.fact-finder.de/FACT-Finder-7.2” version=“7.2" default-query=“trousers” channel=“bergfreunde-co-uk” search-immediate=“true”'
+			}
+		}
+	} only %}
+ 
+{% endblock %}</code></pre>
+        <p>Add a widget:</p><pre xml:space="preserve"><code class="language-json line-numbers">{% block content %}
+	{% include atom('communication', 'FactFinderWebComponents') with {
+		data: {
+			properties: {
+			component: 'url=“http://search-web-components.fact-finder.de/FACT-Finder-7.2” version=“7.2" default-query=“trousers” channel=“bergfreunde-co-uk” search-immediate=“true”'
+			}
+		}
+	} only %}
+ 
+	{% include atom('header-navigation', 'FactFinderWebComponents') with {
+		data: {
+			properties: {
+				component: 'group-count=“4" group-size=“4” hide-empty-groups=“1" fetch-initial=“1”'
+			}
+		}
+	} only %}
+{% endblock %}</code></pre>
+        <p>&#160;</p>
+        <p><b>See also</b>:</p>
+        <ul>
+            <li><a href="https://web-components.fact-finder.de/">General information about FACT Finder Web Components</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan 23rdth, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Sergey Palkin, Oksana Karasyova</i>
+            </MadCap:conditionalText><![CDATA[
+]]></p>
+    </body>
+</html>

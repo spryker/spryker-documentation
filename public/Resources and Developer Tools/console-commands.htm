@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="4" MadCap:lastHeight="25878" MadCap:lastWidth="2057" style="">
+    <head><title>Console Commands</title>
+    </head>
+    <body>
+        <h1>Console Commands</h1>
+        <p MadCap:conditions="General.Hidden Comment">http://spryker.github.io/development-guide/reference/console-commands/</p>
+        <p>We provide an integrated mechanism to add command line calls. Technically this is based on Symfony’s Console Component.
+		</p>
+        <h2>
+			Get a list of all available commands
+		</h2>
+        <p>You can see the list of all of the commands by running: <var>vendor/bin/console</var>.</p><pre><code class="language-PHP line-numbers">vagrant@spryker-vagrant ➜  current git:(develop) ✗ vendor/bin/console
+Store: DE | Environment: development
+
+Available commands:
+ help                                        Displays help for a command
+ list                                        Lists commands
+collector
+ collector:search:export                     Collector export search
+ collector:search:update                     Collect update search
+ collector:storage:export                    Collector export storage
+gitflow
+ gitflow:finish                              Finish branch
+ gitflow:update                              Update branch
+newrelic
+ newrelic:record-deployment                  Send deployment notification to New Relic
+oms
+ oms:check-condition                         Check conditions
+ oms:check-timeout                           Check timeouts
+ ...</code></pre>
+        <h2>Get a list of all available options
+		</h2>
+        <p>To get a list of all available options you can use the -h option:
+
+		</p><pre><code class="language-PHP line-numbers">vagrant@spryker-vagrant ➜  current git:(develop) vendor/bin/console gitflow:finish -h
+Store: DE | Environment: development
+Usage:
+ gitflow:finish [-l|--level[="..."]] [-f|--from[="..."]] [-b|--branch[="..."]]
+Options:
+ --level (-l)          Define on which level this command should run (project|core) (default: "project")
+ --from (-f)           Define from where you want to rebase (default: "develop")
+ --branch (-b)         Define which branch you want to rebase
+ --help (-h)           Display this help message
+ --quiet (-q)          Do not output any message
+ --verbose (-v|vv|vvv) Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug
+ --version (-V)        Display this application version
+ --ansi                Force ANSI output
+ --no-ansi             Disable ANSI output
+ --no-interaction (-n) Do not ask any interactive question</code></pre>
+        <h2>Implementing a new command
+		</h2>
+        <p>To add a new console command, you need to create a new class in: </p>
+        <p><var>[Namespace]/Zed/(module)/Communication/Console/ </var>which extends </p>
+        <p><var>Spryker\Zed\Console\Business\Model\Console</var>. There are two methods that need to be implemented:
+
+		</p>
+        <ul>
+            <li class="bullet_list"><var>configure()</var>	This method is used to set the name, description etc.
+			</li>
+            <li class="bullet_list"><var>execute()</var>	This method is executed by the console application and contains your code (e.g. call a facade).<![CDATA[			]]></li>
+        </ul>
+        <p>Symfony’s console tool is quite powerful. Please read the official documentation before you implement your first console command.
+
+			It is possible to use arguments, to send messages and to add options.
+
+		</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\MyBundle\Communication\Console;
+ 
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+ 
+class YourNewConsoleCommand extends Console
+{
+    const COMMAND_NAME = 'my-bundle:my-task'; // e.g. 'catalog:import'
+
+     /**
+      * @return void
+      */
+    protected function configure()
+    {
+        $this-&gt;setName(static::COMMAND_NAME);
+        $this-&gt;setDescription('Lorem ipsum dolor sit amet.');
+    }
+ 
+    /**
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     *
+     * @return void
+     */
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        // your code here
+    }
+ 
+}</code></pre>
+        <h2>Add new console command to configuration
+		</h2>
+        <p>To see the command listed when running <var>vendor/bin/console</var>, you to provide it to the common console module. Then you can run the new console command with: <var>vendor/bin/console your-module:your-task</var></p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Console;
+
+use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+ 
+class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Symfony\Component\Console\Command\Command[]
+     */
+    public function getConsoleCommands(Container $container)
+    {
+        $commands = parent::getCommands($container);
+        $commands = [
+            // ...
+            new YourNewConsoleCommand(),
+            // ...
+        ];
+ 
+        return $commands;
+    }
+}</code></pre>
+        <h2>Event Listener
+		</h2>
+        <p>Symfony console triggers three events in a console command lifecycle.
+
+		</p>
+        <ul>
+            <li><var>ConsoleEvents::COMMAND</var> is triggered before the command is executed
+			</li>
+            <li><var>ConsoleEvents::TERMINATE</var> is triggered after the command is executed
+			</li>
+            <li><var>ConsoleEvents::EXCEPTION</var> is triggered when an uncaught exception appears
+			</li>
+        </ul>
+        <p>To add an event listener you need to create a class which implements <var>EventSubscriberInterface</var>. This can then be added in your <var>ConsoleDependencyProvider::getEventSubscriber()</var>.
+
+		</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Console;
+
+use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+ 
+class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+     */
+    protected function getEventSubscriber(Container $container)
+    {
+        $eventSubscriber = parent::getEventSubscriber($container);
+        $eventSubscriber = [
+            // ...
+            new YourEventListenerPlugin(),
+            // ...
+        ];
+ 
+        return $eventSubscriber;
+    }
+}</code></pre>
+        <p>This is useful in many situations. One case could be when you need to log information in your console command lifecycle.
+
+		</p>
+        <h2><a name="Logging"></a>Logging
+		</h2>
+        <p>For logging we already provide a plugin which can be added into your project as described above. The <var>ConsoleLogPlugin</var> makes use of our log module to log useful information for all three possible events.</p>
+    </body>
+</html>

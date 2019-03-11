@@ -1,0 +1,525 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.2019-02,ReleaseVersions.2019-03">
+    <head><title>Category Image Feature Integration | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="The Category Image feature allows adding images to subcategories. This guide walks you through the process of integrating the feature into your project." />
+    </head>
+    <body>
+        <h1>Category Image Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature Core</h2>
+        <h3>Prerequisites</h3>
+        <p>Please overview and install the necessary features before beginning the integration step.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Category</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">201903.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Install the Required Modules Using Composer</h3>
+        <p>Run the following command(s) to install the required modules:</p><pre><code class="language-PHP">composer require spryker-feature/category-image:"^201903.0" --update-with-dependencies</code></pre>
+        <div class="tip">Make sure that the following modules were installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CategoryImage</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/category-image</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CategoryImageGui</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>vendor/spryker/category-image-gui</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CategoryImageStorage</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/category-image-storage</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>CategoryExtension</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/category-extension</var></td></tr></tbody></table></div></div>
+        <h3>2) Set up Database Schema and Transfer Objects</h3>
+        <p>Adjust the schema definition so entity changes will trigger events.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Affected entity</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Triggered events</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_category_image_set</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Entity.spy_category_image_set.create</var>
+                            <br /><var>Entity.spy_category_image_set.update</var>
+                            <br /><var>Entity.spy_category_image_set.delete</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_category_image</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Entity.spy_category_image.create</var>
+                            <br /><var>Entity.spy_category_image.update</var>
+                            <br /><var>Entity.spy_category_image.delete</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spy_category_image_set_to_category_image</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Entity.spy_category_image_set_to_category_image.create</var>
+                            <br /><var>Entity.spy_category_image_set_to_category_image.update</var>
+                            <br /><var>Entity.spy_category_image_set_to_category_image.delete</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Zed/CategoryImage/Persistence/Propel/Schema/spy_category_image.schema.xml</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\CategoryImage\Persistence" package="src.Orm.Zed.CategoryImage.Persistence"&gt;
+ 
+	&lt;table name="spy_category_image_set"&gt;
+		&lt;behavior name="event"&gt;
+			&lt;parameter name="spy_category_image_set_all" column="*"/&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+ 
+	&lt;table name="spy_category_image"&gt;
+		&lt;behavior name="event"&gt;
+			&lt;parameter name="spy_category_image_all" column="*"/&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+ 
+	&lt;table name="spy_category_image_set_to_category_image"&gt;
+		&lt;behavior name="event"&gt;
+			&lt;parameter name="spy_category_image_set_to_category_image_all" column="*"/&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+&lt;/database&gt;
+			</code></pre>
+                <p>&#160;</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Set up synchronization queue pools so non-multistore entities (not store specific entities) will be synchronized among stores:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Zed/CategoryImageStorage/Persistence/Propel/Schema/spy_category_image_storage.schema.xml</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve">&lt;?xml version="1.0"?&gt;
+&lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	name="zed"
+	xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+	namespace="Orm\Zed\CategoryImageStorage\Persistence"
+	package="src.Orm.Zed.CategoryImageStorage.Persistence"&gt;
+ 
+	&lt;table name="spy_category_image_storage"&gt;
+		&lt;behavior name="synchronization"&gt;
+			&lt;parameter name="queue_pool" value="synchronizationPool" /&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+&lt;/database&gt;</pre><pre><code class="language-xml">console transfer:generate
+console propel:install
+console transfer:generate
+		</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that the following changes have been applied by checking your database:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database entity</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_category_image_set</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_category_image</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">table</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_category_image_set_to_category_image</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>spy_category_image_storage</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">table</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">created</td></tr></tbody></table></div></div>
+        <div class="tip">
+			Make sure that propel entities were generated successfully by checking their existence. Also, change the generated entity classes to extend from Spryker core classes.
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Class path</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Extends</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImage.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\CategoryImage\Persistence\Propel\AbstractSpyCategoryImage</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImageQuery.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\ProductAttribute\Persistence\Propel\AbstractSpyProductAttributeQuery</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImageSet.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\CategoryImage\Persistence\Propel\AbstractSpyCategoryImageSet</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImageSetQuery.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\CategoryImage\Persistence\Propel\AbstractSpyCategoryImageSetQuery</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImageSetToCategoryImage.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\CategoryImage\Persistence\Propel\AbstractSpyCategoryImageSetToCategoryImage</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>src/Orm/Zed/CategoryImage/Persistence/Base/SpyCategoryImageSetToCategoryImageQuery.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\CategoryImage\Persistence\Propel\AbstractSpyCategoryImageSetToCategoryImageQuery</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>src/Orm/Zed/CategoryImageStorage/Persistence/Base/SpyCategoryImageStorage.php</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\CategoryImageStorage\Persistence\Propel\AbstractSpyCategoryImageStorage</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>src/Orm/Zed/CategoryImageStorage/Persistence/Base/SpyCategoryImageStorageQuery.php</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Zed\CategoryImageStorage\Persistence\Propel\AbstractSpyCategoryImageStorageQuery</var></td></tr></tbody></table></div></div>
+        <h3>3) Configure export to Redis</h3>
+        <h4>Setup event listeners</h4>
+        <p>With this step you will be able to publish tables on change (create, edit, delete) to <var>spy_category_image_storage</var> and synchronise the data to Storage.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CategoryImageStorageEventSubscriber</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Registers listeners that are responsible to publish category image information to storage when a related entity changes.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Zed/Event/EventDependencyProvider.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+  
+namespace Pyz\Zed\Event;
+  
+use Spryker\Zed\CategoryImageStorage\Communication\Plugin\Event\Subscriber\CategoryImageStorageEventSubscriber;
+use Spryker\Zed\Event\EventDependencyProvider as SprykerEventDependencyProvider;
+  
+class EventDependencyProvider extends SprykerEventDependencyProvider
+{
+	public function getEventSubscriberCollection()
+	{
+		$eventSubscriberCollection = parent::getEventSubscriberCollection();
+		$eventSubscriberCollection-&gt;add(new CategoryImageStorageEventSubscriber());
+  
+		return $eventSubscriberCollection;
+	}
+}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Zed/CategoryImageStorage/CategoryImageStorageConfig.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\CategoryImageStorage;
+ 
+use Pyz\Zed\Synchronization\SynchronizationConfig;
+use Spryker\Zed\CategoryImageStorage\CategoryImageStorageConfig as SprykerCategoryImageSTorageConfig;
+ 
+class CategoryImageStorageConfig extends SprykerCategoryImageSTorageConfig
+{
+	/**
+	* @return string|null
+	*/
+	public function getCategoryImageSynchronizationPoolName(): ?string
+	{
+		return SynchronizationConfig::DEFAULT_SYNCHRONIZATION_POOL_NAME;
+	}
+}
+		</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h4>Set up data synchronization</h4>
+        <p>Add the following plugins to your project:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CategoryImageSynchronizationDataPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Can be executed to synchronize all category image entries from a database to Redis.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\CategoryImageStorage\Communication\Plugin\Synchronization</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tip">
+			Make sure when category images are created, updated or deleted, they are exported (or removed) to Redis accordingly.
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Storage type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Target entity</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Example expected data identifier</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Example expected data fragment</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Redis</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Category Image</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">kv:category_image:en_us:1</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><pre><code class="language-PHP">{
+	"id_category": 1,
+	"image_sets": [
+		{
+			"name": "default",
+			"images": [
+				{
+					"id_category_image": 1,
+					"external_url_large": "http://test/image/url.jpg",
+					"external_url_small": "http://test/image/url.jpg"
+				}
+			]
+		}
+	]
+}
+								</code></pre></td></tr></tbody></table></div></div>
+        <h3>4) Import Data</h3>
+        <p>Prepare your data according to your requirements using our demo data:</p>
+        <p><b>data/import/category_template.csv</b>
+        </p><pre><code class="language-PHP">
+template_name,template_path
+"Sub Categories grid","@CatalogPage/views/sub-categories-grid/sub-categories-grid.twig"
+			</code></pre>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Column</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Is obligatory?</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data type</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data example</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Data explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>template_name</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">My category template</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Human readable name of the category template.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>template_path</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">@ModuleName/path/to/category/template.twig</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Category template path that is used to display a category page.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Run the following console command to import data:</p><pre><code class="language-PHP">console data:import data:import:category-template</code></pre>
+        <p class="tip">Make sure that in the database the configured data is added to the <var>spy_category_template</var> table.</p>
+        <h3>5) Set up behaviour</h3>
+        <p>Add the following plugins to your project:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CategoryImageSetCreatorPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Persists new category image sets into database after the category creation.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Zed\CategoryImage\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CategoryImageSetExpanderPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Hydrates category with image data after reading them from the database.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>\Spryker\Zed\CategoryImage\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CategoryImageSetUpdaterPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Persists category image set changes into a database after the category update.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Zed\CategoryImage\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RemoveCategoryImageSetRelationPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Deletes category image sets when a category is deleted.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>\Spryker\Zed\CategoryImage\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CategoryImageFormPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Extends create/edit category forms with the category image set related fields.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Zed\CategoryImageGui\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>CategoryImageFormTabExpanderPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Extends create/edit category tabs with the category image set related item.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>\Spryker\Zed\CategoryImageGui\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Zed/Category/CategoryDependencyProvider.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Category;
+ 
+use Spryker\Zed\Category\CategoryDependencyProvider as SprykerDependencyProvider;
+use Spryker\Zed\CategoryImage\Communication\Plugin\CategoryImageSetCreatorPlugin;
+use Spryker\Zed\CategoryImage\Communication\Plugin\CategoryImageSetExpanderPlugin;
+use Spryker\Zed\CategoryImage\Communication\Plugin\CategoryImageSetUpdaterPlugin;
+use Spryker\Zed\CategoryImage\Communication\Plugin\RemoveCategoryImageSetRelationPlugin;
+use Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryImageFormPlugin;
+use Spryker\Zed\CategoryImageGui\Communication\Plugin\CategoryImageFormTabExpanderPlugin;
+ 
+class CategoryDependencyProvider extends SprykerDependencyProvider
+{
+	/**
+	* @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationDeletePluginInterface[]
+	*/
+	protected function getRelationDeletePluginStack()
+	{
+		$deletePlugins = array_merge(
+			[
+				new RemoveCategoryImageSetRelationPlugin(),
+			],
+			parent::getRelationDeletePluginStack()
+		);
+ 
+		return $deletePlugins;
+	}
+ 
+	/**
+	* @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryTransferExpanderPluginInterface[]
+	*/
+	protected function getCategoryPostReadPlugins(): array
+	{
+		return [
+			new CategoryImageSetExpanderPlugin(),
+		];
+	}
+ 
+	/**
+	* @return array
+	*/
+	protected function getCategoryFormPlugins()
+	{
+		return array_merge(parent::getCategoryFormPlugins(), [
+			new CategoryImageFormPlugin(),
+		]);
+	}
+ 
+	/**
+	* @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryUpdateAfterPluginInterface[]
+	*/
+	protected function getCategoryPostUpdatePlugins(): array
+	{
+		return [
+			new CategoryImageSetUpdaterPlugin(),
+		];
+	}
+ 
+	/**
+	* @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryCreateAfterPluginInterface[]
+	*/
+	protected function getCategoryPostCreatePlugins(): array
+	{
+		return [
+			new CategoryImageSetCreatorPlugin(),
+		];
+	}
+ 
+	/**
+	* @return \Spryker\Zed\CategoryExtension\Dependency\Plugin\CategoryFormTabExpanderPluginInterface[]
+	*/
+	protected function getCategoryFormTabExpanderPlugins(): array
+	{
+		return [
+			new CategoryImageFormTabExpanderPlugin(),
+		];
+	}
+}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p class="tip">Make sure that category image handling is integrated successfully by going to Zed and creating, editing, and deleting categories with images.</p>
+        <h2>Install Feature Frontend</h2>
+        <h3>Prerequisites</h3>
+        <p>Please overview and install the necessary features before beginning the integration step.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Category</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">201903.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Install the Required Modules Using Composer</h3>
+        <p>Run the following command(s) to install the required modules:</p><pre><code class="language-PHP">composer require spryker-shop/category-image-storage-widget:"^1.0.0" --update-with-dependencies</code></pre>
+        <div class="tip">Make sure that the following modules were installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CategoryImageStorageWidget</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker-shop/category-image-storage-widget</var></td></tr></tbody></table></div></div>
+        <h3>2) Set up Widgets</h3>
+        <p>Register the following global widgets:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Widget</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CategoryImageStorageWidget</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Finds the given category image set in Storage and displays its first image in the given size format.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>\SprykerShop\Yves\CategoryImageStorageWidget\Widget\CategoryImageStorageWidget</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+  
+namespace Pyz\Yves\ShopApplication;
+  
+use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+use SprykerShop\Yves\CategoryImageStorageWidget\Widget\CategoryImageStorageWidget;
+  
+class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+{
+	/**
+	* @return string[]
+	*/
+	protected function getGlobalWidgets(): array
+	{
+		return [
+			CategoryImageStorageWidget::class,
+		];
+	}
+}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that the following widgets were registered:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Test</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CategoryImageStorageWidget</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Make sure you have category image data in your storage, then render the widget for any categories that have images assigned.</td></tr></tbody></table></div></div>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p>
+            <MadCap:annotation MadCap:createDate="2019-02-12T14:43:08.7928985+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-12T14:43:10.6250541+02:00">Assigning a Template to a Category Page</MadCap:annotation>
+        </p>
+        <p>
+            <MadCap:annotation MadCap:createDate="2019-02-12T14:41:18.7298400+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-12T14:41:20.7327927+02:00">Adding an Image to a Subcategory</MadCap:annotation>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 12, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Tamás Nyulas, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

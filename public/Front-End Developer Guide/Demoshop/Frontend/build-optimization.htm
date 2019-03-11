@@ -1,0 +1,59 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head><title>Build Optimization</title>
+    </head>
+    <body>
+        <h1>Build and Optimization <img src="../../../Resources/shoptype/Demoshop.png" /></h1>
+        <p>We use <a href="https://webpack.js.org/">Webpack</a> and <a href="../Oryx/oryx.htm" target="_blank">Oryx</a> for transpiling/building the assets and to optimize the resulting output.</p>
+        <p>For more on <strong>Webpack </strong>build process and requirements see:</p>
+        <ul>
+            <li class="bullet_list"><a href="https://webpack.js.org/concepts/" target="_blank">Key Concepts</a>
+            </li>
+            <li class="bullet_list"><a href="https://webpack.js.org/guides/get-started/" target="_blank">Getting started</a>
+                <ul>
+                    <li class="bullet_list"><a href="https://webpack.js.org/guides/get-started/#using-webpack-with-a-config" target="_blank">Using a Configuration</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="bullet_list"><a href="https://webpack.js.org/configuration/" target="_blank">Configuration Details</a>
+            </li>
+        </ul>
+        <p>Learn more about Spryker <strong>Oryx </strong>frontend helper:</p>
+        <ul>
+            <li class="bullet_list"><a href="../Oryx/oryx.htm" target="_blank">Oryx documentation</a>
+            </li>
+            <li class="bullet_list"><a href="../Oryx/oryx-for-zed.htm" target="_blank">Oryx for Zed documentation</a>
+            </li>
+        </ul>
+        <h2>Automatic loading for Webpack Entry Points</h2>
+        <p> <a href="../Oryx/oryx.htm#find" target="_blank">Oryx's globbing system</a>, enables Webpack to automatically find and load entry points. </p>
+        <h3>Yves</h3>
+        <p>At project level, you can pass your own entry points directly in the <var>Webpack </var>configuration. We recommend to also use the<var>oryx.find()</var> API to import any Yves related code. This way, you will get every frontend feature developed in the core (i.e. payments method UI).</p><pre><code class="language-bash line-numbers">const settings = {
+    entry: {
+        dirs: [path.resolve('vendor/spryker')],
+        patterns: ['**/Yves/**/*.entry.js'],
+        defineName: p =&gt; path.basename(p, '.entry.js'),
+        description: 'looking for entry points...'
+    }
+};
+
+const webpackConfiguration = {
+    // ...
+    entry: oryx.find(settings.entry, {
+        'your-entry-name': '/path/to/your/entry/point.js'
+    }),
+    // ...
+};</code></pre>
+        <p><var>**/Yves/**/*.entry.js </var>is the default pattern for Yves automatic inclusion: every filename endings with <var>.entry.js</var> and contained in a parent folder called <var>Yves </var>will be included by <var>webpack </var>into the build process.</p>
+        <h3>Zed</h3>
+        <p>Zed frontend is fully managed by Oryx for Zed. It relies on the <var> oryx.find()</var> API to automatically globb the entry point files across the project. </p>
+        <p>To add or change entry points in Zed, <a href="../Oryx/oryx-for-zed.htm#Extend/c">extend the Oryx for Zed Webpack configuration</a>.</p>
+        <p>For more about Zed assets management:</p>
+        <ul>
+            <li class="bullet_list"><a href="../Oryx/oryx.htm#find">Oryx globbing system</a>
+            </li>
+            <li class="bullet_list"><a href="../Oryx/oryx-for-zed.htm#API">Oryx for Zed API</a>
+            </li>
+        </ul>
+    </body>
+</html>

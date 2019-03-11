@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Project Implementation - Zed API <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>For the API and the API bundles to get activated we need to configure our own service provider stack in the Zed ApplicationDependencyProvider class:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProviders(Container $container)
+    {
+        $providers = [
+            // Add Security/CORS service providers
+            // Add Auth service providers
+            
+            new RequestServiceProvider(),
+            new SslServiceProvider(),
+            new ServiceControllerServiceProvider(),
+            new RoutingServiceProvider(),
+            $this-&gt;getApiServiceProvider(),
+            new ApiRoutingServiceProvider(),
+            new PropelServiceProvider(),
+        ];
+
+        if (Environment::isDevelopment()) {
+            $providers[] = new WhoopsErrorHandlerServiceProvider();
+        }
+
+        return $providers;
+    }
+
+    /**
+     * @return \Spryker\Zed\Api\Communication\Plugin\ApiServiceProviderPlugin
+     */
+    protected function getApiServiceProvider()
+    {
+        $controllerListener = new ApiControllerListenerPlugin();
+        $serviceProvider = new ApiServiceProviderPlugin();
+        $serviceProvider-&gt;setControllerListener($controllerListener);
+
+        return $serviceProvider;
+    }
+</code></pre>
+        <p>In the ZedBootstrap class we activate this service provider stack based on the URI:
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /**
+     * @SuppressWarnings(PHPMD)
+     *
+     * @return void
+     */
+    protected function setUp()
+    {
+        if (!empty($_SERVER['REQUEST_URI']) &amp;&amp; strpos($_SERVER['REQUEST_URI'], ApiConfig::ROUTE_PREFIX_API_REST) === 0) {
+            $this-&gt;registerApiServiceProviders();
+            return;
+        }
+
+        parent::setUp();
+    }
+
+    /**
+     * @return void
+     */
+    protected function registerApiServiceProviders()
+    {
+        foreach ($this-&gt;getApiServiceProvider() as $provider) {
+            $this-&gt;application-&gt;register($provider);
+        }
+    }
+
+    /**
+     * @return \Silex\ServiceProviderInterface[]
+     */
+    protected function getApiServiceProvider()
+    {
+        return $this-&gt;getProvidedDependency(ApplicationDependencyProvider::SERVICE_PROVIDER_API);
+    }
+</code></pre>
+        <p>As an alternative you can have your own <var>rest.php</var> PHP entry point and configure your server/container nginx to route into a different ZedBootstrap setup.
+
+</p>
+        <p>This own stack uses the minimal service providers needed exlusively to run the API.
+</p>
+        <p>
+Steps for installation when migrating an older demoshop version:
+</p>
+        <p>
+Update spryker/propel-query-builder to <var>^0.2.0</var></p>
+    </body>
+</html>

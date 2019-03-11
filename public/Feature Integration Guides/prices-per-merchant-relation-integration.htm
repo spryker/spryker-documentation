@@ -1,0 +1,588 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.ShopSuite,General.Draft">
+    <head>
+    </head>
+    <body>
+        <h1>Prices per Merchant Relation Feature Integration</h1>
+        <p>The Price per Merchant Relation feature is shipped with the following modules:</p>
+        <table style="width: 100%;">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold;">Module</td>
+                    <td style="font-weight: bold;">Description</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product-merchant-relationship">PriceProductMerchantRelationship</a>
+                    </td>
+                    <td>Bears the logic for setting specific product prices per merchant relationship.</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product-extension">PriceProductExtension</a>
+                    </td>
+                    <td>	Provides plugin interfaces to extend PriceProduct module.</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product-merchant-relationship-data-import">PriceProductMerchantRelationshipDataImport</a>
+                    </td>
+                    <td>Contains demo data and importer for price products for merchant relations.</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product-merchant-relationship-storage">PriceProductMerchantRelationshipStorage</a>
+                    </td>
+                    <td>Saves prices for merchant relations into Storage and contains plugins for reading them.</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product-storage-extension">PriceProductStorageExtension</a>
+                    </td>
+                    <td>Provides plugin interfaces to extend PriceProductStorage module.</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/price-product">PriceProductPriceProduct</a>
+                    </td>
+                    <td>Provides product price related functionality, price persistence, current price resolvers per currency/price mode.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To install the Price per Merchant Relation feature, follow the steps below.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>1. Install the necessary modules using composer</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Update the existing and install the required modules:</p>
+                <p><i>composer update "spryker/*"</i>
+                </p>
+                <p><i>composer require spryker/price-product:"^2.0.0" spryker/price-product-data-import:"^0.1.0" spryker/price-product-extension:"^1.0.0" spryker/price-product-merchant-relationship:"^1.0.0" spryker/price-product-merchant-relationship-data-import:"^0.1.0" spryker/price-product-merchant-relationship-storage:"^1.0.0" spryker/price-product-storage:"^2.0.0" spryker/price-product-storage-extension:"^1.0.0" --update-with-dependencies</i>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>2. Add a plugin to Client's PriceProductStorageDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PriceProductStorage</td>
+                            <td>PriceProductMerchantRelationshipStorageDimensionPlugin</td>
+                            <td>Reads prices for merchant relations from Redis to show them in catalog.</td>
+                            <td>getPriceDimensionPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Client/PriceProductStorage/PriceProductStorageDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Client\PriceProductStorage;
+use Spryker\Client\PriceProductMerchantRelationshipStorage\Plugin\PriceProductStorageExtension\PriceProductMerchantRelationshipStorageDimensionPlugin;
+use Spryker\Client\PriceProductStorage\PriceProductStorageDependencyProvider as SprykerPriceProductStorageDependencyProvider;
+class PriceProductStorageDependencyProvider extends SprykerPriceProductStorageDependencyProvider
+{
+    /**
+     * @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePriceDimensionPluginInterface[]
+     */
+    public function getPriceDimensionStorageReaderPlugins(): array
+    {
+        return [
+            new PriceProductMerchantRelationshipStorageDimensionPlugin(),
+        ];
+    }
+}</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><![CDATA[
+		]]><b>3. Add a plugin to Client's CustomerDependencyProvider</b></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Customer</td>
+                            <td>CustomerChangePriceUpdatePlugin</td>
+                            <td>When a guest user adds some products to cart, and then, while in checkout, logs in as a customer having specific prices for his/her merchant relation, this plugin updates the default prices to respective merchant relation prices.</td>
+                            <td>getCustomerSessionSetPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Client/Customer/CustomerDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Client\Customer;
+...
+use Spryker\Client\PriceProductMerchantRelationship\Plugin\CustomerChangePriceUpdatePlugin;
+class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
+{
+    /**
+     * @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionGetPluginInterface[]
+    ...
+    protected function getCustomerSessionSetPlugins()
+    {
+        return [
+            new GuestCartSaveCustomerSessionSetPlugin(), #MultiCartFeature
+            new GuestCartUpdateCustomerSessionSetPlugin(), #PersistentCartFeature
+            new CustomerChangeCartUpdatePlugin(),
+            new CustomerChangePriceUpdatePlugin(), #PricesPerBusinessUnit
+        ];
+    }
+    /**</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><![CDATA[
+		]]><b>4. Add a plugin to Service's PriceProductDependencyProvider
+</b></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PriceProduct</td>
+                            <td>MerchantRelationshipPriceProductFilterPlugin</td>
+                            <td>Prioritizes the choice of prices available for a client so that the merchant relationship prices are higher priority than default prices.</td>
+                            <td>getPriceProductDecisionPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Service/PriceProduct/PriceProductDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Service\PriceProduct;
+use Spryker\Service\PriceProduct\PriceProductDependencyProvider as SprykerPriceProductDependencyProvider;
+use Spryker\Service\PriceProductMerchantRelationship\Plugin\PriceProductExtension\MerchantRelationshipPriceProductFilterPlugin;
+class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvider
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+     */
+    protected function getPriceProductDecisionPlugins(): array
+    {
+        return array_merge([
+           new MerchantRelationshipPriceProductFilterPlugin(),
+        ], parent::getPriceProductDecisionPlugins());
+    }
+}</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>5. Add a plugin to Zed's CompanyUserDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>CompanyUser</td>
+                            <td>MerchantRelationshipHydratePlugin</td>
+                            <td>Adds data about merchant relations of a logged in customer to business unit information the customer is assigned to. Based on this data, prices applicable to this customer, are collected.
+	</td>
+                            <td>getCompanyUserHydrationPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>
+	src/Pyz/Zed/CompanyUser/CompanyUserDependencyProvider.php	
+    </MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\CompanyUser;
+...
+use Spryker\Zed\MerchantRelationship\Communication\Plugin\CompanyUser\MerchantRelationshipHydratePlugin;
+class CompanyUserDependencyProvider extends SprykerCompanyUserDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserHydrationPluginInterface[]
+     */
+    protected function getCompanyUserHydrationPlugins(): array
+    {
+        return [
+            new CompanyBusinessUnitHydratePlugin(),
+            new MerchantRelationshipHydratePlugin(),
+        ];
+    }
+    /**</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>6. Add plugins to Zed's DataImportDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>DataImport</td>
+                            <td>PriceProductDataImportPlugin</td>
+                            <td>Imports prices and adds them to default price dimension.	</td>
+                            <td>getDataImporterPlugins</td>
+                        </tr>
+                        <tr>
+                            <td>DataImport</td>
+                            <td>PriceProductMerchantRelationshipDataImportPlugin</td>
+                            <td>Imports prices for merchant relations.</td>
+                            <td>getDataImporterPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>
+                    <MadCap:annotation MadCap:createDate="2018-09-19T14:58:26.0857656+03:00" MadCap:creator="kravchenko" MadCap:initials="KR" MadCap:comment="insert a note" MadCap:editor="kravchenko" MadCap:editDate="2018-09-19T14:58:37.6545783+03:00">If you have not installed plugins needed for <a href="http://documentation.spryker.com/capabilities/company_account/merchants_and_merchant_relations/merchants-and-merchant-relations.htm?tocpath=Capabilities%7CCapabilities%7CCompany%20Account%7CMerchants%20and%20Merchant%20Relations%7C_____0">Merchant and Merchant Relations</a>, add them here as well. See <a href="merchant-merchant-relations-feature-integration.htm">Merchant and Merchant Relations feature integration guide</a> for more details.</MadCap:annotation>
+                </p>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/DataImport/DataImportDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\DataImport;
+...
+use Spryker\Zed\MerchantDataImport\Communication\Plugin\MerchantDataImportPlugin;
+use Spryker\Zed\MerchantRelationshipDataImport\Communication\Plugin\MerchantRelationshipDataImportPlugin;
+use Spryker\Zed\PriceProductDataImport\Communication\Plugin\PriceProductDataImportPlugin;
+use Spryker\Zed\PriceProductMerchantRelationshipDataImport\Communication\Plugin\PriceProductMerchantRelationshipDataImportPlugin;
+...
+      
+    protected function getDataImporterPlugins(): array
+    {
+        return [
+            [new CategoryDataImportPlugin(), DataImportConfig::IMPORT_TYPE_CATEGORY_TEMPLATE],
+            new CompanyDataImportPlugin(),
+            new CompanyBusinessUnitDataImportPlugin(),
+            new CompanyUnitAddressDataImportPlugin(),
+            new CompanyUnitAddressLabelDataImportPlugin(),
+            new CompanyUnitAddressLabelRelationDataImportPlugin(),
+            new ProductMeasurementUnitDataImportPlugin(),
+            new ProductMeasurementBaseUnitDataImportPlugin(),
+            new ProductMeasurementSalesUnitDataImportPlugin(),
+            new ProductMeasurementSalesUnitStoreDataImportPlugin(),
+            new ProductQuantityDataImportPlugin(),
+            new ProductPackagingUnitTypeDataImportPlugin(),
+            new ProductPackagingUnitDataImportPlugin(),
+            new BusinessOnBehalfCompanyUserDataImportPlugin(),
+            new PriceProductDataImportPlugin(),
+            new MerchantDataImportPlugin(),
+            new MerchantRelationshipDataImportPlugin(),
+            new PriceProductMerchantRelationshipDataImportPlugin(),
+        ];
+    }</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><![CDATA[
+	]]><b>7. Add a plugin to Zed's ConsoleDependencyProvider
+</b></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Plugin</th>
+                            <th>Description</th>
+                            <th>Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Console</td>
+                            <td>PriceProductMerchantRelationshipDeleteConsole</td>
+                            <td>Deletes imported prices.</td>
+                            <td>getConsoleCommands</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/Console/ConsoleDependencyProvider.php	</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\Console;
+...
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Console\PriceProductMerchantRelationshipDeleteConsole;
+ 
+...
+            // Setup commands
+ 
+            new PriceProductMerchantRelationshipDeleteConsole(),
+...</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>8. Create a new schema file in PriceProductMerchantRelationship module</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>File Location</th>
+                            <th>Schema file Template</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PriceProductMerchantRelationship</td>
+                            <td>src/Pyz/Zed/PriceProductMerchantRelationship/Persistence/Propel/Schema/spy_price_product_merchnat_relationship.schema.xml</td>
+                            <td>
+                                <MadCap:dropDown>
+                                    <MadCap:dropDownHead>
+                                        <MadCap:dropDownHotspot>src/Pyz/Zed/PriceProductMerchantRelationship/Persistence/Propel/Schema/spy_price_product_merchnat_relationship.schema.xml
+					</MadCap:dropDownHotspot>
+                                    </MadCap:dropDownHead>
+                                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          name="zed"
+          xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
+          namespace="Orm\Zed\PriceProductMerchantRelationship\Persistence"
+          package="src.Orm.Zed.PriceProductMerchantRelationship.Persistence"&gt;
+  
+    &lt;table name="spy_price_product_merchant_relationship"&gt;
+        &lt;behavior name="event"&gt;
+            &lt;parameter name="spy_price_product_merchant_relationship_all" column="*"/&gt;
+        &lt;/behavior&gt;
+    &lt;/table&gt;
+  
+&lt;/database&gt;</code></pre>
+                                    </MadCap:dropDownBody>
+                                </MadCap:dropDown>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><![CDATA[
+		]]><b>9. Add the event subscriber to Zed's EventDependencyProvider
+</b></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;">
+                    <col />
+                    <col />
+                    <col />
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Event Subscriber Name</th>
+                            <th>Method in EventDependencyProvider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Event</td>
+                            <td>PriceProductMerchantRelationshipStorageEventSubscriber</td>
+                            <td>
+                                <p>getEventSubscriberCollection</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/Event/EventDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\Event;
+...
+use Spryker\Zed\PriceProductMerchantRelationshipStorage\Communication\Plugin\Event\Subscriber\PriceProductMerchantRelationshipStorageEventSubscriber;
+use Spryker\Zed\PriceProductStorage\Communication\Plugin\Event\Subscriber\PriceProductStorageEventSubscriber;
+use Spryker\Zed\ProductCategoryFilterStorage\Communication\Plugin\Event\Subscriber\ProductCategoryFilterStorageEventSubscriber;
+use Spryker\Zed\ProductCategoryStorage\Communication\Plugin\Event\Subscriber\ProductCategoryStorageEventSubscriber;
+...
+class EventDependencyProvider extends SprykerEventDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    public function getEventListenerCollection()
+    {
+        return parent::getEventListenerCollection();
+    }
+    /**
+     * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
+     */
+    public function getEventSubscriberCollection()
+    {
+        $eventSubscriberCollection = parent::getEventSubscriberCollection();
+        /**
+         * Storage Events
+         */
+...
+         $eventSubscriberCollection-&gt;add(new ProductLabelStorageEventSubscriber());
+         $eventSubscriberCollection-&gt;add(new ProductSetStorageEventSubscriber());
+         $eventSubscriberCollection-&gt;add(new ProductSearchConfigStorageEventSubscriber());
+         $eventSubscriberCollection-&gt;add(new PriceProductMerchantRelationshipStorageEventSubscriber());
+...</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>10. Change/create class in Zed's PriceProduct module: PriceProductDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\PriceProduct;
+use Spryker\Zed\PriceProduct\PriceProductDependencyProvider as SprykerPriceProductDependencyProvider;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceDimensionAbstractWriterPlugin;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceDimensionConcreteWriterPlugin;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin;
+use Spryker\Zed\PriceProductMerchantRelationship\Communication\Plugin\PriceProduct\MerchantRelationshipPriceQueryCriteriaPlugin;
+/**
+ * Copyright © 2017-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvider
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionQueryCriteriaPluginInterface[]
+     */
+    protected function getPriceDimensionQueryCriteriaPlugins(): array
+    {
+        return array_merge(parent::getPriceDimensionQueryCriteriaPlugins(), [
+            new MerchantRelationshipPriceQueryCriteriaPlugin(),
+        ]);
+    }
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionAbstractSaverPluginInterface[]
+     */
+    protected function getPriceDimensionAbstractSaverPlugins(): array
+    {
+        return [
+            new MerchantRelationshipPriceDimensionAbstractWriterPlugin(),
+        ];
+    }
+    /**
+     * {@inheritdoc}
+     *
+     * @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceDimensionConcreteSaverPluginInterface[]
+     */
+    protected function getPriceDimensionConcreteSaverPlugins(): array
+    {
+        return [
+            new MerchantRelationshipPriceDimensionConcreteWriterPlugin(),
+        ];
+    }
+    /**
+     * @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductDimensionExpanderStrategyPluginInterface[]
+     */
+    protected function getPriceProductDimensionExpanderStrategyPlugins(): array
+    {
+        return [
+            new MerchantRelationshipPriceProductDimensionExpanderStrategyPlugin(),
+        ];
+    }
+}</code></pre>
+                        <p>&#160;</p>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>
+	See  <MadCap:xref href="../Module Migration Guides/mg-priceproduct.htm">Migration Guide - PriceProduct</MadCap:xref> for information on how to migrate to a newer version of the PriceProduct module with price dimensions support.
+    </p>
+    </body>
+</html>

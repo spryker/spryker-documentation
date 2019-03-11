@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+        <link href="../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Factory</h1>
+        <p MadCap:conditions="General.Hidden Comment">Used to be: http://spryker.github.io/development-guide/reference/factory/</p>
+        <p>All <MadCap:variable name="General.bundles/modules" /> are shipped with a dedicated factory for each layer. The responsibility of the factory is to create new instances of the classes from the same layer and module.
+
+</p>
+        <p>The following example shows a typical method from a factory. The method <var>createKeyBuilder() </var>creates an instance which is then injected inside of <var>createCmsBlockFinder()</var>:
+</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+class CmsBlockFactory extends AbstractFactory
+{
+
+    /**
+     * @return \Spryker\Client\CmsBlock\Storage\CmsBlockStorageInterface
+     */
+    public function createCmsBlockFinder()
+    {
+        return new CmsBlockStorage(
+            $this-&gt;getStorage(),
+            $this-&gt;createKeyBuilder()
+        );
+    }
+
+    /**
+     * @return \Spryker\Client\CmsBlock\Dependency\Client\CmsBlockToStorageClientInterface
+     */
+    protected function getStorage()
+    {
+        return $this-&gt;getProvidedDependency(CmsBlockDependencyProvider::KV_STORAGE);
+    }
+
+    /**
+     * @return \Spryker\Shared\KeyBuilder\KeyBuilderInterface
+     */
+    protected function createKeyBuilder()
+    {
+        return new CmsBlockKeyBuilder();
+    }
+
+}
+
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>Conventions for Factory Methods
+</h2>
+        <p>The factories contain two types of methods:
+
+</p>
+        <ul>
+            <li class="bullet_list">methods which create internal classes
+</li>
+            <li class="bullet_list">methods which provide external dependencies
+</li>
+        </ul>
+        <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows.css');margin-left: 0;margin-right: auto;width: 100%;" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" style="width: 163px;" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Naming convention</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Example	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Purpose
+</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p><var>createXXX()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p><var>createCmsBlockFinder()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                        <p>		These methods inject dependencies and create instances of internal classes. They always start with the <var>create</var>-prefix. It is highly recommended to have only one occurrence of <var>new </var>per method.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p><var>getXXX()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p><var>getCustomerClient()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                        <p>These methods retrieve a provided external dependency which can be injected into an internal model. Typical external dependencies are Clients, Facades and QueryContainer. It is a good practice to add the type of the object as a suffix (e.g. getCustomerFacade()).
+</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>	Inherited Methods from AbstractFactory
+</h2>
+        <p>The extended AbstractFactory holds some important methods:
+</p>
+        <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows.css');margin-left: 0;margin-right: auto;width: 100%;" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Purpose	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Available
+</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p><var>getConfig()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p>The module config contains all of the needed settings for the current module.</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                        <p>Zed only</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p><var>getQueryContainer()</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p>The dependency container always holds a direct connection to the module’s query container, which is often required by internal models.	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                        <p>Zed only</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>	
+	Snippets to Create a New Factory
+</h2>
+        <p>The factory pattern is used all over our code-base. The concrete implementations looks a bit different for Yves, Zed and Client. You can copy&amp;paste these snippets and just replace ‘MyBundle’ with your real module name. To enable auto-completion it is recommended to define the interfaces for the query container and module config in the class doc block as shown in the snippets.
+
+</p>
+        <h3>Yves
+</h3><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Yves\MyBundle;
+
+use Spryker\Yves\Kernel\AbstractFactory;
+
+class MyBundleFactory extends AbstractFactory
+{
+}
+</code></pre>
+        <h3>Client
+</h3><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Client\MyBundle;
+
+use Pyz\Client\Kernel\AbstractFactory;
+
+class MyBundleFactory extends AbstractFactory
+{
+}
+</code></pre>
+        <h3>Zed - Communication Layer
+</h3><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\MyBundle\Communication;
+
+use Pyz\Zed\MyBundle\MyBundleConfig;
+use Pyz\Zed\MyBundle\Persistence\MyBundleQueryContainerInterface;
+use Spryker\Zed\Kernel\Communication\AbstractCommunicationFactory;
+
+/**
+ * @method MyBundleConfig getConfig()
+ * @method MyBundleQueryContainerInterface getQueryContainer()
+ */
+class MyBundleCommunicationFactory extends AbstractCommunicationFactory
+{
+}
+</code></pre>
+        <h3>Zed - Business Layer
+</h3><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\MyBundle\Business;
+
+use Pyz\Zed\MyBundle\MyBundleConfig;
+use Pyz\Zed\MyBundle\Persistence\MyBundleQueryContainerInterface;
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+
+/**
+ * @method MyBundleConfig getConfig()
+ * @method MyBundleQueryContainerInterface getQueryContainer()
+ */
+class MyBundleBusinessFactory extends AbstractBusinessFactory
+{
+}
+</code></pre>
+        <h3>Zed - Persistence Layer
+</h3><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\MyBundle\Persistence;
+
+use Pyz\Zed\MyBundle\MyBundleConfig;
+use Spryker\Zed\Kernel\Persistence\AbstractPersistenceFactory;
+
+/**
+ * @method MyBundleConfig getConfig()
+ */
+class MyBundlePersistenceFactory extends AbstractPersistenceFactory
+{
+}
+</code></pre>
+        <h2>Using the Factory
+</h2>
+        <p>An instance of the factory can be retrieved by calling <var>$this-&gt;getFactory()</var>; this will return the instance of the factory defined in the same layer.
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+    public function registerCustomer(CustomerTransfer $customerTransfer)
+    {
+        return $this-&gt;getFactory()
+            -&gt;createCustomer()
+            -&gt;register($customerTransfer);
+    }
+</code></pre>
+        <h2>Related Spryks</h2>
+        <p>You might use the following definitions to generate related code:</p>
+        <ul>
+            <li>Add Zed Persistence Factory</li>
+            <li>Add Client Factory</li>
+        </ul>
+        <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+    </body>
+</html>

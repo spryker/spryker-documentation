@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.ShopSuite,General.Draft">
+    <head>
+        <link href="../../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Splittable Order Items Feature Integration</h1>
+        <p>The Splittable Order Items feature is shipped with following modules:</p>
+        <table style="width: 100%;">
+            <col />
+            <col />
+            <tbody>
+                <tr>
+                    <td style="font-weight: bold;">Module</td>
+                    <td style="font-weight: bold;">Description</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/DiscountExtension">DiscountExtension</a>
+                    </td>
+                    <td>Provides extension plugins for Discount module</td>
+                </tr>
+                <tr>
+                    <td><a href="https://github.com/spryker/spryker/tree/master/Bundles/SalesQuantity">SalesQuantity</a>
+                    </td>
+                    <td>Provides support in handling and configuring quantity for sales orders and items</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To install the Merchants and Merchant relations feature, follows the steps below.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>1. Install necessary modules using composer</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Update existing and install the required modules:</p>
+                <p><i>composer update "spryker/*" "spryker-shop/*"</i>
+                </p>
+                <p><i>composer require spryker/discount-extension:"^1.0.0" spryker/sales-quantity:"^1.0.0" --update-with-dependencies</i>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>2. Run the commands</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code>console transfer:generate
+console propel:install</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>3. Add a plugin to Zed's CartDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <thead>
+                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Module</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Plugin</th>
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Cart</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">IsQuantitySplittableItemExpanderPlugin</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Adds new <i>isQuantitySplittable</i> attribute for products</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">getExpanderPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/Cart/CartDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">...
+use Spryker\Zed\SalesQuantity\Communication\Plugin\Cart\IsQuantitySplittableItemExpanderPlugin;
+...
+protected function getExpanderPlugins(Container $container)
+    {
+        return [
+            ...
+            new IsQuantitySplittableItemExpanderPlugin(),
+            ...
+        ];
+    }
+</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>4. Add a plugin to Zed's SalesDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <thead>
+                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Module</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Plugin</th>
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Sales</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">NonSplittableItemTransformerStrategyPlugin </td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Defines order item breakdown strategy for cart items depending if the product is splittable or non-splittable</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">getItemTransformerStrategyPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/Sales/SalesDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-PHP line-numbers">...
+use Spryker\Zed\Sales\Communication\Plugin\SalesExtension\SingleQuantityBasedItemTransformerStrategyPlugin;
+...
+use Spryker\Zed\SalesQuantity\Communication\Plugin\SalesExtension\NonSplittableItemTransformerStrategyPlugin;
+...   
+    /**
+     * @return \Spryker\Zed\SalesExtension\Dependency\Plugin\ItemTransformerStrategyPluginInterface[]
+     */
+    public function getItemTransformerStrategyPlugins(): array
+    {
+        return [
+        ...    
+			new NonSplittableItemTransformerStrategyPlugin(),
+        ...    
+        ];
+    }</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><b>5. Add plugins to Zed's DiscountDependencyProvider</b>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <table style="width: 100%;mc-table-style: url('../../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <col class="TableStyle-PatternedRows-Column-Regular" />
+                    <thead>
+                        <tr class="TableStyle-PatternedRows-Head-Header1">
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Module</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Plugin</th>
+                            <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
+                            <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Method in Dependency Provider</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="TableStyle-PatternedRows-Body-LightRows">
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Discount</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">NonSplittableDiscountableItemTransformerStrategyPlugin and </td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Defines discountable item transformation strategy for splittable and non-splittable items to adjust the discount calculation item breakdown according the corresponding order item breakdown.</td>
+                            <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">getDiscountableItemTransformerStrategyPlugins</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>src/Pyz/Zed/Discount/DiscountDependencyProvider.php</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-PHP line-numbers">...
+use Spryker\Zed\Discount\Communication\Plugin\DiscountExtension\SingleQuantityBasedDiscountableItemTransformerStrategyPlugin;
+...
+use Spryker\Zed\SalesQuantity\Communication\Plugin\DiscountExtension\NonSplittableDiscountableItemTransformerStrategyPlugin;
+...
+    /**
+     * @return \Spryker\Zed\DiscountExtension\Dependency\Plugin\DiscountableItemTransformerStrategyPluginInterface[]
+     */
+    protected function getDiscountableItemTransformerStrategyPlugins(): array
+    {
+        return [
+            new NonSplittableDiscountableItemTransformerStrategyPlugin(),
+            ...
+        ];
+    }</code></pre>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+    </body>
+</html>

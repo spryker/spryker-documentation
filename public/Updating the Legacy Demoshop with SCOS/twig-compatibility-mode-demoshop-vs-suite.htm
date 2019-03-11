@@ -1,0 +1,97 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head><title>Twig Compatibility: Legacy Demoshop vs SCOS | Spryker</title>
+        <meta name="description" content="In SCOS, variables from the Twig templates can be accessed from the _view variable. In Demoshop, theTwig variables are passed to the global Twig namespace." />
+    </head>
+    <body>
+        <h1>Twig Compatibility: Legacy Demoshop vs SCOS</h1>
+        <p>In the SCOS, all variables available in the Twig templates can be accessed from the <var>_view</var> variable. In the Demoshop we used a different technique and passed the Twig variables to the global Twig namespace directly. The following code examples will help to understand the difference.</p>
+        <p>Demoshop controller:</p><pre><code class="language-PHP line-numbers">
+...
+public function fooAction(): array
+{
+    return $this-&gt;viewResponse([
+        'varA' =&gt; 'value-a',
+    ]);
+}
+</code></pre>
+        <p>Demoshop Twig file:</p><pre><code class="language-PHP line-numbers">
+&lt;div&gt;
+    &lt;p&gt;The value of varA is {{ varA }}&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+        <p>As you can see in this example, the key (<var>varA</var>) passed from the controller to the template is used one-to-one to retrieve the value inside the template.</p>
+        <p>We changed this behavior in the SCOS, as already mentioned, to keep the global scope of Twig clean. See the following example:</p>
+        <p>SCOS controller:</p><pre><code class="language-PHP line-numbers">
+use SprykerYvesKernelViewView;
+...
+public function fooAction(): View
+{
+    return $this-&gt;view([
+        'varA' =&gt; 'value-a',
+    ]);
+}
+...
+</code></pre>
+        <p>SCOS Twig file:</p><pre><code class="language-PHP line-numbers">
+&lt;div&gt;
+    &lt;p&gt;The value of varA is {{ _view.varA }}&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+        <p>The view object here is limited to the current template scope.</p>
+        <h2>How to Use a SCOS Feature Within the Demoshop</h2>
+        <p>To not be forced to update all the Twig files and variables usages, we added a configuration option that can be used to pass all the variables to the global Twig scope.</p>
+        <p>ShopApplicationConfig:</p><pre><code class="language-PHP line-numbers">
+&lt;?php
+				
+/**
+* Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+* Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+*/ 
+				
+namespace SprykerShopYvesShopApplication;
+ 
+use SprykerYvesKernelAbstractBundleConfig;
+ 
+class ShopApplicationConfig extends AbstractBundleConfig
+{
+    ...
+ 
+    /**
+     * @return bool
+     */
+    public function useViewParametersToRenderTwig(): bool
+    {
+        return false;
+    }
+}
+</code></pre>
+        <p>When this method has been changed in your project so it returns <var>true</var> instead of <var>false</var>, the way of Demoshop accessing the Twig variable can be used if the View class from the SCOS is used.</p><pre><code class="language-PHP line-numbers">
+&lt;div&gt;
+    &lt;p&gt;The value of varA is {{ _view.varA }}&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+        <p>and</p><pre><code class="language-PHP line-numbers">
+&lt;div&gt;
+    &lt;p&gt;The value of varA is {{ varA }}&lt;/p&gt;
+&lt;/div&gt;
+</code></pre>
+        <p>can now be used to access variables in Twig.</p>
+        <p>For more information on Demoshop vs Suite compatibility, see <MadCap:xref href="demoshop-with-shop-app-atomic-design-and-ps.htm">Making Demoshop Compatible with Shop App, Atomic Design, P&amp;S</MadCap:xref>.</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="demoshop-with-shop-app-atomic-design-and-ps.htm">Making Demoshop Compatible with Shop App, Atomic Design, P&amp;S</a>
+            </li>
+            <li><a href="demoshop-to-atomic-frontend.htm">Migrating from the Legacy Demoshop to Atomic Frontend</a>
+            </li>
+            <li><a href="setting-up-shopuicompatibility.htm">Setting up ShopUiCompatibility Module in the Legacy Demoshop</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: October 18th, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by René Klatt, Dmitry Beirak </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

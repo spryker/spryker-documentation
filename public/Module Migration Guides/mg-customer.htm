@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Demoshop,Spryker.B2B,Spryker.B2C">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Customer <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>&#160;</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">Upgrading from version 6.* to version 7.0</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p><![CDATA[
+                    ]]><span class="note">Case insensitivity for queries containing filterByEmail conditions will be out of the box for the Customer module.
+</span><![CDATA[                ]]></p>
+                <h3>1. Regenerate Propel Models</h3>
+                <p>
+                    To apply the fix, you need to regenerate Propel models. During this migration table schemas should NOT be updated.
+                </p>
+                <p>
+                    Before you start, please check that all migrations are applied and you don't have technical dept here.
+                </p>
+                <p>
+                    Run the following commands: <br /><code class="php">vendor/bin/console propel:diff</code> <br /><code class="php">vendor/bin/console propel:model:build</code> <br /></p>
+                <p>
+                    Propel models should be updated, no migrations should be created.
+                </p>
+                <h3>2. Fix Removed Deprecations</h3>
+                <p>
+                    Find usages of <var>\Spryker\Shared\Customer\CustomerConstants::HOST_YVES</var> and replace them with
+                    <var>\Spryker\Shared\Customer\CustomerConstants::BASE_URL_YVES</var>.
+                </p>
+                <p>
+                    Find usages of <var>\Spryker\Zed\Customer\Communication\Form\AddressForm::setDefaultOptions</var>
+                    and replace with <var>\Spryker\Zed\Customer\Communication\Form\AddressForm::configureOptions</var>.
+                </p>
+                <p>
+                    Find usages of <var>\Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface::getIdCountryByIso2Code</var>
+                    and replace with <var>\Spryker\Zed\Customer\Dependency\Facade\CustomerToCountryInterface::getCountryByIso2Code</var>.
+                </p>
+                <p>
+                    Fins usages of <var>\Spryker\Zed\Customer\Business\CustomerFacadeInterface::forgotPassword</var>
+                    and replace with <var>\Spryker\Zed\Customer\Business\CustomerFacadeInterface::sendPasswordRestoreMail</var>.
+                </p>
+                <p>
+                    Find usages of <var>\Spryker\Client\Customer\CustomerClientInterface::hasCustomerWithEmailAndPassword(...)</var>
+                    and replace with <var>\Spryker\Client\Customer\CustomerClientInterface::login(...)</var>.
+                </p>
+                <p>
+                    Find usages of <var>\Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeInterface</var>
+                    and replace with <var>\Spryker\Zed\Customer\Dependency\Service\CustomerToUtilSanitizeServiceInterface</var>.
+                </p>
+                <p><var>\Spryker\Zed\Customer\Business\Exception\CountryNotFoundException</var> is removed from Customer module. Please make
+                        sure there are no usages in your code. Instead of it <var>\Spryker\Zed\Country\Business\Exception\MissingCountryException</var>
+                        will be thrown, but take care that your code does not use Spryker exceptions to implement business logic.
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">Upgrading from version 5.* to version 6.* </div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>In Customer module version 5 we changed how customer data is stored when order is placed, instead of a foreign key, now <var>customer_reference</var> is stored. Because of this you will have to migrate all your old orders, the migration script is .</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">Upgrading from version 4.* to version 5.0
+</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+Customer delete functionality has been added to the Customer module. These changes require DB migration (new customer fields) but not code changes to use the basic functionality.
+</p>
+                <h3>
+1. Database Migration
+
+</h3>
+                <ul>
+                    <li><var>vendor/bin/console propel:diff,</var> also manual review is necessary for the generated migration file.
+</li>
+                    <li><var>vendor/bin/console propel:migrate
+</var>
+                    </li>
+                    <li><var>vendor/bin/console propel:model:build
+</var>
+                    </li>
+                    <li><var>vendor/bin/console transfer:generate
+</var>
+                    </li>
+                </ul>
+                <p>After running the last command, you'll find a new field <var>anonymized_at</var> in entities <var>Orm\Zed\Customer\Persistence\SpyCustomer</var>, <var>Orm\Zed\Customer\Persistence\SpyCustomerAddress</var> and their transfer objects <var>Generated\Shared\Transfer\CustomerTransfer and Generated\Shared\Transfer\CustomerAddressTransfer.</var></p>
+                <h3>
+2. Plugin Integration
+</h3>
+                <p>
+By default, we provide one plugin for Newsletter anonymization.
+
+</p>
+                <ol>
+                    <li>Make sure you have the Newsletter module version &gt;=4.1.0 and the
+<var>Spryker\Zed\Newsletter\Communication\Plugin\CustomerAnonymizer\CustomerUnsubscribePlugin</var> in your project.
+</li>
+                    <li>
+Open your CustomerDependencyProvider or create a new one (if you don't have one in the path) <var>Pyz\Zed\Customer\CustomerDependencyProvider</var>. </li>
+                    <li>Add the method <var>getCustomerAnonymizerPlugins</var> with the <var>CustomerUnsubscribePlugin </var>to the execution stack as follows:
+
+</li>
+                </ol><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Customer;
+
+...
+
+class Pyz\Zed\Customer\CustomerDependencyProvider extends SprykerCustomerDependencyProvider
+{
+
+    /**
+     * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerAnonymizerPluginInterface[]
+     */
+    protected function getCustomerAnonymizerPlugins()
+    {
+        return [
+            new CustomerUnsubscribePlugin([
+                NewsletterConstants::EDITORIAL_NEWSLETTER
+            ])
+        ];
+    }
+    
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li>Learn how to manage customers</li>
+            <li>Get acquainted with Customer Module Details</li>
+            <li>Learn how to add new customers and manage their details</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Nov. 13th, 2017</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Denis Turkov</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

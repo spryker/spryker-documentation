@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.2019-02,ReleaseVersions.2019-02">
+    <head><title>Session Management | Spryker</title>
+        <meta name="description" content="User, Customer and Customer Page modules support the session behaviour in Spryker. In Zed, it is managed by a javascript while in Yves it is managed by a widget. Configuration for both of them is located in the same confi file, depending on the environment. They both use the same formula for session timeout calculation. The use case scenarios which can be assumed using the formula are included." />
+    </head>
+    <body>
+        <h1>Session Management</h1>
+        <p>In Spryker Commerce OS, session behavior is supported by User, Customer and CustomerPage modules.</p>
+        <p>The following article provides an overview on how sessions are handled in Zed and Yves, as well as describes possible use cases for both of them.</p>
+        <h2>Zed</h2>
+        <p>In Zed (back-end), sessions are managed by the following javascript:</p><var>vendor/spryker/spryker/Bundles/Gui/assets/Zed/js/modules/update-session.js</var>
+        <p>The script handles sessions as follows:</p>
+        <ol>
+            <li>Gets Session lifetime (<var>SessionConstants::ZED_SESSION_TIME_TO_LIVE</var>) from the <a href="#All">configuration file</a>.</li>
+            <li>Stores this value in browser local storage or a specific cookie with the current timestamp.</li>
+            <li>When a page is loaded, java-script timeout function is used for refreshing the session. Timeout is calculated by the following formula:</li>
+            <p class="note">timeout = ((current_timestamp - session_started_at) - (session_lifetime - refresh_before_session_end)) * -1</p>
+       For example:
+<div class="example"><ul><li>current time: 10:00 (1543399200)</li><li>session lifetime: 30m (18000)</li><li>session started at: 9:35 (1543397700)</li><li>session refresh before end: 5m (300)</li><p><var>((1543399200 - 1543397700) - (1800-300))*-1 = 0</var></p></ul></div><li>When time is out, sends Ajax request to PHP controller to extend session lifetime.</li><li>Refreshes data in browser storage after Ajax request is complete.</li></ol>
+        <h2>Yves</h2>
+        <p>In Yves (front-end), sessions are managed by the following widget:</p><var>vendor/spryker/spryker-shop/Bundles/UpdateSessionTtlWidget/src/SprykerShop/Yves/UpdateSessionTtlWidget/Widget/UpdateSessionTtlWidget.php</var>
+        <p>The widget handles sessions as follows:</p>
+        <ol>
+            <li>Gets Session lifetime (<var>SessionConstants::YVES_SESSION_TIME_TO_LIVE</var>) from configuration the <a href="#All">configuration file</a>.</li>
+            <li>When a page is loaded, checks whether session update is necessary. Check calculation is based on: <br /><p class="note">timeout = ((current_timestamp - session_started_at) - (session_lifetime - refresh_before_session_end)) * -1.</p></li>
+            <li>If time is out, refreshes the session.</li>
+        </ol>
+        <p><a name="All"></a>All the constants for session behavior are taken from the following configuration file:</p>
+        <p><var>config/Shared/config_default.php</var>
+        </p>
+        <p>However, depending on your environment, the values can be taken from the corresponding config files in <var>config/Shared</var>, if mentioned there.</p>
+        <div class="info">By default, session lifetime value is 30 minutes while session check is set to be performed 5 minutes prior to the session timeout.</div>
+        <h2>Use cases</h2>
+        <p>Based on the introduced formula and configuration values, the following scenarios can be assumed for both Yves and Zed:</p>
+        <h3>Scenario #1</h3>
+        <div class="example">
+            <ol>
+                <li>User logs into Yves or Zed</li>
+                <li>User performs certain actions</li>
+                <li>If the interval between user's actions does not exceed 25 minutes, the user is not logged out.</li>
+            </ol>
+        </div>
+        <h3>Scenario #2</h3>
+        <div class="example">
+            <ol>
+                <li>User logs into Yves or Zed</li>
+                <li>User performs certain actions</li>
+                <li>User does not perform any actions for more than 25 minutes.</li>
+                <li>Upon performing any action, user is redirected to the corresponding login page.</li>
+            </ol>
+        </div>
+        <p><i>Last review date: Feb 19, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Jeremy Foruna, Andrii Tserkovnyi</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

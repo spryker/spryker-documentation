@@ -1,0 +1,446 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Draft">
+    <head>
+    </head>
+    <body>
+        <h1>Migration guide - Payone Demoshop</h1>
+        <p>Payone version 2 requires:</p>
+        <p>ShopUiCompatibility <a href="mg-shopuicompatibility.htm">[Migration guide] - ShopUiCompatibility</a></p>
+        <p>spryker-eco/ShopUiCompatibility version ^1.0.0</p>
+        <p>&#160;</p>
+        <p>Remove the following section in <var>./config/Shared/config_default.php</var>:</p><pre><code class="language-PHP line-numbers">// ---------- State machine (OMS)  
+$config[OmsConstants::PROCESS_LOCATION] = [
+	OmsConfig::DEFAULT_PROCESS_LOCATION,
+];
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+	'DummyPayment01',
+	'Nopayment01',
+];
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+	DummyPaymentConfig::PAYMENT_METHOD_INVOICE =&gt; 'DummyPayment01',
+	DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD =&gt; 'DummyPayment01',
+	GiftCardConfig::PROVIDER_NAME =&gt; 'DummyPayment01',
+	NopaymentConfig::PAYMENT_PROVIDER_NAME =&gt; 'Nopayment01',
+];</code></pre>
+        <p>&#160;</p>
+        <p>Add this to <var>./config/Shared/config_default_DE.php</var>:</p><pre><code class="language-PHP line-numbers">use Spryker\Shared\DummyPayment\DummyPaymentConfig;
+use Spryker\Shared\Kernel\KernelConstants;
+use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Shared\Sales\SalesConstants;
+use Spryker\Zed\Oms\OmsConfig;
+use SprykerEco\Shared\Payone\PayoneConstants;
+use SprykerEco\Zed\Payone\PayoneConfig;</code></pre>
+        <p>&#160;</p>
+        <p>Remove this from <var>./config/Shared/config_default_DE.php</var>:</p><pre><code class="language-PHP line-numbers">// ---------- Glue host
+$config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = sprintf('http://glue.de.%s.local', $domain);</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./config/Shared/config_default_DE.php</var>:</p><pre><code class="language-PHP line-numbers">// ---------- Payone
+$config[PayoneConstants::PAYONE] = [
+	PayoneConstants::PAYONE_CREDENTIALS_ENCODING =&gt; 'UTF-8',
+ 
+	PayoneConstants::PAYONE_CREDENTIALS_KEY =&gt; '6R7j3031dPSUvI85',
+	PayoneConstants::PAYONE_CREDENTIALS_MID =&gt; '32481',
+	PayoneConstants::PAYONE_CREDENTIALS_AID =&gt; '32893',
+	PayoneConstants::PAYONE_CREDENTIALS_PORTAL_ID =&gt; '2030040',
+	PayoneConstants::PAYONE_PAYMENT_GATEWAY_URL =&gt; 'https://api.pay1.de/post-gateway/',
+	PayoneConstants::PAYONE_REDIRECT_SUCCESS_URL =&gt; sprintf(
+				'%s/checkout/success',
+				$config[ApplicationConstants::BASE_URL_YVES]
+	),
+	PayoneConstants::PAYONE_REDIRECT_ERROR_URL =&gt; sprintf(
+				'%s/checkout/payment',
+				$config[ApplicationConstants::BASE_URL_YVES]
+	),
+	PayoneConstants::PAYONE_REDIRECT_BACK_URL =&gt; sprintf(
+				'%s/checkout/regular-redirect-payment-cancellation',
+				$config[ApplicationConstants::BASE_URL_YVES]
+	),
+	PayoneConstants::PAYONE_MODE =&gt; 'test',
+	PayoneConstants::PAYONE_BUSINESS_RELATION =&gt; 'b2b',
+	PayoneConstants::PAYONE_EMPTY_SEQUENCE_NUMBER =&gt; 0,
+	PayoneConstants::HOST_YVES =&gt; $config[ApplicationConstants::BASE_URL_YVES],
+];
+$config[PayoneConstants::PAYONE][PayoneConstants::PAYONE_STANDARD_CHECKOUT_ENTRY_POINT_URL] = sprintf(
+	'%s/checkout/paypal-express-checkout-entry-point',
+	$config[ApplicationConstants::BASE_URL_YVES]
+);
+$config[PayoneConstants::PAYONE][PayoneConstants::PAYONE_EXPRESS_CHECKOUT_BACK_URL] = sprintf(
+	'%s/cart',
+	$config[ApplicationConstants::BASE_URL_YVES]
+);
+$config[PayoneConstants::PAYONE][PayoneConstants::PAYONE_EXPRESS_CHECKOUT_FAILURE_URL] = sprintf(
+	'%s/cart',
+	$config[ApplicationConstants::BASE_URL_YVES]
+);
+$config[OmsConstants::PROCESS_LOCATION] = [
+	OmsConfig::DEFAULT_PROCESS_LOCATION,
+//    $config[KernelConstants::SPRYKER_ROOT] . '/DummyPayment/config/Zed/Oms',
+	APPLICATION_VENDOR_DIR . '/spryker-eco/payone/config/Zed/Oms',
+];
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+	PayoneConfig::PAYMENT_METHOD_CREDIT_CARD =&gt; 'PayoneCreditCard',
+	PayoneConfig::PAYMENT_METHOD_E_WALLET =&gt; 'PayoneEWallet',
+	PayoneConfig::PAYMENT_METHOD_DIRECT_DEBIT =&gt; 'PayoneDirectDebit',
+	PayoneConfig::PAYMENT_METHOD_EPS_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_INSTANT_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_GIROPAY_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_IDEAL_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_POSTFINANCE_CARD_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_POSTFINANCE_EFINANCE_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_PRZELEWY24_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_BANCONTACT_ONLINE_TRANSFER =&gt; 'PayoneOnlineTransfer',
+	PayoneConfig::PAYMENT_METHOD_PRE_PAYMENT =&gt; 'PayonePrePayment',
+	PayoneConfig::PAYMENT_METHOD_INVOICE =&gt; 'PayoneInvoice',
+	PayoneConfig::PAYMENT_METHOD_SECURITY_INVOICE =&gt; 'PayoneSecurityInvoice',
+	PayoneConfig::PAYMENT_METHOD_PAYPAL_EXPRESS_CHECKOUT =&gt; 'PayonePaypalExpressCheckout',
+	DummyPaymentConfig::PAYMENT_METHOD_INVOICE =&gt; 'DummyPayment01',
+	DummyPaymentConfig::PAYMENT_METHOD_CREDIT_CARD =&gt; 'DummyPayment01',
+	PayoneConfig::PAYMENT_METHOD_PAYPAL_EXPRESS_CHECKOUT =&gt; 'PayonePaypalExpressCheckout'
+];
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+	'PayoneCreditCard',
+	'PayoneEWallet',
+	'PayoneDirectDebit',
+	'PayoneOnlineTransfer',
+	'PayonePrePayment',
+	'PayoneInvoice',
+	'PayonePaypalExpressCheckout',
+	'PayoneSecurityInvoice',
+	'PayonePaypalExpressCheckout'
+];</code></pre>
+        <p>&#160;</p>
+        <p>Add this to <var>./src/Pyz/Client/Customer/CustomerDependencyProvider.php</var>, to <var>class CustomerDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">public const CLIENT_PAYONE = 'CLIENT_PAYONE';</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Client/Customer/CustomerDependencyProvider.php</var>, to the section <var>provideServiceLayerDependencies(Container $container) </var>before <var>return $container;</var>:</p><pre><code class="language-PHP line-numbers">$container[static::CLIENT_PAYONE] = function (Container $container) {
+    return $container-&gt;getLocator()-&gt;payone()-&gt;client();
+};</code></pre>
+        <p>&#160;</p>
+        <p>Add the following line to <var>./src/Pyz/Yves/Application/YvesBootstrap.php</var>:</p><pre><code class="language-PHP line-numbers">use SprykerEco\Yves\Payone\Plugin\Provider\PayoneControllerProvider;</code></pre>
+        <p>&#160;</p>
+        <p>Add the following line to <var>./src/Pyz/Yves/Application/YvesBootstrap.php</var>, to the return of <var>protected function getControllerProviderStack($isSsl)</var>:</p><pre><code class="language-PHP line-numbers">new PayoneControllerProvider($isSsl),</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var>:</p><pre><code class="language-PHP line-numbers">
+use Generated\Shared\Transfer\PaymentTransfer;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
+use SprykerEco\Yves\Payone\Plugin\PayoneCreditCardSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneDirectDebitSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneEpsOnlineTransferSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneEWalletSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneHandlerPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneInvoiceSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayonePrePaymentSubFormPlugin;
+use SprykerEco\Yves\Payone\Plugin\PayoneSecurityInvoiceSubFormPlugin;</code></pre>
+        <p>&#160;</p>
+        <p>Add the following line to <var>./src/Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var>, to <var>class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">public const CLIENT_PAYONE = 'CLIENT_PAYONE';</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var>, to <var>protected function provideClients(Container $container)</var>, before <var>return</var>:</p><pre><code class="language-PHP line-numbers">$container[static::CLIENT_PAYONE] = function (Container $container) {
+    return $container-&gt;getLocator()-&gt;payone()-&gt;client();
+};</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var>, to <var>protected function extendPaymentMethodHandler(Container $container)</var>, before <var>return $paymentMethodHandler;</var>:</p><pre><code class="language-PHP line-numbers">$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_INVOICE);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_SECURITY_INVOICE);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_CREDIT_CARD);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_DIRECT_DEBIT);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_E_WALLET);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_ONLINE_TRANSFER);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_PRE_PAYMENT);
+$paymentMethodHandler-&gt;add(new PayoneHandlerPlugin(), PaymentTransfer::PAYONE_PAYPAL_EXPRESS_CHECKOUT);</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Checkout/CheckoutDependencyProvider.php</var>, to <var>protected function extendPaymentMethodHandler(Container $container)</var>, before <var>return $container;</var>:</p><pre><code class="language-PHP line-numbers">
+$container[static::PAYMENT_SUB_FORMS] = function () {
+    $paymentSubFormPlugin = new SubFormPluginCollection();
+    $paymentSubFormPlugin-&gt;add(new PayoneSecurityInvoiceSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayoneInvoiceSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayoneCreditCardSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayoneDirectDebitSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayoneEWalletSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayoneEpsOnlineTransferSubFormPlugin());
+    $paymentSubFormPlugin-&gt;add(new PayonePrePaymentSubFormPlugin());
+    return $paymentSubFormPlugin;
+};</code></pre>
+        <p>&#160;</p>
+        <p>Change the following line in <var>./src/Pyz/Yves/Checkout/Process/StepFactory.php</var>, in <var>return new SuccessStep(</var></p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">$this-&gt;getCartClient(),</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">
+$this-&gt;getProvidedDependency(CheckoutDependencyProvider::CLIENT_PAYONE),</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>:</p><pre><code class="language-PHP line-numbers">use Generated\Shared\Transfer\PayoneBankAccountCheckTransfer;
+use Generated\Shared\Transfer\PayoneCancelRedirectTransfer;
+use Generated\Shared\Transfer\PayoneGetFileTransfer;
+use Generated\Shared\Transfer\PayoneGetInvoiceTransfer;
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
+use Generated\Shared\Transfer\PayoneInitPaypalExpressCheckoutRequestTransfer;
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use SprykerEco\Client\Payone\PayoneClientInterface;
+use SprykerEco\Yves\Payone\Handler\PayoneHandler;</code></pre>
+        <p>&#160;</p>
+        <p>Change the following line in <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>:</p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">class SuccessStep extends AbstractBaseStep</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">
+class SuccessStep extends AbstractBaseStep implements PayoneClientInterface</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>, to <var>class SuccessStep extends AbstractBaseStep implements PayoneClientInterface</var>, at the very beginning:</p><pre><code class="language-PHP line-numbers">/**
+ * @var PayoneClientInterface
+ */
+protected $payoneClient;
+/**
+ * @var \Generated\Shared\Transfer\QuoteTransfer
+ */
+protected $quoteTransfer;</code></pre>
+        <p>&#160;</p>
+        <p>Change the following line in <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>:</p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">CartClientInterface $cartClient</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">PayoneClientInterface $payoneClient,</code></pre>
+        <p>&#160;</p>
+        <p>Also this line:</p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">$this-&gt;cartClient = $cartClient;</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">$this-&gt;payoneClient = $payoneClient;</code></pre>
+        <p>&#160;</p>
+        <p>And this line:</p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">$this-&gt;cartClient-&gt;clearQuote();</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">
+if (method_exists($quoteTransfer-&gt;getPayment(), 'getPayone')) {
+    $this-&gt;quoteTransfer = $quoteTransfer;
+}</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>, to <var>class SuccessStep extends AbstractBaseStep implements PayoneClientInterface</var>, after <var>public function execute(Request $request, AbstractTransfer $quoteTransfer){...}</var>:</p><pre><code class="language-PHP line-numbers">
+public function getTemplateVariables(AbstractTransfer $dataTransfer)
+{
+    $getPaymentDetailTransfer = new PayoneGetPaymentDetailTransfer();
+    if ($this-&gt;quoteTransfer-&gt;getPayment()-&gt;getPaymentProvider() === PayoneHandler::PAYMENT_PROVIDER) {
+        $getPaymentDetailTransfer-&gt;setOrderReference($this-&gt;quoteTransfer-&gt;getOrderReference());
+        $getPaymentDetailTransfer = $this-&gt;payoneClient-&gt;getPaymentDetail($getPaymentDetailTransfer);
+    }
+    return [
+        'quoteTransfer' =&gt; $this-&gt;quoteTransfer,
+        'paymentDetail' =&gt; $getPaymentDetailTransfer-&gt;getPaymentDetail(),
+    ];
+}</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Checkout/Process/Steps/SuccessStep.php</var>, at the very end of <var>class SuccessStep extends AbstractBaseStep implements PayoneClientInterface</var>:</p><pre><code class="language-PHP line-numbers">/**
+ * Prepares credit card check request to bring standard parameters and hash to front-end.
+ *
+ * @api
+ *
+ * @return \SprykerEco\Client\Payone\ClientApi\Request\CreditCardCheckContainer
+ */
+public function getCreditCardCheckRequest()
+{
+    // TODO: Implement getCreditCardCheckRequest() method.
+}
+/**
+ * Processes and saves transaction status update received from Payone.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer
+ */
+public function updateStatus(PayoneTransactionStatusUpdateTransfer $statusUpdateTransfer)
+{
+    // TODO: Implement updateStatus() method.
+}
+/**
+ * Performs GetFile request to Payone API for PDF file download.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneGetFileTransfer $getFileTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneGetFileTransfer
+ */
+public function getFile(PayoneGetFileTransfer $getFileTransfer)
+{
+    // TODO: Implement getFile() method.
+}
+/**
+ * Performs GetInvoice request to Payone API for PDF file download.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneGetInvoiceTransfer $getInvoiceTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneGetInvoiceTransfer
+ */
+public function getInvoice(PayoneGetInvoiceTransfer $getInvoiceTransfer)
+{
+    // TODO: Implement getInvoice() method.
+}
+/**
+ * Fetches payment details for given order.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer
+ */
+public function getPaymentDetail(PayoneGetPaymentDetailTransfer $getPaymentDetailTransfer)
+{
+    // TODO: Implement getPaymentDetail() method.
+}
+/**
+ * Verifies url HMAC signature and fires 'cancel redirect' event.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneCancelRedirectTransfer $cancelRedirectTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneCancelRedirectTransfer
+ */
+public function cancelRedirect(PayoneCancelRedirectTransfer $cancelRedirectTransfer)
+{
+    // TODO: Implement cancelRedirect() method.
+}
+/**
+ * Performs BankAccountCheck request to Payone API.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayonePaymentDirectDebitTransfer $bankAccountCheckTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneBankAccountCheckTransfer
+ */
+public function bankAccountCheck(PayoneBankAccountCheckTransfer $bankAccountCheckTransfer)
+{
+    // TODO: Implement bankAccountCheck() method.
+}
+/**
+ * Performs ManageMandate request to Payone API.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayoneManageMandateTransfer
+ */
+public function manageMandate(QuoteTransfer $quoteTransfer)
+{
+    // TODO: Implement manageMandate() method.
+}
+/**
+ * Send start paypal express checkout to payone.
+ *
+ * @api
+ *
+ * @param \Generated\Shared\Transfer\PayoneInitPaypalExpressCheckoutRequestTransfer $requestTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayonePaypalExpressCheckoutGenericPaymentResponseTransfer
+ */
+public function initPaypalExpressCheckout(PayoneInitPaypalExpressCheckoutRequestTransfer $requestTransfer)
+{
+    // TODO: Implement initPaypalExpressCheckout() method.
+}
+/**
+ * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+ *
+ * @return \Generated\Shared\Transfer\PayonePaypalExpressCheckoutGenericPaymentResponseTransfer
+ */
+public function getPaypalExpressCheckoutDetails(QuoteTransfer $quoteTransfer)
+{
+    // TODO: Implement getPaypalExpressCheckoutDetails() method.
+}
+</code></pre>
+        <p>&#160;</p>
+        <p>Add the following line to <var>./src/Pyz/Yves/Customer/Controller/OrderController.php</var>:</p><pre><code class="language-PHP line-numbers">use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Yves/Customer/Controller/OrderController.php</var>, to <var>protected function getOrderDetailsResponseData($idSalesOrder)</var>, before <var>return [ ... ]</var>:</p><pre><code class="language-PHP line-numbers">
+$getPaymentDetailTransfer = new PayoneGetPaymentDetailTransfer();
+$getPaymentDetailTransfer-&gt;setOrderId($idSalesOrder);
+$getPaymentDetailTransfer = $this-&gt;getFactory()
+    -&gt;getPayoneClient()-&gt;getPaymentDetail($getPaymentDetailTransfer);</code></pre>
+        <p>&#160;</p>
+        <p>Change the following section in <var>./src/Pyz/Yves/Customer/Controller/OrderController.php</var>, in <var>protected function getOrderDetailsResponseData($idSalesOrder)</var>:</p>
+        <p>from:</p><pre><code class="language-PHP line-numbers">return [
+    'order' =&gt; $orderTransfer,
+    'items' =&gt; $items,
+];</code></pre>
+        <p>to:</p><pre><code class="language-PHP line-numbers">return [
+    'order' =&gt; $orderTransfer,
+    'paymentDetail' =&gt; $getPaymentDetailTransfer-&gt;getPaymentDetail(),
+];</code></pre>
+        <p>&#160;</p>
+        <p>Add the following line and section to <var>./src/Pyz/Yves/Customer/CustomerDependencyProvider.php</var>, to <var>class CustomerDependencyProvider extends AbstractBundleDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">public const CLIENT_PAYONE = 'CLIENT_PAYONE';</code></pre>
+        <p>&#160;</p>
+        <p>And this to <var>protected function provideClients(Container $container)</var>, before <var>return $container;</var>:</p><pre><code class="language-PHP line-numbers">
+$container[static::CLIENT_PAYONE] = function (Container $container) {
+    return $container-&gt;getLocator()-&gt;payone()-&gt;client();
+};</code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./src/Pyz/Yves/Customer/CustomerDependencyProvider.php</var>, at the very end of <var>class CustomerFactory extends AbstractFactory</var>:</p><pre><code class="language-PHP line-numbers">/**
+ * @return \Spryker\Client\Payone\PayoneClientInterface
+ */
+public function createPayoneClient()
+{
+    return $this-&gt;getProvidedDependency(CustomerDependencyProvider::CLIENT_PAYONE);
+}</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Zed/Oms/OmsDependencyProvider.php</var>:</p><pre><code class="language-PHP line-numbers">use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\AuthorizeCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\CancelCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\CaptureCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\CaptureWithSettlementCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\PreAuthorizeCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Command\RefundCommandPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsApprovedConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsErrorConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\AuthorizationIsRedirectConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\CaptureIsApprovedConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsAppointedConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsCaptureConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsOverpaidConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsPaidConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsRefundConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PaymentIsUnderPaidConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsApprovedConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsErrorConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\PreAuthorizationIsRedirectConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsApprovedConditionPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Oms\Condition\RefundIsPossibleConditionPlugin;</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Zed/Oms/OmsDependencyProvider.php</var>, to <var>$container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {</var>, before <var>return $commandCollection;</var>:</p><pre><code class="language-PHP line-numbers">$commandCollection-&gt;add(new PreAuthorizeCommandPlugin(), 'Payone/PreAuthorize');
+$commandCollection-&gt;add(new AuthorizeCommandPlugin(), 'Payone/Authorize');
+$commandCollection-&gt;add(new CancelCommandPlugin(), 'Payone/Cancel');
+$commandCollection-&gt;add(new CaptureCommandPlugin(), 'Payone/Capture');
+$commandCollection-&gt;add(new CaptureWithSettlementCommandPlugin(), 'Payone/CaptureWithSettlement');
+$commandCollection-&gt;add(new RefundCommandPlugin(), 'Payone/Refund');</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Zed/Oms/OmsDependencyProvider.php</var>, to <var>$container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {</var>, before <var>return $conditionCollection;</var>:</p><pre><code class="language-PHP line-numbers">$conditionCollection-&gt;add(new PreAuthorizationIsApprovedConditionPlugin(), 'Payone/PreAuthorizationIsApproved');
+$conditionCollection-&gt;add(new AuthorizationIsApprovedConditionPlugin(), 'Payone/AuthorizationIsApproved');
+$conditionCollection-&gt;add(new CaptureIsApprovedConditionPlugin(), 'Payone/CaptureIsApproved');
+$conditionCollection-&gt;add(new RefundIsApprovedConditionPlugin(), 'Payone/RefundIsApproved');
+$conditionCollection-&gt;add(new RefundIsPossibleConditionPlugin(), 'Payone/RefundIsPossible');
+$conditionCollection-&gt;add(new PreAuthorizationIsErrorConditionPlugin(), 'Payone/PreAuthorizationIsError');
+$conditionCollection-&gt;add(new AuthorizationIsErrorConditionPlugin(), 'Payone/AuthorizationIsError');
+$conditionCollection-&gt;add(new PreAuthorizationIsRedirectConditionPlugin(), 'Payone/PreAuthorizationIsRedirect');
+$conditionCollection-&gt;add(new AuthorizationIsRedirectConditionPlugin(), 'Payone/AuthorizationIsRedirect');
+$conditionCollection-&gt;add(new PaymentIsAppointedConditionPlugin(), 'Payone/PaymentIsAppointed');
+$conditionCollection-&gt;add(new PaymentIsCaptureConditionPlugin(), 'Payone/PaymentIsCapture');
+$conditionCollection-&gt;add(new PaymentIsPaidConditionPlugin(), 'Payone/PaymentIsPaid');
+$conditionCollection-&gt;add(new PaymentIsUnderPaidConditionPlugin(), 'Payone/PaymentIsUnderPaid');
+$conditionCollection-&gt;add(new PaymentIsOverpaidConditionPlugin(), 'Payone/PaymentIsOverpaid');
+$conditionCollection-&gt;add(new PaymentIsRefundConditionPlugin(), 'Payone/PaymentIsRefund');</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Zed/Payment/PaymentDependencyProvider.php</var>:</p><pre><code class="language-PHP line-numbers">use SprykerEco\Zed\Payone\Communication\Plugin\Checkout\PayonePostSaveHookPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Checkout\PayonePreCheckPlugin;
+use SprykerEco\Zed\Payone\Communication\Plugin\Checkout\PayoneSaveOrderPlugin;
+use SprykerEco\Zed\Payone\PayoneConfig;</code></pre>
+        <p>&#160;</p>
+        <p>Add the following lines to <var>./src/Pyz/Zed/Payment/PaymentDependencyProvider.php</var>, to <var>function (CheckoutPluginCollectionInterface $pluginCollection) {,</var> before <var>return $pluginCollection;</var>:</p><pre><code class="language-PHP line-numbers">$pluginCollection-&gt;add(new PayonePreCheckPlugin(), PayoneConfig::PROVIDER_NAME, static::CHECKOUT_PRE_CHECK_PLUGINS);
+$pluginCollection-&gt;add(new PayoneSaveOrderPlugin(), PayoneConfig::PROVIDER_NAME, static::CHECKOUT_ORDER_SAVER_PLUGINS);
+$pluginCollection-&gt;add(new PayonePostSaveHookPlugin(), PayoneConfig::PROVIDER_NAME, static::CHECKOUT_POST_SAVE_PLUGINS);
+</code></pre>
+        <p>&#160;</p>
+        <p><i>Estimated migration time: 1 hour</i>
+        </p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="http://documentation.spryker.com/industry_partners/payment/payone/v1_1/payone-v1-1.htm#payment-integration---bs-payone---1-1">Integrating Payone into your project</a>
+        </p>
+        <p>&#160;</p>
+        <p><i>Last review date: October 30th, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Alessandro Bellini and Dmitry Beirak</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

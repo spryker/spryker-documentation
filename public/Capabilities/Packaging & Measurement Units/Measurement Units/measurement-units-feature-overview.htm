@@ -1,0 +1,115 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.MultiCurrency,Spryker.MultiLanguage,Spryker.MultiStore,Spryker.B2B">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Measurement Units Feature Overview | Spryker</title>
+        <meta name="description" content="The Measurement Units per Products feature allows selling products by any unit of measure defined by the shop administrator." />
+    </head>
+    <body>
+        <h1>Measurement Units Feature Overview <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>
+            <MadCap:popup>
+                <MadCap:popupHead>ML</MadCap:popupHead>
+                <MadCap:popupBody>Multi-language</MadCap:popupBody>
+            </MadCap:popup> <MadCap:popup><MadCap:popupHead>MS</MadCap:popupHead><MadCap:popupBody>Multi-store</MadCap:popupBody></MadCap:popup> <MadCap:popup><MadCap:popupHead>MC</MadCap:popupHead><MadCap:popupBody>Multi-currency</MadCap:popupBody></MadCap:popup></p>
+        <p>The Measurement Units per Products feature allows selling products by any unit of measure defined by the shop administrator. For example, apples can be offered in "Item" or "Kilogram", cables can be offered in "Centimeter", "Meter" or "Feet" etc. To support alternate units of measure, there must be a base unit value, relative to which all the internal conversions and calculations will be made. Such value is referred to as <b>base unit</b>. The base unit is assigned to abstract products and by default it is "item", however it can be changed to any other unit. </p>
+        <p>Besides the base unit, the shop owner can define <b>sales units</b> - alternate units of measure in which items will be offered in the shop. Sales units are assigned to concrete products, but if  sales units are not defined, the <b>base unit</b> is used as a default sales unit. If there are several sales units and no default sales unit is defined, then the first unit to show will be the first in the alphabetical order. </p>
+        <p>The sales units are displayed on product details page. It is also possible to define the sales units in the Administration Interface, but choose not to display them in the web shop. Actually, sales units are only shown on the website, but then immediately converted into the base unit, as internally the system only works with the base units.</p>
+        <p>Sales units can be configured per store, that is, they have a store relation. </p>
+        <p class="example">For example, you might have bought a quintal of apples, but want to use kilograms as the base unit, and you choose to offer the apples in "Items", "Kilograms" and "Pounds" in one of your stores. In this case, kilograms is both <b>base</b> and <b>sales unit</b>. Therefore, this unit of measure will be used to manage stock and make all the internal calculations. "Items" and "Pounds" in this example will be the <b>sales units</b> applicable to the respective store.</p>
+        <p>The shop owner can define if conversion factor between base and sales units should be displayed in the web shop. If it is set to "true", then: </p>
+        <div class="table-wrap">
+            <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 253px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 446px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Example</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Display Value</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Product Details Page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">The base unit is meter and the sales unit is feet</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">"<b>1 meter=3,048 feet</b>" is displayed under the drop-down field with measuring units on product details page</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                            <img src="../../../Resources/Images/Measurement Units/quantity.png" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>On the <b>cart page</b>, the user sees quantity both in base unit and sales unit. </p>
+        <div class="table-wrap">
+            <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 254px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 383px;" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Example</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Display Value</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Cart Page</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Suppose if base unit of cables is meters and the user selects to buy 12.19 feet of cable</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                            <p>Both, the quantity <b>4</b> and <b>12.19</b> feet are displayed on the cart page.</p>
+                            <p class="info">12.19 (sales unit) = 4 (base unit)</p>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                            <img src="../../../Resources/Images/Measurement Units/quantity_cart.png" style="max-width: 90%;" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>If user puts one and the same product in different sales units, they will be shown as two different items in the cart.</p>
+        <p>The schema below illustrates relations between products and measurement units, where:</p>
+        <ul>
+            <li><b>conversion</b> - factor to convert a value from sales to base unit. If it is "null" then the information is taken from the global conversions (<var>MeasurementUnitConverter.php</var> file).</li>
+            <li><b>precision</b> - ratio between a sales unit and a base unit. For example, a base unit is "item", and user selects "kg" as a sales unit.</li>
+            <li><b>is_displayed</b> - If <i>true</i>, then the value is shown in shop.</li>
+            <li><b>is_default</b> - If <i>true</i> then the unit is shown as default unit in shop.</li>
+        </ul>
+        <p>
+            <img src="../../../Resources/Images/Measurement Units/product_units_relation.png" />
+        </p>
+        <p>Let's take an example to better understand the feature. Suppose, 1 apple (1=factor) weights 0,1 Kg, then ratio will be 10 (1kg = 10 apples). If the precision is 100, the user can specify a number as 0.40 Kg (which will be 4 apples). Likewise, if in this case the user selects <i>kg</i> and precision is set to "1", it's quantity in sales units on the cart page will be "0", as precision 1 implies that no digits are shown after the decimal sign. Actually,</p>
+        <p><var> (Base Unit Value) = (User Input Sales Unit Value) * Precision / Factor</var>
+        </p>
+        <p>There can be two types of conversions in the system: </p>
+        <ul>
+            <li><b>Global conversions</b> - are defined in the code already (like from cm to meter). </li>
+            <li><b>Product-specific conversions</b> - are defined per product (like from 1 meter of cable to its weight).</li>
+        </ul>
+        <p>  If a global unit conversion exists between the base and sales unit, then factor and precision fields are optional. If no global unit conversion exists between the base and sales unit then factor and precision fields are mandatory. If precision is "null", then the information is taken from the product measurement unit's <i>default_precision</i> (default value is 1).</p>
+        <div class="table-wrap">
+            <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Core Level</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Project Level</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">All the standard conversion ratios are defined in <var>Bundles/UtilMeasurementUnitConversion/src/Spryker/Service/UtilMeasurementUnitConversion/Model/MeasurementUnitConverter.php</var>. </td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Conversion, precision, as well as <i>is_displayed</i> and <i>is_default</i> parameters can be defined in <i>spy_product_measrument_sales_unit</i> table. <p>Name of the measurement unit and some other data are stored to the <i>sales_order_item</i>.</p></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p> </p>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 6, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoy Gerner, Anastasija Datsun</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

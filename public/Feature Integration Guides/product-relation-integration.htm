@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="4" MadCap:lastHeight="6221" MadCap:lastWidth="1354" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Product Relation Integration</h1>
+        <ol>
+            <li>Register a new collector plugin. How to is in .
+</li>
+            <li>Then register a new twig service plugin <br /><var>\Spryker\Yves\ProductRelation\Plugin\ProductRelationTwigServiceProvider</var> inside the <var>\Pyz\Yves\Application\YvesBootstrap::registerServiceProviders</var> plugin stack. <br />This will allow to use the UI carousel component to display relations.
+</li>
+            <li>
+Add this new twig extension to your templates. By default, it is included in the product detail and cart overview pages of our demoshop.
+
+</li>
+        </ol>
+        <p><strong>To render the component, include the provided twig function as shown bellow</strong>:
+
+</p>
+        <ul>
+            <li class="bullet_list"><strong>Product detail </strong>- <var>product_relation("related-products", {idProductAbstract : product.idProductAbstract}, 'Similar products', '@ProductRelation/partial/product_relation_carousel.twig') </var> .
+
+</li>
+            <li class="bullet_list"><strong>Cart Overview</strong> - <var>product_relation("up-selling", {quote : quoteTransfer}, 'You might also be interested in these products', '@ProductRelation/partial/product_relation_carousel.twig'</var>).
+
+</li>
+        </ul>
+        <p>Each type accepts a number of parameters:
+
+</p>
+        <p>“up-selling” - <var>abstractProductIds</var> which is an array of abstract product ids <var>(['abstractProductIds' =&gt; [1,2,3]])</var> or <var>quote </var>which is quote transfer object <var>(['quote' =&gt; $quoteTransfer])</var>.
+
+</p>
+        <p>“related-products” - i<var>dProductAbstract (['idProductAbstract' =&gt; 1])</var>.
+
+</p>
+        <ul>
+            <li class="bullet_list">Include javascript carousel component <var>slick.js</var> In <var>package.json </var>include
+</li>
+        </ul><pre><code class="language-PHP line-numbers">      "dependencies": {
+        ...
+        "slick-carousel": "~1.6.0",
+      }    
+  
+</code></pre>
+        <p>and run <var>npm install</var></p>
+        <p>Create new component under <var>assets/Yves/default/app/components/carousel/_carousel.scss</var> with contents
+
+  </p><pre xml:space="preserve"><code class="bash">.carousel {
+    font-size:14px;
+
+    .image-container {
+       width: 150px;
+       height: 180px;
+    }
+
+    .slick-slide {
+       margin-left: 10px;
+    }
+
+    .product-name {
+       white-space: nowrap;
+       overflow: hidden;
+       text-overflow: ellipsis;
+    }
+
+  }
+ </code></pre>
+        <p> 
+include this style file in <var>/assets/Yves/default/app/style/index.scss</var> like <var>@import '../components/carousel/carousel';</var></p>
+        <p><![CDATA[
+]]><var>assets/Yves/default/app/components/carousel/index.js</var> - configures the slick.js javascript carousel component.</p><pre xml:space="preserve"><code class="bash">
+    var $ = require('jquery');
+    var carousel = require('slick-carousel');
+
+    module.exports = {
+        name: 'carousel',
+        view: {
+            init: function($root) {
+                this.$root = $root;
+                this.$root.slick({
+                    infinite: true,
+                    slidesToShow: 6,
+                    slidesToScroll: 6,
+                    responsive: [
+                        {
+                            breakpoint: 1024,
+                            settings: {
+                                slidesToShow: 3,
+                                slidesToScroll: 3
+                            }
+                        },
+                        {
+                            breakpoint: 600,
+                            settings: {
+                                slidesToShow: 2,
+                                slidesToScroll: 2
+                            }
+                        },
+                        {
+                            breakpoint: 480,
+                            settings: {
+                                slidesToShow: 1,
+                                slidesToScroll: 1
+                            }
+                        }
+                    ]
+                });
+            },
+        }
+    };
+  </code></pre>
+        <ul>
+            <li class="bullet_list">Include this js file in<var> assets/Yves/default/app/index.js</var>:</li>
+        </ul><pre><code class="language-PHP line-numbers">      run([
+              ...
+              require('./components/carousel')
+      ]);
+  </code></pre>
+        <ul>
+            <li class="bullet_list">Create file /<var>assets/Yves/default/vendor/slick-carousel.scss</var> with contents
+
+    </li>
+        </ul><pre><code class="language-PHP line-numbers">$slick-assets-relative-path: "../../../../node_modules/slick-carousel/slick/";
+
+    $slick-font-path: "#{$slick-assets-relative-path}fonts/";
+    $slick-font-family: "slick";
+    $slick-loader-path: $slick-assets-relative-path;
+    $slick-arrow-color: black;
+    $slick-dot-color: black;
+    $slick-dot-color-active: black;
+    $slick-prev-character: "\2190";
+    $slick-next-character: "\2192";
+    $slick-dot-character: "\2022";
+    $slick-dot-size: 30px;
+    $slick-opacity-default: 0.75;
+    $slick-opacity-on-hover: 1;
+    $slick-opacity-not-active: 0.25;
+
+    @import '~slick-carousel/slick/slick.scss';
+    @import '~slick-carousel/slick/slick-theme.scss';
+
+    .slick-list {
+      .slick-loading &amp; {
+        background: none !important;
+      }
+    }
+ </code></pre>
+        <ul>
+            <li class="bullet_list">Run <var>npm run yves</var> to generate javascript and css. </li>
+        </ul>
+        <p class="tip">To reference an example implementation, see the latest demoshop .
+
+</p>
+        <ul>
+            <li class="bullet_list">Add template for rendering html <br /><var>src/Pyz/Yves/ProductRelation/Theme/default/partial/product_relation_carousel.twig</var><![CDATA[
+]]></li>
+        </ul><pre><code class="language-PHP line-numbers">         {% if productRelations %}
+            &lt;div class="row"&gt;
+                &lt;div class="small-12 columns"&gt;
+                    &lt;div class="callout"&gt;
+                        &lt;h3&gt;{{ name }}&lt;/h3&gt;
+                        &lt;div class="row align-spaced"&gt;
+                            &lt;div class="small-11 columns"&gt;
+                                &lt;div class="carousel" data-component="carousel"&gt;
+                                {% for relation in productRelations %}
+
+                                    {% include "@catalog/catalog/partials/product.twig" with {
+                                      detailsUrl: relation.url,
+                                      name:relation.name,
+                                      priceValue: relation.price,
+                                      product: relation,
+                                      imageUrl: (relation.imageSets|length ? relation.imageSets.default[0].externalUrlSmall : '')
+                                    } %}
+
+                                {% endfor %}
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        &lt;/div&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        {% endif %}
+  </code></pre>
+        <p>This is sample a template and has to be updated for the project.
+
+</p>
+        <ul>
+            <li class="bullet_list">You may also want to adjust the product relations updater script (how often it should run). The relations have a periodic updater <var>product-relation:update</var> which is started by Jenkins.
+</li>
+        </ul>
+    </body>
+</html>

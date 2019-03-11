@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite,ReleaseVersions.2019-02,ReleaseVersions.2019-03">
+    <head><title>Code Sniffer</title>
+    </head>
+    <body>
+        <h1>Code Sniffer <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>To correspond to <a href="http://www.php-fig.org/psr/psr-2/" target="_blank">PSR-2 standards</a>, we integrated the well known <a href="https://github.com/FriendsOfPHP/PHP-CS-Fixer" target="_blank">PHP-CS Fixer</a> and <a href="https://github.com/squizlabs/PHP_CodeSniffer" target="_blank">PHPCodeSniffer.</a></p>
+        <p>Code Sniffer is a very powerful tool that helps to keep the code clean and prevent simple mistakes. The sniffer can find all the issues, and can also auto-fix most of them (when used with -f option).</p><pre><code class="language-PHP line-numbers">
+	$ vendor/bin/console code:sniff:style
+ 
+	// Fix fixable errors instead of just reporting
+	$ vendor/bin/console code:sniff:style -f
+
+	// Sniff a specific module in your project (looks into all application layers Zed, Yves, Client, ...)
+	$ vendor/bin/console code:sniff:style -m Discount
+
+	// Sniff a specific subfolder of your project
+	$ vendor/bin/console code:sniff:style src/Pyz/Zed
+ 
+	// Run a specific sniff only
+	$ vendor/bin/console code:sniff:style ... -s Spryker.Commenting.FullyQualifiedClassNameInDocBlock</code></pre>
+        <p>There are two levels of sniffer severity: Level 1 (normal, used by default) and Level 2 (strict). Level 2 was added to support an additional check of extra complexity. It is recommended to use it for Core modules development. The full list of the included snippets can be found on <a href="https://github.com/spryker/code-sniffer/tree/master/docs">GitHub</a><MadCap:annotation MadCap:createDate="2019-02-14T17:16:32.3235835+02:00" MadCap:creator="dmitry.beirak" MadCap:initials="DM" MadCap:comment="Starting from version 2019.02" MadCap:editor="dmitry.beirak" MadCap:editDate="2019-02-14T17:16:33.6190589+02:00">.</MadCap:annotation></p><pre><code class="language-PHP line-numbers">	// Run code sniffer with Level 1
+	console c:s:s -m Spryker.Development -l 1
+
+	// Run code sniffer with Level 2
+	console c:s:s -m Spryker.Development -l 2 -v</code></pre>
+        <p>Tip: <code>c:s:s</code> can be used as short for <code>code:sniff:style</code>.</p>
+        <p><b>Additional options</b>:</p>
+        <ul>
+            <li class="bullet_list"><var>-v:</var> Verbose output</li>
+            <li class="bullet_list"><var>-d:</var> Dry-run, only output the command to be run</li>
+        </ul>
+        <p>Always commit your changes before executing this command!</p>
+        <p>Run <var>–help</var> or <var>-h</var> to get help about usage of all options available.</p>
+        <p>See the <a href="https://github.com/spryker/code-sniffer" target="_blank">code sniffer</a> documentation for details and information on how to set it up for your CI system as a checking tool for each PR.</p>
+        <p style="font-weight: bold;">&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="architecture-sniffer.htm">Architecture sniffer</a>
+            </li>
+            <li><a href="tooling-config-file.htm">Tooling config file</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p style="font-style: italic;">Last review date: Feb 4, 2019 <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

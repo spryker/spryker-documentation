@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Demoshop,Spryker.B2B,Spryker.B2C,Spryker.DemoShop">
+    <head><title>Migration Guide - CMS Block GUI</title>
+    </head>
+    <body>
+        <h1>Migration Guide - CMS Block GUI <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Upgrading from Version 1.* to Version 2.*</h2>
+        <p>This version adds support to manage CMS Block-store relation through the dedicated CMS Block Administration Intrerface.</p>
+        <ol>
+            <li>Installl/update <var>spryker/cms-block</var> to at least Version 2.0.0. You can find additional guide to migration <a href="mg-cms-block.htm">here</a>.</li>
+            <li>Upgrade <var>spryker/cms-block-gui</var> to at least Version 2.0.0.</li>
+            <li>
+                The CMS Block Administration Interface expects the CMS Block-store relation handling partial form to be defined in the dependency provider using the <var>Spryker\Zed\Kernel\Communication\Form\FormTypeInterface</var>.
+                You can use the single store and multi-store compatible default implementation <var>Spryker\Zed\Store\Communication\Form\Type\StoreRelationToggleType</var> wrapped in <var>Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin</var>.
+                <br />                Note: <var>Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin</var> is introduced in <var>spryker/store</var> version <var>1.2.0</var>.
+                <MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot><div class="drop-anchor">Example injection</div></MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+use Spryker\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider as CmsBlockGuiCmsBlockGuiDependencyProvider;
+use Spryker\Zed\Store\Communication\Plugin\Form\StoreRelationToggleFormTypePlugin;
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\Kernel\Communication\Form\FormTypeInterface
+     */
+    protected function createStoreRelationFormTypePlugin()
+    {
+        return new StoreRelationToggleFormTypePlugin();
+    }
+}
+                        </code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>
+                The following deprecated methods have been removed:
+                <ul><li><var>CmsBlockGuiCommunicationFactory::createCmsBlockForm()</var></li><li><var>CmsBlockGuiCommunicationFactory::createCmsBlockGlossaryForm()</var></li><li><var>CmsBlockGuiCommunicationFactory::createCmsBlockGlossaryPlaceholderTranslationFormType()</var></li><li><var>CmsBlockGuiCommunicationFactory::createCmsBlockGlossaryPlaceholderFormType()</var></li><li><var>CmsBlockForm::getName()</var></li><li><var>CmsBlockGlossaryForm::getName()</var></li><li><var>CmsBlockGlossaryPlaceholderForm::getName()</var></li></ul></li>
+            <li>
+                Additionally these internal classes have changed. Take a look if you have customized any of them:
+                <ul><li><var>CmsBlockForm</var></li><li><var>CmsBlockTable</var></li><li><var>ViewBlockController</var></li><li><var>ViewBlock/index.twig</var></li></ul>
+                You can find more details for these changes on <a href="https://github.com/spryker/cms-block-gui/releases">CMS Block GUI module release page</a>.
+            </li>
+            <li>
+                Go to a <var>CMS Block</var> edit page through the CMS Block Administration Interface to verify that the migration was successful.
+                At this point the CMS Block-store relation configuration will be shown but being disabled if multi-store feature is not enabled yet.
+                You can find additional information about multi-store CMS Block feature and the process of its enablement here.
+            </li>
+        </ol>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="mg-cms-block.htm">Learn how to migrate CMS Block</a>
+            </li>
+            <li><a href="mg-cms-block-collector.htm">Learn how to migrate CMS Block Collector</a>
+            </li>
+            <li>Learn more about Multi-store CMS Block</li>
+            <li>Learn how to use CMS blocks</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan. 31st, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner </i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

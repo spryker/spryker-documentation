@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.2019-02,ReleaseVersions.2019-03" description="The CMS Search Product Lists feature allows seeing search results for CMS and product pages. The guide describes how to enable the feature in the project.">
+    <head><title>CMS Page Search Product Lists Feature Integration | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="The CMS Page Search Product Lists feature allows seeing search results for CMS and product pages. The guide describes how to enable the feature in the project." />
+    </head>
+    <body>
+        <h1>CMS Page Search Product Lists Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature Core</h2>
+        <h3>Prerequisites</h3>
+        <p>Please overview and install the necessary features before beginning the integration step.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cms</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Product lists</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">201903.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Catalog</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">201903.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Set up behaviour</h3>
+        <h4>Configure the catalog search count query</h4>
+        <p>Add the following plugins to your project:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ProductListQueryExpanderPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Extends a search query by filtering down results to match the current customer's product restrictions.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>\Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Client/Catalog/CatalogDependencyProvider.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Client\Catalog;
+ 
+use Spryker\Client\Catalog\CatalogDependencyProvider as SprykerCatalogDependencyProvider;
+use Spryker\Client\CustomerCatalog\Plugin\Search\ProductListQueryExpanderPlugin;
+ 
+class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
+{
+	/**
+	* @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+	*/
+	protected function createCatalogSearchCountQueryExpanderPlugins(): array
+	{
+		return [
+			new ProductListQueryExpanderPlugin(),
+		];
+	}
+}
+		</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">Make sure that the number of products on the catalog tab item is correct according to the customer's assigned product lists.</div>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p>
+            <MadCap:annotation MadCap:createDate="2019-02-12T14:43:08.7928985+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-12T14:43:10.6250541+02:00">CMS&#160;Pages in Search Results</MadCap:annotation>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/product_management/product-restrictions.htm">Product Restrictions</a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 13, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Tamás Nyulas, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

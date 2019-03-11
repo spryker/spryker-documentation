@@ -1,0 +1,907 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,ReleaseVersions.2018-10" description="The Multiple Carts Feature allows customers to manage multiple shopping carts in one account. The guide describes how to integrate the feature into your project">
+    <head><title>Multiple Carts Feature Integration | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="Multiple Carts allows customers to manage multiple shopping carts in one account. The guide describes how to integrate the feature into your project." />
+    </head>
+    <body>
+        <h1>Multiple Carts Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature Core</h2>
+        <h3>Prerequisites</h3>
+        <p>
+			To start feature integration, overview and install the necessary features:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Persistent Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Install the Required Modules Using Composer</h3>
+        <p>
+			Run the following command(s) to install the required modules:
+		</p><pre><code class="language-PHP line-numbers">
+	composer require spryker-feature/multiple-carts: "^2018.11.0" --update-with-dependencies</code></pre>
+        <div class="tip">
+			Make sure that the following modules have been installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MultiCart</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/multi-cart</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">MultiCartDataImport</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/multi-cart-data-import</var></td></tr></tbody></table></div></div>
+        <h3>2) Set up Database Schema and Transfer Objects</h3>
+        <p>
+			Run the following commands to apply database changes and generate entity and transfer changes:
+		</p><pre><code class="language-PHP line-numbers">
+	console transfer:generate
+	console propel:install
+	console transfer:generate</code></pre>
+        <div class="tip">Make sure that the following changes have been applied by checking your database:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database entity</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">spy_quote.name</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">spy_quote.is_default</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">column</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">spy_quote.key</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">spy_quote-unique-name-customer_reference</td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">index</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">created</td></tr></tbody></table></div></div>
+        <div class="tip">Make sure that the following changes in transfer objects have been applied:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">QuoteTransfer.name</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">QuoteTransfer.isDefault</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuoteTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">QuoteTransfer.key</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">QuoteResponseTransfer.customQuotes</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuoteResponseTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">QuoteUpdateRequestAttributesTransfer.name</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteUpdateRequestAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">QuoteUpdateRequestAttributesTransfer.totals</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">column</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuoteUpdateRequestAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">QuoteActivationRequestTransfer</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteActivationRequestTransfer</var></td></tr></tbody></table></div></div>
+        <h3>3) Add Translations</h3>
+        <p>
+			Append glossary for the feature:
+		</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/data/import/glossary.csv</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	multi_cart.cart.set_default.success,"Cart '%quote%' was successfully set as active.",en_US
+	multi_cart.cart.set_default.success,"Warenkorb '%quote%' wurde erfolgreich auf aktiv gesetzt.",de_DE
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>
+			Run the following console command to import data:
+		</p><pre><code class="language-PHP line-numbers">
+	onsole data:import glossary
+			</code></pre>
+        <div class="tip">
+			Make sure that  the configured data has been added to the spy_glossary table in the database.
+		</div>
+        <h3>4) Import Data</h3>
+        <h4>Import multicarts</h4>
+        <div class="info">
+			The following imported entities will be used as carts in Spryker OS.
+		</div>
+        <p>
+			Prepare your data according to your requirements using our demo data:
+		</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">vendor/spryker/spryker/multi-cart-data-import/data/import/multi_cart.csv</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	key,name,customer_reference,store,is_default,quote_data
+	quote-1,My Cart,DE--1,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-2,My Cart,DE--2,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-3,My Cart,DE--3,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-4,My Cart,DE--4,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-5,My Cart,DE--5,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-6,My Cart,DE--6,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-7,My Cart,DE--7,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-8,My Cart,DE--8,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-9,My Cart,DE--9,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-10,My Cart,DE--10,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-11,My Cart,DE--11,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-12,My Cart,DE--12,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-13,My Cart,DE--13,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-14,My Cart,DE--14,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-15,My Cart,DE--15,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-16,My Cart,DE--16,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-17,My Cart,DE--17,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-18,My Cart,DE--18,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-19,My Cart,DE--19,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-20,My Cart,DE--20,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+	quote-21,My Cart,DE--21,DE,1,"{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}"
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Column</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Is obligatory</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data type</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data example</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Data explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">key</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">quote-19</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Key that will identify the quote to be referred in future imports.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">name</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">My Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Name of the quote.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">customer_reference</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DE--21</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Customer reference of the quote owner.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">store</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DE</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Store name that the quote relates to.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">is_default</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">int</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">1</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Flag to show that the quote is default for the customer.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">quote_data</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">{""currency"":{""code"":""EUR"",""name"":""Euro"",""symbol"":""\u20ac"",""isDefault"":true,""fractionDigits"":2},""priceMode"":""GROSS_MODE""}</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Quote data params serialized as json.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			Register the following plugin to enable data import:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">MultiCartDataImportPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Imports customer's quotes to database.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Make sure that customers have already been imported.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\MultiCartDataImport\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var style="font-weight: normal;">src/Pyz/Zed/DataImport/DataImportDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Zed\DataImport;
+ 
+	use Spryker\Zed\DataImport\DataImportDependencyProvider as SprykerDataImportDependencyProvider;
+	use Spryker\Zed\MultiCartDataImport\Communication\Plugin\MultiCartDataImportPlugin;
+ 
+	class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
+	{
+		protected function getDataImporterPlugins(): array
+		{
+			return [
+				new MultiCartDataImportPlugin(),
+			];
+		}
+	}
+			</code></pre>
+        <p>
+			Run the following console command to import data:
+		</p><pre><code class="language-PHP line-numbers">
+	console data:import multi-cart
+			</code></pre>
+        <div class="tip">
+			Open spy_quote and make sure that all data has been imported.
+		</div>
+        <h3>5) Set up Behavior</h3>
+        <div class="info">
+			This feature requires a database storage strategy enabled in the quote module.
+		</div>
+        <h4>Setup Quote integration</h4>
+        <p>
+			Register the following plugins:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">AddSuccessMessageAfterQuoteCreatedPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds a success message to messenger afterwards.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">AddDefaultNameBeforeQuoteSavePlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Sets a default quote name if the quote does not have a name.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>pryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">ResolveQuoteNameBeforeQuoteCreatePlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Resolves a quote name to make it unique for a customer before the quote is saved.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">If AddDefaultNameBeforeQuoteSavePlugin is used, it should be added afterwards.</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DeactivateQuotesBeforeQuoteSavePlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Marks a quote as default. Makes an SQL request mark all customer's quote as nondefault.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">InitDefaultQuoteCustomerQuoteDeleteAfterPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Activates any customer quote, if an active customer quote was removed.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">NameQuoteTransferExpanderPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Sets a default quote name if the quote does not have any name. The default guest quote name will be used for guest customer quotes.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Client\MultiCart\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>&#160;</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Zed/Quote/QuoteDependencyProvider.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Zed\Quote;
+  
+	use Spryker\Zed\MultiCart\Communication\Plugin\AddDefaultNameBeforeQuoteSavePlugin;
+	use Spryker\Zed\MultiCart\Communication\Plugin\AddSuccessMessageAfterQuoteCreatedPlugin;
+	use Spryker\Zed\MultiCart\Communication\Plugin\DeactivateQuotesBeforeQuoteSavePlugin;
+	use Spryker\Zed\MultiCart\Communication\Plugin\InitDefaultQuoteCustomerQuoteDeleteAfterPlugin;
+	use Spryker\Zed\MultiCart\Communication\Plugin\ResolveQuoteNameBeforeQuoteCreatePlugin;
+	use Spryker\Zed\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
+  
+	class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
+	{
+		/**
+		* @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+		*/
+		protected function getQuoteCreateAfterPlugins(): array
+		{
+			return [
+				new AddSuccessMessageAfterQuoteCreatedPlugin(),
+			];
+		}
+  
+		/**
+		* @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+		*/
+		protected function getQuoteCreateBeforePlugins(): array
+		{
+			return [
+				new AddDefaultNameBeforeQuoteSavePlugin(),
+				new ResolveQuoteNameBeforeQuoteCreatePlugin(),
+				new DeactivateQuotesBeforeQuoteSavePlugin(),
+			];
+		}
+  
+		/**
+		* @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+		*/
+		protected function getQuoteUpdateBeforePlugins(): array
+		{
+			return [
+				new AddDefaultNameBeforeQuoteSavePlugin(),
+				new ResolveQuoteNameBeforeQuoteCreatePlugin(),
+				new DeactivateQuotesBeforeQuoteSavePlugin(),
+			];
+		}
+  
+ 
+		/**
+		* @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteDeleteAfterPluginInterface[]
+		*/
+		protected function getQuoteDeleteAfterPlugins(): array
+		{
+			return [
+				new InitDefaultQuoteCustomerQuoteDeleteAfterPlugin(),
+			];
+		}
+	}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Client/Quote/QuoteDependencyProvider.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Client\Quote;
+  
+	use Spryker\Client\Kernel\Container;
+	use Spryker\Client\MultiCart\Plugin\NameQuoteTransferExpanderPlugin;
+	use Spryker\Client\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
+  
+	class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
+	{
+		/**
+		* @param \Spryker\Client\Kernel\Container $container
+		*
+		* @return \Spryker\Client\Quote\Dependency\Plugin\QuoteTransferExpanderPluginInterface[]
+		*/
+		protected function getQuoteTransferExpanderPlugins(Container $container)
+		{
+			return [
+				new NameQuoteTransferExpanderPlugin(),
+			];
+		}
+	}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that customer carts have unique names. If a customer creates the cart with the name that has already been used in another cart of the customer, the cart name will be extended with an iteratable suffix.<br />For example:<br />if the name 'Shopping cart' already exists, it will be changed to the following:<br />Shopping cart →  Shopping cart 1<br />Shopping cart → Shopping cart 2
+		</div>
+        <div class="tip">
+			Make sure that the customer has only one active cart at once. If the customer updates an inactive cart it becomes active, while the previous active cart becomes inactive.
+		</div>
+        <h4>Setup Persistent cart integration</h4>
+        <p>
+			Register the following plugins:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">CustomerCartQuoteResponseExpanderPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds a customer quote collection to the quote response transfer after the cart operation has been handled.<br />Replaces a quote with an active quote if it exists.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\MultiCart\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">SaveCustomerQuotesQuoteUpdatePlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Extracts Customer Quote Collection from the quote response object and saves it to the customer session.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Client\MultiCart\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DefaultQuoteUpdatePlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Finds Customer Default Quote in the customer quote collection and saves it to the customer session.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Client\MultiCart\Pluginn</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">QuoteSelectorPersistentCartChangeExpanderPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Takes the quote ID from parameters and replaces it in the quote change request.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">&#160;</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Client\MultiCart\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>&#160;</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Client/PersistentCart/PersistentCartDependencyProvider.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Client\PersistentCart;
+  
+	use Spryker\Client\MultiCart\Plugin\DefaultQuoteUpdatePlugin;
+	use Spryker\Client\MultiCart\Plugin\QuoteSelectorPersistentCartChangeExpanderPlugin;
+	use Spryker\Client\MultiCart\Plugin\SaveCustomerQuotesQuoteUpdatePlugin;
+	use Spryker\Client\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+  
+	class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+	{
+		/**
+		* @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
+		*/
+		protected function getQuoteUpdatePlugins(): array
+		{
+			return [
+				new SaveCustomerQuotesQuoteUpdatePlugin(),
+				new DefaultQuoteUpdatePlugin(),
+			];
+		}
+  
+		/**
+		* @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+		*/
+		protected function getChangeRequestExtendPlugins(): array
+		{
+			return [
+				new QuoteSelectorPersistentCartChangeExpanderPlugin(),
+			];
+		}
+	}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Zed/PersistentCart/PersistentCartDependencyProvider.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Zed\PersistentCart;
+  
+	use Spryker\Zed\MultiCart\Communication\Plugin\CustomerCartQuoteResponseExpanderPlugin;
+	use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+  
+	class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+	{
+		/**
+		* @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+		*/
+		protected function getQuoteResponseExpanderPlugins(): array
+		{
+			return [
+				new CustomerCartQuoteResponseExpanderPlugin(),
+			];
+		}
+	}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that adding items to the cart will update the customer's cart list in the multi-cart session.
+		</div>
+        <h4>Setup customer integration</h4>
+        <p>
+			Register the following plugins:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">GuestCartSaveCustomerSessionSetPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Executed after a customer has been added to the session.<br /><br />Saves a guest customer quote to the database if it is not empty.<br />Takes an active customer quote from the database if a guest cart is empty.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Should be added before GuestCartUpdateCustomerSessionSetPlugin.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Client\MultiCart\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Client/Customer/CustomerDependencyProvider.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Client\Customer;
+  
+	use Spryker\Client\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
+	use Spryker\Client\MultiCart\Plugin\GuestCartSaveCustomerSessionSetPlugin;
+  
+	class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
+	{
+		/**
+		* @return \Spryker\Client\Customer\Dependency\Plugin\CustomerSessionSetPluginInterface[]
+		*/
+		protected function getCustomerSessionSetPlugins()
+		{
+			return [
+				new GuestCartSaveCustomerSessionSetPlugin(),
+			];
+		}
+	}	
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that no  empty guest cart will be saved to the database in customer login.
+		</div>
+        <h3>6) Related features</h3>
+        <p>
+			Here you can find a list of related feature integration guides:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Feature</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Recommended version</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Multiple Carts Quick Add to Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">2018.11</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Multiple Carts Quick Add to Cart <MadCap:annotation MadCap:createDate="2018-12-26T18:35:39.3255671+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add link https://spryker.atlassian.net/wiki/spaces/DOCS/pages/639336487/Multiple+Carts+Quick+Add+to+Cart+Feature+Integration+-+ongoing" MadCap:editor="kravchenko" MadCap:editDate="2019-01-04T13:09:36.6028349+02:00">Feature</MadCap:annotation> Integration</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Multiple Carts Reorder</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">2018.11</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Multiple Carts Reorder Feature <MadCap:annotation MadCap:createDate="2018-12-26T18:35:44.4392931+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add link https://spryker.atlassian.net/wiki/spaces/DOCS/pages/639303969/Multiple+Carts+Reorder+Feature+Integration+-+ongoing" MadCap:editor="kravchenko" MadCap:editDate="2019-01-04T13:09:28.1463633+02:00">Integration</MadCap:annotation></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>Install Feature Frontend</h2>
+        <h3>Prerequisites</h3>
+        <p>
+			Please overview and install the necessary features before beginning the integration step.
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Product</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Persistent Cart</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Customer Account Management</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Install the required modules using composer</h3>
+        <p>
+			Run the following command(s) to install the required modules:
+		</p><pre><code class="language-PHP line-numbers">
+composer require spryker-feature/multiple-carts: "^2018.11.0" --update-with-dependencies
+			</code></pre>
+        <div class="tip">Make sure that the following modules have been installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MultiCartPage</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker-shop/multi-cart-page</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">MultiCartWidget</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker-shop/multi-cart-widget</var></td></tr></tbody></table></div></div>
+        <h3>2) Add Translations</h3>
+        <p>
+			Append glossary according to your configuration:
+		</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/data/import/glossary.csv</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+page.multi_cart.shopping_cart.list.title,Shopping cart,en_US
+page.multi_cart.shopping_cart.list.title,Einkaufswagen,de_DE
+page.multi_cart.shopping_cart.list.create_link,Create,en_US
+page.multi_cart.shopping_cart.list.create_link,Erstellen,de_DE
+page.multi_cart.shopping_cart.list.label.name,Name,en_US
+page.multi_cart.shopping_cart.list.label.name,Name,de_DE
+page.multi_cart.shopping_cart.list.label.num_of_products,Number of products,en_US
+page.multi_cart.shopping_cart.list.label.num_of_products,Anzahl der Produkte,de_DE
+page.multi_cart.shopping_cart.list.label.prices,Prices,en_US
+page.multi_cart.shopping_cart.list.label.prices,Preise,de_DE
+page.multi_cart.shopping_cart.list.label.total,Total,en_US
+page.multi_cart.shopping_cart.list.label.total,Gesamt,de_DE
+page.multi_cart.shopping_cart.list.label.actions,Actions,en_US
+page.multi_cart.shopping_cart.list.label.actions,Aktionen,de_DE
+page.multi_cart.shopping_cart.list.link.edit_name,Edit name,en_US
+page.multi_cart.shopping_cart.list.link.edit_name,Namen bearbeiten,de_DE
+page.multi_cart.shopping_cart.list.link.duplicate,Duplicate,en_US
+page.multi_cart.shopping_cart.list.link.duplicate,Duplikat,de_DE
+page.multi_cart.shopping_cart.list.link.delete,Delete,en_US
+page.multi_cart.shopping_cart.list.link.delete,Löschen,de_DE
+page.multi_cart.shopping_cart.list.label.item,"Item",en_US
+page.multi_cart.shopping_cart.list.label.item,"Artikel",de_DE
+page.multi_cart.shopping_cart.list.label.items,"Items",en_US
+page.multi_cart.shopping_cart.list.label.items,"Artikel",de_DE
+customer.account.shopping_cart.list.title,Manage Shopping carts,en_US
+customer.account.shopping_cart.list.title,Verwalten Sie Einkaufswagen,de_DE
+page.multi_cart.shopping_cart.list.label.access,Access,en_US
+page.multi_cart.shopping_cart.list.label.access,Zugriff,de_DE
+page.multi_cart.shopping_cart.update.title,Edit,en_US
+page.multi_cart.shopping_cart.update.title,Bearbeiten,de_DE
+page.multi_cart.shopping_cart.create.title,Create,en_US
+page.multi_cart.shopping_cart.create.title,Erstellen,de_DE
+multi_cart.form.create_cart,"Add new cart",en_US
+multi_cart.form.create_cart,"Füge einen neuen Warenkorb hinzu",de_DE
+multi_cart.form.quote.name,"Cart Name",en_US
+multi_cart.form.quote.name,"Name des Einkaufswagens",de_DE
+multi_cart.form.edit_cart,"Change Name",en_US
+multi_cart.form.edit_cart,"Namen ändern",de_DE
+multi_cart.form.edit_cart_information,"Edit Cart information",en_US
+multi_cart.form.edit_cart_information,"Einkaufswageninformationen bearbeiten",de_DE
+multi_cart.cart.set_default.success,"Cart '%quote%' was successfully set as active.",en_US
+multi_cart.cart.set_default.success,"Warenkorb '%quote%' wurde erfolgreich auf aktiv gesetzt.",de_DE
+multi_cart_page.cart_clear.success,"Cart was successfully cleared",en_US
+multi_cart_page.cart_clear.success,"Einkaufswagen wurde erfolgreich gelöscht",de_DE
+multi_cart_page.cart_delete_confirmation.warning,Warning,en_US
+multi_cart_page.cart_delete_confirmation.warning,Warnung,de_DE
+multi_cart_page.cart_delete_confirmation.trying_to_delete,You are trying to delete Cart,en_US
+multi_cart_page.cart_delete_confirmation.trying_to_delete,Sie versuchen den Warenkorb zu löschen,de_DE
+multi_cart_page.cart_delete_confirmation.shared_with,It is shared with the following users,en_US
+multi_cart_page.cart_delete_confirmation.shared_with,Der Warenkorb ist mit den folgenden Personen geteilt,de_DE
+multi_cart_page.cart_delete_confirmation.from_all_of_them,It will be deleted from all of them,en_US
+multi_cart_page.cart_delete_confirmation.from_all_of_them,Der Warenkorb wird für alle Nutzer gelöscht,de_DE
+multi_cart_page.cart_delete_confirmation.cancel,Cancel,en_US
+multi_cart_page.cart_delete_confirmation.cancel,Abbrechen,de_DE
+multi_cart_page.cart_delete_confirmation.delete,Delete,en_US
+multi_cart_page.cart_delete_confirmation.delete,Löschen,de_DE
+multi_cart_page.cart_delete_confirmation.breadcrumbs.shopping_carts,Shopping carts,en_US
+multi_cart_page.cart_delete_confirmation.breadcrumbs.shopping_carts,Warenkörbe,de_DE
+multi_cart_widget.cart.cart_name,"Cart Name",en_US
+multi_cart_widget.cart.cart_name,"Name des Einkaufswagens",de_DE
+multi_cart_widget.cart.add,"Create New Cart",en_US
+multi_cart_widget.cart.add,"Neuen Warenkorb erstellen",de_DE
+multi_cart_widget.cart.action.change_name,"Change Name",en_US
+multi_cart_widget.cart.action.change_name,"Namen ändern",de_DE
+multi_cart_widget.cart.action.duplicate,"Duplicate",en_US
+multi_cart_widget.cart.action.duplicate,"Duplikat",de_DE
+multi_cart_widget.cart.action.clear,"Clear cart",en_US
+multi_cart_widget.cart.action.clear,"Leerer Warenkorb",de_DE
+multi_cart_widget.cart.action.delete,"Delete cart",en_US
+multi_cart_widget.cart.action.delete,"Warenkorb löschen",de_DE
+multi_cart_widget.cart.action.view,"View details",en_US
+multi_cart_widget.cart.action.view,"Warenkorb ansehen",de_DE
+multi_cart_widget.cart.action.set_default,"Set active",en_US
+multi_cart_widget.cart.action.set_default,"Aktiv setzen",de_DE
+multi_cart_widget.cart.default,"Active",en_US
+multi_cart_widget.cart.default,"Aktiv",de_DE
+multi_cart_widget.cart.item,"Item",en_US
+multi_cart_widget.cart.item,"Artikel",de_DE
+multi_cart_widget.cart.items,"Items",en_US
+multi_cart_widget.cart.items,"Artikel",de_DE
+multi_cart_widget.cart.view_all,"View all carts",en_US
+multi_cart_widget.cart.view_all,"Alle Warenkörbe anzeigen",de_DE
+multi_cart_widget.cart.cart,"Cart",en_US
+multi_cart_widget.cart.cart,"Warenkorb",de_DE
+multi_cart_widget.cart.carts,"Carts",en_US
+multi_cart_widget.cart.carts,"Warenkorb",de_DE
+multi_cart_widget.cart.list,"Cart List",en_US
+multi_cart_widget.cart.list,"Warenkorb-Liste",de_DE
+multi_cart_widget.cart.status,"Status",en_US
+multi_cart_widget.cart.status,"Status",de_DE
+multi_cart_widget.cart.sub_total,"Sub Total",en_US
+multi_cart_widget.cart.sub_total,"Zwischensumme",de_DE
+multi_cart_widget.cart.actions,"Actions",en_US
+multi_cart_widget.cart.actions,"Aktionen",de_DE
+multi_cart_widget.cart.created.success,"Cart '%quoteName%' was created successfully",en_US
+multi_cart_widget.cart.created.success,"Warenkorb '%quoteName%' wurde erfolgreich erstellt",de_DE
+multi_cart_widget.cart.updated.success,"Cart updated successfully",en_US
+multi_cart_widget.cart.updated.success,"Einkaufswagen wurde erfolgreich aktualisiert",de_DE
+multi_cart_widget.cart.was-deleted-before,Dieser Warenkorb wurde bereits gelöscht,de_DE
+multi_cart_widget.cart.was-deleted-before,This cart was already deleted,en_US
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>
+			Run the following console command to import data:
+		</p><pre><code class="language-PHP line-numbers">
+console data:import glossary
+			</code></pre>
+        <div class="tip">
+			Make sure that in the database the configured data are added to the spy_glossary table.
+		</div>
+        <h3>3) Enable Controllers</h3>
+        <h4>Controller Provider List</h4>
+        <p>
+			Register the following controller provider(s) to the Yves application:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Provider</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Namespace</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Enabled Controller</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Controller Specification</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">MultiCartPageControllerProvider</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SprykerShop\Yves\MultiCartPage\Plugin\Provider</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">MultiCartController</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Provides functionality to manage multicarts.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><var style="font-weight: normal;">src/Pyz/Yves/ShopApplication/YvesBootstrap.php</var>
+                </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Yves\ShopApplication;
+ 
+	use SprykerShop\Yves\MultiCartPage\Plugin\Provider\MultiCartPageControllerProvider;
+	use SprykerShop\Yves\ShopApplication\YvesBootstrap as SprykerYvesBootstrap;
+ 
+	class YvesBootstrap extends SprykerYvesBootstrap
+	{
+		/**
+		* @param bool|null $isSsl
+		*
+		* @return \SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider[]
+		*/
+		protected function getControllerProviderStack($isSsl)
+		{
+			return [
+				new MultiCartPageControllerProvider($isSsl),
+			];
+		}
+	}
+			</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Verify the changes by opening the customer cart list page with a logged in customer on, for example, http://example.org/multi-cart/
+		</div>
+        <h3>4) Set up Widgets</h3>
+        <p>
+			Register the following global widgets:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Widget</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Desciption</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">AddToMultiCartWidget</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Shows a cart list for adding it to the cart functionality</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>SprykerShop\Yves\MultiCartWidget\Widget</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">CartOperationsWidget</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Shows multicart functionalities in the cart page.</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>SprykerShop\Yves\MultiCartWidget\Widget</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MiniCartWidget</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Shows MiniCart in the header.</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>SprykerShop\Yves\MultiCartWidget\Widget</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">MultiCartMenuItemWidget</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Shows a link to the cart list page in the customer account navigation.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>SprykerShop\Yves\MultiCartWidget\Widget</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var>src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Yves\ShopApplication;
+ 
+	use SprykerShop\Yves\MultiCartWidget\Widget\AddToMultiCartWidget;
+	use SprykerShop\Yves\MultiCartWidget\Widget\CartOperationsWidget;
+	use SprykerShop\Yves\MultiCartWidget\Widget\MiniCartWidget;
+	use SprykerShop\Yves\MultiCartWidget\Widget\MultiCartMenuItemWidget;
+	use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+ 
+	class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+	{
+		/**
+		* @return string[]
+		*/
+		protected function getGlobalWidgets(): array
+		{
+			return [
+				AddToMultiCartWidget::class,
+				CartOperationsWidget::class,
+				MiniCartWidget::class,
+				MultiCartMenuItemWidget::class,
+			];
+		}
+	}
+			</code></pre>
+        <p>
+			Run the following command to enable Javascript and CSS changes:
+		</p><pre><code class="language-PHP line-numbers">console frontend:yves:build</code></pre>
+        <div class="tip">Make sure that the following widgets have been registered:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Test</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">AddToMultiCartWidget</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Go to the product detail page. A shopping cart list should be added to the cart form.</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">CartOperationsWidget</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Go to the cart overview page and see a title with the cart name and the Clear all button.</td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MiniCartWidget</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Minicart with all customer's carts should be in the header.</td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">MultiCartMenuItemWidget</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Go to the customer account overview page. A shopping cart link should be in the customer navigation links.</td></tr></tbody></table></div></div>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/cart/multiple_carts_per_user/multiple-carts-per-user-overview.htm">Multiple Carts per User Feature Overview</a>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/cart/quick_order/quick-order-feature-overview.htm">Quick Order Feature Overview</a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last
+review date: Dec. 6th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Dmitriy Krainiy, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

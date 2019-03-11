@@ -1,0 +1,358 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.ShopSuite,Spryker.B2B,Spryker.B2C">
+    <head><title>Publish and Synchronization Reference</title>
+    </head>
+    <body>
+        <h1>Publish and Synchronization Reference <img src="../Resources/Images/shoptype/MasterSuite.png" /> </h1>
+        <p>
+            <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></p>
+        <p>To implement <i>Publish and Synchronize</i> in your code, you need to perform the following steps:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>1. Add Publish Events</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p><i>Publish</i> and <i>Synchronize</i> are event-driven. To start publishing data to the frontend, an event must be triggered. For this purpose, you need to add events for all changes you want to synchronize. For information on how to add events to your module, see <a href="https://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/event/event_adding.html" target="_blank">Adding Events</a>.</p>
+                <p>For example, the following code creates an event once an entity is created, updated or deleted in the <var>spy_product_abstract</var> table (see <var>data/shop/development/current/vendor/spryker/product/src/Spryker/Zed/Product/Dependency/ProductEvents.php</var>):</p><pre><code class="language-PHP line-numbers">/**
+ * Specification:
+ * - Represents spy_product_abstract entity creation.
+ *
+ * @api
+ */
+const ENTITY_SPY_PRODUCT_ABSTRACT_CREATE = "Entity.spy_product_abstract.create";
+
+/**
+ * Specification:
+ * - Represents spy_product_abstract entity changes.
+ *
+ * @api
+ */
+const ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE = "Entity.spy_product_abstract.update";
+
+/**
+ * Specification:
+ * - Represents spy_product_abstract entity deletion.
+ *
+ * @api
+ */
+const ENTITY_SPY_PRODUCT_ABSTRACT_DELETE = "Entity.spy_product_abstract.delete";</code></pre>
+                <p>The events will be posted to queue <b>event</b> in RabbitMq.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>2. Create Publication  Queue</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Now, you need to create a publication queue. It will be used to synchronize published data to the frontend. It is recommended to have a separate queue for each <i>Redis</i> or <i>Elasticsearch</i> entity. For information on how to create a queue, see <a href="https://academy.spryker.com/enablement/tutorials_and_howtos/introduction_tutorials/ht_setup_hello_world_queue.html" target="_blank">Set Up a "Hello World" Queue</a>, section <b>Creating a Simple Queue</b>.</p>
+                <p class="tip">As a naming convention, names of queues that synchronize data to Redis start with <b>sync.storage</b>, and names of queues that synchronize data to Elasticsearch start with <b>sync.search</b>.</p>
+                <p>We implemented 2 message processor plugins for synchronizing data to the frontend:</p>
+                <ul>
+                    <li><var>SynchronizationStorageQueueMessageProcessorPlugin</var> - for synchronizing data to Redis, and</li>
+                    <li><var>SynchronizationSearchQueueMessageProcessorPlugin</var> - for synchronizing data to Elasticsearch.</li>
+                </ul>
+                <p>You need to map your new queue to one of the plugins depending on which storage you want to use it for. The queues must be mapped in <var>QueueDependencyProvider::getProcessorMessagePlugins()</var>. For details, see section <b>Queue Message Processor Plugin</b> in the <i>Set Up a "Hello World" Queue</i> document.</p>
+                <p class="tip">It is also good practice to create an error queue for your publication queue, where errors will be posted. The error queue must be registered in <var>RabbitMqConfig::getQueueOptions()</var>. For example:</p><pre><code class="language-PHP line-numbers">protected function getQueueOptions()
+{
+    $queueOptionCollection = new ArrayObject();
+    $queueOptionCollection-&gt;append($this-&gt;createQueueOption(EventConstants::EVENT_QUEUE, EventConstants::EVENT_QUEUE_ERROR));
+    $queueOptionCollection-&gt;append($this-&gt;createQueueOption(GlossaryStorageConstants::SYNC_STORAGE_QUEUE, GlossaryStorageConstants::SYNC_STORAGE_ERROR_QUEUE));
+    $queueOptionCollection-&gt;append($this-&gt;createQueueOption(UrlStorageConstants::URL_SYNC_STORAGE_QUEUE, UrlStorageConstants::URL_SYNC_STORAGE_ERROR_QUEUE));
+    ...</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>3. Create Publication Table</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>The next step is to create a database table that will be used as a mirror for the corresponding <i>Redis</i> or <i>Elasticsearch</i> store. For details, see <a href="https://academy.spryker.com/enablement/tutorials/backend/t_extend_db_schema.html" target="_blank">Extending the Database Schema</a>.</p>
+                <p class="info">As a naming convention, it is recommended to append <var>_storage</var> to the end of the table name, if it is synchronized with Redis, and <var>_search</var>, if it is synchronized with Elasticsearch.</p>
+                <p>All mirror tables must implement the <b>Synchronization</b> Behavior that will be used to synchronize data to <i>Redis</i> or <i>Elasticsearch</i>. Also, the table must populate foreign keys necessary to backtrack the Propel entities.</p>
+                <p>Sample Redis synchronization table  (see <var>data/shop/development/current/src/Orm/Propel/DE/Schema/spy_product_storage.schema.xml</var>):</p><pre><code class="language-XML line-numbers">    &lt;table name="spy_product_abstract_storage"&gt;
+        &lt;column name="id_product_abstract_storage" type="integer" autoIncrement="true" primaryKey="true"/&gt;
+        &lt;column name="fk_product_abstract" type="INTEGER" required="true"/&gt;
+        &lt;id-method-parameter value="spy_product_abstract_storage_pk_seq"/&gt;
+        &lt;behavior name="synchronization"&gt;
+            &lt;parameter name="resource" value="product_abstract"/&gt;
+            &lt;parameter name="store" required="true"/&gt;
+            &lt;parameter name="locale" required="true"/&gt;
+            &lt;parameter name="key_suffix_column" value="fk_product_abstract"/&gt;
+            &lt;parameter name="queue_group" value="sync.storage.product"/&gt;
+        &lt;/behavior&gt;
+        &lt;behavior name="timestampable"/&gt;
+    &lt;/table&gt;</code></pre>
+                <p>Sample Elasticsearch synchronization table (see <var>data/shop/development/current/src/Orm/Propel/DE/Schema/spy_cms_page_search.schema.xml</var>):</p><pre><code class="language-XML line-numbers">    &lt;table name="spy_cms_page_search"&gt;
+        &lt;column name="id_cms_page_search" type="INTEGER" autoIncrement="true" primaryKey="true"/&gt;
+        &lt;column name="fk_cms_page" type="INTEGER" required="true"/&gt;
+        &lt;!-- "structured_data" column contains the result from database query while "data" column contains mapped data for the search engine --&gt;
+        &lt;column name="structured_data" type="LONGVARCHAR" required="true"/&gt;
+        &lt;id-method-parameter value="spy_cms_page_search_pk_seq"/&gt;
+        &lt;behavior name="synchronization"&gt;
+            &lt;parameter name="resource" value="cms_page"/&gt;
+            &lt;parameter name="store" required="true"/&gt;
+            &lt;parameter name="locale" required="true"/&gt;
+            &lt;parameter name="key_suffix_column" value="fk_cms_page"/&gt;
+            &lt;parameter name="queue_group" value="sync.search.cms"/&gt;
+            &lt;parameter name="params" value="{"type":"page"}"/&gt;
+        &lt;/behavior&gt;
+        &lt;behavior name="timestampable"/&gt;
+    &lt;/table&gt;</code></pre>
+                <p>The <i>Synchronization</i> behavior added by the above schema files adds a column that will contain the actual data to synchronize to Redis or Elasticsearch (in JSON format). The column name is <b>data</b>.</p>
+                <p>Synchronization Behavior Parameters:<b><br /></b></p>
+                <ul>
+                    <li><b>resource</b> - specifies the Redis or Elasticsearch namespace to synchronize with;</li>
+                    <li><b>store</b> - specifies whether it is necessary to specify a store for an entity;</li>
+                    <li><b>locale</b> - specifies whether it is necessary to specify a locale for an entity;</li>
+                    <li><b>key_suffix_column</b> - specifies the name of the column that will be appended to the Redis or Elasticsearch key to make the key unique. If this parameter is omitted, then all entities will be stored under the same key;</li>
+                    <li><b>queue_group</b> - specifies the queue group used for synchronization;</li>
+                    <li><b>params</b> - specifies search parameters (Elasticsearch only).</li>
+                </ul>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>4. Create Publish Module</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>Now, you are ready to implement the <b>Publish</b> step. It is recommended practice to create a separate module for this purpose. To create an empty module, execute the following commands:</p><pre><code class="language-Bash line-numbers">console code:generate:module:zed MyModuleStorage
+console code:generate:module:client MyModuleStorage
+console code:generate:module:shared MyModuleStorage</code></pre>
+                <p class="info">As a naming convention, names of modules that publish data to Redis end with <var>Storage</var> (e.g. <i>MyModule<b>Storage</b></i>), and names of modules that publish to Elasticsearch end with <var>Search</var> (e.g. <i>MyModule<b>Search</b></i>).</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>5. Listen to Publish Events</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>To implement the <i>Publish</i> step, first, you need is to consume the <i>Publish Events</i>. For this purpose, you need to create an event listener. A listener is a plugin class to your storage or search module. Sample implementation can be found in the <i>ProductStorage</i> Module.</p><pre><code class="language-PHP line-numbers">class ProductConcreteProductAbstractStorageListener extends AbstractProductConcreteStorageListener implements EventBulkHandlerInterface
+{
+    use DatabaseTransactionHandlerTrait;
+
+    /**
+     * @api
+     *
+     * @param \Spryker\Shared\Kernel\Transfer\TransferInterface[] $eventTransfers
+     * @param string $eventName
+     *
+     * @return void
+     */
+    public function handleBulk(array $eventTransfers, $eventName)
+    {
+        $this-&gt;preventTransaction();
+        $productAbstractIds = $this-&gt;getFactory()-&gt;getEventBehaviorFacade()-&gt;getEventTransferIds($eventTransfers);
+        if (empty($productAbstractIds)) {
+            return;
+        }
+
+        $productIds = $this-&gt;getQueryContainer()-&gt;queryProductIdsByProductAbstractIds($productAbstractIds)-&gt;find()-&gt;getData();
+        $this-&gt;publish($productIds);
+    }
+}</code></pre>
+                <p>A listener class must implement the <b>EventBulkHandlerInterface</b> and contain only one method called <var>handleBulk</var> that will be called by the event queue. The method accepts two parameters:</p>
+                <ul>
+                    <li><b>$eventTransfers</b> - specifies an array of event transfers that represent the events to consume;</li>
+                    <li><b>$eventName</b> - specifies an event name.</li>
+                </ul>
+                <p class="info">For performance considerations, events are passed to the listener in bulk. Even if a single event must be handled, it is passed as an array of a single element.</p>
+                <p>Implementing a listener is detailed in <a href="https://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/event/event_listen.html" target="_blank">Listening to Events</a>. Follow the guide to create your listener classes.</p>
+                <p>Also, you need to map listeners to the events. For this purpose, you need to add a plugin class that extends the <b>AbstractPlugin</b> and implements the <b>EventSubscriberInterface</b> interfaces. For example, this is how the <i>ProductStorage</i> module maps changes in abstract products to the respective listeners (see full code in <var>data/shop/development/current/vendor/spryker/product-storage/src/Spryker/Zed/ProductStorage/Communication/Plugin/Event/Subscriber/ProductStorageEventSubscriber.php</var>):</p><pre><code class="language-PHP line-numbers">class ProductStorageEventSubscriber extends AbstractPlugin implements EventSubscriberInterface
+{
+    /**
+     * @api
+     *
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return \Spryker\Zed\Event\Dependency\EventCollectionInterface
+     */
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection
+            //...
+            -&gt;addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_CREATE, new ProductAbstractStorageListener())
+            -&gt;addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductAbstractStorageListener())
+            -&gt;addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_UPDATE, new ProductConcreteProductAbstractStorageListener())
+            -&gt;addListenerQueued(ProductEvents::ENTITY_SPY_PRODUCT_ABSTRACT_DELETE, new ProductAbstractStorageListener())
+            //...
+        return $eventCollection;
+    }
+}</code></pre>
+                <h3>Overriding Listeners</h3>
+                <p>If necessary, you can also override listeners already configured in Spryker. For this purpose, you need to implement a class that extends the event subscriber of the corresponding module on your project level:</p><pre><code class="language-PHP line-numbers">/**
+ * @method \Spryker\Zed\AvailabilityStorage\Communication\AvailabilityStorageCommunicationFactory getFactory()
+ */
+class AvailabilityStorageEventSubscriber extends Spryker\Zed\AvailabilityStorage\Communication\Plugin\Event\Subscriber\AvailabilityStorageEventSubscriber
+{
+    /**
+     * @param \Spryker\Zed\Event\Dependency\EventCollectionInterface $eventCollection
+     *
+     * @return void
+     */
+    protected function addAvailabilityAbstractUpdateListener(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection-&gt;addListenerQueued(AvailabilityEvents::ENTITY_SPY_AVAILABILITY_ABSTRACT_UPDATE, new AvailabilityStorageListener());
+    }
+}</code></pre>
+                <h3>Adding Listeners to Existing Modules</h3>
+                <p>To add a listener to an existing module, you also need to extend the module's event subscriber on project level:</p><pre><code class="language-PHP line-numbers">class PyzUrlStorageEventSubscriber extends UrlStorageEventSubscriber implements EventSubscriberInterface
+{
+    public function getSubscribedEvents(EventCollectionInterface $eventCollection)
+    {
+        $eventCollection-&gt;addListenerQueued(UrlEvents::ENTITY_SPY_URL_CREATE, new UrlStorageListener());
+        return $eventCollection;
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>6. Publish Data</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>After consuming an event, you need to publish the data for the frontend. For this purpose, your code needs to query the data relevant to the update and make changes to the corresponding <i>storage</i> or <i>search</i> database table. For this purpose, you need to implement the following methods: <b>Publish</b> for publishing an entity, and <b>Unpublish</b> for removing it.</p>
+                <p>Sample implementation can be found in the <i>ProductStorage</i> module  (see full code in <var>data/shop/development/current/vendor/spryker/product-storage/src/Spryker/Zed/ProductStorage/Communication/Plugin/Event/Listener/AbstractProductAbstractStorageListener.php</var>):</p><pre><code class="language-PHP line-numbers">/**
+ * @param array $productAbstractIds
+ *
+ * @return void
+ */
+protected function publish(array $productAbstractIds)
+{
+    $spyProductAbstractLocalizedEntities = $this-&gt;findProductAbstractLocalizedEntities($productAbstractIds);
+    $spyProductAbstractStorageEntities = $this-&gt;findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
+
+    if (!$spyProductAbstractLocalizedEntities) {
+        $this-&gt;deleteStorageData($spyProductAbstractStorageEntities);
+    }
+
+    $this-&gt;storeData($spyProductAbstractLocalizedEntities, $spyProductAbstractStorageEntities);
+}
+
+/**
+ * @param array $productAbstractIds
+ *
+ * @return void
+ */
+protected function unpublish(array $productAbstractIds)
+{
+    $spyProductStorageEntities = $this-&gt;findProductStorageEntitiesByProductAbstractIds($productAbstractIds);
+    $this-&gt;deleteStorageData($spyProductStorageEntities);
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>7. Trigger Publish Events</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>All you need to do to synchronize data to the frontend data storage is trigger the corresponding events. One way to do that is to trigger the events manually. This can be done by calling the <var>EventFacade::trigger()</var> method:</p><pre><code class="language-PHP">$this-&gt;eventFacade-&gt;trigger(CmsEvents::CMS_VERSION_PUBLISH, (new EventEntityTransfer())-&gt;setId($id));</code></pre>
+                <p>Alternatively, you can enable event triggering automatically. In this case, an event will be triggered once a certain Propel entity is created, updated or deleted. For this purpose, you need to enable <b>Event Behavior</b> in your modules.</p>
+                <p>To implement Event Behavior, you need to add a behavior called <b>event</b> to your Propel model. For example, the following code in the schema of the <i>Product Module</i> enables triggering of events each time the <var>spy_product_abstract</var> table is updated (see <var>data/shop/development/current/src/Pyz/Zed/Product/Persistence/Propel/Schema/spy_product.schema.xml</var>):</p><pre><code class="language-XML line-numbers">&lt;table name="spy_product_abstract"&gt;
+    &lt;behavior name="event"&gt;
+        &lt;parameter name="spy_product_abstract_all" column="*"/&gt;
+    &lt;/behavior&gt;
+&lt;/table&gt;</code></pre>
+                <p>The <b>parameter</b> element specifies when events should be triggered. It has 4 attributes:</p>
+                <ul>
+                    <li><b>name</b> - specifies the parameter name. It should be unique in your Propel model.</li>
+                    <li><b>column</b> - specifies the column that needs to be updated to trigger an event. If you want to track all columns, use the asterisk (<b>*</b>) character.</li>
+                    <li><b>value</b> - specifies a value to compare.</li>
+                    <li><b>operator</b> - specifies the comparison operator. You can use any PHP comparison operators for this purpose (===, ==, !=, !==, &lt;, &gt;, &lt;=, &gt;=, &lt;&gt;).</li>
+                </ul>
+                <p>The <i>value</i> and <i>operator</i> attributes are optional. They can be used to filter changes based on certain criteria. In the following example, an event will be triggered only if the value of the <b>quantity</b> column equals <b>0</b>:</p><pre><code class="language-XML">&lt;parameter name="spy_mymodule_quantity" column="quantity" value="0" operator="==="/&gt;</code></pre>
+                <p>The following example triggers an event when the value of any column is less than or equals <b>10</b>:</p><pre><code class="language-XML">&lt;parameter name="spy_mymodule_all" column="*" value="10" operator="&lt;="/&gt;</code></pre>
+                <p>After making changes to your Propel schema, run the following command:</p><pre><code class="language-Bash">console propel:install</code></pre>
+                <p>Now, you can trigger publish events by simply manipulating any entry in the table:</p><pre><code class="language-PHP">$productAbstractEntity = SpyProductAbstractQuery::create()-&gt;findOne();
+$productAbstractEntity-&gt;setColorCode("#FFFFFF");
+$productAbstractEntity-&gt;save();</code></pre>
+                <p>After implementing the above steps, you will have the data storage of your frontend app synchronized with the backend data storage.</p>
+                <MadCap:dropDown>
+                    <MadCap:dropDownHead>
+                        <MadCap:dropDownHotspot>Deleting Entries</MadCap:dropDownHotspot>
+                    </MadCap:dropDownHead>
+                    <MadCap:dropDownBody>
+                        <p>Currently, event triggering only works with Propel Entities, but not Propel Queries. For this reason, deleting multiple entities will not trigger <i>Publish and Synchronize</i>. Thus, for example, the following code will not trigger anything: <var>$query→filterByFkProduct(1)→delete();</var>. To work around this, you need to trigger the events manually or iterate through objects and delete them one-by-one.</p>
+                        <MadCap:dropDown>
+                            <MadCap:dropDownHead>
+                                <MadCap:dropDownHotspot>How</MadCap:dropDownHotspot>
+                            </MadCap:dropDownHead>
+                            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">$productAbstractIds = [1,2,3];
+$query-&gt;filterByFkProduct_In($productAbstractIds)-&gt;delete();
+foreach ($productAbstractIds as $id) {
+    $this-&gt;eventFacade-&gt;trigger(ProductEvents::PRODUCT_ABSTRACT_UNPUBLISH, (new EventEntityTransfer())-&gt;setId($id));
+}
+// -- OR --
+$productAbstracts = SpyProductAbstractQuery::create()-&gt;find();
+foreach ($productAbstracts as $productAbstract) {
+    $productAbstract-&gt;delete();
+}</code></pre>
+                            </MadCap:dropDownBody>
+                        </MadCap:dropDown>
+                    </MadCap:dropDownBody>
+                </MadCap:dropDown>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Additional Tasks</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <h3>View Event Mapping</h3>
+                <p>To see all listeners mapped for a certain event, Ctrl+Click it in PhpStorm. The following example shows that the <i>SPY_URL_CREATE</i> event has <b>6</b> listeners mapped to it, which means that there will be <b>6</b> messages for this event in the <b>event</b> queue.</p>
+                <p>
+                    <img src="../Resources/Images/PandS/lookup-listener.png" />
+                </p>
+                <h3>Debug Publish and Synchronize</h3>
+                <p>To debug Publish and Synchronize:</p>
+                <ol>
+                    <li>
+                        <p>Turn off <a href="https://academy.spryker.com/developing_with_spryker/developer_resources/cronjob_scheduling.html" target="_blank">Jenkins</a> to stop processing all queues. This can be done using the following command:</p><pre><code class="language-Bash">console setup:jenkins:disable</code></pre>
+                    </li>
+                    <li>Trigger your event. Now, you should be able to see the messages in the <b>event</b> queue of RabbitMQ management UI. To open it, use the following URL: <a href="http://zed.de.suite.local:15672/#/queues" target="_blank">http://zed.de.suite.local:15672/#/queues</a>.</li>
+                    <li>Set a breakpoint inside a listener mapped to the event and enable the PhpStorm debugging mode.</li>
+                    <li>
+                        <p>Run the following command:</p><pre><code class="language-Bash">XDEBUG_CONFIG="remote_host=10.10.0.1" PHP_IDE_CONFIG="serverName=~^zed\.de\..+\.local$" console queue:task:start event --no-ack</code></pre>
+                    </li>
+                    <li>If you want to view the events stacked in the Publish Queues, they are also available in the RabbitMQ management UI.</li>
+                    <li>
+                        <p>To re-enable the queues after debugging, run the following command:</p><pre><code class="language-Bash">console setup:jenkins:disable</code></pre>
+                    </li>
+                </ol>
+                <h3>Re-Export Storage and Search Data to Redis or Elasticsearch</h3>
+                <p>There is no functionality for this purpose, but you can use the queue client to send data to sync queues. Example:</p><pre><code class="language-PHP line-numbers">$data = $productAbstractStorage-&gt;getData();
+$data["_timestamp"] = microtime(true); // Compare fresh copy of storage and search data
+$message = [
+    "write" =&gt; [
+        "key" =&gt; $productAbstractStorage-&gt;getKey(),
+        "value" =&gt; $data,
+        "resource" =&gt; "product_abstract",
+        "params" =&gt; [], // You can use this option to specify an Elasticsearch type, e.g. ["type" =&gt; "page"]
+    ]
+];
+
+$queueSendTransfer = new \Generated\Shared\Transfer\QueueSendMessageTransfer();
+$queueSendTransfer-&gt;setBody(json_encode($message));
+
+$queueClient = $this-&gt;getFactory()-&gt;getQueueClient();
+$queueClient-&gt;sendMessage("sync.storage.product", $queueSendTransfer);</code></pre>
+                <h3>Re-Trigger Entities</h3>
+                <p>Use the Event Facade to trigger publish events for specific entities:</p><pre><code class="language-PHP line-numbers">$productAbstracts = SpyProductAbstractQuery::create()-&gt;find();
+foreach ($productAbstracts as $productAbstract) {
+    $this-&gt;eventFacade-&gt;trigger(ProductEvents::PRODUCT_ABSTRACT_PUBLISH, (new EventEntityTransfer())-&gt;setId($productAbstract-&gt;getIdProductAbstract()));
+}</code></pre>
+                <h3>Disable Events</h3>
+                <p>If you want to disable all events, call <var>EventBehaviorConfig::disableEvent()</var>. To disable events of a specific entity, call <var>$glossaryTranslationEntity-&gt;disableEvent()</var>.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h3>See Also:</h3>
+        <ul>
+            <li>
+                <MadCap:xref href="../Architecture Concepts/Publish and Synchronization/publish-and-synchronization.htm">Publish and Synchronization  </MadCap:xref>
+            </li>
+            <li><a href="../tutorials/introduction/handling-data-publish-and-synchronization.htm">Tutorial - Handling Data - Publish and Synchronization</a>
+            </li>
+            <li><a href="../Architecture Concepts/Publish and Synchronization/publish-and-synchronization-repeated-process.htm">Re-synchronization and re-generation of data</a>
+            </li>
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>Build and Optimization for Antelope <img src="../../../Resources/shoptype/Demoshop.png" /></h1>
+        <p class="important"><strong>Antelope Deprecation Notice:</strong>
+            <br />As of 04/2017 Antelope will be replaced by <a href="../Oryx/oryx.htm">Oryx</a>. You can still use Antelope however, no new development is planned for this component.</p>
+        <p>We use <strong>Antelope </strong>for transpiling/building the assets and to optimize the resulting output.
+</p>
+        <p>
+Read more about <a href="configuration.htm">antelope configuration</a>.
+
+</p>
+        <h2>The Assets Tree
+</h2>
+        <p>Antelope relies on <var>webpack</var>, so we need to understand how the build process works.
+
+</p>
+        <p>In a nutshell, the builder starts reading the assets, by searching for expressions such as:
+
+</p>
+        <ul>
+            <li class="bullet_list"><var>require(...)</var> in <var>javascript</var>;
+</li>
+            <li class="bullet_list"><var>url(...)</var> or <var>src(...)</var> in <var>css</var>;
+</li>
+            <li class="bullet_list"><var>@import '...'</var> in <var>scss</var>;
+</li>
+        </ul>
+        <p>These expressions tell <strong>webpack </strong>that other assets are needed, and that they must be loaded.
+
+</p>
+        <p>This way, crawling files one by one, the builder processes the whole assets tree.
+
+</p>
+        <p>By using <a href="https://webpack.github.io/docs/loaders.html" target="_blank">loaders</a>, webpack knows how to behave depending on the type of the file.
+
+</p>
+        <h2><a name="Entry_points"></a>Entry Points
+</h2>
+        <p>Entry points are the files that <var>webpack </var>starts to build first.
+Automatic loading
+Antelope can automatically find and load entry points.
+
+When you create one (usually a <var>js</var> file), follow this naming convention:
+
+</p>
+        <p><var>&lt;application&gt;-[&lt;theme&gt;-]&lt;name&gt;.entry.js</var><![CDATA[
+]]></p>
+        <ul>
+            <li class="bullet_list"><var>&lt;application&gt;</var> (mandatory): tells Antelope which application to target;
+</li>
+            <li class="bullet_list"><var>&lt;theme&gt;</var> (mandatory, only for Yves): tells Antelope which theme to target;
+</li>
+            <li class="bullet_list"><var>&lt;name&gt;</var> (mandatory): entry point name;
+</li>
+            <li class="bullet_list"><var>.entry</var> suffix: tells Antelope to load this file as an entry point.
+</li>
+        </ul>
+        <p><strong>Examples</strong>:
+
+</p>
+        <p>Yves: <var>yves-demoshop-main.entry.js</var> where yves is the target application, demoshop is the target theme and main is the entry point name;
+</p>
+        <p>Zed: <var>zed-editor.entry.js</var> where zed is the target application and main is the entry point name.
+</p>
+        <p class="important"><strong>Spryker Core entry points for Zed bundles
+
+</strong>
+            <br />In Spryker Core, due to the high number of <MadCap:variable name="General.bundles/modules" /> (and, consequently, of entry points) we have a different naming convention: <var>spryker-zed-&lt;module&gt;-&lt;name&gt;.entry.js</var>.
+</p>
+        <h2>Manual Loading
+</h2>
+        <p>You can manually specify which entry points Antelope must load, by adding them to the <var>webpack </var>configuration file. In this case, feel free to use the naming convention that you prefer.
+</p>
+        <p>
+            <MadCap:relatedTopics style="mc-use-custom-sort-order: true;">
+                <MadCap:relatedTopic src="overview.htm" />
+                <MadCap:relatedTopic src="download-structure-antelope.htm" />
+                <MadCap:relatedTopic src="configuration.htm" />
+                <MadCap:relatedTopic src="development-antelope.htm" />
+                <MadCap:relatedTopic src="cli.htm" />
+                <MadCap:relatedTopic src="build_optimization_antelope.htm" />
+                <MadCap:relatedTopic src="publishing.htm" />
+                <MadCap:relatedTopic src="asset-management-overview.htm" />
+            </MadCap:relatedTopics><![CDATA[
+]]></p>
+    </body>
+</html>

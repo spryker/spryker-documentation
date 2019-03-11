@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Security and Authentication | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This article describes the authorization mechanism used in Spryker, the modules that provide it, as well as user scopes, database tables, and extension points." />
+    </head>
+    <body>
+        <h1>Security and Authentication</h1>
+        <p>When exposing information via Spryker Glue API and integrating with third-party applications, it is essential to protect API endpoints from unauthorized access. For this purpose, Spryker provides an authorization mechanism, using which you can request users to authenticate themselves before accessing a resource. For this purpose, Spryker Glue is shipped with an implementation of the OAuth 2.0 protocol. It allows users to authenticate themselves with their username and password and receive an access token. The token can then be used to access protected resources.</p>
+        <p>The authorization mechanism provided by the Glue is flexible and allows you to define which endpoints specifically require authentication. Usually, protected endpoints include customer wish lists, carts, personal data and the like. Also, you may want to protect additional areas as required by your project. In addition to endpoints, you may require authorization to use specific REST verbs. For example, a certain endpoint can allow retrieving information, but not modifying it. In this case, the <i>GET</i> verb can be allowed for usage without authentication, while the <i>PUT</i>, <i>PATCH</i> and <i>DELETE</i> verbs will require user authentication to use.</p>
+        <h2>How Authentication Works</h2>
+        <p>To authenticate a user, the client must send an authentication request, containing the username and password. If the provided credentials match a valid Spryker user, the API responds with a <b>201</b> response code and a message containing an access token, also known as a <i>bearer token</i>. The token can then be used to access protected API resources. Schematically, the authentication and authorization scheme of Spryker REST API can be represented as follows:</p>
+        <p>
+            <img src="../../Resources/Images/SecurityAndAuthentication/auth-scheme.png" />
+        </p>
+        <p>Access tokens issued by the API have a limited lifetime. When a token is issued, the response message contains not only the access token, but also the duration of its validity, in seconds, and a refresh token. Once the access token expires, the corresponding refresh token can be exchanged for a new pair of access and refresh tokens.</p>
+        <p>If an invalid or expired token is passed when accessing a protected resource, or no token is passed at all, the API will respond with a <b>401 Unauthorized</b> response code. This response code will also be issued if a user is not authorized to access that particular resource. The response body will contain a detailed error message. It is, therefore, the client's responsibility to handle the <i>401</i> response code and error messages correctly.</p>
+        <p>Authentication workflow:</p>
+        <p>
+            <img src="../../Resources/Images/SecurityAndAuthentication/authentication-workflow.PNG" style="max-width: 50%;" />
+        </p>
+        <h2>Modules</h2>
+        <p>Authentication and authorization are provided by the following modules:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">league/oauth2-server</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Third-party OAuth server, <b>PhpLeague Oauth Server</b>, integrated into Spryker</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Oauth</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Integrates <i>PhpLeague Oauth Server</i> with Spryker and also provides the necessary extension points</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">OauthCustomerConnector</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Provides authentication plugins for OAuth modules necessary to validate user credentials and scopes</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">AuthRestApi</td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Provides authentication resources to the REST API</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>User Scopes</h2>
+        <p>The API has scopes are defined for different groups of users. A scope defines which resources specifically users can access.</p>
+        <p class="tip">By default, all Spryker customers are assigned to the <b>customer</b> scope.</p>
+        <p>To identify, which user has made a request, you can use the <i>getUser</i> function of <i>RestRequestInterface</i>, for example:</p><pre><code class="language-PHP line-numbers">class MyResourceHandler implements MyResourceInterface
+    /**
+     * @param \Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface $restRequest
+     *
+     * @return \Generated\Shared\Transfer\CustomerTransfer
+     */
+    protected function getCustomerTransfer(RestRequestInterface $restRequest): CustomerTransfer
+    {
+        return (new CustomerTransfer())-&gt;setCustomerReference($restRequest-&gt;getUser()-&gt;getNaturalIdentifier());
+    }</code></pre>
+        <h2>Endpoint Protection</h2>
+        <p>In addition to user scopes, each endpoint can be secured individually. For this purpose, you need to configure the routing of your Resource Feature Module. The <b>Route Plugins</b> of each module define which verbs are supported by the corresponding endpoint. This is done via the <var>config</var> function of the plugin class. The verbs are passed to it as a set of functions that should be called when the corresponding verb is passed.</p>
+        <p class="info">For details, see <MadCap:annotation MadCap:createDate="2018-12-26T16:26:39.0177173+02:00" MadCap:creator="kravchenko" MadCap:initials="KR" MadCap:comment="add link to https://spryker.atlassian.net/wiki/spaces/DOCS/pages/322011252/Glue+REST+API+[AC-92]+Work+In+Progress" MadCap:editor="kravchenko" MadCap:editDate="2018-12-26T16:26:44.6848112+02:00">Resource Routing</MadCap:annotation>.</p>
+        <p>For each function in the set, the second parameter determines, whether the corresponding verb requires authentication to use (the parameter value is <b>true</b>) or not (the value is <b>false</b>). If the parameter is not passed, the verb requires authentication.</p>
+        <p>In the following example, the <i>PUT</i> and <i>DELETE</i> verbs require authentication, and the <i>GET</i> verb can be called anonymously.</p><pre><code class="language-PHP line-numbers">...
+class MyResourceRoutePlugin extends AbstractPlugin implements ResourceRoutePluginInterface
+{
+    public function configure(ResourceRouteCollectionInterface $resourceRouteCollection): ResourceRouteCollectionInterface
+    {
+        $resourceRouteCollection-&gt;addPost('post')
+            -&gt;addDelete('delete', true)
+            -&gt;addGet('get', false);
+        ...</code></pre>
+        <h2>Database and Extension Points</h2>
+        <p>All data related to API authentication functionality is stored in the following tables:</p>
+        <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Table</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">spy_oauth_access_token</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>Stores all issued tokens.
+</p>
+                        <p>The table is not used for token verification, it is added for audit purposes only.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">spy_oauth_client</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Contains a list of clients that are currently using OAuth, one record for each frontend customer. The <b>is_confidental</b> field identifies whether a specific client must provide a password.</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">spy_oauth_scope</td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Stores user scopes.</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>The OAuth module also provides the following extension points:</p>
+        <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Extension Point</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Interface</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">User provider plugins	</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>getUserProviderPlugins()</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">\Spryker\Zed\Oauth\Dependency\Plugin\OauthUserProviderPluginInterfacen</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Scope provider plugins</td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">getScopeProviderPlugins()</td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">\Spryker\Zed\Oauth\Dependency\Plugin\OauthScopeProviderPluginInterface</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p MadCap:conditions="General.Hidden Comment"><b>See also:</b>
+        </p>
+        <ul>
+            <li MadCap:conditions="General.Hidden Comment"><a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/563019879/Authentication+and+Authorization">Authentication and Authorization</a>
+            </li>
+            <li MadCap:conditions="General.Hidden Comment"><a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/255492298/How+To+Implement+an+API+Resource">How To Implement an API Resource</a>
+            </li>
+            <li MadCap:conditions="General.Hidden Comment"><a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/322011252/Glue+REST+API+[AC-92]+Work+In+Progress">Glue REST API [AC-92] Work In Progress</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec 13, 2018</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Volodymyr Volkov</MadCap:conditionalText></p>
+    </body>
+</html>

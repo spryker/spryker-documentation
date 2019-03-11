@@ -1,0 +1,230 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Configure Search Features <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>In this section you’ll learn how to configure faceted navigation, filters, pagination and sorting, so all the important search features that are provided by the <var>Search</var> module.</p>
+        <p>This configuration is only relevant if you enable the three query expanders and result formatters mentioned above.</p>
+        <p>Indirectly, they all require you to provide an instance of <var>\Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface</var> by <var>\Spryker\Client\Search\SearchDependencyProvider::createSearchConfigPlugin()</var> method. So first of all you’ll need to implement this interface.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Catalog\Plugin\Config;
+
+use Spryker\Client\Kernel\AbstractPlugin;
+use Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface;
+
+/**
+ * @method \Spryker\Client\Catalog\CatalogFactory getFactory()
+ */
+class CatalogSearchConfigBuilder extends AbstractPlugin implements SearchConfigBuilderInterface
+{
+    // ...
+}</code></pre>
+        <p>The first method we’ll implement in this interface is <var>buildFacetConfig()</var> where we configure our facet filters.</p>
+        <p>The goal here is to create <var>FacetConfigTransfer</var> instances with some data and push them for the <var>$facetConfigBuilder</var>.</p>
+        <p>Let’s assume that previously in our <var>PageMapInterface</var> we mapped an integer facet which we called “price” with some data (note the use of <var>addIntegerFacet()</var> in the example above), so now we would like to add a price range filter for that data.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Catalog\Plugin\Config;
+
+use Generated\Shared\Transfer\FacetConfigTransfer;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+// ...
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface $facetConfigBuilder
+     *
+     * @return void
+     */
+    public function buildFacetConfig(FacetConfigBuilderInterface $facetConfigBuilder)
+    {
+        $priceFacet = (new FacetConfigTransfer())
+            -&gt;setName('price')
+            -&gt;setParameterName('price')
+            -&gt;setFieldName(PageIndexMap::INTEGER_FACET)
+            -&gt;setType(FacetConfigBuilder::TYPE_PRICE_RANGE);
+
+        $facetConfigBuilder-&gt;addFacet($priceFacet);
+    }
+
+// ...</code></pre>
+        <p>You could create and add as many <var>FacetConfigTransfers</var> as you need. Let’s analyze this transfer’s options below:</p>
+        <ul>
+            <li class="bullet_list"><strong>setName()</strong>: <i>Required</i> field, the name of the target data to filter by.</li>
+            <li class="bullet_list"><strong>setParameterName()</strong>: <i>Required</i> field, the name that will be used in the request when the filter is used.</li>
+            <li class="bullet_list"><strong>setFieldName()</strong>: <i>Required</i> field, the name of the field of the page mapping type where the target data is stored.</li>
+            <li class="bullet_list"><strong>setType()</strong>: <i>Required</i> field, the type of the facet. Currently available options: “enumeration”, “bool”, “range”, “price_range”, “category”.</li>
+            <li class="bullet_list"><strong>setIsMultiValued()</strong>: <i>Optional</i> field, if set to <var>true</var> multiple values can be filtered with logical OR comparison.</li>
+            <li class="bullet_list"><strong>setSize()</strong>: <i>Optional</i> field, the maximum number of filter options to be returned (0 means unlimited). Elasticsearch returns 10 options by default.</li>
+            <li class="bullet_list"><strong>setValueTransformer()</strong>: <i>Optional</i> field, to provide a value transformer plugin by defining the Fully Qualified Name of the plugin.
+                This plugin needs to implement <code>\Spryker\Client\Search\Dependency\Plugin\FacetSearchResultValueTransformerPluginInterface</code>. It's used to transform each filter value
+                from their stored values (for example IDs) to something readable (representing name) for users.</li>
+        </ul>
+        <p>The next method we’ll implement is the <var>buildSortConfig()</var>, where we configure our sorting options. Let’s assume we’d like to sort by name and price and we’ve already added them when we implemented <var>PageMapInterface</var> (note the use of <var>addStringSort()</var> and <var>addIntegerSort()</var> in the example above).</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Catalog\Plugin\Config;
+
+use Generated\Shared\Transfer\SortConfigTransfer;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+// ...
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return void
+     */
+    public function buildSortConfig(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $this
+            -&gt;addAscendingNameSort($sortConfigBuilder)
+            -&gt;addDescendingNameSort($sortConfigBuilder)
+            -&gt;addAscendingPriceSort($sortConfigBuilder)
+            -&gt;addDescendingPriceSort($sortConfigBuilder);
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return $this
+     */
+    protected function addAscendingNameSort(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $ascendingNameSortConfig = (new SortConfigTransfer())
+            -&gt;setName('name')
+            -&gt;setParameterName('name_asc')
+            -&gt;setFieldName(PageIndexMap::STRING_SORT);
+
+        $sortConfigBuilder-&gt;addSort($ascendingNameSortConfig);
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return $this
+     */
+    protected function addDescendingNameSort(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $ascendingNameSortConfig = (new SortConfigTransfer())
+            -&gt;setName('name')
+            -&gt;setParameterName('name_desc')
+            -&gt;setFieldName(PageIndexMap::STRING_SORT)
+            -&gt;setIsDescending(true);
+
+        $sortConfigBuilder-&gt;addSort($ascendingNameSortConfig);
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return $this
+     */
+    protected function addAscendingPriceSort(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $priceSortConfig = (new SortConfigTransfer())
+            -&gt;setName('price')
+            -&gt;setParameterName('price_asc')
+            -&gt;setFieldName(PageIndexMap::INTEGER_SORT);
+
+        $sortConfigBuilder-&gt;addSort($priceSortConfig);
+
+        return $this;
+    }
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\SortConfigBuilderInterface $sortConfigBuilder
+     *
+     * @return $this
+     */
+    protected function addDescendingPriceSort(SortConfigBuilderInterface $sortConfigBuilder)
+    {
+        $priceSortConfig = (new SortConfigTransfer())
+            -&gt;setName('price')
+            -&gt;setParameterName('price_desc')
+            -&gt;setFieldName(PageIndexMap::INTEGER_SORT)
+            -&gt;setIsDescending(true);
+
+        $sortConfigBuilder-&gt;addSort($priceSortConfig);
+
+        return $this;
+    }
+
+// ...</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Similar to facet filters, here you can create and add as many <var>SortConfigTransfers</var> as you need. The transfer’s options are the following:</p>
+        <ul>
+            <li class="bullet_list"><strong>setName()</strong>: <i>Required</i> field, the name of the target data to sort by.</li>
+            <li class="bullet_list"><strong>setParameterName()</strong>: <i>Required</i> field, the name that will be used in the request when the sort is used.</li>
+            <li class="bullet_list"><strong>setFieldName()</strong>: <i>Required</i> field, the name of the field of the page mapping type where the target data is stored..</li>
+            <li class="bullet_list"><strong>setIsDescending()</strong>: <i>Optional</i> field, the sort direction is descending when this is set to true otherwise the sort direction is ascending by default.</li>
+        </ul>
+        <p class="info"><strong>Sort by relevance</strong>
+            <br />Note that Elasticsearch is by default sorting by relevance. The cost of each document is calculated based on your search query.</p>
+        <p>The last method we’ll need to implement in the <var>CatalogSearchConfigBuilder</var> is the <var>buildPaginationConfig()</var> to configure the pagination of the results.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Catalog\Plugin\Config;
+
+use Generated\Shared\Transfer\PaginationConfigTransfer;
+use Spryker\Client\Search\Dependency\Plugin\FacetConfigBuilderInterface;
+// ...
+
+    const DEFAULT_ITEMS_PER_PAGE = 6;
+    const VALID_ITEMS_PER_PAGE_OPTIONS = [6, 18, 36];
+
+    /**
+     * @param \Spryker\Client\Search\Dependency\Plugin\PaginationConfigBuilderInterface $paginationConfigBuilder
+     *
+     * @return void
+     */
+    public function buildPaginationConfig(PaginationConfigBuilderInterface $paginationConfigBuilder)
+    {
+        $paginationConfigTransfer = (new PaginationConfigTransfer())
+            -&gt;setParameterName('page')
+            -&gt;setItemsPerPageParameterName('ipp')
+            -&gt;setDefaultItemsPerPage(static::DEFAULT_ITEMS_PER_PAGE)
+            -&gt;setValidItemsPerPageOptions(static::VALID_ITEMS_PER_PAGE_OPTIONS);
+
+        $paginationConfigBuilder-&gt;setPagination($paginationConfigTransfer);
+    }
+
+// ...</code></pre>
+        <p>This time we need to create only one instance from <var>PaginationConfigTransfer</var> and set it in the <var>$paginationConfigBuilder</var>. The transfer’s options are the following:</p>
+        <ul>
+            <li class="bullet_list"><strong>setParameterName()</strong>: <i>Required</i> field, the name that will be used in the request for the current page.</li>
+            <li class="bullet_list"><strong>setItemsPerPageParameterName()</strong>: <i>Optional</i> field, if defined this name will be used in the request for changing the items per page parameter.</li>
+            <li class="bullet_list"><strong>setDefaultItemsPerPage()</strong>: <i>Optional</i> field, the value of the default items per page.</li>
+            <li class="bullet_list"><strong>setValidItemsPerPageOptions()</strong>: <i>Optional</i> field, an array of valid items per page options.</li>
+        </ul>
+        <p>After fully implementing the config builder plugin, we’ll need to provide it on project level in the <var>SearchDependencyProvider</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Search;
+
+use Pyz\Client\Catalog\Plugin\Config\CatalogSearchConfigBuilder;
+use Spryker\Client\Kernel\Container;
+use Spryker\Client\Search\SearchDependencyProvider as SprykerSearchDependencyProvider;
+
+class SearchDependencyProvider extends SprykerSearchDependencyProvider
+{
+
+    /**
+     * @param \Spryker\Client\Kernel\Container $container
+     *
+     * @return \Spryker\Client\Search\Dependency\Plugin\SearchConfigBuilderInterface
+     */
+    protected function createSearchConfigBuilderPlugin(Container $container)
+    {
+        return new CatalogSearchConfigBuilder();
+    }
+
+}</code></pre>
+        <p>After you provided the instance of your search configuration builder, the <i>expander</i> and <i>result formatter</i> plugins will start to generate data next time you’ll run a search query. This tutorial doesn’t cover how to display the filters, but you can find examples using them in our Demoshop.</p>
+    </body>
+</html>

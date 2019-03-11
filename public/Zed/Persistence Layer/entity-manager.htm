@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Entity Manager</h1>
+        <p>
+    Since Kernel version 3.2, it is possible to create an entity manager class in your persistence layer.
+It will be responsible for saving, updating and deleting data. Using the class, you can separate data from persistence details (Propel).</p>
+        <p>
+It is important to not overuse the entity manager or repository for your logic, 
+    these two new concepts should only be concerned about data persistence for a entities. Combining multiple calls, 
+    making decisions should be done in business layer by delegating calls to corresponding entities/repositories. 
+    The side effect of not doing it, will be the business logic creep to persistence layer which will make change hard.
+    </p>
+        <p>
+  		As an example on using an entity manager, see the <a href="https://github.com/spryker/blog-example" target="_blank" title="Access Blog module" alt="Access Blog module">Blog module</a>.
+			</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Entity Transfers</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+    With the Publish and Synchronize feature we have added a new transfer generation for EntityTransfers. The EntityTransfers are direct representation of SQL tables,
+    EntityTransfer has all properties and relations defined, also it holds FQCN to the Propel entity it is mapped to. This FQCN is used when mapping entity when data is persisted.
+    Names of Entity Transfers start with <var>Spy</var>, followed by the table name, and then the <var>EntityTransfer</var> suffix. For example,  <var>SpyBlogEntityTransfer</var> would map to SpyBlog Propel entity.</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AbstractEntityManager Class</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+
+    Abstract entity manager has one public helper method <var>save()</var> to save EntityTransfer trees.
+    If you call <var>$this-&gt;save(SpyBlogEntityTransfer)</var> on your module, EntityManager will try to save the whole tree in a single transaction,
+    and you will get back another transfer back with primary foreign keys populated.
+
+    Example implementation:
+	<pre><code class="language-PHP line-numbers">
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+
+/**
+* @method \Spryker\Zed\Blog\Persistence\BlogPersistenceFactory getFactory()
+*/
+class BlogEntityManager extends AbstractEntityManager implements BlogEntityManagerInterface, EntityManagerInterface
+{
+    /**
+    *
+    * @api
+    *
+    * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogEntityTransfer
+    *
+    * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
+    */
+    public function saveBlog(SpyBlogEntityTransfer $blogEntityTransfer)
+    {
+      return $this-&gt;save($blogEntityTransfer);
+    }
+}
+    	</code></pre>
+
+    It's good practice to include saver method for each saved entity, even it can be automatically mapped, as this way you define contracts.
+	</p>
+                <p>
+    Deletion would be done the same way you normally do with Propel.
+<pre><code class="language-PHP line-numbers">
+use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
+
+/**
+* @method \Spryker\Zed\Blog\Persistence\BlogPersistenceFactory getFactory()
+*/
+class BlogEntityManager extends AbstractEntityManager implements BlogEntityManagerInterface, EntityManagerInterface
+{
+   /**
+   * @api
+   *
+   * @param int $idBlog
+   */
+   public function deleteBlogById($idBlog)
+   {
+     $this-&gt;getFactory()
+       -&gt;createBlogQuery()
+       -&gt;filterByIdBlog($idBlog)
+       -&gt;delete();
+   }
+ }
+</code></pre></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Entity Manager Availability</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+    The main idea is to keep entity manager inside its own module, and have control over how data is persisted. It cannot be located by Spryker dependency locator. So it cannot be used by other modules.
+    If you need to save from another module, you have to provide facade method.
+
+    The entity manager is available in the same module as Factories and Facade, and can be accessed by calling <var>getEntityManager</var>. Also you need to defined autocomplete namespace the same wast as for other magic classes.
+    <pre><code class="language-PHP line-numbers">
+use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
+
+/**
+* @method \Spryker\Zed\Blog\Persistence\BlogRepositoryInterface getRepository()
+* @method \Spryker\Zed\Blog\Persistence\BlogEntityManagerInterface getEntityManager()
+*/
+class BlogBusinessFactory extends AbstractBusinessFactory
+{
+  ../facade methods
+}
+    </code></pre></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Transaction Handling</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+  If there is a need to make your whole operation atomic, and you need to control it, you can include a transaction trait in your business class.</p>
+                <p>
+  			  The following transaction handler implements a generic interface and removes dependency on Propel from <var>Business</var>.
+			    <pre><code class="language-PHP line-numbers">
+namespace Spryker\Zed\Blog\Business\Model;
+
+use Spryker\Zed\Kernel\Persistence\EntityManager\TransactionTrait;
+
+class Blog
+{
+  use TransactionTrait;
+
+  /**
+  * @param \Generated\Shared\Transfer\SpyBlogEntityTransfer $blogTransfer
+  *
+  * @return \Generated\Shared\Transfer\SpyBlogEntityTransfer
+  */
+  public function save(SpyBlogEntityTransfer $blogTransfer)
+  {
+    return $this-&gt;getTransactionHandler()-&gt;handleTransaction(function() use($blogTransfer) {
+
+      // Everything in this blog will be done in a single transaction.
+
+      return $this-&gt;executeSaveBlogTransaction($blogTransfer);
+    });
+  }
+}
+  </code></pre></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>Related Spryks</h2>
+        <p>You might use the following definitions to generate related code:</p>
+        <ul>
+            <li>Add Zed Persistence Entity Manager</li>
+            <li>Add Zed Persistence Entity Manager Interface</li>
+            <li>Add Zed Persistence Entity Manager Interface Method</li>
+            <li>Add Zed Persistence Entity Manager Method</li>
+        </ul>
+        <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="database_overview.htm">Database Overview</a>
+            </li>
+            <li><a href="database_schema_definition.htm">Defining Database Schema</a>
+            </li>
+            <li><a href="entity.htm">Learn about Entities and their usage</a>
+            </li>
+            <li><a href="entity.htm">Saving Entities with transactions</a>
+            </li>
+            <li><a href="repository.htm">Learn about Repository class and how to use it
+				</a>
+            </li>
+            <li><a href="query_container.htm">Implementing and using a query container</a>
+            </li>
+            <li><a href="query_objects.htm">Creating query objects</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Mar. 21st, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Aurimas Ličkus</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

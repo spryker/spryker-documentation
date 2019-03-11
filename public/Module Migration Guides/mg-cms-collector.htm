@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Demoshop,Spryker.B2C,Spryker.B2B">
+    <head><title>Migration Guide - CMS Collector</title>
+    </head>
+    <body>
+        <h1><a name="Migration_Guide"></a>Migration Guide - CMS Collector <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <h2>Upgrading from Version 1.* to Version 2.*</h2>
+        <li>Upgrade <var>spryker/cms</var> module to at least 6.2 version. Check out the <a href="mg-cms.htm">CMS migration guide</a> for additional help.</li>
+        <li>Upgrade <var>spryker/cms-content-widget</var> module to at least 1.1 version if you use <var>CmsPageCollectorParameterMapExpanderPlugin</var> plugin.</li>
+        <li>CMS page data expander plugins are applied by the <var>spryker/cms</var> module instead of the <var>spryker/cms-collector</var> module:</li>
+        <ul>
+            <li>Amend your custom CMS page collector data expander plugins to use <var>CmsPageDataExpanderPluginInterface</var> plugin interface instead of the deprecated <var>CmsPageCollectorDataExpanderPluginInterface</var> plugin interface.</li>
+            <li>If you use <var>CmsPageCollectorParameterMapExpanderPlugin</var> plugin, replace it with <var>CmsPageParameterMapExpanderPlugin</var> plugin.</li>
+            <li>Register your CMS page data expander plugins to <var>spryker/cms</var> module in the <var>CmsDependencyProvider</var> dependency provider</li>
+            Example of CMS data expander plugin registration:
+               <pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Cms;
+
+use Spryker\Zed\Cms\CmsDependencyProvider as SprykerCmsDependencyProvider;
+use Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageDataExpander\CmsPageParameterMapExpanderPlugin;
+
+class CmsDependencyProvider extends SprykerCmsDependencyProvider
+{
+    /**
+     * @return \Spryker\Zed\Cms\Dependency\Plugin\CmsPageDataExpanderPluginInterface[]
+     */
+    protected function getCmsPageDataExpanderPlugins()
+    {
+        return [
+            new CmsPageParameterMapExpanderPlugin(),
+        ];
+    }
+}
+                        </code></pre><li>Remove deprecated CMS page collector data expander plugin registrations from <var>spryker/cms-collector</var> module's dependency provider in <var>CmsCollectorDependencyProvider</var>.</li></ul>
+        <p>&#160;</p>
+        <p><b>See more:</b>
+        </p>
+        <ul>
+            <li><a href="mg-cms-block.htm#here">Learn how to migrate CMS Block</a>
+            </li>
+            <li>Learn more about CMS Widget</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Sep. 22, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner </i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

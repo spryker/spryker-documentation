@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop,Spryker.B2C">
+    <head><title>Computop - API details</title>
+    </head>
+    <body>
+        <h1>Computop API <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Authorization Call:</h2>
+        <ul>
+            <li>
+        Authorize money.
+    </li>
+            <li>
+        There is no partial authorization. Please make one API call to make authorization for all items in the order.
+    </li>
+            <li>
+        It is not possible to Authorize a higher amount than in the ORDER.
+    </li>
+        </ul>
+        <h2>Inquire Call:</h2>
+        <p>Status inquiries within Paygate give detailed information about the amounts that are actually authorized, captured or credited. Especially before executing reversals via the interface reverse.aspx it is recommended to check the transaction status with inquire.aspx because Reverse.aspx re-verses not only authorizations but ALWAYS THE LAST TRANSACTION STEP. </p>
+        <h2>Reverse Call:</h2>
+        <ul>
+            <li>
+        Reverse.aspx does not only reverse authorizations, but also any LAST TRANSACTION STAGE! If the last transaction was a capture, Reverse.aspx initiates the reverse, e.g. a credit. Therefore, the utmost caution is urged. Use it at your own risk. We recommend checking the transaction status with Inquire.aspx before using Reverse.aspx.
+    </li>
+            <li>
+        Use it just after "Inquire" call if it returns the previous action as "Authorization".
+    </li>
+        </ul>
+        <h2>Capture Call:</h2>
+        <ul>
+            <li>
+        Capture money.
+    </li>
+            <li>
+        Shipment price is captured with the first capture request.
+    </li>
+            <li>
+        Please contact the helpdesk, if you want to capture amounts &lt; 100 (the smallest currency unit).
+    </li>
+            <li>
+        It is not possible to capture a higher amount than in the ORDER or Auth.
+    </li>
+        </ul>
+        <h2>Refund Call:</h2>
+        <ul>
+            <li>
+        Refund money.
+    </li>
+            <li>
+        The merchant has the chance to refund more money to the customer than captured.
+    </li>
+            <li>
+        Shipment price will be refunded with the last possible refund request.
+
+        If You do not need to refund shipment price:
+				<ul><li>Create <var>Pyz\Zed\Computop\ComputopConfig</var>. </li><li>Extend it from original <var>SprykerEco\Zed\Computop\ComputopConfig</var>. </li><li>Update <var>isRefundShipmentPriceEnabled</var> method (set up "false"). </li></ul></li>
+        </ul>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="computop.htm">Get a general idea about Computop</a>
+            </li>
+            <li><a href="computop-oms-details.htm">Get acquainted with Computop OMS functioning</a><![CDATA[
+            ]]></li>
+            <li><a href="computop-credit-card.htm">Configure Credit Card payment method for Computop</a><![CDATA[
+            ]]></li>
+            <li><a href="computop-direct-debit.htm">Configure Direct Debit payment method for Computop
+            
+</a>
+            </li>
+            <li><a href="computop-easy-credit.htm">Configure Easy Credit payment method for Computop</a><![CDATA[
+            ]]></li>
+            <li><a href="computop-ideal.htm">Configure iDeal payment method for Computop
+            
+</a>
+            </li>
+            <li><a href="computop-paydirekt.htm">Configure Paydirekt payment method for Computop
+            
+</a>
+            </li>
+            <li><a href="computop-paynow.htm">Configure PayNow payment method for Computop
+            </a>
+            </li>
+            <li><a href="computop-paypal.htm">Configure PayPal payment method for Computop
+            
+</a>
+            </li>
+            <li><a href="computop-sofort.htm">Configure Sofort payment method for Computop
+            
+</a>
+            </li>
+            <li><a href="computop-crif.htm">Computop CRIF</a><![CDATA[           
+			]]></li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb. 20th, 2018</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Aleksey Kotsuba</MadCap:conditionalText></p>
+    </body>
+</html>

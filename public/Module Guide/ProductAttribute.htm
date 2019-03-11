@@ -1,0 +1,1561 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:searchable="False">
+    <head>
+    </head>
+    <body>
+        <h1>ProductAttribute</h1>
+        <p>ProductAttribute module is for managing product attributes defined in the JSON fields as well as attribute meta information.</p>
+        <p>&#160;</p>
+        <table width="100%" style="margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" cellspacing="0" border="0" class="TableStyle-PatternedRows2">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Latest version: <b>1.1.1</b></td>
+                    <td rowspan="2" style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://github.com/spryker/product-attribute/releases/tag/1.1.1" target="_blank">View on GitHub <img src="../Resources/Images/view-on-github.png" /></a>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Last update: <b>19 Nov 2018</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Type: <b>Core Splitted</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Group: <b>Functional</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="currentVersion">
+            <h2 id="facade">API (Facades)</h2>
+            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody id="facade_body">
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAbstractAttributeValues</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Returns product abstract attributes with metadata info</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductAttributeValues</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Returns list of all product concrete attributes</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getMetaAttributesForProductAbstract</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getMetaAttributesForProduct</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>suggestKeys</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Returns list of product keys suggested based on $searchText, super attributes are ignored</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>saveAbstractAttributes</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Save product abstract attributes</p>
+                                    <p>$attributes format</p>
+                                    <p>[</p>
+                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                    <p>]</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>saveConcreteAttributes</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Save product concrete attributes</p>
+                                    <p>$attributes format</p>
+                                    <p>[</p>
+                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                    <p>]</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>extractKeysFromAttributes</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Return list of unique attribute keys</p>
+                                    <p>$attributes format</p>
+                                    <p>[</p>
+                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                    <p>]</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>extractValuesFromAttributes</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Return list of unique attribute values</p>
+                                    <p>$attributes format</p>
+                                    <p>[</p>
+                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                    <p>]</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>createProductManagementAttribute</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Searches for an existing product attribute key entity by the provided key in database or create it if does not exist</p>
+                                </li>
+                                <li>
+                                    <p>Creates a new product management attribute entity with the given data and the found/created attribute key entity</p>
+                                </li>
+                                <li>
+                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                </li>
+                                <li>
+                                    <p>Saves predefined product attribute values if provided</p>
+                                </li>
+                                <li>
+                                    <p>Returns a transfer that also contains the ids of the created entities</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>updateProductManagementAttribute</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Searches for an existing product attribute key entity in database by the provided key or create it if does not exist</p>
+                                </li>
+                                <li>
+                                    <p>Updates an existing product management attribute entity by id with the given data and the found/created attribute key entity</p>
+                                </li>
+                                <li>
+                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                </li>
+                                <li>
+                                    <p>Saves predefined product attribute values if provided</p>
+                                </li>
+                                <li>
+                                    <p>Removes old predefined product attribute values which were persisted earlier but are not used any more</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductManagementAttribute</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Reads a product management attribute entity from the database and returns a fully hydrated transfer representation</p>
+                                </li>
+                                <li>
+                                    <p>Return null if the entity is not found by id</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>translateProductManagementAttribute</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Saves product attribute key translation to the glossary</p>
+                                </li>
+                                <li>
+                                    <p>Saves predefined attribute value translations if provided</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeValueSuggestionsCount</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Gets total count of attribute suggestions</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getAttributeValueSuggestions</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Reads available attributes and gives suggestions by specified parameters</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeAvailableTypes</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Provides available (supported) attribute types (e.g. number, text, date).</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>findAttributeTranslationByKey</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Finds attribute and its translation for passed locale</p>
+                                </li>
+                                <li>
+                                    <p>Returns NULL in case the combination is not found</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>suggestUnusedAttributeKeys</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted</p>
+                                    <p>product management attribute list</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAttributeCollection</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Returns list of ALL product management attributes</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getUniqueSuperAttributesFromConcreteProducts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Retrieve a list of unique super attributes from concrete product transfers.</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 id="require">Dependencies:</h2>
+            <ul id="require_list">
+                <li><b>PHP</b> &gt;=7.1</li>
+                <li><b><MadCap:xref href="Glossary.htm">Glossary</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Locale.htm">Locale</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Product.htm">Product</MadCap:xref></b> ^5.2.0 || ^6.0.0</li>
+                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.2.0</li>
+                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+            </ul>
+            <h2 id="suggest">Suggested Installations:</h2>
+            <ul id="suggest_list">
+            </ul>
+        </p>
+        <MadCap:dropDown id="previousVersionsHead">
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Previous Versions</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p id="previousVersions">
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.1.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAbstractAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns product abstract attributes with metadata info</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of all product concrete attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getMetaAttributesForProductAbstract</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getMetaAttributesForProduct</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>suggestKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of product keys suggested based on $searchText, super attributes are ignored</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>saveAbstractAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product abstract attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>saveConcreteAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product concrete attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>extractKeysFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute keys</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>extractValuesFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute values</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>createProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity by the provided key in database or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a new product management attribute entity with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns a transfer that also contains the ids of the created entities</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>updateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity in database by the provided key or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Updates an existing product management attribute entity by id with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Removes old predefined product attribute values which were persisted earlier but are not used any more</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads a product management attribute entity from the database and returns a fully hydrated transfer representation</p>
+                                                </li>
+                                                <li>
+                                                    <p>Return null if the entity is not found by id</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>translateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Saves product attribute key translation to the glossary</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined attribute value translations if provided</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeValueSuggestionsCount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Gets total count of attribute suggestions</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getAttributeValueSuggestions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads available attributes and gives suggestions by specified parameters</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeAvailableTypes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Provides available (supported) attribute types (e.g. number, text, date).</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>findAttributeTranslationByKey</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Finds attribute and its translation for passed locale</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns NULL in case the combination is not found</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>suggestUnusedAttributeKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted</p>
+                                                    <p>product management attribute list</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAttributeCollection</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of ALL product management attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getUniqueSuperAttributesFromConcreteProducts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Retrieve a list of unique super attributes from concrete product transfers.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="Glossary.htm">Glossary</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Locale.htm">Locale</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Product.htm">Product</MadCap:xref></b> ^5.2.0 || ^6.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.2.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.2</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAbstractAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns product abstract attributes with metadata info</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of all product concrete attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getMetaAttributesForProductAbstract</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getMetaAttributesForProduct</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>suggestKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of product keys suggested based on $searchText, super attributes are ignored</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>saveAbstractAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product abstract attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>saveConcreteAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product concrete attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>extractKeysFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute keys</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>extractValuesFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute values</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>createProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity by the provided key in database or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a new product management attribute entity with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns a transfer that also contains the ids of the created entities</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>updateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity in database by the provided key or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Updates an existing product management attribute entity by id with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Removes old predefined product attribute values which were persisted earlier but are not used any more</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads a product management attribute entity from the database and returns a fully hydrated transfer representation</p>
+                                                </li>
+                                                <li>
+                                                    <p>Return null if the entity is not found by id</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>translateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Saves product attribute key translation to the glossary</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined attribute value translations if provided</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeValueSuggestionsCount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Gets total count of attribute suggestions</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getAttributeValueSuggestions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads available attributes and gives suggestions by specified parameters</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeAvailableTypes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Provides available (supported) attribute types (e.g. number, text, date).</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>findAttributeTranslationByKey</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Finds attribute and its translation for passed locale</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns NULL in case the combination is not found</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>suggestUnusedAttributeKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted</p>
+                                                    <p>product management attribute list</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAttributeCollection</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of ALL product management attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="Glossary.htm">Glossary</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Locale.htm">Locale</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Product.htm">Product</MadCap:xref></b> ^5.2.0 || ^6.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.2.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAbstractAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns product abstract attributes with metadata info</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of all product concrete attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getMetaAttributesForProductAbstract</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getMetaAttributesForProduct</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>suggestKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of product keys suggested based on $searchText, super attributes are ignored</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>saveAbstractAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product abstract attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>saveConcreteAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product concrete attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>extractKeysFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute keys</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>extractValuesFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute values</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>createProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity by the provided key in database or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a new product management attribute entity with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns a transfer that also contains the ids of the created entities</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>updateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity in database by the provided key or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Updates an existing product management attribute entity by id with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Removes old predefined product attribute values which were persisted earlier but are not used any more</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads a product management attribute entity from the database and returns a fully hydrated transfer representation</p>
+                                                </li>
+                                                <li>
+                                                    <p>Return null if the entity is not found by id</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>translateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Saves product attribute key translation to the glossary</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined attribute value translations if provided</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeValueSuggestionsCount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Gets total count of attribute suggestions</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getAttributeValueSuggestions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads available attributes and gives suggestions by specified parameters</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeAvailableTypes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Provides available (supported) attribute types (e.g. number, text, date).</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>findAttributeTranslationByKey</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Finds attribute and its translation for passed locale</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns NULL in case the combination is not found</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>suggestUnusedAttributeKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted</p>
+                                                    <p>product management attribute list</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAttributeCollection</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of ALL product management attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="Glossary.htm">Glossary</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Locale.htm">Locale</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Product.htm">Product</MadCap:xref></b> ^5.2.0 || ^6.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.2.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAbstractAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns product abstract attributes with metadata info</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductAttributeValues</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of all product concrete attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getMetaAttributesForProductAbstract</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getMetaAttributesForProduct</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of attributes metadata based on product abstract attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>suggestKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of product keys suggested based on $searchText, super attributes are ignored</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>saveAbstractAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product abstract attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>saveConcreteAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Save product concrete attributes</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>extractKeysFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute keys</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>extractValuesFromAttributes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Return list of unique attribute values</p>
+                                                    <p>$attributes format</p>
+                                                    <p>[</p>
+                                                    <p>[_] =&gt; [key=&gt;value, key2=&gt;value2]</p>
+                                                    <p>[46] =&gt; [key=&gt;value]</p>
+                                                    <p>[66] =&gt; [key3=&gt;value3, key5=value5]</p>
+                                                    <p>]</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>createProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity by the provided key in database or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a new product management attribute entity with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns a transfer that also contains the ids of the created entities</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>updateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Searches for an existing product attribute key entity in database by the provided key or create it if does not exist</p>
+                                                </li>
+                                                <li>
+                                                    <p>Updates an existing product management attribute entity by id with the given data and the found/created attribute key entity</p>
+                                                </li>
+                                                <li>
+                                                    <p>Creates a glossary key for the product attribute key with the configured prefix if does not exist already</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined product attribute values if provided</p>
+                                                </li>
+                                                <li>
+                                                    <p>Removes old predefined product attribute values which were persisted earlier but are not used any more</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads a product management attribute entity from the database and returns a fully hydrated transfer representation</p>
+                                                </li>
+                                                <li>
+                                                    <p>Return null if the entity is not found by id</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>translateProductManagementAttribute</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Saves product attribute key translation to the glossary</p>
+                                                </li>
+                                                <li>
+                                                    <p>Saves predefined attribute value translations if provided</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeValueSuggestionsCount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Gets total count of attribute suggestions</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getAttributeValueSuggestions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads available attributes and gives suggestions by specified parameters</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getAttributeAvailableTypes</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Provides available (supported) attribute types (e.g. number, text, date).</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>findAttributeTranslationByKey</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Finds attribute and its translation for passed locale</p>
+                                                </li>
+                                                <li>
+                                                    <p>Returns NULL in case the combination is not found</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>suggestUnusedAttributeKeys</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns a filtered list of keys that exists in the persisted product attribute key list but not in the persisted</p>
+                                                    <p>product management attribute list</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getProductAttributeCollection</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Returns list of ALL product management attributes</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Glossary.htm">Glossary</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Locale.htm">Locale</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Product.htm">Product</MadCap:xref></b> ^5.2.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.2.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p><i>Last review date: 20 Nov 2018<MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><b>Do not edit this file - generated automatically</b></MadCap:conditionalText></i>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,158 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Demoshop,Spryker.B2C,Spryker.B2B">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Environment Configuration <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>The environment configuration was restructured to solve a couple of inconsistencies and dependencies within the configuration itself. To untangle some of the configuration options it was necessary to introduce a few new configuration constants. Although the Spryker core should be fully backward compatible it is advised to update project implementations to make use of the new configuration options.</p>
+        <p>Along with the introduction of the new configuration constants, a couple of unused ones have been marked as deprecated.</p>
+        <h2>HOST vs. BASE_URL</h2>
+        <p>The configuration contained some inconsistencies in defining a host for _Yves_ and _Zed_ and how these got reused to define other configuration options. It was not obvious if these configuration values contained a URL (including schema and/or ports) or a plain host. To decouple this, a set of new configuration constants has been added and the existing <var>HOST_*</var> configuration options have been reused to match their actual purpose.</p>
+        <h3>_HOST_YVES_ and _HOST_ZED_</h3>
+        <p>They should only define the host for accessing either _Yves_ or _Zed_. They should not include any scheme and port definitions. This makes for reuse for e.g. setting a cookie domain.</p>
+        <h3>_BASE_URL_YVES_ and _BASE_URL_SSL_YVES_</h3>
+        <p>These two define the base URLs (including scheme and port) for accessing _Yves_. They can be derived from <var>HOST_YVES</var>, e.g.:</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+use Spryker\Shared\Application\ApplicationConstants
+// ...
+$config[ApplicationConstants::BASE_URL_YVES] = sprintf(
+    'http://%s:8080',
+    $config[ApplicationConstants::HOST_YVES]
+);</code></pre>
+        <h3>_BASE_URL_ZED_ and _BASE_URL_SSL_ZED_</h3>
+        <p>Similar to the two constants above, these two define the base URLs for accessing _Zed_. They should include the scheme and optionally port.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+use Spryker\Shared\Application\ApplicationConstants
+// ...
+$config[ApplicationConstants::BASE_URL_ZED] = sprintf(
+    'http://%s:8081',
+    $config[ApplicationConstants::HOST_ZED]
+);</code></pre>
+        <h3>_BASE_URL_STATIC_ASSETS_, _BASE_URL_STATIC_MEDIA_, _BASE_URL_SSL_STATIC_ASSETS_, and _BASE_URL_SSL_STATIC_MEDIA_</h3>
+        <p>These ones replace the existing, and now deprecated, constants <var>HOST_STATIC_ASSETS</var>, <var>HOST_STATIC_MEDIA</var>, <var>HOST_SSL_STATIC_ASSETS</var>, and <var>HOST_SSL_STATIC_MEDIA</var>. They should include the scheme and optionally a port.</p>
+        <p MadCap:conditions="Spryker.DemoShop">It might be necessary to update <var>\Pyz\Yves\Twig\Plugin\TwigAsset</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a> to have it use the new configuration options.</p>
+        <h2>Defining Ports</h2>
+        <p><var>PORT_YVES</var>, <var>PORT_SSL_YVES</var>, <var>PORT_ZED</var>, and <var>PORT_SSL_ZED</var> have been added but aren't used by Spryker core yet. They can be defined and reused to set e.g. <var>BASE_URL_YVES</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+use Spryker\Shared\Application\ApplicationConstants
+// ...
+$config[ApplicationConstants::HOST_YVES] = 'www.de.demoshop.local';
+$config[ApplicationConstants::PORT_YVES] = ':8080';
+$config[ApplicationConstants::BASE_URL_ZED] = sprintf(
+    'http://%s:%s',
+    $config[ApplicationConstants::HOST_YVES],
+    $config[ApplicationConstants::PORT_YVES] ?: ''
+);</code></pre>
+        <p MadCap:conditions="Spryker.DemoShop">If it is required to define ports in project implementations, it might be necessary to update <var>\Pyz\Shared\Application\Business\Routing\UrlGenerator</var> to the latest version from <a href="https://github.com/spryker/demoshop" target="_blank">Demoshop</a>. Older versions of this class aren't aware of URLs containing ports.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">List of the New Configuration Constants</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <ul>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::PORT_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::PORT_ZED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::PORT_SSL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::PORT_SSL_ZED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_ZED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_STATIC_ASSETS</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_STATIC_MEDIA</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_SSL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_SSL_ZED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Customer\CustomerConstants::BASE_URL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Newsletter\NewsletterConstants::BASE_URL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\ProductManagement\ProductManagementConstants::BASE_URL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\ZedRequest\ZedRequestConstants::BASE_URL_ZED_API</var>
+                    </li>
+                    <li><var>\Spryker\Shared\ZedRequest\ZedRequestConstants::BASE_URL_SSL_ZED_API</var>
+                    </li>
+                </ul>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">List of the Deprecated Configuration Constants</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <ul>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::ZED_RABBITMQ_USERNAME</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::ZED_RABBITMQ_PASSWORD</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::ZED_RABBITMQ_HOST</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::ZED_RABBITMQ_PORT</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::ZED_RABBITMQ_VHOST</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_ENABLED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_OBJECT_STORAGE_ENABLED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_CDN_ENABLED</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_PREFIX</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_HTTP</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_CDN_STATIC_MEDIA_HTTPS</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::CLOUD_CDN_PRODUCT_IMAGES_PATH_NAME</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_ZED_GUI</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_ZED_API</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_STATIC_ASSETS</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_STATIC_MEDIA</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_SSL_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_SSL_ZED_GUI</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_SSL_ZED_API</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_SSL_STATIC_ASSETS</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Application\ApplicationConstants::HOST_SSL_STATIC_MEDIA</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Customer\CustomerConstants::HOST_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\Newsletter\NewsletterConstants::HOST_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\ProductManagement\ProductManagementConstants::HOST_YVES</var>
+                    </li>
+                    <li><var>\Spryker\Shared\ZedRequest\ZedRequestConstants::HOST_SSL_ZED_API</var>
+                    </li>
+                </ul>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="mg-multi-currency.htm">How to migrate Multi-Currency</a>
+            </li>
+            <li>How to migrate Discount</li>
+        </ul>
+    </body>
+</html>

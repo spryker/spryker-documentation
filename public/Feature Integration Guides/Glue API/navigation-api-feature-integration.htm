@@ -1,0 +1,121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2019-03">
+    <head><title>Navigation Feature Integration | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This guide will navigate you through the process of installing and configuring the Navigation feature in Spryker OS." />
+    </head>
+    <body>
+        <h1>Navigation API Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature API</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Navigation</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">201903.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>1) Install the Required Modules Using Composer</h2>
+        <p>Run the following command to install the required modules:</p><pre><code class="language-PHP line-numbers">composer require spryker/navigations-rest-api:"^1.0.0" --update-with-dependencies</code></pre>
+        <div class="tip">
+		Make sure that the following module is installed:<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>NavigationsRestApi</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker/navigations-rest-api</var></td></tr></tbody></table></div></div>
+        <h2>2) Set up Transfer Objects</h2>
+        <p>Run the following commands to generate transfer changes:</p><pre><code class="language-PHP line-numbers">console transfer:generate</code></pre>
+        <div class="tip">
+			Make sure that the following changes are present in the transfer objects:<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestNavigationAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestNavigationAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>RestNavigationNodeTransfer</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestNavigationNodeTransfer
+		</var></td></tr></tbody></table></div></div>
+        <h2>3) Set up Configuration</h2>
+        <p>Configure mapping to specify source field from which resourceId field should be filled depends on navigation node type.</p>
+        <p><b><var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var></b>
+        </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\NavigationsRestApi;
+ 
+use Spryker\Glue\NavigationsRestApi\NavigationsRestApiConfig as SprykerNavigationsRestApiConfigi;
+ 
+class NavigationsRestApiConfig extends SprykerNavigationsRestApiConfig
+{
+    /**
+     * @return array
+     */
+    public function getNavigationTypeToUrlResourceIdFieldMapping(): array
+    {
+        return [
+            'category' =&gt; 'fkResourceCategorynode',
+            'cms_page' =&gt; 'fkResourcePage',
+        ];
+    }
+}</code></pre>
+        <h2>4) Set up Behavior</h2>
+        <h3>Enable Resources and Relationships</h3>
+        <p>Activate the following plugin:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>NavigationsResourceRoutePlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Registers the navigations resource.<![CDATA[						]]></td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Glue\NavigationsRestApi\Plugin\ResourceRoute</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><b><var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var></b>
+        </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\CategoriesRestApi\Plugin\CategoriesResourceRoutePlugin;
+use Spryker\Glue\CategoriesRestApi\Plugin\CategoryResourceRoutePlugin;
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function getResourceRoutePlugins(): array
+    {
+        return [
+            new NavigationsResourceRoutePlugin(),
+        ];
+    }
+}</code></pre>
+        <div class="tip">Make sure that the following endpoint is available:<br />http://example.org/navigations/{navigationId} </div>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <p><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/retrieving-navigation-trees.htm">Navigation API</a>
+        </p>
+        <p>&#160;</p>
+        <p><i>Last review date: Mar 3, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Anton Khabiuk and Dmitry Beirak</MadCap:conditionalText>
+        </p>
+        <p>&#160;</p>
+    </body>
+</html>

@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2C,Spryker.B2B">
+    <head>
+    </head>
+    <body>
+        <h1>Enabling the Content Widget <img src="../../../Spryker Capabilities/Content/Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Spryker Capabilities/Content/Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>
+			CMS content widgets is a CMS feature for adding  dynamic content to CMS pages/blocks.
+		</p>
+        <p>For example, you can list a single product, product lists, product groups or product sets.
+		</p>
+        <h2>Integration</h2>
+        <p>First of all you need to install the cms-content-widget module with Composer (update composer.json with <var>"cms-content-widget": "^1.0.0"</var> or use Composer require).
+		    </p>
+        <p>
+			To enable the feature, configure it in your project.
+		</p>
+        <p>            Integration of CMS widget consists of three main parts:
+		</p>
+        <ol>
+            <li>
+				Registering twig function in Yves.
+			</li>
+            <li>Providing configuration in module shared directory so that Yves and Zed can read it.
+			</li>
+            <li>Optionally, providing CMS content function parameter mapper plugins.
+
+			</li>
+        </ol>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>
+					Step 1: Registering twig function in Yves.
+				</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+				The CMS content widget is a twig function. Therefore, twig syntax rules apply and must be followed when including the inside content. </p>
+                <p>For example <var>{{ product(['012', '013', '321']) }}</var> will include carousel component with three products.
+				</p>
+                <p>To register a new function you need to create a plugin which implements <var>\Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface</var> interface and place it in Yves application.
+					Plugins are registered in <var>\Pyz\Yves\CmsContentWidget\CmsContentWidgetependencyProvider::getCmsContentWidgetPlugins</var> which is an array stored as key =&gt; value pairs,
+					where key is the function name you want to use in template and value is a specific plugin instance. This plugin needs configuration which is explained in the next paragraph.
+					To enable the feature for CMS blocks, you have to configure twig rendering plugin <var>`\Spryker\Yves\CmsContentWidget\Plugin\CmsTwigContentRendererPlugin`</var> and add it to <var>`\Pyz\Yves\CmsBlock\CmsBlockDependencyProvider::getCmsBlockTwigContentRendererPlugin`</var>.
+					This will enable twig function rendering in CMS blocks.
+				</p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>
+					Step 2: Providing CMS content widget configuration.
+				</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+				Some information needs to be shared between Yves and Zed. Therefore, the configuration plugin must be placed in a shared namespace. </p>
+                <p><strong>The new plugin must implement</strong>: <var>\Spryker\Shared\CmsContentWidget\Depedency\CmsContentWidgetConfigurationProviderInterface</var> which is used by Yves and Zed.
+					When used in Yves, inject this plugin directly to your plugin and use configuration when building twig callable.
+					When used in Zed, it should be added to <var>\Pyz\Zed\CmsContentWidget\CmsContentWidgetConfig::getCmsContentWidgetConfigurationProviders</var> plugin array where <strong>key </strong>is the function name and <strong>value </strong>is the plugin instance.
+					Providing it to Zed allows to render usage information below the content editor.
+				</p>
+                <p>
+				The configuration provider requires implementation of the following methods:</p>
+                <ul>
+                    <li><var>getFunctionName</var> is the name of function when used in CMS content.</li>
+                    <li><var>getAvailableTemplates</var> is the list of supported templates, it's a key value pair where key is the template identifier which is passed to function and value is a path to twig template.</li>
+                    <li><var>getUsageInformation</var> is a plain text usage information, displayed when rendering help pane below content editor.</li>
+                </ul>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>
+				Step 3:&#160;Function mapping plugins - optional.     </MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+					When defining functions, you may want to accept "natural identifiers", such as "sku" for products or "set_key" for product sets. It is preferable that the content manager provides the identifiers instead of relying on surrogate keys.
+					The problem arises when you need to read data from the Yves data store as the Yves data store uses "surrogate key/primary keys". Therefore, to read data, convert/map those natural identifiers to surrogate keys.
+				</p>
+                <p>We provide mappers to help map the identifiers. Each mapper must implement: <var>\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface</var> and be added to <var>\Pyz\Zed\Cms\CmsDependencyProvider::getCmsContentWidgetParameterMapperPlugins</var>
+				where <strong>key </strong>is the function name and <strong>value </strong>is a specific mapper. </p>
+                <p>The mapper receives unmapped values where your plugin is responsible for mapping and returning it as an array.
+					Mapper plugins are invoked by CMS and block collectors. To export this data you must register two plugins one for CMS pages and one for CMS blocks.
+					For CmsBlockCollector add plugin <var>`\Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsBlockCollector\CmsBlockCollectorParameterMapExpanderPlugin`</var> to <var>`\Pyz\Zed\CmsBlockCollector\CmsBlockCollectorDependencyProvider::getCollectorDataExpanderPlugins`</var>.
+					For CmsCollector add plugin <var>`\Spryker\Zed\CmsContentWidget\Communication\Plugin\CmsPageCollector\CmsPageCollectorParameterMapExpanderPlugin`</var> to <var>`\Pyz\Zed\CmsCollector\CmsCollectorDependencyProvider::getCollectorDataExpanderPlugins`</var>.
+					Make sure to update CmsBlockCollector and CmsCollector modules as expander plugins were added during this feature release.
+
+					It's exported to <var>\Spryker\Shared\CmsContentWidget\CmsContentWidgetConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP</var>.	You can access parameter mapping inside the <var>$contex</var> variable when implementing the CMS content function plugin in Yves.
+					The <var>$context</var> is a special twig function variable that uses twig to pass the data you normally send to the template. This variable has a <var>cmsContent</var> key. This key has data from the Yves store. This can be either a CMS page or block data.
+				</p>
+                <p>The parameter mapping can be read from:
+				</p><pre><code class="language-PHP line-numbers"> $context['cmsContent'][CmsContentWidgetConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP][$this-&gt;widgetConfiguration-&gt;getFunctionName()];</code></pre>
+                <p>
+
+
+					For example you can use this method as a basis when implementing <var>\Spryker\Yves\CmsContentWidget\Dependency\CmsContentWidgetPluginInterface</var>.
+				</p><pre><code class="language-php line-numbers">namespace Spryker\Yves\Module\Plugin;  
+
+class CmsWidgetPlugin extends AbstractPlugin implements CmsContentWidgetPluginInterface
+{
+     /**
+      * @return \Callable
+       */
+      public function getContentWidgetFunction()
+      {
+          return function (Twig_Environment $twig, array $context, $parameters, $templateIdentifier = null) {
+              return $twig-&amp;gt;render(
+                  $this-&amp;gt;resolveTemplatePath($templateIdentifier),
+                  $this-&amp;gt;getContent($context, $parameters)
+              );
+          };
+      }
+      
+         /**
+     * @param null|string $templateIdentifier
+     *
+     * @return string
+     */
+    protected function resolveTemplatePath($templateIdentifier = null) 
+    {
+        return '@Module/partials/function_template.twig'
+    }
+    
+     /**
+     * @param array $context
+     * @param array|string $parameters
+     *
+     * @return array
+     */
+    protected function getContent(array $context, $parameters)
+    {
+        return []; //return data to be inserted into template
+    }
+      
+ }     </code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>Provided Plugins</h2>
+        <p>
+			We provide three CMS content widget plugins . All are currently implemented in the demoshop so you can take them from our repository and integrate in your project.
+		</p>
+        <p>Plugin configuration is described below.</p>
+        <h3>Zed Plugins:</h3><pre><code class="language-php line-numbers">namespace Pyz\Zed\CmsContentWidget;
+class CmsContentWidgetConfig extends SprykerCmsContentConfig
+{        
+       /**
+        * {@inheritdoc}
+        *
+        * @return array|\Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface[]
+        */
+       public function getCmsContentWidgetConfigurationProviders()
+      {
+          return [
+             \Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider(),
+             \Spryker\Shared\CmsContentWidgetProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider(),
+             \Spryker\Shared\CmsContentWidgetProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider(),
+            ];
+       }
+}  </code></pre>
+        <h3>Zed CMS Configuration Providers:</h3><pre><code class="language-php line-numbers">namespace Pyz\Zed\CmsContentWidget;
+class CmsContentWidgetConfig extends SprykerCmsContentConfig
+{        
+       /**
+        * {@inheritdoc}
+        *
+        * @return array|\Spryker\Shared\CmsContentWidget\CmsContentWidget\CmsContentWidgetConfigurationProviderInterface[]
+        */
+       public function getCmsContentWidgetConfigurationProviders()
+      {
+          return [
+             \Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider(),
+             \Spryker\Shared\CmsContentWidgetProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider(),
+             \Spryker\Shared\CmsContentWidgetProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Shared\CmsProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider(),
+            ];
+       }
+}  </code></pre>
+        <h3>
+			Zed CMS Collector Parameter Mapper Plugins:
+		</h3><pre><code class="language-php line-numbers">namespace Pyz\Zed\CmsContentWidget;
+
+class CmsContentWidgetDependencyProvider extends SprykerCmsContentWidgetDependencyProvider
+{
+
+      /**
+       * {@inheritdoc}
+       *
+       * @param \Spryker\Zed\Kernel\Container $container
+       *
+       * @return array|\Spryker\Zed\CmsContentWidget\Dependency\Plugin\CmsContentWidgetParameterMapperPluginInterface[]
+       */
+      protected function getCmsContentWidgetParameterMapperPlugins(Container $container)
+      {
+          return [
+              \Spryker\Shared\CmsProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Zed\CmsProductConnector\Communication\Plugin\Cms\CmsProductSkuMapperPlugin(),
+              \Spryker\Shared\CmsProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Zed\CmsProductSetConnector\Communication\Plugin\Cms\CmsProductSetKeyMapperPlugin(),
+              \Spryker\Shared\CmsProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider::FUNCTION_NAME =&amp;gt; new \Spryker\Zed\CmsProductConnector\Communication\Plugin\Cms\CmsProductSkuMapperPlugin(),
+          ];
+      }
+      
+}      </code></pre>
+        <h3>Yves Plugin Dependencies</h3><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\CmsContentWidget;
+
+use Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider;
+use Spryker\Shared\CmsContentWidgetProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider;
+use Spryker\Shared\CmsContentWidgetProductSetConnector\ContentWidgetConfigurationProvider\CmsProductSetContentWidgetConfigurationProvider;
+use Spryker\Zed\CmsContentWidget\CmsContentWidgetConfig as SprykerCmsContentConfig;
+
+class CmsContentWidgetConfig extends SprykerCmsContentConfig
+{
+    /**
+     * {@inheritdoc}
+     *
+     * @return array|\Spryker\Shared\CmsContentWidget\Dependency\CmsContentWidgetConfigurationProviderInterface[]
+     */
+    public function getCmsContentWidgetConfigurationProviders()
+    {
+        return [
+            CmsProductContentWidgetConfigurationProvider::FUNCTION_NAME =&gt; new CmsProductContentWidgetConfigurationProvider(),
+            CmsProductSetContentWidgetConfigurationProvider::FUNCTION_NAME =&gt; new CmsProductSetContentWidgetConfigurationProvider(),
+            CmsProductGroupContentWidgetConfigurationProvider::FUNCTION_NAME =&gt; new CmsProductGroupContentWidgetConfigurationProvider(),
+        ];
+    }
+}
+				</code></pre>
+        <h3 MadCap:conditions="Spryker.DemoShop">Demoshop - Add Twig Function for Your Application Scope</h3>
+        <p MadCap:conditions="Spryker.DemoShop">Open your <var>YvesBootstrap</var> (<var>src/Pyz/Yves/AApplication/YvesBootstrap.php</var>) and add to <var>registerServiceProviders
+            CmsContentWidgetServiceProvider</var> provider:</p><pre MadCap:conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">
+namespace Pyz\Yves\Application;
+
+...
+
+class YvesBootstrap
+{
+
+    ...
+
+    /**
+     * @return void
+     */
+    protected function registerServiceProviders()
+    {
+                ...
+            $this-&gt;application-&gt;register(new CmsContentWidgetServiceProvider());
+    }
+}
+            </code></pre>
+        <h3>Version Check When Using the Widget for CMS Blocks</h3>
+        <p>If you use this widget for CMS Blocks, then check that you have proper versions of your modules as follows:
+		cms-block &gt;= 1.2.0, cms-block-collector &gt;= 1.1.0, cms-block-gui &gt;= 1.1.0.</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="../../../Spryker Capabilities/Content/Capabilities/CMS/CMS Widget/cms-widget.htm">Get a general idea of what the widgets are</a>
+            </li>
+            <li><a href="../../../Spryker Capabilities/Content/Capabilities/CMS/CMS Widget/available-widgets.html">Learn how to use available widgets</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Sep. 20th, 2017
+</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Denis Turkov</i> </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

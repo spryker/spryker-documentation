@@ -1,0 +1,192 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Draft,General.OldOutdated">
+    <head>
+    </head>
+    <body>
+        <h1><a name="Search"></a>
+            <MadCap:annotation MadCap:createDate="2018-08-30T18:04:09.9338113+03:00" MadCap:creator="oksana.karasyova" MadCap:initials="OK" MadCap:comment="outdated because of Publish &amp; Synchronize process https://spryker.atlassian.net/wiki/spaces/DOCS/pages/199033000/Deprecated" MadCap:editor="oksana.karasyova" MadCap:editDate="2018-08-30T18:04:40.5919318+03:00">Search Collector Configuration</MadCap:annotation>
+        </h1>
+        <p>In this section you’ll learn how to easily map collected data from the database to the default Elasticsearch page mapping type.</p>
+        <p>If you need information about how collectors work in general, you can read more about it on the <a href="../Development/Collector/collector.htm">Collector</a> documentation page.</p>
+        <p>First, you need to implement <var>\Spryker\Zed\Search\Dependency\Plugin\PageMapInterface</var> interface as a plugin. This interface contains the <var>buildPageMap()</var> method which will be called for each collected document and its responsibility is to create a <var>PageMapTransfer</var> object and fill it with the mapped data. Basically, this transfer object represents one document in the page type.</p>
+        <p>The <var>buildPageMap()</var> method provides an instance of <var>\Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface</var> to help to fill this transfer object with the correct data in the correct format. It’s really easy to use, all you need to do is to tell the <i>PageMapBuilder</i> which data you need to have in the search result data, which data you want to filter by, which data you want to sort by, etc.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="bash">&lt;?php
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $locale)
+    {
+        $pageMapTransfer = (new PageMapTransfer())
+            -&gt;setStore(Store::getInstance()-&gt;getStoreName())
+            -&gt;setLocale($locale-&gt;getLocaleName());
+
+        $price = $this-&gt;getPriceBySku($productData['abstract_sku']);
+
+        $pageMapBuilder
+            -&gt;addSearchResultData($pageMapTransfer, 'id_product_abstract', $productData['id_product_abstract'])
+            -&gt;addSearchResultData($pageMapTransfer, 'abstract_sku', $productData['abstract_sku'])
+            -&gt;addSearchResultData($pageMapTransfer, 'abstract_name', $productData['abstract_name'])
+            -&gt;addSearchResultData($pageMapTransfer, 'price', $price)
+            -&gt;addSearchResultData($pageMapTransfer, 'url', $this-&gt;getProductUrl($productData))
+            -&gt;addSearchResultData($pageMapTransfer, 'available', $this-&gt;isAvailable($productData)
+            -&gt;addFullTextBoosted($pageMapTransfer, $productData['abstract_name'])
+            -&gt;addSuggestionTerms($pageMapTransfer, $productData['abstract_name'])
+            -&gt;addCompletionTerms($pageMapTransfer, $productData['abstract_name'])
+            -&gt;addStringSort($pageMapTransfer, 'name', $productData['abstract_name'])
+            -&gt;addIntegerSort($pageMapTransfer, 'price', $price)
+            -&gt;addIntegerFacet($pageMapTransfer, 'price', $price)
+            -&gt;addCategory($pageMapTransfer, $this-&gt;getAllParentCategories($productData), $this-&gt;getDirectParentCategories($productData));
+
+        return $pageMapTransfer;
+    }
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>In the example above, you can see that first we create the <var>PageMapTransfer</var> instance, add some metadata to it, then with the help of the <var>PageMapBuilderInterface</var> we can easily map some data to the transfer.</p>
+        <p>At the end, we’ll get the data for a document similar to the example below:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+   "store": "DE",
+   "locale": "en_US",
+   "search-result-data": {
+      "id_product_abstract": 1,
+      "abstract_sku": "foo",
+      "abstract_name": "Lorem ipsum",
+      "url": "/lorem-ipsum",
+      "price": 1234,
+      "available": true
+   },
+   "full-text-boosted": [
+      "Lorem ipsum"
+   ],
+   "suggestion-terms": [
+      "Lorem ipsum"
+   ],
+   "completion-terms": [
+      "Lorem ipsum"
+   ],
+   "string-sort": {
+      "name": "Lorem ipsum"
+   },
+   "integer-sort": {
+      "price": 1234
+   },
+   "integer-facet": [
+      {
+         "facet-name": "price",
+         "facet-value": 1234
+      }
+   ],
+   "category": {
+      "direct-parents": [
+         "1"
+      ],
+      "all-parents": [
+         "1",
+         "2",
+         "3"
+      ]
+   }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>After implementing our <i>PageMap</i> plugin we need to make sure that we also use it in our collector.</p>
+        <p>The collector has the <var>collectItem()</var> method which has the data for our <i>PageMap</i> plugin to generate the <var>PageMapTransfer</var>. The <var>collectItem()</var> by definition needs to return an array which is exactly the final data for one document pushed to <var>Elasticsearch</var>.</p>
+        <p>To transform the generated <var>PageMapTransfer</var> into the final document in the right format, use the <var>transformPageMapToDocument()</var> method of the <var>SearchFacade</var>.</p>
+        <p>In the example below you can see how the <i>PageMap</i> plugin is used in the <var>ProductCollector</var> from Demoshop.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="bash">&lt;?php
+
+namespace Pyz\Zed\Collector\Business\Search;
+
+use Spryker\Zed\Collector\Business\Collector\Search\AbstractSearchPdoCollector;
+use Spryker\Zed\Search\Business\SearchFacadeInterface;
+use Spryker\Zed\Search\Dependency\Plugin\PageMapInterface;
+
+class ProductCollector extends AbstractSearchPdoCollector
+{
+
+    /**
+     * @var \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface
+     */
+    protected $productDataPageMapPlugin;
+
+    /**
+     * @var \Spryker\Zed\Search\Business\SearchFacadeInterface
+     */
+    protected $searchFacade;
+
+    /**
+     * @param \Spryker\Zed\Search\Dependency\Plugin\PageMapInterface $productDataPageMapPlugin
+     * @param \Spryker\Zed\Search\Business\SearchFacadeInterface $searchFacade
+     */
+    public function __construct(PageMapInterface $productDataPageMapPlugin, SearchFacadeInterface $searchFacade)
+    {
+        $this-&gt;productDataPageMapPlugin = $productDataPageMapPlugin;
+        $this-&gt;searchFacade = $searchFacade;
+    }
+
+    /**
+     * @param string $touchKey
+     * @param array $collectItemData
+     *
+     * @return array
+     */
+    protected function collectItem($touchKey, array $collectItemData)
+    {
+        return $this
+            -&gt;searchFacade
+            -&gt;transformPageMapToDocument($this-&gt;productDataPageMapPlugin, $collectItemData, $this-&gt;locale);
+    }
+
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2><a name="Dynamic"></a>Dynamic Product Attribute Mapping</h2>
+        <p>Product attributes can be changed in time, when for example a shop decides to add a few new types of products to the catalogue.</p>
+        <p>As we saw earlier, it’s possible to configure which data you provide for Elasticsearch. It also can be applied for product attributes, but it’s not too effective that developers need to take care of them if they are changing a lot.</p>
+        <p>For this reason, the <i>ProductSearch</i> module provides an extra feature that allows you to dynamicaly map product attributes to the documents for Elasticsearch page type.</p>
+        <p>In the database there is a <var>spy_product_search_attribute_map</var> table that contains:</p>
+        <ul>
+            <li class="bullet_list"><var>fk_product_attribute_key</var> which is the foreign key of the product attribute</li>
+            <li class="bullet_list"><var>target_field</var> which is a string, representing the field name from the Elasticsearch page type.</li>
+        </ul>
+        <p>If you feed this table with some data you can easily extend the previously implemented <var>buildPageMap()</var> method by calling <var>ProductSearchFacade</var>’s <var>mapDynamicProductAttributes()</var> at the end.</p>
+        <p>So let’s extend our previous example of <var>buildPageMap()</var>.</p><pre xml:space="preserve"><code class="bash">&lt;?php
+
+    /**
+     * @param \Spryker\Zed\Search\Business\Model\Elasticsearch\DataMapper\PageMapBuilderInterface $pageMapBuilder
+     * @param array $productData
+     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     *
+     * @return \Generated\Shared\Transfer\PageMapTransfer
+     */
+    public function buildPageMap(PageMapBuilderInterface $pageMapBuilder, array $productData, LocaleTransfer $locale)
+    {
+        // ...
+
+        $pageMapTransfer = $this
+            -&gt;productSearchFacade
+            -&gt;mapDynamicProductAttributes($pageMapBuilder, $pageMapTransfer, $attributes);
+
+        return $pageMapTransfer;
+    }</code></pre>
+        <p class="info"><strong>Search Preferences</strong>
+            <br />It's possible to manage from the Zed UI which product attributes you'd like to search after and how they should behave. Read more about this in the <MadCap:xref href="search_preferences.htm">Search Preferences</MadCap:xref> section.</p>
+    </body>
+</html>

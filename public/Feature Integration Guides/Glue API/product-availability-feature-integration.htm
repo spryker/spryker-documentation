@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Product Availability Feature Integration | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This guide will navigate you through the process of installing and configuring the Product Availability feature in Spryker OS." />
+    </head>
+    <body>
+        <h1>Product Availability Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature API</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Product Management</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Availability</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">ProductsRestApi </td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2.2.3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Install the Required Modules Using Composer</h3>
+        <p>Run the following commands to install the required modules:</p><pre><code class="language-PHP">composer require spryker/product-availabilities-rest-api:"^1.0.3" --update-with-dependencies
+composer require spryker/products-product-availabilities-resource-relationship:"^1.0.0" --update-with-dependencies</code></pre>
+        <div class="tip">Make sure that the following modules are installed:		<div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ProductAvailabilitiesRestApi</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/product-availabilities-rest-api</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>ProductsProductAvailabilitiesResourceRelationship</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/products-product-availabilities-resource-relationship</var></td></tr></tbody></table></div></div>
+        <h3>2) Set up Transfer objects</h3>
+        <p>Run the following commands to generate transfer changes:</p><pre><code class="language-PHP">console transfer:generate
+</code></pre>
+        <div class="tip">Make sure that the following changes in transfer objects are present:<![CDATA[			]]><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestAbstractProductAvailabilityAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestAbstractProductAvailabilityAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>RestConcreteProductAvailabilityAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestConcreteProductAvailabilityAttributesTransfer</var></td></tr></tbody></table></div></div>
+        <h3>3) Set up behavior</h3>
+        <h4>Enable resources and relationships</h4>
+        <p>Activate the following plugin:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>AbstractProductAvailabilitiesRoutePlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the abstract product availabilities resource.
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\ProductAvailabilitiesRestApi\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ConcreteProductAvailabilitiesRoutePlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the concrete product availabilities resource.
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\ProductAvailabilitiesRestApi\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>AbstractProductAvailabilitiesResourceRelationshipPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds the abstract product availability resource as a relationship to the abstract product resource.
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>ConcreteProductAvailabilitiesResourceRelationshipPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Adds the concrete product availability resource as a relationship to the concrete product resource.
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><b><var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var></b>
+        </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Plugin\AbstractProductAvailabilitiesRoutePlugin;
+use Spryker\Glue\ProductAvailabilitiesRestApi\Plugin\ConcreteProductAvailabilitiesRoutePlugin;
+use Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Plugin\AbstractProductAvailabilitiesResourceRelationshipPlugin;
+use Spryker\Glue\ProductsProductAvailabilitiesResourceRelationship\Plugin\ConcreteProductAvailabilitiesResourceRelationshipPlugin;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function getResourceRoutePlugins(): array
+    {
+        return [
+            new AbstractProductAvailabilitiesRoutePlugin(),
+            new ConcreteProductAvailabilitiesRoutePlugin(),
+        ];
+    }
+ 
+    /**
+    * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    *
+    * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
+    */
+    protected function getResourceRelationshipPlugins(
+        ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    ): ResourceRelationshipCollectionInterface {
+        $resourceRelationshipCollection-&gt;addRelationship(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            new AbstractProductAvailabilitiesResourceRelationshipPlugin()
+        );
+        $resourceRelationshipCollection-&gt;addRelationship(
+            ProductsRestApiConfig::RESOURCE_CONCRETE_PRODUCTS,
+            new ConcreteProductAvailabilitiesResourceRelationshipPlugin()
+        );
+ 
+        return $resourceRelationshipCollection;
+    }
+}</code></pre>
+        <div class="tip">
+            <p>Make sure that the following endpoints are available:</p>
+            <p><var>http://example.org/abstract-products/{{abstract_sku}}/abstract-product-availabilities</var>
+            </p>
+            <p><var>http://example.org/concrete-products/{{concrete_sku}}/concrete-product-availabilities</var>
+            </p>
+            <p>&#160;</p>
+            <p>Make a request to <var>http://example.org/abstract-products/{{abstract_sku}}?include=abstract-product-availabilities</var>. Make sure that the response includes relationships to the <var>abstract-product-availabilities</var> resource.</p>
+            <p>Make a request to <var>http://example.org/concrete-products/{{concrete_sku}}?include=concrete-product-availabilities</var>. Make sure that the response includes relationships to the <var>concrete-product-availabilities</var> resource.</p>
+        </div>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 19, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Tihran Voitov and Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

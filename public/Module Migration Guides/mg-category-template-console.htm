@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:lastBlockDepth="4" MadCap:lastHeight="2609" MadCap:lastWidth="1359" MadCap:conditions="General.Draft,General.Demoshop">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Category Template Migration Console</h1>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">Click here to expand Category Template Migration Script</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+
+&lt;?php
+
+/**
+ * Copyright © 2016-present Spryker Systems GmbH. All rights reserved.
+ * Use of this software requires acceptance of the Evaluation License Agreement. See LICENSE file.
+ */
+
+namespace Pyz\Zed\Category\Communication\Console;
+
+use Exception;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryTemplateQuery;
+use Spryker\Zed\Category\CategoryConfig;
+use Spryker\Zed\Kernel\Communication\Console\Console;
+use Spryker\Zed\PropelOrm\Business\Runtime\ActiveQuery\Criteria;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+/**
+ * @method \Spryker\Zed\Category\Business\CategoryFacadeInterface getFacade()
+ */
+class CategoryTemplateMigration extends Console
+{
+
+    const COMMAND_NAME = 'category-template:migrate';
+
+    /**
+     * @var \Symfony\Component\Console\Output\OutputInterface
+     */
+    protected $output;
+
+    /**
+     * @param \Symfony\Component\Console\Input\InputInterface $input
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return void
+     */
+    public function execute(InputInterface $input, OutputInterface $output)
+    {
+        $this-&gt;output = $output;
+
+        $this-&gt;getFacade()-&gt;syncCategoryTemplate();
+        $this-&gt;assignTemplateToAllCategories();
+
+        $output-&gt;writeln('Successfully finished.');
+    }
+
+    /**
+    * @return void
+    */
+    protected function configure()
+    {
+        parent::configure();
+
+        $this-&gt;setName(static::COMMAND_NAME);
+        $this-&gt;setDescription('');
+    }
+
+    /**
+    * @throws \Exception
+    *
+    * @return void
+    */
+    protected function assignTemplateToAllCategories()
+    {
+        $spyCategoryTemplate = SpyCategoryTemplateQuery::create()
+            -&gt;filterByName(CategoryConfig::CATEGORY_TEMPLATE_DEFAULT)
+            -&gt;findOne();
+
+        if (empty($spyCategoryTemplate)) {
+            throw new Exception('Please specify CATEGORY_TEMPLATE_DEFAULT in your category template list configuration');
+        }
+
+        $query = SpyCategoryQuery::create()
+            -&gt;filterByFkCategoryTemplate(null, Criteria::ISNULL);
+
+        $this-&gt;output-&gt;writeln('Will update ' . $query-&gt;count() . ' categories without template.');
+
+        foreach ($query-&gt;find() as $category) {
+            $category-&gt;setFkCategoryTemplate($spyCategoryTemplate-&gt;getIdCategoryTemplate());
+            $category-&gt;save();
+        }
+    }
+
+    /**
+    * @return array
+    */
+    protected function getTemplateList()
+    {
+        return $this-&gt;getFactory()
+                -&gt;getConfig()
+                -&gt;getTemplateList();
+    }
+
+}
+    </code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><b>See also</b>
+        </p>
+        <li>Get a general idea about a Category</li>
+        <li><a href="mg-category.htm">Migration Guide - Category</a>
+        </li>
+    </body>
+</html>
