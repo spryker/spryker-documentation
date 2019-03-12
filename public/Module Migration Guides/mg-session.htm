@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Session</h1>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot><div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div></MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>The previous version made use of the deprecated <var>spryker/new-relic</var> and the <var>spryker/new-relic-api</var> modules.</p>
+                <p>To be able to use this version you need to install the <var>spryker/monitoring</var> module if you haven't done already by running:</p>
+                <p><pre><code class="language-bash">composer require spryker/monitoring</code></pre>
+                </p>
+                <p>All session handler classes provided by this module are now using the monitoring module instead of the new-relic module.</p>
+            </MadCap:dropDownBody>
+            <MadCap:dropDownBody>
+                <p>Additionally we moved some constants from the SessionConstants file to the SessionConfig file.</p>
+                <p>You need to update your config_* files and use as values for the session configuration the ones which come from the SessionConfig file now.</p>
+                <p>Example:</p>
+                <p>
+                    You need to change all:
+                    <pre><code class="language-PHP">
+                        $config[SessionConstants::CONFIG_KEY] = SessionConstants::CONFIG_VALUE;
+                    </code></pre>
+                    to:
+                    <pre><code class="language-PHP">
+                        $config[SessionConstants::CONFIG_KEY] = SessionConfig::CONFIG_VALUE;
+                    </code></pre></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><i>Last review date: Nov 22, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>
+		by René Klatt , Oksana Karasyova</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

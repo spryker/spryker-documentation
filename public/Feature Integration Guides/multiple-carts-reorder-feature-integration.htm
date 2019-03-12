@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,ReleaseVersions.2018-10">
+    <head><title>Multiple Carts Reorder Feature Integration | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="The Reorder Feature allows reordering previous orders. This guide will walk you through the process of integrating the feature into your project. " />
+    </head>
+    <body>
+        <h1>Multiple Carts: Reorder Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature Core</h2>
+        <h3>Prerequisites</h3>
+        <p>
+			To start feature integration, overview and install the necessary features:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Multiple Carts</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Reorder</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h3>1) Set up Behavior</h3>
+        <p>
+			Register the following plugin:
+		</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">ReorderPersistentCartChangeExpanderPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Adds a default reorder name and adds it to add item request.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">1</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Client\MultiCart\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var>src/Pyz/Client/PersistentCart/PersistentCartDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+  
+	namespace Pyz\Client\PersistentCart;
+  
+	use Spryker\Client\MultiCart\Plugin\ReorderPersistentCartChangeExpanderPlugin;
+	use Spryker\Client\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+  
+	class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+	{
+		/**
+		* @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+		*/
+		protected function getChangeRequestExtendPlugins(): array
+		{
+			return [
+				new ReorderPersistentCartChangeExpanderPlugin(),
+			];
+		}
+	}
+			</code></pre>
+        <div class="tip">
+			When using the reorder feature, a new customer quote must be created with the name "Cart from order {Order reference}".
+		</div>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/cart/multiple_carts_per_user/multiple-carts-per-user-overview.htm">Multiple Carts per User Feature Overview</a>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/order_management/reorder.htm">Reorder</a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec. 6th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Dmitriy Krainiy, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

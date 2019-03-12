@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Conceptual O<MadCap:annotation MadCap:createDate="2018-10-10T16:21:11.4858263+03:00" MadCap:creator="Oksana Karasyova" MadCap:initials="OK" MadCap:comment="need to rewrite it" MadCap:editor="Oksana Karasyova" MadCap:editDate="2018-10-10T16:21:17.1078437+03:00">verview</MadCap:annotation></h1>
+        <p MadCap:conditions="General.Hidden Comment">Used to be http://spryker.github.io/getting-started/overview/</p>
+        <p>Spryker is a Commerce Operating System composed of the following applications: Storefront (Yves), Backoffice (Zed), Storefront API (Glue).
+
+</p>
+        <ul>
+            <li class="bullet_list"><b>Storefront</b> -	Front-end-presentation layer for customers, provided by Yves Application Layer based on the <a href="https://symfony.com/components" target="_blank">Symfony Components</a>.
+</li>
+            <li class="bullet_list"><b>Backoffice</b> - an application that contains all business logic and the backend GUI, provided by Zed Application Layer, also makes use of the Symfony Components. </li>
+            <li>
+                <p><b>Storefront API</b> - an application providing resources for customers' interaction, provided by Glue Application Layer, based <a href="https://jsonapi.org/" target="_blank">JSON API convention</a>.</p>
+            </li>
+        </ul>
+        <p>The following diagram shows the conceptual parts of the application and their connections:
+</p>
+        <p style="text-align: left;">
+            <img src="../Resources/Images/spryker-overview.png" title="Click Me" alt="Conceptual Overview" class="Thumbnail" />
+        </p>
+        <p>The Spryker OS provides the followings Application Layers:</p>
+        <ul>
+            <li class="bullet_list" value="1">Yves - provides frontend functionality with the light-weight data access</li>
+            <li class="bullet_list" value="2">Zed - provides backoffice/backend functionality with heavy calculations</li>
+            <li class="bullet_list" value="2">Glue - provides infrastructure for API with the mixed data access</li>
+            <li class="bullet_list" value="2">Client - provides data access infrastructure</li>
+            <li class="bullet_list" value="2">Shared - provides shared code abstractions to be used in other Application Layers</li>
+            <li class="bullet_list" value="2">Service - provides infrastructure for the stateless operations, usually utils</li>
+        </ul>
+        <p>Application Layers structure support you in a better conceptual decoupling and not always represent a bootstraped Application.</p>
+        <h2>Code Structure </h2>
+        <p>When you look into the source-code, you can see that the code is divided in two parts:
+
+</p>
+        <ol>
+            <li>in the <var>src/</var> directory you can find the code of your current project. This is where you will do your implementations.
+</li>
+            <li>in the <var>vendor/spryker</var> directory you will find what we call the Spryker-core.
+</li>
+        </ol>
+        <p>Directories
+</p>
+        <table class="TableStyle-PatternedRows2" style="margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Path	</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Purpose
+</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>src/{Namespace}/	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>This is where you will do the programming. Here you can find all the code for Yves and Zed.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>vendor/spryker/spryker/	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>Here you can find the code of the Spryker-core. It follows the same architectural rules which you use in the project’s code.
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>vendor/{vendor}/{package}/</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>	In the vendor directory you can also find other packages that are installed via composer install.
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>data/	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>Directory for log files and other temporary data.
+</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>public/Yves/index.php</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>Web-server entry point of Storefront application.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>public/Yves/Assets/</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>Static files (CSS, JS, and assets) for the project’s Yves.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p>public/Zed/index.php</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>Web-server entry point of Backoffice application.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p>public/Zed/Assets/</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>Static files (CSS, JS, and assets) for the project’s Zed.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p>public/Glue/index.php</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                        <p>Web-server entry point of Storefront API application.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 28th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Denis Turkov, Oksana Karasyova</MadCap:conditionalText><![CDATA[		]]></p>
+    </body>
+</html>

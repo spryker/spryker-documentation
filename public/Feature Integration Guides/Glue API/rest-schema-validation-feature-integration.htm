@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>REST Schema Validation Feature Integration | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This guide will navigate you through the process of installing and configuring the REST Schema Validation feature in Spryker OS." />
+    </head>
+    <body>
+        <h1>REST Schema Validation Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature API</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h3>1) Install the Required Modules Using Composer</h3>
+            <p>Run the following command to install the required modules:</p><pre><code class="language-PHP">composer require spryker/rest-request-validator:"^1.1.0" --update-with-dependencies</code></pre>
+            <div class="tip">Make sure that the following module is installed:
+				<div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>RestRequestValidator</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker/rest-request-validator</var></td></tr></tbody></table></div></div>
+        </div>
+        <h3>2) Set up behavior</h3>
+        <h4>Enable console command</h4>
+        <p>Activate the console command provided by the module:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Class</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>BuildValidationCacheConsole</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Generates validation cache required for validating the request. </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\RestRequestValidator\Communication\Console</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="font-weight: bold;"><var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Console;
+ 
+use Spryker\Zed\RestRequestValidator\Communication\Console\BuildValidationCacheConsole;
+use Spryker\Zed\Console\ConsoleDependencyProvider as SprykerConsoleDependencyProvider;
+ 
+class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Symfony\Component\Console\Command\Command[]
+     */
+    protected function getConsoleCommands(Container $container)
+    {
+        $commands = [
+            new BuildValidationCacheConsole(),
+        ];
+ 
+        return $commands;
+    }
+}</code></pre>
+        <div class="tip">To verify that <var>BuildValidationCacheConsole</var> is activated, check if the <var>console glue:rest:build-request-validation-cache</var> console command exists.</div>
+        <h4>
+		Generate validation cache
+		</h4>
+        <p>Run the following command to generate validation cache:
+</p><pre><code class="language-PHP">console glue:rest:build-request-validation-cache</code></pre>
+        <div class="tip">Make sure that the cache is collected correctly. Check <var>src/Generated/Glue/Validator</var>, it should contain the subdirectories to match your stores setup, each directory should have a <var>validation.cache</var> file with the valid YAML of the default core validation rules.
+        <pre><code class="language-PHP line-numbers">- AT
+    - validation.cache
+- DE
+    - validation.cache
+...</code></pre></div>
+        <h4>Enable request validation</h4>
+        <p>Activate the following plugin:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ValidateRestRequestAttributesPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Validates the POST and PATCH methods request attributes section.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Glue\RestRequestValidator\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div><var style="font-weight: bold;">src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\RestRequestValidator\Plugin\ValidateRestRequestAttributesPlugin;
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+     */
+    protected function getRestRequestValidatorPlugins(): array
+    {
+        return [
+            new ValidateRestRequestAttributesPlugin(),
+        ];
+    }
+}</code></pre>
+        <div class="tip">To verify that <var>ValidateRestRequestAttributesPlugin</var> is activated, you need to have another glue feature that uses the validation config <var>src/Pyz/Glue/YourModuleRestApi/Validation</var>.<br />Go to <var>src/Pyz/Glue/YourModuleRestApi/Validation</var> and create a validation config file called <var>yourmodule.validation.yaml</var>. Describe the endpoints validation rules in the file, e.g.:<br /><var style="font-weight: bold;">sample.validation.yaml</var><pre><code class="language-PHP line-numbers">access-tokens:
+  post:
+    username:
+      - NotBlank
+      - Email
+    password:
+      - NotBlank</code></pre>Run this console command to collect the validation cache: <var>console glue:rest:build-request-validation-cache</var>.<br />Then make a call to the endpoint you have described in the validation file with invalid data, e.g.:
+<pre><code class="language-PHP line-numbers">POST http://example.org/access-tokens
+BODY:
+{
+    "data":
+        {
+            "type":"access-tokens",
+            "attributes":
+                {
+                    "username":"tester",
+                    "password": ""
+                }
+        }
+}</code></pre>You must see the validation error similar to this:
+<pre><code class="language-PHP line-numbers">
+{
+    "errors": [
+        {
+            "code": "901",
+            "status": 422,
+            "detail": "username =&gt; This value is not a valid email address."
+        },
+        {
+            "code": "901",
+            "status": 422,
+            "detail": "password =&gt; This value should not be blank."
+        }
+    ]
+}</code></pre></div>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 18, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Eugenia Poidenko and Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop,Spryker.MultiStore">
+    <head>
+    </head>
+    <body>
+        <h1>
+            <MadCap:annotation MadCap:createDate="2018-08-31T17:27:11.0437803+03:00" MadCap:creator="oksana.karasyova" MadCap:initials="OK" MadCap:comment="Seems that the page refers to Demoshop\r\n" MadCap:editor="oksana.karasyova" MadCap:editDate="2018-08-31T17:27:34.6999318+03:00">URL</MadCap:annotation> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /> </h1>
+        <p MadCap:conditions="General.Hidden Comment">Used to be: http://spryker.github.io/core/bundles/url/</p>
+        <p>The URL module handles dynamic URLs for entities that appear on the front-end (Yves). At the moment, Spryker core provides URL handling for products, CMS pages, categories and URL redirects.</p>
+        <p>The URLs are stored in one database table and each is unique. The database structure for storing URLs looks like the following:</p>
+        <p class="Figure"><a href="http://www.gliffy.com/go/publish/10811573" target="_blank"><img src="../../Resources/Images/discount_schema.png" class="Thumbnail" /></a>
+        </p>
+        <p class="Figure" MadCap:conditions="General.Image_Source">http://www.gliffy.com/go/publish/10811573</p>
+        <p MadCap:conditions="Spryker.DemoShop">
+            <MadCap:conditionalText MadCap:conditions="Spryker.DemoShop">In the Spryker Demoshop, </MadCap:conditionalText>URLs are exported to the key-value storage (Redis) with collectors. Every stored key contains the URL that can be matched with a router and every stored value contains a <samp>reference key </samp>and a <var>type</var>.</p>
+        <p>The <var>reference_key</var> contains the key of the entity that was also stored in the key-value storage. The data read from the reference key is exactly the data that will be provided to the controller to handle the request at the end. The <samp>type </samp>is required to determine which controller handles the request (along with the data from the reference key).</p>
+        <p MadCap:conditions="Spryker.DemoShop">The example below shows the value stored under the <var>kv:de.en_us.url./en/imprint</var> key which will match the <a href="http://zed.de.demoshop.local/en/imprint">/en/imprint</a> URL in Demoshop.
+		
+		</p><pre MadCap:conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">{
+    "reference_key": "de.en_us.resource.page.1",
+    "type": "page"
+}</code></pre>
+        <p MadCap:conditions="Spryker.DemoShop">A router called <var>\Pyz\Yves\Collector\Plugin\Router\StorageRouter</var>, matches URLs for Yves requests handled by the URL module. If a requested URL is matched with the <samp>StorageRouter</samp> then it will try to find a <var>ResourceCreator</var> that can handle the provided resource type. <var>ResourceCreator</var> provides data for the router about the controller that will handle the request. </p>
+        <p MadCap:conditions="General.Hidden Comment">To read more about how to implement a custom <samp><var>ResourceCreator</var> </samp>see Setting up the frontend (link to http://spryker.github.io/core/bundles/url/#setting-up-the-frontend).</p>
+        <p><strong>See also:</strong>
+        </p>
+        <ul>
+            <li class="bullet_list"><a href="url-handling-new-entity.htm">Handling New Types of Entity URLs</a>
+            </li>
+        </ul>
+    </body>
+</html>

@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>Wishlist <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2><var>createWishlist(WishlistTransfer $wishlistTransfer)</var>
+        </h2>
+        <p>Creates wishlist for a specific customer with given name.</p>
+        <p>Required values: <var>name</var>, <var>fkCustomer</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setName('foobar')
+    -&gt;setFkCustomer(1);
+
+$wishlistTransfer = $wishlistFacade-&gt;createWishlist($wishlistTransfer);</code></pre>
+        <h2><var>updateWishlist(WishlistTransfer $wishlistTransfer)</var>
+        </h2>
+        <p>Updates specific wishlist.</p>
+        <p>Required values: <var>idWishlist</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setName('new name')
+    -&gt;setIdWishlist(1);
+
+$wishlistTransfer = $wishlistFacade-&gt;updateWishlist($wishlistTransfer);</code></pre>
+        <h2><var>removeWishlist(WishlistTransfer $wishlistTransfer)</var>
+        </h2>
+        <p>Removes wishlist and its items.</p>
+        <p>Required values: <var>idWishlist</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setIdWishlist(1);
+
+$wishlistTransfer = $wishlistFacade-&gt;removeWishlist($wishlistTransfer);</code></pre>
+        <h2><var>getWishlistByName(WishlistTransfer $wishlistTransfer)</var>
+        </h2>
+        <p>Returns wishlist by specific name for a given customer.</p>
+        <p>Required values: <var>fkCustomer</var>, <var>name</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setFkCustomer(1)
+    -&gt;setName('foobar');
+
+$wishlistTransfer = $wishlistFacade-&gt;getWishlistByName($wishlistTransfer);</code></pre>
+        <h2><var>getWishlistOverview(WishlistOverviewRequestTransfer $wishlistOverviewRequestTransfer)</var>
+        </h2>
+        <p>Returns wishlist by specific name for a given customer, with paginated items.</p>
+        <p>Pagination is controlled with <var>page</var>, <var>itemsPerPage</var>, <var>orderBy</var> and <var>orderDirection</var> values of <var>WishlistOverviewRequestTransfer</var>.</p>
+        <p>Required values of <var>WishlistTransfer</var>: <var>fkCustomer</var>, <var>name</var>.</p>
+        <p>Required values of <var>WishlistOverviewRequestTransfer</var>: <var>WishlistTransfer</var>.</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+$wishlistTransfer = (new WishlistTransfer())
+    -&gt;setName('foobar')
+    -&gt;setFkCustomer(1);
+
+$wishlistOverviewRequest = (new WishlistOverviewRequestTransfer())
+    -&gt;setWishlist($wishlistTransfer)
+    -&gt;setPage(1)
+    -&gt;setItemsPerPage(10)
+    -&gt;setOrderBy('created_at')
+    -&gt;setOrderDirection('DESC');
+
+$wishlistOverviewRequestTransfer = $wishlistFacade-&gt;getWishlistOverview($wishlistOverviewRequest);</code></pre>
+    </body>
+</html>

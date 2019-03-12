@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Product Category Relationship Feature Integration | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This guide will navigate you through the process of installing and configuring the Product Category Relationship feature in Spryker OS." />
+    </head>
+    <body>
+        <h1>Product Category Relationship Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature API</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Product Management</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Category</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">ProductCategory</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">CategoriesRestApi</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">1.1.2</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">ProductsRestApi</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2.2.3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>1) Install the required modules</h2>
+        <p>Run the following command to install the required modules:</p><pre><code class="language-PHP line-numbers">composer require spryker/products-categories-resource-relationship:"^1.0.0" --update-with-dependencies</code></pre>
+        <div class="tip">
+		Make sure that the following module is installed:<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ProductsCategoriesResourceRelationship</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>	vendor/spryker/products-categories-resource-relationship</var></td></tr></tbody><tbody /></table></div></div>
+        <h2>2) Set up behavior </h2>
+        <h3>Enable relationship</h3>
+        <p>Activate the following plugin:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>AbstractProductsCategoriesResourceRelationshipPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Adds the categories resource as a relationship to an abstract product </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Glue\ProductsCategoriesResourceRelationship\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><b><var>src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</var></b>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+use Spryker\Glue\ProductsCategoriesResourceRelationship\Plugin\AbstractProductsCategoriesResourceRelationshipPlugin;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+   /**
+    * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    *
+    * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
+    */
+    protected function getResourceRelationshipPlugins(
+        ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    ): ResourceRelationshipCollectionInterface {
+        $resourceRelationshipCollection-&gt;addRelationship(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            new AbstractProductsCategoriesResourceRelationshipPlugin()
+        );
+ 
+        return $resourceRelationshipCollection;
+    }
+}</code></pre>
+        <div class="tip">
+		Make a request to <var>http://example.org/abstract-products/{{abstract_sku}}?include=category-nodes.</var><br />Example:<br /><MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{  
+   "data":{  
+      "type":"abstract-products",
+      "id":"001",
+      "attributes":{  
+         ...
+      },
+      "links":{  
+         "self":"http://example.org/abstract-products/001"
+      },
+      "relationships":{  
+         "category-nodes":{  
+            "data":[  
+               {  
+                  "type":"category-nodes",
+                  "id":"4"
+               },
+               {  
+                  "type":"category-nodes",
+                  "id":"2"
+               }
+            ]
+         }
+      }
+   },
+   "included":[  
+      {  
+         "type":"category-nodes",
+         "id":"4",
+         "attributes":{  
+            ...
+         },
+         "links":{  
+            "self":"http://example.org/category-nodes/4"
+         }
+      },
+      {  
+         "type":"category-nodes",
+         "id":"2",
+         "attributes":{  
+            ...
+         },
+         "links":{  
+            "self":"http://example.org/category-nodes/2"
+         }
+      }
+   ]
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></div>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 22, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Tihran Voitov and Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

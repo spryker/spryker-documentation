@@ -1,0 +1,191 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>Oryx for Zed <img src="../../../Resources/shoptype/Demoshop.png" /></h1>
+        <p class="important"> As of April 2017, Oryx replaces <a href="../Antelope Global Tool/overview.htm">Antelope</a></p>
+        <h2>Introduction
+</h2>
+        <p>oryx-for-zed is an extension of Oryx that<strong> performs a full build for Spryker Zed UI </strong>applications. It also provides access to Zed settings and Zed <var>webpack </var>configuration, so you can extend/change the whole building process.
+
+</p>
+        <h3>Requirements
+</h3>
+        <ul>
+            <li class="bullet_list"><var>nodejs</var> version 6.x LTS
+</li>
+            <li class="bullet_list"><var>npm </var>version &gt;= 3.x or <var>yarn </var>version &gt;= 0.19.x
+</li>
+        </ul>
+        <h3>Setup
+</h3>
+        <p>You need to add oryx-for-zed to your <var>package.json</var>:
+</p>
+        <ul>
+            <li class="bullet_list">Open the terminal, go to your project root folder and type:
+</li>
+        </ul><pre><code class="language-bash line-numbers">npm install @spryker/oryx-for-zed --save-dev
+# or 
+yarn add @spryker/oryx-for-zed --dev
+</code></pre>
+        <p class="note">oryx-for-zed comes with a peer dependency:
+
+<var>oryx </var>version &gt;= 1.x
+</p>
+        <h2>Usage
+</h2>
+        <p>Once installed, you can:
+
+</p>
+        <ul>
+            <li class="bullet_list">call the builder directly from your scripts (simple builder)
+</li>
+            <li class="bullet_list">extend/change the settings/<var>webpack </var>configuration for your custom Zed build
+</li>
+        </ul>
+        <h3>Simple builder
+</h3>
+        <p>The following section describes how to run run oryx-for-zed.
+
+</p>
+        <p>To run run oryx-for-zed
+
+Add the following script to your <var>package.json</var>:
+
+</p><pre><code class="language-bash line-numbers">{
+    "scripts": {
+        "zed": "node ./node_modules/@spryker/oryx-for-zed/build"
+    }
+}
+</code></pre>
+        <p>Open the terminal and type:
+
+</p><pre><code class="language-bash line-numbers">npm run build-zed
+# or 
+yarn run build-zed
+</code></pre>
+        <h3>Extend/change settings
+</h3>
+        <p>Settings are extended and changed by using the onyx-for-zed <a href="#API">API</a>.
+
+</p>
+        <p>The example below shows how to create a cuostm build:
+
+</p>
+        <p><strong>Step 1</strong>: <var>build.js</var><![CDATA[
+
+]]></p>
+        <p>Create a <var>build.js</var> file in your project containing your custom settings and the logic needed to get the <var>webpack </var>configuration and run the builder:
+
+</p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
+const oryxForZed = require('@spryker/oryx-for-zed');
+
+const myCustomZedSettings = Object.assign({}, oryxForZed.settings, {
+    // your own settings
+});
+
+const configuration = oryxForZed.getConfiguration(myCustomZedSettings);
+
+oryx.build(configuration);
+</code></pre>
+        <p><strong>Step 2</strong>: <var>package.json</var> </p>
+        <p>Add a script into your <var>package.json</var> pointing to <var>build.js</var>.
+
+</p><pre><code class="language-bash line-numbers">{
+    "scripts": {
+        "build-zed": "node ./path/to/build"
+    }
+}
+</code></pre>
+        <p>You will now be able to…
+
+</p>
+        <h3><a name="Extend/c"></a>Extend/change <var>webpack </var>configuration
+</h3>
+        <p><var>webpack </var>is customised by using the onyx-for-zed <a href="#API">API</a>. </p>
+        <p>The example below shows how to create a custom build:
+
+</p>
+        <p><strong>Step 1</strong>: <var>webpack.config.js</var><![CDATA[
+
+]]></p>
+        <p>Create a <var>webpack.config.js</var> file in your project containing your <var>webpack </var>custom configuration:
+
+</p><pre><code class="language-bash line-numbers">const oryxForZed = require('@spryker/oryx-for-zed');
+const oryxConfiguration = oryxForZed.getConfiguration(oryxForZed.settings);
+
+const myCustomZedConfiguration = Object.assign({}, oryxConfiguration, {
+    // your own configuration
+});
+
+module.exports = myCustomZedConfiguration;
+</code></pre>
+        <p><strong>Step 2</strong>: <var>build.js</var></p>
+        <p>Create a <var>build.js</var> file in your project containing your <var>webpack </var>configuration and the logic needed to run the builder:
+
+</p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
+const myCustomZedConfiguration = require('./webpack.config.js');
+
+oryx.build(myCustomZedConfiguration);
+</code></pre>
+        <p><strong>Step 3</strong>: <var>package.json</var><![CDATA[
+
+]]></p>
+        <p>Add a script into your <var>package.json</var> pointing to <var>build.js</var>.
+
+</p><pre><code class="language-bash line-numbers">{
+    "scripts": {
+        "build-zed": "node ./path/to/build"
+    }
+}
+</code></pre>
+        <h2><a name="API"></a>API
+</h2>
+        <h3>Settings
+</h3><pre><code class="language-bash line-numbers">oryxForZed.settings
+</code></pre>
+        <p>Contains all the basic settings used in the <var>webpack </var>configuration. Go to the <a href="https://github.com/spryker/oryx-for-zed/blob/master/lib/settings.js" target="_blank">code</a> for more details.
+
+</p>
+        <h3>getConfiguration()
+</h3>
+        <p>oryxForZed.getConfiguration(settings)
+</p>
+        <p>Returns the default Zed <var>webpack </var>configuration, based on provided <var>settings</var>.
+
+</p>
+        <p>Go to the <a href="https://github.com/spryker/oryx-for-zed/blob/master/lib/webpack.config.js" target="_blank">code</a> for more details.
+
+</p>
+        <h3>CLI args
+</h3>
+        <p>oryx-for-zed uses arguments to customise the build process.
+
+</p>
+        <p>You can pass them using the terminal:
+
+</p><pre><code class="language-bash line-numbers">npm run zed -- --arg
+# or 
+yarn run zed -- --arg
+</code></pre>
+        <p>Or embed them into the script section in <var>package.json</var>:
+</p><pre><code class="language-bash line-numbers">{
+    "scripts": {
+        "build-zed": "node ./node_modules/@spryker/oryx-for-zed/build --arg"
+    }
+}
+</code></pre>
+        <p>Args list
+</p>
+        <ul>
+            <li class="bullet_list"><var>--dev</var>: development mode; enable <var>webpack </var>watchers on the code
+</li>
+            <li class="bullet_list"><var>--prod</var>: production mode; enable assets optimisation/compression
+</li>
+            <li class="bullet_list"><var>--boost</var>: boost mode (<strong>experimental</strong>); build assets using eval source maps
+</li>
+        </ul>
+        <p>If no arg is passed, development is activated but without watchers.</p>
+    </body>
+</html>

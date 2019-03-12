@@ -1,0 +1,221 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B,Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>How To Send a Mail <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>The following example represents a real-world scenario: CustomerRegistration.</p>
+        <p>A Customer goes through the registration process in your frontend (Yves) and all customer information is sent to Zed. Zed uses the information to register the customer. Once the registration is completed, the customer will receive a confirmation email.</p>
+        <p>In the model which handles the registration you will then do something similar to this:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Customer\Business\Model\Customer;
+
+    ...
+    
+    // customer registration code
+    $this-&gt;sendMail($customerTransfer);
+    
+    ...
+    
+    protected function sendMail(CustomerTransfer $customerTransfer) 
+    {
+        // Create a MailTransfer instance which is 
+        // used for further processing
+        $mailTransfer = new MailTransfer();
+        
+        // Set the mail type which is used for the 
+        // internal mapping e.g. which mail provider
+        // should send this mail
+        $mailTransfer-&gt;setType(CustomerRegistrationMailTypePlugin::MAIL_TYPE);
+        
+        // Set the CustomerTransfer to the MailTransfer
+        // this can be any Transfer object which is 
+        // needed in the Mail
+        $mailTransfer-&gt;setCustomer($customerTransfer);
+        
+        // Set the LocaleTransfer which should be used 
+        // for e.g. translation inside your templates
+        $mailTransfer-&gt;setLocale($customerTransfer-&gt;getLocale());
+
+        // Trigger the mail facade to handle the mail
+        $this-&gt;mailFacade-&gt;handleMail($mailTransfer);
+    }
+
+...</code></pre>
+        <p>All <var>MailTransfer</var>’s need at least to know which mail type (nothing more than a string) should be used for further internal processing.</p>
+        <p>A minimalistic example could look like this:</p><pre><code class="language-PHP line-numbers">&lt;?php
+...
+protected function sendMail() 
+{
+    $mailTransfer = new MailTransfer();
+    $mailTransfer-&gt;setType(YourMailTypePlugin::MAIL_TYPE);
+    $this-&gt;mailFacade-&gt;handleMail($mailTransfer);
+}</code></pre>
+        <p>Now let’s have a detailed look into the MailType plugin used for this example:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Customer\Communication\Plugin\Mail;
+
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+
+class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+{
+
+    const MAIL_TYPE = 'customer registration mail';
+    
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return static::MAIL_TYPE;
+    }
+    
+    /**
+     * @param \Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface $mailBuilder
+     *
+     * @return void
+     */
+    public function build(MailBuilderInterface $mailBuilder)
+    {
+        $this
+            -&gt;setSubject($mailBuilder)
+            -&gt;setHtmlTemplate($mailBuilder)
+            -&gt;setTextTemplate($mailBuilder)
+            -&gt;setSender($mailBuilder)
+            -&gt;setRecipient($mailBuilder);
+    }
+    
+    ...
+    
+    protected function setRecipient(MailBuilderInterface $mailBuilder)
+    {
+        // Get the CusomterTransfer which was added
+        // to the MailTransfer in the sendMail() method
+        // of the Customer model
+        $customerTransfer = $mailBuilder-&gt;getMailTransfer()-&gt;getCustomer();
+        
+        // Use the customer information to add the needed
+        // recipient information through the MailBuilder
+        // to the MailTransfer
+        $mailBuilder-&gt;addRecipient(
+            $customerTransfer-&gt;getEmail(),
+            $customerTransfer-&gt;getFirstName() . ' ' . $customerTransfer-&gt;getLastName()
+        );
+    }
+}</code></pre>
+        <p>The Mail module’s default MailBuilder is already pre-defined to build the <var>MailTransfer</var>. MailBuilder internally adds a new <var>MailRecipientTransfer </var>with the passed information, email and name.</p>
+        <p>When plugin is created, it should be registered it in MailDependencyProvider:</p><pre><code class="language-PHP line-numbers">&lt;?php
+        ...
+        $container-&gt;extend(self::MAIL_TYPE_COLLECTION, function (MailTypeCollectionAddInterface $mailCollection) {
+            $mailCollection
+                -&gt;add(new CustomerRegistrationMailTypePlugin());
+
+            return $mailCollection
+        });
+        ...
+ ?&gt;</code></pre>
+        <p>The default, MailBuilder also has access to the glossary with the <var>setSubject()</var> method. This is used for translations as follows:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Customer\Communication\Plugin\Mail;
+
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Mail\Business\Model\Mail\Builder\MailBuilderInterface;
+use Spryker\Zed\Mail\Dependency\Plugin\MailTypeInterface;
+
+class CustomerRegistrationMailTypePlugin extends AbstractPlugin implements MailTypePluginInterface
+{
+    ...
+    protected function setSubject(MailBuilderInterface $mailBuilder)
+    {
+        $mailBuilder-&gt;setSubject('mail.customer.registration.subject');
+    }
+    ...
+}</code></pre>
+        <p>A string is used as a key of the translation. The MailBuilder internally does the translation through the <var>GlossaryFacade</var>:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Spryker\Zed\Mail\Business\Model\Mail\Builder;
+    
+    ...
+    
+    protected function setSubject($subject, array $data = [])
+    {
+        $subject = $this-&gt;translate($subject, $data);
+        
+        $this-&gt;getMailTransfer()-&gt;setSubject($subject);
+        
+        return $this;
+    }
+    ...
+    
+    protected function translate($keyName, array $data = [])
+    {
+        $localeTransfer = $this-&gt;getLocaleTransfer();
+
+        if ($this-&gt;glossaryFacade-&gt;hasTranslation($keyName, $localeTransfer)) {
+            $keyName = $this-&gt;glossaryFacade-&gt;translate($keyName, $data, $localeTransfer);
+        }
+
+        return $keyName;
+    }
+}</code></pre>
+        <p>As you can see above, you can also translate with placeholder. For the <var>mail.order.shipped.subject</var> key we have  <var>Your order {orderReference} is on its way</var> as translation.</p>
+        <p>In your MailType plugin you can use the orderReference from the given OrderTransfer within the subject:</p><pre><code class="language-PHP line-numbers">&lt;?php
+...
+protected function setSubject(MailBuilderInterface $mailBuilder)
+{
+    $orderTransfer = $mailBuilder-&gt;getMailTransfer()-&gt;getOrder();
+    
+    $mailBuilder-&gt;setSubject(
+        'mail.order.shipped.subject',
+        [
+            '{orderReference}' =&gt; $orderTransfer-&gt;getOrderReference()
+        ]
+    );
+}
+...
+}</code></pre>
+        <h2>Templates</h2>
+        <p>Usually you will have a <var>*.twig</var> file which contains the template you want to use for mail. You need to set the template which should be used in your MailType plugin:</p><pre><code class="language-PHP line-numbers">&lt;?php
+...
+protected function setTextTemplate(MailBuilderInterface $mailBuilder)
+{
+    $mailBuilder-&gt;setTextTemplate('customer/mail/customer_registration.text.twig');
+}
+...
+}</code></pre>
+        <p>The provider determines the template’s final look. It can contain plain text, HTML, etc. For example you can even have a template which generates JSON:</p><pre><code class="language-PHP line-numbers">{
+    ...
+    customer: "{{ mail.customer.firstName }} {{ mail.customer.lastName }}",
+    ...
+}</code></pre>
+        <p>In our example we have a plain text template with:</p><pre><code class="language-PHP line-numbers">{{ 'mail.customer.registration.text' | trans }}</code></pre>
+        <p>The templates must be placed within the bundles Presentation layer. In our example <var>src/Pyz/Zed/Customer/Presentation/Mail/customer_registration.text.twig</var>. You can use the same <var>trans</var> filter as used with Yves and Zed templates.</p>
+        <p><var>TwigRenderer</var> is the default renderer, but you can add your own Renderer by implementing the <var>RendererInterface</var>.</p>
+        <p>We also provide a basic layout file to where you can inject concrete content files. If you want to build your own layout, you need to have the following in your template:</p><pre><code class="language-PHP line-numbers">{% for template in mail.templates %}
+    {% if not template.isHtml %}
+        {% include "@" ~ template.name with {mail: mail} %}
+    {% endif %}
+{% endfor %}</code></pre>
+        <p>This one is used for plain text messages, and templates can also be used to generate JSON or a query strings like <var>customer={{ mail.customer.firstName }}&amp;orderReference={{ mail.order.orderReference }}</var> - it’s up to your provider to decide what you need to render.</p>
+        <p>For HTML messages you need to have this in your layout file:</p><pre><code class="language-PHP line-numbers">{% for template in mail.templates %}
+    {% if template.isHtml %}
+        {% include "@" ~ template.name with {mail: mail} %}
+    {% endif %}
+{% endfor %}</code></pre>
+        <p>Once you have completed the steps below, call <var>MailFacade::handleMail()</var> to activate the mail functionality.</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li>
+                <MadCap:xref href="mail.htm">Mail</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="mail-create-provider-plugin.htm">Create a MailProviderPlugin</MadCap:xref>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan. 3rd, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Andrey Tkachenko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

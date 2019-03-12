@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.DemoShop,Spryker.B2C">
+    <head><title>Computop - CRIF</title>
+    </head>
+    <body>
+        <h1>Computop - CRIF <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>General Information About CRIF</h2>
+        <p>Popular with customers, risky for the merchant: Payment methods such as direct debit or purchase on account involve a high level of default risk. Computop Paycontrol, an automated credit rating with all standard credit agencies, combines flexibility and payment security for online business. With Paycontrol you can, amongst other things, automatically obtain information from CRIF without having to connect your shop system to individual information interfaces.</p>
+        <p>CRIF (formerly Deltavista) provides information on about 80 million individuals, 6 million companies, and 10 million payment, register, and address records from Germany, Austria and Switzerland.</p>
+        <p>
+            <img src="../../../Resources/Images/Computop/CRIF-process-flow.png" style="width: 973px;height: 446px;" />
+        </p>
+        <h2>Calling the Interface </h2>
+        <p>To carry out a CRIF order check via a Server-to-Server connection, go to the following URL: https://www.computop-paygate.com/deltavista.aspx</p>
+        <p class="note">For security reasons, Paygate rejects all payment requests with formatting errors. Therefore please use the correct data type for each parameter.</p>
+        <h2>Integration with Checkout.</h2>
+        <p>If you want to integrate Computop CRIF in your project, you have to adjust <var>ShipmentStep</var> like described below.</p>
+        <p>In file <var>Yves/Checkout/Process/Steps/ShipmentStep.php</var> in your project add call to <var>ComputopClient</var></p><pre><code class="language-php line-numbers">
+public function execute(Request $request, AbstractTransfer $quoteTransfer)
+{
+    
+	....
+
+	$quoteTransfer = $this-&gt;computopClient-&gt;performCrifApiCall($quoteTransfer);
+	return $quoteTransfer;
+}</code></pre>
+        <p>Do not forget to inject <var>\SprykerEco\Client\Computop\ComputopClientInterface</var> in <var>ShipmentStep</var> and update <var>StepFactory</var>.</p>
+        <p>Also you have to add CRIF configurations that described below:</p><pre><code class="language-php line-numbers">
+	$config[ComputopApiConstants::CRIF_ACTION] = 'https://www.computop-paygate.com/deltavista.aspx';
+	$config[ComputopApiConstants::CRIF_PRODUCT_NAME] = ''; //QuickCheckConsumer or CreditCheckConsumer or QuickCheckBusiness or CreditCheckBusiness or IdentCheckConsumer
+
+	$config[ComputopApiConstants::CRIF_LEGAL_FORM] = ''; //PERSON or COMPANY or UNKNOWN
+
+	$config[ComputopConstants::CRIF_GREEN_AVAILABLE_PAYMENT_METHODS] = [];
+	$config[ComputopConstants::CRIF_YELLOW_AVAILABLE_PAYMENT_METHODS] = [];
+	$config[ComputopConstants::CRIF_RED_AVAILABLE_PAYMENT_METHODS] = [];
+		</code></pre>
+        <p>Or, as usual, you can take a look at <var>config/Zed/config.dist.php</var>.</p>
+    </body>
+</html>

@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>HowTo - Implement Prepayment Back End <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>To integrate the prepayment method into the checkout, we need to provide implementations for these 2 plugins:
+
+</p>
+        <ul>
+            <li class="bullet_list"><var>CheckoutPreCondition</var>
+            </li>
+            <li class="bullet_list"><var>PaymentSaveOrder</var>
+            </li>
+        </ul>
+        <p>Perform the following procedure:</p>
+        <ol>
+            <li>Add the following 2 plugins in Zed, inside the <var>Communication/Plugin/Checkout/</var> folder of the new added module.
+			<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot><p>PrepaymentPreCheckPlugin</p></MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre xml:space="preserve"><code class="language-PHP lne-numbers">&lt;?php
+
+namespace Pyz\Zed\PaymentMethods\Communication\Plugin\Checkout;
+
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPreCheckPluginInterface;
+
+
+class PrepaymentPreCheckPlugin extends AbstractPlugin implements CheckoutPreCheckPluginInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return \Generated\Shared\Transfer\CheckoutResponseTransfer
+     */
+    public function checkCondition(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+        return $checkoutResponseTransfer;
+    }
+
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown><MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot><p>PrepaymentSaveOrderPlugin</p></MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\PaymentMethods\Communication\Plugin\Checkout;
+
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutSaveOrderPluginInterface;
+
+class PrepaymentSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderPluginInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     * @param \Generated\Shared\Transfer\CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
+     */
+    public function saveOrder(QuoteTransfer $quoteTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    {
+
+    }
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Next, inject these 2 plugins in the <var>Payment</var> module by creating a <var>PaymentDependencyInjector</var> under <var>Dependency/Injector</var> folder:
+<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\PaymentMethods\Dependency\Injector;
+
+use Pyz\Zed\PaymentMethods\Communication\Plugin\Checkout\PrepaymentPreCheckPlugin;
+use Pyz\Zed\PaymentMethods\Communication\Plugin\Checkout\PrepaymentSaveOrderPlugin;
+use Spryker\Zed\Kernel\Container;
+use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
+use Spryker\Zed\Kernel\Dependency\Injector\AbstractDependencyInjector;
+use Spryker\Zed\Payment\Dependency\Plugin\Checkout\CheckoutPluginCollection;
+use Spryker\Zed\Payment\PaymentDependencyProvider;
+
+class PaymentDependencyInjector extends AbstractDependencyInjector
+{
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function injectBusinessLayerDependencies(Container $container)
+    {
+        $container = $this-&gt;injectPaymentPlugins($container);
+
+        return $container;
+    }
+
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    protected function injectPaymentPlugins(Container $container)
+    {
+        $container-&gt;extend(PaymentDependencyProvider::CHECKOUT_PLUGINS, function (CheckoutPluginCollection $pluginCollection) {
+            $pluginCollection-&gt;add(new PrepaymentPreCheckPlugin(), PaymentMethodsConstants::PROVIDER, PaymentDependencyProvider::CHECKOUT_PRE_CHECK_PLUGINS);
+            $pluginCollection-&gt;add(new PrepaymentSaveOrderPlugin(), PaymentMethodsConstants::PROVIDER, PaymentDependencyProvider::CHECKOUT_ORDER_SAVER_PLUGINS);
+
+            return $pluginCollection;
+        });
+
+        return $container;
+    }
+
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Link the prepayment state machine to process the orders submitted with the payment method we’re implementing. 
+					<p class="note"><MadCap:conditionalText MadCap:conditions="Spryker.DemoShop">We’ll use the prepayment state machine that’s delivered with Demoshop.
+</MadCap:conditionalText></p><p>Add this configuration in the <var>SalesConfig</var> class:</p><pre><code class="language-bash line-numbers">/**
+     * @var array
+     */
+    protected static $stateMachineMapper = [
+        //..
+        PaymentMethodsConstants::PAYMENT_PREPAYMENT_FORM_PROPERTY_PATH =&gt; OmsConfig::ORDER_PROCESS_PREPAYMENT_01,
+    ];
+</code></pre></li>
+        </ol>
+    </body>
+</html>

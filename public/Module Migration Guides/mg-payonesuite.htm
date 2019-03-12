@@ -1,0 +1,188 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Draft">
+    <head>
+    </head>
+    <body>
+        <h1>Migration guide - Payone Suite</h1>
+        <h2>Suite — Frontend</h2>
+        <p>&#160;</p>
+        <p>Add the "<var>./vendor/spryker-eco/**/*</var>" line to the <var>include </var>section of the <var>./tsconfig.json</var> file:</p><pre><code class="language-PHP line-numbers">"include": [
+  "./vendor/spryker/spryker-shop/**/*",
+  "./vendor/spryker-eco/**/*",
+  "./src/Pyz/Yves/**/*"
+], </code></pre>
+        <p>&#160;</p>
+        <p>Add the following section to <var>./frontend/settings.js</var>, right after the <var>core </var>property:</p><pre><code class="language-PHP line-numbers">core: {
+  modules: './vendor/spryker/spryker-shop/Bundles',
+  shopUiModule: `./vendor/spryker/spryker-shop/Bundles/ShopUi/src/SprykerShop/Yves/ShopUi/Theme/${theme}`
+},
+eco: {
+  modules: './vendor/spryker-eco'
+},</code></pre>
+        <p>&#160;</p>
+        <p>Add the <var>path.join(context, paths.eco.modules)</var> line to the <var>find.componentEntryPoints.dirs</var> array in the <var>./frontend/settings.js</var> file:</p><pre><code class="language-PHP line-numbers">
+find: {
+  componentEntryPoints: {
+    dirs: [
+      path.join(context, paths.core.modules),
+      path.join(context, paths.eco.modules),
+      path.join(context, paths.project.modules)
+    ],</code></pre>
+        <p>&#160;</p>
+        <p>If you want to render the "Payone Pay with Paypal" button in your UI, overwrite the molecule <var>cart-summary</var>.</p>
+        <p>Create the file <var>./src/Pyz/Yves/CartPage/Theme/default/components/molecules/cart-summary/cart-summary.twig</var> and paste this code into it:</p><pre><code class="language-PHP line-numbers">{% extends model('component') %}
+ {% define config = {
+    name: 'cart-summary',
+    tag: 'div'
+} %}
+ {% define data = {
+    cart: required,
+    isQuoteValid: required
+} %}
+ {% set canProceedToCheckout = data.cart.items is not empty
+    and data.isQuoteValid
+    and (not is_granted('IS_AUTHENTICATED_FULLY') or can('WriteSharedCartPermissionPlugin', data.cart.idQuote))
+%}
+ {% block body %}
+    &lt;h6 class="text-secondary float-right"&gt;{{ app['cart.quantity'] }} {{ 'item' | trans }}&lt;/h6&gt;
+    &lt;h6&gt;{{ 'cart.your-order' | trans }}&lt;/h6&gt;
+    &lt;hr /&gt;
+     &lt;ul class="list spacing-y"&gt;
+        {% if widgetExists('DiscountSummaryWidgetPlugin') %}
+            &lt;li class="list__item spacing-y"&gt;
+                {{ widget('DiscountSummaryWidgetPlugin', data.cart) }}
+            &lt;/li&gt;
+        {% endif %}
+         {% if data.cart.shipment is not empty and data.cart.shipment.method is not empty %}
+            &lt;li class="list__item spacing-y"&gt;
+                &lt;strong&gt;{{ 'cart.shipping' | trans }}&lt;/strong&gt;
+                &lt;br /&gt;
+                {{ data.cart.shipment.method.name }}
+                &lt;span class="float-right"&gt;{{ data.cart.shipment.method.storeCurrencyPrice | money }}&lt;/span&gt;
+                &lt;hr /&gt;
+            &lt;/li&gt;
+        {% endif %}
+         &lt;li class="list__item spacing-y"&gt;
+            {{ 'cart.price.subtotal' | trans }}
+            &lt;span class="float-right"&gt;{{ data.cart.totals.subtotal | money }}&lt;/span&gt;
+        &lt;/li&gt;
+         &lt;li class="list__item spacing-y"&gt;
+            {{ 'cart.total.tax_total' | trans }}
+            &lt;span class="float-right"&gt;{{ data.cart.totals.taxTotal.amount | money }}&lt;/span&gt;
+        &lt;/li&gt;
+        &lt;li class="list__item spacing-y"&gt;
+            {{ 'cart.price.grand.total' | trans }}
+            &lt;strong class="float-right"&gt;{{ data.cart.totals.grandTotal | money }}&lt;/strong&gt;
+        &lt;/li&gt;
+    &lt;/ul&gt;
+     {% if canProceedToCheckout %}
+        &lt;hr /&gt;
+        &lt;a class="button button--expand button--success" href="{{ url('checkout-index') }}" {{qa('cart-go-to-checkout')}}&gt;
+            {{ 'cart.checkout' | trans }}
+        &lt;/a&gt;
+        {{ render(path('payone-checkout-with-paypal-button')) }}
+    {% endif %}
+{% endblock %}</code></pre>
+        <p>&#160;</p>
+        <p>Create the file <var>./src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</var> and paste this code into it:</p><pre><code class="language-PHP line-numbers">{% extends template('page-layout-checkout', 'CheckoutPage') %}
+ 
+{% define data = {
+    backUrl: _view.previousStepUrl,
+    forms: {
+        payment: _view.paymentForm
+    },
+ 
+    title: 'checkout.step.payment.title' | trans
+} %}
+ 
+{% block content %}
+    {% embed molecule('form') with {
+        class: 'box',
+        data: {
+            form: data.forms.payment,
+            options: {
+                attr: {
+                    id: 'payment-form'
+                }
+            },
+            submit: {
+                enable: true,
+                text: 'checkout.step.summary' | trans
+            },
+            cancel: {
+                enable: true,
+                url: data.backUrl,
+                text: 'general.back.button' | trans
+            }
+        }
+    } only %}
+        {% block fieldset %}
+            {% for name, choices in data.form.paymentSelection.vars.choices %}
+                {% set paymentProviderIndex = loop.index %}
+                &lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+                &lt;ul class="list spacing-y"&gt;
+                    {% for key, choice in choices %}
+                        &lt;li class="list__item spacing-y clear"&gt;
+                            {% embed molecule('form') with {
+                                data: {
+                                    form: data.form[data.form.paymentSelection[key].vars.value],
+                                    enableStart: false,
+                                    enableEnd: false,
+                                    layout: {
+                                        'card_expires_month': 'col col--sm-4',
+                                        'card_expires_year': 'col col--sm-8'
+                                    }
+                                },
+                                embed: {
+                                    index: loop.index ~ '-' ~ paymentProviderIndex,
+                                    toggler: data.form.paymentSelection[key]
+                                }
+                            } only %}
+                                {% block fieldset %}
+                                    {{ form_row(embed.toggler, {
+                                        required: false,
+                                        component: molecule('toggler-radio'),
+                                        attributes: {
+                                            'target-selector': '.js-payment-method-' ~ embed.index,
+                                            'class-to-toggle': 'is-hidden'
+                                        }
+                                    }) }}
+ 
+                                    &lt;div class="col col--sm-12 is-hidden js-payment-method-{{embed.index}}"&gt;
+                                        &lt;div class="col col--sm-12"&gt;
+                                            {% if data.form.vars.template_path == 'Payone/credit_card' %}
+                                                {% include view('credit-card', 'Payone') with {
+                                                    form: data.form.parent
+                                                } only %}
+ 
+                                            {% elseif data.form.vars.template_path == 'Payone/direct_debit' %}
+                                                {% include view('direct-debit', 'Payone') with {
+                                                    form: data.form.parent
+                                                } only %}
+ 
+                                            {% else %}
+                                                {{parent()}}
+                                            {% endif %}
+                                        &lt;/div&gt;
+                                    &lt;/div&gt;
+                                {% endblock %}
+                            {% endembed %}
+                        &lt;/li&gt;
+                    {% endfor %}
+                &lt;/ul&gt;
+            {% endfor %}
+        {% endblock %}
+    {% endembed %}
+{% endblock %}</code></pre>
+        <p>&#160;</p>
+        <p><i>Estimated migration time: 30 minutes</i>
+        </p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="http://documentation.spryker.com/industry_partners/payment/payone/v1_1/payone-v1-1.htm#payment-integration---bs-payone---1-1">Integrating Payone into your project</a>
+        </p>
+        <p>&#160;</p>
+        <p style="font-style: italic;">Last review date: October 30th, 2018 <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Yuriy Gerton and Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

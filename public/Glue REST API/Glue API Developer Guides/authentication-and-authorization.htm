@@ -1,0 +1,316 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Authentication and Authorization | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This article provides the list of private resources and describes how to install and use the means needed to work with the sensitive data." />
+    </head>
+    <body>
+        <h1>Authentication and Authorization</h1>
+        <p>Some resources (see the List of the private resources below) in Spryker REST API require user authentication. This process is essential to protect sensitive data and resources from unauthorized access. For this purpose, Spryker implements the OAuth 2.0 mechanism for user authentication. On the REST API level, it is represented by the <b>Login API</b>.</p>
+        <p>To get access to a protected resource, first, you need to obtain an <b>Access Token</b>. We use JWT tokens required for Spryker Glue to identify a user during API calls. Then you need to pass the token in the request header to get access to the resources that require authentication.</p>
+        <p>
+            <img src="../../Resources/Images/AuthenticationAndAuthorization/tutorial_apionprem_OAauth_Public_Password_Flow.jpg" />
+        </p>
+        <p>For increased security, access tokens have a limited lifetime. When receiving an access token, the response body contains not only the access token itself, but also its lifetime, in seconds, and a <b>Refresh Token</b>. When the lifetime expires, the <i>Refresh Token</i> can be exchanged for a new Access Token. The new token will also have a limited lifetime and have a corresponding <i>Refresh Token</i> for future authentication. The default lifetime of the tokens is 8 hours (28800 seconds) for an access token and 1 month (2628000 seconds) for a refresh token, although the settings can be changed in the module configuration.</p>
+        <h2>List of private resources</h2>
+        <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Action</th>
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Endpoints</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Customer - Get a Customer </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/customers/{{customer_reference}}</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Customer - Update info</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">PATCH</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/customers/{{customer_reference}}</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Customer - Change password </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PATCH</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/{{customer_reference}}</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Customer - Delete </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/customers/{{customer_reference}}</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Customer - Create a new address</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">POST</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/customers/{{customer_reference}}/addresses</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Customer - Update existing address</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">PATCH</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/customers/{{customer_reference}}/addresses/{{customer_address_uuid}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Customer - Delete the address</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/customers/{{customer_reference}}/addresses/{{customer_address_uuid}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Customer - Get List of Order</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/orders
+
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Customer - Ger Order details</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/orders/{{order_id}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Cart - Create the new cart</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">POST</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/carts
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart - Retrieve the cart</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>http://mysprykershop.com/carts
+</p>
+                        <p>http://mysprykershop.com/carts/{{cart_uuid}}</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Cart - Add an item to the cart</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">POST</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/carts/{{cart_uuid}}/items
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart - Update item quantity</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PATCH</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/carts/{{cart_uuid}}/items/{{concrete_sku}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Cart - Remove the cart </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/carts/{{url}}/carts/{{cart_uuid}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart - Remove items from a cart</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/carts/{{cart_uuid}}/items/{{concrete_id}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Wishlist - Add an item to wishlist</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">POST</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/wishlists/{{wishlist_uuid}}/wishlist-items
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Wishlist - Create the wishlist </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">POST</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/wishlists
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Wishlist - Delete a wishlist</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/wishlists/{{wishlist_uuid}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Wishlist - Delete an item into a wishlist </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DELETE</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/wishlists/{{wishlist_id}}/wishlist-items/{{concrete_sku}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Wishlist - Get list of wishlist</td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">http://mysprykershop.com/wishlists
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Wishlist - Get wishlist by ID </td>
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">GET</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">http://mysprykershop.com/wishlists/{{wishlist_uuid}}
+</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Wishlist - Rename a wishlist </td>
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">PATCH</td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">http://mysprykershop.com/wishlists/{{wishlist_uuid}}
+</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>
+            <h2>Installation</h2>
+        </p>
+        <p>For instructions on how to install the necessary modules and enable OAuth authentication, see <a href="https://documentation.spryker.com/feature_integration_guides/glue_api/glue-api-installation-and-configuration.htm">Login API</a>.</p>
+        <h2>User Authentication</h2>
+        <p>To authenticate a user and receive an access token, send a <i>POST</i> request to the following endpoint:</p>
+        <p style="font-weight: bold;">/access-tokens</p>
+        <p>Sample request: <i>POST</i> http://mysprykershop.com/access-tokens</p>
+        <p style="font-weight: bold;">Attributes:</p>
+        <ul>
+            <li><b>username</b> - specifies the username of the user to authenticate;</li>
+            <li>
+                <p><b>password</b> - specifies the user's password.</p>
+            </li>
+        </ul>
+        <div class="important"><b>Security Considerations</b>
+            <br />As passwords are sent to this endpoint unencrypted, it is strongly recommended to provide access to it only via the HTTPS protocol.<br /></div>
+        <p style="font-weight: bold;">Sample Request:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+  "data": {
+    "type": "access-tokens",
+    "attributes": {
+      "username": "john.doe@example.com",
+      "password": "qwerty"
+    }
+  }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p style="font-weight: bold;">Sample Response:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+    "data": {
+        "type": "access-tokens",
+        "id": null,
+        "attributes": {
+            "tokenType": "Bearer",
+            "expiresIn": 3600,
+            "accessToken": "eyJ0...",
+            "refreshToken": "def5..."
+            "idCompanyUser": null
+        },
+        "links": {
+            "self": "http://mysprykershop.com/access-tokens"
+        }
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>In the above example, the <i>access</i> token contained in the <b>accessToken</b> attribute will expire in <b>3600</b> seconds. After it expires, a new access token can be received using the data contained in the <b>refreshToken</b> attribute.</p>
+        <h2>Accessing Resources</h2>
+        <p>To access protected resources, you need to pass the access token in the <b>Authorization</b> header of your request. Example:</p><pre><code class="language-PHP line-numbers">GET /carts HTTP/1.1
+Host: mysprykershop.com:10001
+Content-Type: application/json
+Authorization: Bearer eyJ0...
+Cache-Control: no-cache</code></pre>
+        <p>If authorization is successful, the API will perform the requested operation. If authorization fails, a <b>401 Unathorized</b> error will be returned. The response will contain an error code explaining the cause of the error. It is, therefore, your responsibility to handle <i>401</i> errors when accessing protected resources. Sample error response:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+    "errors": [
+        {
+            "detail": "Invalid access token.",
+            "status": 401,
+            "code": "001"
+        }
+    ]
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>All protected resources can return the following generic errors:</p>
+        <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">001</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Invalid access token</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">002</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Access token missing or forbidden resource for the given user scope</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">003</td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Failed to log in the user</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">004</td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Failed to refresh a token</td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Refreshing Tokens</h2>
+        <p>To refresh an access token, send a request to the following endpoint and pass the corresponding <b>refresh token</b>:</p>
+        <p style="font-weight: bold;">/refresh-tokens</p>
+        <p>Sample request: <i>POST</i> http://mysprykershop.com/refresh-tokens</p>
+        <p style="font-weight: bold;">Attributes:</p>
+        <ul>
+            <li><b>refreshToken</b> - specifies the Refresh Token received during initial authentication.</li>
+        </ul>
+        <p style="font-weight: bold;">Sample Request:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+  "data": {
+    "type": "refresh-tokens",
+    "attributes": {
+      "refreshToken": "def5..."
+    }
+  }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p style="font-weight: bold;">Sample Response:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+    "data": {
+        "type": "refresh-tokens",
+        "id": null,
+        "attributes": {
+            "tokenType": "Bearer",
+            "expiresIn": 28800,
+            "accessToken": "eyJ0...",
+            "refreshToken": "def5..."
+        },
+        "links": {
+            "self": "http://mysprykershop.com/refresh-tokens"
+        }
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>See Also:</h2>
+        <ul>
+            <li>B2B&#160;Authentication and Authorization</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan 17, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

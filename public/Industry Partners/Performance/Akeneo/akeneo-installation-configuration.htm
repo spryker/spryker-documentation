@@ -1,0 +1,506 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.DemoShop,Spryker.ShopSuite,Spryker.B2C">
+    <head><title>Akeneo - Installation and Configuration | Spryker</title>
+        <meta name="description" content="Learn how to install and configure the Akeneo module. Global, dependency and import configuration steps are included. Read about the way Spryker treats multi-select attributes from Akeneo. " />
+    </head>
+    <body>
+        <h1>Akeneo - Installation and Configuration <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Installation</h2>
+        <p>To install AkeneoPim, add <var>AkeneoPimMiddlewareConnector</var> by running the console command:</p><pre><code class="language-PHP">
+composer require spryker-eco/akeneo-pim-middleware-connector:1.0.1</code></pre>
+        <h2><a name="Global"></a>Global configuration</h2>
+        <p>Add <var>SprykerMiddleware</var> to your project’s core namespaces:</p><pre><code class="language-php line-numbers">
+	$config[KernelConstants::CORE_NAMESPACES] = [
+		'SprykerShop',
+		'SprykerMiddleware',
+		'SprykerEco',
+		'Spryker',
+	];</code></pre>
+        <p>To set up the Akeneo initial configuration, use the credentials you received from your PIM:</p><pre><code class="language-php line-numbers">
+	$config[AkeneoPimConstants::HOST] = '';
+	$config[AkeneoPimConstants::USERNAME] = '';
+	$config[AkeneoPimConstants::PASSWORD] = '';
+	$config[AkeneoPimConstants::CLIENT_ID] = '';
+	$config[AkeneoPimConstants::CLIENT_SECRET] = '';
+				</code></pre>
+        <p>Next, specify your paths to additional map files:</p><pre><code class="language-php line-numbers">
+	$config[AkeneoPimMiddlewareConnectorConstants::LOCALE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/locale_map.json';
+	$config[AkeneoPimMiddlewareConnectorConstants::ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/attribute_map.json';
+	$config[AkeneoPimMiddlewareConnectorConstants::SUPER_ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/super_attribute_map.json';
+</code></pre>
+        <p>This being done, specify the ID of the category template that should be assigned to the  imported categories:</p><pre><code class="language-php">
+	$config[AkeneoPimMiddlewareConnectorConstants::FK_CATEGORY_TEMPLATE] = 1;</code></pre>
+        <p>Next, specify the name of a tax set for the imported products:</p><pre><code class="language-php">
+	$config[AkeneoPimMiddlewareConnectorConstants::TAX_SET] = 1;</code></pre>
+        <p>Finally, specify the locales that should be imported to shops and stores in which imported products are to be available, and specify how prices should be mapped according to locales:</p><pre><code class="language-php line-numbers">
+	$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_FOR_IMPORT] = [
+		'de_DE',
+		'de_AT',
+	];
+	$config[AkeneoPimMiddlewareConnectorConstants::ACTIVE_STORES_FOR_PRODUCTS] = [
+		'DE',
+		'AT'
+	];
+	$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_TO_PRICE_MAP] = [
+		'de_DE' =&gt; [
+			'currency' =&gt; 'EUR',
+			'type' =&gt; 'DEFAULT',
+			'store' =&gt; 'DE',
+		],
+		'en_US' =&gt; [
+			'currency' =&gt; 'USD',
+			'type' =&gt; 'DEFAULT',
+			'store' =&gt; 'US',
+		],
+	];
+				</code></pre>
+        <h2>Dependency configuration</h2>
+        <p>Add Middleware Process console command to <var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var> in your project:</p><pre><code class="language-PHP line-numbers">
+…
+use SprykerMiddleware\Zed\Process\Communication\Console\ProcessConsole;
+…
+ 
+protected function getConsoleCommands(Container $container)
+{
+   $commands = [
+       … 
+       new ProcessConsole(),
+   ];
+   …
+   return $commands;
+}</code></pre>
+        <p>Create ProcessDependencyProvider on a project level for specifying ConfigurationPlugins. Add <var>src/Pyz/Zed/Process/ProcessDependencyProvider.php</var> file:</p><pre><code class="language-PHP line-numbers">
+&lt;?php
+ 
+namespace Pyz\Zed\Process;
+ 
+use SprykerEco\Zed\AkeneoPimMiddlewareConnector\Communication\Plugin\Configuration\AkeneoPimConfigurationProfilePlugin;
+use SprykerEco\Zed\AkeneoPimMiddlewareConnector\Communication\Plugin\Configuration\DefaultAkeneoPimConfigurationProfilePlugin;
+use SprykerMiddleware\Zed\Process\Communication\Plugin\Configuration\DefaultConfigurationProfilePlugin;
+use SprykerMiddleware\Zed\Process\ProcessDependencyProvider as SprykerProcessDependencyProvider;
+ 
+class ProcessDependencyProvider extends SprykerProcessDependencyProvider
+{
+    /**
+     * @return \SprykerMiddleware\Zed\Process\Dependency\Plugin\Configuration\ConfigurationProfilePluginInterface[]
+     */
+    protected function getConfigurationProfilePluginsStack(): array
+    {
+        $profileStack = parent::getConfigurationProfilePluginsStack();
+        $profileStack[] = new DefaultConfigurationProfilePlugin();
+        $profileStack[] = new AkeneoPimConfigurationProfilePlugin();
+        $profileStack[] = new DefaultAkeneoPimConfigurationProfilePlugin();
+ 
+        return $profileStack;
+    }
+}</code></pre>
+        <h2>Import configuration</h2>
+        <p>Firstly, extend the AkeneoPimMiddlewareConnector module on a project level. Create <var>src/Pyz/Zed/AkeneoPimMiddlewareConnector</var> folder.</p>
+        <p>Inside the module, implement plugins for writing data (categories, attributes, abstract and concrete products) into the shop. Add the following plugins to <var>src/Pyz/Zed/AkeneoPimMiddlewareConnector/Communication/Plugin</var>:</p>
+        <ul>
+            <li>AttributeDataImporterPlugin</li>
+            <li>CategoryDataImporterPlugin</li>
+            <li>ProductAbstractDataImporterPlugin</li>
+            <li>ProductDataImporterPlugin</li>
+        </ul>
+        <p>Find an examplary plugin implementation below.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>ProductAbstractDataImporterPlugin.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+&lt;?php
+  
+namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Communication\Plugin;
+ 
+use Spryker\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEco\Zed\AkeneoPimMiddlewareConnector\Dependency\Plugin\DataImporterPluginInterface;
+ 
+class ProductAbstractDataImporterPlugin extends AbstractPlugin implements DataImporterPluginInterface
+{
+    /**
+     * @api
+     *
+     * @param array $data
+     *
+     * @return void
+     */
+    public function import(array $data): void
+    {
+        $this-&gt;getFacade()-&gt;importProductsAbstract($data);
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Implement your own DataImporter for importing products to the shop database. It can be a business module inside the AkeneoPimMiddlewareConnector module. Example:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoDataImporter.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+&lt;?php
+ 
+namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter;
+ 
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface;
+use Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface;
+use Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface;
+use Spryker\Zed\EventBehavior\EventBehaviorConfig;
+ 
+class AkeneoDataImporter implements AkeneoDataImporterInterface
+{
+    /**
+     * @var \Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface
+     */
+    protected $dataImporterPublisher;
+ 
+     /**
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface
+     */
+    protected $dataSetStepBroker;
+ 
+     /**
+     * @var \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
+     */
+    protected $dataSet;
+ 
+     /**
+     * @var \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+     */
+    protected $writerPlugins;
+ 
+     /**
+     * @param \Spryker\Zed\DataImport\Business\Model\Publisher\DataImporterPublisherInterface $dataImporterPublisher
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface $dataSetStepBroker
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     * @param \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface|array $writerPlugins
+     */
+    public function __construct(
+        DataImporterPublisherInterface $dataImporterPublisher,
+        DataSetStepBrokerInterface $dataSetStepBroker,
+        DataSetInterface $dataSet,
+        array $writerPlugins = []
+    ) {
+        $this-&gt;dataImporterPublisher = $dataImporterPublisher;
+        $this-&gt;dataSetStepBroker = $dataSetStepBroker;
+        $this-&gt;dataSet = $dataSet;
+        $this-&gt;writerPlugins = $writerPlugins;
+    }
+ 
+     /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function import(array $data): void
+    {
+        EventBehaviorConfig::disableEvent();
+        foreach ($data as $item) {
+            $this-&gt;dataSet-&gt;exchangeArray($item);
+            $this-&gt;dataSetStepBroker-&gt;execute($this-&gt;dataSet);
+             /** @var DataSetWriterPluginInterface $writerPlugin */
+            foreach ($this-&gt;writerPlugins as $writerPlugin) {
+                $writerPlugin-&gt;write($this-&gt;dataSet);
+            }
+        }
+         foreach ($this-&gt;writerPlugins as $writerPlugin) {
+            $writerPlugin-&gt;write($this-&gt;dataSet);
+        }
+         EventBehaviorConfig::enableEvent();
+        $this-&gt;dataImporterPublisher-&gt;triggerEvents();
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Implement facade methods for the AkeneoPimMiddlewareConnector module. Example:</p><pre><code class="language-PHP line-numbers">
+class AkeneoPimMiddlewareConnectorFacade extends SprykerAkeneoPimMiddlewareConnectorFacade implements AkeneoPimMiddlewareConnectorFacadeInterface
+...
+    /**
+     * @param array $data
+     */
+    public function importProductsAbstract(array $data): void
+    {
+        $this-&gt;getFactory()
+            -&gt;createProductAbstractImporter()
+            -&gt;import($data);
+    }
+...</code></pre>
+        <h2>Dataset step broker and writer</h2>
+        <p> Business Factory method is used for Importer creation. Determine the data writing approach and how you want to broke the payload. The AkeneoImporter you implemented usually expects the implementation of <var>\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface</var>.</p>
+        <p>For better understanding, see the example of the AkeneoDataImporter creation for importing abstract products in <var>AkeneoPimMiddlewareConnectorBusinessFactory.</var></p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoPimMiddlewareConnectorBusinessFactory</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+...
+class AkeneoPimMiddlewareConnectorBusinessFactory extends SprykerAkeneoPimMiddlewareConnectorBusinessFactory
+...
+ 
+    /**
+     * @return \Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter\AkeneoDataImporterInterface
+     */
+    public function createProductAbstractImporter()
+    {
+        return new AkeneoDataImporter(
+            $this-&gt;createDataImporterPublisher(),
+            $this-&gt;createProductAbstractImportDataSetStepBroker(),
+            $this-&gt;createDataSet(),
+            $this-&gt;getProvidedDependency(AkeneoPimMiddlewareConnectorDependencyProvider::PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS)
+        );
+    }
+ 
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface
+     */
+    public function createDataSet()
+    {
+        return new DataSet();
+    }
+ 
+    /**
+     * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface
+     *
+     * @throws \Spryker\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException
+     */
+    public function createProductAbstractImportDataSetStepBroker()
+    {
+        $dataSetStepBroker = new DataSetStepBroker();
+        $dataSetStepBroker-&gt;addStep(new ProductAbstractStep());
+ 
+        return $dataSetStepBroker;
+    }
+...</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>As you can see, in <var>DataSetStepBroker,</var> you can add your own steps for preparing data for writers. You can find ready made steps in the DataImport module or implement your own steps. Example:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>ProductAbstractStep</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+&lt;?php
+ 
+namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Business\DataImportStep;
+ 
+use Generated\Shared\Transfer\SpyProductAbstractEntityTransfer;
+use Pyz\Zed\DataImport\Business\Model\ProductAbstract\ProductAbstractHydratorStep;
+use Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface;
+ 
+class ProductAbstractStep extends ProductAbstractHydratorStep
+{
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function importProductAbstract(DataSetInterface $dataSet): void
+    {
+        $productAbstractEntityTransfer = new SpyProductAbstractEntityTransfer();
+        $productAbstractEntityTransfer-&gt;setSku($dataSet[static::KEY_ABSTRACT_SKU]);
+ 
+        $productAbstractEntityTransfer
+            -&gt;setColorCode($dataSet[static::KEY_COLOR_CODE])
+            -&gt;setFkTaxSet($dataSet[static::KEY_TAX_ID)
+            -&gt;setAttributes(json_encode($dataSet[static::KEY_ATTRIBUTES]))
+            -&gt;setNewFrom($dataSet[static::KEY_NEW_FROM])
+            -&gt;setNewTo($dataSet[static::KEY_NEW_TO]);
+ 
+        $dataSet[static::DATA_PRODUCT_ABSTRACT_TRANSFER] = $productAbstractEntityTransfer;
+    }
+ 
+    /**
+     * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
+     *
+     * @return void
+     */
+    protected function importProductCategories(DataSetInterface $dataSet): void
+    {
+        $dataSet[static::DATA_PRODUCT_CATEGORY_TRANSFER] = [];
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>You can change default data mappers and translators for overriding keys or values. By default, Akeneo has a list of predefined mappers, translators and validators for each  import type, but it can be adjusted to meet your requirements. Check the <a href="file:///C:/Dev/academy-sandbox/Spryker Developer Guide/Content/Spryker-Middleware.htm">middleware documentation </a>for more details. </p>
+        <p>You also need to take care of that data that is to be written to the database. Two approaches can be used for that.</p>
+        <p>For attributes and categories, Spryker has implemented writer steps, so no plugins are required for that. Example:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoPimMiddlewareConnectorBusinessFactory</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+/**
+ * @return \Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter\AkeneoDataImporterInterface
+ */
+public function createCategoryImporter(): AkeneoDataImporterInterface
+{
+    return new AkeneoDataImporter(
+        $this-&gt;createDataImporterPublisher(),
+        $this-&gt;createCategoryImportDataSetStepBroker(),
+        $this-&gt;createDataSet()
+    );
+}
+ 
+/**
+ * @return \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface
+ */
+public function createCategoryImportDataSetStepBroker()
+{
+    $dataSetStepBroker = new DataSetStepBroker();
+    $dataSetStepBroker-&gt;addStep($this-&gt;createCategoryWriteStep());
+ 
+    return $dataSetStepBroker;
+}
+ 
+/**
+ * @return \Spryker\Zed\DataImport\Business\Model\DataImportStep\DataImportStepInterface
+ */
+public function createCategoryWriteStep()
+{
+    return new CategoryWriterStep($this-&gt;createCategoryReader());
+}
+ 
+/**
+ * @return \Spryker\Zed\CategoryDataImport\Business\Model\Reader\CategoryReader
+ */
+public function createCategoryReader(): CategoryReader
+{
+    return new CategoryReader();
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>The example demonstrates how you can skip adding plugins for writing data to the database. </p>
+        <p>Product import is a more complex operation, so Spryker provides bulk insertion plugins for that. They are faster than the writer steps.</p>
+        <p>You can use the existing plugins or create your own. The right way to add external plugins is to use dependency providers. We have two types of writer plugins: Propel plugins and PDO&#160;plugins. Check the examples for both of them below.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoPimMiddlewareConnectorBusinessFactory</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+/**
+ * @return \Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter\AkeneoDataImporterInterface
+ */
+public function createProductAbstractImporter()
+{
+    return new AkeneoDataImporter(
+        $this-&gt;createDataImporterPublisher(),
+        $this-&gt;createProductAbstractImportDataSetStepBroker(),
+        $this-&gt;createDataSet(),
+        $this-&gt;getProvidedDependency(AkeneoPimMiddlewareConnectorDependencyProvider::PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS)
+    );
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoPimMiddlewareConnectorDependencyProvider</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+...
+class AkeneoPimMiddlewareConnectorDependencyProvider extends SprykerAkeneoPimMiddlewareConnectorDependencyProvider
+{
+    public const PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS = 'PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS';
+ 
+   /**
+    * @param \Spryker\Zed\Kernel\Container $container
+    *
+    * @return \Spryker\Zed\Kernel\Container
+    */
+    protected function addProductAbstractPropelWriterPlugins(Container $container): Container
+    {
+        $container[static::PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS] = function () {
+            return [
+             new ProductAbstractPropelWriterPlugin(),
+            ];
+        };
+ 
+        return $container;
+    }
+ 
+...
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>When we use only ProductAbstractPropelWriterPlugin, ProductStores, ProductPrices, etc are not imported. If you want to import something other than products, you need to add more writer plugins.</p>
+        <p>For example, if you want to import a product store, provide one more plugin in dependency provider.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>AkeneoPimMiddlewareConnectorDependencyProvider</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+/**
+ * @param \Spryker\Zed\Kernel\Container $container
+ *
+ * @return \Spryker\Zed\Kernel\Container
+ */
+protected function addProductAbstractPropelWriterPlugins(Container $container): Container
+{
+    $container[static::PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS] = function () {
+        return [
+            new ProductAbstractPropelWriterPlugin(),
+            new ProductAbstractStorePropelWriterPlugin(),
+        ];
+    };
+ 
+    return $container;
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p class="note">In case you add more writer plugins, you might have to add more steps to dataset step broker.</p>
+        <h2>Console commands</h2>
+        <p>Now the following console commands are available in your project. Run them one by one.</p><pre><code class="language-bash">
+1) Command to import super attributes:
+vendor/bin/console middleware:process:run -p SUPER_ATTRIBUTE_IMPORT_PROCESS -o data/import/maps/super_attribute_map.json
+ 
+2) Command to prepare locale mapping:
+vendor/bin/console middleware:process:run -p LOCALE_MAP_IMPORT_PROCESS -o data/import/maps/locale_map.json
+ 
+3) Command to prepare products attributes mapping:
+vendor/bin/console middleware:process:run -p ATTRIBUTE_MAP_PROCESS -o data/import/maps/attribute_map.json
+ 
+4) Command to import categories:
+vendor/bin/console middleware:process:run -p DEFAULT_CATEGORY_IMPORT_PROCESS
+ 
+5) Command to import products attributes:
+vendor/bin/console middleware:process:run -p ATTRIBUTE_IMPORT_PROCESS
+ 
+6) Command to prepare product models data in local file:
+vendor/bin/console middleware:process:run -p PRODUCT_MODEL_PREPARATION_PROCESS -o data/import/maps/product_models.json
+ 
+7) Command to import product model data (abstract products):
+vendor/bin/console middleware:process:run -p DEFAULT_PRODUCT_MODEL_IMPORT_PROCESS -i data/import/maps/product_models.json
+ 
+8) Command to prepare products data in local file:
+vendor/bin/console middleware:process:run -p PRODUCT_PREPARATION_PROCESS -o data/import/maps/products.json
+ 
+9) Command to import product model data (abstract products):
+vendor/bin/console middleware:process:run -p DEFAULT_PRODUCT_IMPORT_PROCESS -i data/import/maps/products.json</code></pre>
+        <h2><a name="Multi-se"></a>Multi-select Attributes</h2>
+        <p class="important">The section below explains how Spryker treats multi-select attribues from Akeneo.</p>
+        <ol>
+            <li>The attribute <var>pim_catalog_multiselect</var> is imported as a concatenated string.</li>
+            <li>The following attribute types are skipped during import:</li>
+            <ul>
+                <li><var>pim_assets_collection</var>
+                </li>
+                <li><var>pim_reference_data_multiselect</var>
+                </li>
+                <li><var>pim_catalog_price_collection</var>
+                </li>
+            </ul>
+            <li>On a project level, you can change <var>DefaultProductImportDictionary</var> instead of using the <var>EnrichAttributes</var> translator function or extending it.</li>
+            <li>Price attributes (<var>pim_catalog_price_collection</var>), except the one with <var>attribute_key = 'price'</var>, are skipped. For correct import, products should contain an attribute with <var>attribute_type pim_catalog_price_collection</var> and <var>attribute_key 'price'</var>.</li>
+        </ol>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="akeneo.htm">Learn about Akeneo</a><![CDATA[
+            ]]></li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb. 19th, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Volodymyr Hrychenko, Andrii Tserkovnyi</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

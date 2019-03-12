@@ -1,0 +1,314 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.MultiCurrency,Spryker.MultiLanguage" xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head><title>Installing the Category CMS Blocks | Spryker</title>
+        <meta name="description" content="The procedure described in this topic will guide you through the process of installing the Category CMS Blocks in your project." />
+    </head>
+    <body>
+        <h1>Installing the Category CMS Blocks</h1>
+        <p>Category blocks are blocks that can be embedded into the category template.</p>
+        <p>To enable the Category CMS Block in your project, do the following:</p>
+        <ol>
+            <li>Install CMS Block Category Connector module by composer. 
+			<p><var>"spryker/cms-block-category-connector": "^2.0.0"</var>.</p></li>
+            <li>Register the CMS block form plugin.</li>
+            <li>Add the <var>CmsBlockCategoryFormPlugin</var> to the CMS Block GUI dependency provider (<var>\Pyz\Zed\CmsBlockGui\CmsBlockGuiDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryFormPlugin;
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+	{
+	/**
+	 * @return array
+	 */
+	protected function getCmsBlockFormPlugins()
+	{
+		return = array_merge(parent::getCmsBlockFormPluginsq(), [
+			new CmsBlockCategoryFormPlugin(),
+		]);
+	}
+}</code></pre></p></li>
+            <li>Register the CMS block form the handler plugin.</li>
+            <li>Add the <var>CmsBlockCategoryConnectorUpdatePlugin</var> to the CMS Block dependency provider (<var>Pyz\Zed\CmsBlock\CmsBlockDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlock;
+
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryConnectorUpdatePlugin;
+
+
+class CmsBlockDependencyProvider extends CmsBlockCmsBlockDependencyProvider
+{
+	protected function getCmsBlockUpdatePlugins()
+	{
+		return array_merge(parent::getCmsBlockUpdatePlugins(), [
+			new CmsBlockCategoryConnectorUpdatePlugin()
+		]);
+	}
+}</code></pre></p></li>
+            <li>Register collector plugin: add the <var>CmsBlockCategoryConnectorCollectorPlugin</var> to the Collector dependency provider (<var>\Pyz\Zed\Collector\CollectorDependencyProvider</var>).
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Collector;
+...
+
+class CollectorDependencyProvider extends SprykerCollectorDependencyProvider
+{
+	public function provideBusinessLayerDependencies(Container $container)
+	{
+		...
+
+		$container[self::STORAGE_PLUGINS] = function (Container $container) {
+			return [
+				...
+				CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR =&gt; new CmsBlockCategoryConnectorCollectorPlugin(),
+			];
+		};
+	}
+}</code></pre></p></li>
+            <li>Register Category form and form handler plugins.
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+...
+
+class CategoryDependencyProvider extends SprykerDependencyProvider
+{
+	...
+	/**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     */
+    protected function getRelationUpdatePluginStack()
+    {
+        return array_merge(
+            [
+				...
+                new CategoryFormPlugin(),
+            ],
+            parent::getRelationUpdatePluginStack()
+        );
+    }
+
+	/**
+     * @return array
+     */
+    protected function getCategoryFormPlugins()
+    {
+        return array_merge(parent::getCategoryFormPlugins(), [
+			...
+            new CategoryFormPlugin()
+        ]);
+    }
+}</code></pre></p></li>
+            <li>Register the category list plugin (optional): To show which categories are assigned to a block on a block view page, add the <var>CmsBlockCategoryListViewPlugin</var> to the CMS Block GUI dependency provider.
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+...
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+{
+	...
+
+	/**
+	* @return array
+	*/
+	protected function getCmsBlockViewPlugins()
+	{
+		return array_merge(parent::getCmsBlockViewPlugins(), [
+			new CmsBlockCategoryListViewPlugin(),
+		]);
+	}
+}</code></pre></p></li>
+            <li>Register the CMS block form the handler plugin.</li>
+            <li>Add the <var>CmsBlockCategoryConnectorUpdatePlugin</var> to the CMS Block dependency provider  (<var>Pyz\Zed\CmsBlock\CmsBlockDependencyProvider</var>).
+		<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlock;
+
+use Spryker\Zed\CmsBlockCategoryConnector\Communication\Plugin\CmsBlockCategoryConnectorUpdatePlugin;
+
+
+class CmsBlockDependencyProvider extends CmsBlockCmsBlockDependencyProvider
+{
+	protected function getCmsBlockUpdatePlugins()
+	{
+		return array_merge(parent::getCmsBlockUpdatePlugins(), [
+			new CmsBlockCategoryConnectorUpdatePlugin()
+		]);
+	}
+}</code></pre></p></li>
+            <li>Register collector plugin: add the <var>CmsBlockCategoryConnectorCollectorPlugin</var> to the Collector dependency provider (<var>\Pyz\Zed\Collector\CollectorDependencyProvider</var>).
+        <p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Collector;
+...
+
+class CollectorDependencyProvider extends SprykerCollectorDependencyProvider
+{
+	public function provideBusinessLayerDependencies(Container $container)
+	{
+		...
+
+		$container[self::STORAGE_PLUGINS] = function (Container $container) {
+			return [
+				...
+				CmsBlockCategoryConnectorConstants::RESOURCE_TYPE_CMS_BLOCK_CATEGORY_CONNECTOR =&gt; new CmsBlockCategoryConnectorCollectorPlugin(),
+			];
+		};
+	}
+}</code></pre></p></li>
+            <li>Register Category form and form handler plugins.
+        <p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+...
+
+class CategoryDependencyProvider extends SprykerDependencyProvider
+{
+	...
+	/**
+     * @return \Spryker\Zed\Category\Dependency\Plugin\CategoryRelationUpdatePluginInterface[]
+     */
+    protected function getRelationUpdatePluginStack()
+    {
+        return array_merge(
+            [
+				...
+                new CategoryFormPlugin(),
+            ],
+            parent::getRelationUpdatePluginStack()
+        );
+    }
+
+	/**
+     * @return array
+     */
+    protected function getCategoryFormPlugins()
+    {
+        return array_merge(parent::getCategoryFormPlugins(), [
+			...
+            new CategoryFormPlugin()
+        ]);
+    }
+}</code></pre></p></li>
+            <li>Register the category list plugin (optional): To show which categories are assigned to a block on a block view page, add the <var>CmsBlockCategoryListViewPlugin</var> to the CMS Block GUI dependency provider.
+<p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\CmsBlockGui;
+
+...
+
+class CmsBlockGuiDependencyProvider extends CmsBlockGuiCmsBlockGuiDependencyProvider
+{
+	...
+
+	/**
+	* @return array
+	*/
+	protected function getCmsBlockViewPlugins()
+	{
+		return array_merge(parent::getCmsBlockViewPlugins(), [
+			new CmsBlockCategoryListViewPlugin(),
+		]);
+	}
+}</code></pre></p></li>
+        </ol>
+        <h3 MadCap:conditions="Spryker.DemoShop">Usage for Demoshop</h3>
+        <p MadCap:conditions="Spryker.DemoShop">
+		Adding a template for the new block is done in the same way as for static blocks, see .</p>
+        <p MadCap:conditions="Spryker.DemoShop">
+			Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. We'll call it <var>categorySale.twig</var> and it will have the following structure :
+		</p><pre MadCap:conditions="Spryker.DemoShop"><code class="language-html line-numbers">&lt;!-- CMS_BLOCK_PLACEHOLDER : "saleMessage" --&gt;
+&lt;!-- CMS_BLOCK_PLACEHOLDER : "saleInterval" --&gt;
+&lt;blockquote&gt;
+	{{ spyCmsBlockPlaceholder('saleMessage') | raw }}
+
+	&lt;footer&gt;
+		{{ spyCmsBlockPlaceholder('saleInterval') | raw }}
+	&lt;/footer&gt;
+&lt;/blockquote&gt;</code></pre>
+        <p MadCap:conditions="Spryker.DemoShop"><strong>To configure the block</strong>: </p>
+        <ol>
+            <li>In the Zed UI, go to the CMS section  and navigate to the blocks section.</li>
+            <li>Click <strong>Create CMS Block</strong> to create a new block. </li>
+            <li>From the template drop-down, select the new template and  name the new block.</li>
+            <li>Set the "Category" and enter the category URL in the <strong>Category </strong>field. <br />While typing, the product  search will offer suggestions from the product list.</li>
+            <li>View on a CMS Block edit page:
+<p><img src="../../../Resources/Images/cms-block-category-edit-page.png" title="Edit CMS Block Page" style="width: 484px;height: 650px;" /></p></li>
+            <li>View on a Category edit page:
+       <p><img src="../../../Resources/Images/cms-block-category-category-edit-page.png" title="Edit Category Page" style="width: 476px;height: 226px;" /></p></li>
+            <li>Set the block to <strong>active</strong> to use it straight away.</li>
+            <li>After clicking <strong>Save</strong>, you will be prompted to provide glossary keys for the placeholders  included in the Twig template. <br /></li>
+            <li>Embed the block into the category page by adding the following code in the <var>catalog.twig</var> template
+<p><pre><code class="language-bash">{% if category is defined %}
+	{{ spyCmsBlock({category: category.id}) }}
+{% endif %}</code></pre></p></li>
+            <li>To see the page in Yves, the client data storage (Redis) must be up-to-date. This is handled through cronjobs.</li>
+            <li>To manually execute this step,  run the collectors to update the frontend data storage:
+<pre><code class="language-bash">vendor/bin/console collector:storage:export</code></pre></li>
+        </ol>
+        <p><strong>To configure block positions</strong>: </p>
+        <p>
+            Usually you don't want to change Twig templates for each block assignment, but still be able to manage CMS Blocks from Zed GUI.
+            In this case we recommend to use positioning.
+        </p>
+        <p>
+            CMS Block positioning means that you can predefine some of the useful places in your Twig templates once and then manage your CMS Blocks based
+            on relations to categories and position. For example you could define "header", "body", "footer" positions to manage your CMS Blocks in those places independently.
+        </p>
+        <p>
+            By default we provide the following positions: "Top", "Middle", "Bottom", but you can easily change them in the module configuration on a project level
+            (put your extension of <var>CmsBlockCategoryConnectorConfig</var> with the replaced method <var>getCmsBlockCategoryPositionList</var> to <var>Pyz\Zed\CmsBlockCategoryConnector\CmsBlockCategoryConnectorConfig</var> as in the example below).
+        </p>
+        <p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\CmsBlockCategoryConnector;
+
+...
+
+class CmsBlockCategoryConnectorConfig extends SprykerCmsBlockCategoryConnectorConfig
+{
+	const CMS_BLOCK_CATEGORY_POSITION_TOP = 'Top';
+	const CMS_BLOCK_CATEGORY_POSITION_MIDDLE = 'Middle';
+	const CMS_BLOCK_CATEGORY_POSITION_BOTTOM = 'Bottom';
+
+	/**
+     * @return array
+     */
+    public function getCmsBlockCategoryPositionList()
+    {
+        return [
+            static::CMS_BLOCK_CATEGORY_POSITION_TOP,
+            static::CMS_BLOCK_CATEGORY_POSITION_MIDDLE,
+            static::CMS_BLOCK_CATEGORY_POSITION_BOTTOM,
+        ];
+    }
+
+}</code></pre>
+        </p>
+        <p>
+            Run position sync:<br />To update a list of positions for CMS Blocks on a category page, execute at least once the <var>Spryker\Zed\CmsBlockCategoryConnector\Business\CmsBlockCategoryConnectorFacade::syncCmsBlockCategoryPosition()</var> (e.g. on CMS Block Category importer)).
+        </p>
+        <p>
+			Now you can use the block with the specified position:
+		</p>
+        <p><pre><code class="language-html">{{ spyCmsBlock({category: category.id, position: 'top'}) }}</code></pre>
+        </p>
+        <p><strong>Results</strong>:</p>
+        <p>After running the collectors you should be able to see the block only on the page for which you configured it to be shown.</p>
+        <p>&#160;</p>
+        <p><b>See also</b>:</p>
+        <ul>
+            <li><a href="cms-block.htm">Learn what CMS blocks are and what they are needed for</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block.htm">Learn how to migrate to a newer version of CMS Block</a>
+            </li>
+            <li>Learn about multi-store CMS block functionality and how to enable it
+            </li>
+            <li>Learn about product blocks and how to enable them
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 15, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Denis Tukrov, Anastasija Datsun</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

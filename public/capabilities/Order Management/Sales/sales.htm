@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Sales <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p MadCap:conditions="General.Hidden Comment">used to be: http://spryker.github.io/core/bundles/sales/</p>
+        <p>
+            <MadCap:relatedTopics target="_self" style="mc-label: 'Versions';mc-help-control-display: list;">
+                <MadCap:relatedTopic src="sales-5-0.htm" />
+            </MadCap:relatedTopics>
+        </p>
+        <p>The Sales module provides the order management functionality. The functionality is obtained through the ZED UI that renders orders with orders details and the Client API to get customer orders.</p>
+        <h2>Getting Totals for Order</h2>
+        <p>To get the Order with totals, the facade method <var>SalesFacade::getOrderByIdSalesOrder()</var> creates an order level which returns the <var> OrderTransfer</var> with a hydrated grandTotal, subtotal, expense, discounts and more</p>
+        <p class="important">This is an improvement from the Sales 5.0 version where you had to use <var>SalesAggregatorFacade</var> to get totalks. This version has been deprecated.</p>
+        <h2>Persisting Order Calculated Values</h2>
+        <p>All calculated values are persisted now, when order are first placed. The values are stored by orderSaver plugins from checkout bundle. Check <var>\Pyz\Zed\Checkout\CheckoutDependencyProvider::getCheckoutOrderSavers</var> for currently available plugins.</p>
+        <p>Some values can change during time when order refunded or partially refunded. Then <var>canceled_amount </var>and <var>refundable_amount</var> are recalculated and new values is persisted. At the same moment totals also change, but it does not overwrite old entry, but creates new row in <var>spy_sales_order_total</var> with this you have a history of order totals from the time order was placed.</p>
+        <p>The following ER diagram shows persisted calculated values:</p>
+        <p>
+            <img src="../../../Resources/Images/sales_persisting_order_values.png" title="Click Me" alt="Persising order calculated values" class="Thumbnail" />
+        </p>
+        <h2><a name="Extensio"></a>Extension Points</h2>
+        <p>HydrateOrderPluginInterface - its an action which happens when <var>SalesFacade::getOrderByIdSalesOrder() </var>method is called. This means that you may want to enrich you <var>OrderTransfer</var> with additional data. This plugins accepts passes OrderTransfer for additional population. </p>
+        <p>There are already few plugins provided:</p>
+        <ul>
+            <li><var>DiscountOrderHydratePlugin</var> - hydrates <var>OrderTransfer</var> with discount related data as it was stored when order is placed.</li>
+            <li><var>ProductOptionOrderHydratePlugin</var> - hydrates <var>OrderTransfer</var> with product option related data.</li>
+            <li><var>ProductBundleOrderHydratePlugin</var> - hydrates <var>OrderTransfer</var> with product bundle related data.</li>
+            <li><var>ShipmentOrderHydratePlugin</var> - hydrates <var>OrderTransfer </var>with shipment related data.</li>
+        </ul>
+    </body>
+</html>

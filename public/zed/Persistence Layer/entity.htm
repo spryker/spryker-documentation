@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Entity</h1>
+        <p MadCap:conditions="General.Hidden Comment">Used to be: http://spryker.github.io/development-guide/zed/persistence-layer/entity/</p>
+        <p>In Spryker an entity represents one entry from a table in the database. Entities are an implementation of the <a href="https://en.wikipedia.org/wiki/Active_record_pattern" target="_blank">Active record design pattern</a>, so their usage is very simple.
+For a full documentation see <a href="http://propelorm.org/documentation/reference/active-record.html" target="_blank">Propel’s Active Record Reference</a>. </p>
+        <p class="note">Spryker’s entities are called Active Record classes or just Models there.
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+$customer = new SpyCustomer();
+$customer-&gt;setFirstName('John');
+$customer-&gt;setLastName('Doe');
+$customer-&gt;setEmail('john.doe@spryker.com');
+$customer-&gt;save();
+</code></pre>
+        <h2>Saving Entities With Transactions
+</h2>
+        <p>In general, Propel performs every save operation in a transaction. Sometimes you want to save things together, e.g. when you save customers and order-items during the checkout. For this you can use Propel’s connection.
+</p><pre><code class="language-PHP line-numbers"> &lt;?php
+ $connection = Propel::getConnection();
+ $connection-&gt;beginTransaction();
+ 
+ $customerEntity-&gt;save();
+ $customerAddressEntity-&gt;save();
+ $salesOrderEntity-&gt;save();
+ $connection-&gt;commit();
+</code></pre>
+        <h2>Entity Usage
+</h2>
+        <p>Usually entities are used in the module’s business layer to persist data. In contrast to most other classes in Spryker, entities are never injected, because they have state.
+
+Another way to retrieve entities is to use a query from the query container.</p>
+        <h2>Related Spryks</h2>
+        <p>You might use the following definitions to generate related code:</p>
+        <ul>
+            <li>Add Zed Persistence Propel Abstract Entity</li>
+        </ul>
+        <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="database_overview.htm">Database Overview</a>
+            </li>
+            <li><a href="database_schema_definition.htm">Defining Database Schema</a>
+            </li>
+            <li><a href="entity-manager.htm">Learn about Entity Manager and how to use it</a>
+            </li>
+            <li><a href="repository.htm">Learn about Repository class and how to use it
+				</a>
+            </li>
+            <li><a href="query_container.htm">Implementing and using a query container</a>
+            </li>
+            <li><a href="query_objects.htm">Creating query objects</a>
+            </li>
+        </ul>
+    </body>
+</html>

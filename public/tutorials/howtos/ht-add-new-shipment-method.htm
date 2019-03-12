@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2C,Spryker.B2B,Spryker.DemoShop,Spryker.ShopSuite,General.Draft">
+    <head><title>[%=Heading.Level1%]</title>
+    </head>
+    <body>
+        <h1>HowTo - Add a New Shipment Method <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <MadCap:relatedTopics style="mc-label: 'Versions';mc-help-control-display: popup;">
+                <MadCap:relatedTopic src="ht-add-new-shipment-method-2.htm" />
+            </MadCap:relatedTopics>
+        </p>
+        <p class="info">
+This article describes the steps to add a new shipment method, without integrating with the shipment provider.
+</p>
+        <p>In this tutorial we’ll consider the case when you need to add a new shipment method, without the need to integrate it with the shipment providers system.
+</p>
+        <p>
+What’s important for this situation is to have a price attached to the shipment method and also to have the correct tax set linked to it. Also, the <code>ship</code> event should be manually triggerable from the Zed Admin UI.
+
+</p>
+        <h2>Setting Up the State Machine
+</h2>
+        <p>The state machine that handles orders that use this shipment method needs to use a manual event for shipping, so that it can be triggered from the Zed Admin UI.
+</p>
+        <p>
+            <img src="../../Resources/Images/ship_event.png" class="Thumbnail" />
+        </p>
+        <p>
+The corresponding XML for this transition would be:
+
+</p><pre><code class="language-bash line-numbers">&lt;states&gt;
+   &lt;state name="exported" reserved="true"/&gt;
+   &lt;state name="shipped" reserved="true"/&gt;
+//..
+&lt;/states&gt;
+&lt;transitions&gt;
+    &lt;transition happy="true"&gt;
+        &lt;source&gt;exported&lt;/source&gt;
+        &lt;target&gt;shipped&lt;/target&gt;
+        &lt;event&gt;ship&lt;/event&gt;
+    &lt;/transition&gt;
+//..
+&lt;/transitions&gt;
+&lt;events&gt;
+    &lt;event name="ship" manual="true"/&gt;
+//..
+&lt;/events&gt;</code></pre>
+        <h2>Adding a New Shipment Method
+</h2>
+        <p><b>To add a new shipment method</b>:</p>
+        <ol>
+            <li>In the Zed Admin UI, navigate to the <code>Shipment</code>section and click on <code>Add new Carrier Company</code> . </li>
+            <li>Specify a name for the carrier company and the corresponding glossary key for having a localized name. </li>
+            <li>To  use this carrier company in the shop, select <code>Enabled </code>in the check-box.
+</li>
+        </ol>
+        <p>
+            <img src="../../Resources/Images/ui_add_carrier_cmpany.png" style="width: 554px;height: 337px;max-width: 50%;" class="" />
+        </p>
+        <p>Now that we have a new shipment carrier, we can add a new shipment method to it. </p>
+        <p><strong>To add a new shipment method to a carrier</strong>:</p>
+        <ol>
+            <li>Click "Add new Shipment Method".<br />You will be redirected to the "Add a new shipment method" dialog.</li>
+            <li>Select the carrier you created in the previous step. </li>
+            <li>Add the name and default price </li>
+            <li>Mark it as "Active"</li>
+            <li>Select the corresponding tax set.</li>
+            <li>Click "Add Shipment Method".</li>
+        </ol>
+        <p>
+            <img src="../../Resources/Images/ui_shipment_method_6.png" style="max-width: 60%;" />
+        </p>
+        <p>Now the new shipment method is available in the shop.</p>
+        <p>
+            <img src="../../Resources/Images/ui_shipment_selection.png" style="max-width: 60%;" /><![CDATA[
+]]></p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="shipment-overview.htm">Shipment Overview</a>
+            </li>
+            <li><a href="shipment-methods-plugins.htm">Shipment Methods Plugins</a>
+            </li>
+            <li><a href="ht-add-new-shipment-method-2.htm">HowTo - Add a New Shipment Method 2.0</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review day: Oct. 25th, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

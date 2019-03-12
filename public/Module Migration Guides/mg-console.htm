@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="General.Demoshop,Spryker.B2C,Spryker.B2B">
+    <head>
+    </head>
+    <body>
+        <h1>Migration Guide - Console <img src="../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <h2>Upgrading from Version 3.* to Version 4.*</h2>
+        <p>
+            Console version 4 has been prepared for a standalone usage. Now you are able to use Console module
+            even without a DB configuration.
+        </p>
+        <p>
+            Find or create <var>ConsoleDependencyProvider</var> in a project. Make sure it extends <var>\Spryker\Zed\Console\ConsoleDependencyProvider</var>. <br />          Find <var>getServiceProviders</var> method and add <var>\Spryker\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider</var> to the service stack.
+        </p>
+        <p>The method could look like this:</p><code class="php">
+/**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Silex\ServiceProviderInterface[]
+*/
+public function getServiceProviders(Container $container)
+{
+    $serviceProviders = parent::getServiceProviders($container);
+    $serviceProviders[] = new PropelServiceProvider();
+
+    return $serviceProviders;
+}
+        </code>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="mg-collector.htm">Learn how to migrate Collector</a>
+            </li>
+            <li>Learn more about Console Commands</li>
+        </ul>
+        <p><i>Last review date: Nov. 23rd, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Denis Turkov</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

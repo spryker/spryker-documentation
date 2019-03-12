@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Processor Stack - Zed API <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Request and Pre Processing
+</h2>
+        <p>We now need to decide further on the URL format. Should this be extension driven, which is easier to browse, or HTTP header driven, for example? What kind of URL query string transformation do we need, what kind of header parsing is required?
+
+</p>
+        <p>In order to keep this flexible for our customers, we provide a basic pre and post stack for prcessing the incoming request and the outgoing response.
+</p>
+        <p>Let’s start with the request and pre-processing. Inside the Api module’s ApiBusinessFactory class you can define your pre and post stack:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /*
+     * @return array
+     */
+    protected function getPreProcessorStack()
+    {
+        $stack = parent::getPreProcessorStack();
+        // Add your own or customize completely
+        
+        return $stack;
+    }
+</code></pre>
+        <p>The order matters. Each processor works based on the ApiRequestTransfer hydrating of the previous processors.
+
+</p>
+        <p>So usually, you first parse your URL and extract the actual path after the API prefix.
+
+</p>
+        <p>The <var>PathPreProcessor</var> takes the URL<var> /api/rest/customers/1.json?... </var>and extracts <var>customers/1.json </var>as path element.
+
+</p>
+        <p>The <var>FormatTypeByPathPreProcessor</var> would extract the .json extension for format resolution.
+
+</p>
+        <p>After that, the <var>ResourcePreProcessor</var>, <var>ResourceMethodPreProcessor</var> and <var>ResourceParametersPreProcessor</var> take care of mapping the remaining elements to the right resource and method. They also prepare the basic params.
+
+</p>
+        <p>Finally, we then prepare the CRUD methods with concrete params based on the payload, URL query strings, headers or alike. If you want to provide pagination, sorting, filtering, and more for your “find” action, you can hook in processors to translate your request to the <var>filterTransfer</var>.
+
+</p>
+        <h2>Response and Post Processing
+</h2>
+        <p>Similar the post processing stack can further hydrate the ApiResponseTransfer before returning it. Any custom headers you need to add to the response, you can add here based on the request or persistence data. You can also set or adjust response codes (“HTTP Status Codes”) and add special meta data to the response.
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+    /*
+     * @return array
+     */
+    protected function getPostProcessorStack()
+    {
+        $stack = parent::getPostProcessorStack();
+        // Add your own or customize completely
+                
+        return $stack;
+    }
+</code></pre>
+        <h2>Summary
+</h2>
+        <p>The processors in these stacks are deliberately very lax and easy to replace as each API implementation requires custom headers, parsing and mapping. By replacing the core processors or adding your own, you can map any incoming request to the underlying API dispatcher.
+</p>
+        <h3>Customizing OPTIONS Request</h3>
+        <p>The options request by default will return the configured array of HTTP methods for collection vs item.</p>
+        <table class="TableStyle-PatternedRows" style="mc-table-style: url('../../../Resources/TableStyles/PatternedRows.css'); margin-left: 0; margin-right: auto;" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">URI</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">type </th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">methods</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p> /</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">
+                        <p>collection </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                        <p>OPTIONS, GET, POST</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p> /{id/slug}</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">
+                        <p>item </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                        <p>OPTIONS, GET, PATCH, DELETE</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p>When you need to customize this per resource, add the <var>getHttpMethodsForItem()</var> and <var>getHttpMethodsForCollection()</var> methods to your <var>ApiResourcePlugin</var> classes by implementing the <var>Spryker\Zed\Api\Dependency\Plugin\OptionsForItemInterface</var> and <var>Spryker\Zed\Api\Dependency\Plugin\OptionsForCollectionInterface</var> interfaces for these plugins.</p>
+        <p>The result is that the return values of the above mentioned methods will then be used instead.</p><pre><code class="language-PHP line-numbers">&lt;?php
+/**
+ * @param array $params
+ *
+ * @return array
+ */
+public function getHttpMethodsForItem(array $params) {
+    return [...];
+}
+
+/**
+ * @param array $params
+ *
+ * @return array
+ */
+public function getHttpMethodsForItem(array $params) {
+    return [...];
+}</code></pre>
+        <p>You can omit the HTTP method <var>OPTIONS</var> as this will be auto-appended to the stack of methods.</p>
+    </body>
+</html>

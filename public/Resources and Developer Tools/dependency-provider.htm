@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Dependency Provider</h1>
+        <p MadCap:conditions="General.Hidden Comment">Used to be: http://spryker.github.io/development-guide/reference/dependency-provider/</p>
+        <p>Each <MadCap:variable name="General.bundles/modules" /> ships with a <var>DependencyProvider</var> class which explicitly defines services and external dependencies to other <MadCap:variable name="General.bundles/modules" />. For instance when the Cms module requires the Glossary module this needs to be configured here. The <var>DependencyProvider</var> defines dependencies for each layer. Usually you require some of these classes:
+
+</p>
+        <ul>
+            <li class="bullet_list">Services (Common functionality for Client, Yves and Zed)
+</li>
+            <li class="bullet_list">Plugins
+</li>
+            <li class="bullet_list">Facades
+</li>
+            <li class="bullet_list">Query Containers
+</li>
+        </ul>
+        <p>As you can see in the example these required classes are wrapped into a closure to enable lazy loading. Inside of the closure you get a <var>$container</var> variable which gives you access to a so called <a href="https://en.wikipedia.org/wiki/Service_locator_pattern" target="_blank">service locator</a> to retrieve the required classes like this: <var>$container-&gt;getLocator()-&gt;glossary()-&gt;facade()</var>.
+
+</p>
+        <p class="note">You can use any module name instead of <var>-&gt;glossary(</var>). The structure is always the same so you can copy and adopt it for your use case.
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+class CmsDependencyProvider extends SprykerCmsDependencyProvider
+{
+
+    const FACADE_GLOSSARY = 'FACADE_GLOSSARY';
+    const MY_PLUGINS = 'MY_PLUGINS';
+    const SERVICE_UTIL_SANITIZE = 'SERVICE_UTIL_SANITIZE';
+
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        // Provide access to a facade from another bundle (Glossary in this example)
+        $container[static::FACADE_GLOSSARY] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;glossary()-&gt;facade();
+        }
+
+        // Provide a stack of plugins from other bundles
+        $container[static::MY_PLUGINS] = function (Container $container) {
+            return [
+                new APlugin(),
+                new BPlugin(),
+            ];
+        };
+
+        // Provide a service from another bundle (UtilSanitize in this example)
+        $container[static::SERVICE_UTIL_SANITIZE] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;utilSanitize()-&gt;service();
+        };
+    };
+}</code></pre>
+        <h2>How to use the provided class?
+</h2>
+        <p>You can access the classes which are provided by the <var>DependencyProvider</var> in the <a href="factory.htm" target="_blank">Factory</a>. Technically the <var>$container</var> variable is a simple <a href="http://martinfowler.com/articles/injection.html" target="_blank">DI-container</a> based on <a href="http://pimple.sensiolabs.org/" target="_blank">Pimple</a>. The contained class is initialized only when you use it.
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+class CmsBusinessFactory extends AbstractBusinessFactory
+{
+    /**
+     * Returns an instance of the provided glossary facade.
+     *
+     * @return CmsToGlossaryInterface
+     */
+    protected function getGlossaryFacade()
+    {
+        return $this-&gt;getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
+    }
+}</code></pre>
+        <h2>Snippet for a new dependency provider
+</h2>
+        <p>To create a new dependency provider you can copy and adopt the snippet. Just rename <var>const FACADE_FOO_BAR</var> and <var>fooBar() </var>according to your requirements.
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\MyBundle;
+
+use Spryker\Zed\Kernel\AbstractBundleDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+
+class MyBundleDependencyProvider extends AbstractBundleDependencyProvider
+{
+    const FACADE_FOO_BAR = 'FACADE_FOO_BAR';
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[static::FACADE_FOO_BAR] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;fooBar()-&gt;facade();
+        };
+
+        return $container;
+    }
+
+}</code></pre>
+        <p>New bundles will not be auto-completable in your IDE just yet. Run <var>vendor/bin/console dev:ide:generate-auto-completion</var> to also get IDE typehinting for those, the yellow “markup” will go away.
+
+</p>
+        <h2>Bridges in Spryker Core
+</h2>
+        <p>When you look into dependency provider classes from the core level, you will discover the existence of bridges. Inside of Spryker’s Core we are using the <a href="https://en.wikipedia.org/wiki/Bridge_pattern" target="_blank">Bridge pattern</a> to avoid hard dependencies and to further decouple the bundles form each other.
+
+</p>
+        <p class="note">This is not needed in the project code and we recommend to avoid it to reduce overhead.
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+$container[static::FACADE_GLOSSARY] = function (Container $container) {
+    // Here we return the bridge instead of the required facade. Core only!
+    return new CmsToGlossaryBridge($container-&gt;getLocator()-&gt;glossary()-&gt;facade());
+};</code></pre>
+        <p>The same is true for services.
+</p>
+        <h2>
+Related Spryks</h2>
+        <p>You might use the following definitions to generate related code:</p>
+        <ul>
+            <li>Add Zed Dependency Client Bridge</li>
+            <li>Add Zed Dependency Client Bridge Interface Method</li>
+            <li>Add Zed Dependency Client Bridge Method</li>
+            <li>Add Zed Dependency Client Business Factory Method</li>
+            <li>Add Zed Dependency Client Dependency Provider Constant</li>
+            <li>Add Zed Dependency Client Dependency Provider Method</li>
+            <li>Add Zed Dependency Client Interface</li>
+            <li>Add Zed Dependency Facade Bridge</li>
+            <li>Add Zed Dependency Facade Bridge Interface Method</li>
+            <li>Add Zed Dependency Facade Bridge Method</li>
+            <li>Add Zed Dependency Facade Business Factory Method</li>
+            <li>Add Zed Dependency Facade Dependency Provider Constant</li>
+            <li>Add Zed Dependency Facade Dependency Provider Method</li>
+            <li>Add Zed Dependency Facade Interface</li>
+            <li>Add Zed Dependency Facade Interface Method</li>
+            <li>Add Zed Dependency Facade Method</li>
+            <li>Add Zed Dependency Provider</li>
+            <li>Add Zed Dependency Service Bridge</li>
+            <li>Add Zed Dependency Service Bridge Interface Method</li>
+            <li>Add Zed Dependency Service Bridge Method</li>
+            <li>Add Zed Dependency Service Business Factory Method</li>
+            <li>Add Zed Dependency Service Dependency Provider Constant</li>
+            <li>Add Zed Dependency Service Dependency Provider Method</li>
+            <li>Add Zed Dependency Service Interface</li>
+            <li>
+                Add Client Dependency Provider
+            </li>
+        </ul>
+        <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+    </body>
+</html>

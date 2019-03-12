@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.ShopSuite">
+    <head><title>Heidelpay - Integration into SCOS | Spryker</title>
+        <meta name="description" content="Heidelpay Integration into SCOS contains two steps: back-end and front-end integration. To integrate Heidelpay into SCOs, follow the steps described in the article." />
+    </head>
+    <body>
+        <h1>Heidelpay - Integration into Project <img src="../../../../Resources/Images/shoptype/B2B_Shop.png" /></h1>
+        <p>To integrate Heidelpay, follow the steps below:</p>
+        <h2>Back-end Integration</h2>
+        <ol>
+            <li>Add sub form plugins and payment method handlers:
+				<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>\Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre xml:space="preserve"><code class="language-php line-numbers">protected function addSubFormPluginCollection(Container $container): Container
+{
+	$container[self::PAYMENT_SUB_FORMS] = function () {
+		$subFormPluginCollection = new SubFormPluginCollection();
+		...
+		$subFormPluginCollection-&gt;add(new HeidelpaySofortSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayPaypalAuthorizeSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayPaypalDebitSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayIdealSubFormPlugin());
+		$subFormPluginCollection-&gt;add(new HeidelpayCreditCardSecureSubFormPlugin());
+ 
+		return $subFormPluginCollection;
+	};
+ 
+	return $container;
+}
+ 
+protected function addPaymentMethodHandlerPluginCollection(Container $container): 
+{
+	$container[self::PAYMENT_METHOD_HANDLER] = function () {
+		$stepHandlerPluginCollection = new StepHandlerPluginCollection();
+		... 
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_SOFORT);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_PAYPAL_AUTHORIZE);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_PAYPAL_DEBIT);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayHandlerPlugin(), PaymentTransfer::HEIDELPAY_IDEAL);
+		$stepHandlerPluginCollection-&gt;add(new HeidelpayCreditCardHandlerPlugin(), PaymentTransfer::HEIDELPAY_CREDIT_CARD_SECURE);
+ 
+		return $stepHandlerPluginCollection;
+	};
+ 
+	return $container;
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Add controller provider:
+				<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>\Pyz\Yves\ShopApplication\YvesBootstrap</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre xml:space="preserve"><code class="language-php line-numbers">protected function getControllerProviderStack($isSsl)
+{
+	return [
+		...   
+		new HeidelpayControllerProvider($isSsl),
+	];&gt;
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Add checkout plugins:
+				<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>\Pyz\Zed\Checkout\CheckoutDependencyProvider</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre xml:space="preserve"><code class="language-php line-numbers">protected function getCheckoutOrderSavers(Container $container)
+{
+	$plugins = [
+		...
+		new HeidelpaySaveOrderPlugin(),
+	];
+ 
+	return $plugins;
+}
+ 
+protected function getCheckoutPostHooks(Container $container)
+{
+	return [
+		...
+		new HeidelpayPostSavePlugin(),
+	];
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Add OMS commands and conditions:</li>
+            <MadCap:dropDown>
+                <MadCap:dropDownHead>
+                    <MadCap:dropDownHotspot>\Pyz\Zed\Oms\OmsDependencyProvider</MadCap:dropDownHotspot>
+                </MadCap:dropDownHead>
+                <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-php line-numbers">public function provideBusinessLayerDependencies(Container $container)
+{
+	$container = parent::provideBusinessLayerDependencies($container);
+	$container = $this-&gt;addCommandPlugins($container);
+	$container = $this-&gt;addConditionPlugins($container);
+ 
+	return $container;
+}
+protected function addConditionPlugins(Container $container): Container
+{
+	$container[self::CONDITION_PLUGINS] = function () {
+		$conditionCollection = new ConditionCollection();
+		$conditionCollection-&gt;add(new IsAuthorizationCompletedPlugin(), 'Heidelpay/IsAuthorizationCompleted');
+		$conditionCollection-&gt;add(new IsDebitCompletedPlugin(), 'Heidelpay/IsDebitCompleted');
+		$conditionCollection-&gt;add(new IsCaptureApprovedPlugin(), 'Heidelpay/IsCaptureApproved');
+ 
+		return $conditionCollection;
+	};
+ 
+	return $container;
+}
+ 
+protected function addCommandPlugins(Container $container): Container
+{
+	$container[self::COMMAND_PLUGINS] = function () {
+		$commandCollection = new CommandCollection();
+		$commandCollection-&gt;add(new SendOrderConfirmationPlugin(), 'Oms/SendOrderConfirmation');
+		$commandCollection-&gt;add(new SendOrderShippedPlugin(), 'Oms/SendOrderShipped');
+		$commandCollection-&gt;add(new AuthorizePlugin(), 'Heidelpay/Authorize');
+		$commandCollection-&gt;add(new DebitPlugin(), 'Heidelpay/Debit');
+		$commandCollection-&gt;add(new CapturePlugin(), 'Heidelpay/Capture');
+ 
+		return $commandCollection;
+	};
+ 
+	return $container;
+}</code></pre>
+                </MadCap:dropDownBody>
+            </MadCap:dropDown>
+        </ol>
+        <h2>Front-end Integration</h2>
+        <p>To make Heidelpay module work with your project, it's necessary to extend the frontend part:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>tsconfig.json</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-bash">"include": [
+	"./vendor/spryker/spryker-shop/**/*",
+	"./vendor/spryker-eco/**/*",
+	"./src/Pyz/Yves/**/*"
+],</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>frontend/settings.js</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-bash">// eco folders
+eco: {
+	// all modules
+	modules: './vendor/spryker-eco'
+},
+...
+	componentEntryPoints: {
+		// absolute dirs in which look for
+		dirs: [
+			...
+			path.join(context, paths.eco.modules),
+			...
+		],</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-twig">...
+ 
+{% block content %}
+	{% embed molecule('form') with {
+		class: 'box',
+		data: {
+			form: data.forms.payment,
+			options: {
+				attr: {
+					id: 'payment-form'
+				}
+			},
+			submit: {
+				enable: true,
+				text: 'checkout.step.summary' | trans
+			},
+			cancel: {
+				enable: true,
+				url: data.backUrl,
+				text: 'general.back.button' | trans
+			}
+		}
+	} only %}
+		{% block fieldset %}
+			{% for name, choices in data.form.paymentSelection.vars.choices %}
+				{% set paymentProviderIndex = loop.index %}
+				&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+				&lt;ul class="list spacing-y"&gt;
+					{% for key, choice in choices %}
+						&lt;li class="list__item spacing-y clear"&gt;
+							{% embed molecule('form') with {
+								data: {
+									form: data.form[data.form.paymentSelection[key].vars.value],
+									enableStart: false,
+									enableEnd: false
+								},
+								embed: {
+									index: loop.index ~ '-' ~ paymentProviderIndex,
+									toggler: data.form.paymentSelection[key]
+								}
+							} only %}
+								{% block fieldset %}
+									{% for name, choices in data.form.paymentSelection.vars.choices %}
+										{% set paymentProviderIndex = (loop.index0) %}
+										&lt;h5&gt;{{ ('checkout.payment.provider.' ~ name) | trans }}&lt;/h5&gt;
+										&lt;ul class="list spacing-y"&gt;
+											{% if choices is iterable %}
+												{% for key, choice in choices %}
+													&lt;li class="list__item spacing-y clear"&gt;
+														{% include molecule('payment-method', 'CheckoutPage') with {
+															data: {
+																form: data.form[data.form.paymentSelection[key].vars.value],
+																index: loop.index ~ '-' ~ paymentProviderIndex,
+																toggler: data.form.paymentSelection[key],
+															}
+														} only %}
+													&lt;/li&gt;
+												{% endfor %}
+											{% else %}
+												&lt;li class="list__item spacing-y clear"&gt;
+													{% include molecule('payment-method', 'CheckoutPage') with {
+														data: {
+															form: data.form[data.form.paymentSelection[paymentProviderIndex].vars.value],
+															index: loop.index ~ '-' ~ paymentProviderIndex,
+															toggler: data.form.paymentSelection[paymentProviderIndex],
+															parentFormId: data.options.attr.id
+														}
+													} only %}
+												&lt;/li&gt;
+											{% endif %}
+										&lt;/ul&gt;
+									{% endfor %}
+								{% endblock %}
+							{% endembed %}
+						&lt;/li&gt;
+					{% endfor %}
+				&lt;/ul&gt;
+			{% endfor %}
+		{% endblock %}
+	{% endembed %}
+{% endblock %}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>src/Pyz/Yves/Twig/TwigConfig.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="language-twig">protected function addCoreTemplatePaths(array $paths)
+{
+	...
+	$paths[] = APPLICATION_VENDOR_DIR . '/spryker-eco/%1$s/src/SprykerEco/Yves/%1$s/Theme/' . $themeName;
+ 
+	return $paths;
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>&#160;</p>
+        <p><i>Last
+        review date: Dec. 7th, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Aleksey Kotsuba, Oksana Karasyova</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,313 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Getting Suggestions for Auto-Completion and Search | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This article provides information on which endpoints to use to get search and auto-completion suggestions for your products, categories, and CMS fields." />
+    </head>
+    <body>
+        <h1>Getting Suggestions for Auto-Completion and Search</h1>
+        <p>
+			In addition to the catalog search, Elasticsearch also offers auto-completion terms and suggestions for products, categories and CMS pages that can be retrieved via the search suggestions endpoint. Auto-completion helps to predict the rest of the search string and provides you with all the options.
+		</p>
+        <p>
+			In your development, this resource can help you to retrieve relevant information for your product listing and detail pages, for search, shopping cart, checkout, order history, wishlist and many more.</p>
+        <h2>Installation
+            </h2>
+        <p>
+			For detailed information on the modules that provide the API functionality and related installation instructions, see <a href="https://documentation.spryker.com/feature_integration_guides/glue_api/glue-api-installation-and-configuration.htm" target="_blank">Search API</a>.<br /></p>
+        <h2>Usage</h2>
+        <p>
+			To get search suggestion that you can use for auto-completion, you need to send GET requests to the following endpoint:
+		</p>
+        <p><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/catalog-search-suggestions"><b>/catalog-search-suggestions</b></a>
+            <br />
+        </p>
+        <p>
+			Sample request: <i>GET http://mysprykershop.com/catalog-search-suggestions</i></p>
+        <p style="font-style: normal;">
+			To include search queries in your request, use the q parameter. Below you can find the most common queries to use:
+		</p>
+        <div class="u-is-scrollable">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Request</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">/catalog-search-suggestions?q=</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Suggestions with empty search string</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">/catalog-search-suggestions?q=<b>c</b></td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Suggestions for <b>1</b> letter</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">/catalog-search-suggestions?q=c<b>o</b></td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Suggestions for <b>2</b> letters</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">/catalog-search-suggestions?q=com</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Suggestions for <b>3</b> letters</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">/catalog-search-suggestions?q=<b>computer</b></td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Suggestions for word <b>computers</b></td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">/catalog-search-suggestions?q=telecom+%26+navigation</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Suggestions for "<b>telekom&amp;navigation</b>"</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			If the catalog contains any suggestions for the query string, the endpoint will respond with a <b>RestCatalogSearchSuggestionsResponse</b>.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot> Response sample
+			</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">
+{
+  "data": [
+    {
+      "type": "catalog-search-suggestions",
+      "id": null,
+      "attributes": {
+        "completion": [
+          "cameras &amp; camcorders",
+          "digital cameras"
+        ],
+        "abstractProducts": [
+          {
+            "images": [
+              {
+                "externalUrlSmall": "//d2s0ynfc62ej12.cloudfront.net/b2c/24602396-8292.jpg",
+                "externalUrlLarge": "//d2s0ynfc62ej12.cloudfront.net/b2c/24602396-8292.jpg"
+              }
+            ],
+            "abstractSku": "078",
+            "abstractName": "Sony Xperia Z3 Compact",
+            "price": 25584
+          },
+          {
+            "images": [
+              {
+                "externalUrlSmall": "//d2s0ynfc62ej12.cloudfront.net/b2c/24584210-216.jpg",
+                "externalUrlLarge": "//d2s0ynfc62ej12.cloudfront.net/b2c/24584210-216.jpg"
+              }
+            ],
+            "abstract_sku": "077",
+            "abstract_name": "Sony Xperia Z3 Compact",
+            "price": 14554
+          }
+        ],
+        "categories": [
+          {
+            "name": "Cameras &amp; Camcorders"
+          },
+          {
+            "name": "Digital Cameras"
+          }
+        ],
+        "cmsPages": []
+      },
+      "links": {
+        "self": "http://glue.de.suite.local/catalog-search-suggestions"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://glue.de.suite.local/catalog-search-suggestions?q=cam"
+  },
+  "included": []
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h3>General fields</h3>
+        <div class="u-is-scrollable">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">completion</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Applicable auto completion terms.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+        <h3>Product fields</h3>
+        <div class="u-is-scrollable">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">abstract_sku</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">SKU of the abstract product</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">abstract_name</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Name of the abstract product</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">price</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Integer</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Price to pay for that product in cents</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">external_url_small</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">URLs to the image per image set per image</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">external_url_large</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">URLs to the image per image set per image</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+        <h3>Category fields</h3>
+        <div class="u-is-scrollable">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">categories</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Names of matching categories.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+        <h3>CMS fields</h3>
+        <div class="u-is-scrollable">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field*</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">cmsPages</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Names of matching CMS pages.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			*The fields mentioned are all attributes in the response. Type and ID are not mentioned.
+		</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Sample response</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">{
+  "data": [
+    {
+      "type": "catalog-search-suggestions",
+      "id": null,
+      "attributes": {
+        "completion": [
+          "cameras &amp; camcorders",
+          "digital cameras"
+        ],
+        "abstractProducts": [
+          {
+            "images": [
+              {
+                "externalUrlSmall": "//d2s0ynfc62ej12.cloudfront.net/b2c/24602396-8292.jpg",
+                "externalUrlLarge": "//d2s0ynfc62ej12.cloudfront.net/b2c/24602396-8292.jpg"
+              }
+            ],
+            "abstractSku": "078",
+            "abstractName": "Sony Xperia Z3 Compact",
+            "price": 25584
+          },
+          {
+            "images": [
+              {
+                "externalUrlSmall": "//d2s0ynfc62ej12.cloudfront.net/b2c/24584210-216.jpg",
+                "externalUrlLarge": "//d2s0ynfc62ej12.cloudfront.net/b2c/24584210-216.jpg"
+              }
+            ],
+            "abstract_sku": "077",
+            "abstract_name": "Sony Xperia Z3 Compact",
+            "price": 14554
+          }
+        ],
+        "categories": [
+          {
+            "name": "Cameras &amp; Camcorders"
+          },
+          {
+            "name": "Digital Cameras"
+          }
+        ],
+        "cmsPages": []
+      },
+      "links": {
+        "self": "http://glue.de.suite.local/catalog-search-suggestions"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://glue.de.suite.local/catalog-search-suggestions?q=cam"
+  },
+  "included": []
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>
+			The response contains <b>4</b> types of suggestions:
+		</p>
+        <ul class="disk">
+            <li><b>completion</b> - contains suggestions for auto-completion strings;</li>
+            <li><b>abstractProducts</b> - contains suggested products;</li>
+            <li><b>categories</b> - contains suggestions for categories;</li>
+            <li><b>cmsPages</b> - contains suggested CMS pages.</li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec 13, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Dmitry Beirak</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

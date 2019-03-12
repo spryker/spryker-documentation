@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>How to Implement a Facade</h1>
+        <h2>AbstractFacade</h2>
+        <p>Every facade extends <var>Spryker\Zed\Kernel\Business\AbstractFacade</var> which provides an important method:</p>
+        <table style="width: 100%;mc-table-style: url('../../../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">
+                        <p>Method	</p>
+                    </th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Purpose</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>$this-&gt;getFactory()	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>Returns the factory which is needed to access the underlying models.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Methods</h2>
+        <p>Inside a facade, the methods tell a story about the module. They expose  the module's functions and delegate calls to internal models. A typical method looks like this:</p><pre><code class="language-PHP line-numbers">&lt;?php
+class GlossaryFacade extends AbstractFacade
+{
+    /**
+     * @param string $keyName
+     * @return bool
+     */
+    public function deleteKey($keyName)
+    {
+        $keyManager = $this-&gt;getFactory()-&gt;createKeyManager();
+        return $keyManager-&gt;deleteKey($keyName);
+    }}</code></pre>
+        <p>When you look at the <var>deleteKey()</var> method, please observe the following:</p>
+        <ul>
+            <li class="bullet_list">The name of the method expresses exactly what happens. It uses the terms of the related terminology, but it is easy to grasp what happens (“A key will be deleted”).</li>
+            <li class="bullet_list">The method does not contain any control logic, like if or foreach statements; it just delegates to the business model and calls the right method.</li>
+            <li class="bullet_list">The business model KeyManager is created using the factory so it does not need to know how the class is created.</li>
+        </ul>
+        <h2>Parameters and return values</h2>
+        <p>The main idea of the facade is to hide the implementation details. Typical return values of facade methods are:</p>
+        <ul>
+            <li class="bullet_list">native types (bool, int, float, string, array)</li>
+            <li class="bullet_list">transfer objects</li>
+        </ul>
+        <p class="important">To hide and protect the underlying models and data structure, we never return business models or any propel entities/queries.</p>
+        <h2>Transfer Objects</h2>
+        <p>Each module ships with its own interface for each transfer object that is used. Transfer objects are much more descriptive compared to arrays. </p><pre><code class="language-PHP line-numbers">&lt;?php
+class GlossaryFacade extends AbstractFacade
+{
+    /**
+     * @param CmsGlossaryTransfer $transferTranslation
+     * @return CmsGlossaryTransfer
+     */
+    public function saveTranslation(CmsGlossaryTransfer $translationTransfer)
+    {
+        $translationManager = $this-&gt;getFactory()-&gt;createTranslationManager();
+        return $translationManager-&gt;saveTranslation($translationTransfer);
+    }
+}</code></pre>
+        <h2>Encapsulation</h2>
+        <p>The idea of the business layer is to present a facade to all clients and to hide the internal details. This is the main requirement for future updates and it keeps the bundles decoupled. So when you look at a module from another module you will only see the facade.</p>
+        <p>
+            <img src="../../../Resources/Images/facade-as-internal-api.png" class="Thumbnail" />
+        </p>
+        <h2>Related Spryks</h2>
+        <p>You might use the following definitions to generate related code:</p>
+        <ul>
+            <li>Add Zed Business Facade</li>
+            <li>Add Zed Business Facade Interface</li>
+            <li>Add Zed Business Facade Interface Method</li>
+            <li>Add Zed Business Facade Method</li>
+            <li>Add Zed Business Facade Method Test</li>
+            <li>Add Zed Business Facade Test</li>
+            <li>Add Zed Business Factory</li>
+            <li>Add Zed Business Factory Method</li>
+        </ul>
+        <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+    </body>
+</html>

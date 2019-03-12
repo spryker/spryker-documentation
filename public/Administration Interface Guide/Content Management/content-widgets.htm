@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.B2C">
+    <head>
+    </head>
+    <body>
+        <h1>Content Widgets</h1>
+        <p>CMS widgets allow creating blocks, charts, a dynamic listing of product items, a product set or group, as well as embedding media files into CMS pages or blocks. This article describes how to add and use content widgets in your shop.</p>
+        <h2>CMS Widget Overview</h2>
+        <p>In Zed, a shop administrator can add the following CMS content widgets:</p>
+        <ul>
+            <li><a href="#cmsfile">cms_file</a>
+            </li>
+            <li><a href="#productset">product_set</a>
+            </li>
+            <li><a href="#productgroup">product_group</a>
+            </li>
+            <li MadCap:conditions="ReleaseVersions.2019-03"><a href="#cmsblock">cms_block</a>
+            </li>
+            <li><a href="#chart">chart</a>
+            </li>
+        </ul>
+        <div class="important">To work with CMS content widgets, the Content Widget feature must be <a href="https://documentation.spryker.com/feature_integration_guides/enabling-cms-widget.htm">enabled for your project</a>.</div>
+        <p>To access a CMS widget:</p>
+        <ol>
+            <li>On the left-side navigation bar, navigate to the <b>Content Management</b> menu and select <b>Pages</b>.</li>
+            <li>Click <b>Edit</b> → <b>Placeholders</b> next to the page on which you want to position a widget. This will take you to the <i>Edit Placeholders: page name</i> editor where you can add widgets to your website.</li>
+            <li>In the <b>Content</b> tab, place a mouse pointer on the defined content field.</li>
+            <li>Click <b>content widget</b> and select a widget from the drop-down list. This will embed the following template into the content field:</li>
+            <br /><i>{{ function name (['identifier']) }}.</i>
+            <br />You need to replace a <b>function name</b> with the respective widget name and <b>identifier</b> - with parameters of the function.
+		</ol>
+        <p MadCap:conditions="ReleaseVersions.2019-03">
+            <img src="../../Resources/Images/CMS/content-widgets.png" />
+			 Below we will consider each CMS widget: how you, as a shop administrator, can manage it in Zed and how your shop visitors can view it on Yves.
+		</p>
+        <h2>Adding CMS widgets to a CMS page in the Admin UI</h2>
+        <h3>CMS widget:  <a name="cmsfile"></a>cms_file</h3>
+        <div class="important">Before proceeding, make sure that the <b>File Uploader feature</b> is <MadCap:annotation MadCap:createDate="2019-02-25T19:03:55.6119836+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-25T19:03:58.9255103+02:00">integrated into your project</MadCap:annotation>.</div>
+        <p>This widget enables you to attach media files to a CMS page. Each file is displayed as a download link. Clicking on it will download files such as videos, guides, images, etc from the website to the device.</p>
+        <div class="note">Keep in mind that files should be first uploaded to File list under File Manager in Zed. See <a href="https://documentation.spryker.com/capabilities/media_management/file_uploader/file-uploader-overview.htm">Media Management / File Uploader</a> to learn how to to do this.</div>
+        <p>To add a <b>cms_file</b> content widget:</p>
+        <ol>
+            <li>Select <b>cms_file</b> from the <b>content widget</b> menu.
+				<br /> This will place the following string <i>{{ cms_file(['identifier']) }}</i> where <b>identifier</b> is the <b>file ID</b> you need to insert. 
+				<p class="tip">If you want to add several files to your page, insert them wrapped into brackets and single quotes and separated by a comma. For example:  <i>{{ cms_file(['identifier'], '[identifier'], '[identifier']) }}</i></p><p><img src="../../Resources/Images/CMS/media-file-widget.png" /></p><div class="info">You can look for the <b>file ID</b> in <b>File List</b>. For this, go to <b>File Manager</b> → <b>File List</b>. On the <b>Files list page</b> that opens, the <b># column</b> is the file ID.
+					<br /><img src="../../Resources/Images/CMS/file-list.png" /></div></li>
+            <li>To save the changes, click <b>Save</b> at the bottom of the page.</li>
+            <li>Click <b>Preview</b> to view the way your content would render on the page on Yves.</li>
+        </ol>
+        <p>
+            <img src="../../Resources/Images/CMS/preview-btn-widget.png" />
+        </p>
+        <div class="info">To make your changes visible on Yves, click <b>Publish</b> in the upper right corner of the<b>Edit Placeholders: page name</b> page.</div>
+        <p>Below you can see how the widget is displayed on the page.</p>
+        <p>
+            <img src="../../Resources/Images/CMS/cms-file-widget-yves.png" />
+        </p>
+        <h3>CMS widget:  <a name="productset"></a>product_set</h3>
+        <div class="important">Before proceeding, make sure that the <b>Product Sets feature</b> is <a href="https://documentation.spryker.com/capabilities/product_management/product_set/product-set.htm#feature-integration">integrated into your project</a>.</div>
+        <p>The widget can place a collection of products based on their specific characteristic. Clicking <b>Add all to cart</b> will allow end users to purchase all the product items listed in the set.</p>
+        <div class="note">To enable <b>Add all to cart</b> and <b>Add to cart</b>, make sure that the product is <b>available</b> on the stock. </div>
+        <p>To place a <b>product set</b> on a CMS page:</p>
+        <ol>
+            <li>Select <b>product_set</b> on the <b>content widget</b> menu.
+				<br />This will add the following code: <i>{{ product_set(['identifier']) }}</i> where <b>identifier</b> is a key of a product set.
+       			<p class="note">The product set key must be <b style="font-style: italic; font-weight: normal;">active</b>. Otherwise, it will not be displayed on Yves.</p><img src="../../Resources/Images/CMS/product-set-widget-zed.png" /></li>
+            <li>Insert this key instead of an identifier.
+				<div class="info">To access the key:
+					<ol><li>On the left-side navigation bar, click <b>Products</b> and select <b>Product Sets</b>. The <b>Product Sets</b> page opens.</li><li>Click <b>Edit</b> next to the product set you want to add.
+							<br /><img src="../../Resources/Images/CMS/edit-product-set.png" /></li><li> In the <b>General tab</b> → <b>Product Set Key</b> field, copy the <b>set_key</b> value.</li><br /><img src="../../Resources/Images/CMS/product-set-value.png" /></ol></div></li>
+            <li>To save the changes, click <b>Save</b> at the bottom of the page.</li>
+            <li>Click <b>Preview</b> to view the way your content would render on Yves.</li>
+        </ol>
+        <p>
+            <img src="../../Resources/Images/CMS/preview-btn-widget.png" />
+        </p>
+        <div class="info">To make your changes visible on Yves, click <b>Publish</b> in the upper right corner of the <b>Edit Placeholders: page name</b>.</div>
+        <p>The page with the widget is displayed on the website.</p>
+        <p>
+            <img src="../../Resources/Images/CMS/product-set-widget-yves.png" />
+        </p>
+        <h3>CMS widget:  <a name="productgroup"></a>product_group</h3>
+        <div class="important">Before proceeding, keep in mind that the <b>Product Group</b> feature is <a href="https://documentation.spryker.com/feature_integration_guides/product-group-feature-integration.htm">integrated into your project</a>.</div>
+        <p>You can use this widget to group different products by a specific attribute, for example, color, memory, or size. The products will be displayed as a grid on the page. Clicking the product will take your customers to the respective product detail page.</p>
+        <p>To add a widget:</p>
+        <ol>
+            <li>Select <b>product_group</b> on <b>content widget</b>.
+				<br />This will place the following string to the content area: <i>{{ product_group(['identifier']) }}</i>.
+				<br /><img src="../../Resources/Images/CMS/product-group-widget-zed.png" /></li>
+            <li>Replace the identifier with a <b>product (abstract) SKU</b>. 
+				<div class="info">You can get it from the <b>Product list</b>. To access it, on the left-side navigation bar, click <b>Products</b> -&gt; <b>Products</b>.
+					<br /><img src="../../Resources/Images/CMS/product-sku-widget.png" /></div></li>
+            <li>To save the changes, click <b>Save</b> at the bottom of the page.</li>
+            <li>Click <b>Preview</b> to view the way your content would render on Yves.</li>
+            <br />
+            <img src="../../Resources/Images/CMS/preview-btn-widget.png" />
+        </ol>
+        <div class="info">To make your changes visible on Yves, click <b>Publish</b> in the upper right corner of the <b>Edit Placeholders: page name</b> page.</div>
+        <p>Below you can see the way your widget will be placed on the page on Yves.</p>
+        <p>
+            <img src="../../Resources/Images/CMS/product-group-widget-yves.png" />
+        </p>
+        <h3 MadCap:conditions="ReleaseVersions.2019-03">CMS widget:  <a name="cmsblock"></a>cms_block</h3>
+        <div class="important" MadCap:conditions="ReleaseVersions.2019-03">Before proceeding, keep in mind that the <b>Content Widget CMS block</b> feature is <MadCap:annotation MadCap:createDate="2019-02-25T19:51:53.8621434+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-25T19:51:56.2793800+02:00">enabled for your project</MadCap:annotation>.</div>
+        <p MadCap:conditions="ReleaseVersions.2019-03">This widget embeds multiple blocks containing some content into the same page. This can be required when, for instance, you need to hold some season or promotional campaigns or want to create banners on a page.</p>
+        <p MadCap:conditions="ReleaseVersions.2019-03">To add a CMS block widget to the page, follow the instructions described in the step Adding a CMS Block to a CMS Page [add a link].</p>
+        <p MadCap:conditions="ReleaseVersions.2019-03">The screenshot below displays the widget on the page on Yves.</p>
+        <p MadCap:conditions="ReleaseVersions.2019-03">
+            <img src="../../Resources/Images/CMS/cms-block-widget-yves.png" />
+        </p>
+        <h3>CMS widget:  <a name="chart"></a>chart</h3>
+        <div class="important">Before proceeding, make sure that the <b>Chart</b> feature is <MadCap:annotation MadCap:createDate="2019-02-25T19:55:08.0856412+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-25T19:55:11.1603891+02:00">enabled for your project</MadCap:annotation>.</div>
+        <p>Charts allow attracting your visitors by visualizing data and making the content understandable. The widget easily adds charts and graphs to your CMS page.</p>
+        <p>To place a chart content widget on a CMS page:</p>
+        <ol>
+            <li>Select <b>chart</b> from the <b>content widget</b> menu.</li>
+            <br />This will add the following string <i>{{ chart('identifier') }}</i> where <b>identifier</b> is the name of the plugin containing output data.
+			<br /><img src="../../Resources/Images/CMS/chart-widget-zed.png" /><li>Insert the respective identifier.</li><li>To save the changes, click <b>Save</b> at the bottom of the page.</li><li>Click <b>Preview</b> to view the way your content would render on Yves.
+				<br /><img src="../../Resources/Images/CMS/preview-btn-widget.png" /></li></ol>
+        <div class="info">To make your changes visible on Yves, click <b>Publish</b> in the upper right corner of the <b>Edit Placeholders: page name</b> page.</div>
+        <p>Below you can see the way your widget will be placed on Yves.</p>
+        <p>
+            <img src="../../Resources/Images/CMS/chart-widget-yves.png" />
+        </p>
+        <h3>Viewing CMS Widgets on Yves</h3>
+        <p>You can also view the page how it renders on Yves from the Zed dashboard. For this, go to <b>Content Management</b> → <b>Pages</b> and select <b>View</b> → <b>In Shop</b> next to the respective page.</p>
+        <p>
+            <img src="../../Resources/Images/CMS/viewcing-widgets-zed.png" />
+        </p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="https://documentation.spryker.com/feature_integration_guides/enabling-cms-widget.htm">Learn how to enable content widget</a>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/media_management/file_uploader/file-uploader-overview.htm">Media Management / File Uploader</a> </p>
+        <p>
+            <MadCap:annotation MadCap:createDate="2019-02-25T20:08:34.0944241+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="add a link" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-02-25T20:08:40.0135398+02:00">Learn how to add a CMS Block to a CMS page, Category Page and a Product Detail Page</MadCap:annotation>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 25, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

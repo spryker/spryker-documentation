@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.OldOutdated">
+    <head>
+    </head>
+    <body>
+        <h1>Using Pac<MadCap:annotation MadCap:createDate="2018-10-10T12:13:27.8839927+03:00" MadCap:creator="Oksana Karasyova" MadCap:initials="OK" MadCap:comment="outdated" MadCap:editor="Oksana Karasyova" MadCap:editDate="2018-10-10T12:13:30.4488148+03:00">kagist For Module Down</MadCap:annotation>load</h1>
+        <p>Previously we used <a href="https://toranproxy.com/">Toran Proxy</a> in our code hub <var>code.spryker.com</var>. Since Toran Proxy has been deprecated and is being phased out, we have started to use public <a href="https://packagist.org/">Packagist</a> to host our modules.</p>
+        <p><b>From now on, please download all Spryker modules from Packagist.</b>
+        </p>
+        <p>The new tool is automatically already available without any change in your <var>composer.json</var> thanks to Packagist being the default lookup for Composer.</p>
+        <p>However, the deprecated <var>code.spryker.com</var> URLs should be removed from your <var>composer.lock</var> to avoid the deployment process being slowed down by lookup misses once Toran becomes unavailable.</p>
+        <p>First of all, remove the <var>code.spryker.com</var> block from your composer.json repositories section:</p><pre><code class="language-PHP line-numbers">
+"repositories": [
+	{
+		"type": "composer",
+		"url": "https://code.spryker.com/repo/private"
+	}
+],		
+</code></pre>
+        <p>
+		Then run <var>composer update --lock</var> to generate a fresh lock file with updated download URLs.
+		The important part here is that <var>--lock</var> prevents any update of modules. So you are not accidentally upgrading any module here.
+
+		That's it. Enjoy the new power of Packagist.</p>
+        <p class="info">To further speed up the 	composer update process, use <a href="https://github.com/hirak/prestissimo">this composer tool</a>. After running <var>composer global require hirak/prestissimo</var>, the next <var>composer update</var> or <var>composer install</var> command should be way faster for both local development and server deployment.</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan. 9th, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Mark Scherer</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

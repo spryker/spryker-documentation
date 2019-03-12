@@ -1,0 +1,264 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Demoshop">
+    <head>
+    </head>
+    <body>
+        <h1>Release Notes - June - 1 2017</h1>
+        <MadCap:menuProxy mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" />
+        <h2>Improvements</h2>
+        <h3>Session Service Provider Enhancement</h3>
+        <p>Previously the Yves and Zed <var>SessionServiceProvider</var> contained a switch statement to determine which <var>SessionHandler</var> should be used. The switch is a violation of the open-close principle and therefore we refactored the current <var>SessionServiceProvider</var> for both applications. Now the <var>SessionServiceProvider</var> is able to get the options for <var>$application['session.storage.options']</var> and the handler for <var>$application['session.storage.handler']</var> from a new <var>SessionStorage</var> class which is accessible via the factory. In addition, options are now properly retrieved from the <var>SessionConfig</var> classes. Now you can add your own <var>SessionHandlerInterfaces</var> easier and in a more clean way.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>- <a href="https://github.com/spryker/Session/releases/tag/3.2.0" target="_blank">Session 3.2.0</a></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	- <a href="https://github.com/spryker/Testify/releases/tag/3.2.4" target="_blank">Testify 3.2.4</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Autoload Entry for BC</h3>
+        <p>The autoload entry for deprecated Testify\Module\Environment Codeception Helper was missing. We have now added it again to the <var>composer.json</var> file.</p>
+        <p><strong>Affected <MadCap:variable name="General.Bundle/Module"></MadCap:variable>s</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	- <a href="https://github.com/spryker/Testify/releases/tag/3.2.5" target="_blank">Testify 3.2.5</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Combining Product Images</h3>
+        <p>With these changes we introduce a common way to combine images related to a product. The <var>ImageSet</var> is the key subject of image inheritance. We take an <var>ImageSet</var> from the next layer if on the current it does not exist. The nested logic is as follows: Abstract Default &gt; Abstract Localized &gt; Concrete Default &gt; Concrete Localized.</p>
+        <p>To get all benefits of this fix you should arrange your collectors to use facade methods instead of raw-queries in your product collectors: <var>ProductImageFacade::getCombinedAbstractImageSets</var> for abstract product collector (<var>ProductAbstractCollector</var>) and <var>ProductImageFacade::getCombinedConcreteImageSets</var> for concrete product collector (<var>ProductConcreteCollector</var>).</p>
+        <p>This release is backward compatible, so if you have your own image collector functionality, you can keep it.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>- <a href="https://github.com/spryker/ProductImage/releases/tag/3.2.0" target="_blank">ProductImage 3.2.0</a></p>
+                        <p>- <a href="https://github.com/spryker/ProductManagement/releases/tag/0.5.0" target="_blank">ProductManagement 0.5.0</a></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">n/a</td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>GetConfig for DependencyProvider</h3>
+        <p>Previously it was not possible to get the config of the module inside of the <var>DependencyProvider</var>. You can now use <var>getConfig()</var> in your <var>DependencyProvider</var> to get the bundle Config class.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>- <a href="https://github.com/spryker/Kernel/releases/tag/3.3.0">Kernel 3.3.0</a></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	n/a	</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Moving Glob to Finder</h3>
+        <p>For performance reasons we have moved <var>glob()</var> from <var>ZedNavigationConfig</var> to <var>ZedNavigationSchemaFinder</var>. This will avoid having <var>glob()</var> called on every request. We have also enabled Zed path cache for Twig by default.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p> - <a href="https://github.com/spryker/Twig/releases/tag/3.1.3">Twig 3.1.3</a></p>
+                        <p>- <a href="https://github.com/spryker/ZedNavigation/releases/tag/1.0.6">ZedNavigation 1.0.6</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>Bugfixes</h2>
+        <h3>Category Touch Logic</h3>
+        <p>Touch handling for categories didn’t cover certain use-cases when categories were moved around in the category tree. We had issues when adding/updating/deleting category node parents. Parent category nodes were not being touched, so they were not being updated about the changes in their children nodes. Old parent category nodes were not being touched, so they were not being notified about their children nodes. Products assigned to categories that are under a modified category sub-tree were also not being touched.</p>
+        <p>We have now extended the touch handling to touch the entire tree branch from the root to the leaf for a modified category. Former parent nodes will also get touched along with related products in these tree branches.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>- <a href="https://github.com/spryker/Category/releases/tag/3.2.0">Category 3.2.0</a></p>
+                        <p>- <a href="https://github.com/spryker/ProductCategory/releases/tag/4.2.0">ProductCategory 4.2.0</a><![CDATA[	]]></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	-n/a	</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>On Demand Formater for Querying Voucher Discounts</h3>
+        <p>We had an issue with multiple vouchers coming from the same pool. Propel’s <var>ObjectFormatter</var> was overwriting the virtual columns in <var>DiscountQueryContainer::queryDiscountsBySpecifiedVouchers()</var> results. This issue is fixed now. We added <var>OnDemandFormatter</var> Propel formatter for discount voucher query in order to properly hydrate voucher discounts when codes were coming from same pool.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	- <a href="https://github.com/spryker/Discount/releases/tag/4.0.2">Discount 4.0.2</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h3>Incorrect Prices for Currencies with No Minor Units</h3>
+        <p>There was an error because of conversion from int to dec and dec to int. The field type money made no proper use of divisor and scale attributes to handle currencies with and without minor units properly. When price value was edited with a currency without minor units (e.g. Yen) then the conversion was wrong (e.g. 300 YEN was converted to 30000 YEN). This issue is resolved now.</p>
+        <p><strong>Affected modules</strong>
+        </p>
+        <table style="width: 50%;margin-left: 0;margin-right: auto;mc-table-style: url('../../../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows" cellspacing="0">
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <col class="TableStyle-PatternedRows-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows-Head-Header1">
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Major	</th>
+                    <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Minor	</th>
+                    <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">
+                        <p>Patch</p>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows-Body-LightRows">
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>n/a	</p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">
+                        <p>- <a href="https://github.com/spryker/Currency/releases/tag/2.1.0">Currency 2.1.0</a></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">
+                        <p>	- <a href="https://github.com/spryker/ProductManagement/releases/tag/0.6.0">ProductManagement 0.6.0</a><![CDATA[	]]></p>
+                        <p>- <a href="https://github.com/spryker/ProductManagement/releases/tag/0.6.1">ProductManagement 0.6.1</a></p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>

@@ -1,0 +1,1122 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:searchable="False">
+    <head>
+    </head>
+    <body>
+        <h1>Event</h1>
+        <p>Event module implements an Observer pattern where you can add hooks (events) to your code and allow other bundles to listen and react to those events. Event enables to create synchronous and asynchronous events: traditional synchronous where listeners are handled at the same time as they are dispatched, and asynchronous (queueable) where events are put into a queue and handled later by some queue service.</p>
+        <p>&#160;</p>
+        <table width="100%" style="margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" cellspacing="0" border="0" class="TableStyle-PatternedRows2">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Latest version: <b>2.3.2</b></td>
+                    <td rowspan="2" style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://github.com/spryker/event/releases/tag/2.3.2" target="_blank">View on GitHub <img src="../Resources/Images/view-on-github.png" /></a>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Last update: <b>11 Oct 2018</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Type: <b>Core Splitted</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Group: <b>Functional</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="currentVersion">
+            <h2 id="facade">API (Facades)</h2>
+            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody id="facade_body">
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Handles all events by registered by give $eventName</p>
+                                </li>
+                                <li>
+                                    <p>Passes transfer object to each listener</p>
+                                </li>
+                                <li>
+                                    <p>If listener is queueable then it will put into queue system.</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>triggerBulk</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Handles all events by registered by give $eventName</p>
+                                </li>
+                                <li>
+                                    <p>Passes array of transfer object to each listener</p>
+                                </li>
+                                <li>
+                                    <p>If listener is queueable then it will put into queue system.</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>processEnqueuedMessages</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>forwardMessages</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Forward consumed messages to event queue</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 id="plugins">Plugins</h2>
+            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody id="plugins_body">
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                    <p>event.</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                    <p>than one event at same time (Bulk Operation)</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 id="require">Dependencies:</h2>
+            <ul id="require_list">
+                <li><b>PHP</b> &gt;=7.1</li>
+                <li><b><MadCap:xref href="ErrorHandler.htm">ErrorHandler</MadCap:xref></b> ^2.0.0</li>
+                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.1.0</li>
+                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+            </ul>
+            <h2 id="suggest">Suggested Installations:</h2>
+            <ul id="suggest_list">
+            </ul>
+        </p>
+        <MadCap:dropDown id="previousVersionsHead">
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Previous Versions</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p id="previousVersions">
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.3.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes transfer object to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>triggerBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes array of transfer object to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>forwardMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Forward consumed messages to event queue</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="ErrorHandler.htm">ErrorHandler</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.1.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.3.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes transfer object to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>triggerBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes array of transfer object to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>forwardMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Forward consumed messages to event queue</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="ErrorHandler.htm">ErrorHandler</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.1.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.2.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="ErrorHandler.htm">ErrorHandler</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.1.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.1.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.1.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b>PHP</b> &gt;=7.1</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBaseHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>&#160;</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for each</p>
+                                                    <p>event.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventBulkHandlerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handleBulk</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Listeners needs to implement this interface to execute the codes for more</p>
+                                                    <p>than one event at same time (Bulk Operation)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventListenerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^0.3.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>trigger</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Handles all events by registered by give $eventName</p>
+                                                </li>
+                                                <li>
+                                                    <p>Passes eventTransfer to each listener</p>
+                                                </li>
+                                                <li>
+                                                    <p>If listener is queueable then it will put into queue system.</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>processEnqueuedMessages</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Processes all listeners enqueued in event queue (queue consumer)</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventListenerInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>handle</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​Event/​Dependency/​Plugin/​EventSubscriberInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getSubscribedEvents</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">&#160;</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Log.htm">Log</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Monolog.htm">Monolog</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Queue.htm">Queue</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="UtilEncoding.htm">UtilEncoding</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p><i>Last review date: 20 Nov 2018<MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><b>Do not edit this file - generated automatically</b></MadCap:conditionalText></i>
+        </p>
+    </body>
+</html>

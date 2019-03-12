@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2018-10">
+    <head><title>Product Tax Sets API Feature Integration | Spryker</title>
+        <link href="../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="This guide will navigate you through the process of installing and configuring the Product Tax Sets API feature in Spryker OS." />
+    </head>
+    <body>
+        <h1>Product Tax Sets API Feature Integration</h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature API</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Product Management</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Tax</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.12.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">ProductsRestApi</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2.2.3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2>1) Install the required modules</h2>
+        <p>Run the following commands to install the required modules:</p><pre><code class="language-PHP line-numbers">composer require spryker/product-tax-sets-rest-api:"^1.0.6" --update-with-dependencies
+composer require spryker/products-product-tax-sets-resource-relationship:"^1.0.0" --update-with-dependencies</code></pre>
+        <div class="tip">
+		Make sure that the following modules are installed:<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ProductTaxSetsRestApi</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/product-tax-sets-rest-api</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>ProductsProductTaxSetsResourceRelationship</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/products-product-tax-sets-resource-relationship</var></td></tr></tbody><tbody></tbody></table></div></div>
+        <h2>2) Set up Database Schema and Transfer objects</h2>
+        <p>Run the following commands to apply database changes and generate entity and transfer changes:</p><pre><code class="language-PHP line-numbers">console transfer:generate
+console propel:install
+console transfer:generate</code></pre>
+        <div class="tip">
+		Make sure that the following changes are present by checking your database.<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><col class="TableStyle-PatternedRows2-Column-Regular" /><col class="TableStyle-PatternedRows2-Column-Regular" /><col class="TableStyle-PatternedRows2-Column-Regular" /><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database entity</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spy_tax_set.uuid</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">added</td></tr></tbody></table></div></div>
+        <div class="tip">
+		Make sure that the following changes are present in the transfer objects:<br /><div class="table-wrap"><table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestProductTaxRateTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestProductTaxRateTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RestProductTaxSetsAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestProductTaxSetsAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>TaxSetTransfer.uuid</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">property</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">added</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/TaxSetTransfer</var></td></tr></tbody></table></div></div>
+        <h2>3) Set up behavior</h2>
+        <h3>Generates UUIDs for the existing <var>spy_tax_set records</var> without UUID:</h3>
+        <p>Run the following command:</p><pre><code class="language-PHP line-numbers">console tax-sets:uuid:update</code></pre>
+        <div class="tip">
+		Make sure that the UUID field is filled out for all the records in the <var>spy_tax_set</var> table. You can run the following SQL query to make sure the result equals to 0 records:<br /><pre><code class="language-PHP line-numbers">select count(*) from spy_tax_set where uuid is NULL;</code></pre></div>
+        <h3>Enable resource and relationship</h3>
+        <p>Activate the following plugin:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ProductTaxSetsResourceRoutePlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">	
+Registers the product tax resource.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\ProductTaxSetsRestApi\Plugin</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>ProductsProductTaxSetsResourceRelationshipPlugin</var>
+                        </td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">	
+							
+Adds the product tax sets resource as a relationship to an abstract product resource.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot style="font-weight: bold;">src/Pyz/Glue/GlueApplication/GlueApplicationDependencyProvider.php</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+use Spryker\Glue\ProductTaxSetsRestApi\Plugin\ProductTaxSetsResourceRoutePlugin;
+use Spryker\Glue\ProductsProductTaxSetsResourceRelationship\Plugin\ProductsProductTaxSetsResourceRelationshipPlugin;
+use Spryker\Glue\ProductsRestApi\ProductsRestApiConfig;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+    /**
+     * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+     */
+    protected function getResourceRoutePlugins(): array
+    {
+        return [
+            new ProductTaxSetsResourceRoutePlugin(),
+        ];
+    }
+ 
+    /**
+    * @param \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    *
+    * @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRelationshipCollectionInterface
+    */
+    protected function getResourceRelationshipPlugins(
+        ResourceRelationshipCollectionInterface $resourceRelationshipCollection
+    ): ResourceRelationshipCollectionInterface {
+        $resourceRelationshipCollection-&gt;addRelationship(
+            ProductsRestApiConfig::RESOURCE_ABSTRACT_PRODUCTS,
+            new ProductsProductTaxSetsResourceRelationshipPlugin()
+        );
+ 
+        return $resourceRelationshipCollection;
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <div class="tip">
+			Make sure that the following endpoint is available:<br /><var>http://example.org//abstract-products/{{abstract_sku}}/product-tax-sets </var> <br /><br />Make the request to <var>http://example.org//abstract-products/{{abstract_sku}}?include=product-tax-sets</var>. Make sure that the response includes relationships to the <var>product-tax-sets</var> resources.
+		</div>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 21, 2019</i> <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Tihran Voitov and Dmitry Beirak</MadCap:conditionalText></p>
+    </body>
+</html>

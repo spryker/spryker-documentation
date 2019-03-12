@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2C,ReleaseVersions.2018-10">
+    <head><title>B2C API Demo Shop Installation | Spryker</title>
+        <meta name="description" content="This article describes installation of B2C API Demo Shop to experience the use of Spryker Glue REST API." />
+    </head>
+    <body>
+        <h1>B2C API Demo Shop Installation</h1>
+        <p>
+            <img src="../../Resources/Images/shoptype/B2C_Shop.png" />
+        </p>
+        <p>B2C API Demo Shop can be installed inside <a href="https://documentation.spryker.com/capabilities/development/devvm.htm?Highlight=virtual%20machine">Spryker Development Virtual Machine</a> (VM) or on a separate dedicated server. Below, you will find detailed steps on how to perform both the installation scenarios.</p>
+        <p class="tip">Installation inside the VM ensures quicker Demo Shop roll out as the VM has all the required components installed.</p>
+        <p class="important">
+			The shop is provided for display purposes only and should not under any circumstances be used as a starting point for any project.
+		</p>
+        <h2>Installation Inside the Development Virtual Machine</h2>
+        <p>To perform the Demo Shop installation on the VM:</p>
+        <ol>
+            <li>Make sure that you have Spryker Glue REST API <a href="https://documentation.spryker.com/feature_integration_guides/glue_api/glue-api-installation-and-configuration.htm">installed and working</a>.</li>
+            <li>Log in to the VM. For this purpose, execute the following command on the host where the VM runs:<pre><code class="language-Bash">vagrant ssh</code></pre></li>
+            <li>After logging in to the VM, the current directory will be the folder where your Spryker project is installed, which is <var>/data/shop/development/current</var> by default. Go one directory up. To do this, execute the following command:<pre><code class="language-Bash">cd ..</code></pre></li>
+            <li>Prepare a folder where the API Demo Shop will be installed. For example, if you want to place the demo shop in folder&#160;<var>api-demo-shop</var>, execute the following commands:<pre><code class="language-Bash">sudo mkdir api-demo-shop
+cd api-demo-shop
+sudo chown vagrant:vagrant .
+sudo chmod og+rwx .</code></pre></li>
+            <li>Clone the API Demo Shop repository:<pre><code class="language-Bash">git clone https://github.com/spryker-shop/b2c-api-react-example .</code></pre></li>
+            <li>Open the <var>local_inside_vm.env</var> file for editing.</li>
+            <li>Change the <var>DEV_SERVER_HOST</var> variable to point to the Glue host. For example, if your project name is <i>b2c-demo-shop</i>, the host address will be <b>glue.de.b2c-demo-shop.local</b>. Also, you can change the title of the Demo Shop page. It is specified via the <var>APP_TITLE</var> variable.
+                <p>Sample <b>local_inside_vm.env</b> file implementation for a VM running B2C Demo Shop:</p><pre><code class="language-Bash line-numbers">NODE_ENV=development
+DEV_SERVER_HOST=glue.de.b2c-demo-shop.local
+DEV_SERVER_PORT=3000
+WEB_PORT=3000
+WEB_PATH="/react/"
+API_URL="/"
+APP_TITLE=Spryker API Demo Shop</code></pre><p>When done, save the changes and close the file.</p></li>
+            <li>Install <b>npm cpy</b> globally:<pre><code class="language-Bash">sudo npm install --global cpy-cli</code></pre></li>
+            <li>Open the Nginx configuration file for the Glue vhost:<pre><code class="language-Bash">sudo nano /etc/nginx/sites-available/DE_development_glue</code></pre></li>
+            <li>Add a new <b>location</b> block as follows:<pre><code class="language-Bash">location /react/ {
+    proxy_pass http://glue.de.b2c-demo-shop.local:3000;
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+}</code></pre><p>where <b>proxy_pass</b> specifies the host and port where the API Demo Shop will run. The value must match the values of <var>DEV_SERVER_HOST</var> and <var>DEV_SERVER_PORT</var> of the <b>local_inside_vm.env</b> file you edited on step <b>7</b>.</p><MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Sample vhost implementation for a VM running B2C Demo Shop</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-Bash">server {
+    # Listener for production/staging - requires external LoadBalancer directi$
+    listen 10002;
+
+    # Listener for testing/development - one host only, doesn't require extern$
+    listen 80;
+
+    server_name ~^glue\\.de\\..+\\.local$;
+
+    keepalive_timeout 0;
+    access_log  /data/logs/development/glue-access.log extended;
+
+    root /data/shop/development/current/public/Glue;
+
+    set $application_env development;
+    set $application_store DE;
+    include "spryker/glue.conf";
+    location /react/ {
+        proxy_pass http://glue.de.b2c-demo-shop.local:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown><p>When done, save the changes and close the file.</p></li>
+            <li>Restart the <b>nginx</b> service:<pre><code class="language-Bash">sudo /etc/init.d/nginx restart</code></pre></li>
+            <li>Build and run the application:<pre><code class="language-Bash">npm i
+npm run dist
+npm run serve:vm</code></pre></li>
+            <li>Check that the Demo Shop is available at the following URL: <a href="http://glue.de.b2c-demo-shop.local/react/" target="_blank">http://glue.de.b2c-demo-shop.local/react/</a>, where <i>glue.de.b2c-demo-shop.local</i> is the host name you specified in the <var>local_inside_vm.env</var> file.</li>
+            <li>To stop the Demo Shop App, press <var>Ctrl+C</var>. To start the app again, run:<pre><code class="language-Bash">npm run serve:vm</code></pre></li>
+        </ol>
+        <h2>Installation on a Dedicated Server</h2>
+        <p>To perform the Demo Shop installation on a dedicated web server:</p>
+        <ol>
+            <li>Make sure that you have Spryker Glue REST API <a href="https://documentation.spryker.com/feature_integration_guides/glue_api/glue-api-installation-and-configuration.htm">installed and working</a>.</li>
+            <li>Make sure that the following prerequisites are installed on the server:<ul><li><a href="https://nodejs.org/" target="_blank">Node 8.9.3</a> or newer.</li></ul></li>
+            <li>Add the following entries to the <strong>hosts</strong> file of the server:<pre><code class="language-Bash">&lt;Glue_IP&gt; glue.de.project-name.local
+127.0.0.1 react.local</code></pre><p>where:</p><ul><li><strong>&lt;Glue_IP&gt;</strong> - the IP of the Glue REST API server;</li><li><strong>glue.de.project-name.local</strong> - the local hostname of the Glue REST API server;</li><li><strong>react.local</strong> - the local hostname of the API Demo Shop.</li></ul></li>
+            <li>Clone the API Demo Shop repository:<pre><code class="language-Bash">git clone https://github.com/spryker-shop/b2c-api-react-example .</code></pre></li>
+            <li>Open the <var>local_outside_vm.env</var> file for editing.</li>
+            <li>Change the <var>DEV_SERVER_HOST</var> variable to point to the API Demo Shop hostname, for example, <b>react.local</b>, and the <var>API_URL</var> variable to point 
+				to the local hostname of the Glue REST API server. Also, you can change the title of the Demo Shop page. It is specified via the <var>APP_TITLE</var> variable.
+                <p>Sample <b>local_outside_vm.env</b> file implementation:</p><pre><code class="language-Bash line-numbers">NODE_ENV=development
+DEV_SERVER_HOST=localhost
+DEV_SERVER_PORT=3000
+WEB_PORT=3000
+WEB_PATH="/"
+API_URL="http://glue.de.project-name.local"
+APP_TITLE=Spryker API Demo Shop</code></pre><p>When done, save the changes and close the file.</p></li>
+            <li>Install <b>npm cpy</b> globally:<pre><code class="language-Bash">npm install --global cpy-cli</code></pre></li>
+            <li>Build and run the application:<pre xml:space="preserve"><code class="language-Bash">npm i
+npm run dist
+npm run serve:local</code></pre></li>
+            <li>Check that the Demo Shop is available at the following URL: <a href="http://react.local/" target="_blank">http://react.local</a>.</li>
+            <li>To stop the Demo Shop App, press <var>Ctrl+C</var>. To start the app again, run:<pre xml:space="preserve"><code class="language-Bash">npm run serve:local</code></pre></li>
+        </ol>
+        <h2>See Also:</h2>
+        <ul>
+            <li>
+                <MadCap:xref href="B2C-API-Demo-Shop.htm">B2C API Demo Shop</MadCap:xref>
+            </li>
+        </ul>
+        <p><i>Last review date: Feb. 28th, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Volodymyr Volkov</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

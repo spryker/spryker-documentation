@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.DemoShop,Spryker.B2C">
+    <head>
+    </head>
+    <body>
+        <h1>HowTo - Implement Invoice Payment Front End <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Creating the Form
+</h2>
+        <p>In Yves, we’ll start by building the form. Add the new module also in Yves and add a <var>Form/</var> folder where we’ll place the implementation for building the form.
+
+</p>
+        <p>First add the data provider, inside the <var>Form/DataProvider/</var> folder:
+</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Yves\PaymentMethods\Form\DataProvider;
+
+use Generated\Shared\Transfer\QuoteTransfer;
+use Pyz\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
+
+class InvoiceDataProvider implements DataProviderInterface
+{
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function getData(QuoteTransfer $quoteTransfer)
+    {
+        return $quoteTransfer;
+    }
+
+    /**
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return array
+     */
+    public function getOptions(QuoteTransfer $quoteTransfer)
+    {
+        return [];
+    }
+
+}
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Then implement the form:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\PaymentMethods\Form;
+
+use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
+use Pyz\Yves\Checkout\Dependency\CheckoutAbstractSubFormType;
+use Pyz\Yves\Checkout\Dependency\SubFormInterface;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+
+class InvoiceSubForm extends CheckoutAbstractSubFormType implements SubFormInterface
+{
+
+    /**
+     * @const string
+     */
+    const PAYMENT_PROVIDER = PaymentMethodsConstants::PROVIDER;
+
+    /**
+     * @const string
+     */
+    const PAYMENT_METHOD = PaymentMethodsConstants::PAYMENT_METHOD_INVOICE;
+
+    /**
+     * @return string
+     */
+    public function getPropertyPath()
+    {
+        return PaymentMethodsConstants::PAYMENT_INVOICE_FORM_PROPERTY_PATH;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return static::PAYMENT_PROVIDER . '_' . static::PAYMENT_METHOD;
+    }
+
+    /**
+     * @return string
+     */
+    public function getTemplatePath()
+    {
+        return static::PAYMENT_PROVIDER . '/' . static::PAYMENT_METHOD;
+    }
+
+    /**
+     * @param \Symfony\Component\OptionsResolver\OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        parent::setDefaultOptions($resolver);
+        $resolver-&gt;setDefaults([
+            SubFormInterface::OPTIONS_FIELD_NAME =&gt; [],
+        ]);
+    }
+}
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>To plug this form into checkout, add a plugin for it inside the <var>Plugin/</var> folder:</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\PaymentMethods\Plugin;
+
+use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
+
+/**
+ * @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
+ */
+class InvoiceSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
+{
+
+    /**
+     * @return \Pyz\Yves\PaymentMethods\Form\InvoiceSubForm
+     */
+    public function createSubForm()
+    {
+        return $this-&gt;getFactory()-&gt;createInvoiceForm();
+    }
+
+    /**
+     * @return \Pyz\Yves\Checkout\Dependency\DataProvider\DataProviderInterface
+     */
+    public function createSubFormDataProvider()
+    {
+        return $this-&gt;getFactory()-&gt;createInvoiceFormDataProvider();
+    }
+
+}
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>Payment Handler
+</h2>
+        <p>To be able to handle this new payment type, add the <var>InvoiceHandler </var>class inside the <var>Handler/</var> folder:
+</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\PaymentMethods\Handler;
+
+use Generated\Shared\Transfer\QuoteTransfer;
+use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
+use Symfony\Component\HttpFoundation\Request;
+
+class InvoiceHandler
+{
+
+    /**
+     * @const string
+     */
+    const PAYMENT_PROVIDER = PaymentMethodsConstants::PROVIDER;
+
+    /**
+     * @const string
+     */
+    const PAYMENT_METHOD = PaymentMethodsConstants::PAYMENT_METHOD_INVOICE;
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+    {
+        $quoteTransfer-&gt;getPayment()
+            -&gt;setPaymentProvider(static::PAYMENT_PROVIDER)
+            -&gt;setPaymentMethod(static::PAYMENT_METHOD);
+
+        return $quoteTransfer;
+    }
+}
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>To plug this payment handler into checkout, add a plugin for it under the <var>Plugin/</var> folder:
+</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\PaymentMethods\Plugin;
+
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\Kernel\AbstractPlugin;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
+ */
+class InvoiceHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
+{
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+     *
+     * @return \Generated\Shared\Transfer\QuoteTransfer
+     */
+    public function addToDataClass(Request $request, QuoteTransfer $quoteTransfer)
+    {
+        $this-&gt;getFactory()-&gt;createInvoiceHandler()-&gt;addPaymentToQuote($request, $quoteTransfer);
+    }
+
+}
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h2>Invoice Twig Template
+</h2>
+        <p>Add the Twig template that will be rendered when invoice payment method is selected under the configured path: in Yves, create <var>invoice.twig</var> template file in <var>PaymentMethods/Theme/</var> then <var>ApplicationConstants::YVES_THEME</var> config value directory. </p>
+        <p>Adjust the path according to the theme you are currently using.
+
+</p><pre><code class="language-PHP line-numbers">&lt;div class="payment-subform paymentmethods-invoice-form"&gt;
+    {# Place the details regarding invoice here #}
+    {{ form_widget(form.paymentmethods_invoice) }}
+    {{ form_errors(form.paymentmethods_invoice) }}
+&lt;/div&gt;
+</code></pre>
+        <p>Don’t forget to add the factory and the dependency provider for this new added module in Yves.
+
+</p>
+    </body>
+</html>

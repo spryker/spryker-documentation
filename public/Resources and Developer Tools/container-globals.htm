@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:lastBlockDepth="2" MadCap:lastHeight="8141" MadCap:lastWidth="1700">
+    <head>
+    </head>
+    <body>
+        <h1>Container Globals</h1>
+        <p MadCap:conditions="General.Hidden Comment">http://spryker.github.io/development-guide/reference/container-globals/</p>
+        <p>The <var>ContainerGlobals</var> is a way to inject dependencies which are available inside your <a href="factory.htm">Factories</a>. Every dependency added to the <var>ContainerGlobals</var> is available by using <var>getProvidedDependency()</var> in your factory.
+</p>
+        <p>
+To add something globally you need to create a service provider and add it to the bootstrap of your application.
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace ProjectName\Application\Bundle\ServiceProvider;
+
+use Silex\Application;
+use Silex\ServiceProviderInterface;
+use Spryker\Shared\Kernel\ContainerGlobals;
+
+class YourServiceProvider implements ServiceProviderInterface
+{
+
+    /**
+     * @param \Silex\Application $app
+     *
+     * @return void
+     */
+    public function register(Application $app)
+    {
+        $containerGlobals = new ContainerGlobals();
+        $containerGlobals[KEY_FOR_GLOBAL_DEPENDENCY] = $containerGlobals-&gt;share(function () use () {
+            return new ProjectName\Global\Dependency();
+        });
+    }
+    ...
+}
+</code></pre>
+        <p>To access this global dependency, call <var>$this-&gt;getProvidedDependency(KEY_FOR_GLOBAL_DEPENDENCY) </var>inside your factory.
+
+<var>FormFactoryServiceProvider</var> gives you a full example on how to add a <var>FormFactory</var> that’s available to all of your <a href="factory.htm">factories</a>
+
+With this approach you can define such dependencies once, instead of defining them each time for each module that uses them.</p>
+    </body>
+</html>

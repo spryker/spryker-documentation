@@ -1,0 +1,149 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.DemoShop,Spryker.ShopSuite,Spryker.B2C">
+    <head>
+    </head>
+    <body>
+        <h1>Performance Monitoring - Minubo <img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <img src="../../Resources/Images/minubo-logo.png" />
+        </p>
+        <h2>Partner Information</h2>
+        <table style="margin-left: 0; margin-right: auto;">
+            <col>
+            </col>
+            <col>
+            </col>
+            <tbody>
+                <tr>
+                    <td><a href="https://www.minubo.com/" target="_blank">ABOUT MINUBO</a>
+                    </td>
+                    <td>&#160;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p>Minubo is the Commerce Intelligence Company for omni-channel brands and retailers – solving the top 3 challenges that commerce companies face in becoming data-driven in an omni-channel environment: strategy, people and technology. Fed by a full omni-channel data base, minubo’s Analytics &amp; Insights App enables both strategic and operational roles to make better, data-driven decisions – every day. Alongside that, minubo’s professional services team helps building the needed infrastructure and processes for a fast-growing omni-channel business. Our customer portfolio includes among others LUSH North America, Scotch &amp; Soda und Intersport.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>YOUR ADVANTAGES:</td>
+                    <td>&#160;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <ul>
+                            <li>Out-of-the-box integration of all relevant data sources into one omni-channel data warehouse</li>
+                            <li>Low cost of ownership: The solution is hosted in the cloud and the high level of standardization enables the immediate implementation of a data-driven working environment</li>
+                            <li>Easy-to-use analytics tools for every user group – dashboarding, customer segmentation, Web Pivot for ad-hoc analyses, best practice reports, proaktive insights und action recommendation among others</li>
+                            <li>Standardized commerce data model based on industry best practices enables a data-driven working environment from day one</li>
+                            <li>The minubo data feeds and already developed integrations to third-party systems enables flexible use of the data</li>
+                            <li>Implementation and enablement is conducted by our in-house advisory and support team</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        </hr>
+        <h2>General Information</h2>
+        <p>The Minubo module provides functionality to export order and customer data that was updated since last run of export. Data exported to Amazon S3 bucket as file with list of JSON-objects.</p>
+        <p>Export process runs in two modes:</p>
+        <ol>
+            <li>Automatic mode - every 15 minutes (default)</li>
+            <li>Manual mode - using console command:<pre><code class="language-bash">vendor/bin/console minubo:export:data</code></pre></li>
+        </ol>
+        <p>As a result, the module puts two files Customer_TIMESTAMP.json and Order_TIMESTAMP.json with updated data to Amazon S3 bucket. If there were no changes the module would put empty files.</p>
+        <h2>Installation and configuration</h2>
+        <ol>
+            <li>To install Minubo run next command in the console:
+			<pre><code class="language-bash">composer require spryker-eco/minubo</code></pre></li>
+            <li>Copy over the content from config/config.dist.php to config_default.php and add the values:<pre><code class="language-PHP line-numbers">...
+	use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+	use Spryker\Shared\FileSystem\FileSystemConstants;
+	use SprykerEco\Shared\Minubo\MinuboConstants;
+	...
+	$config[FileSystemConstants::FILESYSTEM_SERVICE] = [
+	'minubo' =&gt; [
+	'sprykerAdapterClass' =&gt; Aws3v3FilesystemBuilderPlugin::class,
+	'root' =&gt; '/minubo/',
+	'path' =&gt; 'data/',
+	'key' =&gt; '..',
+	'secret' =&gt; '..',
+	'bucket' =&gt; '..',
+	'version' =&gt; 'latest',
+	'region' =&gt; '..',
+	],
+	];
+ 
+	$config[MinuboConstants::MINUBO_FILE_SYSTEM_NAME] = 'minubo';
+	$config[MinuboConstants::MINUBO_BUCKET_DIRECTORY] = '/minubo/data/';
+	$config[MinuboConstants::MINUBO_CUSTOMER_SECURE_FIELDS] = [
+	'password',
+	'restore_password_date',
+	'restore_password_key',
+	'registration_key',
+	];
+	...</code></pre></li>
+            <li>Copy over the content from config/jobs.dist.php to jobs.php:<pre><code class="language-PHP line-numbers">...
+	$jobs[] = [
+	'name' =&gt; 'minubo-export',
+	'command' =&gt; '$PHP_BIN vendor/bin/console minubo:export:data',
+	'schedule' =&gt; '*/15 * * * *',
+	'enable' =&gt; true,
+	'run_on_non_production' =&gt; false,
+	'stores' =&gt; ['DE'],
+	];
+	...</code></pre></li>
+            <li>Add Minubo console to ConsoleDependencyProder:<pre><code class="language-PHP line-numbers">...
+	use SprykerEco\Zed\Minubo\Communication\Console\MinuboConsole;
+ 
+	class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
+	{
+	protected function getConsoleCommands(Container $container)
+	{
+	$commands = [
+	...
+	new MinuboConsole(),
+	];
+	...
+	return $commands;
+	}
+	...</code></pre></li>
+            <li>Add or update FlysystemDependencyProvider to project Service Layer:<pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Service\Flysystem;
+
+use Spryker\Service\Flysystem\FlysystemDependencyProvider as SprykerFlysystemDependencyProvider;
+use Spryker\Service\FlysystemAws3v3FileSystem\Plugin\Flysystem\Aws3v3FilesystemBuilderPlugin;
+use Spryker\Service\FlysystemFtpFileSystem\Plugin\Flysystem\FtpFilesystemBuilderPlugin;
+use Spryker\Service\FlysystemLocalFileSystem\Plugin\Flysystem\LocalFilesystemBuilderPlugin;
+use Spryker\Service\Kernel\Container;
+
+class FlysystemDependencyProvider extends SprykerFlysystemDependencyProvider
+{
+    /**
+     * @param \Spryker\Service\Kernel\Container $container
+     *
+     * @return \Spryker\Service\Kernel\Container
+     */
+    protected function addFilesystemBuilderPluginCollection($container)
+    {
+        $container[self::PLUGIN_COLLECTION_FILESYSTEM_BUILDER] = function (Container $container)
+        {
+            return [new FtpFilesystemBuilderPlugin() , new LocalFilesystemBuilderPlugin() , new Aws3v3FilesystemBuilderPlugin() , ];
+        };
+
+        return $container;
+    }
+}</code></pre></li>
+        </ol>
+        <p>&#160;</p>
+        <h2>Copyright and Disclaimer</h2>
+        <p>See <a href="" target="_blank"><a href="https://github.com/spryker/spryker-documentation">Disclaimer</a></a>.</p>
+        <p>&#160;</p>
+        <p><i>Last review date: Jun. 21st, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Yevhen Hrebenikov</i>
+            </MadCap:conditionalText>
+        </p>
+        <p MadCap:conditions="General.Hidden Comment">As hidden comment add the following to the page:</p>
+        <p MadCap:conditions="General.Hidden Comment">Internal Contact person: lennard@minubo.com &amp; sabina.mierzowski@minubo.com</p>
+    </body>
+</html>

@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Product Group - Under The Hood <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Database Schema</h2>
+        <p>The ProductGroup module provides<var> spy_product_group</var> table that stores product groups. Product group entities have only the<var> id_product_group</var> field, because we don’t need to display or refer to any groups in any way.</p>
+        <p>The only necessary details for a group are the abstract products that are in the same group and order in which they have to be displayed. The <var>spy_product_abstract_group</var> table stores exactly this information.</p>
+        <p>
+            <img src="../../../Resources/Images/product_group_db_schema.png" title="Click Me" alt="Product Group DB Schema" class="Thumbnail" />
+        </p>
+        <p MadCap:conditions="General.Image_Source">https://www.gliffy.com/go/share/image/s365x3afydk5srvfsjs2.png?utm_medium=live-embed&amp;utm_source=custom</p>
+        <h2>Handling Product Groups With the KV Storage</h2>
+        <p>On Yves side the goal is to be able to read product group information fast without expensive calls to Zed and without a need to read from database. Therefore, the ProductGroup module provides two Storage collectors that will store the necessary information in the KV Storage.</p>
+        <ul>
+            <li class="bullet_list"><var>ProductGroupCollectorStoragePlugin</var>: Collects and stores the IDs of abstract products in the defined order for each product group.</li>
+            <li class="bullet_list"><var>ProductAbstractGroupsCollectorStoragePlugin</var>: Collects and stores the IDs of product groups for each abstract product.</li>
+        </ul>
+        <p>To read all abstract products that are in the same group(s) as a product that you would like to display, use <var>ProductGroupClient::findProductGroupItemsByIdProductAbstract()</var> method. This returns an array of abstract products, read from the KV Storage. (Note that the <var>spyProductGroupItems()</var> twig function also uses this method to get the necessary information.)</p>
+        <p>The algorithm of reading products by groups in details looks like the following:</p>
+        <ol>
+            <li>Read the <var>product_abstract_groups</var> entry from KV Storage of the subject product to determine the group(s) it’s assigned to.</li>
+            <li>Then for each group we get the ordered IDs of abstract products by reading the necessary <var>product_group</var> entries from the KV Storage.</li>
+            <li>Merge the product IDs of all the groups of the subject product to one list. Since we don’t make difference between groups that a product is in, it makes sense to have one list with all its related items at the end.</li>
+            <li>Change the order of the items by moving the subject product to the beginning of the list.</li>
+            <li>Read product details from the KV Storage for all items in the list.</li>
+        </ol>
+        <p>As you can see the algorithm executes quite some commands to read from the KV Storage, but it’s still fast enough to get the necessary data to be able to display product groups on our frontend.</p>
+    </body>
+</html>

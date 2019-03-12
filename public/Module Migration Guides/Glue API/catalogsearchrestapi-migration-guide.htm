@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Draft,ReleaseVersions.2018-10">
+    <head>
+    </head>
+    <body>
+        <h1>CatalogSearchRestApi Migration Guide</h1>
+        <h2>Upgrading from Version 1.* to Version 2.*</h2>
+        <p>CatalogSearchRestApi version 2 has been improved to work properly with the currency and price mode. Now other modules are responsible to handle these parameters in the request. Also, we have fixed a response structure to meet requirements, namely we have added a price with the currency information and fixed a catalog search suggestions structure.</p>
+        <p>Make sure that API consumers expect a correct response:</p>
+        <p><b>search</b>
+        </p><pre><code class="language-PHP line-numbers">
+	RestCatalogSearchAbstractProducts:
+		properties:
+			images:
+				items:
+					$ref: '#/components/schemas/RestCatalogSearchProductImage'
+			price:
+				type: integer
+			abstractName:
+				type: string
+			prices:
+				type: array
+			abstractSku:
+				type: string
+	RestCatalogSearchAttributes:
+		properties:
+			sort:
+				$ref: '#/components/schemas/RestCatalogSearchSort'
+			pagination:
+				$ref: '#/components/schemas/RestCatalogSearchPagination'
+			abstractProducts:
+				items:
+					$ref: '#/components/schemas/RestCatalogSearchAbstractProducts'
+			valueFacets:
+				items:
+					$ref: '#/components/schemas/RestFacetSearchResult'
+			rangeFacets:
+				items:
+					$ref: '#/components/schemas/RestRangeSearchResult'
+			spellingSuggestion:
+				type: string
+	RestCatalogSearchSuggestionAbstractProducts:
+		properties:
+			images:
+				items:
+					$ref: '#/components/schemas/RestCatalogSearchSuggestionProductImage'
+			price:
+				type: integer
+			abstractName:
+				type: string
+			abstractSku:
+				type: string
+	RestCatalogSearchSuggestionProductImage:
+		properties:
+			externalUrlSmall:
+				type: string
+			externalUrlLarge:
+				type: string
+	RestCatalogSearchSuggestionsAttributes:
+		properties:
+			completion:
+				type: string
+			abstractProducts:
+				items:
+					$ref: '#/components/schemas/RestCatalogSearchSuggestionAbstractProducts'
+			categories:
+				type: array
+			cmsPages:
+				type: array
+			</code></pre>
+        <p>&#160;</p>
+        <p><i>Estimated migration time: 30 minutes</i>
+        </p>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec 10, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Oleh Hladchenko, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

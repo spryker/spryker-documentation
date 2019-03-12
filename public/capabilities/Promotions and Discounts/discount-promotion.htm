@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head><title>Discount Promotion | Spryker</title>
+        <meta name="description" content="With DiscountPromotion module you will be able to extend &quot;Discount&quot; module to provide any new discount-related behavior. " />
+    </head>
+    <body>
+        <h1>Discount Promotion <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>For marketing reasons shops sometimes give away free products depending on the cart content. </p>
+        <div class="example">This could be for example when the cart value is high to give away some free perks.
+           <p>Or for example when the customer buys certain product to give away some other product that is complimentary to the first one.
+        </p></div>
+        <p>Some other use cases are promotions like "buy one, get one for free", "buy product X, get product Y for free", "buy 10 of product X and get 1 of product X for free", etc. The products that are being given away are standard products in the catalog.</p>
+        <p>With <var>DiscountPromotion</var> module you will be able to extend <var>Discount</var> module to provide this new behaviour.</p>
+        <p>This module extends ZED discount UI with different discount collector type where you can enter promotion product SKU and quantity. Cart page in Yves will show promotion products below items, but only when conditions are satisfied. The quantity is the maximum number of products that can be added to cart.</p>
+        <p class="info">This also means that quantity will be displayed as a dropdown component in the cart view page.</p>
+        <h3>How Does It Work?</h3>
+        <p>The promotion discount process is split into two parts:
+        </p>
+        <ul>
+            <li>In the first part a discount decision rule is being evaluated, and if it is <var>true</var>, then discountable items are collected by collector.
+          <div class="info">When discount has Promotion discount selected as collector type, then specific collector strategy will be used. 
+			<p>This new strategy is provided by <var>DiscountPromotion</var> module. The new collector will check if
+          there is a promotion item in the current quote, if it's not there, then this item will be added to <var>QuoteTransfer::promotionItems()</var>. This collection of promotion items is displayed in the cart page.</p><p>After modifying the quote, it will return empty collection and this discount will be skipped.</p></div></li>
+            <li>In the second part when promotion item is added to cart, it will go through the same process as the first time, but the difference is that when Discount promotion collector strategy is executed,
+          it would collect cart items with <var>ItemTransfer::promotion = true</var> flag. And discount amount will be distributed to those items.</li>
+        </ul>
+        <p>
+          Important note: The promotion items cannot be combined with other discounts, also those items are grouped differently in cart.
+         </p>
+        <p>&#160;</p>
+        <p><i>Last review date: Sep. 1, 2017</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Aurimas Ličkus</MadCap:conditionalText><![CDATA[         ]]></p>
+    </body>
+</html>

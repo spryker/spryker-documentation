@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Query Builder - Product Relation <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>Query build in Zed allows to select and bulid a dynamic related product query. The query ships with pre-set rules:
+
+</p>
+        <ul>
+            <li class="bullet_list">sku - filter by abstract product sku.
+</li>
+            <li class="bullet_list">name - filter by abstract product name. The locale is Zed’s default locale. If a product matches in that locale it will be related in both locales.
+</li>
+            <li class="bullet_list">created_at - string value date when the abstract product was created.
+</li>
+            <li class="bullet_list">category - is the name of category in the current zed locale.
+</li>
+            <li class="bullet_list">attributes - is the list of attributes as defined in spy_product_attribute_key database table.
+</li>
+        </ul>
+        <p>These rules can be combined with <var>and </var>or <var>or </var>operators, and it is also possible to nest them to make complex rules.
+
+</p>
+        <p>When a product relation form in a saved configured rule is executed, all matching abstract product ids are saved in <var>spy_product_relation_product_abstract relation table</var>.
+
+</p>
+        <p>Also, the collector is touched and relations are exported to Yves data store. Collector exports, list of abstract products with image, url, name, price…
+
+</p>
+        <p>When a query is selected and a relation in saved, the relation needs to be manually updated to reflect latest changes (run again given query). The console command <var>product-relation:update</var> it will run all active relations with the <var>is_rebuild_scheduled</var> flag in the database table <var>spy_product_relation</var> selected.
+
+This command can also be executed by spryker cron jobs and manually triggered via Jenkins.
+</p>
+    </body>
+</html>

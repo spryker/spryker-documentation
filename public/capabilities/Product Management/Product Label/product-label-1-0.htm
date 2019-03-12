@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Product Label 1.0 <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p MadCap:conditions="General.Draft">Contributor - Tamas status, waiting for merge to release</p>
+        <p>
+            <MadCap:relatedTopics target="_self" style="mc-label: 'Versions';mc-help-control-display: list;">
+                <MadCap:relatedTopic src="product-label.htm" />
+            </MadCap:relatedTopics>
+        </p>
+        <p class="important">The latest version of this module can be found here <MadCap:xref href="product-label.htm">Product Label</MadCap:xref></p>
+        <h2>Overview</h2>
+        <p>Product labels are used to show additional information for abstract products in shop front-ends. They can be managed through a dedicated Zed user interface and rendered in various ways in project implementations.</p>
+        <h2>Feature Integration</h2>
+        <h3>Prerequisites</h3>
+        <p>To prepare your project for using Product Labels:</p>
+        <ol>
+            <li>Require the Product Label module in your <var>composer.json</var> by running <var>composer require spryker/product-label spryker/product-label-collector spryker/product-label-gui</var></li>
+            <li>Install the required changes to the data structure by running console <var>propel:diff &amp;&amp; console propel:migrate &amp;&amp; console propel:model:build</var>. This will generate a migration file, run the migration against your database, and build all new Propel models.</li>
+            <li>Generate the new transfer objects by running <var>console transfer:generate</var></li>
+            <li>Make sure the new Zed user interface assets are built by running <var>npm run zed</var> (or <var>antelope build zed</var> for older versions)</li>
+            <li>Update Zed’s navigation cache to show the new items for the Product Label management user interface by running console <var>application:build-navigation-cache</var></li>
+            <li>Activate the Product Label collectors by adding <var>\Spryker\Zed\ProductLabelCollector\Communication\Plugin\ProductLabelDictionaryCollectorStoragePlugin</var> and <var>\Spryker\Zed\ProductLabelCollector\Communication\Plugin\ProductLabelProductAbstractRelationCollectorStoragePlugin</var> to the storage collector plugin stack in your project implementation:</li>
+        </ol><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Collector;
+
+use Spryker\Shared\Navigation\ProductLabelConstants;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\ProductLabelCollector\Communication\Plugin\ProductLabelDictionaryCollectorStoragePlugin;
+use Spryker\Zed\ProductLabelCollector\Communication\Plugin\ProductLabelProductAbstractRelationCollectorStoragePlugin;
+// ...
+
+class CollectorDependencyProvider extends SprykerCollectorDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Spryker\Zed\Kernel\Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        // ...
+       
+        $container[static::STORAGE_PLUGINS] = function (Container $container) {
+            return [
+                // ...
+                ProductLabelConstants::RESOURCE_TYPE_PRODUCT_LABEL_DICTIONARY =&gt; new ProductLabelDictionaryCollectorStoragePlugin(),
+                ProductLabelConstants::RESOURCE_TYPE_PRODUCT_ABSTRACT_PRODUCT_LABEL_RELATIONS =&gt; new ProductLabelProductAbstractRelationCollectorStoragePlugin(),
+            ];
+        };
+        
+        // ...
+    }
+}</code></pre>
+        <h3>Data Setup</h3>
+        <p>The Zed user interface can be used to manage product labels. The collectors that were enabled before will take care of exporting active labels to the key-value storage. Product labels can also be imported using the <MadCap:conditionalText MadCap:conditions="Spryker.DemoShop">demo-shop’s </MadCap:conditionalText>importer infrastructure. <MadCap:conditionalText MadCap:conditions="Spryker.DemoShop">Spryker provides a couple of example installer implementations in the <a href="https://github.com/spryker/demoshop" target="_blank">demo-shop</a> that can be used for ideas.</MadCap:conditionalText></p>
+        <h3>Usage in Yves</h3>
+        <p>The Product Label module ships with a Twig extension to easily access and render product labels in templates. The extension registers a new Twig function called <var>spyProductLabels</var> that excepts two parameters:</p>
+        <ol>
+            <li><strong>$idProductAbstract</strong>: ID of the abstract product to render labels for</li>
+            <li><strong>$templateName</strong>: The name of a template to use for rendering the labels</li>
+        </ol>
+        <p>To enable the Twig extension it is necessary to register it as a new service provider in <var>\Pyz\Yves\Application\YvesBootstrap</var></p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\Application;
+
+use Spryker\Yves\ProductLabel\Twig\ProductLabelTwigExtension;
+// ...
+
+class YvesBootstrap
+{
+    /**
+     * @return void
+     */
+    protected function registerServiceProviders()
+    {
+        // ...
+        $this-&gt;application-&gt;register(new ProductLabelTwigExtension());
+    }
+}</code></pre>
+        <p>An example implementation of template rendering labels for an abstract product looks like this (e.g. on a product detail page):</p><pre><code class="language-PHP line-numbers">&lt;div class="product-labels"&gt;
+    {{ spyProductLabels(product.getIdProductAbstract(), '@ProductLabel/partials/group.twig') }}
+&lt;/div&gt;</code></pre>
+        <h3>Creating a Custom Template for Rendering Product Labels</h3>
+        <p>The template specified in the second parameter in the <var>spyProductLabels</var> Twig function receives a collection of transfer objects, each representing a product label containing data from the key-value storage. This collection will be empty for abstract products that are not assigned any product labels. All locale-specific label fields will be returned for the currently active store locale.</p>
+        <p>Here’s a simple example of a possible template:</p><pre><code class="language-PHP line-numbers">&lt;div class="product-label-group"&gt;
+    {% for productLabelTransfer in productLabelTransferCollection %}
+        &lt;span class="product-label-flag"&gt;
+            &lt;span class="product-label-flag__content"&gt;
+                {{ productLabelTransfer.getName() }}
+            &lt;/span&gt;
+        &lt;/span&gt;
+    {% endfor %}
+&lt;/div&gt;</code></pre>
+        <p MadCap:conditions="Spryker.DemoShop">A more detailed example implementation is available in the <a href="https://github.com/spryker/demoshop" target="_blank">demo-shop</a>.</p>
+        <h3>Checking Validity</h3>
+        <p>Product labels can be configured to have a validity date range. They will only be represented in the key-value storage if they fall between the <var>valid_from</var> and <var>valid_to</var> dates.</p>
+        <p>To make sure that invalid product labels become valid when the specified validity date range is entered, run the console command <var>console product-label:validity</var>. It will also handle labels that are currently valid but become invalid due to exceeding the <var>valid_to</var> date. The command checks validity date ranges for all active labels and “touch” the ones for which the validity state changes.</p>
+        <p MadCap:conditions="Spryker.DemoShop">The <a href="https://github.com/spryker/demoshop" target="_blank">demo-shop</a> ships with a Cronjob triggers this command once a day.</p>
+        <h2>Under the hood</h2>
+        <h3>Database schema</h3>
+        <p>
+            <img src="../../../Resources/Images/product_label_db.png" title="Product Label Database Schema" alt="Product Label Database Schema" />
+        </p>
+        <p>The <var>Product Label</var> module adds three new tables:</p>
+        <ol>
+            <li><strong>spy_product_label</strong>
+                <br />This table stores the main product label information such as its name, validity dates, flags, etc.</li>
+            <li><strong>spy_product_label_localized_attributes</strong>
+                <br />This tables stores all localized information. Currently it only stores the translated product label names.</li>
+            <li><strong>spy_product_label_product_abstract</strong>
+                <br />This table stores the relations between product labels and abstract products.</li>
+        </ol>
+        <h3>Representation In The Key-Value Storage</h3>
+        <p>Product labels are exported in two parts, a dictionary that contains all active and valid product-labels and a list of product label IDs for each abstract product.</p>
+        <h4>Product Label Dictionary</h4>
+        <p>The dictionary contains only active and valid product labels. The active state is derived from the <var>is_active</var> flag and validity is checked against the <var>valid_from</var> and <var>valid_to</var> fields. There is a dedicated transfer object that represents the structure of each product label in the dictionary, called <var>ProductLabelStorageTransfer</var>.</p>
+        <h4>Abstract Product to Product Label Relations</h4>
+        <p>All relations between an abstract product and a product label will be exported not taking into account active state and validity.</p>
+        <p>When using <var>\Spryker\Client\ProductLabel\ProductLabelClient::findLabelsByIdProductAbstract()</var> (or the Twig function <var>spyProductLabels</var>) each relation is checked against the dictionary and only a collection of active and valid product labels will be returned for a single abstract product. This prevents having to update each product relation in the key-value storage whenever a product label changes thus reducing the number of required “touches”.</p>
+        <h2>Feature Extensions</h2>
+        <h3>Discounts Based on Product Labels</h3>
+        <p>
+            It's possible to create discount rules based on products that have specific label(s). On the discount UI
+            select the <var>product-label</var> rule for <strong>Discount calculation</strong> to define that the discount
+            will be apply to the selected predefined labels. You can also select the <var>product-label</var> rule for
+            <strong>Conditions</strong> to define that your discount is applied when the selected labels are present.
+        </p>
+        <p>Follow the steps below to activate this feature:</p>
+        <ol>
+            <li>Install <var>ProductLabelDiscountConnector</var> module in your project.</li>
+            <li>
+                Active the Decision rule and Collector plugins in <code>\Pyz\Zed\Discount\DiscountDependencyProvider</code>:
+                <pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Discount;
+
+use Spryker\Zed\Discount\DiscountDependencyProvider as SprykerDiscountDependencyProvider;
+use Spryker\Zed\ProductLabelDiscountConnector\Communication\Plugin\Collector\ProductLabelCollectorPlugin;
+use Spryker\Zed\ProductLabelDiscountConnector\Communication\Plugin\DecisionRule\ProductLabelDecisionRulePlugin;
+
+class DiscountDependencyProvider extends SprykerDiscountDependencyProvider
+{
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\DecisionRulePluginInterface[]
+     */
+    protected function getDecisionRulePlugins()
+    {
+        $decisionRulePlugins = parent::getDecisionRulePlugins();
+        // ...
+        $decisionRulePlugins[] = new ProductLabelDecisionRulePlugin();
+
+        return $decisionRulePlugins;
+    }
+
+    /**
+     * @return \Spryker\Zed\Discount\Dependency\Plugin\CollectorPluginInterface[]
+     */
+    protected function getCollectorPlugins()
+    {
+        $collectorPlugins = parent::getCollectorPlugins();
+        // ...
+        $collectorPlugins[] = new ProductLabelCollectorPlugin();
+
+        return $collectorPlugins;
+    }
+
+}
+</code></pre></li>
+            <li>You are ready to use this feature extension.</li>
+        </ol>
+    </body>
+</html>

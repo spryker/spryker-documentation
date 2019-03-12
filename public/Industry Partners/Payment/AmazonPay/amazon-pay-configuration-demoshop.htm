@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head><title>Amazon Pay - Configuration for the Legacy Demoshop | Spryker</title>
+        <meta name="description" content="This tutorial describes the procedure of configuring and implementing Amazon Pay in Spryker Commerce OS Demoshop. " />
+    </head>
+    <body>
+        <h1>Amazon Pay - Configuration for the Legacy Demoshop <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            Please refer to <var>config/Shared/config.dist.php</var> for the module configuration example.</p>
+        <p>To set up the Amazon Pay initial configuration, use the credentials you received after completing the registration as an Amazon seller:</p><pre><code class="language-php line-numbers">$config[AmazonPayConstants::WIDGET_SCRIPT_PATH] = 'https://static-eu.payments-amazon.com/OffAmazonPayments/eur/lpa/js/Widgets.js';
+$config[AmazonPayConstants::WIDGET_SCRIPT_PATH_SANDBOX] = 'https://static-eu.payments-amazon.com/OffAmazonPayments/eur/sandbox/lpa/js/Widgets.js';
+$config[AmazonPayConstants::CLIENT_ID] = '';				
+$config[AmazonPayConstants::CLIENT_SECRET] = '';
+$config[AmazonPayConstants::SELLER_ID] = '';
+$config[AmazonPayConstants::ACCESS_KEY_ID] = '';
+$config[AmazonPayConstants::SECRET_ACCESS_KEY] = '';</code></pre>
+        <p>In case an order is being rejected by Amazon, the module will do a redirect. The default recommendation is to redirect to cart. You need to configure this:</p><pre><code class="language-PHP">$config[AmazonPayConstants::PAYMENT_REJECT_ROUTE] = 'cart';</code></pre>
+        <p>Next, specify your country and shop:</p><pre><code class="language-php">$config[AmazonPayConstants::REGION] = 'DE';
+$config[AmazonPayConstants::STORE_NAME] = 'The Shop';</code></pre>
+        <p>For development purposes, sandbox mode must be enabled:</p><pre><code class="language-php">$config[AmazonPayConstants::SANDBOX] = true;</code></pre>
+        <p>The <var>ERROR_REPORT_LEVEL</var> parameter is used for internal purposes and specifies the log verbosity level.</p>
+        <p>There are three options:</p>
+        <ol>
+            <li>Log all API responses.</li>
+            <li>Log errors only.</li>
+            <li>Disable logging.</li>
+        </ol><pre><code class="language-php">$config[AmazonPayConstants::ERROR_REPORT_LEVEL] = TransactionLogger::REPORT_LEVEL_ERRORS_ONLY;</code></pre>
+        <p>To configure look-and-feel of Amazon Pay button, you can use the following config values:</p><pre><code class="language-php line-numbers">$config[AmazonPayConstants::WIDGET_BUTTON_TYPE] = AmazonPayConfig::WIDGET_BUTTON_TYPE_FULL;
+$config[AmazonPayConstants::WIDGET_BUTTON_SIZE] = AmazonPayConfig::WIDGET_BUTTON_SIZE_MEDIUM;
+$config[AmazonPayConstants::WIDGET_BUTTON_COLOR] = AmazonPayConfig::WIDGET_BUTTON_COLOR_DARK_GRAY;</code></pre>
+        <p class="important">According to Amazon Pay restrictions, a module can run either on a <var>localhost</var> domain or via HTTPS. If it is not possible to use <var>localhost</var>, HTTPS connection should be configured. For testing purposes, register a test account in the <a href="https://pay.amazon.com/us" target="_blank">Amazon Pay dashboard</a>.        </p>
+        <h2>OMS Configuration</h2>
+        <p>Activate the following processes. If you plan to use only one process, drop the other one.</p><pre xml:space="preserve"><code class="language-php line-numbers">
+$config[OmsConstants::PROCESS_LOCATION][] = APPLICATION_ROOT_DIR . '/vendor/spryker-eco/amazon-pay/config/Zed/Oms';
+$config[OmsConstants::ACTIVE_PROCESSES][] = 'AmazonPayPaymentAsync01';
+$config[OmsConstants::ACTIVE_PROCESSES][] = 'AmazonPayPaymentSync01';</code></pre>
+        <p>Default implementation for commands and options should be added to <var>Pyz/Zed/Oms/OmsDependencyProvider.php</var></p>
+        <ol>
+            <li>Commands:
+                <pre><code class="language-php line-numbers">$container-&gt;extend(OmsDependencyProvider::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+$commandCollection
+	-&gt;add(new CancelOrderCommandPlugin(), 'AmazonPay/CancelOrder')
+	-&gt;add(new CloseOrderCommandPlugin(), 'AmazonPay/CloseOrder')
+	-&gt;add(new RefundOrderCommandPlugin(), 'AmazonPay/RefundOrder')
+	-&gt;add(new ReauthorizeExpiredOrderCommandPlugin(), 'AmazonPay/ReauthorizeExpiredOrder')
+	-&gt;add(new CaptureCommandPlugin(), 'AmazonPay/Capture')
+	-&gt;add(new UpdateSuspendedOrderCommandPlugin(), 'AmazonPay/UpdateSuspendedOrder')
+	-&gt;add(new UpdateAuthorizationStatusCommandPlugin(), 'AmazonPay/UpdateAuthorizationStatus')
+	-&gt;add(new UpdateCaptureStatusCommandPlugin(), 'AmazonPay/UpdateCaptureStatus')
+	-&gt;add(new UpdateRefundStatusCommandPlugin(), 'AmazonPay/UpdateRefundStatus');
+ 
+return $commandCollection;
+} );</code></pre></li>
+            <li>
+                Conditions:
+                <pre><code class="language-php line-numbers">$container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
+    $conditionCollection
+        -&gt;add(new IsClosedConditionPlugin(), 'AmazonPay/IsClosed')
+        -&gt;add(new IsCloseAllowedConditionPlugin(), 'AmazonPay/IsCloseAllowed')
+
+        -&gt;add(new IsCancelledConditionPlugin(), 'AmazonPay/IsCancelled')
+        -&gt;add(new IsCancelNotAllowedConditionPlugin(), 'AmazonPay/IsCancelNotAllowed')
+        -&gt;add(new IsCancelledOrderConditionPlugin(), 'AmazonPay/IsOrderCancelled')
+
+        -&gt;add(new IsOpenConditionPlugin(), 'AmazonPay/IsAuthOpen')
+        -&gt;add(new IsDeclinedConditionPlugin(), 'AmazonPay/IsAuthDeclined')
+        -&gt;add(new IsPendingConditionPlugin(), 'AmazonPay/IsAuthPending')
+        -&gt;add(new IsSuspendedConditionPlugin(), 'AmazonPay/IsAuthSuspended')
+        -&gt;add(new IsAuthExpiredConditionPlugin(), 'AmazonPay/IsAuthExpired')
+        -&gt;add(new IsClosedConditionPlugin(), 'AmazonPay/IsAuthClosed')
+        -&gt;add(new IsAuthTransactionTimedOutConditionPlugin(), 'AmazonPay/IsAuthTransactionTimedOut')
+        -&gt;add(new IsSuspendedConditionPlugin(), 'AmazonPay/IsPaymentMethodChanged')
+
+        -&gt;add(new IsCompletedConditionPlugin(), 'AmazonPay/IsCaptureCompleted')
+        -&gt;add(new IsDeclinedConditionPlugin(), 'AmazonPay/IsCaptureDeclined')
+        -&gt;add(new IsPendingConditionPlugin(), 'AmazonPay/IsCapturePending')
+
+        -&gt;add(new IsCompletedConditionPlugin(), 'AmazonPay/IsRefundCompleted')
+        -&gt;add(new IsDeclinedConditionPlugin(), 'AmazonPay/IsRefundDeclined')
+        -&gt;add(new IsPendingConditionPlugin(), 'AmazonPay/IsRefundPending');
+
+    return $conditionCollection;
+});</code></pre></li>
+        </ol>
+        <p>All default commands and conditions are stored in <var>SprykerEco\Zed\AmazonPay\Communication\Plugin\Oms\</var> namespace.</p>
+        <h2>IPN Configuration</h2>
+        <p>In order to allow everyone to send push notifications, please extend <var>config_default.XXX.php</var> for desired environments:</p><pre><code class="language-php line-numbers">$config[AclConstants::ACL_USER_RULE_WHITELIST][] = [
+    'bundle' =&gt; 'amazonpay',
+    'controller' =&gt; 'ipn',
+    'action' =&gt; 'endpoint',
+    'type' =&gt; 'allow',
+];</code></pre>
+        <p>Depending on your SSL configuration, you may have to extend as well:</p><pre><code class="language-php">$config[ApplicationConstants::ZED_SSL_EXCLUDED][] = 'amazonpay/ipn/endpoint';
+$config[ApplicationConstants::YVES_SSL_EXCLUDED]['aie'] = '/amazonpay/ipn/endpoint';</code></pre>
+        <p>&#160;</p>
+        <h2>Yves Controllers</h2>
+        <p>In order to enable processing of AmazonPay commands on frontend, please add <var>AmazonPayControllerProvider</var> to <var>YvesBootstrap</var>:</p><pre xml:space="preserve"><code class="language-php line-numbers">/**
+  * @param bool|null $isSsl
+  *
+  * @return \Pyz\Yves\Application\Plugin\Provider\AbstractYvesControllerProvider[]
+  */
+protected function getControllerProviderStack($isSsl)
+{
+	return [
+		...
+		new AmazonPayControllerProvider($isSsl),
+	];
+}</code></pre>
+        <p>&#160;</p>
+        <h2>Checkout Integration</h2>
+        <p>AmazonPay expects that order is not placed in some cases. For example, it happens when Synchronos mode is on, and payment cannot be processed.</p>
+        <p>In order to handle this,  extend <var>SuccessStep</var> in your project. For example:</p><pre xml:space="preserve"><code class="language-php line-numbers">/**
+  * @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+  *
+  * @return bool
+  */
+public function postCondition(AbstractTransfer $quoteTransfer)
+{
+	if ($quoteTransfer-&gt;getAmazonpayPayment() === null) {
+		return true;
+	}
+ 
+	if ($quoteTransfer-&gt;getAmazonpayPayment()-&gt;getOrderReferenceId() === null) {
+		return false;
+	}
+ 
+	return true;
+}</code></pre>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="amazon-pay.htm">Get a general idea about Amazon Pay</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-api.htm">Configure Amazon Pay API</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-order-ref-info.htm">Obtaining Amazon Order Reference and Shipping Addresses details</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-refund.htm">Learn how Amazon Pay Refund works</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-rendering-pay.htm">Rendering the "Pay with Amazon" button on the Cart page</a>
+            </li>
+            <li><a href="amazon-pay-simulations.htm">Learn how Amazon Pay Sandbox Simulations work</a>
+            </li>
+            <li><a href="amazon-pay-state-machine.htm">Learn about Amazon Pay state machine for synchronous and asynchronous flows</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-state-machine.htm#OMS">Learn about OMS commands</a><![CDATA[
+            ]]></li>
+            <li><a href="amazon-pay-email-notification.htm">Check out Amazon Pay example email notifications</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan 16th, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Andrey Tkachenko, Andrii Tserkovnyi</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

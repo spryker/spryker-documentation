@@ -1,0 +1,81 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>How to Use Blocks</h1>
+        <p>
+        Blocks can be viewed as partial content snippets that can be embedded in other pages. From a SEO perspective,
+        blocks are a real advantage.        </p>
+        <p>
+        The CMS&#160;Block module supports flexible extension by adding a new connector. </p>
+        <p>Spryker provides two extensions
+        as examples   <a href="http://documentation.spryker.com/capabilities/cms/cms_block/category-block.htm">CMS Block Category Connector</a> and <a href="http://documentation.spryker.com/capabilities/cms/cms_block/product-block.htm">CMS Block Product Connector</a>.
+        But you are free to extend and create new relations of blocks to other system subjects.
+        </p>
+        <p class="info"><strong>CMS Block GUI</strong>
+            <br />CMS Block module provides only business logic.
+            For better experience install CMS Block GUI module, which will add GUI to Zed panel.<br /></p>
+        <h3>Main usage</h3>
+        <p>
+        To familiarize yourself with how to use blocks, follow the steps described below. These steps describe how to add a block with a hello message:
+        </p>
+        <ul>
+            <li>
+        Add template for the new block - similar to templates for pages.        </li>
+            <li>
+        Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. We'll call it <var>hello.twig</var> and it will contain the following structure :
+</li>
+        </ul><pre><code class="language-PHP line-numbers">
+&lt;!-- CMS_BLOCK_PLACEHOLDER : "helloBlockText" --&gt;
+&lt;div class="cms-block"&gt;
+    &lt;h1&gt;Hello World!&lt;/h1&gt;
+    &lt;p&gt;{{ spyCmsBlockPlaceholder('helloBlockText') | raw }}&lt;/p&gt;
+&lt;/div&gt;
+            </code></pre>
+        <ul>
+            <li>
+        Next, configure the new block in the CMS Block interface and add the corresponding glossary keys for the 2 included placeholders.
+    </li>
+            <li>
+        Click "Create CMS Block" to take you to the page for creating a new block</li>
+            <li>
+        Select the newly created template from the list, select static type and give it a proper unique name ("HelloMessage").
+        </li>
+            <li>Enter the "'Valid From" and "Valid To" dates if you want to limit the availability to a date range and click <strong>Save</strong>. 
+        </li>
+        </ul>
+        <p>
+            <img src="../../../../../Spryker Administration Interface Guide/Content/Resources/Images/cms-block-edit-page.png" />
+        </p>
+        <ul>
+            <li>
+        Create the glossary keys for the placeholders ( see previous example)
+</li>
+            <li>       Run the collectors so that the changes are effective in Yves.
+        </li>
+        </ul>
+        <p>
+        The new block is now ready to be used and integrated in other Twig templates.
+</p><pre><code class="html">
+{{ spyCmsBlock({name: 'HelloMessage'}) }}
+            </code></pre>
+        <h3>Multi-store Environment</h3>
+        <p>In case you have multiple store environment configured, you can also define in which of your stores the CMS Block is allowed to appear.</p>
+        <p>
+            <img src="../../../../../Spryker Administration Interface Guide/Content/Resources/Images/cms-block-store-relation.png" />
+        </p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Explanation</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p>
+                In the example above, the CMS Block is assigned to DE and US only. If the CMS Block is enabled, then it will appear only in store DE and US.
+                Afterward the user could define another CMS Block assigned to AT store only and have a different content per store.
+</p>
+                <p><![CDATA[            ]]></p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+    </body>
+</html>

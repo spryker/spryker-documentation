@@ -1,0 +1,105 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.MultiStore">
+    <head>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Feature Integration - Multi-store CMS Block | Spryker</title>
+        <meta name="description" content="To prepare your project to work with multi-store CMS Blocks, review an perform the procedure described in this topic." />
+    </head>
+    <body>
+        <h1>Feature Integration - Multi-store CMS Block </h1>
+        <p>To prepare your project to work with multi-store CMS Blocks, the following minimum module versions are required:</p>
+        <table style="width: 100%;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 443px;" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 853px;" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <td class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module
+					</td>
+                    <td class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version
+					</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/cms-block</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2.0.0</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/cms-block-collector</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">2.0.0</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/cms-block-gui</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2.0.0</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/store</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">1.2.0</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/kernel</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">3.13.0
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/collector</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">6.0.0
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spryker/touch</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">4.0.0</td>
+                </tr>
+            </tbody>
+        </table>
+        <p>To enable multi-store management within the CMS Block Zed Admin UI, override <var>Spryker\Zed\Store\StoreConfig::isMultiStorePerZedEnabled()</var> in your project to return <var>true</var>. </p>
+        <p>This will enable the store management inside the CMS Block Zed Admin UI.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Example override</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Store;
+
+use Spryker\Zed\Store\StoreConfig as SprykerStoreConfig;
+
+class StoreConfig extends SprykerStoreConfig
+{
+    /**
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled()
+    {
+        return true;
+    }
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>You should now be able to use the CMS Block in the administration interface to manage CMS Block-store relations.</p>
+        <p MadCap:conditions="Spryker.DemoShop">Check out our <a href="https://github.com/spryker/demoshop">Demoshop implementation</a> for implementation example and idea.</p>
+        <p>&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="cms-block.htm">Learn what CMS blocks are and what they are needed for</a>
+            </li>
+            <li>Learn how to create and use a CMS Block</li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block.htm">Learn how to migrate to a newer version of CMS Block module</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block-gui.htm">Learn how to migrate to a newer version of CMS Block GUI module</a>
+            </li>
+            <li><a href="https://documentation.spryker.com/module_migration_guides/mg-cms-block-collector.htm">Learn how to migrate to a newer version of CMS Block Collector module</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 15, 2019 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner, Anastasija Datsun</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.DemoShop,Spryker.B2C">
+    <head><title>[%=Heading.Level1%]</title>
+    </head>
+    <body>
+        <h1>FACT-Finder - Suggest <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>Prerequisites </h2>
+        <p>The FACT-Finder Suggest module enables you to provide customers with suggested search terms while they are entering a search term. In this way, users do not necessarily have to enter the entire search term themselves but can choose a suggestion. As the users are presented with similar search queries, it enables them to select a suitable, more precise search term and save time when searching. The FACT-Finder Suggest entries are provided by the product information in the Search database as well as from the recent frequently searched and found search terms. The suggestions in this database are no longer linked to the data in the product database, which is why filtering by attributes (such as category) is unfortunately not possible by default.  </p>
+        <h2>Usage </h2>
+        <p>To check example implementation, please see  <a href="search-factfinder-search.htm">Fact Finder - Search Integration</a>. Typing in a search box triggers an API suggest request. By default , use <code>/fact-finder/suggestions</code> to get suggestions. Or you can use the <code>FactFinderSdk</code> module to make a suggest request. </p>
+        <p>It will return a <code>FactFinderSdkSuggestResponseTransfer</code> object that contains an array of suggestions. </p>
+        <p>Basic parameters: </p>
+        <ul>
+            <li><code>query</code> - Query text. </li>
+            <li><code>sid</code> - FACT-Finder session id. </li>
+        </ul>
+        <p>Controller example: </p><pre><code class="language-php line-numbers">&lt;?php
+
+...
+
+/**
+ * @param \Symfony\Component\HttpFoundation\Request $request
+ *
+ * @return \Symfony\Component\HttpFoundation\JsonResponse
+ */
+public function indexAction(Request $request)
+{
+    $factFinderSuggestRequestTransfer = new FactFinderSdkSuggestRequestTransfer();
+    $query = $request-&gt;query-&gt;get('query', '*');
+
+    $factFinderSuggestRequestTransfer-&gt;setQuery($query);
+    $factFinderSuggestRequestTransfer-&gt;setSid($request-&gt;cookies-&gt;get(FactFinderConstants::COOKIE_SID_NAME));
+
+    $response = $this-&gt;getFactory()
+        -&gt;getFactFinderClient()
+        -&gt;getSuggestions($factFinderSuggestRequestTransfer);
+
+    return $this-&gt;jsonResponse($response-&gt;getSuggestions());
+}
+
+...</code></pre>
+        <p><code>FactFinderSdkSuggestResponse</code> has array with suggests. FACT-Finder supports multiple suggest types.
+        The standard types are: Product name, Manufacturer, Category, Search term. We have created suggestion for
+        Product name, Category, Search term, Brand in our demo.
+</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="factfinder.htm">Get a general idea about FACT-Finder</a>
+            </li>
+            <li><a href="search-factfinder-search.htm">Configure FACT-Finder Search</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-recommendation.htm">Configure FACT-Finder recommendations widget
+            
+</a>
+            </li>
+            <li><a href="search-factfinder-campaigns.htm">Configure FACT-Finder Campaign Manager module
+            
+</a>
+            </li>
+            <li><a href="search-factfinder-tracking.htm">Learn more about FACT-Finder tracking system</a><![CDATA[
+            ]]></li>
+            <li><a href="search-factfinder-export-csv.htm">Learn how to export CSVs to FACT-Finder</a><![CDATA[
+            ]]></li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Dec. 22nd, 2017</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i> by Mykhailo Kozii</i>
+            </MadCap:conditionalText><![CDATA[    ]]></p>
+    </body>
+</html>

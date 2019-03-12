@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Draft,ReleaseVersions.2019-03">
+    <head><title>Silex Replacement | Spryker</title>
+        <meta name="description" content="Silex is going to be replaced with a Spryker Application. The article is a part of a series of articles about Silex replacement in Spryker. It contains information about the reasons why it is going to be replaced, backward compatibility information, steps to be taken, changes in the old procedure and the new procedure. " />
+    </head>
+    <body>
+        <h1>Silex replacement</h1>
+        <p>Silex is abandoned and we are going to replace it with a Spryker Application. Originally, Silex was used to integrate Symfony Components into our application by using Service Providers. Apart from the Silex Service Providers, there were many other Service Providers added by Spryker and projects to the application inside the *Bootstrap classes. They implemented Symfony Components and other things by adding them to Pimple container.</p>
+        <h2>What do we need to replace?</h2>
+        <p>Two things are to be replaced. We need to replace <var>silex/silex</var> and <var>pimple/pimple</var> since Silex is not maintained anymore and the version of Pimple in use is outdated.</p>
+        <p>To be able to refactor out Silex, we had to separate the code of the abandoned <var>silex/silex</var> we are currently using in Spryker (v.1.3.6) until all our code is refactored to work in the new way.  On top of that, we added our own application which is to replace Silex and our own Container which is already a replacement for Pimple.</p>
+        <h2>What about backward compatibility?</h2>
+        <p>To avoid forcing everyone to update the majority of Spryker modules, we introduced several small changes which are backward compatible. The Silex application used to be an instance of Pimple where all services were attached to. We introduced our own Container which implements the ContainerInterface from the PSR-11. Additionally, we added a kind of a mock class for Pimple. The Pimple mock, by extending the Container from Spryker, allowed us to keep using the <var>use \Pimple;</var> use statement. This way we were able to keep all the code which makes use of Pimple untouched and remove the <var>pimple/pimple</var> package.</p>
+        <p>Up to this point, the changes are fully backward compatible.</p>
+        <h2>What do projects need to do?</h2>
+        <p>First of all, projects need to update several Spryker modules and other packages. Ideally, there should be no outdated Sprkyer module in use. However, the main ones are <var>spryker/silex</var> (2.2.1), <var>spryker/application</var> (3.13.2), <var>spryker/container</var> (1.1.1).</p>
+        <p>In some older Spryker Commerce OS or Demoshop versions, there were dependencies added to the projects' <var>composer.json</var>. Such projects need to make sure that the mentioned modules don't appear as project dependencies and that there are no constraint points to <var>silex/silex</var>, <var>spryker/pimple</var> or <var>pimple/pimple</var>.</p>
+        <p>There might be some circumstances where an update does not contain the latest versions of the required Spryker modules. To find out why they are not installed, projects can use Composer's <var>why</var> and <var>why-not</var> commands. These commands will help to update the dependencies.</p>
+        <h2>What will change?</h2>
+        <p>As already mentioned, we will not use the ServiceProviderInterface anymore, so all code which implements it needs to be migrated to the new way. There will be a proper replacement for all the ServiceProviders from Spryker. We introduced Application Plugins which will bring in services like Twig, Form, Security, Routing etc. They will be added to the corresponding <var>ApplicationDependencyProvider</var>.</p>
+        <p>With Silex, it was possible to extend or overwrite existing services. Now, instead of adding multiple ServiceProviders, we are going to use extension points added for our services. Each service added as an Application Plugin (e.g. Twig) will have its own extension interface.</p>
+        <h2>What about all the existing ServiceProviders?</h2>
+        <p>They will remain unchanged. However, from now on, we will be creating Application Plugins to use instead of Service Providers. These Application Plugins will have extension points to add or change the functionality of the added service.</p>
+        <h2>What is an Application Plugin?</h2>
+        <p>An Application Plugin is a plugin which brings a service into the application. Twig, for example, will be one of the Application Plugins.</p>
+        <h2>How to extend or change services?</h2>
+        <p>Previously, if we wanted to extend a service like Twig with new functions or global variables, we would have to add another Service Provider and use Pimple's extend functionality by manipulating a registered Service Provider. Then, it would be necessary to add the ServiceProvider to the Silex application too. This option will remain available, but it will be more preferable to use the provided extension interfaces for each of the used services.</p>
+        <p>Let's have a look at how it will work following the Twig example. There will be a Twig module which has a <var>TwigApplicationPlugin</var>. On top of that, there will be a TwigExtension module which brings at least one interface which can be used to extend Twig. Instead of adding multiple ServiceProviders to the application, we will only need to add the <var>TwigApplicationPlugin</var> to the <var>ApplicationDependencyProvider</var>. If we also want to extend Twig, we will add a Plugin to the <var>TwigDependencyProvider</var>.</p>
+        <p style="font-weight: bold;">&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li><a href="application.htm">Application</a>
+            </li>
+            <li><a href="container.htm">Container</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 19, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Rene Klatt, Andrii Tserkovnyi</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

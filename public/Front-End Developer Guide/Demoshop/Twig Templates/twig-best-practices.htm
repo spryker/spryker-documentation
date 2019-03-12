@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop">
+    <head>
+        <link href="../../../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+    </head>
+    <body>
+        <h1>Best Practices - Twig Templates <img src="../../../Resources/shoptype/Demoshop.png" /></h1>
+        <h2>Include vs Macros vs Embed
+</h2>
+        <p>With <var>includes</var>, you can include an entire template. The template has access to any template variables that are currently in scope.
+
+</p>
+        <p>With macros, you are defining a kind of function within Twig that can render a particular component given appropriate objects.
+
+</p>
+        <p>So you could have a macro for rendering, for example, a shopping list which takes a list as a parameter - and you could then reuse this macro. </p>
+        <p>Variables that are not explicitly passed into the macro, won’t be within scope in that macro.
+
+</p>
+        <p>Do not confuse <var>macros </var>with Twig functions; twig functions can access other application logic, not just the data that’s passed into the templates.
+
+</p>
+        <p>A macro should really do one specific task to take some data and render a reusable component. An include can comprise any chunk of things - it’s a lot more up to you.
+
+</p>
+        <p>The extensible nature of the way Twig templates work means that you are likely to use <var>includes </var>less, by design - but there can still be use cases where it will be the easiest way to avoid duplication in your templates.
+
+</p>
+        <p>You may use <var>embed </var>when you need to extend a portion from the included file.
+</p>
+        <table class="TableStyle-PatternedRows2" style="margin-left: 0;margin-right: auto;mc-table-style: url('../../../Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Tag	</th>
+                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">When to Use</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                        <p><var>include</var><![CDATA[	]]></p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                        <p>Used to define common parts in the page, such as header, sidebar, etc. that are extracted for to increase readability and reusability.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                        <p><var>macro	</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                        <p>Used to define functions related to the view, such as pagination. Reusable markup across other templates.</p>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        <p><var>embed	</var>
+                        </p>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                        <p>
+
+If you need to overwrite some blocks of the included template, use embed. If you don’t need to overwrite blocks, use include. It will do the same in a faster way.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <h2>How to Create a Page in Zed
+</h2>
+        <p>To create a new page in Zed, you need to create a new twig file that extends the <var>@Gui/Layout/layout.twig </var>main template and then extend the <var>content </var>block. Next, you can add your <var>content </var>inside content block.
+
+</p><pre><code class="language-bash line-numbers">{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    ... add your code here ...
+
+{% endblock %}
+</code></pre>
+        <p class="important">We strongly recommend to display page elements in widgets as in the next example.
+</p>
+        <h2>How to Add Multiple Elements (Widgets) in Pages
+</h2>
+        <p>To keep the same format of pages and in order for all to look the same on the project, we provide the widgets templates that can be used and can be extended from every page layout:
+
+</p><pre><code class="language-bash line-numbers">{% embed '@Gui/Partials/widget.twig' %}
+
+    {% block widget_content %}
+
+        ... add here page content (forms, tables, texts, etc) ...
+
+    {% endblock %}
+
+{% endembed %}
+</code></pre>
+        <p>By using widget templates, you have the advantage that you can overwrite elements in the widget, that you cannot with normal include. A full example can be seen below:
+
+</p><pre><code class="language-bash line-numbers">{% embed '@Gui/Partials/widget.twig' with { widget_title: 'My new page element', row_class: 'widget-class', row_id: 'widget-id' } %}
+
+    {% block widget_header_content %}
+        &lt;a class="btn btn-primary" href="/sales/details/?id-sales-order={{ idOrder }}"&gt;{{ 'View Order' | trans }}&lt;/a&gt;
+    {% endblock %}
+
+    {% block widget_content %}
+
+        {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            &lt;input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" /&gt;
+        {{ form_end(form) }}
+
+    {% endblock %}
+
+{% endembed %}
+</code></pre>
+        <h2>How to Add Forms
+</h2>
+        <p>Spryker Commerce OS uses Symfony forms which are defined in PHP classes; in the twig templates we usually need few lines of code to render them:
+</p><pre><code class="language-bash line-numbers">{{ form_start(form) }}
+    {{ form_widget(form) }}
+
+    &lt;input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" /&gt;
+{{ form_end(form) }}
+</code></pre>
+        <p class="important">We strongly recommend to define the form action buttons (like submit) in twig templates and not in the php form classes. Doing this, it’s much easier to extend the forms and to include forms in other forms.
+</p>
+        <h2>How to Add Tables Using DataTables
+</h2>
+        <p>The first step to display tables in a template is to add one line of code inside a widget element (`` ):
+
+</p><pre><code class="language-bash line-numbers">{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ customerTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+</code></pre>
+        <p>Next step is to add support in your controller; add one controller action for retrieving the data table and one for having pagination support in your table.
+
+</p><pre><code class="language-bash line-numbers">&lt;?php
+
+class IndexController
+{
+    public function indexAction()
+    {
+        $table = $this-&gt;getFactory()-&gt;createCustomerTable();
+    
+        return $this-&gt;viewResponse([
+            'customerTable' =&gt; $table-&gt;render(),
+        ]);
+    }
+    
+    public function tableAction()
+    {
+        $table = $this-&gt;getFactory()-&gt;createCustomerTable();
+    
+        return $this-&gt;jsonResponse($table-&gt;fetchData());
+    }
+}
+</code></pre>
+        <h2>How to Add Navigation Buttons in Zed
+</h2>
+        <p>In the main Zed layout <var>@Gui/Layout/layout.twig</var> you will find the empty action block which is used as a navigation menu between the module’s pages.
+
+</p>
+        <p>To add new URLs, you’ll have to extend this block and add the necessary buttons by using one of the 5 twig helper functions: <var>{back|create|edit|view|remove}ActionButton</var>.
+
+</p>
+        <p>Each of these buttons will accept three parameters: <var>$url, $title, array $options = []</var>.
+
+</p><pre><code class="language-bash line-numbers">{% block action %}
+    {{ backActionButton($backUrl, $backTitleLabel) }}
+    {{ createActionButton($createUrl, 'Create' | trans}) }}
+    {{ editActionButton('/edit/id=' ~ entity.id, 'Edit Element' | tran) }}
+    {{ viewActionButton('/view/id=' ~ entity.id, 'View Element' | trans) }}
+    {{ removeActionButton('/remove/id=' ~ entity.id, 'Remove Element' | trans) }}
+{% endblock %}
+</code></pre>
+        <p>If you want to add id or class attributes to a button, just add them as a third parameter, as in the example below:
+
+</p><pre>{{ createActionButton('/my/url', 'Create' | trans, { id: 'create-action',
+class: 'create-event-listener' }) }}
+</pre>
+        <h2>How to Add Buttons to a Table
+</h2>
+        <p>This example refers to the case when you render a table in Zed without datatables.
+
+</p>
+        <p>For the table button, you also have 5 twig helper functions: <var>{back|create|edit|view|remove}TableButton.</var></p><pre><code class="language-bash line-numbers">&lt;td&gt;
+    {{ backTableButton($backUrl, $backTitleLabel) }}
+    {{ createTableButton($createUrl, 'Create' | trans}) }}
+    {{ editTableButton('/edit/id=' ~ entity.id, 'Edit Element' | tran) }}
+    {{ viewTableButton('/view/id=' ~ entity.id, 'View Element' | trans) }}
+    {{ removeTableButton('/remove/id=' ~ entity.id, 'Remove Element' | trans) }}
+&lt;/td&gt;
+</code></pre>
+        <p class="note">Table buttons will have the same layout and functionality as action buttons, except their size will be smaller.
+</p>
+        <h2>How to Include Javascript Logic and Custom Styles in Pages
+</h2>
+        <p>In the bundles in Zed, you can find the assets folder where the Javascript and Sass files are stored. Each assets folder must have an entry point (js file) so that webpack knows how to compile the required files.
+
+</p><pre><code class="language-bash line-numbers">assets
+    Zed
+        js
+            modules
+                main.js
+            spryker-zed-bundle_name-main.entry.js
+        sass
+            main.scss
+</code></pre>
+        <p>The entry point file requires the main.je file which loads the other required Javascript and Sass files.
+
+</p>
+        <h3>spryker-zed-bundle_name-main.entry.js
+</h3><pre><code class="language-bash line-numbers">'use strict';
+
+require('./modules/main.js');
+</code></pre>
+        <h3>main.js
+</h3><pre><code class="language-bash line-numbers">'use strict';
+
+require('ZedGui');
+require('./custom/logic'); // requires ./custom/logic.js file
+require('../../sass/main.scss');
+</code></pre>
+        <p>After you add the module specific assets files, you need to include them in the twig files where they are needed.
+
+</p><pre><code class="language-bash line-numbers">&lt;!-- Bundle/src/Spryker/Zed/Bundle/Presentation/ControllerName/actionName.twig --&gt;
+
+{% block footer_js %}
+    {{ parent() }}
+    &lt;script src="/assets/js/spryker-zed-bundle_name-main.js"&gt;&lt;/script&gt;
+{% endblock %}
+</code></pre>
+        <p>And for CSS
+
+</p><pre><code class="language-bash line-numbers">&lt;!-- Bundle/src/Spryker/Zed/Bundle/Presentation/ControllerName/actionName.twig --&gt;
+
+{% block head_css %}
+    {{ parent() }}
+    &lt;link rel="stylesheet" href="/assets/css/spryker-zed-bundle_name-main.css" /&gt;
+{% endblock %}
+</code></pre>
+        <p class="note">Always add <var>{{ parent() }}</var> inside CSS and Javascript extended blocks to keep the block content from the parent’s layout.
+</p>
+        <p class="note">Not using parent will replace the content of the blocks instead of appending.
+</p>
+        <h2>How to Render an URL from a Template View
+</h2>
+        <p>To render another page from a twig layout you will use <var>render(url())</var> functions:
+
+</p><pre xml:space="preserve"><code class="bash">    {{ render(url('/url/to/my/page')) }}
+</code></pre>
+        <p class="tip">Don’t forget to pass the request as a parameter.</p>
+    </body>
+</html>

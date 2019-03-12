@@ -1,0 +1,345 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.DemoShop,Spryker.B2C">
+    <head><title>Payment Integration - BS PayOne - 1.0</title>
+    </head>
+    <body>
+        <h1>Payment Integration - BS PayOne - 1.0 <img src="../../../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>
+            <MadCap:relatedTopics style="mc-label: 'Versions';" target="_blank">
+                <MadCap:relatedTopic src="../../payone-v1-1.htm" />
+            </MadCap:relatedTopics>
+        </p>
+        <p>
+            <img src="../../../../../Resources/Images/Payone/payone-logo.png" style="width: 419px;height: 81px;" />
+        </p>
+        <h2>Partner Information</h2>
+        <table style="margin-left: 0; margin-right: auto;">
+            <col>
+            </col>
+            <col>
+            </col>
+            <tbody>
+                <tr>
+                    <td><a href="https://www.payone.com/" target="_blank">ABOUT BS PAYONE</a>
+                    </td>
+                    <td>&#160;</td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <p>BS PAYONE GmbH is headquartered in Frankfurt am Main and is one of the leading omnichannel-payment providers in Europe. In addition to providing customer support to numerous Savings Banks (Sparkasse) the full-service payment service provider also provides cashless payment transaction services to more than 255,000 customers from stationary trade to the automated and holistic processing of e-commerce and mobile payments.</p>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <hr>
+        </hr>
+        <p MadCap:conditions="General.Hidden Comment">As hidden comment add the following to the page:</p>
+        <p MadCap:conditions="General.Hidden Comment">Internal Contact person: Inessa.Fichtner@payone.de &amp; Alexander.Rehmann@payone.de &amp; Florian.bender@payone.de</p>
+        <p>We integrate with a wide range of payment methods that can be configured according to your needs and convenience. Payment method flows are configured using state machines.
+
+</p>
+        <p>Payone provides seven main methods of payment:
+
+</p>
+        <ul>
+            <li class="bullet_list"><a href="payone-credit-card.htm">Credit Card</a>
+            </li>
+            <li class="bullet_list"><a href="payone-direct-debit.htm">Direct Debit
+</a>
+            </li>
+            <li class="bullet_list"><a href="payone-online-trans.htm">Online Transfer</a>
+            </li>
+            <li class="bullet_list"><a href="payone-paypal.htm">Paypal</a>
+            </li>
+            <li class="bullet_list"><a href="payone-prepayment.htm">Prepayment
+</a>
+            </li>
+            <li class="bullet_list"><a href="payone-invoice.htm">Invoice
+</a>
+            </li>
+            <li class="bullet_list"><a href="payone-paypal-express-checkout.htm">Paypal Express Checkout</a>
+            </li>
+        </ul>
+        <p>We use state machines for handling and managing orders and payments. To integrate Payone payments, a state machine for Payone should be created.
+
+</p>
+        <p>A basic and fully functional state machine for each payment method is already built:
+
+</p>
+        <ul>
+            <li class="bullet_list"><code>PayoneCreditCard.xml</code><![CDATA[
+        ]]></li>
+            <li class="bullet_list"><code>PayoneDirectDebit.xml</code><![CDATA[
+        ]]></li>
+            <li class="bullet_list"><code>PayoneEWallet.xml
+    </code>
+            </li>
+            <li class="bullet_list"><code>PayoneInvoice.xml</code><![CDATA[
+        ]]></li>
+            <li class="bullet_list"><code>PayoneOnlineTransfer.xml
+    </code>
+            </li>
+            <li class="bullet_list"><code>PayonePrePayment.xml</code><![CDATA[
+        ]]></li>
+            <li class="bullet_list"><code>PayonePaypalExpressCheckout.xml</code>
+            </li>
+        </ul>
+        <p>You can use the same state machines or build new ones. The state machine commands and conditions trigger Payone facade calls in order to perform the needed requests to Payone API.
+
+</p>
+        <h3>Integration to Your Project
+</h3>
+        <p>You can copy over configs to your config from the Payone module’s <code>config.dist.php</code> file.
+
+</p>
+        <p>The configuration to integrate payments using Payone is:
+
+</p>
+        <ul>
+            <li class="bullet_list"><code>PAYONE_CREDENTIALS_KEY</code>: payment portal key (required).
+    </li>
+            <li class="bullet_list"><code>PAYONE_CREDENTIALS_MID</code>: merchant id (required).
+    </li>
+            <li class="bullet_list"><code>PAYONE_CREDENTIALS_AID</code>: sub-account id (required).
+    </li>
+            <li class="bullet_list"><code>PAYONE_CREDENTIALS_PORTAL_ID</code>: payment portal id (required).
+    </li>
+            <li class="bullet_list"><code>PAYONE_MODE</code>: the mode of the transaction, either test or live (required).
+    </li>
+            <li class="bullet_list"><code>PAYONE_PAYMENT_GATEWAY_URL</code>: server-API-URL.
+    </li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_SUCCESS_URL</code>: return URL for successful result on redirect.
+    </li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_ERROR_URL</code>: return URL for error on redirect.
+    </li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_BACK_URL</code>: return URL that will be engaged when user cancels action on redirect.
+    </li>
+            <li class="bullet_list"><code>PAYONE_EMPTY_SEQUENCE_NUMBER</code>: sequence number that will be used in API requests when ommitted (0 by default).
+    </li>
+            <li class="bullet_list"><code>PAYONE_CREDENTIALS_ENCODING</code>: encoding of data sent in requests to Payone API (‘UTF-8’ for the <MadCap:variable name="General.ProductName" /> module).
+    </li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_EXPRESS_CHECKOUT_SUCCESS_URL</code>: payone redirects to this url after user approves order on payone side.</li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_EXPRESS_CHECKOUT_FAILURE_URL</code>: if something goes wrong when the user is on payone side, redirect here is done.</li>
+            <li class="bullet_list"><code>PAYONE_REDIRECT_EXPRESS_CHECKOUT_BACK_URL</code>: if user presses back button(if so exists) on payone side, this urs is used to redirect user back to shop.</li>
+            <li class="bullet_list"><code>ROUTE_CART</code>: cart route, where payone module redirects user in case of failure.</li>
+        </ul>
+        <p>The Payone module provides dependency injectors to extend checkout and order processing. Please add or extend with the corresponding keys:
+
+</p><pre><code class="language-php line-numbers">&lt;?php
+$config[KernelConstants::DEPENDENCY_INJECTOR_YVES] = [
+    'Checkout' =&gt; [
+        'Payone'
+    ]
+];
+
+$config[KernelConstants::DEPENDENCY_INJECTOR_ZED] = [
+    'Payment' =&gt; [
+        'Payone'
+    ],
+    'Oms' =&gt; [
+        'Payone'
+    ]
+];
+</code></pre>
+        <p>In order to use the state machines provided by Payone module, make sure to add the location path to configuration:
+</p><pre><code class="language-php line-numbers">&lt;?php
+$config[OmsConstants::PROCESS_LOCATION] = [
+    OmsConfig::DEFAULT_PROCESS_LOCATION,
+    $config[KernelConstants::SPRYKER_ROOT] . '/payone/config/Zed/Oms'
+];
+</code></pre>
+        <p>Add Payone controller provider to Yves bootstrap (this is required to provide endpoint URL for transaction status callbacks): in <code>src/Pyz/Yves/Application/YvesBootstrap.php
+</code>
+    .</p><pre><code class="language-php line-numbers">&lt;?php
+use Spryker\Yves\Payone\Plugin\Provider\PayoneControllerProvider;
+    …
+    protected function registerControllerProviders()
+    {
+        …
+        $controllerProviders = [
+            …
+            new PayoneControllerProvider($ssl),
+        ];
+</code></pre>
+        <p>Optionally configure security firewall for <code>/payone</code> route to accept <code>TransactionStatus</code> requests.
+
+</p>
+        <p class="info">Excerpt from PAYONE Platform Channel Server API document:
+
+    <br />According to the configuration of your payment portal you will receive the data and the status for each payment processed via the URL you have submitted. The data transfer is based on simple HTTP-POST request (key/value pairs). The TransactionStatus is sent from the following IP addresses: 185.60.20.0/24 (i.e. 185.60.20.1 to 185.60.20.254). Please configure your firewall to allow incoming packets from these IP addresses.
+</p>
+        <p>To provide payment details for rendering on frontend, add Payone client to the Checkout and to the Customer module:
+
+</p>
+        <p>in <code>src/&lt;project_name&gt;/Yves/Checkout/CheckoutDependencyProvider.php</code><![CDATA[
+    ]]></p><pre><code class="language-php line-numbers">&lt;?php
+...
+class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
+{
+    ...
+    const CLIENT_PAYONE = 'CLIENT_PAYONE';
+    ...
+    protected function provideClients(Container $container)
+    {
+        ...
+        $container[static::CLIENT_PAYONE] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;payone()-&gt;client();
+        };
+        ...
+        return $container;
+    }
+</code></pre>
+        <p>in <code>src//Yves/Customer/CustomerDependencyProvider.php`</code><![CDATA[
+    ]]></p><pre><code class="language-php line-numbers">&lt;?php
+...
+class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
+{
+    ...
+    const CLIENT_PAYONE = 'CLIENT_PAYONE';
+    ...
+    protected function provideClients(Container $container)
+    {
+        ...
+        $container[static::CLIENT_PAYONE] = function (Container $container) {
+            return $container-&gt;getLocator()-&gt;payone()-&gt;client();
+        };
+        ...
+        return $container;
+    }</code></pre>
+        <p>To add payment details on success step of checkout:
+
+</p>
+        <p>Add quote and payment details to template variables in <code>src/&lt;project_name&gt;/Yves/Checkout/Process/Steps/SuccessStep.php
+</code></p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre xml:space="preserve"><code class="bash">&lt;?php
+...
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
+use Spryker\Client\Payone\PayoneClientInterface;
+use Spryker\Yves\Payone\Handler\PayoneHandler;
+...
+class SuccessStep extends AbstractBaseStep
+{
+    ...
+    /**
+     * @var \Spryker\Client\Payone\PayoneClientInterface
+     */
+    protected $payoneClient;
+
+    /**
+     * @var \Generated\Shared\Transfer\QuoteTransfer
+     */
+    protected $quoteTransfer;
+    ...
+    public function __construct(CustomerClientInterface $customerClient, PayoneClientInterface $payoneClient, $stepRoute, $escapeRoute)
+    {
+        ...
+        $this-&gt;payoneClient = $payoneClient;
+    }
+    ...
+    public function execute(Request $request, AbstractTransfer $quoteTransfer)
+    {
+        $this-&gt;customerClient-&gt;markCustomerAsDirty();
+
+        if (method_exists($quoteTransfer-&gt;getPayment(), 'getPayone')) {
+            $this-&gt;quoteTransfer = $quoteTransfer;
+        }
+
+        return new QuoteTransfer();
+    }
+    ...
+    /**
+     * @param \Spryker\Shared\Kernel\AbstractTransfer $dataTransfer
+     *
+     * @return array
+     */
+    public function getTemplateVariables(AbstractTransfer $dataTransfer)
+    {
+        $getPaymentDetailTransfer = new PayoneGetPaymentDetailTransfer();
+        if ($this-&gt;quoteTransfer-&gt;getPayment()-&gt;getPaymentProvider() === PayoneHandler::PAYMENT_PROVIDER) {
+            $getPaymentDetailTransfer-&gt;setOrderReference($this-&gt;quoteTransfer-&gt;getOrderReference());
+            $getPaymentDetailTransfer = $this-&gt;payoneClient-&gt;getPaymentDetail($getPaymentDetailTransfer);
+        }
+        return [
+            'quoteTransfer' =&gt; $this-&gt;quoteTransfer,
+            'paymentDetail' =&gt; $getPaymentDetailTransfer-&gt;getPaymentDetail(),
+        ];
+    }
+</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Inject Payone client into the step factory <code>src/&lt;project_name&gt;/Yves/Checkout/Process/StepFactory.php
+</code></p><pre><code class="language-php line-numbers">&lt;?php
+...
+protected function createSuccessStep()
+{
+    return new SuccessStep(
+        $this-&gt;getProvidedDependency(CheckoutDependencyProvider::CLIENT_CUSTOMER),
+        $this-&gt;getProvidedDependency(CheckoutDependencyProvider::CLIENT_PAYONE),
+        CheckoutControllerProvider::CHECKOUT_SUCCESS,
+        ApplicationControllerProvider::ROUTE_HOME
+    );
+}
+</code></pre>
+        <p>To add payment details on order details page in customer cabinet:
+
+</p>
+        <p>Add method that will create the Payone client into the CustomerFactory <code>src/&lt;project_name&gt;/Yves/Customer/CustomerFactory.php</code>:
+</p><pre><code class="language-php line-numbers">&lt;?php
+...
+class CustomerFactory extends AbstractFactory
+{
+    ...
+    /**
+     * @return \Spryker\Client\Payone\PayoneClientInterface
+     */
+    public function createPayoneClient()
+    {
+        return $this-&gt;getProvidedDependency(CustomerDependencyProvider::CLIENT_PAYONE);
+    }
+</code></pre>
+        <p>Add payment details to template variables inside the OrderController in <code>src/&lt;project_name&gt;/Yves/Customer/Controller/OrderController.php</code>:
+</p><pre><code class="language-php line-numbers">&lt;?php
+...
+use Generated\Shared\Transfer\PayoneGetPaymentDetailTransfer;
+...
+class  OrderController extends AbstractCustomerController
+{
+    ...
+    protected function getOrderDetailsResponseData($idSalesOrder)
+    {
+        ...
+        $getPaymentDetailTransfer = new PayoneGetPaymentDetailTransfer();
+        $getPaymentDetailTransfer-&gt;setOrderId($idSalesOrder);
+        $getPaymentDetailTransfer = $this-&gt;getFactory()
+            -&gt;getPayoneClient()-&gt;getPaymentDetail($getPaymentDetailTransfer);
+
+        return [
+            'order' =&gt; $orderTransfer,
+            'paymentDetail' =&gt; $getPaymentDetailTransfer-&gt;getPaymentDetail(),
+        ];
+    }
+</code></pre>
+        <p><strong>See also:</strong>
+        </p>
+        <ul>
+            <li class="bullet_list"><![CDATA[
+                ]]><a href="payone-state-machine-cmd-cond-evnt.htm">State Machine Commands, Conditions and Events</a><![CDATA[
+            ]]></li>
+            <li class="bullet_list"><![CDATA[
+                ]]><a href="payone-facade.htm">Payone Facade</a><![CDATA[
+            ]]></li>
+            <li class="bullet_list"><![CDATA[
+               ]]><a href="payone-authorization-and-preauthorization-capture-flows.htm">Authorization and Preauthorization-Capture flows</a><![CDATA[
+            ]]></li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Nov. 6th, 2017 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Serhii Sikachov</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

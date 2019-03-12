@@ -1,0 +1,137 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.ShopSuite,Spryker.B2B,Spryker.B2C">
+    <head><title>Publish and Synchronization | Spryker</title>
+        <meta name="description" content="Spryker implements a two-step process, called Publish and Synchronize. First, the data is published. Then, it is synchronized to Redis and Elasticsearch." />
+    </head>
+    <body>
+        <h1>Publish and Synchronization <img src="../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../Resources/Images/shoptype/B2C_Shop.png" /></h1>
+        <p>For faster access to data, the client (Shop App) uses a key-value storage, <i>Redis</i>, and a search engine, <i>Elasticsearch</i>, as data sources. It does not have direct access to the <a href="https://academy.spryker.com/developing_with_spryker/zed/persistence_layer.html" class="external-link" rel="nofollow">SQL database</a> used by the backend. To have the client data sources always up to date, all changes made on the backend need to be propagated to the client data stores. For this purpose, Spryker implements a two-step process, called <b>Publish and Synchronize</b>. First, the data is <i>published</i>. This means generating an event that describes a change, collecting the related data and publishing it in a form suitable for the client. Then, the data is <b>synchronized</b> to <i>Redis</i> and <i>Elasticsearch</i>.</p>
+        <p>The advantages of the approach are:</p>
+        <ul>
+            <li>High performance and fast (semi-realtime) synchronization. By default, changes are synchronized every second.</li>
+            <li>Possibility to stack and optimize SQL queries in the process of data publication.</li>
+            <li>Possibility to trigger updates by simply manipulating Propel Entities without the need to trigger synchronization manually.</li>
+            <li>Free data transformation to present it in a format that can be easily consumed by a front-end application.</li>
+            <li>Updates can be done incrementally eliminating the need for full export every time.</li>
+            <li>Data integrity and security. The data is always available in the SQL database, even if Redis or Elasticsearch storage becomes corrupted or outdated. You can re-sync it at any time.</li>
+            <li>The data can be localized and even target a specific store.</li>
+        </ul>
+        <p>Both <i>Publish and Synchronize</i> implement the queue pattern.</p>
+        <p class="info">For detailed information on queue implementation, see <a href="http://academy.spryker.com/developing_with_spryker/module_guide/queue/queue.html" class="external-link" rel="nofollow">Spryker Queue Module</a>.</p>
+        <p>Also, the process relies heavily on Propel Behaviors. Behaviors are used to trigger actions automatically upon updating the database. This eliminates the need to trigger any step of the process manually in your code.</p>
+        <p class="info">For details, see <a href="http://propelorm.org/documentation/cookbook/writing-behavior.html" class="external-link" rel="nofollow">Boostrapping a Behavior</a>.</p>
+        <p> </p>
+        <h2 id="trigger">Triggering the Publish Process</h2>
+        <p>There are 2 ways to start the <i>Publish</i> process:</p>
+        <ul>
+            <li>
+                <p>Trigger the <b>publish</b> event manually using the <a href="https://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/event/event_adding.html" class="external-link" rel="nofollow">Event Facade</a>:</p><pre><code class="language-PHP">$this-&gt;eventFacade-&gt;trigger(CmsEvents::CMS_VERSION_PUBLISH, (new EventEntityTransfer())-&gt;setId($id));</code></pre>
+            </li>
+            <li>
+                <p>Manipulate Propel entities that implement <b>Event Behavior</b>. When an entity implements an <i>Event Behavior</i>, any changes to it in the SQL database generate an event immediately without the necessary to call the <i>Event Facade</i>. For example, manipulating an abstract product as follows will generate a <i>create abstract product</i> event:</p><pre><code class="language-PHP">$productAbstractEntity = SpyProductAbstractQuery::create()-&gt;findOne();
+$productAbstractEntity-&gt;setColorCode("#FFFFFF");
+$productAbstractEntity-&gt;save();</code></pre>
+            </li>
+        </ul>
+        <p>Manual triggering is recommended for cases when a certain entity passes several stages before becoming available to the customer. A typical use case for this method is content management. In most cases, a page does not become available once you create it. Usually, it exists as a draft and published only at a certain moment when time is due (e.g. when a new product is released to the market). In this case, manual publishing using the <i>Event Facade</i> is preferable.</p>
+        <p>Implementing <i>Event Behaviors</i> is necessary when you need to always need to have up-to-date data in the shop app. For example, behaviors are widely used in the <i>Availability Module</i>, as it is important to inform customers whether a certain product is available for purchase or not.</p>
+        <h2 id="howitworks">How Does Publish and Synchronize Work</h2>
+        <p>Publish and Synchronize Process Schema:</p>
+        <p>
+            <img src="../../Resources/Images/PandS/how-it-works.png" />
+        </p>
+        <h3 id="publish">Publish</h3>
+        <p>Upon triggering the publish process, an event or events will be posted to a queue called <b>event</b>. Each event message posted to the queue will contain the following information on the event that triggered it: event name, ID, names of the corresponding listener and transfer classes, list of modified columns, as well as foreign keys necessary to backtrack the updated Propel entities. However, it will not contain the actual data that has changed.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Event Message Sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-JSON line-numbers">{
+	"listenerClassName":"Spryker\\Zed\\UrlStorage\\Communication\\Plugin\\Event\\Listener\\UrlStorageListener",
+	"transferClassName":"Generated\\Shared\\Transfer\\EventEntityTransfer",
+	"transferData":{
+		"event":"Entity.spy_url.update",
+		"name":"spy_url",
+		"id":488,
+		"foreign_keys":{
+			"spy_url.fk_resource_page":7,
+			"spy_url.fk_resource_product_abstract":null,
+			"spy_url.fk_resource_redirect":null,
+			"spy_url.fk_resource_product_set":null,
+			"spy_url.fk_resource_categorynode":null,
+			"spy_url.fk_locale":46
+		},
+	"modified_columns":[
+		"spy_url.url"
+	]
+	},
+	"eventName":"Entity.spy_url.update"
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p>Each event is consumed by an <a href="https://academy.spryker.com/developing_with_spryker/module_guide/infrastructure/event/event_listen.html" class="external-link" rel="nofollow">event listener</a> mapped for it. The number of events depends on how many listeners are configured for a specific update. For instance, selling an item of certain product may require updating it's availability status (i.e. <i>available</i> or <i>not available</i>). In addition to that, it might be necessary to update the availability of a product bundle it belongs to. For this reason, there will be two listeners configured, one for product availability and one more for bundle availability, resulting in two events in the queue.</p>
+        <p>To consume an event, the queue adapter will call the listener specified in the <i>listenerClassName</i> field of the event message. A listener is a plugin class implemented in one of the modules. Its task is to query the data affected by an event and transform it into a format suitable for the frontend data storage (<i>Redis</i> or <i>Elasticsearch</i>).</p>
+        <p>The transformed data is stored in a dedicated database table. It serves as a <b>mirror table</b> for the respective <i>Redis</i> or <i>Elasticsearch</i> store. The table contains the data that needs to be synchronized to the frontend, the storage and the key where it needs to be put. The actual information that needs to be synchronized is stored in the <b>data</b> column of each row in the table. It is always kept in a format suitable for the frontend (JSON) for easy and fast synchronization. The table also contains foreign keys necessary to backtrack data and a timestamp of the last change for each row. The timestamp is necessary for faster change tracking.</p>
+        <h3 id="Synchronize">Synchronize</h3>
+        <p>As soon as a change occurs in the mirror table stored in the database, its <b>Synchronization Behavior</b> sends the updated rows as messages to one of the <i>Publish Queues</i>. Upon consuming a message, the data is pushed to <i>Redis</i> or <i>Elastisearch</i>.</p>
+        <MadCap:dropDown>
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Synchronize Message Sample</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody><pre><code class="language-JSON line-numbers">{
+	"write":{
+		"key":"url:de:\/de\/mypage",
+		"value":{
+			"fk_resource_categorynode":null,
+			"fk_resource_page":7,
+			"fk_resource_product_set":null,
+			"fk_resource_product_abstract":null,
+			"id_url":488,
+			"fk_locale":46,
+			"url":"\/de\/mypage",
+			"fk_resource_redirect":null,
+			"locale_urls":[
+				{
+					"fk_resource_categorynode":null,
+					"fk_resource_page":7,
+					"fk_resource_product_set":null,
+					"fk_resource_product_abstract":null,
+					"id_url":488,
+					"fk_locale":46,
+					"url":"\/de\/mypage",
+					"fk_resource_redirect":null,
+					"localeName":"de_DE"
+				},
+				{
+					"fk_resource_categorynode":null,
+					"fk_resource_page":7,
+					"fk_resource_product_set":null,
+					"fk_resource_product_abstract":null,
+					"id_url":487,
+					"fk_locale":66,
+					"url":"\/en\/mypage",
+					"fk_resource_redirect":null,
+					"localeName":"en_US"
+				}
+			],
+			"_timestamp":1526033491.2159581
+			},
+		"resource":"url",
+		"params":[
+		]
+	}
+}</code></pre>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <h3>See also:</h3>
+        <ul>
+            <li>
+                <MadCap:xref href="../../Resources and Developer Tools/publish-and-synchronization-reference.htm">Publish and Synchronization Reference</MadCap:xref>
+            </li>
+            <li><a href="http://documentation.spryker.com/tutorials/introduction/handling-data-publish-and-synchronization.htm">Tutorial - Handling Data - Publish and Synchronization</a>
+            </li>
+            <li><a href="publish-and-synchronization-repeated-process.htm">Re-synchronization and re-generation of data</a>
+            </li>
+        </ul>
+    </body>
+</html>

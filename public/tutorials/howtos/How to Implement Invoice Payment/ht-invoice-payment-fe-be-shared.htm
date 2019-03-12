@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop">
+    <head>
+    </head>
+    <body>
+        <h1>HowTo - Implement Invoice Payment - Shared Implementation <img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>This procedure will help us to identify the new payment type through some unique constants. We are going to define those constants under the <var>Shared</var> namespace, since they’re needed both by Yves and Zed.
+</p>
+        <ol>
+            <li>Create the <var>PaymentMethodsConstants</var> interface under the <var>Shared</var> namespace, where you’ll define these unique constants.
+<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Shared\PaymentMethods;
+
+interface PaymentMethodsConstants
+{
+
+    /**
+     * @const string
+     */
+    const PROVIDER = 'paymentmethods';
+
+    /**
+     * @const string
+     */
+    const PAYMENT_METHOD_INVOICE = 'invoice';
+
+    /**
+     * @const string
+     */
+    const PAYMENT_INVOICE_FORM_PROPERTY_PATH = static::PROVIDER . static::PAYMENT_METHOD_INVOICE;
+
+}</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li>Enrich the <var>Payment</var> transfer file with a new property that corresponds to the new payment method. Add <var>Shared/PaymentMethods/Transfer/invoicepayment.transfer.xml</var> file with the following content:
+			<MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Click to expand the code sample</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;transfers xmlns="spryker:transfer-01"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
+
+    &lt;transfer name="Payment"&gt;
+        &lt;!-- Should be equal to PaymentMethodsConstants::PAYMENT_INVOICE_FORM_PROPERTY_PATH.
+		Then the form fields can be automatically mapped to the transfer object inside this field. --&gt;
+        &lt;property name="paymentmethodsinvoice" type="string"/&gt;
+    &lt;/transfer&gt;
+&lt;/transfers&gt;
+</code></pre></MadCap:dropDownBody></MadCap:dropDown></li>
+            <li> Run the <var>vendor/bin/console transfer:generate</var> command to have the <var>PaymentTransfer</var> class updated.
+</li>
+        </ol>
+        <p>&#160;</p>
+    </body>
+</html>

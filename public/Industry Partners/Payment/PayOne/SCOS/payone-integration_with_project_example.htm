@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Integration With Project - Payone</h1>
+        <ul><b>Objectives:</b><![CDATA[
+ ]]><li>Place order with PayPal express checkout.</li><li>Be redirected to summary page of standard checkout.</li><li>Have shipping a method selector on summary page.</li></ul>
+        <p>&#160;</p>
+        <p>First of all we need to provide a URL to Payone module, which will be used to redirect user when the quote is filled with data obtained from PayPal.
+ To achieve this, make the following steps:</p>
+        <ol>
+            <li>Add custom controller action to <var>src/Pyz/Yves/Checkout/Controller/CheckoutController.php</var>:</li><pre><code class="language-PHP line-numbers">
+/**
+* @return \Symfony\Component\HttpFoundation\RedirectResponse
+*/
+public function paypalExpressCheckoutEntryPointAction()
+{
+$this-&gt;getFactory()
+-&gt;createExpressCheckoutHandler()
+-&gt;fulfillPostConditionsUntilSummaryStep();
+return $this-&gt;redirectResponseInternal(CheckoutPageControllerProvider::CHECKOUT_SUMMARY);
+}
+</code></pre>
+            <li>Register a new controller action in controller provider:</li><pre><code class="language-PHP line-numbers">
+...
+const CHECKOUT_PAYPAL_EXPRESS_CHECKOUT_ENTRY_POINT = 'checkout-paypal-express-checkout-entry-point';
+...
+protected function defineControllers(Application $app)
+{
+...
+$this-&gt;createController('/{checkout}/paypal-express-checkout-entry-point', self::CHECKOUT_PAYPAL_EXPRESS_CHECKOUT_ENTRY_POINT, 'Checkout', 'Checkout', 'paypalExpressCheckoutEntryPoint')
+-&gt;assert('checkout', $allowedLocalesPattern . 'checkout|checkout')
+-&gt;value('checkout', 'checkout')
+-&gt;method('GET');
+...
+}
+</code></pre>
+            <li>Create <code>ExpressCheckoutHandler</code> class <code class="language-PHP">src/Pyz/Yves/CheckoutPage/Handler/ExpressCheckoutHandler.php</code> with corresponding interface:</li><pre><code class="language-PHP line-numbers">
+namespace Pyz\Yves\CheckoutPage\Handler;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Spryker\Client\Cart\CartClientInterface;
+use Spryker\Shared\Shipment\ShipmentConstants;
+class ExpressCheckoutHandler implements ExpressCheckoutHandlerInterface
+{
+/**
+* @var \Spryker\Client\Cart\CartClientInterface
+*/
+protected $cartClient;
+/**
+* @param \Spryker\Client\Cart\CartClientInterface $cartClient
+*/
+public function __construct(CartClientInterface $cartClient)
+{
+$this-&gt;cartClient = $cartClient;
+}
+/**
+* @return void
+*/
+public function fulfillPostConditionsUntilSummaryStep()
+{
+$quoteTransfer = $this-&gt;cartClient-&gt;getQuote();
+$quoteTransfer-&gt;addExpense(
+(new ExpenseTransfer())-&gt;setType(ShipmentConstants::SHIPMENT_EXPENSE_TYPE)
+);
+}
+}
+</code></pre>
+            <li>Add <code>ExpressCheckoutHandler</code> related method in <code class="language-PHP">src/Pyz/Yves/CheckoutPage/CheckoutPageFactory.php</code>:</li><pre><code class="language-PHP line-numbers">
+/**
+* @return \Pyz\Yves\CheckoutPage\Handler\ExpressCheckoutHandler
+*/
+public function createExpressCheckoutHandler()
+{
+return new ExpressCheckoutHandler(
+$this-&gt;getCartClient()
+);
+}
+</code></pre>
+            <li>Extend <code>ShipmentForm</code> class to override a property_path option (create <code class="language-PHP">src/Pyz/Yves/Shipment/Form/ShipmentSubForm.php</code>):</li><pre><code class="language-PHP line-numbers">
+namespace Pyz\Yves\Shipment\Form;
+class ShipmentSubForm extends ShipmentForm
+{
+/**
+* @const string
+*/
+const SHIPMENT_SELECTION_PROPERTY_PATH = self::SHIPMENT_SELECTION;
+}
+</code></pre>
+            <li>Adjust summary form by adding a shipment subform in <code class="language-PHP">src/Pyz/Yves/CheckoutPage/Form/Steps/SummaryForm.php</code>:</li><pre><code class="language-PHP line-numbers">
+class SummaryForm extends AbstractType
+{
+/**
+* Builds the form.
+*
+* This method is called for each type in the hierarchy starting from the
+* top most type. Type extensions can further modify the form.
+*
+* @see FormTypeExtensionInterface::buildForm()
+*
+* @param \Symfony\Component\Form\FormBuilderInterface $builder The form builder
+* @param array $options The options
+*
+* @return void
+*/
+public function buildForm(FormBuilderInterface $builder, array $options)
+{
+$builder-&gt;add(
+'shipmentForm',
+ShipmentSubForm::class,
+array_merge(
+$options,
+[
+'data_class' =&gt; ShipmentTransfer::class,
+'property_path' =&gt; 'shipment',
+]
+)
+);
+}
+/**
+* @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+*
+* @return void
+*/
+public function configureOptions(OptionsResolver $resolver)
+{
+$resolver-&gt;setRequired('shipmentMethods');
+$resolver-&gt;setDefaults([
+'data_class' =&gt; QuoteTransfer::class,
+]);
+}
+/**
+* Returns the name of this type.
+*
+* @return string The name of this type
+*/
+public function getName()
+{
+return 'summaryForm';
+}
+}
+</code></pre>
+            <li>Create shipment subform template for summary page in <code class="language-twig">src/Pyz/Yves/CheckoutPage/Theme/default/checkout/partials/shipment.twig</code>:</li><pre><code class="language-PHP line-numbers">
+
+&lt;div class="row columns"&gt;
+
+ {% set shipmentForm = summaryForm.shipmentForm %}
+
+ &lt;div class="callout"&gt;
+  &lt;ul class="no-bullet"&gt;
+
+   {% for name, choices in shipmentForm.idShipmentMethod.vars.choices %}
+
+   &lt;h4&gt;{{ name }}&lt;/h4&gt;
+
+   {% for key, choice in choices %}
+   &lt;li&gt;
+    &lt;label&gt;
+     {{ form_widget(shipmentForm.idShipmentMethod[key], {'attr': {'class': '__toggler'}}) }}
+     {{ shipmentForm.idShipmentMethod[key].vars.label | raw }}
+    &lt;/label&gt;
+   &lt;/li&gt;
+   {% endfor %}
+   {% endfor %}
+  &lt;/ul&gt;
+ &lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+            <li>Update summary twig template in <code class="language-twig">src/Pyz/Yves/CheckoutPage/Theme/default/checkout/summary.twig</code>.
+            Move <code>"form_start"</code> expression to the top of a content section and <code>"form_end"</code> to the end:</li><pre><code class="language-PHP line-numbers">
+...
+{% block content %}
+{{ form_start(summaryForm, {'attr': {'class': 'row'}}) }}
+...
+...
+...
+{{ form_end(summaryForm) }}
+{% endblock %}
+</code></pre>
+            <li>Remove <code class="language-twig">{% include '@checkout/checkout/partials/voucher-form.twig' %}</code> include from summary template. Include <code class="language-twig">checkout/partials/shipment.twig</code> in your summary template:</li><pre><code class="language-PHP line-numbers">
+      ...
+      <li><code>{{ 'checkout.step.summary.shipping' | trans }}</code></li>
+      {% include '@checkout/checkout/partials/shipment.twig' %}
+      ...
+</code></pre>
+            <li>Add shipment form data provider and remove voucher form from summary form collection(It is just an example, if you need voucher form, you need to adjust summary page on your own). In <code class="language-php">src/Pyz/Yves/CheckoutPage/Form/FormFactory.php</code>:</li><pre><code class="language-PHP line-numbers">
+/**
+* @param \Generated\Shared\Transfer\QuoteTransfer
+*
+* @return \Spryker\Yves\StepEngine\Form\FormCollectionHandlerInterface
+*/
+public function createSummaryFormCollection()
+{
+return $this-&gt;createFormCollection($this-&gt;createSummaryFormTypes(), $this-&gt;getShipmentFormDataProviderPlugin());
+}
+
+....
+
+
+/**
+* @return \Symfony\Component\Form\FormTypeInterface[]
+*/
+protected function createSummaryFormTypes()
+{
+return [
+$this-&gt;createSummaryForm(),
+//$this-&gt;createVoucherFormType(),
+];
+}
+</code></pre>
+            <li>Handle shipment form data, when summary form is submitted. Inject two dependencies into <code class="language-twig">src/Pyz/Yves/CheckoutPage/Process/Steps/SummaryStep.php</code>:</li><pre><code class="language-PHP line-numbers">
+/**
+* @var \Spryker\Client\Calculation\CalculationClientInterface
+*/
+protected $calculationClient;
+/**
+* @var \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection
+*/
+protected $shipmentPlugins;
+/**
+* @param \Spryker\Yves\ProductBundle\Grouper\ProductBundleGrouperInterface $productBundleGrouper
+* @param \Spryker\Client\Cart\CartClientInterface $cartClient
+* @param \Spryker\Client\Calculation\CalculationClientInterface $calculationClient
+* @param \Spryker\Client\Calculation\CalculationClientInterface $shipmentPlugins
+* @param string $stepRoute
+* @param string $escapeRoute
+*/
+public function __construct(
+ProductBundleGrouperInterface $productBundleGrouper,
+CartClientInterface $cartClient,
+CalculationClientInterface $calculationClient,
+StepHandlerPluginCollection $shipmentPlugins,
+$stepRoute,
+$escapeRoute
+) {
+parent::__construct($stepRoute, $escapeRoute);
+$this-&gt;productBundleGrouper = $productBundleGrouper;
+$this-&gt;cartClient = $cartClient;
+$this-&gt;calculationClient = $calculationClient;
+$this-&gt;shipmentPlugins = $shipmentPlugins;
+}
+</code></pre>
+            <li>Extend <code>execute</code> method:</li><pre><code class="language-PHP line-numbers">
+/**
+* @param \Symfony\Component\HttpFoundation\Request $request
+* @param \Spryker\Shared\Kernel\Transfer\AbstractTransfer|\Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+*
+* @return \Generated\Shared\Transfer\QuoteTransfer
+*/
+public function execute(Request $request, AbstractTransfer $quoteTransfer)
+{
+$shipmentHandler = $this-&gt;shipmentPlugins-&gt;get(CheckoutPageDependencyProvider::PLUGIN_SHIPMENT_STEP_HANDLER);
+$shipmentHandler-&gt;addToDataClass($request, $quoteTransfer);
+$this-&gt;calculationClient-&gt;recalculate($quoteTransfer);
+$this-&gt;markCheckoutConfirmed($request, $quoteTransfer);
+return $quoteTransfer;
+}
+
+</code></pre>
+            <p>Now go to checkout and try placing an order with Paypal express checkout. </p>
+        </ol>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="../payone-v1-1.htm">Learn about BS Payone</a>
+            </li>
+            <li><a href="../Legacy Demoshop/v1_1/payone-integration-security-invoice.htm">Security Invoice Payment - Payone</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: <i>Aug. 10th, 2018</i><MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Volodymyr Hrychenko</i></MadCap:conditionalText></i>
+        </p>
+    </body>
+</html>

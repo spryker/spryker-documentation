@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head><title>HowTo - Create a New CMS Page | Spryker</title>
+        <meta name="description" content="This guide describes how to create a template for a new page that can then be created in the Admin UI." />
+    </head>
+    <body>
+        <h1>HowTo - Create Templates for CMS Pages and Blocks</h1>
+        <p>
+This HowTo describes     how to add a new page template in Yves using the CMS. </p>
+        <p>To demonstrate the process, we will create a page with contact information.
+		
+        </p>
+        <h2><a name="Adding_a_Template_For_the_New_‘Contact_Us’_Page"></a>Adding a Template For a CMS Page</h2>
+        <p>In order to have a template to select in the Template drop-down list when creating a new <a href="https://documentation.spryker.com/capabilities/cms/cms_page/cms-page.htm">CMS page</a> on the <a href="https://documentation.spryker.com/administration_interface_guide/content_management/pages.htm#creating-a-page-that-uses-the-new-template">Create new CMS Block</a> page in the Admin UI, first you need to create the template itself.
+			</p>
+        <p>Create a new Twig template under the <var>src/Pyz/Yves/Cms/Theme/default/template/</var> folder. We’ll call it <var>contact_page.twig</var> and it will contain the following content:
+		</p><pre><code class="language-PHP line-numbers">    
+&lt;h1&gt;CONTACT US &lt;/h1&gt;
+    &lt;div&gt;
+        &lt;strong&gt;  Get in touch &lt;/strong&gt;
+        &lt;br&gt;
+        &lt;strong&gt;Phone number : &lt;/strong&gt; +1 (000) 000-0000
+        &lt;br&gt;
+        &lt;strong&gt;Email : &lt;/strong&gt; info@companyname.com
+        &lt;br&gt;&lt;br&gt;
+        &lt;strong&gt; Visit our store &lt;/strong&gt;&lt;br&gt;
+        123 Demo Street&lt;br&gt;
+        Demo City&lt;br&gt;
+        1234&lt;br&gt;
+        &lt;br&gt;
+    &lt;/div&gt;
+			</code></pre>
+        <h2>Adding Placeholders to Support In-Page Translated Text </h2>
+        <p>
+			In order to have the text translated, add placeholders to the text you want to have translated. The placeholders will be replaced at runtime by the corresponding values of the glossary keys assigned to each of them.
+		</p><pre><code class="language-PHP line-numbers">    
+	&lt;!-- CMS_PLACEHOLDER : "PlaceholderContactPageHeader" --&gt;
+    &lt;!-- CMS_PLACEHOLDER : "PlaceholderContactHeader" --&gt;
+    &lt;!-- CMS_PLACEHOLDER : "PlaceholderPhoneNr" --&gt;
+    &lt;!-- CMS_PLACEHOLDER : "PlaceholderEmail" --&gt;
+    &lt;!-- CMS_PLACEHOLDER : "PlaceholderStoreAddress" --&gt;
+    
+  &lt;h1&gt;{{ spyCms('PlaceholderContactPageHeader') }} &lt;/h1&gt;
+    &lt;div&gt;
+        &lt;strong&gt;{{ spyCms('PlaceholderContactHeader') }} &lt;/strong&gt; &lt;br&gt;
+        &lt;strong&gt;{{ spyCms('PlaceholderPhoneNr') }} &lt;/strong&gt; +1 (000) 000-0000 &lt;br&gt;
+        &lt;strong&gt;{{ spyCms('PlaceholderEmail') }}  &lt;/strong&gt; info@companyname.com &lt;br&gt;
+        &lt;strong&gt;{{ spyCms('PlaceholderStoreAddress') }}  &lt;/strong&gt;&lt;br&gt;
+      
+        123 Demo Street&lt;br&gt;
+        Demo City&lt;br&gt;
+        1234&lt;br&gt;
+    &lt;/div&gt;
+			</code></pre>
+        <h2>Adding a Template for a CMS Block</h2>
+        <p>In order to have a template to select in the Template drop-down list when creating a new <a href="https://documentation.spryker.com/capabilities/cms/cms_block/cms-block.htm">CMS block</a> on the <a href="https://documentation.spryker.com/administration_interface_guide/content_management/blocks.htm">Create new CMS Block</a> page in the Admin UI, first you need to create the template itself.</p>
+        <p>Procedure of adding template for the new block is similar to <a href="#Adding_a_Template_For_the_New_‘Contact_Us’_Page">templates for pages</a>.</p>
+        <p>Create a new Twig template under the <var>src/Pyz/Yves/CmsBlock/Theme/default/template/</var> folder. We'll call it <var>hello.twig</var> and it will contain the following structure :</p><pre><code class="language-PHP line-numbers">
+&lt;!-- CMS_BLOCK_PLACEHOLDER : "helloBlockText" --&gt;
+&lt;div class="cms-block"&gt;
+	&lt;h1&gt;Hello World!&lt;/h1&gt;
+	&lt;p&gt;{{ spyCmsBlockPlaceholder('helloBlockText') | raw }}&lt;/p&gt;
+&lt;/div&gt;		
+		</code></pre>
+        <p>Next, configure the new block in the CMS Block interface and add the corresponding glossary keys (<i>EN</i>, <i>DE</i>, for example) for the 2 included placeholders</p>
+    </body>
+</html>

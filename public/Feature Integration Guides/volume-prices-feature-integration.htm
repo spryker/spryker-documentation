@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="Spryker.B2B,ReleaseVersions.2018-10">
+    <head><title>Volume Prices Feature Integration | Spryker</title>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" />
+        <meta name="description" content="The Volume Prices Feature allows setting specific prices for units based on quantities. The guide describes how to integrate the feature into your project." />
+    </head>
+    <body>
+        <h1>Volume Prices Feature Integration <img src="../Resources/Images/shoptype/B2B_Shop.png" /></h1>
+        <MadCap:menuProxy data-mc-skin="/Project/Skins/SideMenuNotFixed.flskn" mc-linked-toc="$topicHeadings" style="mc-context-sensitive: True;mc-include-parent: True;mc-include-siblings: True;mc-include-children: True;" />
+        <h2>Install Feature Core</h2>
+        <h3>Prerequisites</h3>
+        <p>To start feature integration, overview and install the necessary features:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Prices</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="tip">
+			Make sure that the following modules have been installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">PriceProductVolume</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker/price-product-volume</var></td></tr></tbody></table></div></div>
+        <h3>1) Set up Transfer Objets</h3>
+        <p>
+			Run the following commands to generate transfer changes:
+		</p><pre><code class="language-PHP line-numbers">console transfer:generate</code></pre>
+        <div class="tip">
+			Make sure that the following changes  in transfer objects have been applied:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MoneyValue</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/MoneyValueTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">PriceProduct</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/PriceProductTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PriceProductVolume</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/PriceProductVolumeTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">PriceProductVolumeCollection</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/PriceProductVolumeCollectionTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PriceProductFilter</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/PriceProductFilterTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">PriceProductCriteria</td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/PriceProductCriteriaTransfer</var></td></tr></tbody></table></div></div>
+        <h3>2) Import Data</h3>
+        <h4>Import Volume Prices</h4>
+        <p class="info">
+			The following imported entities will be used as <i>productvol</i> in Spryker OS.
+		</p>
+        <p>
+			Prepare your data according to your requirements using our demo data:
+		</p>
+        <p><var>src/data/import/product_price.csv</var>
+        </p><pre><code class="language-PHP line-numbers">
+	abstract_sku,concrete_sku,price_type,store,currency,value_net,value_gross,price_data.volume_prices
+	193,,DEFAULT,DE,EUR,16195,17994,"[{""quantity"":5,""net_price"":150,""gross_price"":165}, {""quantity"":10,""net_price"":145,""gross_price"":158}, {""quantity"":20,""net_price"":140,""gross_price"":152}]"
+	195,,DEFAULT,DE,CHF,40848,45387,"[{""quantity"":3,""net_price"":350,""gross_price"":385}, {""quantity"":8,""net_price"":340,""gross_price"":375}]"
+	194,,DEFAULT,AT,EUR,20780,23089,"[{""quantity"":5,""net_price"":265,""gross_price"":295}, {""quantity"":10,""net_price"":275,""gross_price"":310}, {""quantity"":20,""net_price"":285,""gross_price"":320}]"
+			</code></pre>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Column</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Is obligatory?</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data type</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data example</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Data explanation</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">abstract_sku</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">optional</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">193</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Either abstract_sku or concrete_sku should be present to attach the given prices to the correct product.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">concrete_sku</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">optional</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">117_29890338</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Either abstract_sku or concrete_sku should be present to attach the given prices to the correct product.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">price_type</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DEFAULT</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">store</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">DE</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Store in which the specific product has that specific price.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">currency</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">EUR</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Currency in which the specific product has that specific price.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">value_net</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">integer</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">10200</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Net (after tax is paid) price in cents.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">value_gross</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">integer</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">12000</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Gross (before tax is paid) price in cents.</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">price_data.volume_prices</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">optional</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">json<br /> string</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">"[{""quantity"":5,""net_price"":150,""gross_price"":165}]"</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">A json description of prices when the quantity changes (volume based pricing). In the example given, the product bought, when it has a quantity of less than 5, it uses the normal price, but uses this volume price when the quantity is greater than 5.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>Register the following plugin to enable data import:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">PriceProductDataImportPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Imports demo product price data into the database.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\PriceProductDataImport\Communication\Plugin</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var>src/Pyz/Zed/DataImport/DataImportDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Zed\DataImport;
+ 
+	use Spryker\Zed\DataImport\DataImportDependencyProvider as SprykerDataImportDependencyProvider;
+	use Spryker\Zed\PriceProductDataImport\Communication\Plugin\PriceProductDataImportPlugin;
+ 
+	class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
+	{
+		protected function getDataImporterPlugins(): array
+		{
+			return [
+				new PriceProductDataImportPlugin(),
+			];
+		}
+	}
+			</code></pre>
+        <p>Run the following console command to import data:</p><pre><code class="language-PHP line-numbers">
+	console data:import price-product
+			</code></pre>
+        <p class="tip">
+			Make sure that in the database the configured data has been added to the `spy_product_price` table.
+		</p>
+        <h3>3) Set up behavior</h3>
+        <p>
+            <MadCap:annotation MadCap:createDate="2019-01-10T10:43:49.7816972+02:00" MadCap:creator="Yuliia Boiko" MadCap:initials="YU" MadCap:comment="there is a comment 'please add verification step'. This has not been resolved yet" MadCap:editor="Yuliia Boiko" MadCap:editDate="2019-01-10T10:45:00.6861887+02:00">Enable the following behaviors by registering the plugins:</MadCap:annotation>
+        </p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PriceProductVolumeExtractorPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Provides the ability to extract volume prices from an array of PriceProductTransfers for abstract or concrete products to show them on Frontend side to the customer while buying.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Client\PriceProductVolume\Plugin\PriceProductStorageExtension</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">PriceProductVolumeExtractorPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Provides the ability to extract volume prices from an array of PriceProductTransfers for abstract or concrete products to validate prices when adding items to cart or to validate prices on the backend side.</td>
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension</var>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">PriceProductVolumeFilterPlugin</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Provides the ability to decide, based on selected product quantity, which PriceProduct should be chosen based on the set volume prices.</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var>src/Pyz/Zed/PriceProduct/PriceProductDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Zed\PriceProduct;
+ 
+	use Spryker\Zed\PriceProduct\PriceProductDependencyProvider as SprykerPriceProductDependencyProvider;
+	use Spryker\Zed\PriceProductVolume\Communication\Plugin\PriceProductExtension\PriceProductVolumeExtractorPlugin;
+ 
+	class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvider
+	{
+		/**
+		* @return \Spryker\Zed\PriceProductExtension\Dependency\Plugin\PriceProductReaderPricesExtractorPluginInterface[]
+		*/
+		protected function getPriceProductPricesExtractorPlugins(): array
+		{
+			return [
+				new PriceProductVolumeExtractorPlugin(),
+			];
+		}
+	}
+			</code></pre>
+        <p><var>src/Pyz/Client/PriceProductStorage/PriceProductStorageDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Client\PriceProductStorage;
+ 
+	use Spryker\Client\PriceProductStorage\PriceProductStorageDependencyProvider as SprykerPriceProductStorageDependencyProvider;
+	use Spryker\Client\PriceProductVolume\Plugin\PriceProductStorageExtension\PriceProductVolumeExtractorPlugin;
+ 
+	class PriceProductStorageDependencyProvider extends SprykerPriceProductStorageDependencyProvider
+	{
+		/**
+		* @return \Spryker\Client\PriceProductStorageExtension\Dependency\Plugin\PriceProductStoragePricesExtractorPluginInterface[]
+		*/
+		protected function getPriceProductPricesExtractorPlugins(): array
+		{
+			return [
+				new PriceProductVolumeExtractorPlugin(),
+			];
+		}
+	}
+			</code></pre>
+        <p><var>src/Pyz/Service/PriceProduct/PriceProductDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	/**
+	* This file is part of the Spryker Suite.
+	* For full license information, please view the LICENSE file that was distributed with this source code.
+	*/
+ 
+	namespace Pyz\Service\PriceProduct;
+ 
+	use Spryker\Service\PriceProduct\PriceProductDependencyProvider as SprykerPriceProductDependencyProvider;
+	use Spryker\Service\PriceProductVolume\Plugin\PriceProductExtension\PriceProductVolumeFilterPlugin;
+ 
+	class PriceProductDependencyProvider extends SprykerPriceProductDependencyProvider
+	{
+		/**
+		* {@inheritdoc}
+		*
+		* @return \Spryker\Service\PriceProductExtension\Dependency\Plugin\PriceProductFilterPluginInterface[]
+		*/
+		protected function getPriceProductDecisionPlugins(): array
+		{
+			return array_merge([
+				new PriceProductVolumeFilterPlugin(),
+			], parent::getPriceProductDecisionPlugins());
+		}
+	}
+			</code></pre>
+        <h3>Install Feature Frontend</h3>
+        <h4>Prerequisites</h4>
+        <p>Please overview and install the necessary features before beginning the integration step.</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Spryker Core E-commerce</td>
+                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">2018.11.0</td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Prices</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">2018.11.0</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+			Make sure that the following modules have been installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">PriceProductVolumeWidget</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker-shop/price-product-volume-widget</var></td></tr></tbody></table></div></p>
+        <h3>1) Add Translations</h3>
+        <p>Append glossary according to your configuration:</p>
+        <p><var>src/data/import/glossary.csv</var>
+        </p><pre><code class="language-PHP line-numbers">
+	page.detail.volume_price.quantity,Quantity,en_US
+	page.detail.volume_price.quantity,Anzahl,de_DE
+	page.detail.volume_price.price,Price,en_US
+	page.detail.volume_price.price,Preis,de_DE
+			</code></pre>
+        <p>Run the following console command to import data:</p><pre><code class="language-PHP line-numbers">
+	console data:import glossary
+			</code></pre>
+        <p class="tip">
+			Make sure that in the database the configured data has been added to the spy_glossary table.
+		</p>
+        <h3>2) Set up Widgets</h3>
+        <p>Enable global widgets:</p>
+        <div class="table-wrap">
+            <table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                <thead>
+                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Widget</th>
+                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">ProductPriceVolumeWidget</td>
+                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Shows a table of volume prices for a product that contains the columns: quantity and price for that quantity threshold.</td>
+                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>SprykerShop\Yves\PriceProductVolumeWidget\Widget</var>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p><var>src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php</var>
+        </p><pre><code class="language-PHP line-numbers">
+	&lt;?php
+ 
+	namespace Pyz\Yves\ShopApplication;
+ 
+	use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+	use SprykerShop\Yves\PriceProductVolumeWidget\Widget\ProductPriceVolumeWidget;
+ 
+	class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+	{
+		/**
+		* @return string[]
+		*/
+		protected function getGlobalWidgets(): array
+		{
+			return [
+				ProductPriceVolumeWidget::class,
+			];
+		}
+	}
+			</code></pre>
+        <div class="tip">
+			Make sure that the following widgets have been registered:
+			<div class="table-wrap"><table style="mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Test</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">ProductPriceVolumeWidget</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Go to the product detail page for a product with volume prices set, and observe the table in the detail area that contains the volume prices data.</td></tr></tbody></table></div></div>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <p><a href="https://documentation.spryker.com/capabilities/price/volume_prices/volume-prices-overview.htm">Volume Prices Feature Overview</a>
+        </p>
+        <p>&#160;</p>
+        <p>&#160;</p>
+        <p><i>Last
+review date: Dec 06, 2018</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Ahmed Sabaa, Yuliia Boiko</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>

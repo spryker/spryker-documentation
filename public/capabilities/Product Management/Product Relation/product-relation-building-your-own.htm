@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="" MadCap:conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,Spryker.ShopSuite">
+    <head>
+    </head>
+    <body>
+        <h1>Building Your Own Product Relation Type<img src="../../../Resources/Images/shoptype/B2B_Shop.png" /> <img src="../../../Resources/Images/shoptype/B2C_Shop.png" /> <img src="../../../Resources/Images/shoptype/MasterSuite.png" /> <img src="../../../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <p>To create a new relation type, modify the Yves and Zed applications:
+
+</p>
+        <h4>Zed:
+
+</h4>
+        <ul>
+            <li class="bullet_list">Create new relation type in <var>\Spryker\Shared\ProductRelation\ProductRelationTypes</var> as a new constant type for example <var>TYPE_RELATION_NEW</var> also include to <var>getAvailableRelationTypes </var>returned array. After this you can able select a new relation type when building relation.
+</li>
+        </ul>
+        <p>For example for Yves you need to create custom data provider:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+class RelationNewDataProvider implements ProductRelationDataProviderInterface
+{
+    /**
+     * @param array $parameters
+     *
+     * @return array|\Generated\Shared\Transfer\StorageProductAbstractRelationTransfer[]
+     */
+    public function buildTemplateData(array $parameters)
+    {
+       //read data from Yves data store, return data for view to render.
+    }      
+
+    /**
+    * @return string
+    */
+   public function getAcceptedType()
+   {
+     return ProductRelationTypes::TYPE_RELATION_NEW; //this is the type which is mapped when rendering twig function, first argument.
+   }  
+}
+</code></pre>
+        <h4>Yves:
+
+</h4>
+        <p>By default, the demoshop provides a carousel type javascript component which renders related products. This component can be added with a twig <var>product_relation(type, parameters, title, templatePath)</var> function. The type is a string which maps to a specific data provider and provides custom data when used, like “related-product”, “up-selling”.
+
+</p>
+        <p>It accepts few arguments:
+
+</p>
+        <ul>
+            <li class="bullet_list"><b>type</b>: is the type which is defined in <var>\Spryker\Shared\ProductRelation\ProductRelationTypes</var>, string value (“related-products”, “up-selling”).
+</li>
+            <li class="bullet_list"><strong>parameter</strong>: is the parameter for the selected relation type, depending on the selected relation types this value is different.
+</li>
+            <li class="bullet_list"><strong>title</strong>: is the title displayed in the carousel component.
+</li>
+            <li class="bullet_list"><strong>templatePath</strong>: is the path to the template touse for rendering the carousel component. (<var>@ProductRelation/partial/product_relation_carousel.twig</var>).
+</li>
+        </ul>
+        <p>Each type has a data provider, this data provider reads data from redis and sends it to the template. You can use <var>RelatedProductsDataProvider</var> or <var>UpSellingDataProvider </var>as a sample implementations.
+</p>
+    </body>
+</html>

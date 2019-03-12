@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="ReleaseVersions.2019-03,General.Draft">
+    <head>
+        <link href="../Resources/TableStyles/PatternedRows2.css" rel="stylesheet" MadCap:stylesheetType="table" /><title>Container | Spryker</title>
+        <meta name="description" content="Now, instead of using the &quot;Pimple Container&quot; class, Spryker is going to implement its own Continer since the original container is widely used by the Silex Microframework we are currently refactoring out. The Continer is used with services like Twig and Plugin stacks. The article contains information on adding services, checking if they are added, removing or extending them. Troubleshooting information is included too. " />
+    </head>
+    <body>
+        <h1>Container</h1>
+        <h2>What is a Container?</h2>
+        <p>A Container is a class which holds one or more object collections or definitions. It's important to know that almost everything that is accessible through the Container should only be instantiated when it is requested. It's not as important for static values like <var>isDebugMode</var> as it is important for expensive instantiations.</p>
+        <p>Previously, Spryker has been using the <var>pimple/pimple</var> library which offers the "Pimple Container" class. This class is widely used in Spryker Commerce OS by the Silex Microframework we are currently refactoring out.</p>
+        <p>The Container is used to add services and provide access to those services to other application plugins. The exemplary services are Twig or Symfony components like Security, Form etc. To be able to configure or change the services easily, they are added to the applications as a part of "Service Providers". The previously used <var>Silex\Application</var> extends the Pimple class which makes it a Container too.</p>
+        <p>To be able to refactor out the abandoned Silex code, we added our own Container which implements the PSR-11 interface. The Spryker Container still supports the Silex way of accessing services through the <var>ArrayAccess</var> interface.</p>
+        <h2>Where is the Container used?</h2>
+        <p>Spryker uses several Container instances to separate the accessibility to services. The first Container is used for the services like Twig which are added to the application through the <var>Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface</var>.</p>
+        <p>The second Container is used on a per-Module basis. Each Module creates its own Container instance and can add its own dependencies to the Container. Usually, those dependencies are Plugin stacks.</p>
+        <h2>How to use the Container?</h2>
+        <p>The Container implements the PSR-11 <a href="https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-11-container.md">interface</a>. On top of it, we added the following additional methods:</p>
+        <table style="width: 100%;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+            <col style="width: 239px;" class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <thead>
+                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                    <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</td>
+                    <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>set()</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Adds services to the Container</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>setGlobal()</var>
+                    </td>
+                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Adds global services to the Container</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>configure()</var>
+                    </td>
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Configures existing services (e.g. makes them global, adds aliases)</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>extend()</var>
+                    </td>
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Extends existing services</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>remove()</var>
+                    </td>
+                    <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Removes added services</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="note">Although the Container still implements the <var>ArrayAccess</var> interface, it is not recommended to use it anymore. This was added for backward compatibility only.</div>
+        <h3>Add a service</h3>
+        <p>To add a service, you need to pass the service ID and a callback to the <var>set()</var> method.</p><pre><code class="language-PHP line-numbers">
+$container = $container-&gt;set('your service identifier', function () {
+    return new ExpensiveThing(); // You can return whatever you require
+});</code></pre>
+        <h3>Create service aliases</h3>
+        <p>For backward compatibility, it is possible to configure one or more aliases for a service. Later on, aliases can also be used for renaming of service identifiers without breaking the code which makes use them.</p>
+        <p>Example with a typo in the identifier of the added service:</p><pre><code class="language-PHP line-numbers">
+&lt;?php
+ 
+// Added in one of the ApplicationPlugins
+// notice the typo in the id of this service
+$container-&gt;set('sevrice identifier', function () {
+    return 'foo';
+});
+ 
+// In another ApplicationPlugin, the wrong id is used
+$service = $container-&gt;get('sevrice identifier');</code></pre>
+        <p>To keep backward compatibility when the wrong key is fixed, you can now use the alias feature:</p><pre><code class="language-PHP line-numbers">
+&lt;?php
+ 
+// Added in one of the ApplicationPlugin's
+// notice the type in the id for the service is fixed
+$container-&gt;set('service identifier', function () {
+    return 'foo';
+});
+ 
+// This line adds an alias to the id with the typo, that way the id with the typo can still be used
+$container-&gt;configure('service identifier', ['alias' =&gt; 'sevrice identifier']);
+ 
+// This will now return the service with the id `service identifier` by it's configured alias.
+$service = $container-&gt;get('sevrice identifier');
+ 
+// Will work as normal
+$service = $container-&gt;get('service identifier');</code></pre>
+        <p>It is also possible to add more than one alias at a time. To achieve this, an array of aliases is used in the configuration:</p><pre><code class="language-PHP line-numbers">
+&lt;php
+ 
+$container-&gt;set('service identifier', function () {
+    return 'foo';
+});
+ 
+$container-&gt;configure('service identifier', [
+    'alias' =&gt; [
+        'alias 1',
+        'alias 2',
+    ],
+]);</code></pre>
+        <h3>Check if a service was added</h3>
+        <p>You should always check if a service exists in the container by using the <var>has()</var> method.</p>
+        <p>Example:</p><pre><code class="language-PHP line-numbers">
+if ($container-&gt;has('your service identifier')) {
+    // service exists
+}</code></pre>
+        <h3>Get a service</h3>
+        <p>To retrieve a service, you should always check if the service exists by using the <var>has()</var> method prior to using the <var>get()</var> method.</p>
+        <p>Example:</p><pre><code class="language-PHP line-numbers">
+if ($container-&gt;has('your service identifier')) {
+    $yourService = $container-&gt;get('your service identifier');
+    $yourService-&gt;foo();
+}</code></pre>
+        <h3>Remove a service</h3>
+        <p>In some circumstances, you may want to remove a service from the container again. You can do this with the <var>remove()</var> method.</p>
+        <p>Example:</p><pre><code class="language-PHP line-numbers">
+if ($container-&gt;has('your service identifier')) {
+    $container-&gt;remove('your service identifier');
+}</code></pre>
+        <h3>Extend a service</h3>
+        <p>Whenever you need to extend a service without loading it, you can use the <var>extend()</var> method. It's very important to return the extended service from your callback.</p>
+        <p>Example:</p><pre><code class="language-PHP line-numbers">
+if ($container-&gt;has('your service identifier')) {
+    $container-&gt;extend('your service identifier', function (YourServiceInstance $yourServiceInstance) {
+        $yourServiceInstance-&gt;addFoo('bar');
+         
+        return $yourServiceInstance;
+    });
+}</code></pre>
+        <p>With the code, you can alter your service without loading it. Your service will only be loaded when it is requested from the Container by using <var>Container::get()</var>.</p>
+        <h2>Global Services</h2>
+        <h3>Access an infrastructural service in a module's Dependency Provider</h3>
+        <p>In some cases, it is required to get access to an Application Plugin from a module. To achieve this, some services are marked as global and can be retrieved from the Dependency Provider of the modules through their Container.</p>
+        <p>For example, the Form Application Plugin brings in the Symfony Form Component used in all modules where a form needs to be displayed. To avoid building this service in each module where forms are used, services can be added to the Container with the <var>setGlobal</var> method to be globally available in the modules' Dependency Providers:</p><pre><code class="language-PHP line-numbers">
+namespace Spryker\Zed\Module\Communication\Plugin\Application;
+ 
+class FormApplicationPlugin extends AbstractPlugin implements ApplicationPluginInterface
+{
+    public const SERVICE_FORM = 'form.factory';
+     
+    public function provide(ContainerInterface $container): ContainerInterface
+    {
+        $container-&gt;setGlobal(static::SERVICE_FORM, function () {
+            $form = ...;
+            ...
+            return $form;
+        });
+    }
+}</code></pre>
+        <p>In the Dependency Provider of your module, you need to add a unique constant. It will allow you to use the constant as a key instead of the key provided by the service when referring to it in your Factory:</p><pre><code class="language-PHP line-numbers">
+namespace Spryker\Zed\Module;
+ 
+use Spryker\Shared\Form\Plugin\Application\FormApplicationPlugin;
+ 
+class ModuleDependencyProvider extends AbstractBundleDependencyProvider
+{
+    public const SERVICE_FORM = FormApplicationPlugin::SERVICE_FORM;
+ 
+    ...
+}</code></pre>
+        <p>Then, in your Factory, retrieve the dependency as usual:</p><pre><code class="language-PHP line-numbers">
+namespace Spryker\Zed\Module\Communication;
+ 
+use Spryker\Zed\Module\ModuleDependencyProvider;
+ 
+class ModuleCommunicationFactory extends AbstractCommunicationFactory
+{
+    public function getFormService(): FormFactoryInterface
+    {
+        return $this-&gt;getProvidedDependency(ModuleDependencyProvider::SERVICE_FORM);
+    }
+}</code></pre>
+        <h2>Troubleshooting</h2>
+        <p><pre>FrozenServiceException - The service "your service identifier" is marked as frozen an can't be extended at this point.</pre>
+        </p>
+        <p>In case you try to extend a service which has been already requested from the Container, you will see this exception. A debugger will help you to find a solution. Check which code causes this error by setting a breakpoint in the Container where this exception is thrown. Most likely, you will spot the issue right away. If not, set an additional conditional breakpoint in the first line of the <var>Container::get()</var> method. The condition here should look like <var>$id === 'your service identifier'</var>. It instructs the debugger to stop only when the service identifier which brings the exception is retrieved from the Container. Now check the code which wants to retrieve the service and change it in a way that it is called only after the <var>Container::extend()</var> has been executed.</p>
+        <p style="font-weight: bold;">&#160;</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li style="font-weight: bold;"><a href="application.htm" style="font-weight: normal;">Application</a>
+            </li>
+            <li><a href="silex-replacement.htm">Silex Replacement</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Feb 19, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Rene Klatt, Andrii Tserkovnyi</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

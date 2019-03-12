@@ -1,0 +1,2664 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:searchable="False">
+    <head>
+    </head>
+    <body>
+        <h1>SalesAggregator</h1>
+        <p class="important" id="deprecationmessage">This module is deprecated.</p>
+        <p>
+        </p>
+        <p>&#160;</p>
+        <table width="100%" style="margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows2.css');" cellspacing="0" border="0" class="TableStyle-PatternedRows2">
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <col class="TableStyle-PatternedRows2-Column-Regular" />
+            <tbody>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Latest version: <b>5.0.1</b></td>
+                    <td rowspan="2" style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://github.com/spryker/sales-aggregator/releases/tag/5.0.1" target="_blank">View on GitHub <img src="../Resources/Images/view-on-github.png" /></a>
+                    </td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Last update: <b>12 Apr 2018</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">&#160;</td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                    <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">&#160;</td>
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Type: <b>Core Splitted</b></td>
+                </tr>
+                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                    <td style="text-align: right;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Group: <b>&lt;none&gt;</b></td>
+                </tr>
+            </tbody>
+        </table>
+        <p id="currentVersion">
+            <h2 id="facade">API (Facades)</h2>
+            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody id="facade_body">
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Reads order from database and stores in order transfer</p>
+                                </li>
+                                <li>
+                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Reads order from database and stores in order transfer</p>
+                                </li>
+                                <li>
+                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                </li>
+                                <li>
+                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Iterate order exepenses and sum up amounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Sum up expenses and subtotals</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Sum up item amounts before discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Sum up order subtotal</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Calculate item tax amount</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Calculate order total tax amount</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Calculate order expense tax amount</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderItemProductOptionGrossPrice</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over all items and calculates gross amount for each items</p>
+                                </li>
+                                <li>
+                                    <p>Data is read from sales order persistence</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderSubtotalWithProductOptions</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over all items and calculates subtotal</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalDiscountAmount</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loop over all quote items, and sum all calculated discounts</p>
+                                </li>
+                                <li>
+                                    <p>Loop over all quote expenses, and sum all calculated discounts</p>
+                                </li>
+                                <li>
+                                    <p>Store total amount into order transfer discount totals</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderCalculatedDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Loop over item calculated discount and group by discount display name</p>
+                                </li>
+                                <li>
+                                    <p>Loop over expense calculated discount and group by discount display name</p>
+                                </li>
+                                <li>
+                                    <p>Store all variations to order transfer calculated discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateItemDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loop over item calculated discounts and calculate item gross amount after discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateGrandTotalWithDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Take current grand total and subtract total discount</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderExpenseTaxWithDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loop over expenses and calculate order expense tax after discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpensesWithDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Loop over order expenses and calculated expense gross amount after discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalDiscountAmountWithProductOptions</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over product option discount with discount sum</p>
+                                </li>
+                                <li>
+                                    <p>Calculates totals with product options</p>
+                                </li>
+                                <li>
+                                    <p>Amounts stored: OrderTransfer-&gt;getTotals()-&gt;setDiscountTotal()</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderCalculatedDiscountsWithProductOptions</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over product option calculated discounts and sums up to order total</p>
+                                </li>
+                                <li>
+                                    <p>Amounts stored in OrderTransfer-&gt;getCalculatedDiscounts()</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateItemWithProductOptionsDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Read order discounts from persistence</p>
+                                </li>
+                                <li>
+                                    <p>Assign discount to each coresponding item</p>
+                                </li>
+                                <li>
+                                    <p>Calculate item and product option discount amount fields with discount</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateItemWithProductOptionsAndDiscountsTaxAmount</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over items with discounts</p>
+                                </li>
+                                <li>
+                                    <p>Calculate discount amount for items after discounts</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalTaxAmountWithDiscounts</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <ul>
+                                <li>
+                                    <p>Loops over items with options and discounts</p>
+                                </li>
+                                <li>
+                                    <p>Loops over expenses with discounts</p>
+                                </li>
+                                <li>
+                                    <p>Sum all tax amounts calculated</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateBundlePrice</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                            <ul>
+                                <li>
+                                    <p>Aggregates OrderTransfer::bundleItems prices</p>
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 id="plugins">Plugins</h2>
+            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                <thead>
+                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                    </tr>
+                </thead>
+                <tbody id="plugins_body">
+                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                        </td>
+                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                            <p>Aggregates data and adds it to the transfer.</p>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <h2 id="require">Dependencies:</h2>
+            <ul id="require_list">
+                <li><b><MadCap:xref href="Discount.htm">Discount</MadCap:xref></b> ^4.0.0</li>
+                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^5.0.0</li>
+                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.0.0</li>
+                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^6.0.0</li>
+                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^3.0.0</li>
+                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^5.0.0</li>
+            </ul>
+            <h2 id="suggest">Suggested Installations:</h2>
+            <ul id="suggest_list">
+                <li><b><MadCap:xref href="Checkout.htm">Checkout</MadCap:xref></b> If you want to use Checkout plugins you need to install spryker/checkout.</li>
+            </ul>
+        </p>
+        <MadCap:dropDown id="previousVersionsHead">
+            <MadCap:dropDownHead>
+                <MadCap:dropDownHotspot>Previous Versions</MadCap:dropDownHotspot>
+            </MadCap:dropDownHead>
+            <MadCap:dropDownBody>
+                <p id="previousVersions">
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>5.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderItemProductOptionGrossPrice</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over all items and calculates gross amount for each items</p>
+                                                </li>
+                                                <li>
+                                                    <p>Data is read from sales order persistence</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderSubtotalWithProductOptions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over all items and calculates subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalDiscountAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loop over all quote items, and sum all calculated discounts</p>
+                                                </li>
+                                                <li>
+                                                    <p>Loop over all quote expenses, and sum all calculated discounts</p>
+                                                </li>
+                                                <li>
+                                                    <p>Store total amount into order transfer discount totals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderCalculatedDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loop over item calculated discount and group by discount display name</p>
+                                                </li>
+                                                <li>
+                                                    <p>Loop over expense calculated discount and group by discount display name</p>
+                                                </li>
+                                                <li>
+                                                    <p>Store all variations to order transfer calculated discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateItemDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loop over item calculated discounts and calculate item gross amount after discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateGrandTotalWithDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Take current grand total and subtract total discount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderExpenseTaxWithDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loop over expenses and calculate order expense tax after discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpensesWithDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loop over order expenses and calculated expense gross amount after discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalDiscountAmountWithProductOptions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over product option discount with discount sum</p>
+                                                </li>
+                                                <li>
+                                                    <p>Calculates totals with product options</p>
+                                                </li>
+                                                <li>
+                                                    <p>Amounts stored: OrderTransfer-&gt;getTotals()-&gt;setDiscountTotal()</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderCalculatedDiscountsWithProductOptions</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over product option calculated discounts and sums up to order total</p>
+                                                </li>
+                                                <li>
+                                                    <p>Amounts stored in OrderTransfer-&gt;getCalculatedDiscounts()</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateItemWithProductOptionsDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Read order discounts from persistence</p>
+                                                </li>
+                                                <li>
+                                                    <p>Assign discount to each coresponding item</p>
+                                                </li>
+                                                <li>
+                                                    <p>Calculate item and product option discount amount fields with discount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateItemWithProductOptionsAndDiscountsTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over items with discounts</p>
+                                                </li>
+                                                <li>
+                                                    <p>Calculate discount amount for items after discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTotalTaxAmountWithDiscounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Loops over items with options and discounts</p>
+                                                </li>
+                                                <li>
+                                                    <p>Loops over expenses with discounts</p>
+                                                </li>
+                                                <li>
+                                                    <p>Sum all tax amounts calculated</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateBundlePrice</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Aggregates OrderTransfer::bundleItems prices</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Discount.htm">Discount</MadCap:xref></b> ^4.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^4.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^6.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^5.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                                <li><b><MadCap:xref href="Checkout.htm">Checkout</MadCap:xref></b> If you want to use Checkout plugins you need to install spryker/checkout.</li>
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>4.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^5.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^4.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                                <li><b><MadCap:xref href="Checkout.htm">Checkout</MadCap:xref></b> If you want to use Checkout plugins you need to install spryker/checkout.</li>
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>4.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="PropelOrm.htm">PropelOrm</MadCap:xref></b> ^1.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^5.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^4.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                                <li><b><MadCap:xref href="Checkout.htm">Checkout</MadCap:xref></b> If you want to use Checkout plugins you need to install spryker/checkout.</li>
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.1.2</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0 || ^3.0.0 || ^4.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.1.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0 || ^3.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.1.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0 || ^3.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.0.2</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0 || ^3.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>3.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="ProductOption.htm">ProductOption</MadCap:xref></b> ^3.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>2.0.0</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Reads order from database and stores in order transfer</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Use existing OrderTransfer instead fo quering database</p>
+                                                </li>
+                                                <li>
+                                                    <p>Run all item aggregation plugins defined in SalesAggregatorDependencyProvider</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Iterate order exepenses and sum up amounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up expenses and subtotals</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up item amounts before discounts</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Sum up order subtotal</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate item tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order total tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <ul>
+                                                <li>
+                                                    <p>Calculate order expense tax amount</p>
+                                                </li>
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^3.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                    <MadCap:dropDown>
+                        <MadCap:dropDownHead>
+                            <MadCap:dropDownHotspot>1.0.1</MadCap:dropDownHotspot>
+                        </MadCap:dropDownHead>
+                        <MadCap:dropDownBody>
+                            <h2 id="facade">API (Facades)</h2>
+                            <table id="facade_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 30%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 70%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Facade Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="facade_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalsByIdSalesOrder</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>getOrderItemTotalsByIdSalesOrderItem</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>getOrderTotalByOrderTransfer</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderGrandTotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemAmounts</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderSubtotal</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderItemTaxAmount</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregateOrderTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
+                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows"><b>aggregateOrderExpenseTaxAmountAggregator</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">
+                                            <p>TODO FW Move to own bundle and add description</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="plugins">Plugins</h2>
+                            <table id="plugins_table" style="width: 100%; margin-left: 0;margin-right: auto;mc-table-style: url('../Resources/TableStyles/PatternedRows.css');word-wrap: break-word;" class="TableStyle-PatternedRows" cellspacing="0">
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 20%;" />
+                                <col class="TableStyle-PatternedRows-Column-Regular" style="width: 60%;" />
+                                <thead>
+                                    <tr class="TableStyle-PatternedRows-Head-Header1">
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Plugin</th>
+                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Method</th>
+                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="plugins_body">
+                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows" rowspan="1"><b>/​src/​Spryker/​Zed/​SalesAggregator/​Dependency/​Plugin/​OrderTotalsAggregatePluginInterface.php</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows"><b>aggregate</b>
+                                        </td>
+                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">
+                                            <p>Aggregates data and adds it to the transfer.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h2 id="require">Dependencies:</h2>
+                            <ul id="require_list">
+                                <li><b><MadCap:xref href="Application.htm">Application</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Kernel.htm">Kernel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Propel.htm">Propel</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Sales.htm">Sales</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Symfony.htm">Symfony</MadCap:xref></b> ^2.0.0</li>
+                                <li><b><MadCap:xref href="Tax.htm">Tax</MadCap:xref></b> ^2.0.0</li>
+                            </ul>
+                            <h2 id="suggest">Suggested Installations:</h2>
+                            <ul id="suggest_list">
+                            </ul>
+                        </MadCap:dropDownBody>
+                    </MadCap:dropDown>
+                </p>
+            </MadCap:dropDownBody>
+        </MadCap:dropDown>
+        <p><i>Last review date: 20 Nov 2018<MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><b>Do not edit this file - generated automatically</b></MadCap:conditionalText></i>
+        </p>
+    </body>
+</html>

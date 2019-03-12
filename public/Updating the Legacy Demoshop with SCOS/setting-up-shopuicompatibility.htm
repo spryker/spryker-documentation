@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+    <head>
+    </head>
+    <body>
+        <h1>Setting up ShopUiCompatibility Module in the Legacy Demoshop</h1>
+        <p>The ShopUiCompatibility module is the main module necessary for the <a href="http://documentation.spryker.com/front-end_developer_guide/atomic_frontend/overview.htm">Atomic Frontend</a>. This module is provided in SCOS by default.</p>
+        <p>The following guide describes how to set up the ShopUICompatibility in the Legacy Demoshop.</p>
+        <p>&#160;</p>
+        <h3>To install ShopUiCompatibility module in the Legacy Demoshop, follow the instructions below.</h3>
+        <ol>
+            <li>ShopUiCompatibility requires ShopUi module of a version no older than 1.7.0. If you don't have it, run<pre><code>composer require composer require spryker-shop/shop-ui "^1.7.0"</code></pre></li>
+            <li>Add the following line to <var>./src/Pyz/Yves/Application/YvesBootstrap.php</var>:<pre><code class="language-PHP line-numbers">use SprykerEco\Yves\ShopUiCompatibility\Plugin\Provider\ShopUiCompatibilityTwigServiceProvider;</code></pre></li>
+            <li>Add the following line to <var>./src/Pyz/Yves/Application/YvesBootstrap.php</var>, at the very end of the <var>protected function registerServiceProviders() {</var>:<pre><code class="language-PHP line-numbers">$this-&gt;application-&gt;register(new ShopUiCompatibilityTwigServiceProvider());</code></pre></li>
+            <li>Add the following section to <var>./package.json</var>:<pre><code class="language-PHP line-numbers">"config": {
+"shopUiCompatibilityPath": "./vendor/spryker-eco/shop-ui-compatibility/assets/Yves",
+"yvesPath": "./assets/Yves/default",
+"zedPath": "./node_modules/@spryker/oryx-for-zed"
+},</code></pre></li>
+            <li>Replace the script section in <var>./package.json</var> with this:<pre><code class="language-PHP line-numbers">"engines": {
+"node": "&gt;=6.0.0"
+},</code></pre></li>
+            <li>Change <var>./src/Pyz/Yves/Application/Theme/default/layout/layout.twig</var> as follows:<pre><code class="language-PHP line-numbers">&lt;head&gt;
+	&lt;meta charset="utf-8" /&gt;
+	&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /&gt;
+	&lt;meta name="description" content="{{ page_description | default('') | trans }}" /&gt;
+	&lt;meta name="keywords" content="{{ page_keywords | default('') | trans }}" /&gt;
+	&lt;meta name="generator" content="spryker" /&gt;
+	{% block page_meta %}{% endblock %}
+ 
+	&lt;link rel="stylesheet" href="/assets/default/shopui/css/yves_default.app.css" /&gt; &lt;!-- add this line here, before any other style --&gt;
+	&lt;link rel="stylesheet" href="/assets/default/css/vendor.css" /&gt;
+	&lt;link rel="stylesheet" href="/assets/default/css/app.css" /&gt;
+	{% block stylesheets %}{% endblock %}
+ 
+	&lt;script src="/assets/default/shopui/js/yves_default.runtime.js"&gt;&lt;/script&gt;  &lt;!-- add this line here, before any other script --&gt;
+   
+	&lt;title&gt;{% block page_title %}{{ page_title | default('global.spryker.shop') | trans }}{% endblock %}&lt;/title&gt;
+&lt;/head&gt;</code></pre></li>
+            <li>Add the following lines to <i>./src/Pyz/Yves/Application/Theme/default/layout/layout.twig</i>, at the very end of the body, after any other script:<pre><code class="language-PHP line-numbers">&lt;script src="/assets/default/js/vendor.js"&gt;&lt;/script&gt;
+	&lt;script src="/assets/default/js/app.js"&gt;&lt;/script&gt;
+	&lt;script src="/assets/default/shopui/js/yves_default.es6-polyfill.js"&gt;&lt;/script&gt; &lt;!-- add this line here, after any other script --&gt;
+	&lt;script src="/assets/default/shopui/js/yves_default.vendor.js"&gt;&lt;/script&gt; &lt;!-- add this line here, after any other script --&gt;
+	&lt;script src="/assets/default/shopui/js/yves_default.app.js"&gt;&lt;/script&gt; &lt;!-- add this line here, after any other script --&gt;
+	{% block javascript %}{% endblock %}
+&lt;/body&gt;</code></pre></li>
+            <li>Add all the files from <a href="../Resources/Documents/ShopUi_Compatibility_Migration_Guide.zip">this ZIP-archive</a> to the root of your project.
+        <p>Files in folders must be copied to the same folders.</p></li>
+        </ol>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li><a href="demoshop-with-shop-app-atomic-design-and-ps.htm">Making Demoshop Compatible with Shop App, Atomic Design, P&amp;S</a>
+            </li>
+            <li><a href="demoshop-to-atomic-frontend.htm">Migrating from the Legacy Demoshop to Atomic Frontend</a>
+            </li>
+            <li><a href="twig-compatibility-mode-demoshop-vs-suite.htm">Using SCOS Twig templates in the Legcay Demoshop</a>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p style="font-style: italic;">Last review date: October 30th, 2018 <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Yuriy Gerton, Dmitry Beirak, Helen Kravchenko</MadCap:conditionalText></p>
+    </body>
+</html>

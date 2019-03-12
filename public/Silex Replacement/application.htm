@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" MadCap:conditions="General.Draft,ReleaseVersions.2019-03">
+    <head><title>Application | Spryker</title>
+        <meta name="description" content="Now, instead of using the Silex Microframework and its Service Provider capabilities, Spryker Application and its Application Plugins are going to be used to add global services. All the Application Plugins are added within their corresponding Dependency Providers. No reason to extend the Application Plugins is expected. " />
+    </head>
+    <body>
+        <h1>Application</h1>
+        <h2>Application and Application Extension</h2>
+        <p>Previously, we used the Silex Microframework and its Service Provider capabilities to implement Symfony components and bootstrap our application. Silex is abandoned, and we are in the process of refactoring it out.</p>
+        <p>We added a shared Spryker Application and an ApplicationExtension module to be able to add Application Plugins to the new Application. The <var>Spryker\Shared\Application\Application</var> accepts the ContainerInterface as a dependency. When the latest version of <var>spryker/silex</var> is installed, the ContainerInterface performs the functions of <var>Silex\Application</var>.</p>
+        <p>The Application class is responsible for booting and running the application. The boot process is split into several steps. In the beginning, all Application Plugins are registered with the bootable ones being separated for later usage in the boot process.</p>
+        <p>In the Application Plugin registration process, the ContainerInterface is filled with all the services the application requires. In the boot process, all Application Plugins which implement <var>Spryker\Shared\ApplicationExtention\Dependency\Plugin\BootableApplicationPluginInterface</var> are booted.</p>
+        <p>HttpKernel handles the run process in the following way:</p>
+        <ol>
+            <li>A request object is created from the globals.</li>
+            <li>The response is returned.</li>
+            <li>The process is terminated.</li>
+        </ol>
+        <h2>How to add Application Plugins</h2>
+        <p>Like all plugins in Spryker, Application Plugins are added within their corresponding Dependency Providers. Each application provided by Spryker has a <var>getApplicationPlugins()</var> method which needs to be overridden inside the project namespace and returns a stack of <var>Spryker\Shared\ApplicationExtention\Dependency\Plugin\ApplicationPluginInterfaces</var>. All plugins returned from this method are added to the application.</p>
+        <h2>How to extend Application Plugins</h2>
+        <p>We expect that there will be no reason to extend Application Plugins. Every Application Plugin brings a "service" into the application. Previously, it was possible to add several Service Providers to the application which were responsible for configuring and booting one of those services. For example, the Twig service had a couple of Service Providers to properly configure and construct it. There was a Service Provider which brought a service with its default configuration and other Service Providers which were to change the configuration, add or change functionality etc.</p>
+        <p>With the new Application Plugins, this will no longer be supported. Instead, all modules which provide services will have their corresponding Extension modules. For example, Twig and its TwigExtension module. The Twig module brings a Twig Application Plugin in which the Twig service is added to the Container. Also, the Twig Application Plugin contains extension points for the Twig service.</p>
+        <p style="font-weight: bold;">See also:</p>
+        <ul>
+            <li style="font-weight: normal;"><a href="container.htm">Container</a>
+            </li>
+            <li><a href="silex-replacement.htm">Silex Replacement</a>
+            </li>
+        </ul>
+        <p><i>Last review date: Feb 19, 2019</i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment">by Rene Klatt, Andrii Tserkovnyi</MadCap:conditionalText>
+        </p>
+    </body>
+</html>

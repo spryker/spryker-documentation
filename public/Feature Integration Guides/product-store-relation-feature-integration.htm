@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" style="">
+    <head>
+    </head>
+    <body>
+        <h1>Feature Integration - Multi-Store Products <img src="../Resources/Images/shoptype/Demoshop.png" /></h1>
+        <h2>General Information</h2>
+        <p>
+            By default abstract products are available in all stores. This feature provides additional configuration when:
+            <ul><li>you have multiple stores,</li><li>and you want to manage the appearance of abstract products per store.</li></ul></p>
+        <h2>Prerequisites</h2>
+        <p>To prepare your project to work with multi-store abstract products:</p>
+        <ol>
+            <li>Update/install <var>spryker/collector</var> to at least <var>6.0.0</var> version. You can find additional help for feature migration <a href="../Module Migration Guides/mg-collector.htm">here</a>.</li>
+            <li>Update/install <var>spryker/touch</var> to at least <var>4.0.0</var> version. You can find additional help for feature migration <a href="../Module Migration Guides/mg-touch.htm">here</a>.</li>
+            <li>Update/install <var>spryker/store</var> to at least <var>1.3.0</var> version.</li>
+            <li>Update/install <var>spryker/product</var> to at least <var>6.0.0</var> version. You can find additional help for feature migration <a href="../Module Migration Guides/mg-product.htm">here</a>.</li>
+            <li>
+                If you want to have Zed Admin UI support for the multi-store abstract product management:
+                <ol><li>update/install <var>spryker/productmanagement</var> to at least <var>0.10.0</var> version. You can find additional help for feature migration <a href="../Module Migration Guides/mg-product-management.htm">here</a>.</li><li>
+                        Override <var>Spryker\Zed\Store\StoreConfig::isMultiStorePerZedEnabled()</var> in your project to return <var>true</var>. This will enable the store management inside the Product Information Management (PIM) Zed Admin UI.
+                        <MadCap:dropDown><MadCap:dropDownHead><MadCap:dropDownHotspot>Example override</MadCap:dropDownHotspot></MadCap:dropDownHead><MadCap:dropDownBody><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Store;
+
+use Spryker\Zed\Store\StoreConfig as SprykerStoreConfig;
+
+class StoreConfig extends SprykerStoreConfig
+{
+    /**
+     * @return bool
+     */
+    public function isMultiStorePerZedEnabled()
+    {
+        return true;
+    }
+}
+                                </code></pre></MadCap:dropDownBody></MadCap:dropDown></li><li>You should now be able to use the Product Information Management (PIM) Zed Admin UI to manage abstract product store relation.</li></ol></li>
+        </ol>
+        <p>
+            Check out our <a href="https://github.com/spryker/demoshop">Legacy Demoshop implementation</a> for implementation example and idea.
+</p>
+        <p>&#160;</p>
+        <p><b>See also:</b>
+        </p>
+        <ul>
+            <li>&#160;</li>
+            <li>&#160;</li>
+            <li>
+                <MadCap:xref href="../Module Migration Guides/mg-collector.htm">Migration Guide - Collector</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="../Module Migration Guides/mg-touch.htm">Migration Guide - Touch</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="../Module Migration Guides/mg-product.htm">Migration Guide - Product</MadCap:xref>
+            </li>
+            <li>
+                <MadCap:xref href="../Module Migration Guides/mg-product-management.htm">Migration Guide - ProductManagement</MadCap:xref>
+            </li>
+        </ul>
+        <p>&#160;</p>
+        <p><i>Last review date: Jan. 23rd, 2018 </i>
+            <MadCap:conditionalText MadCap:conditions="General.Hidden Comment"><i>by Karoly Gerner</i>
+            </MadCap:conditionalText>
+        </p>
+    </body>
+</html>
