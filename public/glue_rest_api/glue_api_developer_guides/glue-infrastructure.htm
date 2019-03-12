@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2018-10" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Developer Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The guide will walk you through the process of handling API requests at the Glue layer, including GlueApplication, Resource, and Relationship Modules." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Glue Infrastructure | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="py42drp_ckOLuDtuUnqjrg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="py42drp_ckOLuDtuUnqjrg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1 id="GlueInfrastructure" data-magellan-target="GlueInfrastructure">Glue Infrastructure</h1>
+                                                    <ul data-magellan="" data-animation-duration="250" data-active-class="selected" data-scroll-container-on="small" class="nocontent menu _Skins_SideMenuNotFixed mc-component">
+                                                        <li><a href="#GlueInfrastructure">Glue Infrastructure</a>
+                                                        </li>
+                                                        <ul>
+                                                            <li><a href="#RequestHandling">Request Handling</a>
+                                                            </li>
+                                                            <ul>
+                                                                <li><a href="#ResourceRouting">Resource Routing</a>
+                                                                </li>
+                                                                <li><a href="#ResourceModules">Resource Modules</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#ModuleStructure">Module Structure</a>
+                                                                    </li>
+                                                                    <li><a href="#ResourceController">Resource Controller</a>
+                                                                    </li>
+                                                                    <li><a href="#AbstractAPIController">Abstract API Controller</a>
+                                                                    </li>
+                                                                    <li><a href="#GenericRestRequest">Generic Rest Request</a>
+                                                                    </li>
+                                                                    <li><a href="#GenericRestResponse">Generic Rest Response</a>
+                                                                    </li>
+                                                                    <li><a href="#RestResourceInterface">RestResourceInterface</a>
+                                                                    </li>
+                                                                    <li><a href="#RestErrorMessageTransfer">RestErrorMessageTransfer</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#NestedResources">Nested Resources</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#ResourceWithParentPluginInterface">ResourceWithParentPluginInterface</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#ResourceRelationships">Resource Relationships</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#PossibleImplementations">Possible Implementations</a>
+                                                                    </li>
+                                                                    <li><a href="#RelationshipPlugin">Relationship Plugin</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#ResourceVersioning">Resource Versioning</a>
+                                                                </li>
+                                                                <li><a href="#ResponseCodes">Response Codes</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#HTTPStatusCodes">HTTP Status Codes</a>
+                                                                    </li>
+                                                                    <ul>
+                                                                        <li><a href="#GET">GET</a>
+                                                                        </li>
+                                                                        <li><a href="#POST">POST</a>
+                                                                        </li>
+                                                                        <li><a href="#PATCH">PATCH</a>
+                                                                        </li>
+                                                                        <li><a href="#DELETE">DELETE</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <li><a href="#ErrorCodes">Error Codes</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#DataFormatting">Data Formatting</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#Dates">Dates</a>
+                                                                    </li>
+                                                                    <li><a href="#Prices">Prices</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#RequestHeader">Request Header</a>
+                                                                </li>
+                                                                <li><a href="#ResponseHeader">Response Header</a>
+                                                                </li>
+                                                                <li><a href="#ResponseStructure">Response Structure</a>
+                                                                </li>
+                                                            </ul>
+                                                        </ul>
+                                                    </ul>
+                                                    <p>
+			Spryker API infrastructure is implemented as a separate layer of Spryker Commerce OS, called <b>Glue</b>. It is responsible for providing API endpoints, processing requests, as well as for communication with other layers of the OS in order to retrieve the necessary information. The layer is implemented as a separate <a href="https://silex.symfony.com/doc/2.0/">Silex</a> application, the same as <a href="https://documentation.spryker.com/yves/yves.htm">Yves</a> or <a href="https://documentation.spryker.com/zed/zed.htm">Zed</a>. It has its own bootstrapping and a separate virtual host on the Spryker web server (Nginx by default). In addition to that, Glue has a separate programming namespace within Spryker Commerce OS, also called <b>Glue</b>.
+		</p>
+                                                    <div class="tip"><b>Before You Begin</b>
+                                                        <br />Consider studying the following documents before you begin:
+				<ul><li value="1"><a href="https://jsonapi.org/format/" target="_blank">JSON API Specification</a> implemented in Spryker</li><li value="2"><a href="https://swagger.io/" target="_blank">Swagger Tools Reference</a> to know how to document your API</li><li value="3"><a href="https://www.thoughtworks.com/insights/blog/rest-api-design-resource-modeling" target="_blank">REST API Modelling Reference</a></li></ul></div>
+                                                    <p>
+			Logically, the <i>Glue</i> layer can be divided into 3 parts:
+		</p>
+                                                    <ul>
+                                                        <li value="1"><b>GlueApplication Module</b>
+                                                            <br />The <i>GlueApplication Module</i> provides a framework for constructing API resources. It intercepts all HTTP requests at resource URLs (e.g. http://mysprykershop.com/resource/1), handles call semantics, verifies requests, and also provides several utility interfaces that can be used to construct API responses.
+			</li>
+                                                        <li value="2"><b>Resource Modules</b> <br />Each <i>Resource Module</i> implements a separate resource or a set of resources. Such a module handles requests to a particular resource and provides them with responses. In the process of doing so, the module can communicate with the Storage, Search or Spryker Commerce OS (Zed). The modules do not handle request semantics or rules. Their only task is to provide the necessary data in a format that can be converted by the <i>GlueApplication Module</i> into an API response. </li>
+                                                        <li value="3"><b>Relationship Modules</b> <br />Such modules represent relationships between two different resources. Their task is to extend the response of one of the resources with data of related resources.</li>
+                                                    </ul>
+                                                    <p>
+			To be able to process API requests correctly, Resource Modules need to implement resource route plugins that facilitate routing of requests to the module. Such plugins need to be registered in the <i>GlueApplication Module</i>.
+		</p>
+                                                    <h2 id="RequestHandling" data-magellan-target="RequestHandling">Request Handling</h2>
+                                                    <p>
+			Upon receiving an API request, the <i>GlueApplication Module</i> verifies whether the request is correct, checks whether all required parameters are present, and also identifies the HTTP verb and additional filters, if any. Then, deserializes request data and builds an <b>API Request Object</b> which is passed to the corresponding <i>Resource Module</i>. The object supports <var>Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface</var>.
+		</p>
+                                                    <p>
+			Upon receiving a request object, the <i>Resource Modul</i>e needs to provide it with a valid response. Responses are provided as <b>API Response Objects</b>. To build them, <i>Resource Modules</i> use the <var>RestApi\Spryker\Glue\Kernel\AbstractFactory::getResourceBuilder()</var> method which returns the <var>RestResourceBuilderInterface</var> objects. The <i>GlueApplication Module</i> serializes such objects into the response format and then passes them to the requestor.
+		</p>
+                                                    <p>
+                                                        <img src="../../resources/images/glue-application-module.png" />
+                                                    </p>
+                                                    <p>
+			The <i>Resource Module</i> can communicate with the Storage, Search and Spryker Commerce OS (Zed) using a Client only.
+		</p>
+                                                    <p>
+                                                        <img src="../../resources/images/communication.png" />
+                                                    </p>
+                                                    <h3 id="ResourceRouting" data-magellan-target="ResourceRouting">Resource Routing</h3>
+                                                    <p>
+			Every request needs to be routed to the corresponding <i>Resource Module</i> responsible for handling it. For this purpose, each module implements a <i>Route Plugin</i>. Such a plugin matches every supported HTTP verb to a respective action in a controller of the <i>Resource Module</i>. This should be done for each endpoint. When routing a request, Glue will call the necessary action based on the endpoint and verb used.
+		</p>
+                                                    <div class="tip">
+			The plugin should not map the <i>OPTIONS</i> verb which is mapped automatically.
+		</div>
+                                                    <p>
+			The plugin must provide routing information for the following:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>Resource Type</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Type of the resource implemented by the current <i>Resource Module</i>.
+							<br />Resource types are extracted by Glue from the request URL. For example, if the URL is <var>/carts/1</var>, the resource type is <var>carts</var>. To be able to process calls to this URL, Glue will need a route plugin for the resource type <i>carts</i>.
+						</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>Controller Name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Name of the controller that handles a specific resource type.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>Mapping of Verbs to Actions</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">List of REST verbs that the resource supports and the respective controller actions used to handle them.
+							<br />Allowed verbs are <b>GET</b>, <b>POST</b>, <b>PATCH</b>, and <b>DELETE</b>. The <b>OPTIONS</b> verb is supported by all resources and should not be mapped.
+						</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>Resource Attributes </b>
+                                                                        <br style="font-weight: bold;" /><b>Transfer Class Name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">FQCN of the Resource Attributes Transfer that is used to handle request attributes for the given resource type.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>Parent Resource Type</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">In parent-nested resource relationships, the plugin of the child resource must specify the type of the parent resource.
+							<br />This information is <i>optional</i> and should be provided only by a resource that is nested within another resource.
+						</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			Each route plugin implements <i>ResourceRoutePluginInterface</i>, which provides a set of utility functions that can be used to configure resource routing:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Function</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Return type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Example</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getResourceType</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Gets the resource type.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><i>carts</i>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>configure</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Configures a mapping of the HTTP verbs supported by the resource to the corresponding controller methods responsible for handling them. Also, it defines which of the verbs require authentication to use.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">ResourceRouteCollectionInterface</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getController</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Gets the name of the resource controller responsible for handling requests to the resource. The name must be provided in <i>kebab-case</i>, hyphen-separated.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">If the controller name is <i>CartsResourceController.php</i>, this function should return <i>carts-resource</i>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>getResourceAttributesClassName</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Gets the FQCN of the Resource Attributes Transfer that is used to handle request attributes for the given resource type.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">See details in <a href="https://documentation.spryker.com/tutorials/introduction/glue_api/implementing-rest-api-resource.htm#5.">5. Describe Fields for Post and Patch Calls</a>.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			For more details on how to implement a route plugin, see <a href="https://documentation.spryker.com/tutorials/introduction/glue_api/implementing-rest-api-resource.htm#6.">6. Route Requests to Your Controller</a>.
+		</p>
+                                                    <p>
+			All route plugins need to be added to <i>GlueApplicationDependencyProvider</i> implemented in the <i>GlueApplication Module</i> at the Project Level:
+		</p>
+                                                    <p><var>GlueApplicationDependencyProvider.php</var>
+                                                    </p><pre><code class="language-PHP line-numbers">
+	class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+	{
+		/**
+		* @return \Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRoutePluginInterface[]
+		*/
+		protected function getResourceRoutePlugins(): array
+		{
+			return [
+				new CartsResourceRoutePlugin(),
+				new CartItemsResourceRoutePlugin(),
+				new WishlistsResourceRoutePlugin(),
+				...
+			];
+		}
+			</code></pre>
+                                                    <h3 id="ResourceModules" data-magellan-target="ResourceModules">Resource Modules</h3>
+                                                    <p>
+			A <i>Resource Module</i> is a module that implements a single resource or a set of resources. It is responsible for accepting a request in the form of <i>Request Objects</i> and providing responses in the form of <i>Response Objects</i>. For this purpose, the module can communicate with the Storage or Search, for which purpose it implements a <a href="https://documentation.spryker.com/yves/client.htm">Client</a>. It can also communicate with the Spryker Commerce OS (Zed), however, it is recommended to avoid round trips to the database as much as possible as that can reduce API performance considerably.
+		</p>
+                                                    <p>
+			Resource Modules must implement all logic related to processing a request. It is not recommended having any of the Business Logic, or a part of it, in the <i>GlueApplication Module</i>. In case you need to extend any of the built-in Glue functionality, it is always safer to extend the relevant <i>Resource Modul</i>e than infrastructure.
+		</p>
+                                                    <h4 id="ModuleStructure" data-magellan-target="ModuleStructure">Module Structure</h4>
+                                                    <p>
+			By default, all Resource Modules are located in <var>vendor/spryker/resources-rest-api</var> at the core level. At the project level, you can place your <i>Resource Module</i> implementations in <var>src/Pyz/Glue/ResourcesRestApi</var>. The naming convention for such modules is <i><b>Resources</b>RestApi</i>, where <b>Resources</b> is a name of the feature that the module implements.
+		</p>
+                                                    <p>
+			Recommended module structure:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">ResourcesRestApi</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">&#160;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>Glue/ResourcesRestApi/Controller</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Folder for resource controllers. Controllers are used to handle API requests and responses. Typically, includes the following:
+							<ul><li value="1"><var>FeatureResourcesController.php</var> - contains methods for handling HTTP verbs.</li></ul></td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>Glue/ResourcesRestApi/Dependency</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bridges to clients from other modules.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>Glue/ResourcesRestApi/Plugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Resource plugins. Typically, includes the following:
+							<ul><li value="1"><var>FeatureResourceRelationshipPlugin.php</var> - provides relationships to other modules;</li><li value="2"><var>FeatureResourceRouterPlugin.php</var> - contains resource routing configuration.</li></ul></td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>Glue/ResourcesRestApi/Processor</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Folder where all resource processing logic, data mapping code and calls to other clients are located. Typically, it includes the following:
+							<ul><li value="1"><var>FeatureReader.php</var> - fetches data and combines from other facades to create an API response;</li><li value="2"><var>FeatureWriter.php</var> - creates, updates and deletes resource functionality;</li><li value="3"><var>FeatureMapper.php</var> - maps internal transfer objects to API transfers.</li></ul></td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>Glue/ResourcesRestApi/ResourcesRestApiConfig.php</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Contains resource-related configuration, such as a resource type, error code constants etc.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>Glue/ResourcesRestApi/ResourcesRestApiDependencyProvider.php</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Provides external dependencies.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>Glue/ResourcesRestApi/ResourcesRestApiFactory.php</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Factory that creates business models.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>Glue/ResourcesRestApi/ResourcesRestApiResource.php</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Locatable class that provides resource objects to other modules.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			Also, a module should contain the transfer definition in <var>src/Pyz/Shared/ResourcesRestApi/Transfer</var>:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">ResourcesRestApi</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">&#160;</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>resources_rest_api.transfer.xml</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Contains API transfer definintions.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+			The resulting folder structure on the example of the <i>WishlistsRestApi</i> <i>Module</i> looks as follows:
+		</p>
+                                                    <p>
+                                                        <img src="../../resources/images/wishlists-rest-api.png" />
+                                                    </p>
+                                                    <h4 id="ResourceController" data-magellan-target="ResourceController">Resource Controller</h4>
+                                                    <p>
+			This controller provides actions for all HTTP verbs that a resource implements. It is responsible for:
+		</p>
+                                                    <ul>
+                                                        <li value="1">handling requests for a specific resource;</li>
+                                                        <li value="2">validating data;</li>
+                                                        <li value="3">executing business flow logic;</li>
+                                                        <li value="4">returning responses or error messages.</li>
+                                                    </ul>
+                                                    <p>
+			All operations must be delegated to the corresponding layers, the controller is responsible only for controlling the workflow.
+		</p>
+                                                    <h4 id="AbstractAPIController" data-magellan-target="AbstractAPIController">Abstract API Controller</h4>
+                                                    <p>
+			Each resource controller must extend <var>\Spryker\Glue\Kernel\Controller\AbstractController</var>. This controller class resolves the module factory.
+		</p>
+                                                    <h4 id="GenericRestRequest" data-magellan-target="GenericRestRequest">Generic Rest Request</h4>
+                                                    <p>
+			After deserializing a request, Glue passes it to <i>Resource Modules</i> as an internal API request representation object. It stores all information that relates to the request. The object is passed directly to the resource controller class and supports <var>Spryker\Glue\GlueApplication\Rest\Request\Data\RestRequestInterface</var>.
+		</p>
+                                                    <p>
+			The interface provides the following helper methods:
+		</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Signature</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getResource</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getResource(): RestResourceInterface</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Returns resource objects that represent resources for the current request.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getParentResources</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getParentResources(): array</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Returns an array of parent resources of the current resource. Each parent resource is represented by <var>\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface</var>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>findParentResourceByType</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>findParentResourceByType(string $type): ?RestResourceInterface</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Finds a parent resource by the specified resource type.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The <b>$type</b> parameter specifies the type of the parent resource to return. If there are no parents of the given type, the method returns <b>null</b>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getFilters</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getFilters(): array</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Returns filters for data filtering. Each filter is represented by <var>\Spryker\Glue\GlueApplication\Rest\Request\Data\FilterInterface</var>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">If a request was passed with filter parameters, they are passed as filters. Resource Modules need to handle filters correctly to return only the information that is requested.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getSort</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getSort(): array</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Returns sorting options. Each option is represented by <var>\Spryker\Glue\GlueApplication\Rest\Request\Data\SortInterface</var>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getPage</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getPage(): ?PageInterface</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Returns pagination options.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">If there were no pagination options specified at the time of the query, the method returns <b>null</b>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getFields</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getFields(): array</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Returns sparse fields that can be used to filter out certain parts of the relationships tree from a response. Each field is represented by <var>\Spryker\Glue\GlueApplication\Rest\Request\Data\SparseFieldInterface</var>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getMetadata</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>getMetadata(): MetadataInterface</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Gets additional metadata about the request such as resource version, method, locale etc.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getInclude</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>getInclude(): array</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Gets an array of <i>include</i> options for the request.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>getUser</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>getUser(): ?UserInterface</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Get the user associated with the request.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">If the request was made without <a href="security-and-authentication.htm">authentication</a>, the method returns <b>null</b>.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h4 id="GenericRestResponse" data-magellan-target="GenericRestResponse">Generic Rest Response</h4>
+                                                    <p>
+			Controllers of each module must return their responses to Glue as instances of the <var>\Spryker\Glue\GlueApplication\Rest\JsonApi\RestResponseInterface</var> objects with all data set.
+		</p>
+                                                    <p>
+			The interface provides the following helper methods:
+		</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Signature</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addResource</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addResource(RestResourceInterface $restResource): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds a resource to the response object.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The <b>$restResource</b> parameter specifies an instance of the <b>RestResourceInterface</b> interface that represents the resource to add.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>addError</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>addError(RestErrorMessageTransfer $error): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Adds a business logic error to the response.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">A business logic error is any error that occurred during request procession but does not relate to the REST request format. For example, such an error can occur when a resource with the specified ID is not found or when an attempt is made to assign a value that is not allowed by database or other restrictions.
+							<br />The <b>$error</b> parameter specifies an instance of the <b>RestErrorMessageTransfer</b> interface that contains information about the error (HTTP status, error code and error message).
+						</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addLink</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addLink(string $name, string $uri): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds a link to the response.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The parameters are as follows:
+							<ul><li value="1"><b>$name</b> - specifies a link name. Possible values: <i>first</i>, <i>last</i>, <i>next</i>, <i>prev</i>, <i>related</i>, <i>self</i>, <i>href</i>, <i>meta</i>.</li><li value="2"><b>$uri</b> - specifies a link URL without the domain part.</li></ul><br />For example, if you specify <i>first</i> for <b>$name</b> and <i>/catalog-search?q=canon&amp;include=&amp;page[offset]=0&amp;page[limit]=12</i> for <b>URL</b>, the link will look as follows in the response:
+							<pre><code class="language-PHP line-numbers">
+	{
+		"data": {...},
+  
+		"links": {
+			...
+			"first": "http://mysprykershop.com/catalog-search?q=canon&amp;amp;include=&amp;amp;page[offset]=0&amp;amp;page[limit]=12",
+			...
+		}
+	}
+								</code></pre></td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>setStatus</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>setStatus(int $status): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Sets the HTTP status of the response (for example, <b>200 OK</b>).</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The <b>$status</b> parameter specifies the HTTP status code.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>addHeader</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>addHeader(string $key, string $value): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Adds an HTTP header to the response.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">The <b>$key</b> parameter specifies the header type, and the <b>$value</b> parameter specifies the header value.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h4 id="RestResourceInterface" data-magellan-target="RestResourceInterface">RestResourceInterface</h4>
+                                                    <p><var>Spryker\Glue\GlueApplication\Rest\JsonApi\RestResource</var> is a class that represents REST resources. It implements <var>Spryker\Glue\GlueApplication\Rest\JsonApi\RestResourceInterface</var> that provides the following methods:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Signature</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Notes</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addRelationship</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>addRelationship(RestResourceInterface $restResource): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds another resource related to the given resource.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The <b>$restResource</b> parameter specifies an instance of the <b>RestResourceInterface</b> interface that represents the related resource to add.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>addLink</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>addLink(string $name, string $resourceUri, array $meta = []): self</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Adds a link to the resource.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The parameters are as follows:
+							<ul><li value="1"><b>$name</b> - specifies a link name. Possible values: <i>first</i>, <i>last</i>, <i>next</i>, <i>prev</i>, <i>related</i>, <i>self</i>, <i>href</i>, <i>meta</i>.</li><li value="2"><b>$uri</b> - specifies a link URL without the domain part.</li><li value="3"><b>$meta</b> - an array of meta information to add to the resource. Each object in the array must be represented by <i>MetadataInterface</i>.</li></ul></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h4 id="RestErrorMessageTransfer" data-magellan-target="RestErrorMessageTransfer">RestErrorMessageTransfer</h4>
+                                                    <p>
+			Business errors are returned as the <b>RestErrorMessageTransfer</b> objects with the following structure:
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Used for</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">code</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">High-level business error code, for example, business rule validation error.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">detail</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Human-readable error message.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">status</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">HTTP response status code.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="NestedResources" data-magellan-target="NestedResources">Nested Resources</h3>
+                                                    <p>
+			Glue API allows creating resources with parent-child relationships or, in other words, nested resources. For example, a request to <var>/customers/1/addresses</var> returns addresses for a customer with ID <b>1</b>. To enable such behavior, it is necessary to define how resources depend on each other. This is done by configuring resource route plugins. When processing an URL, the <i>GlueApplication Module</i> tries to find a correct route to a child resource. For this reason, all modules in the nesting chain should be arranged in a sequence using <b>ResourceWithParentPluginInterface</b>. Then, while handling a request to a child resource, business logic can access the parent resource identifier and process the request in the correct context.
+		</p>
+                                                    <h4 id="ResourceWithParentPluginInterface" data-magellan-target="ResourceWithParentPluginInterface">ResourceWithParentPluginInterface</h4>
+                                                    <p>
+			If you are implementing a resource that has a parent, you need to create a plugin that implements <var>Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceWithParentPluginInterface</var>. Such a plugin will route requests from the parent resources to the correct child resource. This interface must be implemented together with <b>ResourceRoutePluginInterface</b>.
+		</p>
+                                                    <p>
+			The interface provides only 1 method: <var>getParentResourceType</var>. The method must return the type of the immediate parent resource within the context of which the child resource is implemented.
+		</p>
+                                                    <h3 id="ResourceRelationships" data-magellan-target="ResourceRelationships">Resource Relationships</h3>
+                                                    <p>
+			Often, to query certain data, one needs to use endpoints from different APIs to get the necessary information. For example, to present products in a customer's wishlist, one would need to use endpoints of the <a href="../glue_api_storefront_guides/managing-wishlists.htm">Wishlists API</a> to get a list of items in the wishlist, and then query endpoints of the <a href="../glue_api_storefront_guides/managing_products/retrieving-product-information.htm">Products API</a> in order to get descriptions, images and other information on each product. This can result in a big number of requests until the necessary data is fetched. To reduce the number of calls and provide all the necessary information in one pass, you can use resource relationships.
+		</p>
+                                                    <p>
+			Let us consider the following REST Response example. It contains information on a wishlist item without any resource relationships.
+		</p><pre><code class="language-PHP line-numbers">
+	{
+		"data": {
+			"type": "wishlist-items",
+			"id": "021_21081475",
+			"links": {
+				"self": "http://mysprykershop.com/wishlists/19154981-f490-56b5-9537-359703a2ed08/wishlist-items/021_21081475"
+			},
+		}
+	}
+			</code></pre>
+                                                    <p>
+			As you can see, it contains only the ID of the wishlist item resource which represents the SKU of the product added. It is impossible to indicate the product name, description etc. If we add relationships to the products resource, the same request will return more information. Now, a single request is sufficient to get information on products in a wishlist:
+		</p><pre><code class="language-PHP line-numbers">
+	{
+		"data": {
+			"type": "wishlist-items",
+			"id": "021_21081475"
+			"links": {
+				"self": "http://mysprykershop.com/wishlists/19154981-f490-56b5-9537-359703a2ed08/wishlist-items/021_21081475"
+			},
+		},
+		"included": [
+			{
+				"type": "concrete-products",
+				"id": "021_21081475",
+				"attributes": {
+					"sku": "021_21081475",
+					"name": "Sony Cyber-shot DSC-W830",
+					"description": "Styled for your pocket  Precision photography meets the portability of a smartphone. The W800 is small enough to take great photos, look good while doing it, and slip in your pocket. Shooting great photos and videos is easy with the W800. Buttons are positioned for ease of use, while a dedicated movie button makes shooting movies simple. The vivid 2.7-type Clear Photo LCD display screen lets you view your stills and play back movies with minimal effort. Whip out the W800 to capture crisp, smooth footage in an instant. At the press of a button, you can record blur-free 720 HD images with digital sound. Breathe new life into a picture by using built-in Picture Effect technology. There’s a range of modes to choose from – you don’t even have to download image-editing software.",
+					"attributes": {
+						"hdmi": "no",
+						"sensor_type": "CCD",
+						"display": "TFT",
+						"usb_version": "2",
+						"brand": "Sony",
+						"color": "Purple"
+					},
+					"superAttributesDefinition": [
+						"color"
+					],
+					"metaTitle": "Sony Cyber-shot DSC-W830",
+					"metaKeywords": "Sony,Entertainment Electronics",
+					"metaDescription": "Styled for your pocket  Precision photography meets the portability of a smartphone. The W800 is small enough to take great photos, look good while doing i"
+				},
+				"links": {
+					"self": "http://mysprykershop.com/concrete-products/021_21081475"
+				}
+			}
+		]
+	}
+			</code></pre>
+                                                    <h4 id="PossibleImplementations" data-magellan-target="PossibleImplementations">Possible Implementations</h4>
+                                                    <p>
+			To add relationships between two resources, you can either implement the <i>Resource Relationship Module</i> that implements a resource relationship plugin, or just the plugin within the related resource. The plugin will add the related resource as a relationship to the resource being queried.
+		</p>
+                                                    <p><i>Option 1: With a separate module</i>
+                                                    </p>
+                                                    <p>
+                                                        <img src="../../resources/images/implementation-wiht-separate-module.png" />
+                                                    </p>
+                                                    <p><i>Option 2: Without module</i>
+                                                    </p>
+                                                    <p>
+                                                        <img src="../../resources/images/implementation-without-module.png" />
+                                                    </p>
+                                                    <p>
+			Implementation without a separate module can be used when the resource being queried contains a unique identifier to directly map the related resource. In the example of wishlist items and products, each item contains the <b>SKU</b> of the product it relates to. Thus, relationships between these resources can be implemented without a relationship module, using product SKU as a unique identifier.
+		</p>
+                                                    <p>
+			In cases when certain business logic is required to determine relationships between two resources, implementation of a relationship module is recommended. For example, if you need to apply some business logic to select products related to a wishlist item, such logic should be implemented within a separate relationship module.
+		</p>
+                                                    <h4 id="RelationshipPlugin" data-magellan-target="RelationshipPlugin">Relationship Plugin</h4>
+                                                    <p>
+			The plugin must implement the following interface: <var>\Spryker\Glue\GlueApplication\Dependency\Plugin\ResourceRelationshipPluginInterface</var>. The interface exposes the <var>addResourceRelationships</var> method that allows you to implement relationships between modules. The first parameter passed to the method contains an array of resources to which resources must be added, and the second parameter contains the current REST request as <b>RestRequestInterface</b>. The interface also provides the <var>getRelationshipResourceType</var> method that allows you to set a relationship name. This name will be used when including related resource data in responses.
+		</p>
+                                                    <h3 id="ResourceVersioning" data-magellan-target="ResourceVersioning">Resource Versioning</h3>
+                                                    <p>
+			As your product grows, you may feel the necessity to change your API. Sometimes, BC breaking changes might be needed to incorporate the required modifications. However, older API clients may rely on old data contracts. If you want to provide backward compatibility, you may want to introduce a versioning system in your API. When versioning is implemented, clients can request the exact resource version they were designed for. Thus, every resource version represents a data contract for a resource at a given point of time.
+		</p>
+                                                    <p>
+			As REST does not implement a strict versioning concept, by default, all Spryker resources are unversioned. Also, all resources and endpoints shipped with Spryker by default will remain unversioned in the future regardless of the version of the module that provides them. This is done so that Resource modules can be merged with any existing projects without breaking the functionality of resources built on top of default Spryker resources.
+		</p>
+                                                    <p>
+			If you want to introduce versioning in your project, in the route plugin of your module, you need to implement <var>\Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceVersionableInterface</var>. This interface exposes the <var>getVersion()</var> method, using which you can specify which version of the resource is supported by the current route plugin. In other words, you need to implement a plugin for each resource version.
+		</p>
+                                                    <p>
+			When versioning is in place, clients can pass the version they require in the request header: <i>application/vnd.api+json; version=<b>2.1</b></i>. The Glue will respond to clients as follows:
+		</p>
+                                                    <ul>
+                                                        <li value="1">If no version is specified in the header, the newest version is returned.</li>
+                                                        <li value="2">If a version is specified and it exists on the server, that specific version is returned.</li>
+                                                        <li value="3">If a version is specified, but it does not exist, the <b>404 Not Found</b> error is returned.</li>
+                                                    </ul>
+                                                    <h3 id="ResponseCodes" data-magellan-target="ResponseCodes">Response Codes</h3>
+                                                    <h4 id="HTTPStatusCodes" data-magellan-target="HTTPStatusCodes">HTTP Status Codes</h4>
+                                                    <p>
+			Below is a list of common HTTP statuses returned by Glue endpoints.
+		</p>
+                                                    <h5 id="GET" data-magellan-target="GET">GET</h5>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Condition</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">200</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">An entity or entities corresponding to the requested resource is/are sent in the response</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bad request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthenticated</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Unauthorized</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Resource not found</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h5 id="POST" data-magellan-target="POST">POST</h5>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Condition</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">201</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Resource created successfully</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bad request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthenticated</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Unauthorized</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Resource not found</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h5 id="PATCH" data-magellan-target="PATCH">PATCH</h5>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Condition</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">200</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Resource updated successfully</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bad request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthenticated</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Unauthorized</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Resource not found</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h5 id="DELETE" data-magellan-target="DELETE">DELETE</h5>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Condition</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">204</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">No content (deleted successfully)</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Bad request</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unauthenticated</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Unauthorized</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Resource not found</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h4 id="ErrorCodes" data-magellan-target="ErrorCodes">Error Codes</h4>
+                                                    <p>
+			In addition to HTTP Status codes, Glue can return additional error codes to distinguish business constraint violations. Each API is assigned a specific error code range. Listed below are code ranges for APIs shipped by Spryker. For specific error codes, see API user documentation for the specific APIs.
+		</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Range</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">API</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">001-099</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">General error codes</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">101-199</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/managing_carts/managing-carts-of-registered-users.htm">Carts API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">201-299</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/managing-wishlists.htm" target="_blank">Wishlists API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">301-399</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/retrieving-product-information.htm" target="_blank">Products API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401-499</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/managing-customers.htm" target="_blank">Customers API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">501-599</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/catalog-search.htm" target="_blank">Catalog Search API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">601-699</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/retrieving-store-configuration.htm" target="_blank">Stores API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">701-799</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/browsing-category-tree.htm" target="_blank">Categories API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">1001-1099</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/managing_carts/managing-carts-of-registered-users.htm">Guest Cart API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">1101-1199</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/checking-out-purchases-and-getting-checkout-data.htm">Checkout API</a>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">1201-1299</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/accessing-product-labels.htm" target="_blank">Product Labels API</a>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="DataFormatting" data-magellan-target="DataFormatting">Data Formatting</h3>
+                                                    <p>
+			The current version uses JSON for responses. The request header from the client indicates the desired response format.
+		</p>
+                                                    <h4 id="Dates" data-magellan-target="Dates">Dates</h4>
+                                                    <p>
+			For date formatting, <a href="https://www.iso.org/iso-8601-date-and-time-format.html">ISO-8601</a> date/time format is used. For requests, any time zone is accepted, however, dates are stored and returned in UTC.
+		</p>
+                                                    <p>Example:</p>
+                                                    <ul>
+                                                        <li value="1">request: <i>1985-07-01T01:22:11+02:00</i></li>
+                                                        <li value="2">in storage and responses: <i>1985-06-31T11:22:11+00:00</i></li>
+                                                    </ul>
+                                                    <h4 id="Prices" data-magellan-target="Prices">Prices</h4>
+                                                    <p>
+			Prices are always returned both in cents and as an integer.
+		</p>
+                                                    <h3 id="RequestHeader" data-magellan-target="RequestHeader">Request Header</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Header</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Sample value</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Used for</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">When not present</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Accept</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">application/vnd.api+json</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Indicates the data format of the expected API response.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><b>406 Not acceptable</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Content-Type</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">application/vnd.api+json; version=1.1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Indicates the request content-type and resource version.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><b>415 Unsupported</b>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Accept-Language</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">de;, en;q=0.5</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Indicates the desired language in which the content should be returned.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="ResponseHeader" data-magellan-target="ResponseHeader">Response Header</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Header</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Value</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Used for</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Content-Type</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">application/vnd.api+json; version=1.1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Response format and resource version.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Content-Language</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">de_DE</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Indicates the language in which the content is returned.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="ResponseStructure" data-magellan-target="ResponseStructure">Response Structure</h3>
+                                                    <p>
+			The response structure follows the <a href="https://jsonapi.org/format/#document-structure" target="_blank">JSON API</a> specification. For examples of responses of each endpoint provided by Spryker, see the API user guides for the respective APIs.
+		</p>
+                                                    <p>&#160;</p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Feb. 28th, 2019</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
