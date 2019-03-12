@@ -73,25 +73,25 @@
 
 .needs-pie
 {
-	behavior: url('../Resources/Scripts/PIE-no-motw.htc');
+	behavior: url('../resources/scripts/PIE-no-motw.htc');
 }
 
 </style>
         <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
         <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
-        <script src="../Resources/Scripts/custom.modernizr.js">
+        <script src="../resources/scripts/custom.modernizr.js">
         </script>
-        <script src="../Resources/Scripts/jquery.min.js">
+        <script src="../resources/scripts/jquery.min.js">
         </script>
-        <script src="../Resources/Scripts/require.min.js">
+        <script src="../resources/scripts/require.min.js">
         </script>
-        <script src="../Resources/Scripts/require.config.js">
+        <script src="../resources/scripts/require.config.js">
         </script>
-        <script src="../Resources/Scripts/foundation.6.2.3_custom.js">
+        <script src="../resources/scripts/foundation.6.2.3_custom.js">
         </script>
-        <script src="../Resources/Scripts/plugins.min.js">
+        <script src="../resources/scripts/plugins.min.js">
         </script>
-        <script src="../Resources/Scripts/MadCapAll.js">
+        <script src="../resources/scripts/MadCapAll.js">
         </script>
     </head>
     <body>
@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="aUyT7-n_0kCMxph8IY4lcQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="aUyT7-n_0kCMxph8IY4lcQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="HeA1wUa2u0-k24AL2l4reg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="HeA1wUa2u0-k24AL2l4reg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,9 +241,8 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Sales Schema</h1>
-                                                    <h2 style="font-weight: bold;"><a name="Orders"></a>Orders</h2>
-                                                    <h3 style="color: #e35d44;"><a name="Sales"></a><span style="color: #e35d44;">Sales Order with Items</span>
-                                                    </h3>
+                                                    <h2 style="font-weight: bold;">Orders</h2>
+                                                    <h3>Sales Order with Items</h3>
                                                     <p>Spryker saves orders with line items. There are three general approaches:</p>
                                                     <ol>
                                                         <li value="1">There is one Sales Order Item for every sold product to the Sales Order. Even when the same product was sold several times. This way we can have a clear state per item.</li>
@@ -257,24 +256,23 @@
                                                         <li value="1"><b>Structure</b>:</li>
                                                         <ul>
                                                             <li value="1">The <b>Sales Order</b> contains only high-level information for the direct communication with the customer (e.g. the name).</li>
-                                                            <li value="2"><i>order_reference</i> - Order reference which is in an ascending order but not linear growing. This reference must be used for all external communications instead of the auto-increment ID to avoid conclusions.</li>
-                                                            <li value="3"><i>is_test</i> - This field was supposed to mark test orders so that the order can be processed in the production environment but all external communication is mocked or also switched to test mode. <p class="note">This feature is currently not functional.</p></li>
-                                                            <li value="4"><i>store</i> - The name of the Store where the order was placed</li>
-                                                            <li value="5"><i>price_mode</i> - This field shows if the order was calculated in a net or gross price mode.</li>
+                                                            <li value="2"><var>order_reference</var> - Order reference which is in an ascending order but not linear growing. This reference must be used for all external communications instead of the auto-increment ID to avoid conclusions.</li>
+                                                            <li value="3"><var>is_test</var> - This field was supposed to mark test orders so that the order can be processed in the production environment but all external communication is mocked or also switched to test mode. <p class="note">This feature is currently not functional.</p></li>
+                                                            <li value="4"><var>store</var> - The name of the Store where the order was placed</li>
+                                                            <li value="5"><var>price_mode</var> - This field shows if the order was calculated in a net or gross price mode.</li>
                                                         </ul>
                                                         <li value="2">The <b>Sales Order Item</b> contains all item-related information like the SKU and product name.</li>
                                                         <ul>
-                                                            <li value="1"><i>sku</i> - SKU of the product. This is a soft relation to the Concrete Product to avoid cross-boundary coupling.</li>
-                                                            <li value="2"><i>quantity</i> - Quantity of "same" products. Per default, this value is "1" so that we save one Sales Order Item per item sold. But in case of non-Splittable Products, we can use a higher value here. We may also use higher quantities for very high numbers to avoid performance problems.</li>
+                                                            <li value="1"><var>sku</var> - SKU of the product. This is a soft relation to the Concrete Product to avoid cross-boundary coupling.</li>
+                                                            <li value="2"><var>quantity</var> - Quantity of "same" products. Per default, this value is "1" so that we save one Sales Order Item per item sold. But in case of non-Splittable Products, we can use a higher value here. We may also use higher quantities for very high numbers to avoid performance problems.</li>
                                                             <ul>
-                                                                <li value="1">"Same product" means products that have the same grouping key which is a hash of the SKU and the Product Options (see class <i>SkuGroupKeyPlugin</i>). The key is also saved in the field <i>group_key</i></li>
+                                                                <li value="1">"Same product" means products that have the same grouping key which is a hash of the SKU and the Product Options (see class <var>SkuGroupKeyPlugin</var>). The key is also saved in the field <var>group_key</var></li>
                                                             </ul>
-                                                            <li value="3"><i>is_quantity_splitable</i> - This flag declares if the quantity can be split (e.g. in case of partial cancelations). <p class="note">It is currently not possible to realize splits with Sales Order Items that have a quantity bigger than "1".</p></li>
+                                                            <li value="3"><var>is_quantity_splitable</var> - This flag declares if the quantity can be split (e.g. in case of partial cancelations). <p class="note">It is currently not possible to realize splits with Sales Order Items that have a quantity bigger than "1".</p></li>
                                                         </ul>
                                                         <li value="3">The Sales Order Item also holds information that is injected from other features, especially the quantity and amount of metadata from the <b>Measurement and Packaging Unit</b> features.</li>
                                                     </ul>
-                                                    <h3><a name="Customer"></a><span style="color: #e35d44;">Customer Data</span>
-                                                    </h3>
+                                                    <h3>Customer Data</h3>
                                                     <p>The Sales Order contains a copy of the Customer data so that it is not affected if the Customer makes changes.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/customer-data.png" />
@@ -284,8 +282,7 @@
                                                         <li value="1">The Sales Order has a relation to the Locale which was used during the checkout so that the same locale can be used for communication.</li>
                                                         <li value="2">The Sales Order has a shipping and a billing address.</li>
                                                     </ul>
-                                                    <h3><a name="Sales2"></a><span style="color: #e35d44;">Sales Bundles and Options</span>
-                                                    </h3>
+                                                    <h3>Sales Bundles and Options</h3>
                                                     <p>See description of the <a href="db-schema-catalog.htm#Product">Product Bundle</a> and <a href="db-schema-catalog.htm#Product2">Product Option</a> schemas for more details.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/sales-bundles-options.png" />
@@ -303,8 +300,7 @@
                                                             <li value="2">Each Option contains the group name (e.g. "Insurance") and the value (e.g. "1 year").</li>
                                                         </ul>
                                                     </ul>
-                                                    <h3><a name="Expenses"></a><span style="color: #e35d44;">Expenses</span>
-                                                    </h3>
+                                                    <h3>Expenses</h3>
                                                     <p>Sales Orders and Sales Order Items can have additional costs. Typically this is the price for the Shipment that is attached to Sales Order.</p>
                                                     <p class="note">Currently, Spryker only supports expenses for the whole order and not per item.</p>
                                                     <p>
@@ -315,8 +311,7 @@
                                                         <li value="1">The order can have several expenses (typically none or one).</li>
                                                         <li value="2">Expenses have a relation to a Shipment which is the main (and only) use case.</li>
                                                     </ul>
-                                                    <h3><a name="Discount"></a><span style="color: #e35d44;">Discounts</span>
-                                                    </h3>
+                                                    <h3>Discounts</h3>
                                                     <p>See Discount Schema for a full description:</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/discount.png" />
@@ -325,10 +320,9 @@
                                                     <ul>
                                                         <li value="1">Discounts are distributed to all objects.</li>
                                                         <li value="2">Each object can have multiple discounts.</li>
-                                                        <li value="3">Discounts are saved with the name, amount, used code (if any) and metadata (e.g. "is_refundable") to all objects where discounts can be applied (Order, Item, Option, and Expense).</li>
+                                                        <li value="3">Discounts are saved with the name, amount, used code (if any) and metadata (e.g. <var>is_refundable</var>) to all objects where discounts can be applied (Order, Item, Option, and Expense).</li>
                                                     </ul>
-                                                    <h3><a name="Payments"></a><span style="color: #e35d44;">Payments</span>
-                                                    </h3>
+                                                    <h3>Payments</h3>
                                                     <p>Orders can be paid with none, one or multiple payments. Each payment is identified by a provider (e.g. Payone) and a method (e.g. Creditcard)</p>
                                                     <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                         <col class="TableStyle-PatternedRows2-Column-Regular" />
@@ -366,10 +360,9 @@
                                                         <li value="1">Payments are related to Sales Orders.</li>
                                                         <li value="2">The amount field contains the amount which was paid by a payment method (which is important for refunds).</li>
                                                     </ul>
-                                                    <h2><a name="OMS"></a><b>OMS Process and States</b>
+                                                    <h2><b>OMS Process and States</b>
                                                     </h2>
-                                                    <h3><a name="Sales3"></a><span style="color: #e35d44;">Sales Order Item States and Process</span>
-                                                    </h3>
+                                                    <h3>Sales Order Item States and Process</h3>
                                                     <p>Spryker uses State Machine to process orders. Every Sales Order Item has a distinct State and belongs to a Process. The State Machine itself is modeled via XML files and therefore not visible in the schema.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/sales-order-item-states-process.png" />
@@ -377,14 +370,13 @@
                                                     <p><b>Structure</b>:</p>
                                                     <ul>
                                                         <li value="1">Each Sales Order Item is related to exactly one Process and one State (e.g. State: "payment pending" in Process: "PrePayment").</li>
-                                                        <li value="2"><i>spy_oms_order_item_state_history</i> tracks the history of state per item.</li>
-                                                        <li value="3">The Sales Order Item has a <i>last_state_change</i> field to avoid expensive lockups on the history table.</li>
+                                                        <li value="2"><var>spy_oms_order_item_state_history</var> tracks the history of state per item.</li>
+                                                        <li value="3">The Sales Order Item has a <var>last_state_change</var> field to avoid expensive lockups on the history table.</li>
                                                         <li value="4">State names are filled automatically when they appear the first time. Any manual change of this table can lead to operational problems because the States are matched via the name field.</li>
                                                     </ul>
-                                                    <h3><a name="Transiti"></a><span style="color: #e35d44;">Transition Log</span>
-                                                    </h3>
+                                                    <h3>Transition Log</h3>
                                                     <p class="info">When something goes wrong in the fulfillment of an order then it's a good idea to have a log with all transitions.</p>
-                                                    <p class="note">This feature is not 100% reliable at the moment and may result in performance problems. The log can be retrieved in Zed UI via a hidden URL: /oms/log?id-order=1</p>
+                                                    <p class="note">This feature is not 100% reliable at the moment and may result in performance problems. The log can be retrieved in Zed UI via a hidden URL: <var>/oms/log?id-order=1</var></p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/transition-log.png" />
                                                     </p>
@@ -392,17 +384,15 @@
                                                     <ul>
                                                         <li value="1">The log table holds all relevant information and is related to the Sales Order and the Sales Order Item.</li>
                                                     </ul>
-                                                    <h3><a name="State"></a><span style="color: #e35d44;">State Machine Lock</span>
-                                                    </h3>
+                                                    <h3>State Machine Lock</h3>
                                                     <p class="info">The State Machine cannot be executed in parallel for the same Sales Order. For this reason, there is a lock with a configurable TTL.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/state-machine-lock.png" />
                                                     </p>
-                                                    <h2><a name="Quote"></a><b>Quote</b><![CDATA[
+                                                    <h2><b>Quote</b><![CDATA[
         ]]></h2>
                                                     <p class="info">The quote object contains the Cart and all user input from the Checkout (like Addresses). When the Quote is persisted in the database then we filter out all data which does not belong the Cart.</p>
-                                                    <h3><a name="Persiste"></a><span style="color: #e35d44;">Persisted Quote (Multi-Cart per Customer)</span>
-                                                    </h3>
+                                                    <h3>Persisted Quote (Multi-Cart per Customer)</h3>
                                                     <p>Customers can have more than one cart and they have the option to keep the cart after checkout.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/persisted-quote.png" />
@@ -410,210 +400,208 @@
                                                     <p><b>Structure</b>:</p>
                                                     <ul>
                                                         <li style="font-style: normal;" value="1">A Quote has a name, belongs to a Customer is only valid in the scope of a Store</li>
-                                                        <li style="font-style: normal;" value="2">A Customer can have multiple Quotes but only one of them is marked as <i>is_default</i>. This is a soft relation via <i>customer_reference</i>.</li>
-                                                        <li style="font-style: normal;" value="3"><i>Quote::quote_data</i> - Serialized quote object which contains only the cart data. Other checkout information is filtered out before the data is saved.</li>
+                                                        <li style="font-style: normal;" value="2">A Customer can have multiple Quotes but only one of them is marked as <var>is_default</var>. This is a soft relation via <var>customer_reference</var>.</li>
+                                                        <li style="font-style: normal;" value="3"><var>Quote::quote_data</var> - Serialized quote object which contains only the cart data. Other checkout information is filtered out before the data is saved.</li>
                                                     </ul>
-                                                    <h3><a name="Shared"></a><span style="color: #e35d44;">Shared Quotes (Carts)</span>
-                                                    </h3>
+                                                    <h3>Shared Quotes (Carts)</h3>
                                                     <p class="info">Carts can be shared among Company Users.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/shared-quotes.png" />
                                                     </p>
-                                                    <h2><a name="Sales4"></a><b>Sales Order Prices</b>
+                                                    <h2><b>Sales Order Prices</b>
                                                     </h2>
                                                     <p>All calculated price values are stored to the order. The assumption is that this information is not changed afterward except for the edge case when the whole order is changed before the payment ("Recalculation").</p>
-                                                    <h3><a name="Overview"></a><span style="color: #e35d44;">Overview</span>
-                                                    </h3>
-                                                    <p>It's important to obey the Sales Order's <i>price_mode</i> that defines if the calculation was executed in net or gross price mode.</p>
-                                                    <p class="info">You can have a look inside the calculation when you add some products to the cart and then open this URL in the shop: <i>/calculation/debug</i></p>
+                                                    <h3>Overview</h3>
+                                                    <p>It's important to obey the Sales Order's <var>price_mode</var> that defines if the calculation was executed in net or gross price mode.</p>
+                                                    <p class="info">You can have a look inside the calculation when you add some products to the cart and then open this URL in the shop: <var>/calculation/debug</var></p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/sales-order-prices.png" />
                                                     </p>
                                                     <p>In general, there are several types of fields:</p>
                                                     <ul>
                                                         <li value="1">Plain prices which are saved in the lowest unit (e.g. "Cent").</li>
-                                                        <li value="2">Amounts which can be changed by user actions (e.g. canceled_amount).</li>
-                                                        <li value="3">Aggregated values which are summed up from related objects (for instance the price_to_pay_aggregation of a Sales Order Item contains the price of the item plus the price of all options minus the applied discount values).</li>
+                                                        <li value="2">Amounts which can be changed by user actions (e.g. <var>canceled_amount</var>).</li>
+                                                        <li value="3">Aggregated values which are summed up from related objects (for instance the <var>price_to_pay_aggregation</var> of a Sales Order Item contains the price of the item plus the price of all options minus the applied discount values).</li>
                                                         <li value="4">Totals which are applied to the Sales Order.</li>
                                                     </ul>
                                                     <p>Prices are attached to different objects like Products, Expenses, Options, ...</p>
                                                     <p>All prices in the are the line prices (so multiplied by the related quantity).</p>
-                                                    <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Fields</th>
-                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
-                                                                <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Calculation</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">tax_rate</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The tax rate of the object loaded from DB</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">---</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">tax_amount_full_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the tax_amount of all related objects</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p>∑tax_amount </p>
-                                                                    <p>+ ∑ItemExpense::tax_amount</p>
-                                                                    <p>+ ∑ProductOption::tax_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">tax_amount</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Tax amount of the object</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">(gross_price - discount_amount_aggregation) * tax_rate / (1+tax_rate)</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">subtotal_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The price of the item with product options but without discounts and expenses.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p>gross_price	</p>
-                                                                    <p>+ product_option_price_aggregation	</p>
-                                                                    <p>+ expense_price_aggregation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">refundable_amount</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The amount that can be canceled for the item (with options, expensed and discounts), Identical with price to pay when the order is created and changed later.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">price_to_pay_aggregation - canceled_amount</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">product_option_price_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the price of all related options of a Sales Order Item</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">∑ProductOption::gross_price</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">price_to_pay_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The price to pay for the customer. This is used as the initial refund amount for the order. Usually this is not shown in cart.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                    <p>gross_price	</p>
-                                                                    <p>+ product_option_price_aggregation	</p>
-                                                                    <p>+ expense_price_aggregation	</p>
-                                                                    <p>- discount_amount_full_aggregation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">price</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The (original) price of the object. Either net or gross.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">net_price OR gross_price</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">net_price</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">New price of the object from the database</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">---</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">gross_price</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Gross price of the object from the database</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">---</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">expense_price_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The sum of the price of all related item-expenses of a Sales Order Item</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">∑ItemExpense::gross_price</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">discount_amount_full_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the amounts of all related discounts. Example: the discounted value of a Sales Order Item is the sum of the values of all applied discounts on the item itself and all related options.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p>Item:discount_amount_aggregation	</p>
-                                                                    <p>+ ∑ProductOption::discount_amount_aggregation	</p>
-                                                                    <p>+ ∑ItemExpense::discount_amount_aggregation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">discount_amount_aggregation</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The sum of the unit_amount of all directly related discounts</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">∑Discount::amount</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">canceled_amount</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">The amount that was canceled. This is usually either 0 or equal with the price_to_pay_aggregation but can also be any other value in between.</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">User Input</td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
-                                                    <h3><a name="Order"></a><span style="color: #e35d44;">Order Totals</span>
-                                                    </h3>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Fields</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Calculation</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>tax_rate</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The tax rate of the object loaded from DB</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">---</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>tax_amount_full_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the <var>tax_amount</var> of all related objects</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>∑tax_amount + ∑ItemExpense::tax_amount + ∑ProductOption::tax_amount</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>tax_amount</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Tax amount of the object</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>(gross_price - discount_amount_aggregation) * tax_rate / (1+tax_rate)</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>subtotal_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The price of the item with product options but without discounts and expenses.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>gross_price + product_option_price_aggregation	+ expense_price_aggregation</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>refundable_amount</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The amount that can be canceled for the item (with options, expensed and discounts), Identical with price to pay when the order is created and changed later.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>price_to_pay_aggregation - canceled_amount</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>product_option_price_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the price of all related options of a Sales Order Item</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>∑ProductOption::gross_price</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>price_to_pay_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The price to pay for the customer. This is used as the initial refund amount for the order. Usually this is not shown in cart.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>gross_price + product_option_price_aggregation + expense_price_aggregation - discount_amount_full_aggregation</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>price</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The (original) price of the object. Either net or gross.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>net_price</var> OR <var>gross_price</var></td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>net_price</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">New price of the object from the database</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">---</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>gross_price</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Gross price of the object from the database</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">---</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>expense_price_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The sum of the price of all related item-expenses of a Sales Order Item</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>∑ItemExpense::gross_price</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>discount_amount_full_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">The sum of the amounts of all related discounts. Example: the discounted value of a Sales Order Item is the sum of the values of all applied discounts on the item itself and all related options.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Item:discount_amount_aggregation + ∑ProductOption::discount_amount_aggregation	+ ∑ItemExpense::discount_amount_aggregation</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>discount_amount_aggregation</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The sum of the unit_amount of all directly related discounts</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>∑Discount::amount</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>canceled_amount</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">The amount that was canceled. This is usually either 0 or equal with the <var>price_to_pay_aggregation</var> but can also be any other value in between.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">User Input</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>Order Totals</h3>
                                                     <p>Totals are sums of already aggregated values. They are shown in the checkout and in the invoices.</p>
                                                     <p>
                                                         <img src="../resources/images/databaase_schema_guide/order-totals.png" />
                                                     </p>
-                                                    <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                        <thead>
-                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
-                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field</th>
-                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
-                                                                <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Calculation</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">subtotal</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Subtotal that is shown in cart and used for invoices</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                    <p>∑Item::sum_aggregation	</p>
-                                                                    <p>- ∑Item::canceled_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">order_expense_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Total order expenses (~Sum of all applied shipment costs)</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">∑Expense::gross_price</td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">discount_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Sum of all discount values</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                    <p>∑Item::discount_amount_full_aggregation	</p>
-                                                                    <p>+ ∑Expense::discount_amount_aggregation</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">refund_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Totally refunded amount</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p>∑Item::refundable_amount	</p>
-                                                                    <p>+ ∑Expense::refundable_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">canceled_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Total amount which was canceled</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                    <p>∑Item::cancelled_amount	</p>
-                                                                    <p>+ ∑Expense::cancelled_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">tax_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Total tax amount of the order</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p>∑Item::tax_amount_full_aggregation </p>
-                                                                    <p>+ ∑Expense::tax_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">grand_total</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Final price that needs to be paid</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
-                                                                    <p>∑Item::price_to_pay_aggregation	</p>
-                                                                    <p>- ∑Item::cancelled_amount	</p>
-                                                                    <p>+ ∑Expense::price_to_pay_aggregation	</p>
-                                                                    <p>- ∑Expense::cancelled_amount</p>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Field</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Calculation</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>subtotal</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Subtotal that is shown in cart and used for invoices</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>∑Item::sum_aggregation - ∑Item::canceled_amount</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>order_expense_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Total order expenses (~Sum of all applied shipment costs)</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>∑Expense::gross_price</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>discount_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Sum of all discount values</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>∑Item::discount_amount_full_aggregation + ∑Expense::discount_amount_aggregation</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>refund_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Totally refunded amount</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>∑Item::refundable_amount + ∑Expense::refundable_amount</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>canceled_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Total amount which was canceled</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>∑Item::cancelled_amount + ∑Expense::cancelled_amount</var> </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>tax_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Total tax amount of the order</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>∑Item::tax_amount_full_aggregation + ∑Expense::tax_amount</var> </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>grand_total</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Final price that needs to be paid</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>∑Item::price_to_pay_aggregation - ∑Item::cancelled_amount + ∑Expense::price_to_pay_aggregation - ∑Expense::cancelled_amount</var> </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

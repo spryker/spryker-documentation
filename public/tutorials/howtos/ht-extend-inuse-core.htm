@@ -73,24 +73,24 @@
 
 .needs-pie
 {
-	behavior: url('../../Resources/Scripts/PIE-no-motw.htc');
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
 }
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <script src="../../Resources/Scripts/custom.modernizr.js">
+        <script src="../../resources/scripts/custom.modernizr.js">
         </script>
-        <script src="../../Resources/Scripts/jquery.min.js">
+        <script src="../../resources/scripts/jquery.min.js">
         </script>
-        <script src="../../Resources/Scripts/require.min.js">
+        <script src="../../resources/scripts/require.min.js">
         </script>
-        <script src="../../Resources/Scripts/require.config.js">
+        <script src="../../resources/scripts/require.config.js">
         </script>
-        <script src="../../Resources/Scripts/foundation.6.2.3_custom.js">
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
         </script>
-        <script src="../../Resources/Scripts/plugins.min.js">
+        <script src="../../resources/scripts/plugins.min.js">
         </script>
-        <script src="../../Resources/Scripts/MadCapAll.js">
+        <script src="../../resources/scripts/MadCapAll.js">
         </script>
     </head>
     <body>
@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="eOLpRoVe_kCx2UxWMzvGbA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="eOLpRoVe_kCx2UxWMzvGbA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="PN8V_baylk2ssV-SORx4ww">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PN8V_baylk2ssV-SORx4ww:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -243,14 +243,24 @@
                                                     <p class="info">This topic describes how to extend a core module that is used by another core module.
 
 </p>
-                                                    <p>Extra consideration must be taken when extending core modules that are already in use by another module. In the following example we will extend the <code>Cart </code> -&gt; <code>Calculation </code>modules.
+                                                    <p>Extra consideration must be taken when extending core modules that are already in use by another module. </p>
+                                                    <p>In the following example we will extend the <code>Cart</code> -&gt; <code>Calculation</code> modules.
 
 </p>
                                                     <h2>Step 1:&#160;Modify the Interface</h2>
-                                                    <p>Add a <code>foo()</code> method to <code>CalculationFacade </code>in the project level and call it from the cart-module. </p>
-                                                    <p>The <code>CalculationFacade </code>needs to implement the <code>CartToCalculationInterface </code>because this interface is used in the Cart-module. </p>
-                                                    <p>You can also add your own interface as follows:</p><pre><code class="language-PHP line-numbers">
-&lt;?php
+                                                    <p>Add a <code>foo()</code> method to <code>CalculationFacade</code> in the project level and call it from the cart-module. </p>
+                                                    <p>The <code>CalculationFacade</code> needs to implement the <code>CartToCalculationInterface</code> because this interface is used in the Cart-module. </p>
+                                                    <p>You can also add your own interface as follows:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Cart\Dependency\Facade;
+
+use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface as SprykerCartToCalculationInterface;
+
+interface CartToCalculationInterface extends SprykerCartToCalculationInterface
+{
+    public function foo();
+}</code></pre>
+                                                    <h2>Step 2: Add the New Method To the Interface</h2>
+                                                    <p>The interface needs to extend the one from core.</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\Calculation\Business;
 
 use Pyz\Zed\Cart\Dependency\Facade\CartToCalculationInterface;
@@ -264,10 +274,22 @@ class CalculationFacade extends SprykerCalculationFacade implements CartToCalcul
     }
 
 }</code></pre>
-                                                    <h2>
+                                                    <h2>Step 3: Remove the Bridge</h2>
+                                                    <p>In the Cart module's dependency provider, remove the bridge to directly use the facade.</p><pre><code class="language-PHP line-numbers">class CartDependencyProvider extends SprykerCartDependencyProvider
+{
 
-Step 2: Add the New Method To the Interface</h2>
-                                                    <p>The interface needs to extend the one from core.</p><pre><code class="language-PHP line-numbers">
+public function provideBusinessLayerDependencies(Container $container)
+{
+	self::provideBusinessLayerDependencies($container);
+
+	$container[self::FACADE_CALCULATION] = function (Container $container) {
+		return $container-&gt;getLocator()-&gt;calculation()-&gt;facade();
+	};
+}</code></pre>
+=======
+        <h2>
+
+Step 2: Add the New Method To the Interface</h2><p>The interface needs to extend the one from core.</p><pre><code class="language-PHP line-numbers">
 
 &lt;?php
 namespace Pyz\Zed\Cart\Dependency\Facade;
@@ -277,11 +299,9 @@ use Spryker\Zed\Cart\Dependency\Facade\CartToCalculationInterface as SprykerCart
 interface CartToCalculationInterface extends SprykerCartToCalculationInterface
 {
     public function foo();
-}</code></pre>
-                                                    <h2>
+}</code></pre><h2>
 
-Step 3: Remove the Bridge</h2>
-                                                    <p>In the Cart module's dependency provider, remove the bridge to directly use the facade.</p><pre><code class="language-PHP line-numbers">
+Step 3: Remove the Bridge</h2><p>In the Cart module's dependency provider, remove the bridge to directly use the facade.</p><pre><code class="language-PHP line-numbers">
 	class CartDependencyProvider extends SprykerCartDependencyProvider
 	{
 
@@ -302,13 +322,10 @@ Step 3: Remove the Bridge</h2>
 
 			return $container;
 		}
-		</code></pre>
-                                                    <p class="important">
+		</code></pre><p class="important">
 Bridges are for core-level only. If you use them at the project-level, you are doing it wrong!
-</p>
-                                                    <p class="info">
-The described case is only practical when you are “between” two core-bundles and you want to make it right. For you own modules, use the general module-interface (e.g. <code>MyModuleInterface</code>).</p>
-                                                </div>
+</p><p class="info">
+The described case is only practical when you are “between” two core-bundles and you want to make it right. For you own modules, use the general module-interface (e.g. <code>MyModuleInterface</code>).</p></div>
                                             </div>
                                         </div>
                                     </div>
