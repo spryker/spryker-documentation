@@ -1,1 +1,1 @@
-define({r:0.5,st:'Stem',n:1,t:[0],u:['../module_guide/overview.htm'],s:['aba'],p:[['and',0]]});
+define({r:0.5,st:'Stem',n:1,t:[0],u:['../overview.htm'],s:['aba'],p:[['and',0]]});
