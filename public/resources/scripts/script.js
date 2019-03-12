@@ -283,7 +283,10 @@ var asideNavCloseButton = new AsideNavCloser('.js-off-canvas-exit', 'offCanvas')
 
 function ToggleSearch() {
 
-    this.search = document.querySelector('.home-page .main-section .search') || document.querySelector('.top-bar .search') || document.querySelector('.searchTopic .search');
+    this.search = document.querySelector('.home-page .main-section .search') ||
+        document.querySelector('.top-bar .search') ||
+        document.querySelector('.searchTopic .search') ||
+        document.querySelector('.error-page-search .search');
     this.container = document.querySelector('.title-bar-section .menu-icon-container');
     this.toggleButton = document.createElement('span');
     this.toggleOverlay = document.createElement('div');
@@ -310,7 +313,7 @@ function ToggleSearch() {
         this.toggleButton.classList.add('search-toggle-button');
         this.toggleOverlay.classList.add('search-toggle-overlay');
         this.container.appendChild(this.toggleButton);
-        this.search.parentNode.appendChild(this.toggleOverlay);
+        document.body.appendChild(this.toggleOverlay);
     }
 }
 
