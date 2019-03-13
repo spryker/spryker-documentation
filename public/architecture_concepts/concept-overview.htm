@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="75HWKcfz3UiJMv1pgYdWsw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="75HWKcfz3UiJMv1pgYdWsw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="P_ATpgUmE0q2LWQiiG6y2g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="P_ATpgUmE0q2LWQiiG6y2g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,26 +241,39 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Conceptual Overview</h1>
-                                                    <p>Spryker is a Commerce Operating System composed of two applications: Yves and Zed.
+                                                    <p>Spryker is a Commerce Operating System composed of the following applications: Storefront (Yves), Backoffice (Zed), Storefront API (Glue).
 
 </p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">Yves	Front-end-presentation layer for customers, based on <a href="http://silex.sensiolabs.org/" target="_blank">Silex</a>.
+                                                        <li class="bullet_list" value="1"><b>Storefront</b> -	Front-end-presentation layer for customers, provided by Yves Application Layer based on the <a href="https://symfony.com/components" target="_blank">Symfony Components</a>.
 </li>
-                                                        <li class="bullet_list" value="2">Zed	Application that contains all business logic and the backend GUI also based on Silex. </li>
+                                                        <li class="bullet_list" value="2"><b>Backoffice</b> - an application that contains all business logic and the backend GUI, provided by Zed Application Layer, also makes use of the Symfony Components. </li>
+                                                        <li value="3">
+                                                            <p><b>Storefront API</b> - an application providing resources for customers' interaction, provided by Glue Application Layer, based <a href="https://jsonapi.org/" target="_blank">JSON API convention</a>.</p>
+                                                        </li>
                                                     </ul>
                                                     <p>The following diagram shows the conceptual parts of the application and their connections:
 </p>
                                                     <p style="text-align: left;"><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../resources/images/spryker-overview.png" data-mc-popup-alt="Conceptual Overview"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="930" data-mc-height="690" src="../resources/images/spryker-overview_thumb_0_48.png" alt="Conceptual Overview" title="Click Me" tabindex="" /></a>
                                                     </p>
+                                                    <p>The Spryker OS provides the followings Application Layers:</p>
+                                                    <ul>
+                                                        <li class="bullet_list" value="1">Yves - provides frontend functionality with the light-weight data access</li>
+                                                        <li class="bullet_list" value="2">Zed - provides backoffice/backend functionality with heavy calculations</li>
+                                                        <li class="bullet_list" value="2">Glue - provides infrastructure for API with the mixed data access</li>
+                                                        <li class="bullet_list" value="2">Client - provides data access infrastructure</li>
+                                                        <li class="bullet_list" value="2">Shared - provides shared code abstractions to be used in other Application Layers</li>
+                                                        <li class="bullet_list" value="2">Service - provides infrastructure for the stateless operations, usually utils</li>
+                                                    </ul>
+                                                    <p>Application Layers structure support you in a better conceptual decoupling and not always represent a bootstraped Application.</p>
                                                     <h2>Code Structure </h2>
                                                     <p>When you look into the source-code, you can see that the code is divided in two parts:
 
 </p>
                                                     <ol>
-                                                        <li value="1">in the src/ directory you can find the code of your current project. This is where you will do your implementations.
+                                                        <li value="1">in the <var>src/</var> directory you can find the code of your current project. This is where you will do your implementations.
 </li>
-                                                        <li value="2">in the `vendor/spryker directory you will find what we call the Spryker-core.
+                                                        <li value="2">in the <var>vendor/spryker</var> directory you will find what we call the Spryker-core.
 </li>
                                                     </ol>
                                                     <p>Directories
@@ -313,24 +326,48 @@
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
-                                                                    <p>public/Yves/Assets/</p>
+                                                                    <p>public/Yves/index.php</p>
                                                                 </td>
                                                                 <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                    <p>Static files (CSS, JS, and assets) for the project’s Yves
-</p>
+                                                                    <p>Web-server entry point of Storefront application.</p>
                                                                 </td>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                    <p>public/Yves/Assets/</p>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                    <p>Static files (CSS, JS, and assets) for the project’s Yves.</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                    <p>public/Zed/index.php</p>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                    <p>Web-server entry point of Backoffice application.</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
                                                                     <p>public/Zed/Assets/</p>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
-                                                                    <p>Static files (CSS, JS, and assets) for the project’s Zed</p>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                    <p>Static files (CSS, JS, and assets) for the project’s Zed.</p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                    <p>public/Glue/index.php</p>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                    <p>Web-server entry point of Storefront API application.</p>
                                                                 </td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <p><![CDATA[		]]></p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Feb 28th, 2018</i><![CDATA[		]]></p>
                                                 </div>
                                             </div>
                                         </div>

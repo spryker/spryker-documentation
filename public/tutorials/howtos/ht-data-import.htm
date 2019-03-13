@@ -1,90 +1,317 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd">
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos">
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>HowTo - Add a New DataImport Type</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
     </head>
     <body>
-        <h1>HowTo - Add a New DataImport Type</h1>
-        <p>The following article describes  how to build your own DataImport for a specific type. All steps in this article are built on the real life example for importing product images.</p>
-        <h2>The Database Schema</h2>
-        <p>You should start by looking at the database tables you want to fill with data. The image below shows the table relation for product images.</p>
-        <p>
-            <img src="../../Resources/Images/product_image_import_database_schema.png" title="Database schema for product images" alt="Database schema for product images" class="Thumbnail" />
-        </p>
-        <p>When you look at this schema you can easily identify the needed data columns for your import file. Currently we only support CSV as format for file imports out of the box. You can easily create your own file reader if you want to use a different format.</p>
-        <p>The relevant fields to fill are:</p>
-        <ul>
-            <li class="bullet_list">name (spy_product_image_set)</li>
-            <li class="bullet_list">external_url_large (spy_product_image)</li>
-            <li class="bullet_list">external_url_small (spy_product_image)</li>
-            <li class="bullet_list">fk_locale (spy_product_image_set)</li>
-            <li class="bullet_list">fk_product (spy_product_image_set)</li>
-            <li class="bullet_list">fk_product_abstract (spy_product_image_set)</li>
-        </ul>
-        <p class="info">All <var>fk_*</var> fields are foreign keys to other database tables. We can not know the id's of the related entities so we need to fill in those fields with a unique identifier.</p>
-        <p>For the database field <var>fk_locale</var> we will use the name of the locale for which we need the id (e.g. de_DE). This value will then be used later to fetch the id for the given locale name.</p>
-        <p class="info">We will use the same technique for the <var>fk_product</var> and <var>fk_product_abstract</var> fields.</p>
-        <h2>Create an Import File</h2>
-        <p>As already said, we only support CSV out of the box, so we will create a CSV file in our preferred editor.</p>
-        <p>Your CSV file should contain the following header columns:</p>
-        <div class="table-wrap">
-            <table style="width: 100%;">
-                <col />
-                <col />
-                <tbody>
-                    <tr>
-                        <td>
-                            <ul>
-                                <li class="bullet_list">image_set_name</li>
-                                <li class="bullet_list">external_url_large</li>
-                                <li class="bullet_list">external_url_small</li>
-                                <li class="bullet_list">locale</li>
-                                <li class="bullet_list">concrete_sku</li>
-                                <li class="bullet_list">abstract_sku</li>
-                            </ul>
-                        </td>
-                        <td>
-                            <div class="example">You will now have a  CSV file similar to this one:
-							<p><img src="../../Resources/Images/product_image_import_csv_file_example.png" title="CSV file example" alt="CSV file example" class="Thumbnail" /></p></div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p>Now you can start to fill in some data into the new file. </p>
-        <p>You should start with only a couple of entries to check after the first import run if all needed data is imported.</p>
-        <p>Save the new file under <code>data/import/*</code>.</p>
-        <h2>Configure the DataImporter</h2>
-        <p>Every import type needs its own <code>DataImporterConfiguration</code>. Open the <code>DataImportConfig</code> class and add a constant for the import type and a method to get the configuration within your <code>DataImportBusinessFactory</code>.</p>
-        <p class="info">The constant is used to identify an import type. More information about it will follow later in this article. In our case we will use <code>const IMPORT_TYPE_PRODUCT_IMAGE = 'product-image';</code></p>
-        <p>We also need a new method to get the configuration.</p>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>Copy the following code block into your <code>DataImportConfig</code> class.</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p><pre><code class="language-bash line-numbers">/**
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="NMul78WbF0C9c37OFogWgA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="NMul78WbF0C9c37OFogWgA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>HowTo - Add a New DataImport Type</h1>
+                                                    <p>The following article describes  how to build your own DataImport for a specific type. All steps in this article are built on the real life example for importing product images.</p>
+                                                    <h2>The Database Schema</h2>
+                                                    <p>You should start by looking at the database tables you want to fill with data. The image below shows the table relation for product images.</p>
+                                                    <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/product_image_import_database_schema.png" data-mc-popup-alt="Database schema for product images"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="623" data-mc-height="463" src="../../resources/images/product_image_import_database_schema_thumb_0_48.png" alt="Database schema for product images" title="Database schema for product images" tabindex="" /></a>
+                                                    </p>
+                                                    <p>When you look at this schema you can easily identify the needed data columns for your import file. Currently we only support CSV as format for file imports out of the box. You can easily create your own file reader if you want to use a different format.</p>
+                                                    <p>The relevant fields to fill are:</p>
+                                                    <ul>
+                                                        <li class="bullet_list" value="1">name (spy_product_image_set)</li>
+                                                        <li class="bullet_list" value="2">external_url_large (spy_product_image)</li>
+                                                        <li class="bullet_list" value="3">external_url_small (spy_product_image)</li>
+                                                        <li class="bullet_list" value="4">fk_locale (spy_product_image_set)</li>
+                                                        <li class="bullet_list" value="5">fk_product (spy_product_image_set)</li>
+                                                        <li class="bullet_list" value="6">fk_product_abstract (spy_product_image_set)</li>
+                                                    </ul>
+                                                    <p class="info">All <var>fk_*</var> fields are foreign keys to other database tables. We can not know the id's of the related entities so we need to fill in those fields with a unique identifier.</p>
+                                                    <p>For the database field <var>fk_locale</var> we will use the name of the locale for which we need the id (e.g. de_DE). This value will then be used later to fetch the id for the given locale name.</p>
+                                                    <p class="info">We will use the same technique for the <var>fk_product</var> and <var>fk_product_abstract</var> fields.</p>
+                                                    <h2>Create an Import File</h2>
+                                                    <p>As already said, we only support CSV out of the box, so we will create a CSV file in our preferred editor.</p>
+                                                    <p>Your CSV file should contain the following header columns:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;">
+                                                            <col />
+                                                            <col />
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td>
+                                                                        <ul>
+                                                                            <li class="bullet_list" value="1">image_set_name</li>
+                                                                            <li class="bullet_list" value="2">external_url_large</li>
+                                                                            <li class="bullet_list" value="3">external_url_small</li>
+                                                                            <li class="bullet_list" value="4">locale</li>
+                                                                            <li class="bullet_list" value="5">concrete_sku</li>
+                                                                            <li class="bullet_list" value="6">abstract_sku</li>
+                                                                        </ul>
+                                                                    </td>
+                                                                    <td>
+                                                                        <div class="example">You will now have a  CSV file similar to this one:
+							<p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/product_image_import_csv_file_example.png" data-mc-popup-alt="CSV file example"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="1592" data-mc-height="111" src="../../resources/images/product_image_import_csv_file_example_thumb_0_48.png" alt="CSV file example" title="CSV file example" tabindex="" /></a></p></div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>Now you can start to fill in some data into the new file. </p>
+                                                    <p>You should start with only a couple of entries to check after the first import run if all needed data is imported.</p>
+                                                    <p>Save the new file under <code>data/import/*</code>.</p>
+                                                    <h2>Configure the DataImporter</h2>
+                                                    <p>Every import type needs its own <code>DataImporterConfiguration</code>. Open the <code>DataImportConfig</code> class and add a constant for the import type and a method to get the configuration within your <code>DataImportBusinessFactory</code>.</p>
+                                                    <p class="info">The constant is used to identify an import type. More information about it will follow later in this article. In our case we will use <code>const IMPORT_TYPE_PRODUCT_IMAGE = 'product-image';</code></p>
+                                                    <p>We also need a new method to get the configuration.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Copy the following code block into your <code>DataImportConfig</code> class.</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p><pre><code class="language-bash line-numbers">/**
 * @return \Generated\Shared\Transfer\DataImporterConfigurationTransfer
 */
 public function getProductImageDataImporterConfiguration()
 {
     return $this-&gt;buildImporterConfiguration('product_image.csv', static::IMPORT_TYPE_PRODUCT_IMAGE);
 }</code></pre>
-                </p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <h2>Create a Writer Step</h2>
-        <p class="info"><strong>Steps</strong>
-            <br />			Each importer needs at least one step to write the data from the file to a database. You can add as much steps as you need to your <code>DataSetStepBroker</code>.
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <h2>Create a Writer Step</h2>
+                                                    <p class="info"><strong>Steps</strong>
+                                                        <br />			Each importer needs at least one step to write the data from the file to a database. You can add as much steps as you need to your <code>DataSetStepBroker</code>.
 		</p>
-        <p>First we will create a new class called <code>ProductImageWriterStep</code> in "*/Zed/DataImport/Business/Model/ProductImage/" with this content:</p>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>
-                    <p>ProductImageWriterStep</p>
-                </MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>First we will create a new class called <code>ProductImageWriterStep</code> in "*/Zed/DataImport/Business/Model/ProductImage/" with this content:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><p>ProductImageWriterStep</p></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Zed\DataImport\Business\Model\ProductImage;
 
@@ -107,18 +334,15 @@ class ProductImageWriterStep implements DataImportStepInterface
 	}
 
 }</code></pre>
-                </p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <h2>Wire up the DataImporter</h2>
-        <p>We now have everything at hand to wire up the new DataImport and run it.</p>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>DataImportBusinessFactory</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p>In our <code>DataImportBusinessFactory</code> we add the following method:</p>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <h2>Wire up the DataImporter</h2>
+                                                    <p>We now have everything at hand to wire up the new DataImport and run it.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />DataImportBusinessFactory</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In our <code>DataImportBusinessFactory</code> we add the following method:</p>
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface|\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerAwareInterface
  */
 protected function createProductImageImporter()
@@ -133,18 +357,15 @@ protected function createProductImageImporter()
 
 	return $dataImporter;
 }</code></pre>
-                </p>
-                <p>In the <code>DataImportBusinessFactory::getImporter()</code> we now add the new DataImporter with <code>$dataImporterCollection-&gt;addDataImporter($this-&gt;createProductImageImporter())</code>.</p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>ConsoleDependencyProvider</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p>To be able to execute the command from the console we need to register a new console command in the <var>ConsoleDependencyProvider</var></p>
-                <p>The DataImport module brings a generic console command which can be used several times to add a console command for each data import type. You only need to register it as follows:</p>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                            <p>In the <code>DataImportBusinessFactory::getImporter()</code> we now add the new DataImporter with <code>$dataImporterCollection-&gt;addDataImporter($this-&gt;createProductImageImporter())</code>.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />ConsoleDependencyProvider</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>To be able to execute the command from the console we need to register a new console command in the <var>ConsoleDependencyProvider</var></p>
+                                                            <p>The DataImport module brings a generic console command which can be used several times to add a console command for each data import type. You only need to register it as follows:</p>
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * @param \Spryker\Zed\Kernel\Container $container
  *
  * @return \Symfony\Component\Console\Command\Command[]
@@ -158,38 +379,32 @@ public function getConsoleCommands(Container $container)
 		...
 	];
 }</code></pre>
-                </p>
-                <p>You will now have a new console command <code>data:import:product-image</code> available. When you run <code>vendor/bin/console</code> you will see a new entry "<b>data:import:product-image  This command executes your "product-image</b>" importer." under data.</p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <h2>Execute the DataImporter</h2>
-        <p>
+                                                            </p>
+                                                            <p>You will now have a new console command <code>data:import:product-image</code> available. When you run <code>vendor/bin/console</code> you will see a new entry "<b>data:import:product-image  This command executes your "product-image</b>" importer." under data.</p>
+                                                        </div>
+                                                    </div>
+                                                    <h2>Execute the DataImporter</h2>
+                                                    <p>
 			The DataImport module brings a generic command which can be used several times. You need to at least register it once without a constructor argument.</p>
-        <p class="info">This command will execute all the registered DataImporter in the <code>DataImportBusinessFactory</code> one after the other.
+                                                    <p class="info">This command will execute all the registered DataImporter in the <code>DataImportBusinessFactory</code> one after the other.
 		</p>
-        <p>As you already made it in the example above, you can add it with a new name over and over again. This brings in the ability to execute only one specific data importer.</p>
-        <p>When you now execute <code>vendor/bin/console data:import:product-image</code> you will see the debug output from the <code>ProductImageWriterStep</code>.</p>
-        <p>There are a lot of options that you can set for an import. If you need to debug one specific line of an import file, you can use offset and limit like this <code>vendor/bin/console data:import:product-image -o 43 -l 1</code>. </p>
-        <p class="example">This will then only execute the data set at potion 43 of your import file.</p>
-        <p>The DataImporter catches exceptions by default and continues to import data. In development mode you can use the throw-exception option to throw the occurred exception instead of catching it. </p>
-        <p class="tip">There are a couple more options, you can see them when you execute <code>vendor/bin/console data:import:product-image -h</code>, the console command will then print the help page for the given command.</p>
-        <h2>Finalize the Data Importer</h2>
-        <p>We have proven that the data importer can be executed but we only print a debug message right now. We need to do some additional things to really save some data.</p>
-        <h3>Convert Logical Identifier to Foreign Keys</h3>
-        <p>As described above, we can not use foreign keys in our import file - we need to use logical identifier which can now be used to get the foreign key of a related entity. </p>
-        <p>There are several ways to achieve what we need. We could add a new Step e.g. <code>LocaleNameToIdLocaleStep</code> or the <b>better way in our case</b> is to use a <code>Repository</code> which provides us with a getter to retrieve the <var>id_locale</var> by it's name:</p>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>LocaleRepository</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p>We will add now a <code>LocaleRepository</code> to get the foreign key of a locale by its name:</p>
-                <MadCap:dropDown>
-                    <MadCap:dropDownHead>
-                        <MadCap:dropDownHotspot>Click here to expand the code sample</MadCap:dropDownHotspot>
-                    </MadCap:dropDownHead>
-                    <MadCap:dropDownBody>
-                        <p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>As you already made it in the example above, you can add it with a new name over and over again. This brings in the ability to execute only one specific data importer.</p>
+                                                    <p>When you now execute <code>vendor/bin/console data:import:product-image</code> you will see the debug output from the <code>ProductImageWriterStep</code>.</p>
+                                                    <p>There are a lot of options that you can set for an import. If you need to debug one specific line of an import file, you can use offset and limit like this <code>vendor/bin/console data:import:product-image -o 43 -l 1</code>. </p>
+                                                    <p class="example">This will then only execute the data set at potion 43 of your import file.</p>
+                                                    <p>The DataImporter catches exceptions by default and continues to import data. In development mode you can use the throw-exception option to throw the occurred exception instead of catching it. </p>
+                                                    <p class="tip">There are a couple more options, you can see them when you execute <code>vendor/bin/console data:import:product-image -h</code>, the console command will then print the help page for the given command.</p>
+                                                    <h2>Finalize the Data Importer</h2>
+                                                    <p>We have proven that the data importer can be executed but we only print a debug message right now. We need to do some additional things to really save some data.</p>
+                                                    <h3>Convert Logical Identifier to Foreign Keys</h3>
+                                                    <p>As described above, we can not use foreign keys in our import file - we need to use logical identifier which can now be used to get the foreign key of a related entity. </p>
+                                                    <p>There are several ways to achieve what we need. We could add a new Step e.g. <code>LocaleNameToIdLocaleStep</code> or the <b>better way in our case</b> is to use a <code>Repository</code> which provides us with a getter to retrieve the <var>id_locale</var> by it's name:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />LocaleRepository</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>We will add now a <code>LocaleRepository</code> to get the foreign key of a locale by its name:</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand the code sample</a></span>
+                                                                <div class="MCDropDownBody dropDownBody">
+                                                                    <p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Zed\DataImport\Business\Model\Locale\Repository;
 
@@ -233,19 +448,16 @@ class LocaleRepository
 	}
 
 }</code></pre>
-                        </p>
-                    </MadCap:dropDownBody>
-                </MadCap:dropDown>
-                <p>This <code>Repository</code> is very simple but does what we need right now.</p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>Add the Repository</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p>We need to change our <code>ProductImageWriterStep</code> to make use of it. To do that, add the following code:</p>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                            <p>This <code>Repository</code> is very simple but does what we need right now.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Add the Repository</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>We need to change our <code>ProductImageWriterStep</code> to make use of it. To do that, add the following code:</p>
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * @var \Pyz\Zed\DataImport\Business\Model\Locale\Repository\LocaleRepositoryInterface
  */
 protected $localeRepository;
@@ -257,21 +469,18 @@ public function __construct(LocaleRepositoryInterface $localeRepository)
 {
 	$this-&gt;localeRepository = $localeRepository;
 }</code></pre>
-                </p>
-                <p>Now we need to inject this new <code>Repository</code> into our <code>ProductImageWriterStep</code> inside of the business factory. </p>
-                <p class="info">When this is done we can use it like this: <code>$idLocale = $this-&gt;localeRepository-&gt;getIdLocaleByLocale($dataSet[static::KEY_LOCALE]);</code></p>
-                <p>We need to add a similar <code>Repository</code> to retrieve the id of an abstract or concrete product by its sku. This is then also added to our <code>ProductImageWriterStep</code> as already done with the <code>LocaleRepository</code>.</p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <h3>Find or Create Entities</h3>
-        <p>We will now create the <code>spy_product_image_set</code>, <code>spy_product_image</code>, <code>spy_product_image_set_to_product_image</code> and entities.</p>
-        <p>With the first run of an importer all entities are new and we need to do an insert. When the importer is executed more than once, it does updates of the existing entities. To do this, we use Propel's <code>findOrCreate()</code> method.</p>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>Find or create the <code>spy_product_image_set</code>. Add the following code to the <code>ProductImageWriterStep</code>:</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                            <p>Now we need to inject this new <code>Repository</code> into our <code>ProductImageWriterStep</code> inside of the business factory. </p>
+                                                            <p class="info">When this is done we can use it like this: <code>$idLocale = $this-&gt;localeRepository-&gt;getIdLocaleByLocale($dataSet[static::KEY_LOCALE]);</code></p>
+                                                            <p>We need to add a similar <code>Repository</code> to retrieve the id of an abstract or concrete product by its sku. This is then also added to our <code>ProductImageWriterStep</code> as already done with the <code>LocaleRepository</code>.</p>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Find or Create Entities</h3>
+                                                    <p>We will now create the <code>spy_product_image_set</code>, <code>spy_product_image</code>, <code>spy_product_image_set_to_product_image</code> and entities.</p>
+                                                    <p>With the first run of an importer all entities are new and we need to do an insert. When the importer is executed more than once, it does updates of the existing entities. To do this, we use Propel's <code>findOrCreate()</code> method.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <code>spy_product_image_set</code>. Add the following code to the <code>ProductImageWriterStep</code>:</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
  *
  * @return \Orm\Zed\ProductImage\Persistence\SpyProductImageSet
@@ -317,16 +526,13 @@ protected function getIdLocaleByLocale(DataSetInterface $dataSet)
 
 	return $idLocale;
 }</code></pre>
-                </p>
-                <p>We want to allow the <code>fk_locale</code> to be null. One of <code>fk_product</code> or <code>fk_product_abstract</code> must be set. For performance reasons we only save the entity when it's new or modified.</p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>Find or create the <code>spy_product_image</code>. Add the following code to the<br /> <code>ProductImageWriterStep</code>:</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                            <p>We want to allow the <code>fk_locale</code> to be null. One of <code>fk_product</code> or <code>fk_product_abstract</code> must be set. For performance reasons we only save the entity when it's new or modified.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Find or create the <code>spy_product_image</code>. Add the following code to the<br /> <code>ProductImageWriterStep</code>:</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * We expect that the large URL is the unique identifier for an image.
  *
  * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
@@ -348,15 +554,12 @@ protected function findOrCreateImage(DataSetInterface $dataSet)
 
 	return $productImageEntity;
 }</code></pre>
-                </p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <MadCap:dropDown>
-            <MadCap:dropDownHead>
-                <MadCap:dropDownHotspot>Add the relation  <code>spy_product_image_set_to_product_image</code>. Add the following code to the <code>ProductImageWriterStep</code>:</MadCap:dropDownHotspot>
-            </MadCap:dropDownHead>
-            <MadCap:dropDownBody>
-                <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Add the relation  <code>spy_product_image_set_to_product_image</code>. Add the following code to the <code>ProductImageWriterStep</code>:</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p><pre><code class="language-bash line-numbers">/**
  * @param \Orm\Zed\ProductImage\Persistence\SpyProductImageSet $imageSetEntity
  * @param \Orm\Zed\ProductImage\Persistence\SpyProductImage $productImageEntity
  *
@@ -376,11 +579,11 @@ protected function updateOrCreateImageToImageSetRelation(SpyProductImageSet $ima
 		$productImageSetToProductImageEntity-&gt;save();
 	}
 }</code></pre>
-                </p>
-            </MadCap:dropDownBody>
-        </MadCap:dropDown>
-        <h3>Fill the Execute Method</h3>
-        <p><pre><code class="language-bash line-numbers">/**
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Fill the Execute Method</h3>
+                                                    <p><pre><code class="language-bash line-numbers">/**
  * @param \Spryker\Zed\DataImport\Business\Model\DataSet\DataSetInterface $dataSet
  *
  * @return void
@@ -392,11 +595,53 @@ public function execute(DataSetInterface $dataSet)
 
 	$this-&gt;updateOrCreateImageToImageSetRelation($imageSetEntity, $productImageEntity);
 }</code></pre>
-        </p>
-        <h2>Run the Importer</h2>
-        <p>When you now run the console command <code>vendor/bin/console data:import:product-image</code>, you will see an output similar to this one:</p>
-        <p>
-            <img src="../../Resources/Images/product_image_import_console_output.png" title="Console output" alt="Console output" class="Thumbnail" />
-        </p>
+                                                    </p>
+                                                    <h2>Run the Importer</h2>
+                                                    <p>When you now run the console command <code>vendor/bin/console data:import:product-image</code>, you will see an output similar to this one:</p>
+                                                    <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../resources/images/product_image_import_console_output.png" data-mc-popup-alt="Console output"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="257" data-mc-height="155" src="../../resources/images/product_image_import_console_output_thumb_0_48.png" alt="Console output" title="Console output" tabindex="" /></a>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
     </body>
 </html>

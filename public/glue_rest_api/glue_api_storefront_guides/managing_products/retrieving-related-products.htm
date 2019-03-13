@@ -1,0 +1,1951 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03,Spryker.B2C,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides|Managing Products">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The article demonstrates how to find alternatives for discontinued products with the help of Glue API endpoints." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Retrieving Related Products | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="3OmcWg_lykChn39mxd_rng">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="3OmcWg_lykChn39mxd_rng:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Retrieving Related Products</h1>
+                                                    <p>
+        Using the&#160;<b>Product Relations</b> feature, sellers can define a list of comparable or additional items for each product. You can display such items,&#160;also called&#160;<i>Related Products</i>, in search and in the cart together with the products selected
+        by customers. This can help boosting the cross- and up-selling performance of the outlet.
+    </p>
+                                                    <p class="info">
+        Only&#160;<a href="https://documentation.spryker.com/capabilities/product_management/product/product-abstraction.htm#differentiate-between-abstract-and-concrete-products">abstract</a>&#160;products support Product Relations. For more details,
+        see&#160;<a href="https://documentation.spryker.com/capabilities/cross-sell_and_upsell/product-relations.htm">Product Relations</a>.
+    </p>
+                                                    <p>
+        The&#160;<b>Product Relations API</b>&#160;provides REST endpoints to retrieve the related products. Using it, you can:
+    </p>
+                                                    <ul>
+                                                        <li value="1">Retrieve a list of related items for a specific related product;</li>
+                                                        <li value="2">Get a list of related products for all items in a cart (for both guest carts and carts of registered users).</li>
+                                                    </ul>
+                                                    <p>
+        In your development, the endpoints can help you to:
+    </p>
+                                                    <ul>
+                                                        <li value="1">Provide comparable products on the product details pages and in search results to make it easier for customers to compare;</li>
+                                                        <li value="2">Provide additional products items in a customer's cart to offer upscale variations, accessories and other additional items for products in the cart. This will help you in boosting the cart value.</li>
+                                                    </ul>
+                                                    <p class="info">
+        To be able to use <b>Product Relations API</b>, first, you need to have the&#160;<i>Product Relations</i> feature integrated with your project. For details,
+        see <a href="https://documentation.spryker.com/feature_integration_guides/product-relation-integration.htm">Product Relation Integration</a>.
+    </p>
+                                                    <p class="note">
+        Different types of relations, as well as their logic, are defined on the project level and can vary depending on the project-specific implementation. The API does not define any new relations. Its task is only to present
+        related products via REST requests.
+    </p>
+                                                    <h2>Installation</h2>
+                                                    <p>
+        For detailed information on the modules that provide the API functionality and related installation instructions, see&#160;Product Relations API Feature Integration.
+    </p>
+                                                    <h2>Getting Related Items for an&#160;Abstract Product</h2>
+                                                    <p>
+        To get related items for an&#160;<b>abstract</b> product, send a&#160;<i>GET</i> request to the following endpoint:
+    </p>
+                                                    <p><b>/abstract-products/{{sku}}/related-products</b>
+                                                    </p>
+                                                    <p> </p>
+                                                    <p>
+        Sample request:&#160;<i>GET&#160;http://mysprykershop.com/abstract-products/<b>122</b>/related-products</i><br /> where&#160;<b>122</b> is the SKU of the abstract&#160;product you need relations for.
+    </p>
+                                                    <h3>Response</h3>
+                                                    <p>
+        If the request was successful, the resource responds with an array of&#160;<b>RestAbstractProductsResponse</b>, where each item specifies a related product.
+    </p>
+                                                    <p><b>Response Fields</b>
+                                                    </p>
+                                                    <p>
+        For a detailed list of the fields included in the response for each product,
+        see <a href="retrieving-product-information.htm#General%20Product%20Information" class="MCXref xref">General Product Information</a>.
+    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+  "data": [
+    {
+      "type": "abstract-products",
+      "id": "128",
+      "attributes": {
+        "sku": "128",
+        "name": "Lenovo ThinkCentre E73",
+        "description": "",
+
+        "superAttributesDefinition": [
+          "internal_memory"
+        ],
+        "superAttributes": {
+          "processor_frequency": [
+            "3.6 GHz",
+            "3.2 GHz"
+          ]
+        },
+        "attributeMap": {
+          "attribute_variants": {
+            "processor_frequency:3.6 GHz": {
+              "id_product_concrete": "128_27314278"
+            },
+            "processor_frequency:3.2 GHz": {
+              "id_product_concrete": "128_29955336"
+            }
+          },
+          "super_attributes": {
+            "processor_frequency": [
+              "3.6 GHz",
+              "3.2 GHz"
+            ]
+          },
+          "product_concrete_ids": [
+            "128_29955336",
+            "128_27314278"
+          ]
+        },
+        "metaTitle": "Lenovo ThinkCentre E73",
+        "metaKeywords": "Lenovo,Tax Exempt",
+        "metaDescription": "Small Form Factor Small Form Factor desktops provide the ultimate performance with full-featured scalability, yet weigh as little as 13.2 lbs / 6 kgs. Keep",
+        "attributeNames": {
+          "processor_threads": "Processor Threads",
+          "pci_express_slots_version": "PCI Express slots version",
+          "internal_memory": "Max internal memory",
+          "stepping": "Stepping",
+          "brand": "Brand",
+          "processor_frequency": "Processor frequency"
+        }
+      },
+      "links": {
+        "self": "http://mysprykershop.com/abstract-products/128"
+      }
+    },
+    {
+      "type": "abstract-products",
+      "id": "129",
+      "attributes": {
+        "sku": "129",
+        "name": "Lenovo ThinkCenter E73",
+        "description": "Eco-friendly and Energy Efficient Lenovo Desktop Power Manager lets you balance power management and performance to save energy and lower costs. The E73 is also ENERGY STAR compliant, EPEAT® Gold and Cisco EnergyWise™ certified—so you can feel good about the planet and your bottom line. With SuperSpeed USB 3.0, transfer data up to 10 times faster than previous USB technologies. You can also connect to audio- and video-related devices with WiFi and Bluetooth® technology. With 10% more processing power, 4th generation Intel® Core™ processors deliver the performance to increase business productivity for your business. They can also guard against identity theft and ensure safe access to your network with built-in security features.",
+        "attributes": {
+          "processor_threads": "8",
+          "processor_cores": "4",
+          "processor_codename": "Haswell",
+          "pci_express_slots_version": "3",
+          "brand": "Lenovo"
+        },
+        "superAttributesDefinition": [],
+        "superAttributes": {
+          "processor_frequency": [
+            "3 GHz",
+            "3.6 GHz",
+            "3.2 GHz"
+          ]
+        },
+        "attributeMap": {
+          "attribute_variants": {
+            "processor_frequency:3 GHz": {
+              "id_product_concrete": "129_24325712"
+            },
+            "processor_frequency:3.6 GHz": {
+              "id_product_concrete": "129_27107297"
+            },
+            "processor_frequency:3.2 GHz": {
+              "id_product_concrete": "129_30706500"
+            }
+          },
+          "super_attributes": {
+            "processor_frequency": [
+              "3 GHz",
+              "3.6 GHz",
+              "3.2 GHz"
+            ]
+          },
+          "product_concrete_ids": [
+            "129_30706500",
+            "129_27107297",
+            "129_24325712"
+          ]
+        },
+        "metaTitle": "Lenovo ThinkCenter E73",
+        "metaKeywords": "Lenovo,Tax Exempt",
+        "metaDescription": "Eco-friendly and Energy Efficient Lenovo Desktop Power Manager lets you balance power management and performance to save energy and lower costs. The E73 is",
+        "attributeNames": {
+          "processor_threads": "Processor Threads",
+          "processor_cores": "Processor cores",
+          "processor_codename": "Processor codename",
+          "pci_express_slots_version": "PCI Express slots version",
+          "brand": "Brand",
+          "processor_frequency": "Processor frequency"
+        }
+      },
+      "links": {
+        "self": "http://mysprykershop.com/abstract-products/129"
+      }
+    },
+    {
+      "type": "abstract-products",
+      "id": "130",
+      "attributes": {
+        "sku": "130",
+        "name": "Lenovo ThinkStation P300",
+        "description": "Optional Flex Module The innovative Flex Module lets you customize I/O ports, so you add only what you need. With the 2 available 5.25\" bays on the P300 Tower, you can mix and match components including an ultraslim ODD, 29-in-1 media card reader, Firewire, and eSATA – up to 8 configurations among an ODD, HDD, and Flex Module. We've redesigned our ThinkStations. No more bulky handles, just a clean-looking, functional design. An extended lip on the top lid that includes a red touch point, combined with a ledge on the back-side, make the P300 exceptionally easy to lift and carry. The P300 workstation features a 15-month life cycle with no planned hardware changes that affect the preloaded software image. Image stability for long-term deployments helps to reduce transition, qualification, and testing costs to ensure savings for your business.",
+        "attributes": {
+          "processor_cores": "4",
+          "processor_threads": "8",
+          "bus_type": "DMI",
+          "stepping": "C0",
+          "brand": "Lenovo"
+        },
+        "superAttributesDefinition": [],
+        "superAttributes": {
+          "processor_frequency": [
+            "3.5 GHz",
+            "3.3 GHz",
+            "3.6 GHz"
+          ]
+        },
+        "attributeMap": {
+          "attribute_variants": {
+            "processor_frequency:3.5 GHz": {
+              "id_product_concrete": "130_24725761"
+            },
+            "processor_frequency:3.3 GHz": {
+              "id_product_concrete": "130_24326086"
+            },
+            "processor_frequency:3.6 GHz": {
+              "id_product_concrete": "130_29285281"
+            }
+          },
+          "super_attributes": {
+            "processor_frequency": [
+              "3.5 GHz",
+              "3.3 GHz",
+              "3.6 GHz"
+            ]
+          },
+          "product_concrete_ids": [
+            "130_29285281",
+            "130_24326086",
+            "130_24725761"
+          ]
+        },
+        "metaTitle": "Lenovo ThinkStation P300",
+        "metaKeywords": "Lenovo,Tax Exempt",
+        "metaDescription": "Optional Flex Module The innovative Flex Module lets you customize I/O ports, so you add only what you need. With the 2 available 5.25\" bays on the P300 To",
+        "attributeNames": {
+          "processor_cores": "Processor cores",
+          "processor_threads": "Processor Threads",
+          "bus_type": "Bus type",
+          "stepping": "Stepping",
+          "brand": "Brand",
+          "processor_frequency": "Processor frequency"
+        }
+      },
+      "links": {
+        "self": "http://mysprykershop.com/abstract-products/130"
+      }
+    },
+    {
+      "type": "abstract-products",
+      "id": "131",
+      "attributes": {
+        "sku": "131",
+        "name": "Lenovo ThinkStation P900",
+        "description": "Thermal Design: Elegant &amp; Efficient. Patented tri-channel cooling with just 3 system fans – as opposed to 10 that other workstations typically rely on — and a direct cooling air baffle directs fresh air into the CPU and memory. ThinkStation P900 delivers new technologies and design to keep your workstation cool and quiet. The innovative Flex Module lets you customize I/O ports, so you add only what you need. Using the 5.25\" bays, you can mix and match components including an ultraslim ODD, 29-in-1 media card reader, Firewire, and eSATA. The Flex Connector is a mezzanine card that fits into the motherboard and allows for expanded storage and I/O, without sacrificing the use of rear PCI. It supports SATA/SAS/PCIe advanced RAID solution. ThinkStation P900 includes two available connectors (enabled with each CPU).",
+        "attributes": {
+          "processor_frequency": "2.4 GHz",
+          "processor_cores": "6",
+          "processor_threads": "12",
+          "stepping": "R2",
+          "brand": "Lenovo",
+          "color": "Black"
+        },
+        "superAttributesDefinition": [
+          "processor_frequency",
+          "color"
+        ],
+        "superAttributes": [],
+        "attributeMap": {
+          "attribute_variants": [],
+          "super_attributes": [],
+          "product_concrete_ids": [
+            "131_24872891"
+          ]
+        },
+        "metaTitle": "Lenovo ThinkStation P900",
+        "metaKeywords": "Lenovo,Tax Exempt",
+        "metaDescription": "Thermal Design: Elegant &amp; Efficient. Patented tri-channel cooling with just 3 system fans – as opposed to 10 that other workstations typically rely on — an",
+        "attributeNames": {
+          "processor_frequency": "Processor frequency",
+          "processor_cores": "Processor cores",
+          "processor_threads": "Processor Threads",
+          "stepping": "Stepping",
+          "brand": "Brand",
+          "color": "Color"
+        }
+      },
+      "links": {
+        "self": "http://glue.de.suite-split-released.local/abstract-products/131"
+      }
+    }
+  ],
+  "links": {
+    "self": "http://mysprykershop.com/abstract-products/122/related-products"
+  }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Reason</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Abstract product ID not specified</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Abstract product not found</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>Getting Up-Selling Products for a Registered User's Cart</h2>
+                                                    <p>
+        To get up-selling items for all products in a cart of a&#160;<b>registered customer</b>, send a&#160;<i>GET</i> request to the following endpoint:
+    </p>
+                                                    <p><b>/carts/{{cart_id}}/up-selling-products</b>
+                                                    </p>
+                                                    <p> </p>
+                                                    <p>
+        Sample request: <i>GET http://mysprykershop.com/carts/<b>1ce91011-8d60-59ef-9fe0-4493ef3628b2</b>/up-selling-products</i><br />where&#160;<b>1ce91011-8d60-59ef-9fe0-4493ef3628b2</b>&#160;is the ID of the cart you need items for.
+    </p>
+                                                    <p class="info">
+        For details on peculiarities of managing carts of registered users, see&#160;<a href="../managing_carts/managing-carts-of-registered-users.htm" class="MCXref xref">Managing Carts of Registered Users</a>.
+    </p>
+                                                    <h3>Response</h3>
+                                                    <p>
+        If the request was successful, the resource responds with an array of&#160;<b>RestAbstractProductsResponse</b>, where each item specifies a related up-selling item.
+    </p>
+                                                    <p><b>Response Fields</b>
+                                                    </p>
+                                                    <p>
+        For a detailed list of the fields included in the response for each product,
+        see <a href="retrieving-product-information.htm#General%20Product%20Information" class="MCXref xref">General Product Information</a>.
+    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "abstract-products",
+            "id": "014",
+            "attributes": {
+                "sku": "014",
+                "name": "Canon IXUS 177",
+                "description": "Stunning images with ease  Easily shoot fantastic photos or movies with Smart Auto, which chooses the perfect camera settings for you – whatever the scene. All you have to do is point and shoot. Use the Help Button for quick, easy-to-follow guidance on using your camera and its functions. Effortlessly enjoy great shots of friends thanks to Face Detection technology. It detects multiple faces in a single frame making sure they remain in focus and with optimum brightness. Face Detection also ensures natural skin tones even in unusual lighting conditions. Experiment and have fun with a range of Creative Filters. You can re-create the distortion of a fish-eye lens, make scenes in stills or movies look like miniature scale models and much more.a",
+                "attributes": {
+                    "megapixel": "20 MP",
+                    "display": "LCD",
+                    "photo_effects": "Vivid",
+                    "field_of_view": "100%",
+                    "brand": "Canon",
+                    "color": "Black"
+                },
+                "superAttributesDefinition": [
+                    "color"
+                ],
+                "superAttributes": [],
+                "attributeMap": {
+                    "attribute_variants": [],
+                    "super_attributes": [],
+                    "product_concrete_ids": [
+                        "014_25919241"
+                    ]
+                },
+                "metaTitle": "Canon IXUS 177",
+                "metaKeywords": "Canon,Entertainment Electronics",
+                "metaDescription": "Stunning images with ease  Easily shoot fantastic photos or movies with Smart Auto, which chooses the perfect camera settings for you – whatever the scene.",
+                "attributeNames": []
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/014"
+            },
+            "relationships": {
+                "abstract-product-image-sets": {
+                    "data": [
+                        {
+                            "type": "abstract-product-image-sets",
+                            "id": "014"
+                        }
+                    ]
+                },
+                "abstract-product-availabilities": {
+                    "data": [
+                        {
+                            "type": "abstract-product-availabilities",
+                            "id": "014"
+                        }
+                    ]
+                },
+                "abstract-product-prices": {
+                    "data": [
+                        {
+                            "type": "abstract-product-prices",
+                            "id": "014"
+                        }
+                    ]
+                },
+                "category-nodes": {
+                    "data": [
+                        {
+                            "type": "category-nodes",
+                            "id": "4"
+                        },
+                        {
+                            "type": "category-nodes",
+                            "id": "2"
+                        }
+                    ]
+                },
+                "product-tax-sets": {
+                    "data": [
+                        {
+                            "type": "product-tax-sets",
+                            "id": "0e93b0d4-6d83-5fc1-ac1d-d6ae11690406"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "abstract-products",
+            "id": "015",
+            "attributes": {
+                "sku": "015",
+                "name": "Canon IXUS 177",
+                "description": "Stunning images with ease  Easily shoot fantastic photos or movies with Smart Auto, which chooses the perfect camera settings for you – whatever the scene. All you have to do is point and shoot. Use the Help Button for quick, easy-to-follow guidance on using your camera and its functions. Effortlessly enjoy great shots of friends thanks to Face Detection technology. It detects multiple faces in a single frame making sure they remain in focus and with optimum brightness. Face Detection also ensures natural skin tones even in unusual lighting conditions. Experiment and have fun with a range of Creative Filters. You can re-create the distortion of a fish-eye lens, make scenes in stills or movies look like miniature scale models and much more.a",
+                "attributes": {
+                    "megapixel": "20 MP",
+                    "display": "LCD",
+                    "photo_effects": "Vivid",
+                    "field_of_view": "100%",
+                    "brand": "Canon",
+                    "color": "Silver"
+                },
+                "superAttributesDefinition": [
+                    "color"
+                ],
+                "superAttributes": [],
+                "attributeMap": {
+                    "attribute_variants": [],
+                    "super_attributes": [],
+                    "product_concrete_ids": [
+                        "015_25904009"
+                    ]
+                },
+                "metaTitle": "Canon IXUS 177",
+                "metaKeywords": "Canon,Entertainment Electronics",
+                "metaDescription": "Stunning images with ease  Easily shoot fantastic photos or movies with Smart Auto, which chooses the perfect camera settings for you – whatever the scene.",
+                "attributeNames": []
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/015"
+            },
+            "relationships": {
+                "abstract-product-image-sets": {
+                    "data": [
+                        {
+                            "type": "abstract-product-image-sets",
+                            "id": "015"
+                        }
+                    ]
+                },
+                "abstract-product-availabilities": {
+                    "data": [
+                        {
+                            "type": "abstract-product-availabilities",
+                            "id": "015"
+                        }
+                    ]
+                },
+                "abstract-product-prices": {
+                    "data": [
+                        {
+                            "type": "abstract-product-prices",
+                            "id": "015"
+                        }
+                    ]
+                },
+                "category-nodes": {
+                    "data": [
+                        {
+                            "type": "category-nodes",
+                            "id": "4"
+                        },
+                        {
+                            "type": "category-nodes",
+                            "id": "2"
+                        }
+                    ]
+                },
+                "product-tax-sets": {
+                    "data": [
+                        {
+                            "type": "product-tax-sets",
+                            "id": "0e93b0d4-6d83-5fc1-ac1d-d6ae11690406"
+                        }
+                    ]
+                },
+                "product-labels": {
+                    "data": [
+                        {
+                            "type": "product-labels",
+                            "id": "5"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "links": {
+        "self": "http://mysprykershop.com/guest-carts/0d691c40-2a56-5b80-9ed5-af366a66c6ef/up-selling-products"
+    },
+    "included": [
+        {
+            "type": "abstract-product-image-sets",
+            "id": "004",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30663302_6177.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30663302_6177.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/004/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "004",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/004/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "004",
+            "attributes": {
+                "price": 7000,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 7000,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/004/abstract-product-prices"
+            }
+        },
+        {
+            "type": "category-nodes",
+            "id": "4",
+            "attributes": {
+                "nodeId": 4,
+                "name": "Digital Cameras",
+                "metaTitle": "Digital Cameras",
+                "metaKeywords": "Digital Cameras",
+                "metaDescription": "Digital Cameras",
+                "isActive": true,
+                "children": [],
+                "parents": [
+                    {
+                        "nodeId": 2,
+                        "name": "Cameras &amp; Camcorders",
+                        "metaTitle": "Cameras &amp; Camcorders",
+                        "metaKeywords": "Cameras &amp; Camcorders",
+                        "metaDescription": "Cameras &amp; Camcorders",
+                        "isActive": true,
+                        "children": [],
+                        "parents": [
+                            {
+                                "nodeId": 1,
+                                "name": "Demoshop",
+                                "metaTitle": "Demoshop",
+                                "metaKeywords": "English version of Demoshop",
+                                "metaDescription": "English version of Demoshop",
+                                "isActive": true,
+                                "children": [],
+                                "parents": [],
+                                "order": null
+                            }
+                        ],
+                        "order": 90
+                    }
+                ],
+                "order": 100
+            },
+            "links": {
+                "self": "http://mysprykershop.com/category-nodes/4"
+            }
+        },
+        {
+            "type": "category-nodes",
+            "id": "2",
+            "attributes": {
+                "nodeId": 2,
+                "name": "Cameras &amp; Camcorders",
+                "metaTitle": "Cameras &amp; Camcorders",
+                "metaKeywords": "Cameras &amp; Camcorders",
+                "metaDescription": "Cameras &amp; Camcorders",
+                "isActive": true,
+                "children": [
+                    {
+                        "nodeId": 4,
+                        "name": "Digital Cameras",
+                        "metaTitle": "Digital Cameras",
+                        "metaKeywords": "Digital Cameras",
+                        "metaDescription": "Digital Cameras",
+                        "isActive": true,
+                        "children": [],
+                        "parents": [],
+                        "order": 100
+                    },
+                    {
+                        "nodeId": 3,
+                        "name": "Camcorders",
+                        "metaTitle": "Camcorders",
+                        "metaKeywords": "Camcorders",
+                        "metaDescription": "Camcorders",
+                        "isActive": true,
+                        "children": [],
+                        "parents": [],
+                        "order": 90
+                    }
+                ],
+                "parents": [
+                    {
+                        "nodeId": 1,
+                        "name": "Demoshop",
+                        "metaTitle": "Demoshop",
+                        "metaKeywords": "English version of Demoshop",
+                        "metaDescription": "English version of Demoshop",
+                        "isActive": true,
+                        "children": [],
+                        "parents": [],
+                        "order": null
+                    }
+                ],
+                "order": 90
+            },
+            "links": {
+                "self": "http://mysprykershop.com/category-nodes/2"
+            }
+        },
+        {
+            "type": "product-tax-sets",
+            "id": "0e93b0d4-6d83-5fc1-ac1d-d6ae11690406",
+            "attributes": {
+                "name": "Entertainment Electronics",
+                "restTaxRates": [
+                    {
+                        "name": "Austria Standard",
+                        "rate": "20.00",
+                        "country": "AT"
+                    },
+                    {
+                        "name": "Belgium Standard",
+                        "rate": "21.00",
+                        "country": "BE"
+                    },
+                    {
+                        "name": "Bulgaria Standard",
+                        "rate": "20.00",
+                        "country": "BG"
+                    },
+                    {
+                        "name": "Czech Republic Standard",
+                        "rate": "21.00",
+                        "country": "CZ"
+                    },
+                    {
+                        "name": "Denmark Standard",
+                        "rate": "25.00",
+                        "country": "DK"
+                    },
+                    {
+                        "name": "France Standard",
+                        "rate": "20.00",
+                        "country": "FR"
+                    },
+                    {
+                        "name": "Germany Standard",
+                        "rate": "19.00",
+                        "country": "DE"
+                    },
+                    {
+                        "name": "Hungary Standard",
+                        "rate": "27.00",
+                        "country": "HU"
+                    },
+                    {
+                        "name": "Italy Standard",
+                        "rate": "22.00",
+                        "country": "IT"
+                    },
+                    {
+                        "name": "Luxembourg Standard",
+                        "rate": "17.00",
+                        "country": "LU"
+                    },
+                    {
+                        "name": "Netherlands Standard",
+                        "rate": "21.00",
+                        "country": "NL"
+                    },
+                    {
+                        "name": "Poland Standard",
+                        "rate": "23.00",
+                        "country": "PL"
+                    },
+                    {
+                        "name": "Romania Standard",
+                        "rate": "20.00",
+                        "country": "RO"
+                    },
+                    {
+                        "name": "Slovakia Standard",
+                        "rate": "20.00",
+                        "country": "SK"
+                    },
+                    {
+                        "name": "Slovenia Standard",
+                        "rate": "22.00",
+                        "country": "SI"
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/015/product-tax-sets"
+            }
+        },
+        {
+            "type": "product-labels",
+            "id": "3",
+            "attributes": {
+                "name": "Standard Label",
+                "isExclusive": false,
+                "position": 3,
+                "frontEndReference": ""
+            },
+            "links": {
+                "self": "http://mysprykershop.com/product-labels/3"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "005",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30663301_9631.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30663301_9631.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/005/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "005",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/005/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "005",
+            "attributes": {
+                "price": 7000,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 7000,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/005/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "006",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30692993_5119.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30692993_5119.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/006/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "006",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/006/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "006",
+            "attributes": {
+                "price": 34500,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 34500,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    },
+                    {
+                        "priceTypeName": "ORIGINAL",
+                        "netAmount": null,
+                        "grossAmount": 34800,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/006/abstract-product-prices"
+            }
+        },
+        {
+            "type": "product-labels",
+            "id": "5",
+            "attributes": {
+                "name": "SALE %",
+                "isExclusive": false,
+                "position": 5,
+                "frontEndReference": "highlight"
+            },
+            "links": {
+                "self": "http://mysprykershop.com/product-labels/5"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "007",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30691822_1486.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30691822_1486.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/007/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "007",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/007/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "007",
+            "attributes": {
+                "price": 34500,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 34500,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/007/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "008",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30692992_1205.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30692992_1205.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/008/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "008",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/008/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "008",
+            "attributes": {
+                "price": 34500,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 34500,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/008/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "009",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30692991_9278.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30692991_9278.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/009/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "009",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/009/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "009",
+            "attributes": {
+                "price": 9999,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 9999,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/009/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "010",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30692994_4933.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30692994_4933.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/010/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "010",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/010/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "010",
+            "attributes": {
+                "price": 34600,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 34600,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    },
+                    {
+                        "priceTypeName": "ORIGINAL",
+                        "netAmount": null,
+                        "grossAmount": 35600,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/010/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "011",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/30775359_2536.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/30775359_2536.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/011/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "011",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/011/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "011",
+            "attributes": {
+                "price": 36600,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 36600,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/011/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "012",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/25904598_3791.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/25904598_3791.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/012/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "012",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/012/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "012",
+            "attributes": {
+                "price": 36600,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 36600,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/012/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "013",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/norm/high/25904584-3409.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/25904584-3409.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/013/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "013",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/013/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "013",
+            "attributes": {
+                "price": 5699,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 5699,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/013/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "014",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/gallery/25919241_0663.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/gallery_mediums/25919241_0663.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/014/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "014",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/014/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "014",
+            "attributes": {
+                "price": 4579,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 4579,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/014/abstract-product-prices"
+            }
+        },
+        {
+            "type": "abstract-product-image-sets",
+            "id": "015",
+            "attributes": {
+                "imageSets": [
+                    {
+                        "name": "default",
+                        "images": [
+                            {
+                                "externalUrlLarge": "//images.icecat.biz/img/norm/high/25904009-6055.jpg",
+                                "externalUrlSmall": "//images.icecat.biz/img/norm/medium/25904009-6055.jpg"
+                            }
+                        ]
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/015/abstract-product-image-sets"
+            }
+        },
+        {
+            "type": "abstract-product-availabilities",
+            "id": "015",
+            "attributes": {
+                "availability": true,
+                "quantity": 10
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/015/abstract-product-availabilities"
+            }
+        },
+        {
+            "type": "abstract-product-prices",
+            "id": "015",
+            "attributes": {
+                "price": 6000,
+                "prices": [
+                    {
+                        "priceTypeName": "DEFAULT",
+                        "netAmount": null,
+                        "grossAmount": 6000,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    },
+                    {
+                        "priceTypeName": "ORIGINAL",
+                        "netAmount": null,
+                        "grossAmount": 8000,
+                        "currency": {
+                            "code": "EUR",
+                            "name": "Euro",
+                            "symbol": "€"
+                        }
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/015/abstract-product-prices"
+            }
+        }
+    ]
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Reason</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Cart ID is missing</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">A cart with the specified ID was not found</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>Getting Up-Selling Products for a&#160;Guest Cart</h2>
+                                                    <p>
+        To get up-selling items for products in a <b>guest</b> cart, send a&#160;<i>GET</i> request to the following endpoint:
+    </p>
+                                                    <p><b>/guest-carts/{{cart_id}}/up-selling-products</b>
+                                                    </p>
+                                                    <p> </p>
+                                                    <p>
+        Sample request:&#160;<i>GET http://mysprykershop.com/guest-carts/<b>1ce91011-8d60-59ef-9fe0-4493ef3628b2</b>/up-selling-products</i><br />where&#160;<b>1ce91011-8d60-59ef-9fe0-4493ef3628b2</b>&#160;is the ID of the guest cart you need items for.
+    </p>
+                                                    <p>
+        Your request must specify a unique identifier of the <b>guest user</b> in&#160;the&#160;<b>X-Anonymous-Customer-Unique-Id</b>&#160;header.
+    </p>
+                                                    <p class="info">
+        For details on how to retrieve and manage the identifier, see&#160;<a href="../managing_carts/managing-guest-carts.htm" class="MCXref xref">Managing Guest Carts</a>.
+    </p>
+                                                    <h3>Response</h3>
+                                                    <p>
+        If the request was successful, the resource responds with an array of&#160;<b>RestAbstractProductsResponse</b>, where each item specifies a related up-selling item.
+    </p>
+                                                    <p><b>Response Fields</b>
+                                                    </p>
+                                                    <p>
+        For a detailed list of the fields included in the response for each product,
+        see <a href="retrieving-product-information.htm#General%20Product%20Information" class="MCXref xref">General Product Information</a>.
+    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "abstract-products",
+            "id": "138",
+            "attributes": {
+                "sku": "138",
+                "name": "Acer TravelMate P258-M",
+                "description": "Tactile textile The P2 series now comes with a fine linen textile pattern embossed on the outer covers. This lends a professional refined look and feel to the line that adds distinction to functionality. There are also practical benefits, as the pattern makes it a bit easier to keep a firm grip on the go, while also resisting scratches. The TravelMate P2 Series is certified to deliver the high audio and visual standards of Skype for Business1. Optimised hardware ensures that every word will be heard clearly with no gap or lag in speech, minimal background noise and zero echo. That means you can call or video chat with superior audio and visual quality. The TravelMate P2 is packed with features that make it easier to do business. Work faster with smoother gestures on the large Precision Touchpad. Quickly share business contacts with a smartphone via Contact Pickup. Log in to the TravelMate P2 faster thanks to Face Login.\t",
+                "attributes": {
+                    "form_factor": "clamshell",
+                    "processor_cache": "3 MB",
+                    "stepping": "D1",
+                    "brand": "Acer",
+                    "color": "Black"
+                },
+                "superAttributesDefinition": [
+                    "form_factor",
+                    "processor_cache",
+                    "color"
+                ],
+                "superAttributes": {
+                    "processor_frequency": [
+                        "3.1 GHz",
+                        "2.8 GHz"
+                    ]
+                },
+                "attributeMap": {
+                    "attribute_variants": {
+                        "processor_frequency:3.1 GHz": {
+                            "id_product_concrete": "138_30657838"
+                        },
+                        "processor_frequency:2.8 GHz": {
+                            "id_product_concrete": "138_30046855"
+                        }
+                    },
+                    "super_attributes": {
+                        "processor_frequency": [
+                            "3.1 GHz",
+                            "2.8 GHz"
+                        ]
+                    },
+                    "product_concrete_ids": [
+                        "138_30046855",
+                        "138_30657838"
+                    ]
+                },
+                "metaTitle": "Acer TravelMate P258-M",
+                "metaKeywords": "Acer,Entertainment Electronics",
+                "metaDescription": "Tactile textile The P2 series now comes with a fine linen textile pattern embossed on the outer covers. This lends a professional refined look and feel to",
+                "attributeNames": {
+                    "form_factor": "Form factor",
+                    "processor_cache": "Processor cache type",
+                    "stepping": "Stepping",
+                    "brand": "Brand",
+                    "color": "Color",
+                    "processor_frequency": "Processor frequency"
+                }
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/138"
+            }
+        },
+        {
+            "type": "abstract-products",
+            "id": "042",
+            "attributes": {
+                "sku": "042",
+                "name": "Samsung Galaxy S7",
+                "description": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curved front and back fit in your palm just right. It's as beautiful to look at as it is to use. We spent a long time perfecting the curves of the Galaxy S7 edge and S7. Using a proprietary process called 3D Thermoforming, we melted 3D glass to curve with such precision that it meets the curved metal alloy to create an exquisitely seamless and strong unibody. The dual-curve backs on the Galaxy S7 edge and S7 are the reason why they feel so comfortable when you hold them. Everything about the design, from the naturally flowing lines to the thin form factor, come together to deliver a grip that's so satisfying, you won't want to let go.",
+                "attributes": {
+                    "usb_version": "2",
+                    "os_version": "6",
+                    "max_memory_card_size": "200 GB",
+                    "weight": "152 g",
+                    "brand": "Samsung",
+                    "color": "Gold"
+                },
+                "superAttributesDefinition": [
+                    "color"
+                ],
+                "superAttributes": [],
+                "attributeMap": {
+                    "attribute_variants": [],
+                    "super_attributes": [],
+                    "product_concrete_ids": [
+                        "042_31040075"
+                    ]
+                },
+                "metaTitle": "Samsung Galaxy S7",
+                "metaKeywords": "Samsung,Communication Electronics",
+                "metaDescription": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curv",
+                "attributeNames": {
+                    "usb_version": "USB version",
+                    "os_version": "OS version",
+                    "max_memory_card_size": "Max memory card size",
+                    "weight": "Weight",
+                    "brand": "Brand",
+                    "color": "Color"
+                }
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/042"
+            }
+        },
+        {
+            "type": "abstract-products",
+            "id": "043",
+            "attributes": {
+                "sku": "043",
+                "name": "Samsung Galaxy S7",
+                "description": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curved front and back fit in your palm just right. It's as beautiful to look at as it is to use. We spent a long time perfecting the curves of the Galaxy S7 edge and S7. Using a proprietary process called 3D Thermoforming, we melted 3D glass to curve with such precision that it meets the curved metal alloy to create an exquisitely seamless and strong unibody. The dual-curve backs on the Galaxy S7 edge and S7 are the reason why they feel so comfortable when you hold them. Everything about the design, from the naturally flowing lines to the thin form factor, come together to deliver a grip that's so satisfying, you won't want to let go.",
+                "attributes": {
+                    "usb_version": "2",
+                    "os_version": "6",
+                    "max_memory_card_size": "200 GB",
+                    "weight": "152 g",
+                    "brand": "Samsung",
+                    "color": "White"
+                },
+                "superAttributesDefinition": [
+                    "color"
+                ],
+                "superAttributes": [],
+                "attributeMap": {
+                    "attribute_variants": [],
+                    "super_attributes": [],
+                    "product_concrete_ids": [
+                        "043_31040074"
+                    ]
+                },
+                "metaTitle": "Samsung Galaxy S7",
+                "metaKeywords": "Samsung,Communication Electronics",
+                "metaDescription": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curv",
+                "attributeNames": {
+                    "usb_version": "USB version",
+                    "os_version": "OS version",
+                    "max_memory_card_size": "Max memory card size",
+                    "weight": "Weight",
+                    "brand": "Brand",
+                    "color": "Color"
+                }
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/043"
+            }
+        },
+        {
+            "type": "abstract-products",
+            "id": "044",
+            "attributes": {
+                "sku": "044",
+                "name": "Samsung Galaxy S7",
+                "description": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curved front and back fit in your palm just right. It's as beautiful to look at as it is to use. We spent a long time perfecting the curves of the Galaxy S7 edge and S7. Using a proprietary process called 3D Thermoforming, we melted 3D glass to curve with such precision that it meets the curved metal alloy to create an exquisitely seamless and strong unibody. The dual-curve backs on the Galaxy S7 edge and S7 are the reason why they feel so comfortable when you hold them. Everything about the design, from the naturally flowing lines to the thin form factor, come together to deliver a grip that's so satisfying, you won't want to let go.",
+                "attributes": {
+                    "usb_version": "2",
+                    "os_version": "6",
+                    "max_memory_card_size": "200 GB",
+                    "weight": "152 g",
+                    "brand": "Samsung",
+                    "color": "Black"
+                },
+                "superAttributesDefinition": [
+                    "color"
+                ],
+                "superAttributes": [],
+                "attributeMap": {
+                    "attribute_variants": [],
+                    "super_attributes": [],
+                    "product_concrete_ids": [
+                        "044_31040076"
+                    ]
+                },
+                "metaTitle": "Samsung Galaxy S7",
+                "metaKeywords": "Samsung,Communication Electronics",
+                "metaDescription": "Smart Design The beauty of what we've engineered is to give you the slimmest feel in your hand without compromising the big screen size. The elegantly curv",
+                "attributeNames": {
+                    "usb_version": "USB version",
+                    "os_version": "OS version",
+                    "max_memory_card_size": "Max memory card size",
+                    "weight": "Weight",
+                    "brand": "Brand",
+                    "color": "Color"
+                }
+            },
+            "links": {
+                "self": "http://mysprykershop.com/abstract-products/044"
+            }
+        }
+    ],
+    "links": {
+        "self": "http://mysprykershop.com/guest-carts/6a721c99-03d1-5c4d-8f1b-2c33ae57762a/up-selling-products"
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Reason</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Cart ID is missing</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">A cart with the specified ID was not found</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>See Also:</h2>
+                                                    <ul>
+                                                        <li value="1"><a href="retrieving-alternative-products.htm" class="MCXref xref">Retrieving Alternative Products</a>
+                                                        </li>
+                                                        <li value="2"><a href="retrieving-product-information.htm" class="MCXref xref">Retrieving Product Information</a>
+                                                        </li>
+                                                        <li value="3"><a href="https://documentation.spryker.com/capabilities/cross-sell_and_upsell/product-relations.htm">Product Relations</a>
+                                                        </li>
+                                                        <li value="4"><a href="../catalog-search.htm" class="MCXref xref">Catalog Search</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
