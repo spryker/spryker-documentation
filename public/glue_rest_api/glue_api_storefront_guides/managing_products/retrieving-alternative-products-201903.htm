@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos|Glue API HowTos">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03,Spryker.B2C,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides|Managing Products">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
-        <meta name="description" content="This guides provides step-by-step instructions on how to configure the visibility of the included section of REST responses in Spryker Glue API." />
+        <meta name="description" content="The article demonstrates how to find alternatives for discontinued products with the help of Glue API endpoints." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
@@ -13,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Configuring Visibility of the Included Section | Spryker</title>
+        <meta name="author" content="" /><title>Retrieving Alternative Products | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="MKXhnUWLwkaolswVV067Cg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="MKXhnUWLwkaolswVV067Cg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="FH-I588lCU6EELN37e6-QQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="FH-I588lCU6EELN37e6-QQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,269 +241,263 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Configuring Visibility of the Included Section</h1>
+                                                    <h1>Retrieving Alternative Products</h1>
                                                     <p>
-            Responses of Spryker Glue REST API can return the&#160;<b>included</b>&#160;and <b>relationships</b> sections. The sections contain additional information on the resource requested. Such information is presented in the form of related resources. For example, 
-            if you request information on products, the sections can include such additional related resources as image sets, prices, availability information etc.
+            The <i>Alternative Products</i> feature allows customers to quickly find a substitute product in case if their preferred item runs out of stock or is no longer available for other reasons. The feature is particularly useful when a certain product
+            becomes discontinued. In this case, customers usually seek for a more up-to-date generation of the same product, and suggesting possible alternatives is especially crucial.
         </p>
-                                                    <p class="info">For more details, see <a href="https://jsonapi.org/format/#document-compound-documents" target="_blank">Compound Documents</a>.</p>
-                                                    <p>You can decide whether Glue REST API includes the sections in all responses by default:</p>
+                                                    <p class="info">
+            For more details, see&#160;<a href="https://documentation.spryker.com/capabilities/product_management/alternative_products/alternative-products.htm">Alternative Products</a> and
+            <a href="https://documentation.spryker.com/capabilities/product_management/discontinued_products/discontinued-products.htm">Discontinued Products</a>.
+        </p>
+                                                    <p>
+            The&#160;<b>Product Alternatives API</b> provides access to alternative products via&#160;REST API requests. In particular, you can:
+        </p>
                                                     <ul>
-                                                        <li value="1">If you <b>enable</b> the option,&#160;API endpoints return all related resources by default. With the help of the&#160;<i>include</i> query string you can filter out the unnecessary included resources and request only the information you need.</li>
-                                                        <li value="2">If you&#160;<b>disable</b> the option, responses of API endpoints do not contain the&#160;<i>included</i>&#160;and <i>relationships&#160;</i>sections unless you specify the related resources you need via the&#160;<i>include</i> query string. When the string is specified, only the resources passed by it are returned.</li>
+                                                        <li value="1">Find out whether a specific concrete product is discontinued;</li>
+                                                        <li value="2">Retrieve a list of alternative products for a specific product.</li>
                                                     </ul>
+                                                    <p class="note">
+            Only&#160;<b>concrete</b> products can be marked as discontinued and, therefore, alternatives can be specified for <b>concrete</b> products&#160;only.
+        </p>
+                                                    <p>
+            In your development, the endpoints can help you to:
+        </p>
+                                                    <ul>
+                                                        <li value="1">
+                Provide alternatives to a customer in the case when a desired product runs out of stock or is otherwise unavailable, for example, due to local restrictions;
+            </li>
+                                                        <li value="2">
+                Provide replacements in case a certain product is discontinued;
+            </li>
+                                                        <li value="3">
+                Make alternative products available to customers in their shopping list or suggestions area in order to make searching for and comparing similar products easier. This can significantly enhance the shopping experience in your shop.
+            </li>
+                                                    </ul>
+                                                    <p class="important">
+            It is the responsibility of the client to identify whether a product is unavailable and when to provide alternatives. The API only provides information on availability, discontinued status and possible alternatives.
+        </p>
+                                                    <h2>Installation</h2>
+                                                    <p>
+            For detailed information on the modules that provide the API functionality and related installation instructions, see&#160;Alternative Products.
+        </p>
+                                                    <p class="info">
+            To be able to use <b>Product Alternatives API</b>, first, you need to have the&#160;<i>Alternative Products</i> feature integrated with your project.<br /><br />To be able to handle discontinued products, first, integrate the <i>Discontinued Products</i> feature.</p>
+                                                    <h2>Checking Whether Product is Discontinued</h2>
+                                                    <p>
+            Before suggesting an alternative product, first, you need to identify whether a product is still available, i.e. not discontinued. For this purpose, the response of the <i>/concrete-products</i> endpoint
+            has been extended with the following attributes:
+        </p>
                                                     <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                         <tbody>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"> </th>
-                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Request with 'include' query string</th>
-                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Request without 'include' query string</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Attribute</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Type</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Description</th>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
-                                                                    <p>&#160;</p>
-                                                                </th>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
-                                                                    <p style="text-align: center;">Example:</p>
-                                                                    <p style="text-align: center;"><i>/concrete-products/177_24867659?<b>include=concrete-product-image-sets</b></i>
-                                                                    </p>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>isDiscontinued</b>
                                                                 </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Boolean</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                    <p style="text-align: center;">Example:</p>
-                                                                    <p style="text-align: center;"><i>/concrete-products/177_24867659</i>
-                                                                    </p>
+                                                                    <p>Specifies whether a product is discontinued:</p>
+                                                                    <ul>
+                                                                        <li value="1"><b>true</b> - the product is discontinued and requires a replacement item;</li>
+                                                                        <li value="2"><b>false&#160;</b>- the product is not&#160;discontinued.</li>
+                                                                    </ul>
                                                                 </td>
                                                             </tr>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>Enabled</b>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>discontinuedNote</b>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The&#160;<b>included</b>&#160;and <b>relationships</b> sections contain only the resources whose names were passed in the query string (resource <i>concrete-product-image-sets</i> per the example).</td>
-                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" rowspan="2">The&#160;<i>included</i> section contains&#160;<b>all</b>&#160;the included resources (if any). </td>
-                                                            </tr>
-                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>Disabled</b>
-                                                                </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">The response <b>does not</b> contain the&#160;<i>included</i> section with related resources.</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Contains an optional note that was specified when marking a product as discontinued.</td>
                                                             </tr>
                                                         </tbody>
                                                     </table>
-                                                    <p>
-            By default, the option is <b>enabled</b>&#160;on the Spryker Core level, but&#160;<b>disabled</b> on the project level in 
-            all <a href="https://documentation.spryker.com/about_spryker/understanding_spryker/demoshops.htm">Spryker Demo Shops</a> (<i>B2B Demo Shop</i>, <i>B2C&#160;Demo Shop</i> and <i>Master Shop Suite</i>).
+                                                    <p class="note">
+            Only <b>concrete</b> products can be marked as discontinued.
         </p>
+                                                    <p>To find out whether a product is discontinued, send a <i>GET</i> request to the endpoint:</p>
+                                                    <p><b>/concrete-products/{{sku}}</b>
+                                                        <br />Retrieves information on a <b>concrete</b> product by SKU.
+        </p>
+                                                    <p> </p>
+                                                    <p>
+            Sample request:&#160;<i>GET http://mysprykershop.com/concrete-products/<b>145_29885470</b></i><br />where <b>145_29885470</b> is the SKU of the concrete product.
+        </p>
+                                                    <p> </p>
+                                                    <p>
+            If the request was successful and a product with the specified SKU was found, the resource responds with a&#160;<b>RestConcreteProductsResponse</b>. Sample response (truncated) with the <b>isDiscontinued</b> and&#160;<b>discontinuedNote</b>
+            fields populated:
+        </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to view</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "concrete-products",
+        "id": "145_29885470",
+        "attributes": {
+            "isDiscontinued": true,
+            "discontinuedNote": "Replaced by Acer Aspire S7",
+            "sku": "145_29885470",
+            "name": "DELL Chromebook 13",
+            "description": "The industry’s finest Sleek. Smooth. Strong: The carbon fiber finish with magnesium alloy is light, durable, cool to the touch and designed to impress. The Google ecosystem at your service: Expect Speed - boots in seconds, Simplicity - easy to use and manage, Secure - with virus protection built-in, encrypted user data and automated updates. A wide range of magnificence: Bring business projects to full light with industry leading brightness and viewing angles on a 13.3\" FHD IPS display with optional scratch-resistant Corning® Gorilla® Glass NBT™ touch display. Business class performance - Browse faster using up to core i5 5th gen intel Core processors and experience the performance of Dell's most powerful chromebook. Professional looks and productivity: Thoughtfully designed to be sleek and useful with a carbon fiber lid, dark gray alloy chassis, backlit keyboard, glass track pad and 1080p display. Work on the go: Securely and easily access servers, mirror desktops and improve lifecycle management with Dell unique IP from KACE, SonicWALL (VPN) and Wyse.",
+            "attributes": {...},
+            "superAttributesDefinition": [...],
+            "metaTitle": "DELL Chromebook 13",
+            "metaKeywords": "DELL,Entertainment Electronics",
+            "metaDescription": "The industry’s finest Sleek. Smooth. Strong: The carbon fiber finish with magnesium alloy is light, durable, cool to the touch and designed to impress. The",
+            "attributeNames": {...}
+        },
+        "links": {...},
+        "relationships": {...}
+    },
+    "included": [...]
+}</code></pre>
+                                                        </div>
+                                                    </div>
                                                     <p class="info">
-            For the purposes of boosting the API performance and bandwidth usage optimization, it is recommended to request only the information you need.
+            For a detailed listing of all fields available in the response, as well as possible errors,
+            see <a href="retrieving-product-information.htm#General%20Product%20Information" class="MCXref xref">General Product Information</a>.
         </p>
+                                                    <p class="tip">
+            You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales; 
+			<b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+        </p>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Reason</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Concrete product ID not specified</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Concrete product not found</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>Retrieving Alternatives for Product</h2>
+                                                    <p>To retrieve alternatives for a&#160;product, send a&#160;<i>GET</i> request to the following endpoints:</p>
+                                                    <ul>
+                                                        <li value="1"><b>/concrete-products/{{sku}}/abstract-alternative-products</b> - gets <b>abstract</b> products that substitute the item whose SKU is specified;</li>
+                                                        <li value="2"><b>/concrete-products/{{sku}}/concrete-alternative-products</b> - gets&#160;<b>concrete</b> products that substitute the item whose SKU is specified.</li>
+                                                    </ul>
                                                     <p>
-            To configure the behavior of the <i>included</i>&#160;and <i>relationships&#160;</i>sections:
+            Sample request: <i>GET http://mysprykershop.com/concrete-products/<b>145_29885470</b>/abstract-alternative-products</i><br />where <b>145_29885470</b> is the SKU of the product you are searching alternatives for.
         </p>
-                                                    <h2>Prerequisites</h2>
+                                                    <p class="note">
+            Alternatives are available only for <b>concrete</b> products.
+        </p>
+                                                    <h3>Response</h3>
                                                     <p>
-            To make the option possible, you need to have at least version <b>1.12.0</b> of <i>GlueApplication</i>&#160;module installed in your project. For details on how to upgrade, 
-            see the Integration Guide.
+            Depending on the endpoint used, the request will be either an <b>AbstractProductsRestCollectionResponse</b> or&#160;a&#160;<b>ConcreteProductsRestCollectionResponse</b>:
         </p>
-                                                    <h2>Configuration</h2>
-                                                    <p>
-            To configure the behavior of the sections:
-        </p>
-                                                    <ol>
-                                                        <li value="1">Open or create file&#160;<var>Pyz\Glue\GlueApplication\GlueApplicationConfig.php</var> on your project level.</li>
-                                                        <li value="2">Set the value of the&#160;<var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter according to the desired behavior:
-                <ul><li value="1"><b>true</b> - to enable related resources everywhere;</li><li value="2"><b>false</b>&#160;- to return&#160;related resources per request only.</li></ul><p><b>Sample Implementation:</b></p><pre><code class="language-PHP line-numbers">&lt;?php
-
-namespace Pyz\Glue\GlueApplication;
-
-use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
-use Spryker\Glue\GlueApplication\GlueApplicationConfig as SprykerGlueApplicationConfig;
-
-class GlueApplicationConfig extends SprykerGlueApplicationConfig
-{
-    ...
-    
-    /**
-     * @return bool
-     */
-    public function isEagerRelationshipsLoadingEnabled(): bool
+                                                    <ul>
+                                                        <li value="1"><i>AbstractProductsRestCollectionResponse</i> - represents a collection, where each item is an&#160;<b>abstract</b>&#160;alternative to the product requested;</li>
+                                                        <li value="2"><i>ConcreteProductsRestCollectionResponse</i>&#160;- represents a collection, where each item is a&#160;<b>concrete</b> alternative&#160;to the product requested.</li>
+                                                    </ul>
+                                                    <p class="info">
+            For a detailed description of abstract and concrete product fields,
+            see <a href="retrieving-product-information.htm#General%20Product%20Information" class="MCXref xref">General Product Information</a>.</p>
+                                                    <p><b>Sample Responses:</b>
+                                                    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response containing abstract alternatives for a product</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+  "data": [
     {
-        return false;
-    }
-}</code></pre></li>
-                                                        <li value="3">Save the file.</li>
-                                                    </ol>
-                                                    <h2>Verification</h2>
-                                                    <p>
-            To verify that the configuration has been completed successfully:</p>
-                                                    <ol>
-                                                        <li value="1">Send a <i>GET</i> request as follows:<br /><i>http://mysprykershop.com/concrete-products/177_24867659?<b>include=concrete-product-image-sets</b></i></li>
-                                                        <li value="2">
-                                                            <p>Make sure that the&#160;<i>included</i>&#160;and <i>relationships</i>&#160;sections of the response contain the&#160;<i>concrete-product-image-sets</i> resource <b>only</b>.</p>
-                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
-                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
-  data: {
-    type: concrete-products,
-    id: 177_24867659,
-    attributes: {...},
-    links: {...},
-    relationships: {
-      concrete-product-image-sets: {
-        data: [
-          {
-            type: concrete-product-image-sets,
-            id: 177_24867659
-          }
-        ]
+      "type": "abstract-products",
+      "id": "055",
+      "attributes": {...},
+      "links": {
+        "self": "http://mysprykershop.com/abstract-products/055"
+      }
+    },
+    {
+      "type": "abstract-products",
+      "id": "056",
+      "attributes": {...},
+      "links": {
+        "self": "http://mysprykershop.com/abstract-products/056"
       }
     }
-  },
-  included: [
-    {
-      type: concrete-product-image-sets,
-      id: 177_24867659,
-      attributes: {
-        imageSets: [
-          {
-            name: default,
-            images: [
-              {
-                externalUrlLarge: //images.icecat.biz/img/norm/high/24867659-4916.jpg,
-                externalUrlSmall: //images.icecat.biz/img/norm/medium/24867659-4916.jpg
-              }
-            ]
-          }
-        ]
-      },
-      links: {
-        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-image-sets
-      }
-    }
-  ]
+  ],
+  "links": {
+    "self": "http://mysprykershop.com/concrete-products/145_29885470/abstract-alternative-products"
+  }
 }</code></pre>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                        <li value="3">Send a <i>GET</i> request as follows:<br /><i>http://mysprykershop.com/concrete-products/177_24867659</i></li>
-                                                        <li value="4">
-                                                            <p>
-                        Make sure that the endpoint responds in accordance with your configuration:
-                    </p>
-                                                            <ul>
-                                                                <li value="1">
-                                                                    <p>if the <var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter is set to&#160;<b>true</b>,&#160;the&#160;<i>included</i> section of the response contains all related resources.</p>
-                                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
-                                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
-  data: {
-    type: concrete-products,
-    id: 177_24867659,
-    attributes: {...},
-    links: {...},
-    relationships: {
-      concrete-product-image-sets: {
-        data: [
-          {
-            type: concrete-product-image-sets,
-            id: 177_24867659
-          }
-        ]
-      },
-      concrete-product-availabilities: {
-        data: [
-          {
-            type: concrete-product-availabilities,
-            id: 177_24867659
-          }
-        ]
-      },
-      concrete-product-prices: {
-        data: [
-          {
-            type: concrete-product-prices,
-            id: 177_24867659
-          }
-        ]
-      }
-    }
-  },
-  included: [
-    {
-      type: concrete-product-image-sets,
-      id: 177_24867659,
-      attributes: {
-        imageSets: [
-          {
-            name: default,
-            images: [
-              {
-                externalUrlLarge: //images.icecat.biz/img/norm/high/24867659-4916.jpg,
-                externalUrlSmall: //images.icecat.biz/img/norm/medium/24867659-4916.jpg
-              }
-            ]
-          }
-        ]
-      },
-      links: {
-        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-image-sets
-      }
-    },
-    {
-      type: concrete-product-availabilities,
-      id: 177_24867659,
-      attributes: {
-        availability: true,
-        quantity: 20,
-        isNeverOutOfStock: false
-      },
-      links: {
-        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-availabilities
-      }
-    },
-    {
-      type: concrete-product-prices,
-      id: 177_24867659,
-      attributes: {
-        price: 42502,
-        prices: [
-          {
-            priceTypeName: DEFAULT,
-            netAmount: null,
-            grossAmount: 42502,
-            currency: {
-              code: EUR,
-              name: Euro,
-              symbol: €
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response containing concrete&#160;alternatives for a product</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "concrete-products",
+            "id": "142_30943081",
+            "attributes": {...},
+            "links": {
+                "self": "http://mysprykershop.com/concrete-products/142_30943081"
             }
-          }
-        ]
-      },
-      links: {
-        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-prices
-      }
+        },
+        {
+            "type": "concrete-products",
+            "id": "140_22766487",
+            "attributes": {...},
+            "links": {
+                "self": "http://mysprykershop.com/concrete-products/140_22766487"
+            }
+        }
+    ],
+    "links": {
+        "self": "http://mysprykershop.com/concrete-products/138_30046855/concrete-alternative-products"
     }
-  ]
 }</code></pre>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li value="2">
-                                                                    <p>if the <var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter is set to&#160;<b>false</b>,&#160;the&#160;<i>included</i>&#160;and <i>relationships&#160;</i>sections are absent.</p>
-                                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
-                                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
-  data: {
-    type: concrete-products,
-    id: 177_24867659,
-    attributes: {...},
-    links: {...},
-}</code></pre>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                            </ul>
-                                                        </li>
-                                                    </ol>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">
+			You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales; 
+			<b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+		</p>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Reason</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">400</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Concrete product ID not specified</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Concrete product not found</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
                                                     <h2>See Also:</h2>
                                                     <ul>
-                                                        <li value="1"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/glue-infrastructure.htm">Glue Infrastructure</a>
+                                                        <li value="1"><![CDATA[
+                ]]><a href="retrieving-related-products-201903.htm" class="MCXref xref">Retrieving Related Products</a><![CDATA[
+            ]]></li>
+                                                        <li value="2"><a href="retrieving-product-information.htm" class="MCXref xref">Retrieving Product Information</a>
                                                         </li>
+                                                        <li value="3"><a href="https://documentation.spryker.com/capabilities/product_management/alternative_products/alternative-products.htm">Alternative Products</a>
+                                                        </li>
+                                                        <li value="4"><a href="https://documentation.spryker.com/capabilities/product_management/discontinued_products/discontinued-products.htm">Discontinued Products</a>
+                                                        </li>
+                                                        <li value="5"><![CDATA[
+                 ]]><a href="../catalog-search.htm" class="MCXref xref">Catalog Search</a><![CDATA[
+            ]]></li>
                                                     </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Mar 14, 2019 </i>
+                                                    </p>
+                                                    <p>&#160;</p>
                                                 </div>
                                             </div>
                                         </div>

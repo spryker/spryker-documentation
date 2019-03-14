@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-02,ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Features|Development|Development Tools">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos|Glue API HowTos">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
-        <meta name="description" content="This article describes how to install and use Spryker's new code generation tool that enables you to avoid tedious work by writing boilerplate code for you." />
+        <meta name="description" content="This guides provides step-by-step instructions on how to configure the visibility of the included section of REST responses in Spryker Glue API." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
@@ -13,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Spryk | Spryker</title>
+        <meta name="author" content="" /><title>Configuring Visibility of the Included Section | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -79,6 +79,7 @@
 
 </style>
         <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../../../resources/scripts/jquery.min.js">
@@ -209,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="D9FfDv_mIEKoXmEMYdhYrg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="D9FfDv_mIEKoXmEMYdhYrg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="WOjUvm4Nwk-rycElmcHFjA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WOjUvm4Nwk-rycElmcHFjA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,57 +241,273 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Spryk</h1>
-                                                    <p>Spryk is a code generation tool for Spryker OS that ships as a part of the SDK product.</p>
-                                                    <p>To follow the Spryker's clean and complex architecture, you may need to write a lot of repetitive, boilerplate code. To avoid that tedious work, you can use Spryk, which will automatically generate and modify the required files according to the specified definitions. The definitions are implemented as a set of templates with placeholders to fill out during the execution of the tool, and small pieces of code that are created or modified for each specific definition. The generated code is available for further modification by a developer.</p>
-                                                    <h2>Definition Types</h2>
-                                                    <p>Currently, we support the following definition types:</p>
+                                                    <h1>Configuring Visibility of the Included Section</h1>
+                                                    <p>
+            Responses of Spryker Glue REST API can return the&#160;<b>included</b>&#160;and <b>relationships</b> sections. The sections contain additional information on the resource requested. Such information is presented in the form of related resources. For example, 
+            if you request information on products, the sections can include such additional related resources as image sets, prices, availability information etc.
+        </p>
+                                                    <p class="info">For more details, see <a href="https://jsonapi.org/format/#document-compound-documents" target="_blank">Compound Documents</a>.</p>
+                                                    <p>You can decide whether Glue REST API includes the sections in all responses by default:</p>
                                                     <ul>
-                                                        <li value="1"><b>Template definitions.</b> A template definition adds a new file to your file system and uses Twig as a render engine, which enables you to create files from templates with placeholders. A template definition will at least need a template argument defined. The argument tells Spryk which template to use. Template definitions can have as many arguments as needed.</li>
-                                                        <li value="2"><b>Structure definitions</b>. A structure definition allows you to define a directory structure. For example, the CreateSprykerModule definition contains the description of the created directories. The main argument of a structure definition is directories, which allows you to add a list of directories to be created.</li>
-                                                        <li value="3"><b>Method definitions.</b> A method definition is able to add methods to a specified target, e.g. Spryker\Zed\FooBar\Business\FooBarFacade. This type of definitions needs more arguments to do their job.</li>
+                                                        <li value="1">If you <b>enable</b> the option,&#160;API endpoints return all related resources by default. With the help of the&#160;<i>include</i> query string you can filter out the unnecessary included resources and request only the information you need.</li>
+                                                        <li value="2">If you&#160;<b>disable</b> the option, responses of API endpoints do not contain the&#160;<i>included</i>&#160;and <i>relationships&#160;</i>sections unless you specify the related resources you need via the&#160;<i>include</i> query string. When the string is specified, only the resources passed by it are returned.</li>
                                                     </ul>
-                                                    <h2>Installation</h2>
-                                                    <p>1. Add this private repository to your project's composer.json:</p><pre><code class="language-PHP line-numbers">"repositories": [
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"> </th>
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Request with 'include' query string</th>
+                                                                <th class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Request without 'include' query string</th>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <th class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                    <p>&#160;</p>
+                                                                </th>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                    <p style="text-align: center;">Example:</p>
+                                                                    <p style="text-align: center;"><i>/concrete-products/177_24867659?<b>include=concrete-product-image-sets</b></i>
+                                                                    </p>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                    <p style="text-align: center;">Example:</p>
+                                                                    <p style="text-align: center;"><i>/concrete-products/177_24867659</i>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>Enabled</b>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">The&#160;<b>included</b>&#160;and <b>relationships</b> sections contain only the resources whose names were passed in the query string (resource <i>concrete-product-image-sets</i> per the example).</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows" rowspan="2">The&#160;<i>included</i> section contains&#160;<b>all</b>&#160;the included resources (if any). </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>Disabled</b>
+                                                                </td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">The response <b>does not</b> contain the&#160;<i>included</i> section with related resources.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>
+            By default, the option is <b>enabled</b>&#160;on the Spryker Core level, but&#160;<b>disabled</b> on the project level in 
+            all <a href="https://documentation.spryker.com/about_spryker/understanding_spryker/demoshops.htm">Spryker Demo Shops</a> (<i>B2B Demo Shop</i>, <i>B2C&#160;Demo Shop</i> and <i>Master Shop Suite</i>).
+        </p>
+                                                    <p class="info">
+            For the purposes of boosting the API performance and bandwidth usage optimization, it is recommended to request only the information you need.
+        </p>
+                                                    <p>
+            To configure the behavior of the <i>included</i>&#160;and <i>relationships&#160;</i>sections:
+        </p>
+                                                    <h2>Prerequisites</h2>
+                                                    <p>
+            To make the option possible, you need to have at least version <b>1.12.0</b> of <i>GlueApplication</i>&#160;module installed in your project. For details on how to upgrade, 
+            see the Integration Guide.
+        </p>
+                                                    <h2>Configuration</h2>
+                                                    <p>
+            To configure the behavior of the sections:
+        </p>
+                                                    <ol>
+                                                        <li value="1">Open or create file&#160;<var>Pyz\Glue\GlueApplication\GlueApplicationConfig.php</var> on your project level.</li>
+                                                        <li value="2">Set the value of the&#160;<var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter according to the desired behavior:
+                <ul><li value="1"><b>true</b> - to enable related resources everywhere;</li><li value="2"><b>false</b>&#160;- to return&#160;related resources per request only.</li></ul><p><b>Sample Implementation:</b></p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Glue\GlueApplication;
+
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\GlueApplication\GlueApplicationConfig as SprykerGlueApplicationConfig;
+
+class GlueApplicationConfig extends SprykerGlueApplicationConfig
+{
     ...
+    
+    /**
+     * @return bool
+     */
+    public function isEagerRelationshipsLoadingEnabled(): bool
     {
-        "type": "git",
-        "url": "git@github.com:spryker/spryk.git"
+        return false;
     }
-    ...
-],</code></pre>
-                                                    <p>2. Install Spryk by running:</p><pre><code class="language-PHP line-numbers">composer require --dev spryker/spryk</code></pre>
-                                                    <h2>How to use it</h2>
-                                                    <p>At this moment, there are two interfaces to run the definitions: <b>Spryk Console</b> and <b>SprykGUI</b>..</p>
-                                                    <h3>Spryk Console</h3>
-                                                    <p>The Spryk Console is based on the Symfony's Console component. To start working with it, add it to your <b>ConsoleDependencyProvider</b>. Currently, there are two commands available: <b>SprykDumpConsole</b> and <b>SprykRunConsole</b>. To get the list of all of the definitions, run:</p><pre><code class="language-PHP line-numbers">vendor/bin/console spryk:dump</code></pre>
-                                                    <p>To execute one definition, run:</p><pre><code class="language-PHP line-numbers">vendor/bin/console spryk:run {SPRYK NAME}</code></pre>
-                                                    <p>When you run a definition, the console will ask you to provide all the needed arguments.</p>
-                                                    <p>It is also possible to print all possible arguments to the console by using the <b>--{argument name}={argument value}</b> key.</p>
-                                                    <h3>SprykGUI</h3>
-                                                    <p>This is a Graphical User Interface built inside the Zed application. To install it, run:</p><pre><code class="language-PHP line-numbers">composer require --dev spryker/spryk-gui</code></pre>
-                                                    <p>Once SprykGUI is installed, you can navigate to it through Zed. You will find the list of all the available definitions, and after you have clicked on one of them, the form where you can enter the arguments will appear.</p>
-                                                    <h2>Difference between Core and Project modes</h2>
-                                                    <p>The difference between the <b>Core</b> and <b>Project</b> modes is the place where your code is generated.</p>
-                                                    <p>- <b>Core</b> has the <b>vendor/spryker/{{ organization }}/</b> root path;</p>
-                                                    <p>- <b>Project</b> has the <b>src/{{ organization }}/</b> root path.</p>
-                                                    <p>The organization option should be put into the namespaces config files (<b>Core</b> or <b>Project</b>).</p>
-                                                    <p>Not all spryk definitions can be run on <b>Project</b> layers. </p>
-                                                    <h2>How to change the mode</h2>
-                                                    <p>By default, all spryk definitions run in the <b>Project</b> mode. To use the <b>Core</b> mode, you need to run the <var>console spryk:run {{ SprykName }}</var> command with the following argument in CLI: <b>--mode='core'</b>. Spryk will use the <b>Core</b> mode and an appropriate root path.</p>
-                                                    <h2>How to create a definition</h2>
-                                                    <p>As the whole tool is covered by tests, you should also start to create your own definition by adding a test. To add only a new definition configuration, start by adding an integration test. You also need to add a name of the definition you want to test (e.g. <b>AddMySuperNiceFile</b>), and the assertion to have this file created after you have executed the test.</p>
-                                                    <p>After this is all done, run the integration tests with the following command and see the test fail:</p><pre><code class="language-PHP line-numbers">vendor/bin/codecept run Integration -g {YOUR TEST GROUP}</code></pre>
-                                                    <p>You will get a message that the definition was not found by the given name, so add the definition file for your new definition to <var>spryker/spryk/config/spryk/spryks</var>. After that, re-run the tests.</p>
-                                                    <p>What comes next depends on the chosen definition type. If you have selected the template definition, then most likely you will see an error indicating that the defined template cannot be found. In this case, add your template to <var>spryker/spryker/config/spryk/templates</var> and re-run the tests — now they have to be green.</p>
-                                                    <p><b>See also:</b>
-                                                    </p>
+}</code></pre></li>
+                                                        <li value="3">Save the file.</li>
+                                                    </ol>
+                                                    <h2>Verification</h2>
+                                                    <p>
+            To verify that the configuration has been completed successfully:</p>
+                                                    <ol>
+                                                        <li value="1">Send a <i>GET</i> request as follows:<br /><i>http://mysprykershop.com/concrete-products/177_24867659?<b>include=concrete-product-image-sets</b></i></li>
+                                                        <li value="2">
+                                                            <p>Make sure that the&#160;<i>included</i>&#160;and <i>relationships</i>&#160;sections of the response contain the&#160;<i>concrete-product-image-sets</i> resource <b>only</b>.</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+  data: {
+    type: concrete-products,
+    id: 177_24867659,
+    attributes: {...},
+    links: {...},
+    relationships: {
+      concrete-product-image-sets: {
+        data: [
+          {
+            type: concrete-product-image-sets,
+            id: 177_24867659
+          }
+        ]
+      }
+    }
+  },
+  included: [
+    {
+      type: concrete-product-image-sets,
+      id: 177_24867659,
+      attributes: {
+        imageSets: [
+          {
+            name: default,
+            images: [
+              {
+                externalUrlLarge: //images.icecat.biz/img/norm/high/24867659-4916.jpg,
+                externalUrlSmall: //images.icecat.biz/img/norm/medium/24867659-4916.jpg
+              }
+            ]
+          }
+        ]
+      },
+      links: {
+        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-image-sets
+      }
+    }
+  ]
+}</code></pre>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li value="3">Send a <i>GET</i> request as follows:<br /><i>http://mysprykershop.com/concrete-products/177_24867659</i></li>
+                                                        <li value="4">
+                                                            <p>
+                        Make sure that the endpoint responds in accordance with your configuration:
+                    </p>
+                                                            <ul>
+                                                                <li value="1">
+                                                                    <p>if the <var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter is set to&#160;<b>true</b>,&#160;the&#160;<i>included</i> section of the response contains all related resources.</p>
+                                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+  data: {
+    type: concrete-products,
+    id: 177_24867659,
+    attributes: {...},
+    links: {...},
+    relationships: {
+      concrete-product-image-sets: {
+        data: [
+          {
+            type: concrete-product-image-sets,
+            id: 177_24867659
+          }
+        ]
+      },
+      concrete-product-availabilities: {
+        data: [
+          {
+            type: concrete-product-availabilities,
+            id: 177_24867659
+          }
+        ]
+      },
+      concrete-product-prices: {
+        data: [
+          {
+            type: concrete-product-prices,
+            id: 177_24867659
+          }
+        ]
+      }
+    }
+  },
+  included: [
+    {
+      type: concrete-product-image-sets,
+      id: 177_24867659,
+      attributes: {
+        imageSets: [
+          {
+            name: default,
+            images: [
+              {
+                externalUrlLarge: //images.icecat.biz/img/norm/high/24867659-4916.jpg,
+                externalUrlSmall: //images.icecat.biz/img/norm/medium/24867659-4916.jpg
+              }
+            ]
+          }
+        ]
+      },
+      links: {
+        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-image-sets
+      }
+    },
+    {
+      type: concrete-product-availabilities,
+      id: 177_24867659,
+      attributes: {
+        availability: true,
+        quantity: 20,
+        isNeverOutOfStock: false
+      },
+      links: {
+        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-availabilities
+      }
+    },
+    {
+      type: concrete-product-prices,
+      id: 177_24867659,
+      attributes: {
+        price: 42502,
+        prices: [
+          {
+            priceTypeName: DEFAULT,
+            netAmount: null,
+            grossAmount: 42502,
+            currency: {
+              code: EUR,
+              name: Euro,
+              symbol: €
+            }
+          }
+        ]
+      },
+      links: {
+        self: http://mysprykershop.com/concrete-products/177_24867659/concrete-product-prices
+      }
+    }
+  ]
+}</code></pre>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li value="2">
+                                                                    <p>if the <var>getIsEagerRelatedResourcesInclusionEnabled</var> parameter is set to&#160;<b>false</b>,&#160;the&#160;<i>included</i>&#160;and <i>relationships&#160;</i>sections are absent.</p>
+                                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample response</a></span>
+                                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+  data: {
+    type: concrete-products,
+    id: 177_24867659,
+    attributes: {...},
+    links: {...},
+}</code></pre>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ol>
+                                                    <h2>See Also:</h2>
                                                     <ul>
-                                                        <li value="1"><a href="code-generator.htm">Code generator</a>
+                                                        <li value="1"><a href="https://documentation.spryker.com/glue_rest_api/glue_api_developer_guides/glue-infrastructure.htm">Glue Infrastructure</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Jan 22, 2019</i> </p>
+                                                    <p><i>Last review date: Mar 14, 2019 </i>
+                                                    </p>
+                                                    <p>&#160;</p>
                                                 </div>
                                             </div>
                                         </div>
