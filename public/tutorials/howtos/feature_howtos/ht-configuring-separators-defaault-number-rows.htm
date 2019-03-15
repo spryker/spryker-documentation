@@ -1,10 +1,11 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2B,Spryker.B2C,Spryker.DemoShop,ReleaseVersions.2018-10" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This how-to tutorial describes how to configure separators and default number of rows in the Paste your order foem for Quick Order page." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Checkout StepEngine   </title>
+        <meta name="author" content="" /><title>Configuring Separators and Default Number of Rows | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -229,25 +230,46 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Checkout StepEngine <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <p class="tip"><strong>Yves Step Processing</strong>
-                                                        <br />Checkout in Spryker <MadCap:conditionalText data-mc-conditions="Spryker.DemoShop">demoshop</MadCap:conditionalText> uses a StepEngine step process to navigate customer step by step through checkout.</p>
-                                                    <p>The checkout process creates a generic approach for step processing; each step knows how to handle the form data, where it has to store data and which conditions are required in order to be able proceed to next step.</p>
-                                                    <p><var>StepProcess</var> is the class that knows how to navigate through steps. Checkout contains a stack of steps provided during class creation. <MadCap:conditionalText data-mc-conditions="Spryker.DemoShop">The instance of this class is created in <var>CheckoutFactory</var> and it’s used in the <var>CheckoutController</var> class.</MadCap:conditionalText> Each step has a corresponding controller action. Checkout extensively uses <var>QuoteTransfer</var> data object to populate data from customer and track the current state of the checkout.</p>
-                                                    <p>Example: </p>
-                                                    <p>The controller action used in the payment step</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <h1>Configuring Separators and Default Number of Rows <img src="../../../resources/images/shoptype/b2b_shop.png" /></h1>
+                                                    <p>By default, spaces, semicolons and comas are used as separators in <b>Paste your order</b> form and there are 8 rows in the <b>Quick Order</b> form. You can redefine the separators for bulk products entry as well as change the number of rows displayed in <var>src/Pyz/SprykerShop/Yves/QuickOrderPage/QuickOrderPageConfig.php</var> respectively:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/SprykerShop/Yves/QuickOrderPage/QuickOrderPageConfig.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+namespace SprykerShop\Yves\QuickOrderPage;
+ 
+use \SprykerShop\Yves\QuickOrderPage\QuickOrderPageConfig as SprykerQuickOrderPageConfig;
+ 
+class QuickOrderPageConfig extends SprykerQuickOrderPageConfig
+{
+	protected const TEXT_ORDER_ROW_SPLITTER_PATTERN = '/\r\n|\r|\n/';
+	protected const TEXT_ORDER_SEPARATORS = [',', ';', ' '];
+	protected const DEFAULT_DISPLAYED_ROW_COUNT = 8;
+ 
 	/**
-	 * @param Request $request
-	 *
-	 * @return array|RedirectResponse
+	 * @return string
 	 */
-	public function paymentAction(Request $request)
+	public function getTextOrderRowSplitterPattern(): string
 	{
-		return $this-&gt;createStepProcess()-&gt;process(
-			$request,
-			$this-&gt;getFactory()-&gt;createPaymentForm($this-&gt;getQuoteTransfer())
-		);
-	}</code></pre>
+		return static::TEXT_ORDER_ROW_SPLITTER_PATTERN;
+	}
+ 
+	/**
+	 * @return string[]
+	 */
+	public function getTextOrderSeparators(): array
+	{
+		return static::TEXT_ORDER_SEPARATORS;
+	}
+ 
+	/**
+	 * @return int
+	 */
+	public function getDefaultDisplayedRowCount(): int
+	{
+		return static::DEFAULT_DISPLAYED_ROW_COUNT;
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

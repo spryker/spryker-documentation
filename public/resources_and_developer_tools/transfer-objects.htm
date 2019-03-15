@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="Transfer objects are simple data containers. The article provides information on the transfer object usage: simple usage, object nesting, transfer object creation, generation and transfer file expansion." />
         <link rel="apple-touch-icon" sizes="180x180" href="../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Transfer Objects</title>
+        <meta name="author" content="" /><title>Transfer Objects | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="vqxV2UETEUuSunB_eYPxKA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="vqxV2UETEUuSunB_eYPxKA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="u02_XQb0OEOE19R-pgQVvQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="u02_XQb0OEOE19R-pgQVvQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -300,6 +301,49 @@ CustomerTransfer::FIRST_NAME; // = 'firstName'</code></pre>
     &lt;property name="item"   type="Foo" /&gt; &lt;!-- Foo is the name of another transfer object--&gt;
     &lt;property name="items"  type="Foo[]" /&gt;
 &lt;/transfer&gt;</code></pre>
+                                                    <p>Transfer object associative property attribute gives an ability to work with associative arrays and collections.</p>
+                                                    <p class="info">An associative array is an array with a string index where instead of a linear storage, each value can be assigned a specific key.</p>
+                                                    <p>The associative attribute can be used with all PHP native data types or collections.</p>
+                                                    <p>Schema generation example can be found below:</p><pre><code class="language-PHP line-numbers">
+&lt;?xml version="1.0"?&gt;
+&lt;transfers xmlns="spryker:transfer-01"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd" &gt;
+
+    &lt;transfer name="Foo"&gt;
+        &lt;property name="bars" type="Bar[]" singular="bar" associative="true" /&gt;
+        &lt;property name="bazs" type="array" singular="baz" associative="true" /&gt;
+    &lt;/transfer&gt;
+
+    &lt;transfer name="Bar"&gt;
+        &lt;property name="test" type="string"/&gt;
+    &lt;/transfer&gt;
+
+&lt;/transfers&gt;</code></pre>
+                                                    <h4>Associative arrays usage</h4>
+                                                    <p>You can find examples of associative arrays usage below.</p><pre><code class="language-PHP line-numbers">
+$fooTransfer = new FooTranfer();
+
+// adding transfers with associated keys
+$fooTransfer-&gt;addBar('a', new Bar());
+$fooTransfer-&gt;addBar('b', new Bar());
+
+// setting a transfer object with associated keys
+$bars = new \ArrayObject([
+    'a' =&gt; new Bar(),
+    'b' &gt; new Bar(),
+]);
+$fooTransfer-&gt;setBars($bars);
+
+// adding associated array items
+$fooTransfer-&gt;addBaz('x', 'X');
+$fooTransfer-&gt;addBaz('y', 'Y');
+
+// setting an associated array
+$fooTransfer-&gt;setBazs([
+    'x' =&gt; 'X',
+    'y' =&gt; 'Y',
+]);</code></pre>
                                                     <h2>File Location</h2>
                                                     <p>Most of the modules define transfer objects in a dedicated XML file: <code class="bash">(ModuleNamespace)/Shared/Module/Transfer/module.transfer.xml</code></p>
                                                     <p>Therefore you can find the XML definition for the CustomerGroup module in <code class="bash">vendor/spryker/spryker/Bundles/CustomerGroup/src/Spryker/Shared/CustomerGroup/Transfer/customer_group.transfer.xml</code></p>
@@ -357,7 +401,9 @@ $taxId = $customerTransfer-&gt;getTaxId();</code></pre>
                                                     <ul>
                                                         <li value="1">Add Shared Transfer Schema</li>
                                                     </ul>
-                                                    <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk-201903.htm">Spryk</a> documentation for details.</p>
+                                                    <p>See the <a href="https://documentation.spryker.com/capabilities/development/development_tools/spryk.htm">Spryk</a> documentation for details.</p>
+                                                    <p><i>Last review date: Mar 13, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
