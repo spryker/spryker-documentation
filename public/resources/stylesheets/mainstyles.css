@@ -94,8 +94,8 @@ li
 
 p
 {
-	margin-bottom: 8px;
-	margin-top: 8px;
+	margin-bottom: 14px;
+	margin-top: 14px;
 }
 
 p.note
@@ -109,6 +109,8 @@ p.note
 	overflow: hidden;
 	padding: 15px 60px;
 	border-radius: 4px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 p.tip
@@ -122,6 +124,8 @@ p.tip
 	overflow: hidden;
 	padding: 15px 60px;
 	border-radius: 4px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 p.important
@@ -131,10 +135,12 @@ p.important
 	object-fit: contain;
 	background-position: 13px center;
 	background-repeat: no-repeat;
-	border-left: solid 4px #B21016;
+	border-left: solid 4px #138535;
 	overflow: hidden;
 	padding: 15px 60px;
 	border-radius: 4px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 p.info
@@ -148,6 +154,8 @@ p.info
 	overflow: hidden;
 	padding: 15px 60px;
 	border-radius: 4px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 p.example
@@ -161,6 +169,8 @@ p.example
 	overflow: hidden;
 	padding: 15px 60px;
 	border-radius: 4px;
+	margin-bottom: 8px;
+	margin-top: 8px;
 }
 
 img	/*Setting max-width: 100%; property makes images always fit the width of the container*/
@@ -845,7 +855,8 @@ div.search-container
 .side-menu ._Skins_SideMenu .has-children .sub-menu li:not(.tree-node-leaf) a
 {
 	position: relative;
-	padding: 5px 30px;
+	padding-bottom: 5px;
+	padding-top: 5px;
 }
 
 .side-menu ._Skins_SideMenu .has-children .sub-menu li:not(.tree-node-leaf) a::after
@@ -1155,6 +1166,7 @@ ul.navigation li > a
 {
 	padding: 25px 20px;
 	line-height: 1.88;
+	color: #b1bbc7;
 	border: none;
 	box-shadow: 0 2px 13px 0 rgba(200, 200, 200, 0.5);
 }
@@ -1954,5 +1966,154 @@ ul.navigation ul > li.has-children > a:after
 ul.navigation ul ul
 {
 	top: -10px;
+}
+
+/*Mobile side menu*/
+
+@media only screen and (max-width: 992px)
+{
+	/*tablet*/
+	/*side menu */
+
+	.off-canvas
+	{
+		background: white;
+	}
+
+	.is-drilldown-submenu-parent > a
+	{
+		position: relative;
+	}
+
+	.is-drilldown-submenu-parent > a::after,
+	.js-drilldown-back > a::after
+	{
+		content: '';
+		position: absolute;
+		right: 0;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 6px;
+		height: 11px;
+		background: url('../icons/chevron-right.svg') center no-repeat;
+		background-size: contain;
+	}
+
+	.js-drilldown-back > a::after
+	{
+		background: url('../icons/chevron-back-green.svg') center no-repeat;
+		background-size: contain;
+	}
+
+	.off-canvas.position-right
+	{
+		padding-top: 118px;
+	}
+
+	.off-canvas ul ul
+	{
+		background: white;
+	}
+
+	ul.off-canvas-list ul ul > li > a:hover,
+	ul.off-canvas-list ul > li > a:hover
+	{
+		background: none;
+	}
+
+	ul.off-canvas-list li.js-drilldown-back
+	{
+		position: relative;
+		background: #eef0f1;
+	}
+
+	ul.off-canvas-list li.js-drilldown-back > a
+	{
+		color: black !important;
+		padding-left: 20px;
+	}
+
+	ul.off-canvas-list li.js-drilldown-back > a::after
+	{
+		width: 10px;
+		height: 20px;
+		left: 0;
+	}
+
+	.is-drilldown-submenu.slide-in-right.is-active
+	{
+		padding-top: 118px;
+	}
+
+	ul.off-canvas-list li.js-drilldown-back > a:hover
+	{
+		background: none !important;
+	}
+
+	ul.off-canvas-list li
+	{
+		padding: 0 30px 0 16px;
+	}
+
+	ul.off-canvas-list li:first-child > a
+	{
+		border-top: 1px solid #eef0f1;
+	}
+
+	ul.off-canvas-list li a
+	{
+		color: #758599 !important;
+		padding: 13px 0;
+		font-weight: bold;
+		letter-spacing: 0.5px;
+		line-height: 1.38;
+		border-bottom: 1px solid #eef0f1;
+	}
+
+	ul.off-canvas-list li a:hover
+	{
+		background: none;
+	}
+
+	.js-off-canvas-exit
+	{
+		box-shadow: none;
+	}
+}
+
+@media screen and (max-width: 767px)
+{
+	/*Mobile*/
+}
+
+.aside-close-button
+{
+	width: 26px;
+	height: 26px;
+	display: block;
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	background: url('../icons/close-icon.svg') center no-repeat;
+	background-size: contain;
+}
+
+.search-toggle-button
+{
+	display: none;
+}
+
+.js-off-canvas-exit:hover
+{
+	background: rgba(254, 254, 254, 0.25);
+}
+
+/*overlay*/
+
+.js-off-canvas-exit
+{
+	box-shadow: none;
+	opacity: 0.33;
+	background-color: #0c0c0c;
 }
 
