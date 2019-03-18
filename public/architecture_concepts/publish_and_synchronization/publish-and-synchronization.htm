@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="gGb6ujgO00yv4lQduHEpPw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="gGb6ujgO00yv4lQduHEpPw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="TLqkyTGZ00iv94a6Bi0arA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TLqkyTGZ00iv94a6Bi0arA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -278,7 +278,7 @@ $productAbstractEntity-&gt;save();</code></pre>
                                                     </p>
                                                     <h3 id="publish">Publish</h3>
                                                     <p>Upon triggering the publish process, an event or events will be posted to a queue called <b>event</b>. Each event message posted to the queue will contain the following information on the event that triggered it: event name, ID, names of the corresponding listener and transfer classes, list of modified columns, as well as foreign keys necessary to backtrack the updated Propel entities. However, it will not contain the actual data that has changed.</p>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Event Message Sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Event Message Sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-JSON line-numbers">{
 	"listenerClassName":"Spryker\\Zed\\UrlStorage\\Communication\\Plugin\\Event\\Listener\\UrlStorageListener",
 	"transferClassName":"Generated\\Shared\\Transfer\\EventEntityTransfer",
@@ -307,7 +307,7 @@ $productAbstractEntity-&gt;save();</code></pre>
                                                     <p>The transformed data is stored in a dedicated database table. It serves as a <b>mirror table</b> for the respective <i>Redis</i> or <i>Elasticsearch</i> store. The table contains the data that needs to be synchronized to the frontend, the storage and the key where it needs to be put. The actual information that needs to be synchronized is stored in the <b>data</b> column of each row in the table. It is always kept in a format suitable for the frontend (JSON) for easy and fast synchronization. The table also contains foreign keys necessary to backtrack data and a timestamp of the last change for each row. The timestamp is necessary for faster change tracking.</p>
                                                     <h3 id="Synchronize">Synchronize</h3>
                                                     <p>As soon as a change occurs in the mirror table stored in the database, its <b>Synchronization Behavior</b> sends the updated rows as messages to one of the <i>Publish Queues</i>. Upon consuming a message, the data is pushed to <i>Redis</i> or <i>Elastisearch</i>.</p>
-                                                    <div class="MCDropDown MCDropDown_Open dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Synchronize Message Sample</a></span>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Synchronize Message Sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-JSON line-numbers">{
 	"write":{
 		"key":"url:de:\/de\/mypage",
@@ -355,11 +355,15 @@ $productAbstractEntity-&gt;save();</code></pre>
                                                     </div>
                                                     <h3>See also:</h3>
                                                     <ul>
-                                                        <li value="1"><a href="../../resources_and_developer_tools/publish-and-synchronization-reference.htm" class="MCXref xref">Publish and Synchronization Reference  </a>
+                                                        <li value="1"><a href="../../resources_and_developer_tools/publish-and-synchronization-reference.htm" class="MCXref xref">Overriding Listeners</a>
                                                         </li>
                                                         <li value="2"><a href="http://documentation.spryker.com/tutorials/introduction/handling-data-publish-and-synchronization.htm">Tutorial - Handling Data - Publish and Synchronization</a>
                                                         </li>
                                                         <li value="3"><a href="publish-and-synchronization-repeated-process.htm">Re-synchronization and re-generation of data</a>
+                                                        </li>
+                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/ht-debug-listeners-201903.htm">HowTo - Debug Listeners</a>
+                                                        </li>
+                                                        <li value="5"><a href="https://documentation.spryker.com/tutorials/howtos/ht-dump-queue-messages-201903.htm">HowTo - Dump Queue Messages</a>
                                                         </li>
                                                     </ul>
                                                 </div>
