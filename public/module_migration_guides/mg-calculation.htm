@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="2WieLDdkG0G1pMHPzoSsWw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="2WieLDdkG0G1pMHPzoSsWw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="e0hGrZTq40GFVAkWPRi8Vg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="e0hGrZTq40GFVAkWPRi8Vg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -248,12 +248,12 @@
                                                             <p class="important">In the previous version (3*), the calculator stack was called&#160;<var>getCalculatorStack</var>. <br />You must rename this method to <var>getQuoteCalculatorPluginStack</var>.</p>
                                                             <p>By default the demoshop ships with these plugins. If you have your custom plugins, please add them accordingly, old and new calculators plugins are backwards compatible.</p>
                                                             <p>If you want to keep having old calculated fields, add the plugins to <var>getQuoteCalculatorPluginStack</var>. Take into consideration, that we recommend you discard old plugins and use the new ones.</p><pre><code class="language-PHP line-numbers">&lt;?php
-     new ProductOptionGrossSumCalculatorPlugin(),
-     new ProductOptionTaxRateCalculatorPlugin(),
-     new SumGrossCalculatedDiscountAmountCalculatorPlugin(),
-     new ItemsWithProductOptionsAndDiscountsGrossPriceCalculatorPlugin(),
-     new ItemsWithProductOptionsAndDiscountsTaxCalculatorPlugin(),
-     new ExpenseTaxCalculatorPlugin(),</code></pre>
+new ProductOptionGrossSumCalculatorPlugin(),
+new ProductOptionTaxRateCalculatorPlugin(),
+new SumGrossCalculatedDiscountAmountCalculatorPlugin(),
+new ItemsWithProductOptionsAndDiscountsGrossPriceCalculatorPlugin(),
+new ItemsWithProductOptionsAndDiscountsTaxCalculatorPlugin(),
+new ExpenseTaxCalculatorPlugin(),</code></pre>
                                                             <p class="note">The old Calculator plugins were moved to the following separate repository: <var>spryker/calculation-migration</var>. <br />Please include into your <var>composer.json</var> like <var>"spryker/calculation-migration": "dev-master"</var> and run <var>composer update</var>. <br />This should enable you to use old plugins.</p>
                                                             <p>The Caclulator module also returns <var>back sales.fk_customer</var>, <var>sales.fk_shipment_method</var>, <var>sales.shipment_delivery_time</var> - these are deprecated methods. To safely migrate them see <a href="mg-sales.htm" class="MCXref xref">Migration Guide - Sales    </a>.</p>
                                                             <p>After this you should see new values calculated + legacy ones.</p><![CDATA[
@@ -546,7 +546,7 @@ COMMIT;
                                                                 </li>
                                                             </ol>
                                                             <p>If you have modified these files, take into consideration how data formatting has changed. You will need to adapt your templates accordingly.</p>
-                                                            <p>Also, update your <var>CheckoutDependency</var> provider to include the new expander plugin, which is registered in the new checkout preSave plugin, see .</p>
+                                                            <p>Also, update your <var>CheckoutDependency</var> provider to include the new expander plugin, which is registered in the new checkout preSave plugin, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-process-201903.htm">Checkout Process.</a></p>
                                                             <p>This plugin expands quote items so each item has a single quantity, then runs order recalculate to have correctly distributed amounts. This is needed because after split has been made, some items may have rounding errors and we need to make sure that the tax and price to pay values are correct.</p>
                                                             <p><strong>To add a new plugin to \Pyz\Zed\Checkout\CheckoutDependencyProvider</strong>:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
@@ -622,12 +622,16 @@ use Spryker\Zed\SalesAggregator\Communication\Plugin\OrderAmountAggregator\Order
                                                             <p>After the migration is complete, you can drop all use of <var>SalesAggregator</var>, as all values are already persisted. You can get the same results by using <var>SalesFacade::getOrderByIdSalesOrder()</var>.</p>
                                                         </div>
                                                     </div>
+                                                    <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1">Get a general idea about calculation and how it works</li>
-                                                        <li value="2">Learn about Calculation Data Structure</li>
-                                                        <li value="3">Check Calculation Plugins</li>
+                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/cart/calculation/calculation.htm">Get a general idea about calculation and how it works</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/capabilities/cart/calculation/calculation-data-structure.htm">Learn about Calculation Data Structure</a>
+                                                        </li>
+                                                        <li value="3"><a href="https://documentation.spryker.com/capabilities/cart/calculation/calculation-plugins.htm">Check Calculation Plugins</a>
+                                                        </li>
                                                     </ul>
                                                 </div>
                                             </div>
