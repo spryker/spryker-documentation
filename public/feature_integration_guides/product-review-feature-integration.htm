@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="BnwApyx44Ema-5qF32VBiw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BnwApyx44Ema-5qF32VBiw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="e-Om3-e150yOYvLAnWj--A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="e-Om3-e150yOYvLAnWj--A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -328,8 +328,7 @@
                         -&gt;setNickname($request-&gt;attributes-&gt;get('nickname'))
             );
         }
-    }
-            </code></pre><h3>Displaying an Average Rating</h3><p>To display the average rating stored in Storage, you will need to use <var>spyProductAbstractReview</var> and <var>spyProductAbstractReviewMaximumRating</var> twig extensions shipped by <var>ProductReview</var> module.</p><p><var>spyProductAbstractReview</var> twig extension takes product abstract ID as first argument and injects the corresponding <var>ProductAbstractReviewTransfer</var> transfer object into the twig template provided as the second argument.</p><p><var>spyProductAbstractReviewMaximumRating</var> twig extension allows you to retrieve the <a href="product-review-feature-configuration.htm#configure-maximum-rating">configured maximum rating</a> on demand.</p><p>To register these plugins, you need to add <var>ProductAbstractReviewTwigServiceProvider</var> service provider to your <var>\Pyz\Yves\Application\YvesBootstrap.php</var>.</p>Example of how to register twig extensions:<pre><code class="language-PHP line-numbers">&lt;?php
+    }</code></pre><h3>Displaying an Average Rating</h3><p>To display the average rating stored in Storage, you will need to use <var>spyProductAbstractReview</var> and <var>spyProductAbstractReviewMaximumRating</var> twig extensions shipped by <var>ProductReview</var> module.</p><p><var>spyProductAbstractReview</var> twig extension takes product abstract ID as first argument and injects the corresponding <var>ProductAbstractReviewTransfer</var> transfer object into the twig template provided as the second argument.</p><p><var>spyProductAbstractReviewMaximumRating</var> twig extension allows you to retrieve the <a href="product-review-feature-configuration.htm#configure-maximum-rating">configured maximum rating</a> on demand.</p><p>To register these plugins, you need to add <var>ProductAbstractReviewTwigServiceProvider</var> service provider to your <var>\Pyz\Yves\Application\YvesBootstrap.php</var>.</p>Example of how to register twig extensions:<pre><code class="language-PHP line-numbers">&lt;?php
     namespace Pyz\Yves\Application;
 
     use Spryker\Yves\ProductReview\Plugin\Provider\ProductAbstractReviewTwigServiceProvider;
@@ -345,18 +344,13 @@
             $this-&gt;application-&gt;register(new ProductAbstractReviewTwigServiceProvider());
         }
 
-    }
-                    </code></pre><p>Now you will be able to call the registered <var>spyProductAbstractReview</var> and <var>spyProductAbstractReviewMaximumRating</var> twig extensions in your twig templates.</p>Below is the example <var>spyProductAbstractReview</var> call.<p>@ProductReview/index/index.twig:</p><pre><code class="language-html line-numbers">
-&lt;div&gt;Product name: {{product.name}}&lt;/div&gt;
-{{ spyProductAbstractReview(product.idProductAbstract, '@ProductReview/partials/average-rating.twig') }}
-                </code></pre><p>The <var>spyProductAbstractReview</var> twig extension will render the template provided as a second argument and inject the <var>productAbstractReviewTransfer</var> variable.</p>Below is the example average-rating.twig implementation.<p>@ProductReview/partials/average-rating.twig:</p><pre><code class="language-html line-numbers">
-{% block content %}
-    {% if productAbstractReviewTransfer %}
-        Average product rating is {{ productAbstractReviewTransfer.averageRating }} out of {{ spyProductAbstractReviewMaximumRating() }}
-    {% endif %}
-{% endblock %}
-            </code></pre><h3>Displaying Reviews and Rating Summary</h3><p>To display previously posted and already approved reviews from Search, you will need to call <var>\Spryker\Client\ProductReview\ProductReviewClientInterface::findProductReviewsInSearch</var> method.</p><p>To alter the retrieved number of product reviews per page, change the <a href="product-review-feature-configuration.htm#configure-elements-per-page">Client configuration</a>.</p>Example of product review retrieval:<pre><code class="language-PHP line-numbers">
-namespace Pyz\Yves\ProductReview\Controller;
+    }</code></pre><p>Now you will be able to call the registered <var>spyProductAbstractReview</var> and <var>spyProductAbstractReviewMaximumRating</var> twig extensions in your twig templates.</p>Below is the example <var>spyProductAbstractReview</var> call.<p>@ProductReview/index/index.twig:</p><pre><code class="language-html">&lt;div&gt;Product name: {{product.name}}&lt;/div&gt;
+{{ spyProductAbstractReview(product.idProductAbstract, '@ProductReview/partials/average-rating.twig') }}</code></pre><p>The <var>spyProductAbstractReview</var> twig extension will render the template provided as a second argument and inject the <var>productAbstractReviewTransfer</var> variable.</p>Below is the example average-rating.twig implementation.<p>@ProductReview/partials/average-rating.twig:</p><pre><code class="language-html line-numbers">{% block content %}
+   {% if productAbstractReviewTransfer %}
+       Average product rating is {{ productAbstractReviewTransfer.averageRating }} out of {{ spyProductAbstractReviewMaximumRating() }}
+   {% endif %}
+{% endblock %}</code></pre><h3>Displaying Reviews and Rating Summary</h3><p>To display previously posted and already approved reviews from Search, you will need to call <var>\Spryker\Client\ProductReview\ProductReviewClientInterface::findProductReviewsInSearch</var> method.</p><p>To alter the retrieved number of product reviews per page, change the <a href="product-review-feature-configuration.htm#configure-elements-per-page">Client configuration</a>.</p>Example of product review retrieval:
+<pre><code class="language-PHP line-numbers">namespace Pyz\Yves\ProductReview\Controller;
 
 use Generated\Shared\Transfer\ProductReviewSearchRequestTransfer;
 use Pyz\Yves\Application\Controller\AbstractController;
@@ -388,9 +382,7 @@ class IndexController extends AbstractController
         ];
     }
 
-}
-
-            </code></pre><p>&#160;</p><p><![CDATA[
+}</code></pre><p>&#160;</p><p><![CDATA[
 		
 		]]><i>Last review date: Aug. 28, 2017 </i></p></div>
                                             </div>

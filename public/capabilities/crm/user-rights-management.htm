@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="UYRw6YBKcE2GsuwtTFCgLA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UYRw6YBKcE2GsuwtTFCgLA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Jut3UGBr5k-9mPdXjtJ_mQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Jut3UGBr5k-9mPdXjtJ_mQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -260,7 +260,39 @@
                                                     <p><a name="Also,"></a>Also, you can find bundle names as well as controllers and actions in the file <var>communication/navigation.xml</var>. For example:</p>
                                                     <p>
                                                         <img src="../../resources/images/bundles_navigation.png" />
-                                                    </p> <p>Learn to create and manage Users, Groups and Roles in <a href="https://documentation.spryker.com/administration_interface_guide/users_control/users-control.htm"><a href="file:///C:/Dev/academy-sandbox/Spryker Administration Interface Guide/Content/Administration Interface Guide/Users Control/users-control.htm">Users Control Manual</a></a>.</p></div>
+                                                    </p> <p>Learn to create and manage Users, Groups and Roles in <a href="https://documentation.spryker.com/administration_interface_guide/users_control/users-control.htm"><a href="file:///C:/Dev/academy-sandbox/Spryker Administration Interface Guide/Content/Administration Interface Guide/Users Control/users-control.htm">Users Control Manual</a></a>.</p><h2 data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">ACL Configuration</h2><p data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">Apart from being able to configure user access to Zed resources via Zed UI, you can grant access to additional resources by specifying them in <var>config_*.php</var>. The following options are used to do that:</p><ul><li value="1" data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><var>AclConstants::ACL_DEFAULT_RULES</var> - is used to provide/restrict access to Zed resources, defined in the <var>Spryker\Zed\Auth\AuthConfig::$ingorable</var> property. For example:</li><pre data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><code class="language-PHP line-numbers">
+$config[AclConstants::ACL_DEFAULT_RULES] = [
+    // ....
+    [
+        'bundle' =&gt; 'auth',
+        'controller' =&gt; 'login',
+        'action' =&gt; 'index',
+        'type' =&gt; 'deny',
+    ],
+    // ....
+];</code></pre><p data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">In the example, we restrict access for everyone to Zed login page. This option affects both logged-in and anonymous users. The key feature is the ability to restrict/provide access for anonymous users.</p><li value="2" data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><var>AclConstants::ACL_USER_RULE_WHITELIST</var> -  is used to provide additional access to Zed resources for all logged-in users. For example:</li><pre data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><code class="language-PHP line-numbers">
+$config[AclConstants::ACL_USER_RULE_WHITELIST] = [
+    // ....
+    [
+        'bundle' =&gt; 'application',
+        'controller' =&gt; '*',
+        'action' =&gt; '*',
+        'type' =&gt; 'allow',
+    ],
+    // ....
+];</code></pre><p data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">In the example, we grant access to the Application module resources for all users.</p><p class="note" data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">With the configuration provided in the example, users are granted access to these resources regardless of ACL configuration in ZED UI.</p><li value="3" data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><var>AclConstants::ACL_DEFAULT_CREDENTIALS</var> - is used to provide additional access to Zed resources for a specific user. For example:</li><pre data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03"><code class="language-PHP line-numbers">
+$config[AclConstants::ACL_DEFAULT_CREDENTIALS] = [
+    'winner@spryker.com' =&gt; [
+        'rules' =&gt; [
+            [
+                'bundle' =&gt; '*',
+                'controller' =&gt; '*',
+                'action' =&gt; '*',
+                'type' =&gt; 'allow',
+            ],
+        ],
+    ],
+]</code></pre><p data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">In the example, we grant the user <b>winner@spryker.com</b> access to all Zed resources. To make it work, we should also add <b>winner@spryker.com</b> to this option: <var>`UserConstants::USER_SYSTEM_USERS`</var>. Here, a system user is any user who has additional ACL rules defined for them in <var>config_*.php</var> file.</p><li value="4" data-mc-conditions="Spryker.2019-02,ReleaseVersions.2019-03">Note that if there is at least one <var>allow</var> type for a resource, the user will have access to it in spite of having a <var>deny</var> type for the same resource. It works for <var>`AclConstants::ACL_USER_RULE_WHITELIST`</var>, <var>`AclConstants::ACL_DEFAULT_CREDENTIALS`</var> and rules configured via Zed UI, except for <var>`AclConstants::ACL_DEFAULT_RULES`</var> as it is handled before checking if user logged in or not.</li></ul></div>
                                             </div>
                                         </div>
                                     </div>
