@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="9VgwxURxkEagkK97uGH6IA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="9VgwxURxkEagkK97uGH6IA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="1fnFo6EkMUCsJgRPeOxR6w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="1fnFo6EkMUCsJgRPeOxR6w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -273,16 +273,14 @@ Add this new twig extension to your templates. By default, it is included in the
                                                     <ul>
                                                         <li class="bullet_list" value="1">Include javascript carousel component <var>slick.js</var> In <var>package.json </var>include
 </li>
-                                                    </ul><pre><code class="language-PHP line-numbers">      "dependencies": {
-        ...
-        "slick-carousel": "~1.6.0",
-      }    
-  
-</code></pre>
+                                                    </ul><pre><code class="language-bash line-numbers">"dependencies": {
+...
+"slick-carousel": "~1.6.0",
+}</code></pre>
                                                     <p>and run <var>npm install</var></p>
                                                     <p>Create new component under <var>assets/Yves/default/app/components/carousel/_carousel.scss</var> with contents
 
-  </p><pre xml:space="preserve"><code class="bash">.carousel {
+  </p><pre xml:space="preserve"><code class="languag-bash line-numbers">.carousel {
     font-size:14px;
 
     .image-container {
@@ -300,52 +298,49 @@ Add this new twig extension to your templates. By default, it is included in the
        text-overflow: ellipsis;
     }
 
-  }
- </code></pre>
+  }</code></pre>
                                                     <p> 
 include this style file in <var>/assets/Yves/default/app/style/index.scss</var> like <var>@import '../components/carousel/carousel';</var></p>
                                                     <p><![CDATA[
-]]><var>assets/Yves/default/app/components/carousel/index.js</var> - configures the slick.js javascript carousel component.</p><pre xml:space="preserve"><code class="bash">
-    var $ = require('jquery');
-    var carousel = require('slick-carousel');
+]]><var>assets/Yves/default/app/components/carousel/index.js</var> - configures the slick.js javascript carousel component.</p><pre xml:space="preserve"><code class="language-java line-numbers">var $ = require('jquery');
+var carousel = require('slick-carousel');
 
-    module.exports = {
-        name: 'carousel',
-        view: {
-            init: function($root) {
-                this.$root = $root;
-                this.$root.slick({
-                    infinite: true,
-                    slidesToShow: 6,
-                    slidesToScroll: 6,
-                    responsive: [
-                        {
-                            breakpoint: 1024,
-                            settings: {
-                                slidesToShow: 3,
-                                slidesToScroll: 3
-                            }
-                        },
-                        {
-                            breakpoint: 600,
-                            settings: {
-                                slidesToShow: 2,
-                                slidesToScroll: 2
-                            }
-                        },
-                        {
-                            breakpoint: 480,
-                            settings: {
-                                slidesToShow: 1,
-                                slidesToScroll: 1
-                            }
-                        }
-                    ]
-                });
-            },
-        }
-    };
-  </code></pre>
+module.exports = {
+name: 'carousel',
+	view: {
+    	init: function($root) {
+        	this.$root = $root;
+        	this.$root.slick({
+           		infinite: true,
+                slidesToShow: 6,
+                slidesToScroll: 6,
+                responsive: [
+              		{
+                   		breakpoint: 1024,
+                       	settings: {
+                        	slidesToShow: 3,
+                       		slidesToScroll: 3
+                       }
+                },
+                {
+                	breakpoint: 600,
+                	settings: {
+                    	slidesToShow: 2,
+                    	slidesToScroll: 2
+                  	}
+               	},
+               	{
+                   	breakpoint: 480,
+                   	settings: {
+                    	slidesToShow: 1,
+                     	slidesToScroll: 1
+                     }
+                }
+              ]
+           });
+       },
+    }
+};</code></pre>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Include this js file in<var> assets/Yves/default/app/index.js</var>:</li>
                                                     </ul><pre><code class="language-PHP line-numbers">      run([
@@ -357,7 +352,7 @@ include this style file in <var>/assets/Yves/default/app/style/index.scss</var> 
                                                         <li class="bullet_list" value="1">Create file /<var>assets/Yves/default/vendor/slick-carousel.scss</var> with contents
 
     </li>
-                                                    </ul><pre><code class="language-PHP line-numbers">$slick-assets-relative-path: "../../../../node_modules/slick-carousel/slick/";
+                                                    </ul><pre><code class="language-scss line-numbers">$slick-assets-relative-path: "../../../../node_modules/slick-carousel/slick/";
 
     $slick-font-path: "#{$slick-assets-relative-path}fonts/";
     $slick-font-family: "slick";
@@ -380,8 +375,7 @@ include this style file in <var>/assets/Yves/default/app/style/index.scss</var> 
       .slick-loading &amp; {
         background: none !important;
       }
-    }
- </code></pre>
+    }</code></pre>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Run <var>npm run yves</var> to generate javascript and css. </li>
                                                     </ul>
@@ -391,7 +385,7 @@ include this style file in <var>/assets/Yves/default/app/style/index.scss</var> 
                                                     <ul>
                                                         <li class="bullet_list" value="1">Add template for rendering html <br /><var>src/Pyz/Yves/ProductRelation/Theme/default/partial/product_relation_carousel.twig</var><![CDATA[
 ]]></li>
-                                                    </ul><pre><code class="language-PHP line-numbers">         {% if productRelations %}
+                                                    </ul><pre><code class="language-PHP line-numbers">{% if productRelations %}
             &lt;div class="row"&gt;
                 &lt;div class="small-12 columns"&gt;
                     &lt;div class="callout"&gt;
@@ -417,7 +411,7 @@ include this style file in <var>/assets/Yves/default/app/style/index.scss</var> 
                 &lt;/div&gt;
             &lt;/div&gt;
         {% endif %}
-  </code></pre>
+</code></pre>
                                                     <p>This is sample a template and has to be updated for the project.
 
 </p>

@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="q8FYl6hick61sZbtTBxwZg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="q8FYl6hick61sZbtTBxwZg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ZrA8DbEVgEakNlALGgPAKA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ZrA8DbEVgEakNlALGgPAKA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -297,7 +297,8 @@
                                                             </thead>
                                                             <tbody>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">ReorderPersistentCartChangeExpanderPlugin</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ReorderPersistentCartChangeExpanderPlugin</var>
+                                                                    </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Adds a default reorder name and adds it to add item request.</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">1</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Client\MultiCart\Plugin</var>
@@ -307,30 +308,28 @@
                                                         </table>
                                                     </div>
                                                     <p><var>src/Pyz/Client/PersistentCart/PersistentCartDependencyProvider.php</var>
-                                                    </p><pre><code class="language-PHP line-numbers">
-	&lt;?php
-  
-	namespace Pyz\Client\PersistentCart;
-  
-	use Spryker\Client\MultiCart\Plugin\ReorderPersistentCartChangeExpanderPlugin;
-	use Spryker\Client\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
-  
-	class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+                                                    </p><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\PersistentCart;
+
+use Spryker\Client\MultiCart\Plugin\ReorderPersistentCartChangeExpanderPlugin;
+use Spryker\Client\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+
+class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+{
+	/**
+	 * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+	 */
+	protected function getChangeRequestExtendPlugins(): array
 	{
-		/**
-		* @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
-		*/
-		protected function getChangeRequestExtendPlugins(): array
-		{
-			return [
-				new ReorderPersistentCartChangeExpanderPlugin(),
-			];
-		}
+		return [
+			new ReorderPersistentCartChangeExpanderPlugin(),
+		];
 	}
-			</code></pre>
-                                                    <div class="tip">
+}</code></pre>
+                                                    <p class="tip">
 			When using the reorder feature, a new customer quote must be created with the name "Cart from order {Order reference}".
-		</div>
+		</p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
