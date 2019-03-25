@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="mM7VFBbL20aVLl7JV5LAmw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="mM7VFBbL20aVLl7JV5LAmw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="R2UNzbFKD0-JtC9hpuSpRg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="R2UNzbFKD0-JtC9hpuSpRg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -318,7 +318,7 @@
 					The <var>$context</var> is a special twig function variable that uses twig to pass the data you normally send to the template. This variable has a <var>cmsContent</var> key. This key has data from the Yves store. This can be either a CMS page or block data.
 				</p>
                                                             <p>The parameter mapping can be read from:
-				</p><pre><code class="language-bash"> $context['cmsContent'][CmsContentWidgetConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP][$this-&gt;widgetConfiguration-&gt;getFunctionName()];</code></pre>
+				</p><pre><code class="language-PHP line-numbers"> $context['cmsContent'][CmsContentWidgetConstants::CMS_CONTENT_WIDGET_PARAMETER_MAP][$this-&gt;widgetConfiguration-&gt;getFunctionName()];</code></pre>
                                                             <p>
 
 
@@ -427,7 +427,8 @@ class CmsContentWidgetDependencyProvider extends SprykerCmsContentWidgetDependen
       }
       
 }      </code></pre>
-                                                    <h3>Yves Plugin Dependencies</h3><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\CmsContentWidget;
+                                                    <h3>Yves Plugin Dependencies</h3><pre><code class="language-PHP line-numbers">
+namespace Pyz\Zed\CmsContentWidget;
 
 use Spryker\Shared\CmsContentWidgetProductConnector\ContentWidgetConfigurationProvider\CmsProductContentWidgetConfigurationProvider;
 use Spryker\Shared\CmsContentWidgetProductGroupConnector\ContentWidgetConfigurationProvider\CmsProductGroupContentWidgetConfigurationProvider;
@@ -450,10 +451,11 @@ class CmsContentWidgetConfig extends SprykerCmsContentConfig
         ];
     }
 }
-</code></pre>
+				</code></pre>
                                                     <h3 data-mc-conditions="Spryker.DemoShop">Demoshop - Add Twig Function for Your Application Scope</h3>
                                                     <p data-mc-conditions="Spryker.DemoShop">Open your <var>YvesBootstrap</var> (<var>src/Pyz/Yves/AApplication/YvesBootstrap.php</var>) and add to <var>registerServiceProviders
-            CmsContentWidgetServiceProvider</var> provider:</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">namespace Pyz\Yves\Application;
+            CmsContentWidgetServiceProvider</var> provider:</p><pre data-mc-conditions="Spryker.DemoShop"><code class="language-PHP line-numbers">
+namespace Pyz\Yves\Application;
 
 ...
 
@@ -471,7 +473,7 @@ class YvesBootstrap
             $this-&gt;application-&gt;register(new CmsContentWidgetServiceProvider());
     }
 }
-</code></pre>
+            </code></pre>
                                                     <h3>Version Check When Using the Widget for CMS Blocks</h3>
                                                     <p>If you use this widget for CMS Blocks, then check that you have proper versions of your modules as follows:
 		cms-block &gt;= 1.2.0, cms-block-collector &gt;= 1.1.0, cms-block-gui &gt;= 1.1.0.</p>
