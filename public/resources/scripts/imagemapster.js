@@ -38,16 +38,16 @@ A jQuery plugin to enhance image maps.
 /** @license MIT License (c) copyright B Cavalier & J Hann */
 
 /**
-* when
-* A lightweight CommonJS Promises/A and when() implementation
-*
-* when is part of the cujo.js family of libraries (http://cujojs.com/)
-*
-* Licensed under the MIT License at:
-* http://www.opensource.org/licenses/mit-license.php
-*
-* @version 1.2.0
-*/
+ * when
+ * A lightweight CommonJS Promises/A and when() implementation
+ *
+ * when is part of the cujo.js family of libraries (http://cujojs.com/)
+ *
+ * Licensed under the MIT License at:
+ * http://www.opensource.org/licenses/mit-license.php
+ *
+ * @version 1.2.0
+ */
 
 /*lint-ignore-start*/
 
@@ -76,12 +76,12 @@ A jQuery plugin to enhance image maps.
         freeze = Object.freeze || function (o) { return o; };
 
         /**
-        * Trusted Promise constructor.  A Promise created from this constructor is
-        * a trusted when.js promise.  Any other duck-typed promise is considered
-        * untrusted.
-        *
-        * @constructor
-        */
+         * Trusted Promise constructor.  A Promise created from this constructor is
+         * a trusted when.js promise.  Any other duck-typed promise is considered
+         * untrusted.
+         *
+         * @constructor
+         */
         function Promise() { }
 
         Promise.prototype = freeze({
@@ -95,12 +95,12 @@ A jQuery plugin to enhance image maps.
         });
 
         /**
-        * Create an already-resolved promise for the supplied value
-        * @private
-        *
-        * @param value anything
-        * @return {Promise}
-        */
+         * Create an already-resolved promise for the supplied value
+         * @private
+         *
+         * @param value anything
+         * @return {Promise}
+         */
         function resolved(value) {
 
             var p = new Promise();
@@ -119,13 +119,13 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Create an already-rejected {@link Promise} with the supplied
-        * rejection reason.
-        * @private
-        *
-        * @param reason rejection reason
-        * @return {Promise}
-        */
+         * Create an already-rejected {@link Promise} with the supplied
+         * rejection reason.
+         * @private
+         *
+         * @param reason rejection reason
+         * @return {Promise}
+         */
         function rejected(reason) {
 
             var p = new Promise();
@@ -149,15 +149,15 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Returns a rejected promise for the supplied promiseOrValue. If
-        * promiseOrValue is a value, it will be the rejection value of the
-        * returned promise.  If promiseOrValue is a promise, its
-        * completion value will be the rejected value of the returned promise
-        *
-        * @param promiseOrValue {*} the rejected value of the returned {@link Promise}
-        *
-        * @return {Promise} rejected {@link Promise}
-        */
+         * Returns a rejected promise for the supplied promiseOrValue. If
+         * promiseOrValue is a value, it will be the rejection value of the
+         * returned promise.  If promiseOrValue is a promise, its
+         * completion value will be the rejected value of the returned promise
+         *
+         * @param promiseOrValue {*} the rejected value of the returned {@link Promise}
+         *
+         * @return {Promise} rejected {@link Promise}
+         */
         function reject(promiseOrValue) {
             return when(promiseOrValue, function (value) {
                 return rejected(value);
@@ -165,18 +165,18 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Creates a new, CommonJS compliant, Deferred with fully isolated
-        * resolver and promise parts, either or both of which may be given out
-        * safely to consumers.
-        * The Deferred itself has the full API: resolve, reject, progress, and
-        * then. The resolver has resolve, reject, and progress.  The promise
-        * only has then.
-        *
-        * @memberOf when
-        * @function
-        *
-        * @returns {Deferred}
-        */
+         * Creates a new, CommonJS compliant, Deferred with fully isolated
+         * resolver and promise parts, either or both of which may be given out
+         * safely to consumers.
+         * The Deferred itself has the full API: resolve, reject, progress, and
+         * then. The resolver has resolve, reject, and progress.  The promise
+         * only has then.
+         *
+         * @memberOf when
+         * @function
+         *
+         * @returns {Deferred}
+         */
         function defer() {
             var deferred, promise, listeners, progressHandlers, _then, _progress, complete;
 
@@ -184,23 +184,23 @@ A jQuery plugin to enhance image maps.
             progressHandlers = [];
 
             /**
-            * Pre-resolution then() that adds the supplied callback, errback, and progback
-            * functions to the registered listeners
-            *
-            * @private
-            *
-            * @param [callback] {Function} resolution handler
-            * @param [errback] {Function} rejection handler
-            * @param [progback] {Function} progress handler
-            *
-            * @throws {Error} if any argument is not null, undefined, or a Function
-            */
+             * Pre-resolution then() that adds the supplied callback, errback, and progback
+             * functions to the registered listeners
+             *
+             * @private
+             *
+             * @param [callback] {Function} resolution handler
+             * @param [errback] {Function} rejection handler
+             * @param [progback] {Function} progress handler
+             *
+             * @throws {Error} if any argument is not null, undefined, or a Function
+             */
             _then = function unresolvedThen(callback, errback, progback) {
                 var deferred = defer();
 
                 listeners.push(function (promise) {
                     promise.then(callback, errback)
-					.then(deferred.resolve, deferred.reject, deferred.progress);
+                        .then(deferred.resolve, deferred.reject, deferred.progress);
                 });
 
                 progback && progressHandlers.push(progback);
@@ -209,75 +209,75 @@ A jQuery plugin to enhance image maps.
             };
 
             /**
-            * Registers a handler for this {@link Deferred}'s {@link Promise}.  Even though all arguments
-            * are optional, each argument that *is* supplied must be null, undefined, or a Function.
-            * Any other value will cause an Error to be thrown.
-            *
-            * @memberOf Promise
-            *
-            * @param [callback] {Function} resolution handler
-            * @param [errback] {Function} rejection handler
-            * @param [progback] {Function} progress handler
-            *
-            * @throws {Error} if any argument is not null, undefined, or a Function
-            */
+             * Registers a handler for this {@link Deferred}'s {@link Promise}.  Even though all arguments
+             * are optional, each argument that *is* supplied must be null, undefined, or a Function.
+             * Any other value will cause an Error to be thrown.
+             *
+             * @memberOf Promise
+             *
+             * @param [callback] {Function} resolution handler
+             * @param [errback] {Function} rejection handler
+             * @param [progback] {Function} progress handler
+             *
+             * @throws {Error} if any argument is not null, undefined, or a Function
+             */
             function then(callback, errback, progback) {
                 return _then(callback, errback, progback);
             }
 
             /**
-            * Resolves this {@link Deferred}'s {@link Promise} with val as the
-            * resolution value.
-            *
-            * @memberOf Resolver
-            *
-            * @param val anything
-            */
+             * Resolves this {@link Deferred}'s {@link Promise} with val as the
+             * resolution value.
+             *
+             * @memberOf Resolver
+             *
+             * @param val anything
+             */
             function resolve(val) {
                 complete(resolved(val));
             }
 
             /**
-            * Rejects this {@link Deferred}'s {@link Promise} with err as the
-            * reason.
-            *
-            * @memberOf Resolver
-            *
-            * @param err anything
-            */
+             * Rejects this {@link Deferred}'s {@link Promise} with err as the
+             * reason.
+             *
+             * @memberOf Resolver
+             *
+             * @param err anything
+             */
             function reject(err) {
                 complete(rejected(err));
             }
 
             /**
-            * @private
-            * @param update
-            */
+             * @private
+             * @param update
+             */
             _progress = function (update) {
                 var progress, i = 0;
                 while (progress = progressHandlers[i++]) progress(update);
             };
 
             /**
-            * Emits a progress update to all progress observers registered with
-            * this {@link Deferred}'s {@link Promise}
-            *
-            * @memberOf Resolver
-            *
-            * @param update anything
-            */
+             * Emits a progress update to all progress observers registered with
+             * this {@link Deferred}'s {@link Promise}
+             *
+             * @memberOf Resolver
+             *
+             * @param update anything
+             */
             function progress(update) {
                 _progress(update);
             }
 
             /**
-            * Transition from pre-resolution state to post-resolution state, notifying
-            * all listeners of the resolution or rejection
-            *
-            * @private
-            *
-            * @param completed {Promise} the completed value of this deferred
-            */
+             * Transition from pre-resolution state to post-resolution state, notifying
+             * all listeners of the resolution or rejection
+             *
+             * @private
+             *
+             * @param completed {Promise} the completed value of this deferred
+             */
             complete = function (completed) {
                 var listener, i = 0;
 
@@ -309,11 +309,11 @@ A jQuery plugin to enhance image maps.
             };
 
             /**
-            * The full Deferred object, with both {@link Promise} and {@link Resolver}
-            * parts
-            * @class Deferred
-            * @name Deferred
-            */
+             * The full Deferred object, with both {@link Promise} and {@link Resolver}
+             * parts
+             * @class Deferred
+             * @name Deferred
+             */
             deferred = {};
 
             // Promise and Resolver parts
@@ -323,19 +323,19 @@ A jQuery plugin to enhance image maps.
             promise.then = deferred.then = then;
 
             /**
-            * The {@link Promise} for this {@link Deferred}
-            * @memberOf Deferred
-            * @name promise
-            * @type {Promise}
-            */
+             * The {@link Promise} for this {@link Deferred}
+             * @memberOf Deferred
+             * @name promise
+             * @type {Promise}
+             */
             deferred.promise = freeze(promise);
 
             /**
-            * The {@link Resolver} for this {@link Deferred}
-            * @memberOf Deferred
-            * @name resolver
-            * @class Resolver
-            */
+             * The {@link Resolver} for this {@link Deferred}
+             * @memberOf Deferred
+             * @name resolver
+             * @class Resolver
+             */
             deferred.resolver = freeze({
                 resolve: (deferred.resolve = resolve),
                 reject: (deferred.reject = reject),
@@ -346,38 +346,38 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Determines if promiseOrValue is a promise or not.  Uses the feature
-        * test from http://wiki.commonjs.org/wiki/Promises/A to determine if
-        * promiseOrValue is a promise.
-        *
-        * @param promiseOrValue anything
-        *
-        * @returns {Boolean} true if promiseOrValue is a {@link Promise}
-        */
+         * Determines if promiseOrValue is a promise or not.  Uses the feature
+         * test from http://wiki.commonjs.org/wiki/Promises/A to determine if
+         * promiseOrValue is a promise.
+         *
+         * @param promiseOrValue anything
+         *
+         * @returns {Boolean} true if promiseOrValue is a {@link Promise}
+         */
         function isPromise(promiseOrValue) {
             return promiseOrValue && typeof promiseOrValue.then === 'function';
         }
 
         /**
-        * Register an observer for a promise or immediate value.
-        *
-        * @function
-        * @name when
-        * @namespace
-        *
-        * @param promiseOrValue anything
-        * @param {Function} [callback] callback to be called when promiseOrValue is
-        *   successfully resolved.  If promiseOrValue is an immediate value, callback
-        *   will be invoked immediately.
-        * @param {Function} [errback] callback to be called when promiseOrValue is
-        *   rejected.
-        * @param {Function} [progressHandler] callback to be called when progress updates
-        *   are issued for promiseOrValue.
-        *
-        * @returns {Promise} a new {@link Promise} that will complete with the return
-        *   value of callback or errback or the completion value of promiseOrValue if
-        *   callback and/or errback is not supplied.
-        */
+         * Register an observer for a promise or immediate value.
+         *
+         * @function
+         * @name when
+         * @namespace
+         *
+         * @param promiseOrValue anything
+         * @param {Function} [callback] callback to be called when promiseOrValue is
+         *   successfully resolved.  If promiseOrValue is an immediate value, callback
+         *   will be invoked immediately.
+         * @param {Function} [errback] callback to be called when promiseOrValue is
+         *   rejected.
+         * @param {Function} [progressHandler] callback to be called when progress updates
+         *   are issued for promiseOrValue.
+         *
+         * @returns {Promise} a new {@link Promise} that will complete with the return
+         *   value of callback or errback or the completion value of promiseOrValue if
+         *   callback and/or errback is not supplied.
+         */
         function when(promiseOrValue, callback, errback, progressHandler) {
             // Get a promise for the input promiseOrValue
             // See promise()
@@ -388,23 +388,23 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Returns promiseOrValue if promiseOrValue is a {@link Promise}, a new Promise if
-        * promiseOrValue is a foreign promise, or a new, already-resolved {@link Promise}
-        * whose resolution value is promiseOrValue if promiseOrValue is an immediate value.
-        *
-        * Note that this function is not safe to export since it will return its
-        * input when promiseOrValue is a {@link Promise}
-        *
-        * @private
-        *
-        * @param promiseOrValue anything
-        *
-        * @returns Guaranteed to return a trusted Promise.  If promiseOrValue is a when.js {@link Promise}
-        *   returns promiseOrValue, otherwise, returns a new, already-resolved, when.js {@link Promise}
-        *   whose resolution value is:
-        *   * the resolution value of promiseOrValue if it's a foreign promise, or
-        *   * promiseOrValue if it's a value
-        */
+         * Returns promiseOrValue if promiseOrValue is a {@link Promise}, a new Promise if
+         * promiseOrValue is a foreign promise, or a new, already-resolved {@link Promise}
+         * whose resolution value is promiseOrValue if promiseOrValue is an immediate value.
+         *
+         * Note that this function is not safe to export since it will return its
+         * input when promiseOrValue is a {@link Promise}
+         *
+         * @private
+         *
+         * @param promiseOrValue anything
+         *
+         * @returns Guaranteed to return a trusted Promise.  If promiseOrValue is a when.js {@link Promise}
+         *   returns promiseOrValue, otherwise, returns a new, already-resolved, when.js {@link Promise}
+         *   whose resolution value is:
+         *   * the resolution value of promiseOrValue if it's a foreign promise, or
+         *   * promiseOrValue if it's a value
+         */
         function promise(promiseOrValue) {
             var promise, deferred;
 
@@ -439,21 +439,21 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Return a promise that will resolve when howMany of the supplied promisesOrValues
-        * have resolved. The resolution value of the returned promise will be an array of
-        * length howMany containing the resolutions values of the triggering promisesOrValues.
-        *
-        * @memberOf when
-        *
-        * @param promisesOrValues {Array} array of anything, may contain a mix
-        *      of {@link Promise}s and values
-        * @param howMany
-        * @param [callback]
-        * @param [errback]
-        * @param [progressHandler]
-        *
-        * @returns {Promise}
-        */
+         * Return a promise that will resolve when howMany of the supplied promisesOrValues
+         * have resolved. The resolution value of the returned promise will be an array of
+         * length howMany containing the resolutions values of the triggering promisesOrValues.
+         *
+         * @memberOf when
+         *
+         * @param promisesOrValues {Array} array of anything, may contain a mix
+         *      of {@link Promise}s and values
+         * @param howMany
+         * @param [callback]
+         * @param [errback]
+         * @param [progressHandler]
+         *
+         * @returns {Promise}
+         */
         function some(promisesOrValues, howMany, callback, errback, progressHandler) {
 
             checkCallbacks(2, arguments);
@@ -534,20 +534,20 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Return a promise that will resolve only once all the supplied promisesOrValues
-        * have resolved. The resolution value of the returned promise will be an array
-        * containing the resolution values of each of the promisesOrValues.
-        *
-        * @memberOf when
-        *
-        * @param promisesOrValues {Array|Promise} array of anything, may contain a mix
-        *      of {@link Promise}s and values
-        * @param [callback] {Function}
-        * @param [errback] {Function}
-        * @param [progressHandler] {Function}
-        *
-        * @returns {Promise}
-        */
+         * Return a promise that will resolve only once all the supplied promisesOrValues
+         * have resolved. The resolution value of the returned promise will be an array
+         * containing the resolution values of each of the promisesOrValues.
+         *
+         * @memberOf when
+         *
+         * @param promisesOrValues {Array|Promise} array of anything, may contain a mix
+         *      of {@link Promise}s and values
+         * @param [callback] {Function}
+         * @param [errback] {Function}
+         * @param [progressHandler] {Function}
+         *
+         * @returns {Promise}
+         */
         function all(promisesOrValues, callback, errback, progressHandler) {
 
             checkCallbacks(1, arguments);
@@ -563,20 +563,20 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Return a promise that will resolve when any one of the supplied promisesOrValues
-        * has resolved. The resolution value of the returned promise will be the resolution
-        * value of the triggering promiseOrValue.
-        *
-        * @memberOf when
-        *
-        * @param promisesOrValues {Array|Promise} array of anything, may contain a mix
-        *      of {@link Promise}s and values
-        * @param [callback] {Function}
-        * @param [errback] {Function}
-        * @param [progressHandler] {Function}
-        *
-        * @returns {Promise}
-        */
+         * Return a promise that will resolve when any one of the supplied promisesOrValues
+         * has resolved. The resolution value of the returned promise will be the resolution
+         * value of the triggering promiseOrValue.
+         *
+         * @memberOf when
+         *
+         * @param promisesOrValues {Array|Promise} array of anything, may contain a mix
+         *      of {@link Promise}s and values
+         * @param [callback] {Function}
+         * @param [errback] {Function}
+         * @param [progressHandler] {Function}
+         *
+         * @returns {Promise}
+         */
         function any(promisesOrValues, callback, errback, progressHandler) {
 
             function unwrapSingleResult(val) {
@@ -587,20 +587,20 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Traditional map function, similar to `Array.prototype.map()`, but allows
-        * input to contain {@link Promise}s and/or values, and mapFunc may return
-        * either a value or a {@link Promise}
-        *
-        * @memberOf when
-        *
-        * @param promise {Array|Promise} array of anything, may contain a mix
-        *      of {@link Promise}s and values
-        * @param mapFunc {Function} mapping function mapFunc(value) which may return
-        *      either a {@link Promise} or value
-        *
-        * @returns {Promise} a {@link Promise} that will resolve to an array containing
-        *      the mapped output values.
-        */
+         * Traditional map function, similar to `Array.prototype.map()`, but allows
+         * input to contain {@link Promise}s and/or values, and mapFunc may return
+         * either a value or a {@link Promise}
+         *
+         * @memberOf when
+         *
+         * @param promise {Array|Promise} array of anything, may contain a mix
+         *      of {@link Promise}s and values
+         * @param mapFunc {Function} mapping function mapFunc(value) which may return
+         *      either a {@link Promise} or value
+         *
+         * @returns {Promise} a {@link Promise} that will resolve to an array containing
+         *      the mapped output values.
+         */
         function map(promise, mapFunc) {
             return when(promise, function (array) {
                 return _map(array, mapFunc);
@@ -608,13 +608,13 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Private map helper to map an array of promises
-        * @private
-        *
-        * @param promisesOrValues {Array}
-        * @param mapFunc {Function}
-        * @return {Promise}
-        */
+         * Private map helper to map an array of promises
+         * @private
+         *
+         * @param promisesOrValues {Array}
+         * @param mapFunc {Function}
+         * @return {Promise}
+         */
         function _map(promisesOrValues, mapFunc) {
 
             var results, len, i;
@@ -640,23 +640,23 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Traditional reduce function, similar to `Array.prototype.reduce()`, but
-        * input may contain {@link Promise}s and/or values, and reduceFunc
-        * may return either a value or a {@link Promise}, *and* initialValue may
-        * be a {@link Promise} for the starting value.
-        *
-        * @memberOf when
-        *
-        * @param promise {Array|Promise} array of anything, may contain a mix
-        *      of {@link Promise}s and values.  May also be a {@link Promise} for
-        *      an array.
-        * @param reduceFunc {Function} reduce function reduce(currentValue, nextValue, index, total),
-        *      where total is the total number of items being reduced, and will be the same
-        *      in each call to reduceFunc.
-        * @param initialValue starting value, or a {@link Promise} for the starting value
-        *
-        * @returns {Promise} that will resolve to the final reduced value
-        */
+         * Traditional reduce function, similar to `Array.prototype.reduce()`, but
+         * input may contain {@link Promise}s and/or values, and reduceFunc
+         * may return either a value or a {@link Promise}, *and* initialValue may
+         * be a {@link Promise} for the starting value.
+         *
+         * @memberOf when
+         *
+         * @param promise {Array|Promise} array of anything, may contain a mix
+         *      of {@link Promise}s and values.  May also be a {@link Promise} for
+         *      an array.
+         * @param reduceFunc {Function} reduce function reduce(currentValue, nextValue, index, total),
+         *      where total is the total number of items being reduced, and will be the same
+         *      in each call to reduceFunc.
+         * @param initialValue starting value, or a {@link Promise} for the starting value
+         *
+         * @returns {Promise} that will resolve to the final reduced value
+         */
         function reduce(promise, reduceFunc, initialValue) {
             var args = slice.call(arguments, 1);
             return when(promise, function (array) {
@@ -665,14 +665,14 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Private reduce to reduce an array of promises
-        * @private
-        *
-        * @param promisesOrValues {Array}
-        * @param reduceFunc {Function}
-        * @param initialValue {*}
-        * @return {Promise}
-        */
+         * Private reduce to reduce an array of promises
+         * @private
+         *
+         * @param promisesOrValues {Array}
+         * @param reduceFunc {Function}
+         * @param initialValue {*}
+         * @return {Promise}
+         */
         function _reduce(promisesOrValues, reduceFunc, initialValue) {
 
             var total, args;
@@ -686,14 +686,14 @@ A jQuery plugin to enhance image maps.
             // delegates to the supplied.
 
             args = [
-			function (current, val, i) {
-			    return when(current, function (c) {
-			        return when(val, function (value) {
-			            return reduceFunc(c, value, i, total);
-			        });
-			    });
-			}
-		];
+                function (current, val, i) {
+                    return when(current, function (c) {
+                        return when(val, function (value) {
+                            return reduceFunc(c, value, i, total);
+                        });
+                    });
+                }
+            ];
 
             if (arguments.length > 2) args.push(initialValue);
 
@@ -701,32 +701,32 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * Ensure that resolution of promiseOrValue will complete resolver with the completion
-        * value of promiseOrValue, or instead with resolveValue if it is provided.
-        *
-        * @memberOf when
-        *
-        * @param promiseOrValue
-        * @param resolver {Resolver}
-        * @param [resolveValue] anything
-        *
-        * @returns {Promise}
-        */
+         * Ensure that resolution of promiseOrValue will complete resolver with the completion
+         * value of promiseOrValue, or instead with resolveValue if it is provided.
+         *
+         * @memberOf when
+         *
+         * @param promiseOrValue
+         * @param resolver {Resolver}
+         * @param [resolveValue] anything
+         *
+         * @returns {Promise}
+         */
         function chain(promiseOrValue, resolver, resolveValue) {
             var useResolveValue = arguments.length > 2;
 
             return when(promiseOrValue,
-			function (val) {
-			    if (useResolveValue) val = resolveValue;
-			    resolver.resolve(val);
-			    return val;
-			},
-			function (e) {
-			    resolver.reject(e);
-			    return rejected(e);
-			},
-			resolver.progress
-		);
+                function (val) {
+                    if (useResolveValue) val = resolveValue;
+                    resolver.resolve(val);
+                    return val;
+                },
+                function (e) {
+                    resolver.reject(e);
+                    return rejected(e);
+                },
+                resolver.progress
+            );
         }
 
         //
@@ -734,15 +734,15 @@ A jQuery plugin to enhance image maps.
         //
 
         /**
-        * Helper that checks arrayOfCallbacks to ensure that each element is either
-        * a function, or null or undefined.
-        *
-        * @private
-        *
-        * @param arrayOfCallbacks {Array} array to check
-        * @throws {Error} if any element of arrayOfCallbacks is something other than
-        * a Functions, null, or undefined.
-        */
+         * Helper that checks arrayOfCallbacks to ensure that each element is either
+         * a function, or null or undefined.
+         *
+         * @private
+         *
+         * @param arrayOfCallbacks {Array} array to check
+         * @throws {Error} if any element of arrayOfCallbacks is something other than
+         * a Functions, null, or undefined.
+         */
         function checkCallbacks(start, arrayOfCallbacks) {
             var arg, i = arrayOfCallbacks.length;
             while (i > start) {
@@ -752,9 +752,9 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-        * No-Op function used in method replacement
-        * @private
-        */
+         * No-Op function used in method replacement
+         * @private
+         */
         function noop() { }
 
         slice = [].slice;
@@ -763,59 +763,55 @@ A jQuery plugin to enhance image maps.
         // See: http://es5.github.com/#x15.4.4.21 as there are many
         // specifics and edge cases.
         reduceArray = [].reduce ||
-		function (reduceFunc /*, initialValue */) {
-		    // ES5 dictates that reduce.length === 1
+            function (reduceFunc /*, initialValue */) {
+                // ES5 dictates that reduce.length === 1
 
-		    // This implementation deviates from ES5 spec in the following ways:
-		    // 1. It does not check if reduceFunc is a Callable
+                // This implementation deviates from ES5 spec in the following ways:
+                // 1. It does not check if reduceFunc is a Callable
 
-		    var arr, args, reduced, len, i;
+                var arr, args, reduced, len, i;
 
-		    i = 0;
-		    arr = Object(this);
-		    len = arr.length >>> 0;
-		    args = arguments;
+                i = 0;
+                arr = Object(this);
+                len = arr.length >>> 0;
+                args = arguments;
 
-		    // If no initialValue, use first item of array (we know length !== 0 here)
-		    // and adjust i to start at second item
-		    if (args.length <= 1) {
-		        // Skip to the first real element in the array
-		        for (; ; ) {
-		            if (i in arr) {
-		                reduced = arr[i++];
-		                break;
-		            }
+                // If no initialValue, use first item of array (we know length !== 0 here)
+                // and adjust i to start at second item
+                if (args.length <= 1) {
+                    // Skip to the first real element in the array
+                    for (; ; ) {
+                        if (i in arr) {
+                            reduced = arr[i++];
+                            break;
+                        }
 
-		            // If we reached the end of the array without finding any real
-		            // elements, it's a TypeError
-		            if (++i >= len) {
-		                throw new TypeError();
-		            }
-		        }
-		    } else {
-		        // If initialValue provided, use it
-		        reduced = args[1];
-		    }
+                        // If we reached the end of the array without finding any real
+                        // elements, it's a TypeError
+                        if (++i >= len) {
+                            throw new TypeError();
+                        }
+                    }
+                } else {
+                    // If initialValue provided, use it
+                    reduced = args[1];
+                }
 
-		    // Do the actual reduce
-		    for (; i < len; ++i) {
-		        // Skip holes
-		        if (i in arr)
-		            reduced = reduceFunc(reduced, arr[i], i, arr);
-		    }
+                // Do the actual reduce
+                for (; i < len; ++i) {
+                    // Skip holes
+                    if (i in arr)
+                        reduced = reduceFunc(reduced, arr[i], i, arr);
+                }
 
-		    return reduced;
-		};
+                return reduced;
+            };
 
         return when;
     });
-})(typeof define == 'function'
-	? define
-	: function (factory) {
-	    typeof module != 'undefined'
-		? (module.exports = factory())
-		: (jQuery.mapster_when = factory());
-	}
+})(function (factory) {
+    jQuery.mapster_when = factory();
+    }
 // Boilerplate for AMD, Node, and browser global
 );
 /*lint-ignore-end*/
@@ -857,8 +853,8 @@ A jQuery plugin to enhance image maps.
             strokeWidth: 1,
             includeKeys: '',
             altImage: null,
-            altImageId: null, // used internally            
-            altImages: {} 
+            altImageId: null, // used internally
+            altImages: {}
         },
         defaults: {
             clickNavigate: false,
@@ -893,10 +889,10 @@ A jQuery plugin to enhance image maps.
             selected: null
         },
         area_defaults:
-        {
-            includeKeys: '',
-            isMask: false
-        },
+            {
+                includeKeys: '',
+                isMask: false
+            },
         canvas_style: {
             position: 'absolute',
             left: 0,
@@ -925,7 +921,7 @@ A jQuery plugin to enhance image maps.
             // can "extend" an object by replacing it with its subclass.
             subclass: function(BaseClass, constr) {
                 var Subclass=function() {
-                    var me=this, 
+                    var me=this,
                         args=Array.prototype.slice.call(arguments,0);
                     me.base = BaseClass.prototype;
                     me.base.init = function() {
@@ -989,14 +985,14 @@ A jQuery plugin to enhance image maps.
             },
             isElement: function (o) {
                 return (typeof HTMLElement === "object" ? o instanceof HTMLElement :
-                        o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName === "string");
+                    o && typeof o === "object" && o.nodeType === 1 && typeof o.nodeName === "string");
             },
             /**
-             * Basic indexOf implementation for IE7-8. Though we use $.inArray, some jQuery versions will try to 
+             * Basic indexOf implementation for IE7-8. Though we use $.inArray, some jQuery versions will try to
              * use a prototpye on the calling object, defeating the purpose of using $.inArray in the first place.
              *
              * This will be replaced with the array prototype if it's available.
-             * 
+             *
              * @param  {Array} arr The array to search
              * @param {Object} target The item to search for
              * @return {Number} The index of the item, or -1 if not found
@@ -1009,7 +1005,7 @@ A jQuery plugin to enhance image maps.
                 }
                 return -1;
             },
-                
+
             // finds element of array or object with a property "prop" having value "val"
             // if prop is not defined, then just looks for property with value "val"
             indexOfProp: function (obj, prop, val) {
@@ -1025,7 +1021,7 @@ A jQuery plugin to enhance image maps.
             // returns "obj" if true or false, or "def" if not true/false
             boolOrDefault: function (obj, def) {
                 return this.isBool(obj) ?
-                        obj : def || false;
+                    obj : def || false;
             },
             isBool: function (obj) {
                 return typeof obj === "boolean";
@@ -1042,19 +1038,19 @@ A jQuery plugin to enhance image maps.
             },
             size: function(image, raw) {
                 var u=$.mapster.utils;
-                return { 
+                return {
                     width: raw ? (image.width || image.naturalWidth) : u.imgWidth(image,true) ,
                     height: raw ? (image.height || image.naturalHeight) : u.imgHeight(image,true),
                     complete: function() { return !!this.height && !!this.width;}
                 };
             },
 
-                
+
             /**
              * Set the opacity of the element. This is an IE<8 specific function for handling VML.
              * When using VML we must override the "setOpacity" utility function (monkey patch ourselves).
              * jQuery does not deal with opacity correctly for VML elements. This deals with that.
-             * 
+             *
              * @param {Element} el The DOM element
              * @param {double} opacity A value between 0 and 1 inclusive.
              */
@@ -1065,7 +1061,7 @@ A jQuery plugin to enhance image maps.
                 } else {
                     $(el).each(function(i,e) {
                         if (typeof e.opacity !=='undefined') {
-                           e.opacity=opacity;
+                            e.opacity=opacity;
                         } else {
                             $(e).css("opacity",opacity);
                         }
@@ -1075,40 +1071,40 @@ A jQuery plugin to enhance image maps.
 
 
             // fade "el" from opacity "op" to "endOp" over a period of time "duration"
-            
+
             fader: (function () {
                 var elements = {},
-                        lastKey = 0,
-                        fade_func = function (el, op, endOp, duration) {
-                            var index, 
-                                cbIntervals = duration/15,
-                                obj, u = $.mapster.utils;
+                    lastKey = 0,
+                    fade_func = function (el, op, endOp, duration) {
+                        var index,
+                            cbIntervals = duration/15,
+                            obj, u = $.mapster.utils;
 
-                            if (typeof el === 'number') {
-                                obj = elements[el];
-                                if (!obj) {
-                                    return;
-                                }
-                            } else {
-                                index = u.indexOfProp(elements, null, el);
-                                if (index) {
-                                    delete elements[index];
-                                }
-                                elements[++lastKey] = obj = el;
-                                el = lastKey;
+                        if (typeof el === 'number') {
+                            obj = elements[el];
+                            if (!obj) {
+                                return;
                             }
-
-                            endOp = endOp || 1;
-
-                            op = (op + (endOp / cbIntervals) > endOp - 0.01) ? endOp : op + (endOp / cbIntervals);
-
-                            u.setOpacity(obj, op);
-                            if (op < endOp) {
-                                setTimeout(function () {
-                                    fade_func(el, op, endOp, duration);
-                                }, 15);
+                        } else {
+                            index = u.indexOfProp(elements, null, el);
+                            if (index) {
+                                delete elements[index];
                             }
-                        };
+                            elements[++lastKey] = obj = el;
+                            el = lastKey;
+                        }
+
+                        endOp = endOp || 1;
+
+                        op = (op + (endOp / cbIntervals) > endOp - 0.01) ? endOp : op + (endOp / cbIntervals);
+
+                        u.setOpacity(obj, op);
+                        if (op < endOp) {
+                            setTimeout(function () {
+                                fade_func(el, op, endOp, duration);
+                            }, 15);
+                        }
+                    };
                 return fade_func;
             } ())
         },
@@ -1179,11 +1175,11 @@ A jQuery plugin to enhance image maps.
             }
             if (!map_data.complete || map_data.currentAction) {
                 map_data.commands.push(
-                {
-                    that: that,
-                    command: command,
-                    args: args
-                });
+                    {
+                        that: that,
+                        command: command,
+                        args: args
+                    });
                 return true;
             }
             return false;
@@ -1212,13 +1208,13 @@ A jQuery plugin to enhance image maps.
     // Iterates through all the objects passed, and determines whether it's an area or an image, and calls the appropriate
     // callback for each. If anything is returned from that callback, the process is stopped and that data return. Otherwise,
     // the object itself is returned.
-    
-    var m = $.mapster, 
+
+    var m = $.mapster,
         u = m.utils,
         ap = Array.prototype;
 
 
-    // jQuery's width() and height() are broken on IE9 in some situations. This tries everything. 
+    // jQuery's width() and height() are broken on IE9 in some situations. This tries everything.
     $.each(["width","height"],function(i,e) {
         var capProp = e.substr(0,1).toUpperCase() + e.substr(1);
         // when jqwidth parm is passed, it also checks the jQuery width()/height() property
@@ -1227,16 +1223,16 @@ A jQuery plugin to enhance image maps.
         // we must still check because stuff like adblock can temporarily block it
         // what a goddamn headache
         u["img"+capProp]=function(img,jqwidth) {
-                return (jqwidth ? $(img)[e]() : 0) || 
-                    img[e] || img["natural"+capProp] || img["client"+capProp] || img["offset"+capProp];
+            return (jqwidth ? $(img)[e]() : 0) ||
+                img[e] || img["natural"+capProp] || img["client"+capProp] || img["offset"+capProp];
         };
-     
-    });    
+
+    });
 
     /**
      * The Method object encapsulates the process of testing an ImageMapster method to see if it's being
      * invoked on an image, or an area; then queues the command if the MapData is in an active state.
-     * 
+     *
      * @param {[jQuery]}    that        The target of the invocation
      * @param {[function]}  func_map    The callback if the target is an imagemap
      * @param {[function]}  func_area   The callback if the target is an area
@@ -1245,7 +1241,7 @@ A jQuery plugin to enhance image maps.
      *                                             args: arguments to the method
      *                                            }
      */
-    
+
     m.Method = function (that, func_map, func_area, opts) {
         var me = this;
         me.name = opts.name;
@@ -1264,8 +1260,8 @@ A jQuery plugin to enhance image maps.
         constructor: m.Method,
         go: function () {
             var i,  data, ar, len, result, src = this.input,
-                    area_list = [],
-                    me = this;
+                area_list = [],
+                me = this;
 
             len = src.length;
             for (i = 0; i < len; i++) {
@@ -1277,7 +1273,7 @@ A jQuery plugin to enhance image maps.
                         }
                         continue;
                     }
-                    
+
                     ar = data.getData(src[i].nodeName === 'AREA' ? src[i] : this.key);
                     if (ar) {
                         if ($.inArray(ar, area_list) < 0) {
@@ -1306,28 +1302,28 @@ A jQuery plugin to enhance image maps.
 
     $.mapster.impl = (function () {
         var me = {},
-        addMap= function (map_data) {
-            return m.map_cache.push(map_data) - 1;
-        },
-        removeMap = function (map_data) {
-            m.map_cache.splice(map_data.index, 1);
-            for (var i = m.map_cache.length - 1; i >= this.index; i--) {
-                m.map_cache[i].index--;
-            }
-        };
+            addMap= function (map_data) {
+                return m.map_cache.push(map_data) - 1;
+            },
+            removeMap = function (map_data) {
+                m.map_cache.splice(map_data.index, 1);
+                for (var i = m.map_cache.length - 1; i >= this.index; i--) {
+                    m.map_cache[i].index--;
+                }
+            };
 
-        
+
         /**
          * Test whether the browser supports VML. Credit: google.
          * http://stackoverflow.com/questions/654112/how-do-you-detect-support-for-vml-or-svg-in-a-browser
-         * 
+         *
          * @return {bool} true if vml is supported, false if not
          */
-        
+
         function hasVml() {
             var a = $('<div />').appendTo('body');
             a.html('<v:shape id="vml_flag1" adj="1" />');
-            
+
             var b = a[0].firstChild;
             b.style.behavior = "url(#default#VML)";
             var has = b ? typeof b.adj === "object" : true;
@@ -1346,40 +1342,40 @@ A jQuery plugin to enhance image maps.
         }
 
         /**
-         * Test for the presence of HTML5 Canvas support. This also checks to see if excanvas.js has been 
+         * Test for the presence of HTML5 Canvas support. This also checks to see if excanvas.js has been
          * loaded and is faking it; if so, we assume that canvas is not supported.
          *
          * @return {bool} true if HTML5 canvas support, false if not
          */
-        
+
         function hasCanvas() {
             var d = namespaces();
             // when g_vml_ is present, then we can be sure excanvas is active, meaning there's not a real canvas.
-            
-             return d && d.g_vml_ ? 
+
+            return d && d.g_vml_ ?
                 false :
-                $('<canvas />')[0].getContext ? 
-                    true : 
+                $('<canvas />')[0].getContext ?
+                    true :
                     false;
         }
 
         /**
          * Merge new area data into existing area options on a MapData object. Used for rebinding.
-         * 
+         *
          * @param  {[MapData]} map_data     The MapData object
          * @param  {[object[]]} areas       areas array to merge
          */
-        
+
         function merge_areas(map_data, areas) {
             var ar, index,
                 map_areas = map_data.options.areas;
 
             if (areas) {
                 $.each(areas, function (i, e) {
-                    
+
                     // Issue #68 - ignore invalid data in areas array
-                    
-                    if (!e || !e.key) { 
+
+                    if (!e || !e.key) {
                         return;
                     }
 
@@ -1419,7 +1415,7 @@ A jQuery plugin to enhance image maps.
         //          defaultReturn: a value to return other than the jQuery object (if its not chainable)
         //          args: the arguments
         // Returns a comma-separated list of user-selected areas. "staticState" areas are not considered selected for the purposes of this method.
-        
+
         me.get = function (key) {
             var md = m.getMapData(this);
             if (!(md && md.complete)) {
@@ -1490,7 +1486,7 @@ A jQuery plugin to enhance image maps.
 
         // $(img).mapster('key','group-key', true)
         me.keys = function(key,all) {
-            var keyList=[], 
+            var keyList=[],
                 md = m.getMapData(this);
 
             if (!(md && md.complete)) {
@@ -1510,7 +1506,7 @@ A jQuery plugin to enhance image maps.
                 }
                 $.each(keys,function(i,e) {
                     if ($.inArray(e,keyList)<0) {
-                        keyList.push(e);                         
+                        keyList.push(e);
                     }
                 });
             }
@@ -1533,7 +1529,7 @@ A jQuery plugin to enhance image maps.
                 });
             }
             return keyList.join(',');
-        
+
 
         };
         me.select = function () {
@@ -1542,17 +1538,17 @@ A jQuery plugin to enhance image maps.
         me.deselect = function () {
             me.set.call(this, false);
         };
-        
+
         /**
-         * Select or unselect areas. Areas can be identified by a single string key, a comma-separated list of keys, 
+         * Select or unselect areas. Areas can be identified by a single string key, a comma-separated list of keys,
          * or an array of strings.
-         * 
-         * 
+         *
+         *
          * @param {boolean} selected Determines whether areas are selected or deselected
-         * @param {string|string[]} key A string, comma-separated string, or array of strings indicating 
+         * @param {string|string[]} key A string, comma-separated string, or array of strings indicating
          *                              the areas to select or deselect
          * @param {object} options Rendering options to apply when selecting an area
-         */ 
+         */
 
         me.set = function (selected, key, options) {
             var lastMap, map_data, opts=options,
@@ -1573,7 +1569,7 @@ A jQuery plugin to enhance image maps.
                 }
             }
             function addArea(ar) {
-               if (ar && $.inArray(ar, area_list) < 0) {
+                if (ar && $.inArray(ar, area_list) < 0) {
                     area_list.push(ar);
                     key_list+=(key_list===''?'':',')+ar.key;
                 }
@@ -1584,7 +1580,7 @@ A jQuery plugin to enhance image maps.
                     var newState = setSelection(el);
                     if (map_data.options.boundList) {
                         m.setBoundListProperties(map_data.options, m.getBoundList(map_data.options, key_list), newState);
-                    }   
+                    }
                 });
                 if (!selected) {
                     map_data.removeSelectionFinish();
@@ -1598,15 +1594,15 @@ A jQuery plugin to enhance image maps.
 
                 if (map_data !== lastMap) {
                     if (lastMap) {
-                       finishSetForMap(lastMap);
+                        finishSetForMap(lastMap);
                     }
 
                     area_list = [];
                     key_list='';
                 }
-                
-               if (map_data) {
-                    
+
+                if (map_data) {
+
                     keys = '';
                     if (e.nodeName.toUpperCase()==='IMG') {
                         if (!m.queueCommand(map_data, $(e), 'set', [selected, key, opts])) {
@@ -1632,16 +1628,16 @@ A jQuery plugin to enhance image maps.
                             addArea(map_data.getDataForArea(e));
                             lastMap = map_data;
                         }
-                    
+
                     }
                 }
             });
-            
+
             if (map_data) {
-               finishSetForMap(map_data);
+                finishSetForMap(map_data);
             }
 
-           
+
             return this;
         };
         me.unbind = function (preserveState) {
@@ -1751,9 +1747,9 @@ A jQuery plugin to enhance image maps.
                 { name: 'snapshot' }
             )).go();
         };
-        
+
         // do not queue this function
-        
+
         me.state = function () {
             var md, result = null;
             $(this).each(function (i,e) {
@@ -1779,7 +1775,7 @@ A jQuery plugin to enhance image maps.
                 md = m.getMapData(e);
 
                 // if already bound completely, do a total rebind
-                
+
                 if (md) {
                     me.unbind.apply(img);
                     if (!md.complete) {
@@ -1793,7 +1789,7 @@ A jQuery plugin to enhance image maps.
                 // ensure it's a valid image
                 // jQuery bug with Opera, results in full-url#usemap being returned from jQuery's attr.
                 // So use raw getAttribute instead.
-                
+
                 usemap = this.getAttribute('usemap');
                 map = usemap && $('map[name="' + usemap.substr(1) + '"]');
                 if (!(img.is('img') && usemap && map.length > 0)) {
@@ -1818,13 +1814,13 @@ A jQuery plugin to enhance image maps.
         me.init = function (useCanvas) {
             var style, shapes;
 
-            // for testing/debugging, use of canvas can be forced by initializing 
+            // for testing/debugging, use of canvas can be forced by initializing
             // manually with "true" or "false". But generally we test for it.
-            
+
             m.hasCanvas = function() {
                 if (!u.isBool(m.hasCanvas.value)) {
                     m.hasCanvas.value = u.isBool(useCanvas) ?
-                        useCanvas : 
+                        useCanvas :
                         hasCanvas();
                 }
                 return m.hasCanvas.value;
@@ -1840,9 +1836,9 @@ A jQuery plugin to enhance image maps.
                         style = document.createStyleSheet();
                         shapes = ['shape', 'rect', 'oval', 'circ', 'fill', 'stroke', 'imagedata', 'group', 'textbox'];
                         $.each(shapes,
-                        function (i, el) {
-                            style.addRule('v\\:' + el, "behavior: url(#default#VML); antialias:true");
-                        });
+                            function (i, el) {
+                                style.addRule('v\\:' + el, "behavior: url(#default#VML); antialias:true");
+                            });
                     }
                     m.hasVml.value = hasVml();
                 }
@@ -1856,17 +1852,17 @@ A jQuery plugin to enhance image maps.
 
             $.extend(m.defaults, m.render_defaults,m.shared_defaults);
             $.extend(m.area_defaults, m.render_defaults,m.shared_defaults);
-            
+
         };
         me.test = function (obj) {
             return eval(obj);
         };
         return me;
     } ());
-    
+
     $.mapster.impl.init();
-    
-    
+
+
 } (jQuery));
 /* graphics.js
    Graphics object handles all rendering.
@@ -1876,7 +1872,7 @@ A jQuery plugin to enhance image maps.
         u=m.utils,
         canvasMethods,
         vmlMethods;
-    
+
     /**
      * Implemenation to add each area in an AreaData object to the canvas
      * @param {Graphics} graphics The target graphics object
@@ -1888,7 +1884,7 @@ A jQuery plugin to enhance image maps.
             md = me.map_data,
             isMask = options.isMask;
 
-        // first get area options. Then override fade for selecting, and finally merge in the 
+        // first get area options. Then override fade for selecting, and finally merge in the
         // "select" effect options.
 
         $.each(areaData.areas(), function (i,e) {
@@ -1896,14 +1892,14 @@ A jQuery plugin to enhance image maps.
             me.addShape(e, options);
         });
 
-        // it's faster just to manipulate the passed options isMask property and restore it, than to 
+        // it's faster just to manipulate the passed options isMask property and restore it, than to
         // copy the object each time
-        
+
         options.isMask=isMask;
 
     }
 
-     /**
+    /**
      * Convert a hex value to decimal
      * @param  {string} hex A hexadecimal toString
      * @return {int} Integer represenation of the hex string
@@ -1914,14 +1910,14 @@ A jQuery plugin to enhance image maps.
     }
     function css3color(color, opacity) {
         return 'rgba(' + hex_to_decimal(color.substr(0, 2)) + ','
-                + hex_to_decimal(color.substr(2, 2)) + ','
-                + hex_to_decimal(color.substr(4, 2)) + ',' + opacity + ')';
+            + hex_to_decimal(color.substr(2, 2)) + ','
+            + hex_to_decimal(color.substr(4, 2)) + ',' + opacity + ')';
     }
     /**
      * An object associated with a particular map_data instance to manage renderin.
      * @param {MapData} map_data The MapData object bound to this instance
      */
-    
+
     m.Graphics = function (map_data) {
         //$(window).unload($.mapster.unload);
         // create graphics functions for canvas and vml browsers. usage:
@@ -1937,7 +1933,7 @@ A jQuery plugin to enhance image maps.
         me.masks = [];
         me.map_data = map_data;
     };
-    
+
     p = m.Graphics.prototype= {
         constructor: m.Graphics,
 
@@ -1946,7 +1942,7 @@ A jQuery plugin to enhance image maps.
          * @param  {Element} canvas The canvas element that is the target of this operation
          * @param  {string} [elementName] The name to assign to the element (VML only)
          */
-        
+
         begin: function(canvas, elementName) {
             var c = $(canvas);
 
@@ -1960,14 +1956,14 @@ A jQuery plugin to enhance image maps.
             this.active = true;
 
         },
-        
+
         /**
-         * Add an area to be rendered to this canvas. 
+         * Add an area to be rendered to this canvas.
          * @param {MapArea} mapArea The MapArea object to render
          * @param {object} options An object containing any rendering options that should override the
          *                         defaults for the area
          */
-        
+
         addShape: function(mapArea, options) {
             var addto = options.isMask ? this.masks : this.shapes;
             addto.push({ mapArea: mapArea, options: options });
@@ -1978,7 +1974,7 @@ A jQuery plugin to enhance image maps.
          * @param  {MapData} mapData The MapData object that will receive this new canvas
          * @return {Element} A canvas element
          */
-        
+
         createVisibleCanvas: function (mapData) {
             return $(this.createCanvasFor(mapData))
                 .addClass('mapster_el')
@@ -1987,13 +1983,13 @@ A jQuery plugin to enhance image maps.
 
         /**
          * Add a group of shapes from an AreaData object to the canvas
-         * 
+         *
          * @param {AreaData} areaData An AreaData object (a set of area elements)
-         * @param {string} mode     The rendering mode, "select" or "highlight". This determines the target 
+         * @param {string} mode     The rendering mode, "select" or "highlight". This determines the target
          *                          canvas and which default options to use.
          * @param {striong} options  Rendering options
          */
-        
+
         addShapeGroup: function (areaData, mode,options) {
             // render includeKeys first - because they could be masks
             var me = this,
@@ -2002,7 +1998,7 @@ A jQuery plugin to enhance image maps.
                 opts = areaData.effectiveRenderOptions(mode);
 
             if (options) {
-                 $.extend(opts,options);
+                $.extend(opts,options);
             }
 
             if (mode === 'select') {
@@ -2025,19 +2021,19 @@ A jQuery plugin to enhance image maps.
             addShapeGroupImpl(me,areaData, opts);
             me.render();
             if (opts.fade) {
-                
-                // fading requires special handling for IE. We must access the fill elements directly. The fader also has to deal with 
+
+                // fading requires special handling for IE. We must access the fill elements directly. The fader also has to deal with
                 // the "opacity" attribute (not css)
 
-                u.fader(m.hasCanvas() ? 
-                    canvas : 
+                u.fader(m.hasCanvas() ?
+                    canvas :
                     $(canvas).find('._fill').not('.mapster_mask'),
-                0,
-                m.hasCanvas() ? 
-                    1 : 
-                    opts.fillOpacity,
-                opts.fadeDuration); 
-               
+                    0,
+                    m.hasCanvas() ?
+                        1 :
+                        opts.fillOpacity,
+                    opts.fadeDuration);
+
             }
 
         }
@@ -2047,7 +2043,7 @@ A jQuery plugin to enhance image maps.
 
     function noop() {}
 
-  
+
     // configure remaining prototype methods for ie or canvas-supporting browser
 
     canvasMethods = {
@@ -2090,12 +2086,12 @@ A jQuery plugin to enhance image maps.
             // but no other way around it that i can see.
 
             var maskCanvas, maskContext,
-                        me = this,
-                        md = me.map_data,
-                        hasMasks = me.masks.length,
-                        shapeCanvas = me.createCanvasFor(md),
-                        shapeContext = shapeCanvas.getContext('2d'),
-                        context = me.canvas.getContext('2d');
+                me = this,
+                md = me.map_data,
+                hasMasks = me.masks.length,
+                shapeCanvas = me.createCanvasFor(md),
+                shapeContext = shapeCanvas.getContext('2d'),
+                context = me.canvas.getContext('2d');
 
             if (hasMasks) {
                 maskCanvas = me.createCanvasFor(md);
@@ -2202,40 +2198,40 @@ A jQuery plugin to enhance image maps.
             el_name = me.elementName ? 'name="' + me.elementName + '" ' : '';
             el_class = cssclass ? 'class="' + cssclass + '" ' : '';
 
-            t_fill = '<v:fill color="#' + options.fillColor + '" class="_fill" opacity="' + 
-                (options.fill ? 
+            t_fill = '<v:fill color="#' + options.fillColor + '" class="_fill" opacity="' +
+                (options.fill ?
                     options.fillOpacity :
-                    0) + 
-                '" /><v:stroke class="_fill" opacity="' + 
+                    0) +
+                '" /><v:stroke class="_fill" opacity="' +
                 options.strokeOpacity + '"/>';
 
 
             stroke = options.stroke ?
-                ' strokeweight=' + options.strokeWidth + ' stroked="t" strokecolor="#' + 
-                    options.strokeColor + '"' :
+                ' strokeweight=' + options.strokeWidth + ' stroked="t" strokecolor="#' +
+                options.strokeColor + '"' :
                 ' stroked="f"';
-            
-            fill = options.fill ? 
+
+            fill = options.fill ?
                 ' filled="t"' :
                 ' filled="f"';
 
             switch (mapArea.shape) {
                 case 'rect':
-                    template = '<v:rect ' + el_class + el_name + fill + stroke + 
-                        ' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:' + 
-                          c[0] + 'px;top:' + c[1]  + 'px;width:' + (c[2] - c[0]) + 
-                          'px;height:' + (c[3] - c[1]) + 'px;">' + t_fill + '</v:rect>';
+                    template = '<v:rect ' + el_class + el_name + fill + stroke +
+                        ' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:' +
+                        c[0] + 'px;top:' + c[1]  + 'px;width:' + (c[2] - c[0]) +
+                        'px;height:' + (c[3] - c[1]) + 'px;">' + t_fill + '</v:rect>';
                     break;
                 case 'poly':
                     template = '<v:shape ' + el_class + el_name + fill + stroke + ' coordorigin="0,0" coordsize="' + me.width + ',' + me.height
-                                + '" path="m ' + c[0] + ',' + c[1] + ' l ' + c.slice(2).join(',')
-                                + ' x e" style="zoom:1;margin:0;padding:0;display:block;position:absolute;top:0px;left:0px;width:' + me.width + 'px;height:' + me.height + 'px;">' + t_fill + '</v:shape>';
+                        + '" path="m ' + c[0] + ',' + c[1] + ' l ' + c.slice(2).join(',')
+                        + ' x e" style="zoom:1;margin:0;padding:0;display:block;position:absolute;top:0px;left:0px;width:' + me.width + 'px;height:' + me.height + 'px;">' + t_fill + '</v:shape>';
                     break;
                 case 'circ':
                 case 'circle':
                     template = '<v:oval ' + el_class + el_name + fill + stroke
-                                + ' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:' + (c[0] - c[2]) + 'px;top:' + (c[1] - c[2])
-                                + 'px;width:' + (c[2] * 2) + 'px;height:' + (c[2] * 2) + 'px;">' + t_fill + '</v:oval>';
+                        + ' style="zoom:1;margin:0;padding:0;display:block;position:absolute;left:' + (c[0] - c[2]) + 'px;top:' + (c[1] - c[2])
+                        + 'px;width:' + (c[2] * 2) + 'px;height:' + (c[2] * 2) + 'px;">' + t_fill + '</v:oval>';
                     break;
             }
             e = $(template);
@@ -2268,8 +2264,8 @@ A jQuery plugin to enhance image maps.
         createCanvasFor: function (md) {
             var w = md.scaleInfo.width,
                 h = md.scaleInfo.height;
-            return $('<var width="' + w + '" height="' + h 
-                + '" style="zoom:1;overflow:hidden;display:block;width:' 
+            return $('<var width="' + w + '" height="' + h
+                + '" style="zoom:1;overflow:hidden;display:block;width:'
                 + w + 'px;height:' + h + 'px;"></var>')[0];
         },
 
@@ -2290,25 +2286,25 @@ A jQuery plugin to enhance image maps.
 
     // for all methods with two implemenatations, add a function that will automatically replace itself with the correct
     // method on first invocation
-    
+
     $.each(['renderShape',
-           'addAltImage',
-           'render',
-           'createCanvasFor',
-           'clearHighlight',
-           'removeSelections',
-           'refreshSelections'],
+            'addAltImage',
+            'render',
+            'createCanvasFor',
+            'clearHighlight',
+            'removeSelections',
+            'refreshSelections'],
         function(i,e) {
             p[e]=(function(method) {
                 return function() {
                     p[method] = (m.hasCanvas() ?
-                        canvasMethods[method] : 
+                        canvasMethods[method] :
                         vmlMethods[method]) || noop;
-                  
+
                     return p[method].apply(this,arguments);
                 };
             }(e));
-    });
+        });
 
 
 } (jQuery));
@@ -2318,19 +2314,19 @@ A jQuery plugin to enhance image maps.
 
 (function ($) {
 
-    var m = $.mapster, 
+    var m = $.mapster,
         u = m.utils,
         ap=[];
     /**
      * An object encapsulating all the images used by a MapData.
      */
-    
+
     m.MapImages = function(owner) {
         this.owner = owner;
         this.clear();
     };
 
-    
+
     m.MapImages.prototype = {
         constructor: m.MapImages,
 
@@ -2344,21 +2340,21 @@ A jQuery plugin to enhance image maps.
             var result= ap.slice.apply(this,arguments);
             return result;
         },
-     
-        /** 
-         * a boolean value indicates whether all images are done loading 
+
+        /**
+         * a boolean value indicates whether all images are done loading
          * @return {bool} true when all are done
          */
         complete: function() {
             return $.inArray(false, this.status) < 0;
         },
-        
+
         /**
-         * Save an image in the images array and return its index 
+         * Save an image in the images array and return its index
          * @param  {Image} image An Image object
          * @return {int} the index of the image
          */
-        
+
         _add: function(image) {
             var index = ap.push.call(this,image)-1;
             this.status[index] = false;
@@ -2370,15 +2366,15 @@ A jQuery plugin to enhance image maps.
          * @param  {Image} img An Image
          * @return {int} the index within the array, or -1 if it was not found
          */
-        
+
         indexOf: function(image) {
             return u.indexOf(this,image);
         },
-        
+
         /**
          * Clear this object and reset it to its initial state after binding.
          */
-        
+
         clear: function() {
             var me=this;
 
@@ -2387,47 +2383,47 @@ A jQuery plugin to enhance image maps.
                     delete me[e];
                 });
             }
-            
+
             /**
              * A list of the cross-reference IDs bound to this object
              * @type {string[]}
              */
-            
+
             me.ids=[];
 
             /**
              * Length property for array-like behavior, set to zero when initializing. Array prototype
              * methods will update it after that.
-             * 
+             *
              * @type {int}
              */
-            
+
             me.length=0;
 
             /**
              * the loaded status of the corresponding image
              * @type {boolean[]}
              */
-            
+
             me.status=[];
-            
-            
+
+
             // actually erase the images
-            
+
             me.splice(0);
-            
+
         },
 
         /**
          * Bind an image to the map and add it to the queue to be loaded; return an ID that
          * can be used to reference the
-         * 
+         *
          * @param {Image|string} image An Image object or a URL to an image
          * @param {string} [id] An id to refer to this image
-         * @returns {int} an ID referencing the index of the image object in 
+         * @returns {int} an ID referencing the index of the image object in
          *                map_data.images
          */
-     
+
         add: function(image,id) {
             var index,src,me = this;
 
@@ -2445,7 +2441,7 @@ A jQuery plugin to enhance image maps.
                     .hide();
 
                 index=me._add(image[0]);
-                
+
                 image
                     .bind('load',function(e) {
                         me.imageLoaded.call(me,e);
@@ -2453,12 +2449,12 @@ A jQuery plugin to enhance image maps.
                     .bind('error',function(e) {
                         me.imageLoadError.call(me,e);
                     });
-                
+
                 image.attr('src', src);
             } else {
 
                 // use attr because we want the actual source, not the resolved path the browser will return directly calling image.src
-                
+
                 index=me._add($(image)[0]);
             }
             if (id) {
@@ -2472,59 +2468,59 @@ A jQuery plugin to enhance image maps.
         },
 
         /**
-         * Bind the images in this object, 
-         * @param  {boolean} retry when true, indicates that the function is calling itself after failure 
+         * Bind the images in this object,
+         * @param  {boolean} retry when true, indicates that the function is calling itself after failure
          * @return {Promise} a promise that resolves when the images have finished loading
          */
-        
+
         bind: function(retry) {
             var me = this,
                 promise,
                 triesLeft = me.owner.options.configTimeout / 200,
 
-            /* A recursive function to continue checking that the images have been 
-               loaded until a timeout has elapsed */
+                /* A recursive function to continue checking that the images have been
+                   loaded until a timeout has elapsed */
 
-            check=function() {
-                var i;
+                check=function() {
+                    var i;
 
-                // refresh status of images
-                
-                i=me.length;
+                    // refresh status of images
 
-                while (i-->0) {
-                    if (!me.isLoaded(i)) {
-                        break;
+                    i=me.length;
+
+                    while (i-->0) {
+                        if (!me.isLoaded(i)) {
+                            break;
+                        }
                     }
-                }
 
-                // check to see if every image has already been loaded
-                
-                if (me.complete()) {
-                    me.resolve();
-                } else {
-                    // to account for failure of onLoad to fire in rare situations
-                    if (triesLeft-- > 0) {
-                        me.imgTimeout=window.setTimeout(function() {
-                            check.call(me,true);
-                        }, 50);
+                    // check to see if every image has already been loaded
+
+                    if (me.complete()) {
+                        me.resolve();
                     } else {
-                        me.imageLoadError.call(me);
+                        // to account for failure of onLoad to fire in rare situations
+                        if (triesLeft-- > 0) {
+                            me.imgTimeout=window.setTimeout(function() {
+                                check.call(me,true);
+                            }, 50);
+                        } else {
+                            me.imageLoadError.call(me);
+                        }
                     }
-                }
-            
-            };
+
+                };
 
             promise = me.deferred=u.defer();
-            
+
             check();
             return promise;
         },
-   
+
         resolve: function() {
             var me=this,
                 resolver=me.deferred;
-                
+
             if (resolver) {
                 // Make a copy of the resolver before calling & removing it to ensure
                 // it is not called twice
@@ -2537,7 +2533,7 @@ A jQuery plugin to enhance image maps.
          * Event handler for image onload
          * @param  {object} e jQuery event data
          */
-        
+
         imageLoaded: function(e) {
             var me=this,
                 index = me.indexOf(e.target);
@@ -2550,16 +2546,16 @@ A jQuery plugin to enhance image maps.
                 }
             }
         },
-        
+
         /**
          * Event handler for onload error
          * @param  {object} e jQuery event data
          */
-        
+
         imageLoadError: function(e) {
             clearTimeout(this.imgTimeout);
             this.triesLeft=0;
-            var err = e ? 'The image ' + e.target.src + ' failed to load.' : 
+            var err = e ? 'The image ' + e.target.src + ' failed to load.' :
                 'The images never seemed to finish loading. You may just need to increase the configTimeout if images could take a long time to load.';
             throw err;
         },
@@ -2568,7 +2564,7 @@ A jQuery plugin to enhance image maps.
          * @param  {int}  index The image index
          * @return {boolean} true if loaded, false if not
          */
-        
+
         isLoaded: function(index) {
             var img,
                 me=this,
@@ -2576,7 +2572,7 @@ A jQuery plugin to enhance image maps.
 
             if (status[index]) { return true; }
             img = me[index];
-            
+
             if (typeof img.complete !== 'undefined') {
                 status[index]=img.complete;
             } else {
@@ -2588,7 +2584,7 @@ A jQuery plugin to enhance image maps.
             return status[index];
         }
     };
-    } (jQuery));
+} (jQuery));
 /* mapdata.js
    the MapData object, repesents an instance of a single bound imagemap
 */
@@ -2596,17 +2592,17 @@ A jQuery plugin to enhance image maps.
 
 (function ($) {
 
-    var m = $.mapster, 
+    var m = $.mapster,
         u = m.utils;
-   
+
     /**
      * Set default values for MapData object properties
      * @param  {MapData} me The MapData object
      */
-    
+
     function initializeDefaults(me) {
         $.extend(me,{
-            complete: false,         // (bool)    when configuration is complete       
+            complete: false,         // (bool)    when configuration is complete
             map: null,                // ($)      the image map
             base_canvas: null,       // (canvas|var)  where selections are rendered
             overlay_canvas: null,    // (canvas|var)  where highlights are rendered
@@ -2624,9 +2620,9 @@ A jQuery plugin to enhance image maps.
     }
 
     /**
-     * Return an array of all image-containing options from an options object; 
+     * Return an array of all image-containing options from an options object;
      * that is, containers that may have an "altImage" property
-     * 
+     *
      * @param  {object} obj     An options object
      * @return {object[]}       An array of objects
      */
@@ -2637,7 +2633,7 @@ A jQuery plugin to enhance image maps.
     /**
      * Parse all the altImage references, adding them to the library so they can be preloaded
      * and aliased.
-     * 
+     *
      * @param  {MapData} me The MapData object on which to operate
      */
     function configureAltImages(me)
@@ -2646,14 +2642,14 @@ A jQuery plugin to enhance image maps.
             mi = me.images;
 
         // add alt images
-        
+
         if (m.hasCanvas()) {
             // map altImage library first
-            
+
             $.each(opts.altImages || {}, function(i,e) {
                 mi.add(e,i);
             });
-            
+
             // now find everything else
 
             $.each([opts].concat(opts.areas),function(i,e) {
@@ -2672,9 +2668,9 @@ A jQuery plugin to enhance image maps.
     }
 
     /**
-     * Queue a mouse move action based on current delay settings 
+     * Queue a mouse move action based on current delay settings
      * (helper for mouseover/mouseout handlers)
-     * 
+     *
      * @param  {MapData}    me       The MapData context
      * @param  {number}     delay    The number of milliseconds to delay the action
      * @param  {AreaData}   area     AreaData affected
@@ -2682,7 +2678,7 @@ A jQuery plugin to enhance image maps.
      * @return {Promise}    A promise that resolves when the action is completed
      */
     function queueMouseEvent(me,delay,area, deferred) {
-        
+
         deferred = deferred || u.when.defer();
 
         function cbFinal(areaId) {
@@ -2705,19 +2701,19 @@ A jQuery plugin to enhance image maps.
                     }(area)),
                     delay || 100);
             } else {
-                 cbFinal(area.areaId);
+                cbFinal(area.areaId);
             }
         }
         return deferred;
     }
 
-     /**
+    /**
      * Mousedown event. This is captured only to prevent browser from drawing an outline around an
      * area when it's clicked.
      *
      * @param  {EventData} e jQuery event data
      */
-    
+
     function mousedown(e) {
         if (!m.hasCanvas()) {
             this.blur();
@@ -2727,12 +2723,12 @@ A jQuery plugin to enhance image maps.
 
     /**
      * Mouseover event. Handle highlight rendering and client callback on mouseover
-     * 
+     *
      * @param  {MapData} me The MapData context
      * @param  {EventData} e jQuery event data
      * @return {[type]}   [description]
      */
-    
+
     function mouseover(me,e) {
         var arData = me.getAllDataForArea(this),
             ar=arData.length ? arData[0] : null;
@@ -2765,12 +2761,12 @@ A jQuery plugin to enhance image maps.
 
         if ($.isFunction(me.options.onMouseover)) {
             me.options.onMouseover.call(this,
-            {
-                e: e,
-                options:ar.effectiveOptions(),
-                key: ar.key,
-                selected: ar.isSelected()
-            });
+                {
+                    e: e,
+                    options:ar.effectiveOptions(),
+                    key: ar.key,
+                    selected: ar.isSelected()
+                });
         }
     }
 
@@ -2781,7 +2777,7 @@ A jQuery plugin to enhance image maps.
      * @param  {EventData} e jQuery event data
      * @return {[type]}   [description]
      */
-    
+
     function mouseout(me,e) {
         var newArea,
             ar = me.getDataForArea(this),
@@ -2793,7 +2789,7 @@ A jQuery plugin to enhance image maps.
         }
 
         newArea=me.getDataForArea(e.relatedTarget);
-        
+
         if (newArea === ar) {
             return;
         }
@@ -2806,16 +2802,16 @@ A jQuery plugin to enhance image maps.
 
         if ($.isFunction(opts.onMouseout)) {
             opts.onMouseout.call(this,
-            {
-                e: e,
-                options: opts,
-                key: ar.key,
-                selected: ar.isSelected()
-            });
+                {
+                    e: e,
+                    options: opts,
+                    key: ar.key,
+                    selected: ar.isSelected()
+                });
         }
 
     }
-    
+
     /**
      * Clear any active tooltip or highlight
      *
@@ -2823,15 +2819,15 @@ A jQuery plugin to enhance image maps.
      * @param  {EventData} e jQuery event data
      * @return {[type]}   [description]
      */
-    
+
     function clearEffects(me) {
         var opts = me.options;
 
         me.ensureNoHighlight();
 
-        if (opts.toolTipClose 
-            && $.inArray('area-mouseout', opts.toolTipClose) >= 0 
-            && me.activeToolTip) 
+        if (opts.toolTipClose
+            && $.inArray('area-mouseout', opts.toolTipClose) >= 0
+            && me.activeToolTip)
         {
             me.clearToolTip();
         }
@@ -2844,7 +2840,7 @@ A jQuery plugin to enhance image maps.
      * @param  {EventData} e jQuery event data
      * @return {[type]}   [description]
      */
-    
+
     function click(me,e) {
         var selected, list, list_target, newSelectionState, canChangeState, cbResult,
             that = this,
@@ -2855,7 +2851,7 @@ A jQuery plugin to enhance image maps.
             var areaOpts,target;
             canChangeState = (ar.isSelectable() &&
                 (ar.isDeselectable() || !ar.isSelected()));
-            
+
             if (canChangeState) {
                 newSelectionState = !ar.isSelected();
             } else {
@@ -2864,15 +2860,15 @@ A jQuery plugin to enhance image maps.
 
             list_target = m.getBoundList(opts, ar.key);
 
-            if ($.isFunction(opts.onClick)) 
+            if ($.isFunction(opts.onClick))
             {
                 cbResult= opts.onClick.call(that,
-                {
-                    e: e,
-                    listTarget: list_target,
-                    key: ar.key,
-                    selected: newSelectionState
-                });
+                    {
+                        e: e,
+                        listTarget: list_target,
+                        key: ar.key,
+                        selected: newSelectionState
+                    });
 
                 if (u.isBool(cbResult)) {
                     if (!cbResult) {
@@ -2924,29 +2920,29 @@ A jQuery plugin to enhance image maps.
      * @param {Element} image   an IMG element
      * @param {object} options  ImageMapster binding options
      */
-    m.MapData = function (image, options) 
+    m.MapData = function (image, options)
     {
         var me = this;
-        
-        // (Image)  main map image
-        
-        me.image = image;              
 
-        me.images = new m.MapImages(me); 
+        // (Image)  main map image
+
+        me.image = image;
+
+        me.images = new m.MapImages(me);
         me.graphics = new m.Graphics(me);
 
-        // save the initial style of the image for unbinding. This is problematic, chrome 
+        // save the initial style of the image for unbinding. This is problematic, chrome
         // duplicates styles when assigning, and cssText is apparently not universally supported.
         // Need to do something more robust to make unbinding work universally.
-        
+
         me.imgCssText = image.style.cssText || null;
 
         initializeDefaults(me);
 
         me.configureOptions(options);
-        
+
         // create context-bound event handlers from our private functions
-        
+
         me.mouseover = function(e) { mouseover.call(this,me,e); };
         me.mouseout = function(e) { mouseout.call(this,me,e); };
         me.click = function(e) { click.call(this,me,e); };
@@ -2956,12 +2952,12 @@ A jQuery plugin to enhance image maps.
     m.MapData.prototype = {
         constructor: m.MapData,
 
-         /**
+        /**
          * Set target.options from defaults + options
          * @param  {[type]} target      The target
          * @param  {[type]} options     The options to merge
          */
-        
+
         configureOptions: function(options) {
             this.options= u.updateProps({}, m.defaults, options);
         },
@@ -2970,13 +2966,13 @@ A jQuery plugin to enhance image maps.
          * Ensure all images are loaded
          * @return {Promise} A promise that resolves when the images have finished loading (or fail)
          */
-    
+
         bindImages: function() {
             var me=this,
                 mi = me.images;
 
             // reset the images if this is a rebind
-            
+
             if (mi.length>2) {
                 mi.splice(2);
             } else if (mi.length===0) {
@@ -2986,7 +2982,7 @@ A jQuery plugin to enhance image maps.
                 // will create a duplicate of the main image, we need this to get raw size info
                 mi.add(me.image.src);
             }
-            
+
             configureAltImages(me);
 
             return me.images.bind();
@@ -2996,18 +2992,18 @@ A jQuery plugin to enhance image maps.
          * Test whether an async action is currently in progress
          * @return {Boolean} true or false indicating state
          */
-        
+
         isActive: function() {
             return !this.complete || this.currentAction;
         },
 
         /**
-         * Return an object indicating the various states. This isn't really used by 
+         * Return an object indicating the various states. This isn't really used by
          * production code.
-         * 
+         *
          * @return {object} An object with properties for various states
          */
-        
+
         state: function () {
             return {
                 complete: this.complete,
@@ -3016,26 +3012,26 @@ A jQuery plugin to enhance image maps.
                 zoomedArea: this.zoomedArea,
                 scaleInfo: this.scaleInfo
             };
-        },   
+        },
 
         /**
          * Get a unique ID for the wrapper of this imagemapster
          * @return {string} A string that is unique to this image
          */
-        
+
         wrapId: function () {
             return 'mapster_wrap_' + this.index;
         },
         _idFromKey: function (key) {
             return typeof key === "string" && this._xref.hasOwnProperty(key) ?
-                        this._xref[key] : -1;
+                this._xref[key] : -1;
         },
 
         /**
          * Return a comma-separated string of all selected keys
          * @return {string} CSV of all keys that are currently selected
          */
-        
+
         getSelected: function () {
             var result = '';
             $.each(this.data, function (i,e) {
@@ -3052,7 +3048,7 @@ A jQuery plugin to enhance image maps.
          * @param  {number} atMost  A number limiting the number of areas to be returned (typically 1 or 0 for no limit)
          * @return {MapArea[]}      Array of MapArea objects
          */
-        
+
         getAllDataForArea:function (area,atMost) {
             var i,ar, result,
                 me=this,
@@ -3081,30 +3077,30 @@ A jQuery plugin to enhance image maps.
         getDataForKey: function (key) {
             return this.data[this._idFromKey(key)];
         },
-        
+
         /**
          * Get the primary keys associated with an area group.
          * If this is a primary key, it will be returned.
-         * 
+         *
          * @param  {string key An area key
          * @return {string} A CSV of area keys
          */
-        
+
         getKeysForGroup: function(key) {
             var ar=this.getDataForKey(key);
-            
+
             return !ar ? '':
-                ar.isPrimary ? 
+                ar.isPrimary ?
                     ar.key :
                     this.getPrimaryKeysForMapAreas(ar.areas()).join(',');
         },
-        
+
         /**
          * given an array of MapArea object, return an array of its unique primary keys
          * @param  {MapArea[]} areas The areas to analyze
          * @return {string[]} An array of unique primary keys
          */
-        
+
         getPrimaryKeysForMapAreas: function(areas)
         {
             var keys=[];
@@ -3137,43 +3133,43 @@ A jQuery plugin to enhance image maps.
         setHighlightId: function(id) {
             this.highlightId = id;
         },
-        
+
         /**
          * Clear all active selections on this map
          */
-        
+
         clearSelections: function () {
             $.each(this.data, function (i,e) {
                 if (e.selected) {
                     e.deselect(true);
-                 }
+                }
             });
             this.removeSelectionFinish();
-            
+
         },
 
         /**
          * Set area options from an array of option data.
-         * 
+         *
          * @param {object[]} areas An array of objects containing area-specific options
          */
-        
+
         setAreaOptions: function (areas) {
             var i, area_options, ar;
             areas = areas || [];
 
             // refer by: map_data.options[map_data.data[x].area_option_id]
-            
+
             for (i = areas.length - 1; i >= 0; i--) {
                 area_options = areas[i];
                 if (area_options) {
                     ar = this.getDataForKey(area_options.key);
                     if (ar) {
                         u.updateProps(ar.options, area_options);
-                        
+
                         // TODO: will not deselect areas that were previously selected, so this only works
                         // for an initial bind.
-                        
+
                         if (u.isBool(area_options.selected)) {
                             ar.selected = area_options.selected;
                         }
@@ -3200,20 +3196,20 @@ A jQuery plugin to enhance image maps.
         ///called when images are done loading
         initialize: function () {
             var imgCopy, base_canvas, overlay_canvas, wrap, parentId, css, i,size,
-                img,sort_func, sorted_list,  scale,  
-                        me = this,
-                        opts = me.options;
+                img,sort_func, sorted_list,  scale,
+                me = this,
+                opts = me.options;
 
             if (me.complete) {
                 return;
             }
 
             img = $(me.image);
-            
+
             parentId = img.parent().attr('id');
 
             // create a div wrapper only if there's not already a wrapper, otherwise, own it
-            
+
             if (parentId && parentId.length >= 12 && parentId.substring(0, 12) === "mapster_wrap") {
                 wrap = img.parent();
                 wrap.attr('id', me.wrapId());
@@ -3230,14 +3226,14 @@ A jQuery plugin to enhance image maps.
                 }
             }
             me.wrapper = wrap;
-            
+
             // me.images[1] is the copy of the original image. It should be loaded & at its native size now so we can obtain the true
             // width & height. This is needed to scale the imagemap if not being shown at its native size. It is also needed purely
             // to finish binding in case the original image was not visible. It can be impossible in some browsers to obtain the
             // native size of a hidden image.
 
             me.scaleInfo = scale = u.scaleMap(me.images[0],me.images[1], opts.scaleMap);
-            
+
             me.base_canvas = base_canvas = me.graphics.createVisibleCanvas(me);
             me.overlay_canvas = overlay_canvas = me.graphics.createVisibleCanvas(me);
 
@@ -3245,16 +3241,16 @@ A jQuery plugin to enhance image maps.
             imgCopy = $(me.images[1])
                 .addClass('mapster_el '+ me.images[0].className)
                 .attr({id:null, usemap: null});
-                
+
             size=u.size(me.images[0]);
-            
+
             if (size.complete) {
                 imgCopy.css({
                     width: size.width,
                     height: size.height
                 });
             }
-     
+
             me.buildDataset();
 
             // now that we have processed all the areas, set css for wrapper, scale map if needed
@@ -3288,8 +3284,8 @@ A jQuery plugin to enhance image maps.
             //me.images[1].style.cssText = me.image.style.cssText;
 
             wrap.append(base_canvas)
-                        .append(overlay_canvas)
-                        .append(img.css(m.canvas_style));
+                .append(overlay_canvas)
+                .append(img.css(m.canvas_style));
 
             // images[0] is the original image with map, images[1] is the copy/background that is visible
 
@@ -3321,10 +3317,10 @@ A jQuery plugin to enhance image maps.
 
                 me.options.boundList = opts.onGetList.call(me.image, sorted_list);
             }
-            
+
             me.complete=true;
             me.processCommandQueue();
-            
+
             if (opts.onConfigured && typeof opts.onConfigured === 'function') {
                 opts.onConfigured.call(img, true);
             }
@@ -3356,14 +3352,14 @@ A jQuery plugin to enhance image maps.
 
             // the [attribute] selector is broken on old IE with jQuery. hasVml() is a quick and dirty
             // way to test for that
-            
+
             sel = m.hasVml() ? 'area' :
-                        (default_group ? 
-                            'area[coords]' : 
-                            'area[' + opts.mapKey + ']');
+                (default_group ?
+                    'area[coords]' :
+                    'area[' + opts.mapKey + ']');
 
             areas = $(me.map).find(sel).unbind('.mapster');
-                        
+
             for (mapAreaId = 0;mapAreaId<areas.length; mapAreaId++) {
                 area_id = 0;
                 area = areas[mapAreaId];
@@ -3376,9 +3372,9 @@ A jQuery plugin to enhance image maps.
                 // Create a key if none was assigned by the user
 
                 if (default_group) {
-                     curKey=String(mapAreaId);
+                    curKey=String(mapAreaId);
                     $area.attr('data-mapster-key', curKey);
-                   
+
                 } else {
                     curKey = area.getAttribute(opts.mapKey);
                 }
@@ -3439,15 +3435,15 @@ A jQuery plugin to enhance image maps.
                         .bind('mouseover.mapster, touchstart.mapster', me.mouseover)
                         .bind('mouseout.mapster, touchend.mapster', me.mouseout)
                         .bind('mousedown.mapster', me.mousedown);
-                        
-                    
-                        
+
+
+
                 }
 
-                // store an ID with each area. 
+                // store an ID with each area.
                 $area.data("mapster", mapAreaId+1);
             }
-           
+
             // TODO listenToList
             //            if (opts.listenToList && opts.nitG) {
             //                opts.nitG.bind('click.mapster', event_hooks[map_data.hooks_index].listclick_hook);
@@ -3459,7 +3455,7 @@ A jQuery plugin to enhance image maps.
 
         },
         processCommandQueue: function() {
-            
+
             var cur,me=this;
             while (!me.currentAction && me.commands.length) {
                 cur = me.commands[0];
@@ -3469,9 +3465,9 @@ A jQuery plugin to enhance image maps.
         },
         clearEvents: function () {
             $(this.map).find('area')
-                        .unbind('.mapster');
+                .unbind('.mapster');
             $(this.images)
-                        .unbind('.mapster');
+                .unbind('.mapster');
         },
         _clearCanvases: function (preserveState) {
             // remove the canvas elements created
@@ -3503,7 +3499,7 @@ A jQuery plugin to enhance image maps.
 
         // Compelete cleanup process for deslecting items. Called after a batch operation, or by AreaData for single
         // operations not flagged as "partial"
-        
+
         removeSelectionFinish: function () {
             var g = this.graphics;
 
@@ -3519,16 +3515,16 @@ A jQuery plugin to enhance image maps.
 
 (function ($) {
     var m = $.mapster, u = m.utils;
-    
+
     /**
      * Select this area
-     * 
+     *
      * @param {AreaData} me  AreaData context
      * @param {object} options Options for rendering the selection
      */
     function select(options) {
         // need to add the new one first so that the double-opacity effect leaves the current one highlighted for singleSelect
-        
+
         var me=this, o = me.owner;
         if (o.options.singleSelect) {
             o.clearSelections();
@@ -3538,13 +3534,13 @@ A jQuery plugin to enhance image maps.
         // don't check if it's already selected
         if (!me.isSelected()) {
             if (options) {
-                
-                // cache the current options, and map the altImageId if an altimage 
+
+                // cache the current options, and map the altImageId if an altimage
                 // was passed
 
                 me.optsCache = $.extend(me.effectiveRenderOptions('select'),
                     options,
-                    { 
+                    {
                         altImageId: o.images.add(options.altImage)
                     });
             }
@@ -3563,23 +3559,23 @@ A jQuery plugin to enhance image maps.
     /**
      * Deselect this area, optionally deferring finalization so additional areas can be deselected
      * in a single operation
-     * 
-     * @param  {boolean} partial when true, the caller must invoke "finishRemoveSelection" to render 
+     *
+     * @param  {boolean} partial when true, the caller must invoke "finishRemoveSelection" to render
      */
-    
+
     function deselect(partial) {
         var me=this;
         me.selected = false;
         me.changeState('select', false);
 
         // release information about last area options when deselecting.
-        
+
         me.optsCache=null;
         me.owner.graphics.removeSelections(me.areaId);
 
         // Complete selection removal process. This is separated because it's very inefficient to perform the whole
         // process for multiple removals, as the canvas must be totally redrawn at the end of the process.ar.remove
-        
+
         if (!partial) {
             me.owner.removeSelectionFinish();
         }
@@ -3602,17 +3598,17 @@ A jQuery plugin to enhance image maps.
     }
 
     /**
-     * An AreaData object; represents a conceptual area that can be composed of 
+     * An AreaData object; represents a conceptual area that can be composed of
      * one or more MapArea objects
-     * 
+     *
      * @param {MapData} owner The MapData object to which this belongs
      * @param {string} key   The key for this area
      * @param {string} value The mapValue string for this area
      */
-    
+
     m.AreaData = function (owner, key, value) {
         $.extend(this,{
-            owner: owner, 
+            owner: owner,
             key: key || '',
             // means this represents the first key in a list of keys (it's the area group that gets highlighted on mouseover)
             isPrimary: true,
@@ -3620,16 +3616,16 @@ A jQuery plugin to enhance image maps.
             href: '',
             value: value || '',
             options:{},
-            // "null" means unchanged. Use "isSelected" method to just test true/false 
-            selected: null,       
+            // "null" means unchanged. Use "isSelected" method to just test true/false
+            selected: null,
             // xref to MapArea objects
             areasXref: [],
             // (temporary storage) - the actual area moused over
             area: null,
             // the last options used to render this. Cache so when re-drawing after a remove, changes in options won't
-            // break already selected things. 
+            // break already selected things.
             optsCache: null
-         });
+        });
     };
 
     /**
@@ -3668,7 +3664,7 @@ A jQuery plugin to enhance image maps.
 
             var o = this.effectiveOptions();
             return u.isBool(o.staticState) ? o.staticState :
-                        this.isSelected();
+                this.isSelected();
         },
         isSelected: function () {
             return u.isBool(this.selected) ? this.selected :
@@ -3676,11 +3672,11 @@ A jQuery plugin to enhance image maps.
         },
         isSelectable: function () {
             return u.isBool(this.effectiveOptions().staticState) ? false :
-                        (u.isBool(this.owner.options.staticState) ? false : u.boolOrDefault(this.effectiveOptions().isSelectable,true));
+                (u.isBool(this.owner.options.staticState) ? false : u.boolOrDefault(this.effectiveOptions().isSelectable,true));
         },
         isDeselectable: function () {
             return u.isBool(this.effectiveOptions().staticState) ? false :
-                        (u.isBool(this.owner.options.staticState) ? false : u.boolOrDefault(this.effectiveOptions().isDeselectable,true));
+                (u.isBool(this.owner.options.staticState) ? false : u.boolOrDefault(this.effectiveOptions().isDeselectable,true));
         },
         isNotRendered: function() {
             var area = $(this.area);
@@ -3690,51 +3686,51 @@ A jQuery plugin to enhance image maps.
 
         },
 
-        
-         /**
-         * Return the overall options effective for this area. 
+
+        /**
+         * Return the overall options effective for this area.
          * This should get the default options, and merge in area-specific options, finally
          * overlaying options passed by parameter
-         * 
+         *
          * @param  {[type]} options  options which will supercede all other options for this area
          * @return {[type]}          the combined options
          */
-        
+
         effectiveOptions: function (options) {
-            
+
             var opts = u.updateProps({},
-                    this.owner.area_options,
-                    this.options,
-                    options || {},
-                    {
-                        id: this.areaId 
-                    }
-                );
+                this.owner.area_options,
+                this.options,
+                options || {},
+                {
+                    id: this.areaId
+                }
+            );
 
             opts.selected = this.isSelected();
-            
+
             return opts;
         },
 
         /**
-         * Return the options effective for this area for a "render" or "highlight" mode. 
-         * This should get the default options, merge in the areas-specific options, 
+         * Return the options effective for this area for a "render" or "highlight" mode.
+         * This should get the default options, merge in the areas-specific options,
          * and then the mode-specific options.
          * @param  {string} mode    'render' or 'highlight'
          * @param  {[type]} options  options which will supercede all other options for this area
          * @return {[type]}          the combined options
          */
-        
+
         effectiveRenderOptions: function (mode, options) {
             var allOpts,opts=this.optsCache;
-            
+
             if (!opts || mode==='highlight') {
                 allOpts = this.effectiveOptions(options);
                 opts = u.updateProps({},
                     allOpts,
                     allOpts["render_" + mode]
                 );
-                    
+
                 if (mode!=='highlight') {
                     this.optsCache=opts;
                 }
@@ -3756,7 +3752,7 @@ A jQuery plugin to enhance image maps.
         },
 
         // highlight this area
-         
+
         highlight: function (options) {
             var o = this.owner;
             if (this.effectiveOptions().highlight) {
@@ -3768,12 +3764,12 @@ A jQuery plugin to enhance image maps.
 
         // select this area. if "callEvent" is true then the state change event will be called. (This method can be used
         // during config operations, in which case no event is indicated)
-        
+
         drawSelection: function () {
-        
+
 
             this.owner.graphics.addShapeGroup(this, "select");
-        
+
         }
 
 
@@ -3820,8 +3816,8 @@ A jQuery plugin to enhance image maps.
 
 
     /**
-     * Compute positions that will place a target with dimensions [width,height] outside 
-     * but near the boundaries of the elements "elements". When an imagemap is passed, the 
+     * Compute positions that will place a target with dimensions [width,height] outside
+     * but near the boundaries of the elements "elements". When an imagemap is passed, the
      *
      * @param  {Element|Element[]} elements An element or an array of elements (such as a jQuery object)
      * @param  {Element} image The image to which area elements are bound, if this is an image map.
@@ -3831,20 +3827,20 @@ A jQuery plugin to enhance image maps.
      */
     u.areaCorners = function (elements, image, container, width, height) {
         var pos,found, minX, minY, maxX, maxY, bestMinX, bestMaxX, bestMinY, bestMaxY, curX, curY, nest, j,
-           offsetx=0, 
-           offsety=0,
-           rootx,
-           rooty,
-           iCoords,radius,angle,el,
-           coords=[];
+            offsetx=0,
+            offsety=0,
+            rootx,
+            rooty,
+            iCoords,radius,angle,el,
+            coords=[];
 
         // if a single element was passed, map it to an array
-        
-        elements = elements.length ? 
+
+        elements = elements.length ?
             elements:
             [elements];
 
-        container = container ? 
+        container = container ?
             $(container):
             $(document.body);
 
@@ -3867,7 +3863,7 @@ A jQuery plugin to enhance image maps.
         // map the coordinates of any type of shape to a poly and use the logic. simpler than using three different
         // calculation methods. Circles use a 20 degree increment for this estimation.
 
-        for (j=0;j<elements.length;j++) 
+        for (j=0;j<elements.length;j++)
         {
             el=elements[j];
             if (el.nodeName==='AREA') {
@@ -3880,16 +3876,16 @@ A jQuery plugin to enhance image maps.
                         radius=iCoords[2];
                         coords=[];
                         for (j=0;j<360;j+=20) {
-                             angle=j*Math.PI/180;
-                             coords.push(curX+radius*Math.cos(angle),curY+radius*Math.sin(angle));
+                            angle=j*Math.PI/180;
+                            coords.push(curX+radius*Math.cos(angle),curY+radius*Math.sin(angle));
                         }
                         break;
-                      case 'rect':
-                          coords.push(iCoords[0],iCoords[1],iCoords[2],iCoords[1],iCoords[2],iCoords[3],iCoords[0],iCoords[3]);
-                          break;
-                      default:
-                          coords=coords.concat(iCoords);
-                         break;
+                    case 'rect':
+                        coords.push(iCoords[0],iCoords[1],iCoords[2],iCoords[1],iCoords[2],iCoords[3],iCoords[0],iCoords[3]);
+                        break;
+                    default:
+                        coords=coords.concat(iCoords);
+                        break;
                 }
 
                 // map area positions to it's real position in the container
@@ -3903,20 +3899,20 @@ A jQuery plugin to enhance image maps.
                 el=$(el);
                 pos = el.position();
                 coords.push(pos.left,pos.top,
-                            pos.left+el.width(),pos.top,
-                            pos.left+el.width(),pos.top+el.height(),
-                            pos.left,pos.top+el.height());
+                    pos.left+el.width(),pos.top,
+                    pos.left+el.width(),pos.top+el.height(),
+                    pos.left,pos.top+el.height());
 
             }
         }
-        
+
         minX = minY = bestMinX = bestMinY = 999999;
         maxX = maxY = bestMaxX = bestMaxY = -1;
 
         for (j = coords.length - 2; j >= 0; j -= 2) {
             curX = coords[j];
             curY = coords[j + 1];
-            
+
             if (curX < minX) {
                 minX = curX;
                 bestMaxY = curY;
@@ -3937,26 +3933,26 @@ A jQuery plugin to enhance image maps.
         }
 
         // try to figure out the best place for the tooltip
-        
+
         if (width && height) {
             found=false;
             $.each([[bestMaxX - width, minY - height], [bestMinX, minY - height],
-                             [minX - width, bestMaxY - height], [minX - width, bestMinY],
-                             [maxX,bestMaxY - height], [ maxX,bestMinY],
-                             [bestMaxX - width, maxY], [bestMinX, maxY]
-                      ],function (i, e) {
-                          if (!found && (e[0] > rootx && e[1] > rooty)) {
-                              nest = e;
-                              found=true;
-                              return false;
-                  }
-             });
-             
-             // default to lower-right corner if nothing fit inside the boundaries of the image
-             
-             if (!found) {
-                 nest=[maxX,maxY];
-             }
+                [minX - width, bestMaxY - height], [minX - width, bestMinY],
+                [maxX,bestMaxY - height], [ maxX,bestMinY],
+                [bestMaxX - width, maxY], [bestMinX, maxY]
+            ],function (i, e) {
+                if (!found && (e[0] > rootx && e[1] > rooty)) {
+                    nest = e;
+                    found=true;
+                    return false;
+                }
+            });
+
+            // default to lower-right corner if nothing fit inside the boundaries of the image
+
+            if (!found) {
+                nest=[maxX,maxY];
+            }
         }
         return nest;
     };
@@ -3991,7 +3987,7 @@ A jQuery plugin to enhance image maps.
     };
     // Scale a set of AREAs, return old data as an array of objects
     m.utils.scaleMap = function (image, imageRaw, scale) {
-        
+
         // stunningly, jQuery width can return zero even as width does not, seems to happen only
         // with adBlock or maybe other plugins. These must interfere with onload events somehow.
 
@@ -4007,21 +4003,21 @@ A jQuery plugin to enhance image maps.
         }
         return this.getScaleInfo(vis, scale ? raw : null);
     };
-    
+
     /**
      * Resize the image map. Only one of newWidth and newHeight should be passed to preserve scale
-     * 
+     *
      * @param  {int}   width       The new width OR an object containing named parameters matching this function sig
      * @param  {int}   height      The new height
      * @param  {int}   effectDuration Time in ms for the resize animation, or zero for no animation
      * @param  {function} callback    A function to invoke when the operation finishes
      * @return {promise}              NOT YET IMPLEMENTED
      */
-    
+
     m.MapData.prototype.resize = function (width, height, duration, callback) {
-        var p,promises,newsize,els, highlightId, ratio, 
+        var p,promises,newsize,els, highlightId, ratio,
             me = this;
-        
+
         // allow omitting duration
         callback = callback || duration;
 
@@ -4040,16 +4036,16 @@ A jQuery plugin to enhance image maps.
         function cleanupAndNotify() {
 
             me.currentAction = '';
-            
+
             if ($.isFunction(callback)) {
                 callback();
             }
-            
+
             me.processCommandQueue();
         }
 
         // handle cleanup after the inner elements are resized
-        
+
         function finishResize() {
             sizeCanvas(me.overlay_canvas, width, height);
 
@@ -4072,7 +4068,7 @@ A jQuery plugin to enhance image maps.
                     width: width,
                     height: height
                 },
-                { 
+                {
                     width: me.scaleInfo.realWidth,
                     height: me.scaleInfo.realHeight
                 });
@@ -4089,7 +4085,7 @@ A jQuery plugin to enhance image maps.
 
         highlightId = me.highlightId;
 
-        
+
         if (!width) {
             ratio = height / me.scaleInfo.realHeight;
             width = Math.round(me.scaleInfo.realWidth * ratio);
@@ -4127,7 +4123,7 @@ A jQuery plugin to enhance image maps.
 
             // though resizeMapData is not async, it needs to be finished just the same as the animations,
             // so add it to the "to do" list.
-            
+
             u.when.all(promises).then(finishResize);
             resizeMapData();
             p.resolve();
@@ -4135,7 +4131,7 @@ A jQuery plugin to enhance image maps.
             els.css(newsize);
             resizeMapData();
             finishResize();
-            
+
         }
     };
 
@@ -4150,8 +4146,8 @@ A jQuery plugin to enhance image maps.
 
     p.coords = function (percent, coordOffset) {
         var j, newCoords = [],
-                    pct = percent || this.owner.scaleInfo.scalePct,
-                    offset = coordOffset || 0;
+            pct = percent || this.owner.scaleInfo.scalePct,
+            offset = coordOffset || 0;
 
         if (pct === 1 && coordOffset === 0) {
             return this.originalCoords;
@@ -4170,122 +4166,122 @@ A jQuery plugin to enhance image maps.
     p.reset = function () {
         this.area.coords = this.coords(1).join(',');
     };
-    
+
     m.impl.resize = function (width, height, duration, callback) {
         if (!width && !height) {
             return false;
         }
         var x= (new m.Method(this,
-                function () {
-                    this.resize(width, height, duration, callback);
-                },
-                null,
-                {
-                    name: 'resize',
-                    args: arguments
-                }
-            )).go();
+            function () {
+                this.resize(width, height, duration, callback);
+            },
+            null,
+            {
+                name: 'resize',
+                args: arguments
+            }
+        )).go();
         return x;
     };
 
-/*
-    m.impl.zoom = function (key, opts) {
-        var options = opts || {};
+    /*
+        m.impl.zoom = function (key, opts) {
+            var options = opts || {};
 
-        function zoom(areaData) {
-            // this will be MapData object returned by Method
+            function zoom(areaData) {
+                // this will be MapData object returned by Method
 
-            var scroll, corners, height, width, ratio,
-                    diffX, diffY, ratioX, ratioY, offsetX, offsetY, newWidth, newHeight, scrollLeft, scrollTop,
-                    padding = options.padding || 0,
-                    scrollBarSize = areaData ? 20 : 0,
-                    me = this,
-                    zoomOut = false;
+                var scroll, corners, height, width, ratio,
+                        diffX, diffY, ratioX, ratioY, offsetX, offsetY, newWidth, newHeight, scrollLeft, scrollTop,
+                        padding = options.padding || 0,
+                        scrollBarSize = areaData ? 20 : 0,
+                        me = this,
+                        zoomOut = false;
 
-            if (areaData) {
-                // save original state on first zoom operation
-                if (!me.zoomed) {
-                    me.zoomed = true;
-                    me.preZoomWidth = me.scaleInfo.width;
-                    me.preZoomHeight = me.scaleInfo.height;
-                    me.zoomedArea = areaData;
-                    if (options.scroll) {
-                        me.wrapper.css({ overflow: 'auto' });
-                    }
-                }
-                corners = $.mapster.utils.areaCorners(areaData.coords(1, 0));
-                width = me.wrapper.innerWidth() - scrollBarSize - padding * 2;
-                height = me.wrapper.innerHeight() - scrollBarSize - padding * 2;
-                diffX = corners.maxX - corners.minX;
-                diffY = corners.maxY - corners.minY;
-                ratioX = width / diffX;
-                ratioY = height / diffY;
-                ratio = Math.min(ratioX, ratioY);
-                offsetX = (width - diffX * ratio) / 2;
-                offsetY = (height - diffY * ratio) / 2;
-
-                newWidth = me.scaleInfo.realWidth * ratio;
-                newHeight = me.scaleInfo.realHeight * ratio;
-                scrollLeft = (corners.minX) * ratio - padding - offsetX;
-                scrollTop = (corners.minY) * ratio - padding - offsetY;
-            } else {
-                if (!me.zoomed) {
-                    return;
-                }
-                zoomOut = true;
-                newWidth = me.preZoomWidth;
-                newHeight = me.preZoomHeight;
-                scrollLeft = null;
-                scrollTop = null;
-            }
-
-            this.resize({
-                width: newWidth,
-                height: newHeight,
-                duration: options.duration,
-                scroll: scroll,
-                scrollLeft: scrollLeft,
-                scrollTop: scrollTop,
-                // closure so we can be sure values are correct
-                callback: (function () {
-                    var isZoomOut = zoomOut,
-                            scroll = options.scroll,
-                            areaD = areaData;
-                    return function () {
-                        if (isZoomOut) {
-                            me.preZoomWidth = null;
-                            me.preZoomHeight = null;
-                            me.zoomed = false;
-                            me.zoomedArea = false;
-                            if (scroll) {
-                                me.wrapper.css({ overflow: 'inherit' });
-                            }
-                        } else {
-                            // just to be sure it wasn't canceled & restarted
-                            me.zoomedArea = areaD;
+                if (areaData) {
+                    // save original state on first zoom operation
+                    if (!me.zoomed) {
+                        me.zoomed = true;
+                        me.preZoomWidth = me.scaleInfo.width;
+                        me.preZoomHeight = me.scaleInfo.height;
+                        me.zoomedArea = areaData;
+                        if (options.scroll) {
+                            me.wrapper.css({ overflow: 'auto' });
                         }
-                    };
-                } ())
-            });
-        }
-        return (new m.Method(this,
-                function (opts) {
-                    zoom.call(this);
-                },
-                function () {
-                    zoom.call(this.owner, this);
-                },
-                {
-                    name: 'zoom',
-                    args: arguments,
-                    first: true,
-                    key: key
+                    }
+                    corners = $.mapster.utils.areaCorners(areaData.coords(1, 0));
+                    width = me.wrapper.innerWidth() - scrollBarSize - padding * 2;
+                    height = me.wrapper.innerHeight() - scrollBarSize - padding * 2;
+                    diffX = corners.maxX - corners.minX;
+                    diffY = corners.maxY - corners.minY;
+                    ratioX = width / diffX;
+                    ratioY = height / diffY;
+                    ratio = Math.min(ratioX, ratioY);
+                    offsetX = (width - diffX * ratio) / 2;
+                    offsetY = (height - diffY * ratio) / 2;
+
+                    newWidth = me.scaleInfo.realWidth * ratio;
+                    newHeight = me.scaleInfo.realHeight * ratio;
+                    scrollLeft = (corners.minX) * ratio - padding - offsetX;
+                    scrollTop = (corners.minY) * ratio - padding - offsetY;
+                } else {
+                    if (!me.zoomed) {
+                        return;
+                    }
+                    zoomOut = true;
+                    newWidth = me.preZoomWidth;
+                    newHeight = me.preZoomHeight;
+                    scrollLeft = null;
+                    scrollTop = null;
                 }
-                )).go();
+
+                this.resize({
+                    width: newWidth,
+                    height: newHeight,
+                    duration: options.duration,
+                    scroll: scroll,
+                    scrollLeft: scrollLeft,
+                    scrollTop: scrollTop,
+                    // closure so we can be sure values are correct
+                    callback: (function () {
+                        var isZoomOut = zoomOut,
+                                scroll = options.scroll,
+                                areaD = areaData;
+                        return function () {
+                            if (isZoomOut) {
+                                me.preZoomWidth = null;
+                                me.preZoomHeight = null;
+                                me.zoomed = false;
+                                me.zoomedArea = false;
+                                if (scroll) {
+                                    me.wrapper.css({ overflow: 'inherit' });
+                                }
+                            } else {
+                                // just to be sure it wasn't canceled & restarted
+                                me.zoomedArea = areaD;
+                            }
+                        };
+                    } ())
+                });
+            }
+            return (new m.Method(this,
+                    function (opts) {
+                        zoom.call(this);
+                    },
+                    function () {
+                        zoom.call(this.owner, this);
+                    },
+                    {
+                        name: 'zoom',
+                        args: arguments,
+                        first: true,
+                        key: key
+                    }
+                    )).go();
 
 
-    };
-    */
+        };
+        */
 } (jQuery));
 /* tooltip.js - tooltip functionality
    requires areacorners.js
@@ -4294,43 +4290,43 @@ A jQuery plugin to enhance image maps.
 (function ($) {
 
     var m = $.mapster, u = m.utils;
-    
+
     $.extend(m.defaults, {
         toolTipContainer: '<div style="border: 2px solid black; background: #EEEEEE; width:160px; padding:4px; margin: 4px; -moz-box-shadow: 3px 3px 5px #535353; ' +
-        '-webkit-box-shadow: 3px 3px 5px #535353; box-shadow: 3px 3px 5px #535353; -moz-border-radius: 6px 6px 6px 6px; -webkit-border-radius: 6px; ' +
-        'border-radius: 6px 6px 6px 6px; opacity: 0.9;"></div>',
+            '-webkit-box-shadow: 3px 3px 5px #535353; box-shadow: 3px 3px 5px #535353; -moz-border-radius: 6px 6px 6px 6px; -webkit-border-radius: 6px; ' +
+            'border-radius: 6px 6px 6px 6px; opacity: 0.9;"></div>',
         showToolTip: false,
         toolTipFade: true,
         toolTipClose: ['area-mouseout','image-mouseout'],
         onShowToolTip: null,
         onHideToolTip: null
     });
-    
+
     $.extend(m.area_defaults, {
         toolTip: null,
         toolTipClose: null
     });
-    
+
 
     /**
      * Show a tooltip positioned near this area.
-     * 
+     *
      * @param {string|jquery} html A string of html or a jQuery object containing the tooltip content.
      * @param {string|jquery} [template] The html template in which to wrap the content
-     * @param {string|object} [css] CSS to apply to the outermost element of the tooltip 
+     * @param {string|object} [css] CSS to apply to the outermost element of the tooltip
      * @return {jquery} The tooltip that was created
      */
-    
+
     function createToolTip(html, template, css) {
         var tooltip;
 
         // wrap the template in a jQuery object, or clone the template if it's already one.
         // This assumes that anything other than a string is a jQuery object; if it's not jQuery will
         // probably throw an error.
-        
+
         if (template) {
             tooltip = typeof template === 'string' ?
-                $(template) : 
+                $(template) :
                 $(template).clone();
 
             tooltip.append(html);
@@ -4342,46 +4338,46 @@ A jQuery plugin to enhance image maps.
         // use a non-block type element.
 
         tooltip.css($.extend((css || {}),{
-                display:"block",
-                position:"absolute"
-            })).hide();
-        
+            display:"block",
+            position:"absolute"
+        })).hide();
+
         $('body').append(tooltip);
 
         // we must actually add the tooltip to the DOM and "show" it in order to figure out how much space it
         // consumes, and then reposition it with that knowledge.
         // We also cache the actual opacity setting to restore finally.
-        
+
         tooltip.attr("data-opacity",tooltip.css("opacity"))
             .css("opacity",0);
-        
+
         // doesn't really show it because opacity=0
-        
+
         return tooltip.show();
     }
 
 
     /**
      * Show a tooltip positioned near this area.
-     * 
+     *
      * @param {jquery} tooltip The tooltip
      * @param {object} [options] options for displaying the tooltip.
      *  @config {int} [left] The 0-based absolute x position for the tooltip
      *  @config {int} [top] The 0-based absolute y position for the tooltip
-     *  @config {string|object} [css] CSS to apply to the outermost element of the tooltip 
+     *  @config {string|object} [css] CSS to apply to the outermost element of the tooltip
      *  @config {bool} [fadeDuration] When non-zero, the duration in milliseconds of a fade-in effect for the tooltip.
      */
-    
+
     function showToolTipImpl(tooltip,options)
     {
-        var tooltipCss = { 
+        var tooltipCss = {
                 "left":  options.left + "px",
                 "top": options.top + "px"
-            }, 
+            },
             actalOpacity=tooltip.attr("data-opacity") || 0,
             zindex = tooltip.css("z-index");
-        
-        if (parseInt(zindex,10)===0 
+
+        if (parseInt(zindex,10)===0
             || zindex === "auto") {
             tooltipCss["z-index"] = 9999;
         }
@@ -4389,20 +4385,20 @@ A jQuery plugin to enhance image maps.
         tooltip.css(tooltipCss)
             .addClass('mapster_tooltip');
 
-        
+
         if (options.fadeDuration && options.fadeDuration>0) {
             u.fader(tooltip[0], 0, actalOpacity, options.fadeDuration);
         } else {
             u.setOpacity(tooltip[0], actalOpacity);
         }
     }
-      
+
     /**
      * Hide and remove active tooltips
-     * 
+     *
      * @param  {MapData} this The mapdata object to which the tooltips belong
      */
-    
+
     m.MapData.prototype.clearToolTip = function() {
         if (this.activeToolTip) {
             this.activeToolTip.stop().remove();
@@ -4427,7 +4423,7 @@ A jQuery plugin to enhance image maps.
      */
     function bindToolTipClose(options, bindOption, event, target, beforeClose, onClose) {
         var event_name = event + '.mapster-tooltip';
-        
+
         if ($.inArray(bindOption, options) >= 0) {
             target.unbind(event_name)
                 .bind(event_name, function (e) {
@@ -4438,51 +4434,51 @@ A jQuery plugin to enhance image maps.
                         }
                     }
                 });
-            
+
             return {
-                object: target, 
+                object: target,
                 event: event_name
             };
         }
     }
-    
+
     /**
      * Show a tooltip.
      *
      * @param {string|jquery}   [tooltip]       A string of html or a jQuery object containing the tooltip content.
-     * 
+     *
      * @param {string|jquery}   [target]        The target of the tooltip, to be used to determine positioning. If null,
      *                                          absolute position values must be passed with left and top.
      *
      * @param {string|jquery}   [image]         If target is an [area] the image that owns it
-     * 
+     *
      * @param {string|jquery}   [container]     An element within which the tooltip must be bounded
      *
      *
-     * 
+     *
      * @param {object|string|jQuery} [options]  options to apply when creating this tooltip - OR -
-     *                                          The markup, or a jquery object, containing the data for the tooltip 
-     *                                         
+     *                                          The markup, or a jquery object, containing the data for the tooltip
+     *
      *  @config {string}        [closeEvents]   A string with one or more comma-separated values that determine when the tooltip
      *                                          closes: 'area-click','tooltip-click','image-mouseout' are valid values
      *                                          then no template will be used.
-     *  @config {int}           [offsetx]       the horizontal amount to offset the tooltip 
-     *  @config {int}           [offsety]       the vertical amount to offset the tooltip 
-     *  @config {string|object} [css]           CSS to apply to the outermost element of the tooltip 
+     *  @config {int}           [offsetx]       the horizontal amount to offset the tooltip
+     *  @config {int}           [offsety]       the vertical amount to offset the tooltip
+     *  @config {string|object} [css]           CSS to apply to the outermost element of the tooltip
      */
-    
+
     function showToolTip(tooltip,target,image,container,options) {
         var corners,
             ttopts = {};
-    
+
         options = options || {};
 
 
         if (target) {
 
             corners = u.areaCorners(target,image,container,
-                                    tooltip.outerWidth(true),
-                                    tooltip.outerHeight(true));
+                tooltip.outerWidth(true),
+                tooltip.outerHeight(true));
 
             // Try to upper-left align it first, if that doesn't work, change the parameters
 
@@ -4490,7 +4486,7 @@ A jQuery plugin to enhance image maps.
             ttopts.top = corners[1];
 
         } else {
-            
+
             ttopts.left = options.left;
             ttopts.top = options.top;
         }
@@ -4505,23 +4501,23 @@ A jQuery plugin to enhance image maps.
 
         return tooltip;
     }
-    
+
     /**
      * Show a tooltip positioned near this area.
-      *
+     *
      * @param {string|jquery}   [content]       A string of html or a jQuery object containing the tooltip content.
-     
+
      * @param {object|string|jQuery} [options]  options to apply when creating this tooltip - OR -
-     *                                          The markup, or a jquery object, containing the data for the tooltip 
+     *                                          The markup, or a jquery object, containing the data for the tooltip
      *  @config {string|jquery}   [container]     An element within which the tooltip must be bounded
      *  @config {bool}          [template]      a template to use instead of the default. If this property exists and is null,
      *                                          then no template will be used.
      *  @config {string}        [closeEvents]   A string with one or more comma-separated values that determine when the tooltip
      *                                          closes: 'area-click','tooltip-click','image-mouseout' are valid values
      *                                          then no template will be used.
-     *  @config {int}           [offsetx]       the horizontal amount to offset the tooltip 
-     *  @config {int}           [offsety]       the vertical amount to offset the tooltip 
-     *  @config {string|object} [css]           CSS to apply to the outermost element of the tooltip 
+     *  @config {int}           [offsetx]       the horizontal amount to offset the tooltip
+     *  @config {int}           [offsety]       the vertical amount to offset the tooltip
+     *  @config {string|object} [css]           CSS to apply to the outermost element of the tooltip
      */
     m.AreaData.prototype.showToolTip= function(content,options) {
         var tooltip, closeOpts, target, tipClosed, template,
@@ -4529,26 +4525,26 @@ A jQuery plugin to enhance image maps.
             ad=this,
             md=ad.owner,
             areaOpts = ad.effectiveOptions();
-    
+
         // copy the options object so we can update it
         options = options ? $.extend({},options) : {};
 
         content = content || areaOpts.toolTip;
         closeOpts = options.closeEvents || areaOpts.toolTipClose || md.options.toolTipClose || 'tooltip-click';
-        
-        template = typeof options.template !== 'undefined' ? 
-                options.template :
-                md.options.toolTipContainer;
+
+        template = typeof options.template !== 'undefined' ?
+            options.template :
+            md.options.toolTipContainer;
 
         options.closeEvents = typeof closeOpts === 'string' ?
             closeOpts = u.split(closeOpts) :
             closeOpts;
 
         options.fadeDuration = options.fadeDuration ||
-                 (md.options.toolTipFade ? 
-                    (md.options.fadeDuration || areaOpts.fadeDuration) : 0);
+            (md.options.toolTipFade ?
+                (md.options.fadeDuration || areaOpts.fadeDuration) : 0);
 
-        target = ad.area ? 
+        target = ad.area ?
             ad.area :
             $.map(ad.areas(),
                 function(e) {
@@ -4579,41 +4575,41 @@ A jQuery plugin to enhance image maps.
 
 
         showToolTip(tooltip,
-                    target,
-                    md.image,
-                    options.container,
-                    template,
-                    options);
+            target,
+            md.image,
+            options.container,
+            template,
+            options);
 
         u.ifFunction(md.options.onShowToolTip, ad.area,
-        {
-            toolTip: tooltip,
-            options: ttopts,
-            areaOptions: areaOpts,
-            key: ad.key,
-            selected: ad.isSelected()
-        });
+            {
+                toolTip: tooltip,
+                options: ttopts,
+                areaOptions: areaOpts,
+                key: ad.key,
+                selected: ad.isSelected()
+            });
 
         return tooltip;
     };
-    
+
 
     /**
      * Parse an object that could be a string, a jquery object, or an object with a "contents" property
      * containing html or a jQuery object.
-     * 
+     *
      * @param  {object|string|jQuery} options The parameter to parse
      * @return {string|jquery} A string or jquery object
      */
     function getHtmlFromOptions(options) {
 
-            // see if any html was passed as either the options object itself, or the content property
+        // see if any html was passed as either the options object itself, or the content property
 
-            return (options ?
-                ((typeof options === 'string' || options.jquery) ?
-                    options :
-                    options.content) :
-                null);
+        return (options ?
+            ((typeof options === 'string' || options.jquery) ?
+                options :
+                options.content) :
+            null);
     }
 
     /**
@@ -4621,71 +4617,71 @@ A jQuery plugin to enhance image maps.
      * key parameter doesn't apply and "options" is the first parameter.
      *
      * When called with no parameters, or "key" is a falsy value, any active tooltip is cleared.
-     * 
-     * When only a key is provided, the default tooltip for the area is used. 
-     * 
+     *
+     * When only a key is provided, the default tooltip for the area is used.
+     *
      * When html is provided, this is used instead of the default tooltip.
-     * 
+     *
      * When "noTemplate" is true, the default tooltip template will not be used either, meaning only
      * the actual html passed will be used.
-     *  
+     *
      * @param  {string|AreaElement} key The area for which to activate a tooltip, or a DOM element.
-     * 
+     *
      * @param {object|string|jquery} [options] options to apply when creating this tooltip - OR -
-     *                                         The markup, or a jquery object, containing the data for the tooltip 
+     *                                         The markup, or a jquery object, containing the data for the tooltip
      *  @config {string|jQuery} [content]   the inner content of the tooltip; the tooltip text or HTML
      *  @config {Element|jQuery} [container]   the inner content of the tooltip; the tooltip text or HTML
      *  @config {bool}          [template]  a template to use instead of the default. If this property exists and is null,
      *                                      then no template will be used.
      *  @config {int}           [offsetx]   the horizontal amount to offset the tooltip.
      *  @config {int}           [offsety]   the vertical amount to offset the tooltip.
-     *  @config {string|object} [css]       CSS to apply to the outermost element of the tooltip 
-     *  @config {string|object} [css] CSS to apply to the outermost element of the tooltip 
+     *  @config {string|object} [css]       CSS to apply to the outermost element of the tooltip
+     *  @config {string|object} [css] CSS to apply to the outermost element of the tooltip
      *  @config {bool}          [fadeDuration] When non-zero, the duration in milliseconds of a fade-in effect for the tooltip.
      * @return {jQuery} The jQuery object
      */
-    
+
     m.impl.tooltip = function (key,options) {
         return (new m.Method(this,
-        function mapData() {
-            var tooltip, target, md=this;
-            if (!key) {
-                md.clearToolTip();
-            } else {
-                target=$(key);
-                if (md.activeToolTipID ===target[0]) {
-                    return;
-                }
-                md.clearToolTip();
-
-                md.activeToolTip = tooltip = createToolTip(getHtmlFromOptions(options),
-                            options.template || md.options.toolTipContainer,
-                            options.css);
-                md.activeToolTipID = target[0];
-
-                bindToolTipClose(['tooltip-click'],'tooltip-click', 'click', tooltip, null, function() {
+            function mapData() {
+                var tooltip, target, md=this;
+                if (!key) {
                     md.clearToolTip();
-                });
+                } else {
+                    target=$(key);
+                    if (md.activeToolTipID ===target[0]) {
+                        return;
+                    }
+                    md.clearToolTip();
 
-                md.activeToolTip = tooltip = showToolTip(tooltip,
-                    target,
-                    md.image,
-                    options.container,
-                    options);
-            }
-        },
-        function areaData() {
-            if ($.isPlainObject(key) && !options) {
-                options = key;
-            }
+                    md.activeToolTip = tooltip = createToolTip(getHtmlFromOptions(options),
+                        options.template || md.options.toolTipContainer,
+                        options.css);
+                    md.activeToolTipID = target[0];
 
-            this.showToolTip(getHtmlFromOptions(options),options);
-        },
-        { 
-            name: 'tooltip',
-            args: arguments,
-            key: key
-        }
-    )).go();
+                    bindToolTipClose(['tooltip-click'],'tooltip-click', 'click', tooltip, null, function() {
+                        md.clearToolTip();
+                    });
+
+                    md.activeToolTip = tooltip = showToolTip(tooltip,
+                        target,
+                        md.image,
+                        options.container,
+                        options);
+                }
+            },
+            function areaData() {
+                if ($.isPlainObject(key) && !options) {
+                    options = key;
+                }
+
+                this.showToolTip(getHtmlFromOptions(options),options);
+            },
+            {
+                name: 'tooltip',
+                args: arguments,
+                key: key
+            }
+        )).go();
     };
 } (jQuery));
