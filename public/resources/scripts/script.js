@@ -565,6 +565,33 @@ function versionsElemToggle () {
     versionElem ? init() : findElem();
 }
 
+function imageMapster () {
+
+    function init() {
+        if ($ === undefined) {
+            console.log('$ is not defined');
+            return;
+        }
+        if (!document.querySelector('.mapster-image')) {
+            console.log('no mapster image');
+            return;
+        }
+        if(!mapsterConfigs) {
+            console.log('no mapster config');
+            return;
+        }
+
+        var mapsters = document.querySelectorAll('.mapster-image');
+
+        mapsters.forEach((mapster, index)=>{
+            $(mapster).mapster(mapsterConfigs[index])
+        });
+    }
+
+    init();
+}
+
+
 
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
@@ -577,5 +604,6 @@ document.addEventListener("DOMContentLoaded", function (){
     mobileHeaderScrollToggler.init();
     moduleRefContent.init();
     versionsElemToggle();
+	imageMapster();
 } );
 
