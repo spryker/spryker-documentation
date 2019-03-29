@@ -1,1 +1,1 @@
-define({"../overview.htm":0,"../spryker-eco/overview.htm":2,"../spryker-middleware/overview.htm":3,"../spryker-sdk/overview.htm":4,"../spryker-shop/overview.htm":5,"../spryker/overview.htm":1,});
+define({"../overview.htm":0,});
