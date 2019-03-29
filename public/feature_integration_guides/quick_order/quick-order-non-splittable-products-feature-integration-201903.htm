@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2B,ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Cart Page Inhancements | Spryker</title>
+        <meta name="author" content="" /><title>Quick Add to Cart + Non-splittable Products Feature Integration | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -78,6 +78,7 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../../resources/scripts/jquery.min.js">
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="6_TyZpWPdEGuQsRP2RrltQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="6_TyZpWPdEGuQsRP2RrltQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UxrSHQaXp0GmQrJ48ppcJw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UxrSHQaXp0GmQrJ48ppcJw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,13 +240,116 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Cart Page Enhancements </h1>
-                                                    <p>Every Spryker demo shop boilerplate includes a pre-installed Cart feature. Use this section to enhance the Cart with the additional features and extensions.</p>
+                                                    <h1 id="QuickOrderNonsplittableProductsFeatureIntegration" data-magellan-target="QuickOrderNonsplittableProductsFeatureIntegration">Quick Order: Non-splittable Products Feature Integration <img src="../../resources/images/shoptype/b2b_shop.png" /></h1>
+                                                    <p><a href="javascript:void(0);" class="MCTextPopup popup popupHead">ML<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-language</span></a><a href="javascript:void(0);" class="MCTextPopup popup popupHead">MC<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-currency</span></a>
+                                                    </p>
+                                                    <ul data-magellan="" data-animation-duration="250" data-active-class="selected" data-scroll-container-on="small" class="nocontent menu _Skins_SideMenuNotFixed mc-component">
+                                                        <li><a href="#QuickOrderNonsplittableProductsFeatureIntegration">Quick Order: Non-splittable Products Feature Integration </a>
+                                                        </li>
+                                                        <ul>
+                                                            <li><a href="#InstallFeatureCore">Install Feature Core</a>
+                                                            </li>
+                                                            <ul>
+                                                                <li><a href="#Prerequisites">Prerequisites</a>
+                                                                </li>
+                                                                <li><a href="#1SetupBehavior">1) Set up Behavior</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#SetuptheAdditionalFunctionality">Set up the Additional Functionality</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </ul>
+                                                    </ul>
+                                                    <h2 id="InstallFeatureCore" data-magellan-target="InstallFeatureCore">Install Feature Core</h2>
+                                                    <h3 id="Prerequisites" data-magellan-target="Prerequisites">Prerequisites</h3>
+                                                    <p>To start feature integration, overview and install the necessary features:</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Quick Add To Cart</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Non-splittable Products</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">201903.0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="1SetupBehavior" data-magellan-target="1SetupBehavior">1) Set up Behavior</h3>
+                                                    <h4 id="SetuptheAdditionalFunctionality" data-magellan-target="SetuptheAdditionalFunctionality">Set up the Additional Functionality</h4>
+                                                    <p>	Enable the following behaviors by registering the plugins:</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ProductQuantityItemValidatorPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Checks if the provided product quantity has quantity restrictions and provided quantity fits them, if no - adds an error message.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/QuickOrder/QuickOrderDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Client\QuickOrder;
+ 
+use Spryker\Client\ProductQuantityStorage\Plugin\QuickOrder\ProductQuantityItemValidatorPlugin;
+use Spryker\Client\QuickOrder\QuickOrderDependencyProvider as SprykerQuickOrderDependencyProvider;
+ 
+class QuickOrderDependencyProvider extends SprykerQuickOrderDependencyProvider
+{
+	/**
+	* @return \Spryker\Client\QuickOrderExtension\Dependency\Plugin\ItemValidatorPluginInterface[]
+	*/
+	protected function getQuickOrderBuildItemValidatorPlugins(): array
+	{
+		return [
+			new ProductQuantityItemValidatorPlugin(),
+		];
+	}
+}
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">
+                                                        <p class="tip">Make the following checks at  https://mysprykershop.com/quick-order:</p>
+                                                        <ul>
+                                                            <li value="1"><var>ProductQuantityItemValidatorPlugin</var> takes care about quantities restrictions. Provide an SKU with quantity restrictions on the Quick Add To Cat page and verify if quantity gets automatically adjusted according to the quantity restrictions.</li>
+                                                        </ul>
+                                                    </div>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
                                                     <ul>
-                                                        <li value="1"><a href="search_widget-for-concrete-products-integration.htm">Search Widget for Concrete Products Feature Integration
-</a>
+                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/cart/quick_order/quick-order-overview-201903.htm">Familiarize yourself with the Quick Order feature</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/capabilities/order_management/splittable_order_items/splittable-order-items.htm">Familiarize yourself with the Splittable Order Items feature</a>
                                                         </li>
                                                     </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Mar 28, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
@@ -277,6 +381,8 @@
 			});
 		/* ]]> */</script>
                                 <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/imagemapster.js">
                                 </script>
                                 <script src="../../resources/scripts/script.js">
                                 </script>
