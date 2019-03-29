@@ -1,0 +1,1 @@
+define({'/overview.htm':{i:[1],t:['Module Guide'],b:['']},'https://documentation.spryker.com/':{i:[0],t:['... Back to Documentation'],b:['']}});
