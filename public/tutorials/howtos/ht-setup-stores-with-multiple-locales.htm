@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="LdjOlT66aEKcRea86wyc1g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="LdjOlT66aEKcRea86wyc1g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="SnpPFQPCdE2LtGmhXxuCug">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="SnpPFQPCdE2LtGmhXxuCug:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -251,8 +251,7 @@
 		</p>
                                                     <p>For each store you can define a set of locales; the first locale is the default .
 
-		</p><pre><code class="language-PHP line-numbers">
-&lt;?php
+		</p><pre><code class="language-PHP line-numbers">&lt;?php
 'locales' =&gt; 				
 [
 // first entry is default
@@ -274,14 +273,12 @@ In Demoshop, for listing the current content of the cart, the following URLs are
 		</h3>
                                                     <p>For URL routing, when defining the controllers in your controller provider, you must include the allowed locales for the application. The allowed locales pattern can be retrieved using the <var>getAllowedLocalesPattern</var> from the base class of the controller provider (<var>AbstractYvesControllerProvider</var>).
 
-		</p><pre><code class="language-PHP line-numbers">
-&lt;?php
+		</p><pre><code class="language-PHP line-numbers">&lt;?php
 	$allowedLocalesPattern = $this-&gt;getAllowedLocalesPattern();
 
 	$this-&gt;createGetController('/{cart}', static::ROUTE_CART, 'Cart', 'Cart')
 		-&gt;assert('cart', $allowedLocalesPattern . 'cart|cart')
-		-&gt;value('cart', 'cart');
-		</code></pre>
+		-&gt;value('cart', 'cart');</code></pre>
                                                     <h2>Products with Localized Attributes
 		</h2>
                                                     <p>The details of the abstract products are stored localized in the <var>spy_product_abstract_localized_attributes</var> table. For each abstract product there is an entry in this table that corresponds to each locale, containing the associated attributes for the defined locale
@@ -312,17 +309,14 @@ In Demoshop, for listing the current content of the cart, the following URLs are
                                                     <p>The CSV file containing the product data that needs to be imported must contain the name of the product for each locale:
 
 		</p>
-                                                    <ul>
-                                                        <li class="bullet_list" value="1"><var>name.en_US</var>, <var>name.de_DE</var><![CDATA[
-			]]></li>
-                                                    </ul>
+                                                    <p><var>name.en_US</var>, <var>name.de_DE</var><![CDATA[
+			]]></p>
                                                     <p>The CSV file that contains the attributes for the products that need to be imported must contain the short and long description for each locale :
 		</p>
-                                                    <p>
-			short_description.en_US, short_description.de_DE
-		</p>
-                                                    <p>long_description.en_US, long_description.de_DE
-		</p>
+                                                    <ul>
+                                                        <li value="1"><var>short_description.en_US</var>, <var>short_description.de_DE</var></li>
+                                                        <li value="2"><var>long_description.en_US</var>, <var>long_description.de_DE</var></li>
+                                                    </ul>
                                                     <h2>Categories with Localized Attributes
 		</h2>
                                                     <p>The details of the categories are kept in the <var>spy_category_attribute</var>. For each category defined in the <var>spy_category</var> table there is an entry for each defined locale containing the details of the category localized.
@@ -335,12 +329,12 @@ In Demoshop, for listing the current content of the cart, the following URLs are
 
 		</p>
                                                     <ul>
-                                                        <li class="bullet_list" value="1">meta_title
-			</li>
-                                                        <li class="bullet_list" value="2">meta_description
-			</li>
-                                                        <li class="bullet_list" value="3">category_image_name
-			</li>
+                                                        <li class="bullet_list" value="1"><var>meta_title</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="2"><var>meta_description</var>
+                                                        </li>
+                                                        <li class="bullet_list" value="3"><var>category_image_name</var>
+                                                        </li>
                                                     </ul>
                                                     <h3>Importing categories with localized attributes
 		</h3>
@@ -353,12 +347,11 @@ In Demoshop, for listing the current content of the cart, the following URLs are
                                                     <p>The CSV file containing the product data that needs to be imported must contain the name of the product for each locale:
 
 		</p>
-                                                    <p>category_name.en_US, category_name.de_DE
-		</p>
-                                                    <p>low_pic.en_US, low_pic.de_DE
-		</p>
-                                                    <p>category_description.en_US, category_description.de_DE
-		</p>
+                                                    <ul>
+                                                        <li value="1"><var>category_name.en_US</var>, <var>category_name.de_DE</var></li>
+                                                        <li value="2"><var>low_pic.en_US</var>, <var>low_pic.de_DE</var></li>
+                                                        <li value="3"><var>category_description.en_US</var>, <var>category_description.de_DE</var></li>
+                                                    </ul>
                                                     <h2>Importing CMS Blocks and Pages
 		</h2>
                                                     <p>The CMS blocks and pages are able to render localized content through the use of placeholders. The placeholders have a glossary key associated; at runtime, the placeholder is replaced with the glossary value that corresponds to the current locale. Also, a static page will have a distinct URL for each locale defined in the application.
@@ -370,8 +363,7 @@ In Demoshop, for listing the current content of the cart, the following URLs are
 		</p>
                                                     <p>Example:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?xml version="1.0"?&gt;
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;blocks&gt;
 	&lt;block&gt;
 		&lt;template&gt;data_privacy&lt;/template&gt;
@@ -395,15 +387,13 @@ In Demoshop, for listing the current content of the cart, the following URLs are
 			&lt;/en_US&gt;
 		&lt;/locales&gt;
 	&lt;/block&gt;
-&lt;/blocks&gt;
-				</code></pre>
+&lt;/blocks&gt;</code></pre>
                                                         </div>
                                                     </div>
                                                     <p>The XML file structure for loading static pages is similar to the one for importing blocks; the only differences are that a page has also a URL associated for each locale and it doesn’t have a name linked to it.
 		</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?xml version="1.0"?&gt;
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;pages&gt;
 	&lt;page&gt;
 		&lt;template&gt;data_privacy&lt;/template&gt;
@@ -428,8 +418,7 @@ In Demoshop, for listing the current content of the cart, the following URLs are
 				&lt;/en_US&gt;
 				&lt;/locales&gt;
 	&lt;/page&gt;
-&lt;/pages&gt;
-				</code></pre>
+&lt;/pages&gt;</code></pre>
                                                         </div>
                                                     </div>
                                                     <p>Localized URLs

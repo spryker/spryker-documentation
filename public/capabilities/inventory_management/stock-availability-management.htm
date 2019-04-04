@@ -5,6 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The fully automated Stock calculation takes into consideration products that are reserved in open orders when defining availability." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
@@ -12,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Stock and Availability Management    </title>
+        <meta name="author" content="" /><title>Stock and Availability Management | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -78,6 +79,7 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../../resources/scripts/jquery.min.js">
@@ -208,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="KW24G9CwrUGAO2fV-XDQPA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KW24G9CwrUGAO2fV-XDQPA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="d8ni3ts45U6VBcwY1gwBmA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="d8ni3ts45U6VBcwY1gwBmA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -263,7 +265,7 @@ In contrast to Stock, Availability considers not only the number of products in 
                                                             <ul>
                                                                 <li class="bullet_list" value="1">Product details page won’t show the <strong>Add to cart </strong>button when concrete product is out of stock. <br />Instead informational message is displayed.
 </li>
-                                                                <li class="bullet_list" value="2">Pre-check plugin in cart. <br />\<var>Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CheckAvailabilityPlugin</var><br />checks if all items in cart are available. It’s executed after "Add to cart" operation. <br />If an item is not available, an error message is sent to Yves.
+                                                                <li class="bullet_list" value="2">Pre-check plugin in cart. <br /><var>\Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CheckAvailabilityPlugin</var><br />checks if all items in cart are available. It’s executed after "Add to cart" operation. <br />If an item is not available, an error message is sent to Yves.
 </li>
                                                                 <li class="bullet_list" value="3">Checkout pre-condition when order is placed in last step. <var>Spryker\Zed\Availability\Communication\Plugin\ProductsAvailableCheckoutPre<br />ConditionPlugin</var> checks all items in cart. If any of them is not available anymore, order <br />placing is aborted and error message is displayed.
 </li>
@@ -292,29 +294,44 @@ In contrast to Stock, Availability considers not only the number of products in 
 </p>
                                                             <p>The collector is touched:
 </p>
-                                                            <p>
-Case1: if there no record in availability table and availability is created, it needs to be touched.
-
-</p>
-                                                            <p>Case 2: if availability amount was 0 and now it’s more than 0, it needs to be touched.
-
-</p>
-                                                            <p>Case 3: if availability amount was more than 0 and now it’s 0, it needs to be touched.
-
-</p>
-                                                            <p>Collected data example in JSON.
-
-</p><pre><code class="language-PHP line-numbers">{
+                                                            <div class="table-wrap">
+                                                                <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Case</td>
+                                                                            <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Details</td>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Case 1</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">If there is <b>no record</b> in availability table and availability is created, it needs to be touched.
+</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Case 2</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">If availability amount <b>was 0 and now it’s more than 0</b>, it needs to be touched.
+</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Case 3</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">If availability amount <b>was more than 0 and now it’s 0</b>, it needs to be touched.
+</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <p class="example">Collected data example in JSON.
+<pre><code class="language-bash line-numbers">{
     "abstractProductAvailability": true,
     "concreteProductAvailabilityItems": {
         "27003893-1": true,
         "27003893-2": true
     }
-}
-</code></pre>
-                                                            <p>This information is used on product details page when <b>Add to cart</b> button is rendered.
-
-</p>
+}</code></pre></p>
+                                                            <p>This information is used on product details page when <b>Add to cart</b> is rendered.</p>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Availability Calculation
@@ -338,7 +355,7 @@ Case1: if there no record in availability table and availability is created, it 
 </a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>It’s possible to use <var>vendor/bin/console data:import:product-stock</var> command to import stocks into database. The default stock importer uses <var>csv </var>file from <var>src/Pyz/Zed/Updater/Business/Internal/data/import/product_stock.csv</var>which imports stocks for demoshop.</p>
-                                                            <p>Administration Interface is provided to allow assigning stocks to products. This can be accessed at (zed.domain.tld)/availability.</p>
+                                                            <p>Administration Interface is provided to allow assigning stocks to products. This can be accessed at <var>(zed.domain.tld)/availability</var>.</p>
                                                             <p>Stock update considers the stock from the stock file to be the absolute value. On stock update the stock is overwritten with the values from the file. If a certain product does not have a record in the stock file, then it is considered that the stock of this product does not have to be updated.</p>
                                                         </div>
                                                     </div>
@@ -371,9 +388,10 @@ Case1: if there no record in availability table and availability is created, it 
 
 				When orders are placed, each reservation in <p><img src="../../resources/images/inventory/scenario_3.png" /></p><var>spy_oms_product_reservation</var> table will also store information about store, the relation <var>fk_store</var>, to <var>spy_store table</var>. When adding a product to cart and displaying it there, the store identifier <var>fk_store</var> is used to define the correct availability value for the specific store.
 			</li>
-                                                                <p>From Availability module version 6.0 we have added a new configuration option to store.php file to have information about store with shared persistence. Add <var>'sharedPersistenceWithStores' =&gt; []</var>  to stores.php, where array is store names,
-          for example:
-			<pre><code class="language-PHP line-numbers">  'storesWithSharedPersistence' =&gt; ['DE', 'AT']
+                                                                <p>From Availability module version 6.0 we have added a new configuration option to store.php file to have information about store with shared persistence. Add <var>'sharedPersistenceWithStores' =&gt; []</var>  to stores.php, where array is store names.
+</p>
+                                                                <p class="example">For example:
+			<pre><code class="language-bash line-numbers">  'storesWithSharedPersistence' =&gt; ['DE', 'AT']
           $stores['DE'] = [
               ... //other options
               'storesWithSharedPersistence' =&gt; ['AT']
@@ -381,8 +399,8 @@ Case1: if there no record in availability table and availability is created, it 
           $stores['AT'] = [
               ... //other options
               'storesWithSharedPersistence' =&gt; ['DE']
-          ]</code></pre>
-          That means that DE and AT both share database. This information will be used when updating OMS reservations.</p>
+          ]</code></pre></p>
+                                                                <p>That means that DE and AT both share database. This information will be used when updating OMS reservations.</p>
                                                                 <li value="4">Database is shared between stores, warehouses are shared by the stores. In this case the reservation must be synchronized. <p><img src="../../resources/images/inventory/scenario_4.png" /></p>
 				When placing an order in Store A, the reservation is stored with the store identifier <var>fk_store</var>. An event is created and published in the queue, and synchronization with Store B happens.
 See scenario 3 above for information about how reservations are handled as well learn about the new configuration option for shared database in store.php file.			</li>
