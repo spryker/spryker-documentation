@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="PdSmAkwyIkemVfUATKHbQQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PdSmAkwyIkemVfUATKHbQQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="I3b70amLG0KSK-zyifVZMg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="I3b70amLG0KSK-zyifVZMg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -249,67 +249,59 @@
     </p>
                                                     <p>
                                                         <ol>
-                                                            <li value="1"> Go to <code>config/Shared/config_default.php</code> and modify the database configuration:</li><pre><code class="language-PHP line-numbers">
-    $config[PropelConstants::ZED_DB_PORT] = 3306;
-    $config[PropelConstants::ZED_DB_ENGINE] = $config[PropelConstants::ZED_DB_ENGINE_MYSQL];
-    $config[PropelQueryBuilderConstants::ZED_DB_ENGINE] = $config[PropelConstants::ZED_DB_ENGINE_MYSQL];
-    </code></pre>
-                                                            <li value="2">Go to <code>deploy/setup/params.sh</code> and modify <code>DATABASE_DEFAULT_ENGINE</code> to MySQL:</li><pre><code class="language-PHP line-numbers">
-    DATABASE_DEFAULT_ENGINE='mysql'
-    </code></pre>
+                                                            <li value="1"> Go to <code>config/Shared/config_default.php</code> and modify the database configuration:</li><pre><code class="language-bash line-numbers">$config[PropelConstants::ZED_DB_PORT] = 3306;
+$config[PropelConstants::ZED_DB_ENGINE] = $config[PropelConstants::ZED_DB_ENGINE_MYSQL];
+$config[PropelQueryBuilderConstants::ZED_DB_ENGINE] = $config[PropelConstants::ZED_DB_ENGINE_MYSQL];</code></pre>
+                                                            <li value="2">Go to <code>deploy/setup/params.sh</code> and modify <code>DATABASE_DEFAULT_ENGINE</code> to MySQL:</li><pre><code class="language-yaml">DATABASE_DEFAULT_ENGINE='mysql'</code></pre>
                                                             <li value="3">That's it, now run <code>`./setup -i`</code> to install Spryker with MySQL.</li>
                                                         </ol>
                                                     </p>
                                                     <h2>Demoshop Collectors</h2>
-                                                    <p>Spryker Demoshop ships with set of collectors. Make sure you have all MySQLcollectors in <code>`CollectorConfig.php`</code> :</p><pre><code class="language-PHP line-numbers">
-    public function getStoragePdoQueryAdapterClassNames($dbEngineName)
-    {
-        $data = [
-            'MySql' =&gt; [
-                'ProductCollectorQuery' =&gt; MySqlProductAbstractCollectorQuery::class,
-                'ProductConcreteCollectorQuery' =&gt; MySqlProductConcreteCollectorQuery::class,
-                'CategoryNodeCollectorQuery' =&gt; MySqlStorageCategoryNodeCollectorQuery::class,
-                'NavigationCollectorQuery' =&gt; MySqlNavigationCollectorQuery::class,
-                'UrlCollectorQuery' =&gt; MySqlUrlCollectorQuery::class,
-                'ProductOptionCollectorQuery' =&gt; MySqlProductOptionCollectorQuery::class,
-            ],
-            'PostgreSql' =&gt; [
-                ...
-            ],
-        ];
+                                                    <p>Spryker Demoshop ships with set of collectors. Make sure you have all MySQLcollectors in <code>`CollectorConfig.php`</code>:</p><pre><code class="language-PHP line-numbers">public function getStoragePdoQueryAdapterClassNames($dbEngineName)
+{
+	$data = [
+		'MySql' =&gt; [
+			'ProductCollectorQuery' =&gt; MySqlProductAbstractCollectorQuery::class,
+			'ProductConcreteCollectorQuery' =&gt; MySqlProductConcreteCollectorQuery::class,
+			'CategoryNodeCollectorQuery' =&gt; MySqlStorageCategoryNodeCollectorQuery::class,
+			'NavigationCollectorQuery' =&gt; MySqlNavigationCollectorQuery::class,
+			'UrlCollectorQuery' =&gt; MySqlUrlCollectorQuery::class,
+			'ProductOptionCollectorQuery' =&gt; MySqlProductOptionCollectorQuery::class,
+		],
+		'PostgreSql' =&gt; [
+			...
+		],
+	];
 
-        ...
-    }
+	...
+}
 
-    public function getSearchPdoQueryAdapterClassNames($dbEngineName)
-    {
-        $data = [
-            'MySql' =&gt; [
-                'ProductCollectorQuery' =&gt; MySqlSearchProductCollector::class,
-                'CategoryNodeCollectorQuery' =&gt; MySqlSearchCategoryNodeCollectorQuery::class,
-            ],
-            'PostgreSql' =&gt; [
-                ...
-            ],
-        ];
+public function getSearchPdoQueryAdapterClassNames($dbEngineName)
+{
+	$data = [
+ 		'MySql' =&gt; [
+ 			'ProductCollectorQuery' =&gt; MySqlSearchProductCollector::class,
+			'CategoryNodeCollectorQuery' =&gt; MySqlSearchCategoryNodeCollectorQuery::class,
+		],
+		'PostgreSql' =&gt; [
+			...
+		],
+	];
 
-        ...
-    }
-    </code></pre>
+	...
+}</code></pre>
                                                     <h2>MySQL GroupBy Setting</h2>
                                                     <p>In some MySQL servers there is <code>`ONLY_FULL_GROUP_BY`</code> option which forces all columns to be present in group_by. This option should be removed from
         your configurations of MySQL:
         </p>
-                                                    <p><b>Wrong setting</b>:<pre><code class="language-PHP line-numbers">
-            [mysqld]
+                                                    <p><b>Wrong setting</b>:<pre xml:space="preserve"><code class="language-bash">[mysqld]
 
-            # server mode
-            sql-mode = STRICT_ALL_TABLES,ONLY_FULL_GROUP_BY</code></pre></p>
-                                                    <p><b>Correct setting:</b><pre xml:space="preserve"><code class="bash">
-            [mysqld]
+# server mode
+sql-mode = STRICT_ALL_TABLES,ONLY_FULL_GROUP_BY</code></pre></p>
+                                                    <p><b>Correct setting:</b><pre xml:space="preserve"><code class="language-bash">[mysqld]
 
-            # server mode
-            sql-mode = STRICT_ALL_TABLES</code></pre>
+# server mode
+sql-mode = STRICT_ALL_TABLES</code></pre>
                                                     </p>
                                                     <p>&#160;</p>
                                                     <p><![CDATA[

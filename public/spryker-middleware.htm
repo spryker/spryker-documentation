@@ -79,7 +79,7 @@
 
 </style>
         <link href="resources/stylesheets/mainstyles.css" rel="stylesheet" />
-        <link href="resources/tablestyles/patternedrows.css" rel="stylesheet" />
+        <link href="resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="resources/scripts/custom.modernizr.js">
         </script>
         <script src="resources/scripts/jquery.min.js">
@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="cU3MagaPaEmX9bLPM6YddA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="cU3MagaPaEmX9bLPM6YddA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="R0pwu-yP_Ea3xw5LiTjNgw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="R0pwu-yP_Ea3xw5LiTjNgw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,13 +242,13 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Spryker Middleware</h1>
-                                                    <h2>Overview</h2>
+                                                    <h2>Overview </h2>
                                                     <p>Spryker Middleware is a constructor that allows you to set up a linear data processing flow, also referred to as pipeline, for import/export of data from some system to shop, or from shop to some system. For example, it can be used for importing products to a shop, or exporting orders from a shop.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Pipeline Structure</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>The Middleware applies the pipeline pattern allowing to connect different stages of data processing together and inverting dependencies between them. The imported/exported items are processed one by one and go through a set of specific steps called “stages”.</p>
-                                                            <p>The pipeline contains 5 stages: reader, validator, mapper, translator, writer.</p>
-                                                            <p>First of all, a source item is <b>read</b>. Then it is <b>validated</b> to make sure that all attributes etc. are correct and all the necessary data is available. Having passed the validation, the item is <b>mapped</b>, i.e. keys of the source system are mapped onto the target system. This being done, the items go through a <b>translator</b> which processes the values and translates them into a respective format (for example, the price value is a decimal value, but should be init - it’s translator’s responsibility to change it to the required value). After that, the item is <b>written</b> to the target system (to the database, in case of import, to a file, if it’s export etc.).</p>
+                                                            <p>The pipeline contains 5 stages: reader, validator, mapper, translator, and writer.</p>
+                                                            <p>First of all, a source item is <b>read</b>. Then, it is <b>validated</b> to make sure that all attributes etc. are correct and all the necessary data is available. Having passed the validation, the item is <b>mapped</b>, i.e. keys of the source system are mapped onto the target system. This being done, the items go through a <b>translator</b> which processes the values and translates them into a respective format (for example, the price value is a decimal value, but should be init - it’s translator’s responsibility to change it to the required value). After that, the item is <b>written</b> to the target system (to the database, in case of import, to a file, if it’s export etc.).</p>
                                                             <p>
                                                                 <img src="resources/images/middleware/stages.png" />
                                                             </p>
@@ -262,12 +262,12 @@
                                                             <p>
                                                                 <img src="resources/images/middleware/input-output.png" style="max-width: 50%;" />
                                                             </p>
-                                                            <p>The incoming data are taken from the stream - the Middleware does not care about the source of the data, whether they come from a file, from an API etc. The middleware provides its own interface, so the source of the data does not really matter.</p>
+                                                            <p>The incoming data is taken from the stream - the Middleware does not care about the source of the data, whether it comes from a file, from an API etc. The middleware provides its own interface, so that the source of data does not really matter.</p>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />How the Middleware Works</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>The Middleware provides a console interface to allow job triggering and Jenkins integration. It is evoked by running the command <var>middleware:process: run</var>. The main parameter of the command is <i>-p</i> (process name) which defines the process to be started.</p>
+                                                            <p>The Middleware provides a console interface to allow job triggering and Jenkins integration. It is evoked by running the <var>middleware:process: run</var>  command. The main parameter of the command is <i>-p</i> (process name) which defines the process to be started.</p>
                                                             <p>The default implementation of the middleware constructor includes the interface, reading/writing from/to JSON, .csv, .xml formats, business logic of mapping, translation and validation (you can add your own translators and validators).</p>
                                                             <p>There are two main plugin interfaces, which should be implemented to configure Middleware Process: <var>ConfigurationProfilePluginInterface</var> and <var>ProccessConfigurationPluginInterface</var>.</p>
                                                             <p>The <var>ConfigurationProfilePluginInterface</var> registers the processes (like import/export) and the list of custom translators/validators (if any) implemented at the project level. The interface can be implemented in any module under <var>\Spryker\Zed\[MODULE]\Communication\Plugin\Configuration</var>.</p>
@@ -308,9 +308,9 @@ class AkeneoPimConfigurationProfilePlugin extends AbstractPlugin implements Conf
                                                             <p>		Each process is a separate plugin that consists of the following methods (ProcessConfigurationPluginInterface):
 </p>
                                                             <p><b>getProcessName</b> - returns the process name which is used to find necessary process with the parameter (transferred with -p option).</p>
-                                                            <p><b>getInputStreamPlugin</b> - configures the source from where the data is read.</p>
+                                                            <p><b>getInputStreamPlugin</b> - configures the source where the data is read from.</p>
                                                             <p><b>getOutputStreamPlugin</b> - configures the target where the data is written.</p>
-                                                            <p><b>getIteratorPlugin</b> - either does nothing and releases the input stream for processing as is, or alters the data for further processing. For example, if the input stream is just a file, the iterator does nothing and lets the data be processed further. If the input stream is, for example, a file catalog, <var>getInputStreamPlugin</var> returns the file name, the iterator goes through all the files, and if, say each file is in JSON format, the iterator returns each JSON file of the catalog for processing to pipeline.</p>
+                                                            <p><b>getIteratorPlugin</b> - either does nothing and releases the input stream for processing as is, or alters the data for further processing. For example, if the input stream is just a file, the iterator does nothing and lets the data be processed further. If the input stream is, for example, a file catalog, <var>getInputStreamPlugin</var> returns the file name, the iterator goes through all the files, and if, say each file is in the JSON format, the iterator returns each JSON file of the catalog for processing to pipeline.</p>
                                                             <p>You can use one of two iterators that are provided out of the box (NullIterator, JsonDirectoryIterator) or implement your own iterator.</p>
                                                             <p><b>getStagePlugins</b> - contains a list of all stages the items go through (reader, validator, mapper, translator, writer) and makes sure each item passes each stage one by one.</p>
                                                             <p><b>getLoggerPlugin</b> - defines the way logging happens. The default Middleware logger logs to the PHP standard error stream (php://stderr) (this can be changed as needed). Detalization of the logging is fully customizable, which means you can configure it as you wish.</p>
@@ -410,27 +410,16 @@ class AkeneoPimConfigurationProfilePlugin extends AbstractPlugin implements Conf
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Middleware Integration</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>The core of the Spryker Middleware is implemented in the Process module. This module collects all process plugins and creates processes out of them.</p>
-                                                            <p>To install Process module add the Process repository to your repositories in composer.json, do the following:</p><pre><code class="language-PHP">
-repositories": [
- 
-  ...
-  {
-    "type": "git",
-    "url": "https://github.com/spryker-middleware/process.git"
-  }
-],   </code></pre>
-	Then run this command in console:
-	<pre><code class="language-bash">
-composer require spryker-middleware/process    </code></pre>
-	Add <var>SprykerMiddleware</var> namespace to your project’s core namespaces:
-	<pre><code class="language-bash">
-$config[KernelConstants::CORE_NAMESPACES] = [
+                                                            <p>To install Process module, run this command in console:</p><pre><code class="language-bash">composer require spryker-middleware/process</code></pre>
+	Add the <var>SprykerMiddleware</var> namespace to your project’s core namespaces:
+	<pre xml:space="preserve"><code class="language-bash">
+$config[ KernelConstants::CORE_NAMESPACES] = [
    'SprykerShop',
    'SprykerMiddleware',
    'SprykerEco',
    'Spryker',
 ];    </code></pre>
-	Add Middleware Process console command to <var>ConsoleDependencyProvider</var> in your project:
+	Add the Middleware Process console command to <var>ConsoleDependencyProvider</var> in your project:
 	<pre><code class="language-PHP line-numbers">
 	…
 use SprykerMiddleware\Zed\Process\Communication\Console\ProcessConsole;
@@ -443,7 +432,7 @@ protected function getConsoleCommands(Container $container)
    ];
    …
    return $commands;
-}    </code></pre><p>Add Process module on project level and specify configuration profiles in <var>ProcessDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">
+}    </code></pre><p>Add the Process module on project level and specify configuration profiles in <var>ProcessDependencyProvider</var>:</p><pre><code class="language-PHP line-numbers">
 	class ProcessDependencyProvider extends SprykerMiddlewareProcessDependencyProvider
 {
     …
@@ -460,7 +449,7 @@ protected function getConsoleCommands(Container $container)
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Middleware Reports</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>You can view the results of the Spryker Middleware processes in Middleware <i>Reports</i> section under <i>Maintenance</i> menu of the Administration interface. This <i>Middleware Reports</i> section provides an overview of all the processes run with Middleware, overview of the process results (start time, duration, item count and status of each process) as well as the detailed information on each process. The detailed information includes:</p>
+                                                            <p>You can view the results of the Spryker Middleware processes in the Middleware <i>Reports</i> section under the <i>Maintenance</i> menu of the Administration interface. This <i>Middleware Reports</i> section provides an overview of all the processes run with Middleware, overview of the process results (start time, duration, item count, and status of each process), as well as the detailed information on each process. The detailed information includes:</p>
                                                             <p><b>Process details:</b>
                                                             </p>
                                                             <ul>
@@ -495,21 +484,10 @@ protected function getConsoleCommands(Container $container)
                                                                 <li value="5">average item execution time</li>
                                                             </ul>
                                                             <h3>Reports Integration</h3>
-                                                            <p>To install Report module, add the Report repository to your repositories in composer.json:</p><pre><code class="language-bash">
-repositories": [
- 
-  ...
-  {
-    "type": "git",
-    "url": "https://github.com/spryker-middleware/report.git"
-  }
-],
-</code></pre>
-Then run this command in console:
-<pre><code class="language-bash">
+                                                            <p>To install Report module, run this command in console:</p><pre><code class="language-bash">
 composer require spryker-middleware/report
 </code></pre>
-To add reporting functionality to your Middleware process, add the following plugin to the list of post hook plugins in your Process configuration:
+To add the reporting functionality to your Middleware process, add the following plugin to the list of post hook plugins in your Process configuration:
 <pre><code class="language-PHP line-numbers">
 use SprykerMiddleware\Zed\Report\Communication\Plugin\Hook\ReportPostProcessorHookPlugin;
 ...
@@ -521,34 +499,21 @@ public function getPostProcessorHookPlugins(): array
    ];
 }
 ...
-</code></pre><p>After that you will be able to see the result of your process runs in the Admin UI (Maintenance\ Middleware Reports).</p></div>
+</code></pre><p>After that, you will be able to see the result of your process runs in the Admin UI (Maintenance\ Middleware Reports).</p></div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />OmsMiddlewareConnector Module</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>The <var>OmsMiddlewareConnector</var> module provides <var>TriggerOrderExportProcessCommand</var> which enables triggering of a Middleware process from OMS. Also this module provides <var>OrderReadStreamPlugin</var> that provides input stream for reading orders and pass them to next stages of Middleware process.</p>
-                                                            <p>To install <var>OmsMiddlewareConnector</var> module, add <var>OmsMiddlewareConnector</var> repository to your repositories in composer.json:</p><pre><code class="language-php">
-						
-repositories": [
- 
-  ...
-  {
-    "type": "git",
-    "url": "https://github.com/spryker-middleware/oms-middleware-connector.git"
-  }
-],
-</code></pre>
-
-Then run this command in console:
-<pre><code class="language-bash">
+                                                            <p>The <var>OmsMiddlewareConnector</var> module provides <var>TriggerOrderExportProcessCommand</var> which enables triggering of a Middleware process from OMS. Also, this module provides <var>OrderReadStreamPlugin</var> that provides input stream for reading orders and pass them to next stages of Middleware process.</p>
+                                                            <p>To install <var>OmsMiddlewareConnector</var> module, run this command in console:</p><pre><code class="language-bash">
 composer require spryker-middleware/oms-middleware-connector
 </code></pre>
-Please refer to config/Shared/config.dist.php for example of module configuration.
+Please refer to <var>config/Shared/config.dist.php</var> for example of module configuration.
 
-To set up the order export process which should be triggered from OMS command, add configuration of its name to your project’s config:
+To set up the order export process which should be triggered from the OMS command, add configuration of its name to your project’s config:
 <pre><code class="language-PHP">
 $config[OmsMiddlewareConnectorConstants::ORDER_EXPORT_PROCESS_NAME] = OrderExportProcessConfigurationPlugin::PROCESS_NAME;
 </code></pre>
-Now <var>TriggerOrderExportProcessCommand</var> is available and can be registered in OmsDependencyProvider as well as used in your Oms configuration:
+Now, <var>TriggerOrderExportProcessCommand</var> is available and can be registered in <var>OmsDependencyProvider</var> as well as used in your Oms configuration:
 <pre><code class="language-PHP line-numbers">
 ...
 /**
@@ -573,34 +538,36 @@ public function provideBusinessLayerDependencies(Container $container)
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Mapper</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>A mapper is a way to generate an array for <var>WriteSteam</var> via data taken from <var>ReadStream</var>. You should define keys for the new array and match them to payload data according to the strict rules provided as <var>MapperConfigTransfer</var>.</p>
-                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Mapper\Map\AbstractMap</var>. Abstract methods necessary for implementation are <var>getStrategy()</var> and <var>getMap()</var>.</p>
+                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Mapper\Map\AbstractMap</var>. The abstract methods necessary for implementation are <var>getStrategy()</var> and <var>getMap()</var>.</p>
                                                             <p>By default, Middleware supports two strategies:</p>
-                                                            <table style="margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                            <table style="margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
                                                                 <thead>
-                                                                    <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Strategy</th>
-                                                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Description</th>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Strategy</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">SprykerMiddleware\Zed\Process\Business\Mapper\Map\MapInterface::MAPPER_STRATEGY_SKIP_UNKNOWN</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">This strategy will skip the keys which weren't mentioned in the mapper configuration from the payload</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">SprykerMiddleware\Zed\Process\Business\Mapper\Map\MapInterface::MAPPER_STRATEGY_SKIP_UNKNOWN</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">This strategy will skip the keys which weren't mentioned in the mapper configuration from the payload.</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyB-Regular-DarkerRows">SprykerMiddleware\Zed\Process\Business\Mapper\Map\MapInterface::MAPPER_STRATEGY_COPY_UNKNOWN</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyA-Regular-DarkerRows">This strategy will copy keys with values which weren't mentioned in the mapper configuration  from the payload</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">SprykerMiddleware\Zed\Process\Business\Mapper\Map\MapInterface::MAPPER_STRATEGY_COPY_UNKNOWN</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">This strategy will copy keys with values which weren't mentioned in the mapper configuration  from the payload.</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
                                                             <p>There are 5 different ways to set mapper rules:</p>
-                                                            <p><var>ArrayMapRule</var> - this rule allows using the given payload as an array with a recursive call;</p>
-                                                            <p><var>DynamicMapRule</var> - this rule allows using the value from the payload as a key;</p>
-                                                            <p><var>ClosureMapRule</var> - this rule allows using a custom function for the payload array;</p>
-                                                            <p><var>DynamicArrayMapRule</var> - this rule allows using the value from the payload as a key and works with the payload as with an array with recursive calls;</p>
-                                                            <p><var>KeyMapeRule</var> - the simplest rule for the mapper that gets the value via the key from the payload. You can use   <var>.</var> symbol as a key separator for getting value from the payload.</p>
+                                                            <ul>
+                                                                <li value="1"><var>ArrayMapRule</var> - this rule allows using the given payload as an array with a recursive call;</li>
+                                                                <li value="2"><var>DynamicMapRule</var> - this rule allows using the value from the payload as a key;</li>
+                                                                <li value="3"><var>ClosureMapRule</var> - this rule allows using a custom function for the payload array;</li>
+                                                                <li value="4"><var>DynamicArrayMapRule</var> - this rule allows using the value from the payload as a key and works with the payload as with an array with recursive calls;</li>
+                                                                <li value="5"><var>KeyMapeRule</var> - the simplest rule for the mapper that gets the value via the key from the payload. You can use   <var>.</var> symbol as a key separator for getting value from the payload.</li>
+                                                            </ul>
                                                             <p>You can check the examples of each rule in the following snippet. It's a final mapper example with examples of payload and their result.</p>
                                                             <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand code sample</a></span>
                                                                 <div class="MCDropDownBody dropDownBody">
@@ -738,7 +705,7 @@ public function provideBusinessLayerDependencies(Container $container)
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Validator</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>A validator is a way to validate the mapped payload. You should define the validation  rules for the mapped array and provide it  as <var>ValidatorConfigTransfer</var>.</p>
-                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Validator\ValidationRuleSet\AbstractValidationRuleSet</var>. Abstract method is necessary for <var>getRules()</var> implementation. This method returns an array with validation rules for the mapped payload.</p>
+                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Validator\ValidationRuleSet\AbstractValidationRuleSet</var>. The abstract method is necessary for the <var>getRules()</var> implementation. This method returns an array with validation rules for the mapped payload.</p>
                                                             <p>Use the following format to define validation rules:</p><pre><code class="language-PHP line-numbers">
 	/**
 	 * @return array
@@ -748,101 +715,103 @@ public function provideBusinessLayerDependencies(Container $container)
 		return [
 			'mapped_key' =&gt; [
 				'ValidatorName1',
-				'ValidatorName2' =&gt; [
-					'option1' =&gt; 'value1',
-					'option2' =&gt; 'value2',
-				],
+						[
+						'ValidatorName2',
+						'options' =&gt; [
+								'option1' =&gt; 'value1',
+								'option2' =&gt; 'value2',
+						]
+					]
 			],
 		];
 	}
 		</code></pre>
                                                             <h3>Default Validators</h3>
                                                             <p>There are many predefined validators that can be used in <var>ValidationRuleSet</var>.</p>
-                                                            <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                            <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
                                                                 <thead>
-                                                                    <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Validator Name</th>
-                                                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
-                                                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Options</th>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Validator Name</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Options</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">DateTimeValidator  </td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value is a valid "datetime", meaning a string (or an object that can be cast into a string) that follows a specific format.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">format (opt, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DateTime </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value is a valid "datetime", meaning a string (or an object that can be cast into a string) that follows a specific format.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">format (opt, string)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">EqualToValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value is equal to another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">EqualTo</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value is equal to another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">GreaterOrEqualThanValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value is equal to or greater than another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">GreaterOrEqualThan</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value is equal to or greater than another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">GreaterThanValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value is greater than another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">GreaterThan</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value is greater than another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">InListValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value is included in a list of values, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">values (req, array)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">InList</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value is included in a list of values, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">values (req, array)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">LengthValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value's length is greater than a minimum or less than a maximum, defined in options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">min (opt, int)
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Length</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value's length is greater than a minimum or less than a maximum, defined in options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">min (opt, int)
 
 		<br />max (opt, int)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">LessOrEqualThanValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value is equal to or less than another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">LessOrEqualThan</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value is equal to or less than another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">LessThanValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value is less than another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">LessThan</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value is less than another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">NotBlankValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value is not blank</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">NotBlank</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value is not blank.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">NotEqualToValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value is equal to another value, defined in the options.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">value (req, mixed)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">NotEqualTo</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value is equal to another value, defined in the options.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">value (req, mixed)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">RegexValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Validates that a value matches a regular expression.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">pattern (req, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Regex</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Validates that a value matches a regular expression.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">pattern (req, string)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">RequiredValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Validates that a value is not strictly equal to null.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Required</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Validates that a value is not strictly equal to null.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">TypeValidator</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">Validates that a value is of a specific data type. For example, if a variable should be an array, you can use this constraint with the array type option to validate this.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">type (req, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Type</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Validates that a value is of a specific data type. For example, if a variable should be an array, you can use this constraint with the array type option to validate this.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">type (req, string)</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
-                                                            <p>&#160;</p>
                                                             <h3>Create a Custom Validator</h3>
-                                                            <p>To create your own validator,  extend <var>SprykerMiddleware\Zed\Process\Business\Validator\Validators\AbstractValidator</var> and implement <var>validate()</var> method.</p>
-                                                            <p>Now you are ready to create a new validator plugin. You need to extend <var>SprykerMiddleware\Zed\Process\Communication\Plugin\Validator\AbstractGenericValidatorPlugin</var>, implement <var>getName()</var> and <var>getValidatorClassName()</var> methods, and use this plugin in  <var>SprykerMiddleware\Zed\Process\ProcessDependencyProvider::getValidatorStack()</var> method.</p>
+                                                            <p>To create your own validator,  extend <var>SprykerMiddleware\Zed\Process\Business\Validator\Validators\AbstractValidator</var> and implement the <var>validate()</var> method.</p>
+                                                            <p>Now, you are ready to create a new validator plugin. You need to extend <var>SprykerMiddleware\Zed\Process\Communication\Plugin\Validator\AbstractGenericValidatorPlugin</var>, implement the <var>getName()</var> and <var>getValidatorClassName()</var> methods, and use this plugin in the <var>SprykerMiddleware\Zed\Process\ProcessDependencyProvider::getValidatorStack()</var> method.</p>
                                                             <h3>Example of ValidationRuleSet</h3><pre><code class="language-PHP line-numbers">
 	...
 	use SprykerMiddleware\Zed\Process\Business\Validator\ValidationRuleSet\AbstractValidationRuleSet;
@@ -858,21 +827,23 @@ public function provideBusinessLayerDependencies(Container $container)
 			return [
 				'categories' =&gt; [
 					'Required',
-					'LengthValidator' =&gt; [
-						'min' =&gt; 3,
+					[
+						'Length',
+						'options' =&gt; [
+							'min' =&gt; 3,
+						],
 					],
-				],
-			];
-		}
-	}
+				];
+			}
+		}	
 		</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Translator</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>A translator is a way to update the values from the mapped payload using strict rules from a dictionary. You should define the keys  and translator functions provided as <var>TranslatorConfigTransfer</var>.</p>
-                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Translator\Dictionary\AbstractDictionary</var>. The abstract method is necessary for <var>getDictionary()</var> implementation. This method returns an array with translation rules for mapped payload.</p>
-                                                            <p>You can apply translator function for value with type <var>array</var>. You can use <var>*</var> symbol  to apply translator function to each value in the array like <var>mapped_key.*</var> or use <var>mapped_key.*.subkey</var> syntax to apply translator function to the ceratian key in the array.</p>
+                                                            <p>At first, you should implement <var>SprykerMiddleware\Zed\Process\Business\Translator\Dictionary\AbstractDictionary</var>. The abstract method is necessary for the <var>getDictionary()</var> implementation. This method returns an array with translation rules for mapped payload.</p>
+                                                            <p>You can apply translator function for value with the type <var>array</var>. You can use the <var>*</var> symbol  to apply translator function to each value in the array like <var>mapped_key.*</var> or use the <var>mapped_key.*.subkey</var> syntax to apply translator function to the certain key in the array.</p>
                                                             <p>Use the following format to define translation rules:</p>
                                                             <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand code sample</a></span>
                                                                 <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
@@ -921,99 +892,99 @@ public function provideBusinessLayerDependencies(Container $container)
                                                                 </div>
                                                             </div>
                                                             <h3>Default translator functions</h3>
-                                                            <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
-                                                                <col class="TableStyle-PatternedRows-Column-Regular" />
+                                                            <table style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
                                                                 <thead>
-                                                                    <tr class="TableStyle-PatternedRows-Head-Header1">
-                                                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Name</th>
-                                                                        <th class="TableStyle-PatternedRows-HeadE-Regular-Header1">Description</th>
-                                                                        <th class="TableStyle-PatternedRows-HeadD-Regular-Header1">Options</th>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Options</th>
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">ArrayToString</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Join array elements with a string.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">glue (req, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">ArrayToString</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Join array elements with a string.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">glue (req, string)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">BoolToString</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms bool value to string value ('true' or 'false').</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">BoolToString</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms a bool value to a string value ('true' or 'false').</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">DateTimeToString</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Transforms the DateTime object to the string value with the provided format.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">format (req, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">DateTimeToString</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Transforms the DateTime object to the string value with the provided format.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">format (req, string)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Enum</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Uses payload value as the key for array map and return value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">map (req, array)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Enum</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Uses a payload value as the key for the array map and return value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">map (req, array)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">FloatToInt</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Transforms value from the float value to the integer value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">FloatToInt</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Transforms a value from the float value to the integer value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">FloatToString</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms the float value to the string value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">FloatToString</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms the float value to the string value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">IntToFloat</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Transforms the integer value to the float value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">IntToFloat</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Transforms the integer value to the float value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">IntToString</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms the integer value to the string value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">IntToString</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms the integer value to the string value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">MoneyDecimalToInteger</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Transforms money value from the decimal value to the integer value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">MoneyDecimalToInteger</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Transforms a money value from the decimal value to the integer value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">MoneyIntegerToDecimal</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms money value from the integer value to the decimal value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">MoneyIntegerToDecimal</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms a money value from the integer value to the decimal value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">StringToArray</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Split the string to the array by the delimiter</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">delimiter (req, string)</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">StringToArray</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Split the string to the array by the delimiter.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">delimiter (req, string)</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">StringToBool</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms the string value to the boolean value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">StringToBool</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms the string value to the boolean value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">StringToDateTime</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-LightRows">Transforms the string value to the DateTime object.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">StringToDateTime</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Transforms the string value to the DateTime object.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">StringToFloat</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyE-Regular-DarkerRows">Transforms the string value to the float value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">StringToFloat</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Transforms the string value to the float value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
                                                                     </tr>
-                                                                    <tr class="TableStyle-PatternedRows-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">StringToInt</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyB-Regular-LightRows">Transforms the string value to the integer value.</td>
-                                                                        <td class="TableStyle-PatternedRows-BodyA-Regular-LightRows">&#160;</td>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">StringToInt</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Transforms the string value to the integer value.</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">&#160;</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
                                                             <h3>Create a Custom Translator Function</h3>
-                                                            <p>To create your own translator function, extend <i>SprykerMiddleware\Zed\Process\Business\Translator\TranslatorFunction\AbstractTranslatorFunction</i> and implement <i>translate()</i> method.</p>
-                                                            <p>Now you are ready to create validator plugin. You should extend <var>SprykerMiddleware\Zed\Process\Communication\Plugin\TranslatorFunction\AbstractGenericTranslatorFunctionPlugin</var> and implement <var>getName()</var> and <var>getTranslatorFunctionClassName()</var> methods, and use this plugin in  <var>SprykerMiddleware\Zed\Process\ProcessDependencyProvider::getTranslatorFunctionStack()</var> method.</p>
-                                                            <p>Check out an example of dictionary below:</p>
+                                                            <p>To create your own translator function, extend <var>SprykerMiddleware\Zed\Process\Business\Translator\TranslatorFunction\AbstractTranslatorFunction</var> and implement the <var>translate()</var> method.</p>
+                                                            <p>Now you are ready to create validator plugin. You should extend <var>SprykerMiddleware\Zed\Process\Communication\Plugin\TranslatorFunction\AbstractGenericTranslatorFunctionPlugin</var>, implement the <var>getName()</var> and <var>getTranslatorFunctionClassName()</var> methods, and use this plugin in the <var>SprykerMiddleware\Zed\Process\ProcessDependencyProvider::getTranslatorFunctionStack()</var> method.</p>
+                                                            <p>Check out an example of the dictionary below:</p>
                                                             <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand code sample</a></span>
                                                                 <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 	...
@@ -1138,7 +1109,7 @@ public function provideBusinessLayerDependencies(Container $container)
                                                     <h2>Data Import Plugins and Business Logic</h2>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Creating importer</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>First of all, you need to create a business model to import data to the database. Usually, it's called Importer. It should be implemented on project level.</p>
+                                                            <p>First of all, you need to create a business model to import data to the database. Usually, it's called Importer. It should be implemented at the project level.</p>
                                                             <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand code sample</a></span>
                                                                 <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 	&lt;?php
@@ -1206,9 +1177,9 @@ public function provideBusinessLayerDependencies(Container $container)
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Prepare Publisher and datasetStepBroker</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>As an example, we can create DataImporter for categories.</p>
+                                                            <p>As an example, we can create <var>DataImporter</var> for categories.</p>
                                                             <p>Importer business model expects 3 parameters in the constructor, so let's create it.</p>
-                                                            <p>Firstly, you need to update Business factory with the following methods:</p>
+                                                            <p>Firstly, you need to update the business factory with the following methods:</p>
                                                             <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click here to expand code sample</a></span>
                                                                 <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 	&lt;?php
@@ -1285,7 +1256,7 @@ public function provideBusinessLayerDependencies(Container $container)
 		...
 	}
 		</code></pre>
-                                                            <p>Now we need to update the communication layer and create the plugin to import categories.</p><pre><code class="language-PHP line-numbers">
+                                                            <p>Now, we need to update the communication layer and create the plugin to import categories.</p><pre><code class="language-PHP line-numbers">
 	class CategoryDataImporterPlugin extends AbstractPlugin
 	{
 		/**
@@ -1300,7 +1271,7 @@ public function provideBusinessLayerDependencies(Container $container)
 		}
 	}
 		</code></pre>
-                                                            <p>Then you need to add <var>CategoryDataImporterPlugin</var> to communication dependencies.</p><pre><code class="language-PHP line-numbers">
+                                                            <p>Then, you need to add <var>CategoryDataImporterPlugin</var> to communication dependencies.</p><pre><code class="language-PHP line-numbers">
 	/**
 	 * @param \Spryker\Zed\Kernel\Container $container
 	 *
@@ -1405,7 +1376,7 @@ public function provideBusinessLayerDependencies(Container $container)
 		</code></pre>
                                                                 </div>
                                                             </div>
-                                                            <p>As the parameter for <var>DataImportWriteStream</var>, we should use <var>CategoryDataImporterPlugin</var>. Now we add method in our BusinessFactory.</p><pre><code class="language-PHP line-numbers">
+                                                            <p>As the parameter for <var>DataImportWriteStream</var>, we should use <var>CategoryDataImporterPlugin</var>. Now, we add the method to our BusinessFactory.</p><pre><code class="language-PHP line-numbers">
 	/*
 	 * @return \SprykerMiddleware\Shared\Process\Stream\WriteStreamInterface
 	 */
@@ -1441,7 +1412,7 @@ public function provideBusinessLayerDependencies(Container $container)
 		return $container;
 	}
 		</code></pre>
-                                                            <p>Now you should update communication factory:</p><pre><code class="language-PHP line-numbers">
+                                                            <p>Now, you should update the communication factory:</p><pre><code class="language-PHP line-numbers">
 	/**
 	 * @return \SprykerMiddleware\Zed\Process\Dependency\Plugin\Stream\OutputStreamPluginInterface
 	 */
@@ -1474,10 +1445,11 @@ public function provideBusinessLayerDependencies(Container $container)
 		}
 	}	
 		</code></pre>
-                                                            <p>If the configuration plugin is updated accordingly, category import from <var>ReadStream</var> to <var>WriteStream</var>  will be executed every time when <var>CATEGORY_IMPORT_PROCESS</var> command is run.</p>
+                                                            <p>If the configuration plugin is updated accordingly, category import from <var>ReadStream</var> to <var>WriteStream</var>  will be executed every time when the <var>CATEGORY_IMPORT_PROCESS</var> command is run.</p>
+                                                            <p>&#160;</p>
                                                         </div>
                                                     </div>
-                                                    <p><i>Last review date: September, 4th, 2018</i>
+                                                    <p><i>Last review date: Mar 29, 2019</i>
                                                     </p>
                                                 </div>
                                             </div>
