@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="TF0aXSXJoUmTQCS4T_Hbiw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TF0aXSXJoUmTQCS4T_Hbiw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="jNqDet9X7Uy0s-hvbQu2pw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="jNqDet9X7Uy0s-hvbQu2pw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,57 +242,46 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Akeneo - Installation and Configuration <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <h2>Installation</h2>
-                                                    <p>To install AkeneoPim, add <var>AkeneoPimMiddlewareConnector</var> by running the console command:</p><pre><code class="language-PHP">
-composer require spryker-eco/akeneo-pim-middleware-connector:1.0.1</code></pre>
-                                                    <h2><a name="Global"></a>Global configuration</h2>
-                                                    <p>Add <var>SprykerMiddleware</var> to your project’s core namespaces:</p><pre><code class="language-php line-numbers">
-	$config[KernelConstants::CORE_NAMESPACES] = [
-		'SprykerShop',
-		'SprykerMiddleware',
-		'SprykerEco',
-		'Spryker',
+                                                    <p>To install AkeneoPim, add <var>AkeneoPimMiddlewareConnector</var> by running the console command. Set <var>akeneo/api-php-client</var> version that you need.</p><pre><code class="language-bash">composer require akeneo/api-php-client:^4.0.0 spryker-eco/akeneo-pim:^1.0.0 spryker-eco/akeneo-pim-middleware-connector:^1.0.0</code></pre>
+                                                    <h2><a name="Global"></a>Global Configuration</h2>
+                                                    <p>Add <var>SprykerMiddleware</var> to your project’s core namespaces:</p><pre><code class="language-php line-numbers">$config[KernelConstants::CORE_NAMESPACES] = [
+	'SprykerShop',
+	'SprykerMiddleware',
+	'SprykerEco',
+	'Spryker',
 	];</code></pre>
-                                                    <p>To set up the Akeneo initial configuration, use the credentials you received from your PIM:</p><pre><code class="language-php line-numbers">
-	$config[AkeneoPimConstants::HOST] = '';
-	$config[AkeneoPimConstants::USERNAME] = '';
-	$config[AkeneoPimConstants::PASSWORD] = '';
-	$config[AkeneoPimConstants::CLIENT_ID] = '';
-	$config[AkeneoPimConstants::CLIENT_SECRET] = '';
-				</code></pre>
-                                                    <p>Next, specify your paths to additional map files:</p><pre><code class="language-php line-numbers">
-	$config[AkeneoPimMiddlewareConnectorConstants::LOCALE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/locale_map.json';
-	$config[AkeneoPimMiddlewareConnectorConstants::ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/attribute_map.json';
-	$config[AkeneoPimMiddlewareConnectorConstants::SUPER_ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/super_attribute_map.json';
-</code></pre>
-                                                    <p>This being done, specify the ID of the category template that should be assigned to the  imported categories:</p><pre><code class="language-php">
-	$config[AkeneoPimMiddlewareConnectorConstants::FK_CATEGORY_TEMPLATE] = 1;</code></pre>
-                                                    <p>Next, specify the name of a tax set for the imported products:</p><pre><code class="language-php">
-	$config[AkeneoPimMiddlewareConnectorConstants::TAX_SET] = 1;</code></pre>
-                                                    <p>Finally, specify the locales that should be imported to shops and stores in which imported products are to be available, and specify how prices should be mapped according to locales:</p><pre><code class="language-php line-numbers">
-	$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_FOR_IMPORT] = [
-		'de_DE',
-		'de_AT',
-	];
-	$config[AkeneoPimMiddlewareConnectorConstants::ACTIVE_STORES_FOR_PRODUCTS] = [
-		'DE',
-		'AT'
-	];
-	$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_TO_PRICE_MAP] = [
-		'de_DE' =&gt; [
-			'currency' =&gt; 'EUR',
-			'type' =&gt; 'DEFAULT',
-			'store' =&gt; 'DE',
-		],
-		'en_US' =&gt; [
-			'currency' =&gt; 'USD',
-			'type' =&gt; 'DEFAULT',
-			'store' =&gt; 'US',
-		],
-	];
-				</code></pre>
-                                                    <h2>Dependency configuration</h2>
-                                                    <p>Add Middleware Process console command to <var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var> in your project:</p><pre><code class="language-PHP line-numbers">
-…
+                                                    <p>To set up the Akeneo initial configuration, use the credentials you received from your PIM:</p><pre><code class="language-php line-numbers">$config[AkeneoPimConstants::HOST] = '';
+$config[AkeneoPimConstants::USERNAME] = '';
+$config[AkeneoPimConstants::PASSWORD] = '';
+$config[AkeneoPimConstants::CLIENT_ID] = '';
+$config[AkeneoPimConstants::CLIENT_SECRET] = '';</code></pre>
+                                                    <p>Next, specify your paths to the additional map files:</p><pre><code class="language-xml line-numbers">$config[AkeneoPimMiddlewareConnectorConstants::LOCALE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/locale_map.json';
+$config[AkeneoPimMiddlewareConnectorConstants::ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/attribute_map.json';
+$config[AkeneoPimMiddlewareConnectorConstants::SUPER_ATTRIBUTE_MAP_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/import/maps/super_attribute_map.json';</code></pre>
+                                                    <p>This being done, specify the ID of the category template that should be assigned to the  imported categories:</p><pre><code class="language-php">$config[AkeneoPimMiddlewareConnectorConstants::FK_CATEGORY_TEMPLATE] = 1;</code></pre>
+                                                    <p>Next, specify the name of a tax set for the imported products:</p><pre><code class="language-php">$config[AkeneoPimMiddlewareConnectorConstants::TAX_SET] = 1;</code></pre>
+                                                    <p>Finally, specify the locales that should be imported to shops and stores in which imported products are to be available, and specify how prices should be mapped according to locales:</p><pre xml:space="preserve"><code class="language-php line-numbers">$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_FOR_IMPORT] = [
+	'de_DE',
+	'de_AT',
+];
+$config[AkeneoPimMiddlewareConnectorConstants::ACTIVE_STORES_FOR_PRODUCTS] = [
+	'DE',
+	'AT'
+];
+$config[AkeneoPimMiddlewareConnectorConstants::LOCALES_TO_PRICE_MAP] = [
+	'de_DE' =&gt; [
+		'currency' =&gt; 'EUR',
+		'type' =&gt; 'DEFAULT',
+		'store' =&gt; 'DE',
+	],
+	'en_US' =&gt; [
+		'currency' =&gt; 'USD',
+		'type' =&gt; 'DEFAULT',
+		'store' =&gt; 'US',
+	],
+];</code></pre>
+                                                    <h2>Dependency Configuration</h2>
+                                                    <p>Add Middleware Process console command to <var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var> in your project:</p><pre><code class="language-PHP line-numbers">…
 use SprykerMiddleware\Zed\Process\Communication\Console\ProcessConsole;
 …
  
@@ -305,8 +294,7 @@ protected function getConsoleCommands(Container $container)
    …
    return $commands;
 }</code></pre>
-                                                    <p>Create ProcessDependencyProvider on a project level for specifying ConfigurationPlugins. Add <var>src/Pyz/Zed/Process/ProcessDependencyProvider.php</var> file:</p><pre><code class="language-PHP line-numbers">
-&lt;?php
+                                                    <p>Create <var>ProcessDependencyProvider</var> on a project level for specifying <var>ConfigurationPlugins</var>. Add <var>src/Pyz/Zed/Process/ProcessDependencyProvider.php</var> file:</p><pre><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\Process;
  
@@ -330,19 +318,22 @@ class ProcessDependencyProvider extends SprykerProcessDependencyProvider
         return $profileStack;
     }
 }</code></pre>
-                                                    <h2>Import configuration</h2>
-                                                    <p>Firstly, extend the AkeneoPimMiddlewareConnector module on a project level. Create <var>src/Pyz/Zed/AkeneoPimMiddlewareConnector</var> folder.</p>
+                                                    <h2>Import Configuration</h2>
+                                                    <p>Firstly, extend the <var>AkeneoPimMiddlewareConnector</var> module on a project level. Create <var>src/Pyz/Zed/AkeneoPimMiddlewareConnector</var> folder.</p>
                                                     <p>Inside the module, implement plugins for writing data (categories, attributes, abstract and concrete products) into the shop. Add the following plugins to <var>src/Pyz/Zed/AkeneoPimMiddlewareConnector/Communication/Plugin</var>:</p>
                                                     <ul>
-                                                        <li value="1">AttributeDataImporterPlugin</li>
-                                                        <li value="2">CategoryDataImporterPlugin</li>
-                                                        <li value="3">ProductAbstractDataImporterPlugin</li>
-                                                        <li value="4">ProductDataImporterPlugin</li>
+                                                        <li value="1"><var>AttributeDataImporterPlugin</var>
+                                                        </li>
+                                                        <li value="2"><var>CategoryDataImporterPlugin</var>
+                                                        </li>
+                                                        <li value="3"><var>ProductAbstractDataImporterPlugin</var>
+                                                        </li>
+                                                        <li value="4"><var>ProductDataImporterPlugin</var>
+                                                        </li>
                                                     </ul>
                                                     <p>Find an examplary plugin implementation below.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />ProductAbstractDataImporterPlugin.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
   
 namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Communication\Plugin;
  
@@ -367,8 +358,7 @@ class ProductAbstractDataImporterPlugin extends AbstractPlugin implements DataIm
                                                     </div>
                                                     <p>Implement your own DataImporter for importing products to the shop database. It can be a business module inside the AkeneoPimMiddlewareConnector module. Example:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoDataImporter.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter;
  
@@ -443,8 +433,7 @@ class AkeneoDataImporter implements AkeneoDataImporterInterface
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Implement facade methods for the AkeneoPimMiddlewareConnector module. Example:</p><pre><code class="language-PHP line-numbers">
-class AkeneoPimMiddlewareConnectorFacade extends SprykerAkeneoPimMiddlewareConnectorFacade implements AkeneoPimMiddlewareConnectorFacadeInterface
+                                                    <p>Implement facade methods for the <var>AkeneoPimMiddlewareConnector</var> module. Example:</p><pre><code class="language-PHP line-numbers">class AkeneoPimMiddlewareConnectorFacade extends SprykerAkeneoPimMiddlewareConnectorFacade implements AkeneoPimMiddlewareConnectorFacadeInterface
 ...
     /**
      * @param array $data
@@ -456,12 +445,11 @@ class AkeneoPimMiddlewareConnectorFacade extends SprykerAkeneoPimMiddlewareConne
             -&gt;import($data);
     }
 ...</code></pre>
-                                                    <h2>Dataset step broker and writer</h2>
-                                                    <p> Business Factory method is used for Importer creation. Determine the data writing approach and how you want to broke the payload. The AkeneoImporter you implemented usually expects the implementation of <var>\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface</var>.</p>
-                                                    <p>For better understanding, see the example of the AkeneoDataImporter creation for importing abstract products in <var>AkeneoPimMiddlewareConnectorBusinessFactory.</var></p>
+                                                    <h2>Dataset Step Broker and Writer</h2>
+                                                    <p> Business Factory method is used for Importer creation. Determine the data writing approach and how you want to broke the payload. The <var>AkeneoImporter</var> you implemented usually expects the implementation of <var>\Spryker\Zed\DataImport\Business\Model\DataSet\DataSetStepBrokerInterface</var>.</p>
+                                                    <p>For better understanding, see the example of the <var>AkeneoDataImporter</var> creation for importing abstract products in <var>AkeneoPimMiddlewareConnectorBusinessFactory.</var></p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoPimMiddlewareConnectorBusinessFactory</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-...
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">...
 class AkeneoPimMiddlewareConnectorBusinessFactory extends SprykerAkeneoPimMiddlewareConnectorBusinessFactory
 ...
  
@@ -501,10 +489,9 @@ class AkeneoPimMiddlewareConnectorBusinessFactory extends SprykerAkeneoPimMiddle
 ...</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>As you can see, in <var>DataSetStepBroker,</var> you can add your own steps for preparing data for writers. You can find ready made steps in the DataImport module or implement your own steps. Example:</p>
+                                                    <p>As you can see, in <var>DataSetStepBroker,</var> you can add your own steps for preparing data for writers. You can find ready made steps in the <var>DataImport</var> module or implement your own steps. Example:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />ProductAbstractStep</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\AkeneoPimMiddlewareConnector\Business\DataImportStep;
  
@@ -546,12 +533,11 @@ class ProductAbstractStep extends ProductAbstractHydratorStep
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>You can change default data mappers and translators for overriding keys or values. By default, Akeneo has a list of predefined mappers, translators and validators for each  import type, but it can be adjusted to meet your requirements. Check the <a href="file:///C:/Dev/academy-sandbox/Spryker Developer Guide/Content/Spryker-Middleware.htm">middleware documentation </a>for more details. </p>
+                                                    <p>You can change default data mappers and translators for overriding keys or values. By default, Akeneo has a list of predefined mappers, translators and validators for each  import type, but it can be adjusted to meet your requirements. Check the <a href="https://documentation.spryker.com/spryker-middleware.htm">middleware documentation </a>for more details. </p>
                                                     <p>You also need to take care of that data that is to be written to the database. Two approaches can be used for that.</p>
                                                     <p>For attributes and categories, Spryker has implemented writer steps, so no plugins are required for that. Example:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoPimMiddlewareConnectorBusinessFactory</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-/**
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">/**
  * @return \Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter\AkeneoDataImporterInterface
  */
 public function createCategoryImporter(): AkeneoDataImporterInterface
@@ -595,8 +581,7 @@ public function createCategoryReader(): CategoryReader
                                                     <p>Product import is a more complex operation, so Spryker provides bulk insertion plugins for that. They are faster than the writer steps.</p>
                                                     <p>You can use the existing plugins or create your own. The right way to add external plugins is to use dependency providers. We have two types of writer plugins: Propel plugins and PDO&#160;plugins. Check the examples for both of them below.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoPimMiddlewareConnectorBusinessFactory</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-/**
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">/**
  * @return \Pyz\Zed\AkeneoPimMiddlewareConnector\Business\AkeneoDataImporter\AkeneoDataImporterInterface
  */
 public function createProductAbstractImporter()
@@ -611,8 +596,7 @@ public function createProductAbstractImporter()
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoPimMiddlewareConnectorDependencyProvider</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-...
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">...
 class AkeneoPimMiddlewareConnectorDependencyProvider extends SprykerAkeneoPimMiddlewareConnectorDependencyProvider
 {
     public const PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS = 'PRODUCT_ABSTRACT_PROPEL_WRITER_PLUGINS';
@@ -637,11 +621,10 @@ class AkeneoPimMiddlewareConnectorDependencyProvider extends SprykerAkeneoPimMid
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>When we use only ProductAbstractPropelWriterPlugin, ProductStores, ProductPrices, etc are not imported. If you want to import something other than products, you need to add more writer plugins.</p>
+                                                    <p>When we use only <var>ProductAbstractPropelWriterPlugin</var>, <var>ProductStores</var>, <var>ProductPrices</var>, etc are not imported. If you want to import something other than products, you need to add more writer plugins.</p>
                                                     <p>For example, if you want to import a product store, provide one more plugin in dependency provider.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AkeneoPimMiddlewareConnectorDependencyProvider</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
-/**
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">/**
  * @param \Spryker\Zed\Kernel\Container $container
  *
  * @return \Spryker\Zed\Kernel\Container
@@ -660,9 +643,8 @@ protected function addProductAbstractPropelWriterPlugins(Container $container): 
                                                         </div>
                                                     </div>
                                                     <p class="note">In case you add more writer plugins, you might have to add more steps to dataset step broker.</p>
-                                                    <h2>Console commands</h2>
-                                                    <p>Now the following console commands are available in your project. Run them one by one.</p><pre><code class="language-bash">
-1) Command to import super attributes:
+                                                    <h2>Console Commands</h2>
+                                                    <p>Now the following console commands are available in your project. Run them one by one.</p><pre><code class="language-bash">1) Command to import super attributes:
 vendor/bin/console middleware:process:run -p SUPER_ATTRIBUTE_IMPORT_PROCESS -o data/import/maps/super_attribute_map.json
  
 2) Command to prepare locale mapping:
@@ -688,29 +670,14 @@ vendor/bin/console middleware:process:run -p PRODUCT_PREPARATION_PROCESS -o data
  
 9) Command to import product model data (abstract products):
 vendor/bin/console middleware:process:run -p DEFAULT_PRODUCT_IMPORT_PROCESS -i data/import/maps/products.json</code></pre>
-                                                    <h2><a name="Multi-se"></a>Multi-select Attributes</h2>
-                                                    <p class="important">The section below explains how Spryker treats multi-select attribues from Akeneo.</p>
-                                                    <ol>
-                                                        <li value="1">The attribute <var>pim_catalog_multiselect</var> is imported as a concatenated string.</li>
-                                                        <li value="2">The following attribute types are skipped during import:</li>
-                                                        <ul>
-                                                            <li value="1"><var>pim_assets_collection</var>
-                                                            </li>
-                                                            <li value="2"><var>pim_reference_data_multiselect</var>
-                                                            </li>
-                                                            <li value="3"><var>pim_catalog_price_collection</var>
-                                                            </li>
-                                                        </ul>
-                                                        <li value="3">On a project level, you can change <var>DefaultProductImportDictionary</var> instead of using the <var>EnrichAttributes</var> translator function or extending it.</li>
-                                                        <li value="4">Price attributes (<var>pim_catalog_price_collection</var>), except the one with <var>attribute_key = 'price'</var>, are skipped. For correct import, products should contain an attribute with <var>attribute_type pim_catalog_price_collection</var> and <var>attribute_key 'price'</var>.</li>
-                                                    </ol>
+                                                    <p style="font-weight: bold;">&#160;</p>
                                                     <p style="font-weight: bold;">See also:</p>
                                                     <ul>
-                                                        <li value="1"><a href="akeneo.htm">Learn about Akeneo</a><![CDATA[
-            ]]></li>
+                                                        <li value="1"><a href="akeneo.htm">Learn about Akeneo</a>
+                                                        </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Feb. 19th, 2019 </i>
+                                                    <p><i>Last review date: Apr 1, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
