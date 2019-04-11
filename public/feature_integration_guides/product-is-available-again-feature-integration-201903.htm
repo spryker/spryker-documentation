@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03,General.Draft" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="wJKOcsFe-kKcsEV0q9kZew">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="wJKOcsFe-kKcsEV0q9kZew:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="XVyLMBaoiESWs81nL59NJw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="XVyLMBaoiESWs81nL59NJw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -289,28 +289,16 @@
                                                                 </thead>
                                                                 <tbody>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>AvailabilityNotification</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>AvailabilityNotification</var>
                                                                         </td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/availability-notification</var>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>AvailabilityNotificationPage</var>
-                                                                        </td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>vendor/spryker-shop/availability-notification-page</var>
-                                                                        </td>
-                                                                    </tr>
-                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>AvailabilityNotificationPageWidget</var>
-                                                                        </td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker-shop/availability-notification-widget</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker/availability-notification</var>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <h3>2) Set Up Database Schema</h3>
+                                                    <h3>2) Set Up Database Schema and Transfer Objects</h3>
                                                     <p>Run the following commands to apply database changes, generate entities and transfer changes:</p><pre><code class="language-bash line-numbers">console transfer:generate
 console propel:install
 console transfer:generate</code></pre>
@@ -494,28 +482,29 @@ console transfer:generate</code></pre>
 namespace Pyz\Zed\Event;
  
 use Spryker\Zed\AvailabilityNotification\Communication\Plugin\Event\Subscriber\AvailabilityNotificationSubscriber;
-...
+ 
 use Spryker\Zed\Event\EventDependencyProvider as SprykerEventDependencyProvider;
-...
+ 
  
 class EventDependencyProvider extends SprykerEventDependencyProvider
 {
-    ...
- 
     /**
      * @return \Spryker\Zed\Event\Dependency\EventSubscriberCollectionInterface
      */
     public function getEventSubscriberCollection()
     {
         $eventSubscriberCollection = parent::getEventSubscriberCollection();
-        ...
+         
         $eventSubscriberCollection-&gt;add(new AvailabilityNotificationSubscriber());
-        ...
+         
         return $eventSubscriberCollection;
     }
 }</code></pre>
                                                         </div>
                                                     </div>
+                                                    <div class="tip">To verify that <var>AvailabilityNotificationSubscriber</var> is working:
+        <ol><li value="1"> add a new product and make it unavailable;</li><li value="2">on Yves, as a customer, subscribe to its availability notifications;</li><li value="3">make the product available;</li><li value="4">check your mailbox for the email about the product's availability.</li></ol></div>
+                                                    <h4>&#160;</h4>
                                                     <h4>Email Handling</h4>
                                                     <p>Add the following plugins in your project:</p>
                                                     <div class="table-wrap">
@@ -611,6 +600,8 @@ class MailDependencyProvider extends SprykerMailDependencyProvider
 }</code></pre>
                                                         </div>
                                                     </div>
+                                                    <div class="tip">To verify that <var>AvailabilityNotificationSubscriptionMailTypePlugin</var>, <var>AvailabilityNotificationUnsubscribedMailTypePlugin</var> and <var>AvailabilityNotificationMailTypePlugin</var> are working:
+        <ol><li value="1">add a new product;</li><li value="2">on YVES, as a customer, subscribe to its availability notifications;</li><li value="3">switch the availability status of the product several times;</li><li value="4">check your mailbox for the emails about the product's status being switched to available and unavailable. </li></ol></div>
                                                     <h4>Customer Behavior</h4>
                                                     <p>Add the following plugins in your project:</p>
                                                     <div class="table-wrap">
@@ -691,10 +682,79 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
 }</code></pre>
                                                         </div>
                                                     </div>
+                                                    <div class="tip">To verify that <var>AvailabilityNotificationAnonymizerPlugin</var> is working:
+        <ol><li value="1"> add a new product;</li><li value="2">on Yves, as a company user, subscribe to its availability notifications;</li><li value="3">Check that the corresponding line is added to <var>spy_availability_notification_subscription</var> table;</li><li value="4">delete this user;</li><li value="5">check that the line is deleted from <var>spy_availability_notification_subscription</var> table.</li></ol></div>
+                                                    <div class="tip">To verify that <var>AvailabilityNotificationSubscriptionCustomerTransferExpanderPlugin</var> is working:
+        <ol><li value="1">add a new product;</li><li value="2">on Yves, as a company user, subscribe to its availability notifications;</li><li value="3">on Yves, go to account overview&gt; <i>Newsletters</i> page; </li><li value="4">check that you are subscribed to the product's availability notifications.</li></ol></div>
                                                     <h2>Install Feature Frontend</h2>
-                                                    <h3>1) Add Translations</h3>
+                                                    <h3>Prerequisites</h3>
+                                                    <p>Ensure that the related features are installed:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Mailing &amp; Notifications</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Inventory Management</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Product</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                        <p>Spryker Core</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">201903.0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>1) Install the Required Modules Using Composer</h3>
+                                                    <p>Run the following command to install the required modules:</p><pre><code class="language-bash">composer require "spryker-feature/availability-notification":"^201903.0" --update-with-dependencies</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following modules have been installed:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>AvailabilityNotificationPage</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker-shop/availability-notification-page</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                            <p><var>AvailabilityNotificationPageWidget</var>
+                                                                            </p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                            <p><var>vendor/spryker-shop/availability-notification-widget</var>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3>2) Add Translations</h3>
                                                     <p>Feature-specific glossary keys:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/data/import/glossary.csv</a></span>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/data/import/glossary.csv</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-xml line-numbers">availability_notification.notify_me,Notify me when back in stock,en_US
 availability_notification.notify_me,"Benachrichtigen Sie mich, wenn der Artikel wieder verfügbar ist",de_DE
 availability_notification.do_not_notify_me,Do not notify me when back in stock,en_US
@@ -736,7 +796,7 @@ availability_notification.email_address,"E-Mail-Addresse",de_DE</code></pre>
                                                     <p>Run the following console command to import data:</p><pre><code class="language-bash">
 console data:import glossary</code></pre>
                                                     <p class="tip">Make sure that, in the database, the configured data is added to the <var>spy_glossary</var> table.</p>
-                                                    <h3>Enable Controllers</h3>
+                                                    <h3>3)Enable Controllers</h3>
                                                     <p>Register the following controller providers in Yves application:</p>
                                                     <div class="table-wrap">
                                                         <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
@@ -814,8 +874,10 @@ class YvesBootstrap extends SprykerYvesBootstrap
                                                             <li value="2">http://mysprykershop.com/en/availability-notification/unsubscribe-by-key/{32 characters key}</li>
                                                             <li value="3">http://mysprykershop.com/de/availability-notification/unsubscribe-by-key/{32 characters key}</li>
                                                         </ul>
+                                                        <p class="tip">If you have any other languages configured, the corresponding links must be available too.</p>
                                                     </div>
-                                                    <p>If you have any other languages configured, the corresponding links must be available too.</p>
+                                                    <h3>4) Set up Widgets</h3>
+                                                    <p>Register the following plugins to enable widgets:</p>
                                                     <div class="table-wrap">
                                                         <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                             <col class="TableStyle-PatternedRows2-Column-Regular" />
@@ -841,6 +903,29 @@ class YvesBootstrap extends SprykerYvesBootstrap
                                                             </tbody>
                                                         </table>
                                                     </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Yves\ShopApplication;
+ 
+use SprykerShop\Yves\AvailabilityNotificationWidget\Widget\AvailabilityNotificationSubscriptionWidget;
+use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+ 
+class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+{
+    /**
+     * @return string[]
+     */
+    protected function getGlobalWidgets(): array
+    {
+        return [
+            AvailabilityNotificationSubscriptionWidget::class,
+        ];
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following command to enable Javascript and CSS changes:</p><pre><code class="language-PHP">console frontend:yves:build</code></pre>
                                                     <p>In case you have a custom template, put <var>AvailabilityNotificationSubscriptionWidget</var> to your <var>src/Pyz/Yves/ProductDetailPage/Theme/default/components/molecules/product-configurator/product-configurator.twig</var> file:</p><pre><code class="language-PHP line-numbers">
 ...
 {% set isProductAbstract = data.product.idProductConcrete is empty %}
@@ -855,7 +940,7 @@ class YvesBootstrap extends SprykerYvesBootstrap
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/mailing_and_notifications/product_is_available_again/product-is-available-again-201903.htm">Familiarize yourself with the Product is available again feature</a>
+                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/mailing_and_notifications/product_is_available_again/product-is-available-again-201903.htm">Product is Available Again feature overview</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>

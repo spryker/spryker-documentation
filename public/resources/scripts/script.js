@@ -700,6 +700,64 @@ function imageMapster () {
     this.init();
 }
 
+function versionElementsHandler(){
+    this.versionElements = [];
+
+    this.init = () => {
+        this.versionElements = document.querySelectorAll('.versions-element');
+        if(this.versionElements.length > 0){
+            this.versionElements.forEach((elem)=>{
+                let versionElem = elem.querySelector('.js-versions-trigger');
+                let dropdown = elem.querySelector('.js-versions-dropdown');
+                versionElem.addEventListener('click', ()=>{
+                    dropdown.classList.toggle('visible');
+                })
+            })
+        }
+    };
+
+    this.init();
+}
+
+
+function gaDropdownReadCheck(){
+    let gaDropdownsPending = false;
+    return function (){
+        const dropDown = this.querySelector('.MCDropDown');
+        const dropdownName = this.querySelector('.MCDropDownHotSpot').innerText;
+        let isOpen = () => {
+            let result = dropDown.classList.contains('MCDropDown_Open');
+            console.log(result);
+            return result;
+        };
+        console.log('pending:' + gaDropdownsPending);
+        if(isOpen() && !gaDropdownsPending){
+            gaDropdownsPending = true;
+            setTimeout(()=>{
+                if(isOpen()){
+                    console.log('sending');
+                    gtag('event', dropdownName, {
+                        'event_category': 'Reading Installation Guides',
+                        'event_label': 'docs',
+                        'value': 1
+                    });
+                    gaDropdownsPending = false;
+                }else{
+                    gaDropdownsPending = false;
+                }
+            }, 10000);
+        }
+    }
+}
+
+function initGaDropDowns (){
+    if(!document.querySelector('.ga-dropdown')) return;
+    document.querySelectorAll('.ga-dropdown').forEach((dropDown)=>{
+        dropDown.addEventListener('click', gaDropdownReadCheck());
+    })
+
+}
+
 
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
@@ -709,10 +767,12 @@ document.addEventListener("DOMContentLoaded", function (){
     flHandler.init();
     sliderInit.init();
     searchResultMessageChecker.init();
-    mobileHeaderScrollToggler.init();
+    // mobileHeaderScrollToggler.init();
     moduleRefContent.init();
     versionsElemToggle();
     dropHandler.init();
     imageMapster();
+    versionElementsHandler();
+    initGaDropDowns();
 } );
 
