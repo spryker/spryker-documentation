@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Tk2LvHL610GfzZ_kgZcqpQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Tk2LvHL610GfzZ_kgZcqpQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="WMyVQCUV3ketjtcIpdlmcA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WMyVQCUV3ketjtcIpdlmcA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,17 +240,17 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Payment <img src="../resources/images/shoptype/b2b_shop.png" /> <img src="../resources/images/shoptype/b2c_shop.png" /> <img src="../resources/images/shoptype/mastersuite.png" /> <img src="../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <h2>Upgrading from Version 3.* to Version 4.*
-</h2>
-                                                    <p>In the Payment module version 4 we have added new payment tables to store order payment related information.</p>
-                                                    <p>To enable the new version:</p>
-                                                    <ol>
-                                                        <li value="1">Composer update spryker/payment to new version
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In the Payment module version 4 we have added new payment tables to store order payment related information.</p>
+                                                            <p>To enable the new version:</p>
+                                                            <ol>
+                                                                <li value="1">Composer update spryker/payment to new version
 </li>
-                                                        <li value="2"> Run <var>vendor/bin/console transfer:generate</var> to generate new transfer objects
+                                                                <li value="2"> Run <var>vendor/bin/console transfer:generate</var> to generate new transfer objects
 </li>
-                                                        <li value="3">Insert new sales payment tables by executing the following queries:</li>
-                                                    </ol><pre><code class="language-PHP line-numbers">
+                                                                <li value="3">Insert new sales payment tables by executing the following queries:</li>
+                                                            </ol><pre><code class="language-PHP line-numbers">
 CREATE SEQUENCE “spy_sales_payment_pk_seq”;
 CREATE TABLE “spy_sales_payment”
 (
@@ -278,11 +278,13 @@ ALTER TABLE “spy_sales_payment” ADD CONSTRAINT “spy_sales_payment-fk_sales
     FOREIGN KEY (“fk_sales_payment_method_type”)
     REFERENCES “spy_sales_payment_method_type” (“id_sales_payment_method_type”);
 </code></pre>
-                                                    <p>You should now be able to see that the new order saved payment information into the <var>spy_sales_payment</var> table.
+                                                            <p>You should now be able to see that the new order saved payment information into the <var>spy_sales_payment</var> table.
 </p>
-                                                    <p>You may also want to enable the new plugin <var>\Spryker\Zed\Payment\Communication\Plugin\Sales\PaymentOrderHydratePlugin</var> by adding it to <var>\Pyz\Zed\Sales\SalesDependencyProvider::getOrderHydrationPlugins</var>.
+                                                            <p>You may also want to enable the new plugin <var>\Spryker\Zed\Payment\Communication\Plugin\Sales\PaymentOrderHydratePlugin</var> by adding it to <var>\Pyz\Zed\Sales\SalesDependencyProvider::getOrderHydrationPlugins</var>.
 </p>
-                                                    <p>This enables new payment provider hydration plugins which are hydrated to OrderTransfer. </p>
+                                                            <p>This enables new payment provider hydration plugins which are hydrated to OrderTransfer. </p>
+                                                        </div>
+                                                    </div>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

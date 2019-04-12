@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="IhRr6XkXJ0C7PDGrMsFPOQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="IhRr6XkXJ0C7PDGrMsFPOQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="5NwFf06MNEyzocKKs2pSUg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="5NwFf06MNEyzocKKs2pSUg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,23 +240,26 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Checkout <img src="../resources/images/shoptype/b2b_shop.png" /> <img src="../resources/images/shoptype/b2c_shop.png" /> <img src="../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <h2>Upgrading from Version 3.* to Version 4.*</h2>
-                                                    <p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>
             If you extended <code class="php">\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface</code>: find those
             plugins and make sure they return boolean. Important: you can return <var>true</var> even if a plugin adds errors
             to the checkout response.<br />            Replace the interface with <var>Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreConditionInterface</var>.
         </p>
-                                                    <p>
+                                                            <p>
             If you extended <code class="php">\Spryker\Zed\Checkout\Dependency\Plugin\CheckoutPreSaveHookInterface</code>: find those
             plugins and make sure they work with only one param <var>QuoteTransfer $quoteTransfer</var> in <var>preSave</var> function.<br />            Replace the interface to <var>Spryker\Zed\Checkout\Dependency\Plugin\PlaceOrder\CheckoutPreSaveHookInterface</var><![CDATA[        ]]></p>
-                                                    <p>
+                                                            <p>
             OMS run is not optional anymore. Order placement process will trigger the OMS run after an order is saved,
             and before post save hooks run.<br />            Please find and remove usages of <var>\Spryker\Zed\Oms\Communication\Plugin\Checkout\OmsPostSaveHookPlugin</var> and
             any customer OMS trigger implementation.
         </p>
-                                                    <h3>
+                                                            <h3>
             Migrate to the New Saved Plugins: <br /></h3>
-                                                    <p>           Replace <var>\Spryker\Zed\ProductOption\Communication\Plugin\ProductOptionOrderSaverPlugin</var> with <var>\Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderSaverPlugin</var> with <var>\Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\Shipment\Communication\Plugin\OrderShipmentSavePlugin</var> with <var>\Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin</var><br />            Replace <var>\Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderSavePlugin</var> with <var>\Spryker\Zed\Discount\Communication\Plugin\Checkout\DiscountOrderSavePlugin</var><br />            Replace <var>\Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin</var> with <var>\Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin</var><br />            Replace <var>\Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentSaverPlugin</var> with <var>\Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin</var> with <var>\Spryker\Zed\Sales\Communication\Plugin\Checkout\SalesOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\SalesProductConnector\Communication\Plugin\ItemMetadataSaverPlugin</var> with <var>\Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin</var></p>
+                                                            <p>           Replace <var>\Spryker\Zed\ProductOption\Communication\Plugin\ProductOptionOrderSaverPlugin</var> with <var>\Spryker\Zed\ProductOption\Communication\Plugin\Checkout\ProductOptionOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\ProductBundle\Communication\Plugin\Sales\ProductBundleOrderSaverPlugin</var> with <var>\Spryker\Zed\ProductBundle\Communication\Plugin\Checkout\ProductBundleOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\Shipment\Communication\Plugin\OrderShipmentSavePlugin</var> with <var>\Spryker\Zed\Shipment\Communication\Plugin\Checkout\OrderShipmentSavePlugin</var><br />            Replace <var>\Spryker\Zed\Discount\Communication\Plugin\Sales\DiscountOrderSavePlugin</var> with <var>\Spryker\Zed\Discount\Communication\Plugin\Checkout\DiscountOrderSavePlugin</var><br />            Replace <var>\Spryker\Zed\Customer\Communication\Plugin\OrderCustomerSavePlugin</var> with <var>\Spryker\Zed\Customer\Communication\Plugin\Checkout\CustomerOrderSavePlugin</var><br />            Replace <var>\Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentSaverPlugin</var> with <var>\Spryker\Zed\Payment\Communication\Plugin\Checkout\PaymentOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\Sales\Communication\Plugin\SalesOrderSaverPlugin</var> with <var>\Spryker\Zed\Sales\Communication\Plugin\Checkout\SalesOrderSaverPlugin</var><br />            Replace <var>\Spryker\Zed\SalesProductConnector\Communication\Plugin\ItemMetadataSaverPlugin</var> with <var>\Spryker\Zed\SalesProductConnector\Communication\Plugin\Checkout\ItemMetadataSaverPlugin</var></p>
+                                                        </div>
+                                                    </div>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
