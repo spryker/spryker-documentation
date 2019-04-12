@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="oShOUCuFhUmO0GB0Abfl7Q">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="oShOUCuFhUmO0GB0Abfl7Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="eUOcWaJyG0ezVA4Iaf-9rA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="eUOcWaJyG0ezVA4Iaf-9rA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,45 +240,48 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Product Label</h1>
-                                                    <h2>Upgrading from Version 1.* to Version 2.*</h2>
-                                                    <p>The following list describes the Backward Compatibility breaking changes in this version and how to upgrade.</p>
-                                                    <h3>Product Label Rendering</h3>
-                                                    <p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to Version 2.*</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>The following list describes the Backward Compatibility breaking changes in this version and how to upgrade.</p>
+                                                            <h3>Product Label Rendering</h3>
+                                                            <p>
             We've changed <var>spyProductLabels</var> twig function to work based on a list of product label IDs.
             It's original behaviour was moved to a new twig function, called <var>spyProductAbstractLabels</var>.
             The idea behind this change is to directly get all the product label IDs of abstract products on catalog pages
             from Search documents instead of reading all these information from Storage. This is a better approach performance
             wise and also gives us the ability to be able to search and filter for labels in Elasticsearch.
         </p>
-                                                    <p>
+                                                            <p>
             If you just want to quickly upgrade and keep the previous behaviour, you only need to find and replace all the usages
             of <var>spyProductLabels</var> function to <var>spyProductAbstractLabels</var> in all of your twig templates.
             However, we suggest you to invest some time and
         </p>
-                                                    <p>
+                                                            <p>
             However, to get the full benefits of this version upgrade you first need to export product label IDs to your Search
             documents. To do this, you need to modify your product search collector, by adding a new <var>search-result-data</var>
             entry (i.e. <var>id_product_labels</var>) for products. The data of this field can be easily read with
             <var>ProductLabelFacade::findLabelIdsByIdProductAbstract()</var> method.
         </p>
-                                                    <p>
+                                                            <p>
             Once you have the product label IDs in search documents, you can use the <var>spyProductLabels</var> twig method
             in your templates to pass the list of label IDs and display the available labels of a product.
         </p>
-                                                    <h3>Database Changes</h3>
-                                                    <p>
+                                                            <h3>Database Changes</h3>
+                                                            <p>
             We've also added a new <var>is_dynamic</var> field to <var>spy_product_label</var> database table to prepare for the
             new dynamic labels feature coming in the following minor releases. In the 2.0 release the dynamic labels feature
             is not yet implemented, it will be provided by one of the following minor versions.
         </p>
-                                                    <p>To start database migration run the following commands:</p>
-                                                    <ul>
-                                                        <li value="1"><var>vendor/bin/console propel:diff</var>, manual review is necessary for the generated migration file.</li>
-                                                        <li value="2"><var>vendor/bin/console propel:migrate</var>
-                                                        </li>
-                                                        <li value="3"><var>vendor/bin/console propel:model:build</var>
-                                                        </li>
-                                                    </ul>
+                                                            <p>To start database migration run the following commands:</p>
+                                                            <ul>
+                                                                <li value="1"><var>vendor/bin/console propel:diff</var>, manual review is necessary for the generated migration file.</li>
+                                                                <li value="2"><var>vendor/bin/console propel:migrate</var>
+                                                                </li>
+                                                                <li value="3"><var>vendor/bin/console propel:model:build</var>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

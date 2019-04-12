@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="oJZAh-XF8UGsZLJsBoHWEQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="oJZAh-XF8UGsZLJsBoHWEQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="KqjBdZP3cE2qr0jWfpaWmA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KqjBdZP3cE2qr0jWfpaWmA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,21 +240,22 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - CompanyUser</h1>
-                                                    <h2>Upgrading from version 1.0.0 to 2.0.0</h2>
-                                                    <p>CompanyUser module version 2.0.0 brings one major change - new <var>is_active</var> column in <var>spy_company_user</var> database table. The main purpose of this field is to store information about company users and make it possible to enable/disable them.</p>
-                                                    <p>Also, <i>CompanyUserTransfer</i> object got a new <var>isActive</var> field, since it represents CompanyUser from the database (and you aren't allowed to use database entities directly).</p>
-                                                    <p>To migrate, do the following:</p>
-                                                    <p>1) Run database migration:</p><pre><code class="language-PHP line-numbers">ALTER TABLE "spy_company_user"
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from version 1.0.0 to 2.0.0</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>CompanyUser module version 2.0.0 brings one major change - new <var>is_active</var> column in <var>spy_company_user</var> database table. The main purpose of this field is to store information about company users and make it possible to enable/disable them.</p>
+                                                            <p>Also, <i>CompanyUserTransfer</i> object got a new <var>isActive</var> field, since it represents CompanyUser from the database (and you aren't allowed to use database entities directly).</p>
+                                                            <p>To migrate, do the following:</p>
+                                                            <p>1) Run database migration:</p><pre><code class="language-PHP line-numbers">ALTER TABLE "spy_company_user"
   ADD "is_active" BOOLEAN DEFAULT 't';</code></pre>
-                                                    <p>As a result, all existing company users will receive a new column <var>is_active</var>. By default, the value is <i style="font-weight: bold; font-style: normal;">true</i> and it is <b>required</b>.</p>
-                                                    <p>2) Rebuild Propel2 models:</p><pre><code class="language-PHP line-numbers">vendor/bin/console propel:model:build</code></pre>
-                                                    <p>This command is needed to update <i>SpyCompanyUser</i>, <i>SpyCompanyUserEntityTransfer</i> and other database-related classes.</p>
-                                                    <p>So, once this command is executed, CompanyUser-related database classes will have new methods - <var>getIsActive</var> and <var>setIsActive</var>.</p>
-                                                    <p>3) Regenerate transfer objects:</p><pre><code class="language-PHP line-numbers">vendor/bin/console transfer:generate</code></pre>
-                                                    <p>This command is needed to regenerate CompanyUserTransfer object, which will now have a new field - `isActive`.</p>
-                                                    <h3>New facade methods</h3>
-                                                    <p>Another change is that new methods for enabling and disabling company user were added.</p>
-                                                    <p>They both return <i>CompanyUserResponseTransfer</i> object, that can be used to determine whether the attempt was successful or not.</p><pre><code class="language-PHP line-numbers">/**
+                                                            <p>As a result, all existing company users will receive a new column <var>is_active</var>. By default, the value is <i style="font-weight: bold; font-style: normal;">true</i> and it is <b>required</b>.</p>
+                                                            <p>2) Rebuild Propel2 models:</p><pre><code class="language-PHP line-numbers">vendor/bin/console propel:model:build</code></pre>
+                                                            <p>This command is needed to update <i>SpyCompanyUser</i>, <i>SpyCompanyUserEntityTransfer</i> and other database-related classes.</p>
+                                                            <p>So, once this command is executed, CompanyUser-related database classes will have new methods - <var>getIsActive</var> and <var>setIsActive</var>.</p>
+                                                            <p>3) Regenerate transfer objects:</p><pre><code class="language-PHP line-numbers">vendor/bin/console transfer:generate</code></pre>
+                                                            <p>This command is needed to regenerate CompanyUserTransfer object, which will now have a new field - `isActive`.</p>
+                                                            <h3>New facade methods</h3>
+                                                            <p>Another change is that new methods for enabling and disabling company user were added.</p>
+                                                            <p>They both return <i>CompanyUserResponseTransfer</i> object, that can be used to determine whether the attempt was successful or not.</p><pre><code class="language-PHP line-numbers">/**
  * Specification:
  * - Enables company user.
  * - Uses idCompanyUser from company user transfer to find company user.
@@ -279,30 +280,32 @@ public function enableCompanyUser(CompanyUserTransfer $companyUserTransfer): Com
  * @return \Generated\Shared\Transfer\CompanyUserResponseTransfer
  */
 public function disableCompanyUser(CompanyUserTransfer $companyUserTransfer): CompanyUserResponseTransfer;</code></pre>
-                                                    <p>Disabled company users cannot see the <i>My Company</i> page, but they can make orders as customers.</p>
-                                                    <p>Enabled users can obviously view the <i>My Company</i> page, create new company users, company user roles and send invitations.</p>
-                                                    <p>A newly registered company user <b>is active</b> by default. That means, that the user can log in straight after the registration has been completed.</p>
-                                                    <p>Action that can be performed by each user, are determined by permissions they have. These permissions are set by their roles in the company.</p>
-                                                    <p>The methods below now have additional checks which verify if company user is active or not.</p>
-                                                    <p>- <var>\Spryker\Zed\CompanyUser\Persistence\CompanyUserRepository::findActiveCompanyUserByCustomerId()</var></p>
-                                                    <p>- <var>\SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider::mapCompanyUserCollectionToChoiceArray()</var></p>
-                                                    <h3>Updated Company Role Permissions Management page</h3>
-                                                    <p>Previously, permissions management of specific company role required you to go to the company role deletion page.</p>
-                                                    <p>On that page, you needed to click  <i>Manage permission</i>s. After that, you were redirected to the needed page with the list of available permissions for the company role, that you selected.</p>
-                                                    <p>Quite a long way, isn't it?</p>
-                                                    <p>With the changes of this Epic, the picture is completely different. Now, you're able to manage permissions directly from the Company Role Edit page.</p>
-                                                    <p>To achieve this, some some changes have been made. Please take a time to check the list below to make sure that upgrading your CompanyUser module to the new 2.0.0 major won't break any existing code.</p>
-                                                    <p>The changes are:</p>
-                                                    <ul>
-                                                        <li value="1"><var>CompanyRolePermissionController::manageAction()</var> method has been removed;
+                                                            <p>Disabled company users cannot see the <i>My Company</i> page, but they can make orders as customers.</p>
+                                                            <p>Enabled users can obviously view the <i>My Company</i> page, create new company users, company user roles and send invitations.</p>
+                                                            <p>A newly registered company user <b>is active</b> by default. That means, that the user can log in straight after the registration has been completed.</p>
+                                                            <p>Action that can be performed by each user, are determined by permissions they have. These permissions are set by their roles in the company.</p>
+                                                            <p>The methods below now have additional checks which verify if company user is active or not.</p>
+                                                            <p>- <var>\Spryker\Zed\CompanyUser\Persistence\CompanyUserRepository::findActiveCompanyUserByCustomerId()</var></p>
+                                                            <p>- <var>\SprykerShop\Yves\CompanyPage\Form\DataProvider\CompanyUserAccountSelectorFormDataProvider::mapCompanyUserCollectionToChoiceArray()</var></p>
+                                                            <h3>Updated Company Role Permissions Management page</h3>
+                                                            <p>Previously, permissions management of specific company role required you to go to the company role deletion page.</p>
+                                                            <p>On that page, you needed to click  <i>Manage permission</i>s. After that, you were redirected to the needed page with the list of available permissions for the company role, that you selected.</p>
+                                                            <p>Quite a long way, isn't it?</p>
+                                                            <p>With the changes of this Epic, the picture is completely different. Now, you're able to manage permissions directly from the Company Role Edit page.</p>
+                                                            <p>To achieve this, some some changes have been made. Please take a time to check the list below to make sure that upgrading your CompanyUser module to the new 2.0.0 major won't break any existing code.</p>
+                                                            <p>The changes are:</p>
+                                                            <ul>
+                                                                <li value="1"><var>CompanyRolePermissionController::manageAction()</var> method has been removed;
         <p>Please replace all usages with <var>CompanyRoleController::updateAction();</var></p></li>
-                                                        <li value="2"><var>SprykerShop/Yves/CompanyPage/Plugin/Provider/CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE</var> constant that represented the old <i>Company Role Permissions Management</i> page, has been removed and is no longer available;
+                                                                <li value="2"><var>SprykerShop/Yves/CompanyPage/Plugin/Provider/CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_PERMISSION_MANAGE</var> constant that represented the old <i>Company Role Permissions Management</i> page, has been removed and is no longer available;
             <p>Please use <var>SprykerShop/Yves/CompanyPage/Plugin/Provider/CompanyPageControllerProvider::ROUTE_COMPANY_ROLE_UPDATE</var> instead;</p></li>
-                                                        <li value="3">Manage permissions button link on Company Role Details page has been changed from <var>company/company-role-permission/manage</var> to <var>company/company-role/update</var>.</li>
-                                                    </ul>
-                                                    <p>&#160;</p>
-                                                    <p><i>Estimated migration time: 2,5 to 4 hours. The time may vary depending on project-specific factors</i>
-                                                    </p>
+                                                                <li value="3">Manage permissions button link on Company Role Details page has been changed from <var>company/company-role-permission/manage</var> to <var>company/company-role/update</var>.</li>
+                                                            </ul>
+                                                            <p>&#160;</p>
+                                                            <p><i>Estimated migration time: 2,5 to 4 hours. The time may vary depending on project-specific factors</i>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>
