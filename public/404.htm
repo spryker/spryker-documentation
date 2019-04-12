@@ -250,9 +250,15 @@
                                     <script>/* <![CDATA[ */
         window.onload = function () {
             // Place the mistyped text in the search frame
-            var myURL = window.location.pathname;
-            var searchString = myURL.substring(myURL.lastIndexOf('/') + 1);
-            window.document.getElementById("search-panel").firstElementChild.firstElementChild.firstElementChild.setAttribute("value", searchString)
+            var myURL = window.location.href;
+            var urlObj = new URL(myURL);
+            var pg = urlObj.searchParams.get("page");
+
+            if (pg)
+            {
+                var searchString = pg.substring(pg.lastIndexOf('/') + 1).replace(/_/g, " ").replace(/.html/g, "").replace(/.htm/g, "");
+                window.document.getElementById("search-panel").firstElementChild.firstElementChild.firstElementChild.setAttribute("value", searchString)
+            }
         }
     /* ]]> */</script>
                                     <div class="error-container">

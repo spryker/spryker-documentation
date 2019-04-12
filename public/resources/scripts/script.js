@@ -565,32 +565,198 @@ function versionsElemToggle () {
     versionElem ? init() : findElem();
 }
 
-function imageMapster () {
 
-    function init() {
-        if ($ === undefined) {
-            console.log('$ is not defined');
-            return;
-        }
-        if (!document.querySelector('.mapster-image')) {
-            console.log('no mapster image');
-            return;
-        }
-        if(!mapsterConfigs) {
-            console.log('no mapster config');
-            return;
-        }
+function DropDownsHandler(){
 
-        var mapsters = document.querySelectorAll('.mapster-image');
+    this.hash = '';
+    this.dropDowns = document.querySelectorAll('.MCDropDown');
 
-        mapsters.forEach((mapster, index)=>{
-            $(mapster).mapster(mapsterConfigs[index])
-        });
+    this.checkDropDowns = function () {
+        this.dropDowns.forEach((item)=>{
+            console.log(item.querySelector(this.hash));
+            var dropTrigger = item.querySelector('.MCDropDownHotSpot');
+            var targetDrop = item.querySelector(this.hash);
+            var isClosed = item.classList.contains('MCDropDown_Closed');
+            console.log(targetDrop, isClosed);
+            if(targetDrop && isClosed){
+                dropTrigger.click();
+                console.log('click');
+            }
+        })
+    };
+
+    this.checkHash = function () {
+        this.hash = window.location.hash;
+        this.hash !== '' ? this.checkDropDowns() : '' ;
+    };
+
+    this.init = function () {
+        if(!this.dropDowns) return;
+        window.addEventListener('load', this.checkHash.bind(this));
+        window.addEventListener('hashchange', this.checkHash.bind(this));
     }
-
-    init();
 }
 
+var dropHandler = new DropDownsHandler();
+
+function imageMapster () {
+
+    const resizeDelay = 25;
+    const resizeTime = 25;
+    this.mapsters = [];
+    this.mapsterMaps = [];
+    this.mapsterConfigs = [];
+
+
+    this.mapsterConfigTemplate = {
+        mapKey: 'id',
+        fillColor: '000000',
+        fillOpacity: 0.5,
+        showToolTip: true,
+        toolTipClose: ["tooltip-click", "area-click", "image-mouseout", "area-mouseout"],
+        toolTipContainer: '<div style="border:0.5px solid black; background: #FFFFFF; font-family:Titillium Web; text-align: left; font-size: 20px; position:absolute; width:250px; padding:4px; box-shadow: rgb(83, 83, 83) 3px 3px 5px; border-radius: 6px; opacity: 0.90; display: block; z-index: 9999;" />',
+        areas: []
+    };
+
+    function checkMapster() {
+        if ($ === undefined || !document.querySelector('.mapster-image')) {
+            console.log('no mapster');
+            return;
+        }
+        return true;
+    }
+
+    const mapsterResize = (maxWidth,maxHeight) => {
+        this.mapsters.forEach((mapsterImage)=>{
+            let imgWidth = $(mapsterImage).width(),
+                imgHeight = $(mapsterImage).height(),
+                newWidth=0,
+                newHeight=0;
+
+            if (imgWidth/maxWidth > imgHeight/maxHeight) {
+                newWidth = maxWidth - 50;
+            } else {
+                newHeight = maxHeight - 100;
+            }
+            $(mapsterImage).mapster('resize',newWidth,newHeight,resizeTime);
+        })
+    };
+
+    const onWindowResize = () => {
+        var curWidth = $(this.mapsterContext).width(),
+            curHeight = $(this.mapsterContext).height(),
+            checking=false;
+        if (checking) {
+            return;
+        }
+        checking = true;
+        window.setTimeout(() => {
+            var newWidth = $(this.mapsterContext).width(),
+                newHeight = $(this.mapsterContext).height();
+            if (newWidth === curWidth && newHeight === curHeight) {
+                mapsterResize(newWidth,newHeight);
+            }
+            checking=false;
+        },resizeDelay );
+    };
+
+    this.mapEvents = () => {
+        $(window).bind('resize',onWindowResize);
+
+    };
+
+    this.getMapsterConfigs = () => {
+        let mapsterConfigs = [];
+        this.mapsterMaps.forEach((map)=>{
+            let areas = map.querySelectorAll('area');
+            let newConfig = Object.assign({}, this.mapsterConfigTemplate);
+            newConfig.areas = this.getAreasData(areas);
+            mapsterConfigs.push(newConfig);
+        });
+        return mapsterConfigs;
+    };
+
+    this.getAreasData = (areas) => {
+        let configs = [];
+        areas.forEach((area) => {
+            configs.push(Object.assign({}, area.dataset));
+        });
+        return configs;
+    };
+
+    this.init = () => {
+        if(!checkMapster()) return;
+        this.mapsters = document.querySelectorAll('.mapster-image');
+        this.mapsterContext = document.querySelector('.main-content');
+        this.mapsterMaps = document.querySelectorAll('.mapster-map');
+        this.mapsterConfigs = this.getMapsterConfigs();
+        this.mapsters.forEach((mapster, index)=>{
+            $(mapster).mapster(this.mapsterConfigs[index])
+        });
+
+        this.mapEvents();
+    };
+
+    this.init();
+}
+
+function versionElementsHandler(){
+    this.versionElements = [];
+
+    this.init = () => {
+        this.versionElements = document.querySelectorAll('.versions-element');
+        if(this.versionElements.length > 0){
+            this.versionElements.forEach((elem)=>{
+                let versionElem = elem.querySelector('.js-versions-trigger');
+                let dropdown = elem.querySelector('.js-versions-dropdown');
+                versionElem.addEventListener('click', ()=>{
+                    dropdown.classList.toggle('visible');
+                })
+            })
+        }
+    };
+
+    this.init();
+}
+
+
+function gaDropdownReadCheck(){
+    let gaDropdownsPending = false;
+    return function (){
+        const dropDown = this.querySelector('.MCDropDown');
+        const dropdownName = this.querySelector('.MCDropDownHotSpot').innerText;
+        let isOpen = () => {
+            let result = dropDown.classList.contains('MCDropDown_Open');
+            console.log(result);
+            return result;
+        };
+        console.log('pending:' + gaDropdownsPending);
+        if(isOpen() && !gaDropdownsPending){
+            gaDropdownsPending = true;
+            setTimeout(()=>{
+                if(isOpen()){
+                    console.log('sending');
+                    gtag('event', dropdownName, {
+                        'event_category': 'Reading Installation Guides',
+                        'event_label': 'docs',
+                        'value': 1
+                    });
+                    gaDropdownsPending = false;
+                }else{
+                    gaDropdownsPending = false;
+                }
+            }, 10000);
+        }
+    }
+}
+
+function initGaDropDowns (){
+    if(!document.querySelector('.ga-dropdown')) return;
+    document.querySelectorAll('.ga-dropdown').forEach((dropDown)=>{
+        dropDown.addEventListener('click', gaDropdownReadCheck());
+    })
+
+}
 
 
 document.addEventListener("DOMContentLoaded", function (){
@@ -601,9 +767,12 @@ document.addEventListener("DOMContentLoaded", function (){
     flHandler.init();
     sliderInit.init();
     searchResultMessageChecker.init();
-    mobileHeaderScrollToggler.init();
+    // mobileHeaderScrollToggler.init();
     moduleRefContent.init();
     versionsElemToggle();
-	imageMapster();
+    dropHandler.init();
+    imageMapster();
+    versionElementsHandler();
+    initGaDropDowns();
 } );
 
