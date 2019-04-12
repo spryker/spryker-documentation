@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="VTxF1FUJ5Ui_Tjx5ToKmgQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="VTxF1FUJ5Ui_Tjx5ToKmgQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ymKY-PFmGkWWelyH--4yJg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ymKY-PFmGkWWelyH--4yJg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/module_guide.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -268,6 +268,174 @@
                                                         </tbody>
                                                     </table>
                                                     <p id="currentVersion">
+                                                        <h2 id="facade">API (Facades)</h2>
+                                                        <table id="facade_table" style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 30%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 70%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Facade Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="facade_body">
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>createProductReview</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Stores provided product review in persistent storage with pending status.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Checks if provided rating in transfer object does not exceed configured limit</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Returns the provided transfer object updated with the stored entity's data.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>findProductReview</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves the product review from persistent storage that matches the provided id in the transfer object.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>updateProductReviewStatus</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Updates product review's status in persistent storage that matches the provided id in the transfer object.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Returns the provided transfer object updated with the saved entity's data.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Touches "product review"</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>As "active" if status was updated to "approved".</p>
+                                                                            </li>
+                                                                            <li value="5">
+                                                                                <p>As "deleted" if status was updated to "rejected" or "pending".</p>
+                                                                            </li>
+                                                                            <li value="6">
+                                                                                <p>Touches "product review abstract" entities as "active".</p>
+                                                                            </li>
+                                                                            <li value="7">
+                                                                                <p>Touches product abstract</p>
+                                                                            </li>
+                                                                            <li value="8">
+                                                                                <p>Touches abstract product and all its variants.</p>
+                                                                            </li>
+                                                                            <li value="9">
+                                                                                <p>Touches related "product_abstract", "product_concrete", and "attribute_map" entries.</p>
+                                                                            </li>
+                                                                            <li value="10">
+                                                                                <p>Used touch event status (active, inactive) depends on the current status of the product and its variants.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>deleteProductReview</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Permanently deletes the product review from persistent storage that matches the provided id in the transfer object.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touches "product review" entries as "delete".</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Touches "product review abstract" entries as "active".</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>Touches product abstract</p>
+                                                                            </li>
+                                                                            <li value="5">
+                                                                                <p>Touches abstract product and all its variants.</p>
+                                                                            </li>
+                                                                            <li value="6">
+                                                                                <p>Touches related "product_abstract", "product_concrete", and "attribute_map" entries.</p>
+                                                                            </li>
+                                                                            <li value="7">
+                                                                                <p>Used touch event status (active, inactive) depends on the current status of the product and its variants.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h2 id="client">Clients</h2>
+                                                        <table id="client_table" style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 30%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 70%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Client Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="client_body">
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>submitCustomerReview</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Stores provided product review in persistent storage with pending status.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Returns the provided transfer object updated with the stored entity's data.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>findProductReviewsInSearch</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves provided product abstract related product reviews from Search.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>findProductAbstractReviewInStorage</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves provided product abstract and locale related review details from Storage.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>getMaximumRating</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves the available maximum rating value</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                         <h2 id="require">Dependencies:</h2>
                                                         <ul id="require_list">
                                                             <li value="1"><b>PHP</b> &gt;=7.1</li>
@@ -1442,7 +1610,7 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <p><i>03 Apr 2019</i>
+                                                    <p><i>13 Apr 2019</i>
                                                     </p>
                                                 </div>
                                             </div>

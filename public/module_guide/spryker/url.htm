@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="VFsdnI5fwEWGQPCrnI7gpA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="VFsdnI5fwEWGQPCrnI7gpA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="L-_3wO7ZIkKmj0cZ8tR72Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="L-_3wO7ZIkKmj0cZ8tR72Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/module_guide.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -268,6 +268,479 @@
                                                         </tbody>
                                                     </table>
                                                     <p id="currentVersion">
+                                                        <h2 id="facade">API (Facades)</h2>
+                                                        <table id="facade_table" style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 30%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 70%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Facade Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="facade_body">
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>createUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Persists a new URL entity in database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touches active "url" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Existing redirect from the URL of the new entity will be deleted.</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>Existing related URL redirects will be updated to avoid redirect chains.</p>
+                                                                            </li>
+                                                                            <li value="5">
+                                                                                <p>Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>findUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <p>{@inheritdoc}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>findUrlCaseInsensitive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Finds existing URL entity by case insensitive URL value.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Returns UrlTransfer with the appropriate data from database if the entity is found, NULL otherwise.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>hasUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <p>{@inheritdoc}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>hasUrlCaseInsensitive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Checks if URL entity exists in database by the provided <var>id_url</var> or case insensitive <var>url</var>.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>URL redirects are ignored unless the URL to be checked is a redirect as well (<var>fkResourceRedirect</var> is set).</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>hasUrlOrRedirectedUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <p>{@inheritdoc}</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>hasUrlOrRedirectedUrlCaseInsensitive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Checks if URL entity exists in database by the provided <var>id_url</var> or case insensitive <var>url</var>.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Redirected URLs are also considered.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>updateUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Persists changes of existing URL entity in database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touches active "url" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Existing redirect from the URL of the updated entity will be deleted.</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>Existing related URL redirects will be updated to avoid redirect chains.</p>
+                                                                            </li>
+                                                                            <li value="5">
+                                                                                <p>Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>deleteUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Removes URL entity from database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touch deletes "url" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Removes URL redirects that points to the deleted URL.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>activateUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Touches active "url" entry.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>deactivateUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Touches inactive "url" entry.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>createUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Persists new URL redirect entity to database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touches active "redirect" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Existing related URL redirects will be updated to avoid redirect chains.</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>findUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Finds existing URL redirect entity in database by the provided <var>id_url_redirect</var>.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Returns UrlRedirectTransfer with the appropriate data from database if the entity is found, NULL otherwise.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>hasUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Checks if URL redirect entity exists in database by the provided <var>id_url_redirect</var>.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>updateUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Persists changes of existing URL redirect entity in database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touches active "redirect" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>If "source" data is also provided, related URL entity will be also updated.</p>
+                                                                            </li>
+                                                                            <li value="4">
+                                                                                <p>Existing related URL redirects will be updated to avoid redirect chains.</p>
+                                                                            </li>
+                                                                            <li value="5">
+                                                                                <p>Existing related URL redirects can affect the value of the persisted URL to avoid redirect chains.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>deleteUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Removes URL redirect entity from database.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>Touch deletes "redirect" entry.</p>
+                                                                            </li>
+                                                                            <li value="3">
+                                                                                <p>Removes URL redirects that points to the deleted URL.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>activateUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Touches active "redirect" entry.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>deactivateUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Touches inactive "url" entry.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>validateUrlRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Checks if the provided URL redirect is valid or not.</p>
+                                                                            </li>
+                                                                            <li value="2">
+                                                                                <p>URL redirect is invalid if it results in a redirect loop.</p>
+                                                                                <p>{@inheritdoc}</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>createUrlForCurrentLocale</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>saveUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>hasUrlId</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>getUrlByPath</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>getUrlById</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>hasResourceUrlByCategoryNodeIdAndLocale</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>check if a ResourceUrl by CategoryNode and Locale exist</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>getResourceUrlByCategoryNodeIdAndLocale</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>getResourceUrlCollectionByCategoryNodeId</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>touchUrlActive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>touchUrlDeleted</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>createRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>createRedirectAndTouch</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>createRedirectUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>saveRedirectUrlAndTouch</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>saveRedirect</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>touchRedirectActive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>saveUrlAndTouch</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>saveRedirectAndTouch</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&#160;</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>getUrlByIdProductAbstractAndIdLocale</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">&#160;</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h2 id="client">Clients</h2>
+                                                        <table id="client_table" style="width: 100%;margin-left: 0;margin-right: auto;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 30%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 70%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Client Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="client_body">
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>findUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves locale specific URL details from Storage if found.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>matchUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>Retrieves locale specific URL details from Storage if found. Then returns the resource that is referenced in that URL.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <h2 id="plugins">Plugins</h2>
+                                                        <table id="plugins_table" style="width: 100%;margin-left: 0;margin-right: auto;word-wrap: break-word;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 20%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 20%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 60%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Method</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody id="plugins_body">
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td rowspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>/​src/​Spryker/​Zed/​Url/​Dependency/​Plugin/​UrlDeletePluginInterface.php</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>delete</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>This plugin is executed before and/or after URL entity deletion, depending for which event was it provided.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td rowspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>/​src/​Spryker/​Zed/​Url/​Dependency/​Plugin/​UrlCreatePluginInterface.php</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>create</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>This plugin is executed before and/or after new URL entity creation, depending for which event was it provided.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td rowspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>/​src/​Spryker/​Zed/​Url/​Dependency/​Plugin/​UrlUpdatePluginInterface.php</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>update</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                        <ul>
+                                                                            <li value="1">
+                                                                                <p>This plugin is executed before and/or after URL entity update, depending for which event was it provided.</p>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                         <h2 id="require">Dependencies:</h2>
                                                         <ul id="require_list">
                                                             <li value="1"><b>PHP</b> &gt;=7.1</li>
@@ -6452,7 +6925,7 @@
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <p><i>03 Apr 2019</i>
+                                                    <p><i>13 Apr 2019</i>
                                                     </p>
                                                 </div>
                                             </div>

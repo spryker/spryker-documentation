@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2018-10" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides|Glue API">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2018-10" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -13,7 +13,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Wishlist API Feature Integration | Spryker</title>
+        <meta name="author" content="" /><title>Wishlist API Feature Integration</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -181,10 +181,6 @@
                                 <div class="row collapse">
                                     <div class="top-bar">
                                         <div class="breadcrumbs-block">
-                                            <div class="nocontent">
-                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
-                                                </div>
-                                            </div>
                                         </div>
                                         <div>
                                         </div>
@@ -210,12 +206,6 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="NAmnJpqbP0-pXafbm1JNwA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="NAmnJpqbP0-pXafbm1JNwA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
-                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
-                                                        </ul>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <div>
@@ -258,7 +248,7 @@
                                                                 <li><a href="#3Setupbehavior">3) Set up behavior</a>
                                                                 </li>
                                                                 <ul>
-                                                                    <li><a href="#GeneratesUUIDsforexistingwhishlistsrecordswithoutUUID">Generates UUIDs for existing whishlists records without UUID:</a>
+                                                                    <li><a href="#GenerateUUIDsforexistingwhishlistrecordsthathavenoUUID">Generate UUIDs for existing whishlist records that have no UUID</a>
                                                                     </li>
                                                                     <li><a href="#Enableresourcesandrelationships">Enable resources and relationships</a>
                                                                     </li>
@@ -266,6 +256,7 @@
                                                             </ul>
                                                         </ul>
                                                     </ul>
+                                                    <p class="important">The latest version of this guide can be found at <a href="wishlist-api-feature-integration-201903.htm" class="MCXref xref">Wishlist API Feature Integration</a>.</p>
                                                     <h2 id="InstallFeatureAPI" data-magellan-target="InstallFeatureAPI">Install Feature API</h2>
                                                     <h3 id="Prerequisites" data-magellan-target="Prerequisites">Prerequisites</h3>
                                                     <p>To start feature integration, overview and install the necessary features:</p>
@@ -298,24 +289,24 @@
                                                         </table>
                                                     </div>
                                                     <h3 id="1InstalltheRequiredModulesUsingComposer" data-magellan-target="1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</h3>
-                                                    <p>Run the following commands to install the required modules:</p><pre><code class="language-PHP">composer require spryker/wishlists-rest-api:"^1.3.0" --update-with-dependencies
+                                                    <p>Run the following commands to install the required modules:</p><pre><code class="language-Bash">composer require spryker/wishlists-rest-api:"^1.3.0" --update-with-dependencies
 composer require spryker/wishlist-items-products-resource-relationship:"^1.0.0" --update-with-dependencies</code></pre>
                                                     <div class="tip">Make sure that the following modules are installed:
 		<div class="table-wrap"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>WishlistsRestApi</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/wishlists-rest-api</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>WishlistItemsProductsResourceRelationship</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/wishlist-items-products-resource-relationship</var></td></tr></tbody></table></div></div>
                                                     <h3 id="2SetupDatabaseSchemaandTransferobjects" data-magellan-target="2SetupDatabaseSchemaandTransferobjects">2) Set up Database Schema and Transfer objects</h3>
-                                                    <p>Run the following commands to apply database changes and generate entity and transfer changes:</p><pre><code class="language-PHP">console transfer:generate
+                                                    <p>Run the following commands to apply database changes, and also generate entity and transfer changes:</p><pre><code class="language-Bash">console transfer:generate
 console propel:install
 console transfer:generate</code></pre>
-                                                    <div class="tip">Make sure that the following change is present in your database:
+                                                    <div class="tip">Make sure that the following changes have occurred in the database:
 	<div class="table-wrap"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><col class="TableStyle-PatternedRows2-Column-Regular" /><col class="TableStyle-PatternedRows2-Column-Regular" /><col class="TableStyle-PatternedRows2-Column-Regular" /><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database entity</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spy_wishlist.uuid</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">column</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">added</td></tr></tbody></table></div></div>
-                                                    <div class="tip">Make sure that the following changes are present in transfer objects:<![CDATA[
-			]]><div class="table-wrap"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestWishlistItemsAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestWishlistItemsAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RestWishlistsAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestWishlistsAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>WishlistTransfer.uuid<![CDATA[
-		]]></var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">property</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">added</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/WishlistTransfer</var></td></tr></tbody></table></div></div>
+                                                    <div class="tip">Make sure that the following changes have occurred in transfer objects:
+			<div class="table-wrap"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestWishlistItemsAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestWishlistItemsAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RestWishlistsAttributesTransfer</var></td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td><td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td><td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestWishlistsAttributesTransfer</var></td></tr><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>WishlistTransfer.uuid
+		</var></td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">property</td><td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">added</td><td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/WishlistTransfer</var></td></tr></tbody></table></div></div>
                                                     <h3 id="3Setupbehavior" data-magellan-target="3Setupbehavior">3) Set up behavior</h3>
-                                                    <h4 id="GeneratesUUIDsforexistingwhishlistsrecordswithoutUUID" data-magellan-target="GeneratesUUIDsforexistingwhishlistsrecordswithoutUUID">Generates UUIDs for existing whishlists records without UUID:</h4>
-                                                    <p>Run the following command:</p><pre><code class="language-PHP">console wishlists:uuid:update</code></pre>
+                                                    <h4 id="GenerateUUIDsforexistingwhishlistrecordsthathavenoUUID" data-magellan-target="GenerateUUIDsforexistingwhishlistrecordsthathavenoUUID">Generate UUIDs for existing whishlist records that have no UUID</h4>
+                                                    <p>Run the following command:</p><pre><code class="language-Bash">console wishlists:uuid:update</code></pre>
                                                     <div class="tip">
-                                                        <p>Make sure that the <var>uuid</var> field is filled with all the records from the <var>spy_wishlist</var> table. You can run the following SQL-query for it and make sure that the result is 0 records.</p>
+                                                        <p>Make sure that the <var>uuid</var> field is filled with all the records from the <var>spy_wishlist</var> table. You can run the following SQL query and make sure that the result is 0 records.</p>
                                                         <p><var>select count(*) from spy_wishlist where uuid is NULL;</var>
                                                         </p>
                                                     </div>
@@ -334,7 +325,7 @@ console transfer:generate</code></pre>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>WishlistsResourceRoutePlugin</var>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the wishlist resource.					</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the <var>wishlists</var> resource.					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None
 					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\WishlistsRestApi\Plugin</var>
@@ -343,7 +334,7 @@ console transfer:generate</code></pre>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>WishlistItemsResourceRoutePlugin						</var>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the wishlist item resource.					</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the <var>wishlist-items</var> resource.					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None
 					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\WishlistsRestApi\Plugin</var>
@@ -352,7 +343,7 @@ console transfer:generate</code></pre>
                                                             <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>WishlistItemsConcreteProductsResourceRelationshipPlugin<![CDATA[					]]></var>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds the concrete product resource as a relationship to the wishlist items resource.<![CDATA[				]]></td>
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds the <var>concrete-products</var> resource as a relationship to the <var>wishlist-items</var> resource.				</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None
 					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\WishlistItemsProductsResourceRelationship\Plugin</var>
@@ -361,7 +352,7 @@ console transfer:generate</code></pre>
                                                             <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                 <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>WishlistRelationshipByResourceIdPlugin<![CDATA[					]]></var>
                                                                 </td>
-                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Adds the wishlist resource as a relationship to the customer resource.<![CDATA[				]]></td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Adds the <var>wishlists</var> resource as a relationship to the <var>customers</var> resource.				</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None
 					</td>
                                                                 <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Glue\WishlistsRestApi\Plugin</var>
@@ -418,15 +409,14 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
                                                     </div>
                                                     <div class="tip">
                                                         <p>Make sure that the following endpoints are available:</p>
-                                                        <p><var>http://example.org/wishlists</var>
+                                                        <p><var>http:///glue.mysprykershop.com/wishlists</var>
                                                         </p>
-                                                        <p><var>http://example.org/wishlists/{{wishlist_id}}/wishlists-items</var>
+                                                        <p><var>http:///glue.mysprykershop.com/wishlists/{{wishlist_id}}/wishlists-items</var>
                                                         </p>
                                                         <br />
-                                                        <p>Make a request to <var>http://example.org/wishlists/{{wishlist_id}}/wishlists-items?include=concrete-products</var>. The wishlist with the given ID should have at least one added product. Make sure that the response includes relationships to the <var>concrete-products</var> resources. <br />Make a request to <var>http://example.org/customers/{{customer_id}}?include=wishlist</var>. A customer with the given ID should have at least one wishlist. Make sure that the response includes relationships to the <var>wishlists</var> resources.</p>
+                                                        <p>Make a request to <var>http://glue.mysprykershop.com/wishlists/{{wishlist_id}}/wishlists-items?include=concrete-products</var> and make sure that the given wishlist has at least one product added. Make sure that the response includes relationships to the <var>concrete-products</var> resources.<br />			Make a request to <var>http://glue.mysprykershop.com/customers/{{customer_id}}?include=wishlists</var> and make sure that the given customer has at least one wishlist. Make sure that the response includes relationships to the <var>wishlists</var> resources.</p>
                                                     </div>
-                                                    <p>&#160;</p>
-                                                    <p><i>Last review date: Feb 25, 2019</i> </p>
+                                                    <p><i>Last review date: Apr 11, 2019</i> </p>
                                                 </div>
                                             </div>
                                         </div>
