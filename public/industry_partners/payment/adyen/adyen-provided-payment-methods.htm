@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="_jc3ArRu-U6uplQ3eCaADg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_jc3ArRu-U6uplQ3eCaADg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="xnlzNvRbaUSNR9e2QMseuA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="xnlzNvRbaUSNR9e2QMseuA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,7 +242,7 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Adyen - Provided Payment Methods</h1>
                                                     <h2><a name="Credit"></a>Credit Card</h2>
-                                                    <p>Adyen module provides integration with possible ways: simple and with 3D Secure authorization.</p>
+                                                    <p>Adyen module provides integration in two ways: simple and with 3D Secure authorization.</p>
                                                     <p>3D Secure integration requires adjustments on project level.</p>
                                                     <p>At first you will need to add additional Checkout Step. Example of implementation:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/Steps/AdyenExecute3DStep.php</a></span>
@@ -349,42 +349,101 @@ class AdyenExecute3DStep extends AbstractBaseStep
                                                     </div>
                                                     <p>And put it between place order and success steps:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Process/StepFactory.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">
-	public function createStepCollection()
-	{
-		$stepCollection = new StepCollection(
-			$this-&gt;getUrlGenerator(),
-			CheckoutPageControllerProvider::CHECKOUT_ERROR
-		);
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">public function createStepCollection()
+    {
+        $stepCollection = new StepCollection(
+            $this-&gt;getUrlGenerator(),
+            CheckoutPageControllerProvider::CHECKOUT_ERROR
+        );
  
-		$stepCollection
-			-&gt;addStep($this-&gt;createEntryStep())
-			-&gt;addStep($this-&gt;createCustomerStep())
-			-&gt;addStep($this-&gt;createAddressStep())
-			-&gt;addStep($this-&gt;createShipmentStep())
-			-&gt;addStep($this-&gt;createPaymentStep())
-			-&gt;addStep($this-&gt;createSummaryStep())
-			-&gt;addStep($this-&gt;createPlaceOrderStep())
-			-&gt;addStep($this-&gt;createAdyenExecute3DStep())
-			-&gt;addStep($this-&gt;createSuccessStep());
+        $stepCollection
+            -&gt;addStep($this-&gt;createEntryStep())
+            -&gt;addStep($this-&gt;createCustomerStep())
+            -&gt;addStep($this-&gt;createAddressStep())
+            -&gt;addStep($this-&gt;createShipmentStep())
+            -&gt;addStep($this-&gt;createPaymentStep())
+            -&gt;addStep($this-&gt;createSummaryStep())
+            -&gt;addStep($this-&gt;createPlaceOrderStep())
+            -&gt;addStep($this-&gt;createAdyenExecute3DStep())
+            -&gt;addStep($this-&gt;createSuccessStep());
  
-		return $stepCollection;
-	}
+        return $stepCollection;
+    }
  
 ...
  
-	public function createAdyenExecute3DStep(): StepInterface
-	{
-		return new AdyenExecute3DStep(
-			CheckoutPageControllerProvider::CHECKOUT_ADYEN_EXECUTE_3D,
-			HomePageControllerProvider::ROUTE_HOME,
-			$this-&gt;getQuoteClient(),
-			$this-&gt;getConfig()
-		);
-	}</code></pre>
+    /**
+     * @return \Pyz\Yves\CheckoutPage\Process\Steps\PlaceOrderStep
+     */
+    public function createPlaceOrderStep()
+    {
+        return new PlaceOrderStep(
+            $this-&gt;getCheckoutClient(),
+            $this-&gt;getFlashMessenger(),
+            $this-&gt;getStore()-&gt;getCurrentLocale(),
+            $this-&gt;getGlossaryStorageClient(),
+            CheckoutPageControllerProvider::CHECKOUT_PLACE_ORDER,
+            HomePageControllerProvider::ROUTE_HOME,
+            [
+                'payment failed' =&gt; CheckoutPageControllerProvider::CHECKOUT_PAYMENT,
+                'shipment failed' =&gt; CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
+            ]
+        );
+    }
+ 
+    public function createAdyenExecute3DStep(): StepInterface
+    {
+        return new AdyenExecute3DStep(
+            CheckoutPageControllerProvider::CHECKOUT_ADYEN_EXECUTE_3D,
+            HomePageControllerProvider::ROUTE_HOME,
+            $this-&gt;getQuoteClient(),
+            $this-&gt;getConfig()
+        );
+    }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Do not forget to add step action to controller provider:</p>
+                                                    <p>Add controller to process 3D secure step:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Controller/CheckoutController.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+ 
+namespace Pyz\Yves\CheckoutPage\Controller;
+ 
+use SprykerShop\Yves\CheckoutPage\Controller\CheckoutController as SprykerShopCheckoutController;
+use Symfony\Component\HttpFoundation\Request;
+ 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageFactory getFactory()
+ */
+class CheckoutController extends SprykerShopCheckoutController
+{
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return array|\Spryker\Yves\Kernel\View\View|\Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function adyenExecute3DAction(Request $request)
+    {
+        $response = $this-&gt;createStepProcess()-&gt;process($request);
+ 
+        if (!is_array($response)) {
+            return $response;
+        }
+ 
+        return $this-&gt;view(
+            $response,
+            $this-&gt;getFactory()-&gt;getCustomerPageWidgetPlugins(),
+            '@CheckoutPage/views/adyen/execute_3d.twig'
+        );
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Do not forget to add action to controller provider:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Plugin/Provider/CheckoutPageControllerProvider.php</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">
 	public const CHECKOUT_ADYEN_EXECUTE_3D = 'checkout-adyen-execute-3d';

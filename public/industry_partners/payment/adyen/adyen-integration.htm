@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="HIV8saQXvEW8Br3WIohtUQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="HIV8saQXvEW8Br3WIohtUQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="RHCZlWPj-kaAgTsaSvrOXg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="RHCZlWPj-kaAgTsaSvrOXg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -284,6 +284,15 @@ protected function addPaymentMethodHandlerPluginCollection(Container $container)
  
 	return $container;
 }</code></pre>
+                                                    <p>Extend <var>ShipmentStep</var> to add payment filtering logic in <var>\Pyz\Yves\ShopApplication\YvesBootstrap</var>:</p><pre><code class="language-php line-numbers">	
+	
+protected function getControllerProviderStack($isSsl)
+	{
+		return [
+			...   
+			new AdyenControllerProvider($isSsl),
+		];
+	}</code></pre>
                                                     <p>Add controller provider to <var>\Pyz\Yves\ShopApplication\YvesBootstrap</var>:</p><pre><code class="language-php line-numbers">	
 	
 protected function getControllerProviderStack($isSsl)
@@ -311,45 +320,52 @@ protected function getControllerProviderStack($isSsl)
 			new AdyenPostSaveHookPlugin(),
 		];
 	}</code></pre>
-                                                    <p>Add OMS commands and conditions to <var>\Pyz\Zed\Oms\OmsDependencyProvider</var>:</p><pre><code class="language-php line-numbers">
+                                                    <p>Add OMS commands and conditions to <var>\Pyz\Zed\Oms\OmsDependencyProvider</var>:</p><pre><code class="language-php line-numbers">public function provideBusinessLayerDependencies(Container $container)
+{
+    $container = parent::provideBusinessLayerDependencies($container);
+    $container = $this-&gt;extendCommandPlugins($container);
+    $container = $this-&gt;extendConditionPlugins($container);
+ 
+    return $container;
+}
 protected function extendCommandPlugins(Container $container)
 {
-	$container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
-		...
-		$commandCollection-&gt;add(new AuthorizePlugin(), 'Adyen/Authorize');
-		$commandCollection-&gt;add(new CancelPlugin(), 'Adyen/Cancel');
-		$commandCollection-&gt;add(new CapturePlugin(), 'Adyen/Capture');
-		$commandCollection-&gt;add(new RefundPlugin(), 'Adyen/Refund');
-		$commandCollection-&gt;add(new CancelOrRefundPlugin(), 'Adyen/CancelOrRefund');
+    $container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+        ...
+        $commandCollection-&gt;add(new AuthorizePlugin(), 'Adyen/Authorize');
+        $commandCollection-&gt;add(new CancelPlugin(), 'Adyen/Cancel');
+        $commandCollection-&gt;add(new CapturePlugin(), 'Adyen/Capture');
+        $commandCollection-&gt;add(new RefundPlugin(), 'Adyen/Refund');
+        $commandCollection-&gt;add(new CancelOrRefundPlugin(), 'Adyen/CancelOrRefund');
  
-		return $commandCollection;
-	});
+        return $commandCollection;
+    });
  
-	return $container;
+    return $container;
 }
  
 protected function extendConditionPlugins(Container $container)
 {
-	$container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
-		...
-		$conditionCollection-&gt;add(new IsAuthorizedAndCapturedPlugin(), 'Adyen/IsAuthorizedAndCaptured');
-		$conditionCollection-&gt;add(new IsAuthorizedPlugin(), 'Adyen/IsAuthorized');
-		$conditionCollection-&gt;add(new IsCanceledPlugin(), 'Adyen/IsCanceled');
-		$conditionCollection-&gt;add(new IsCancellationReceivedPlugin(), 'Adyen/IsCancellationReceived');
-		$conditionCollection-&gt;add(new IsCancellationFailedPlugin(), 'Adyen/IsCancellationFailed');
-		$conditionCollection-&gt;add(new IsCapturedPlugin(), 'Adyen/IsCaptured');
-		$conditionCollection-&gt;add(new IsCaptureReceivedPlugin(), 'Adyen/IsCaptureReceived');
-		$conditionCollection-&gt;add(new IsCaptureFailedPlugin(), 'Adyen/IsCaptureFailed');
-		$conditionCollection-&gt;add(new IsRefundedPlugin(), 'Adyen/IsRefunded');
-		$conditionCollection-&gt;add(new IsRefundReceivedPlugin(), 'Adyen/IsRefundReceived');
-		$conditionCollection-&gt;add(new IsRefundFailedPlugin(), 'Adyen/IsRefundFailed');;
+    $container-&gt;extend(OmsDependencyProvider::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
+        ...
+        $conditionCollection-&gt;add(new IsAuthorizedAndCapturedPlugin(), 'Adyen/IsAuthorizedAndCaptured');
+        $conditionCollection-&gt;add(new IsAuthorizedPlugin(), 'Adyen/IsAuthorized');
+        $conditionCollection-&gt;add(new IsCanceledPlugin(), 'Adyen/IsCanceled');
+        $conditionCollection-&gt;add(new IsCancellationReceivedPlugin(), 'Adyen/IsCancellationReceived');
+        $conditionCollection-&gt;add(new IsCancellationFailedPlugin(), 'Adyen/IsCancellationFailed');
+        $conditionCollection-&gt;add(new IsCapturedPlugin(), 'Adyen/IsCaptured');
+        $conditionCollection-&gt;add(new IsCaptureReceivedPlugin(), 'Adyen/IsCaptureReceived');
+        $conditionCollection-&gt;add(new IsCaptureFailedPlugin(), 'Adyen/IsCaptureFailed');
+        $conditionCollection-&gt;add(new IsRefundedPlugin(), 'Adyen/IsRefunded');
+        $conditionCollection-&gt;add(new IsRefundReceivedPlugin(), 'Adyen/IsRefundReceived');
+        $conditionCollection-&gt;add(new IsRefundFailedPlugin(), 'Adyen/IsRefundFailed');;
  
-		return $conditionCollection;
-	});
+        return $conditionCollection;
+    });
  
-	return $container;
+    return $container;
 }</code></pre>
-                                                    <p>Frontend Integration</p>
+                                                    <h3>Frontend Integration</h3>
                                                     <p>To make Eco module work with your project, it's necessary to extend the frontend part:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />tsconfig.json</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">
