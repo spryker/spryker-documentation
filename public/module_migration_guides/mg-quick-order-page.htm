@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="RdZbhW59Ska53imu59ND5w">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="RdZbhW59Ska53imu59ND5w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="iDk4qt9f-0mHe7eq7aQ2Bg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iDk4qt9f-0mHe7eq7aQ2Bg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,40 +241,37 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - QuickOrderPage</h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to 2.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>At version 2.0.0 we've introduced a couple of features for Quick Order page.</p>
-                                                            <p>First of all, there is a brand new possibility to search for concrete products by name or SKU using a widget (reusable functionality). Now the user is able to add items to a shopping list right from the Quick Order form. After the user selected a certain product from the search field, price and measuring unit (if the module is installed and product already has unit) will be displayed. Price is getting recalculated on every quantity field change taking into account volume prices. Quantity is validated against quantity restrictions if configured. While adding to cart packaging units will be applied to a product if present.</p>
-                                                            <p>To perform the migration, follow the steps:</p>
-                                                            <ol>
-                                                                <li value="1">This feature requires <var>ProductPageSearch</var> 3.x.x.
+                                                    <h2>Upgrading from Version 1.* to 2.*</h2>
+                                                    <p>At version 2.0.0 we've introduced a couple of features for Quick Order page.</p>
+                                                    <p>First of all, there is a brand new possibility to search for concrete products by name or SKU using a widget (reusable functionality). Now the user is able to add items to a shopping list right from the Quick Order form. After the user selected a certain product from the search field, price and measuring unit (if the module is installed and product already has unit) will be displayed. Price is getting recalculated on every quantity field change taking into account volume prices. Quantity is validated against quantity restrictions if configured. While adding to cart packaging units will be applied to a product if present.</p>
+                                                    <p>To perform the migration, follow the steps:</p>
+                                                    <ol>
+                                                        <li value="1">This feature requires <var>ProductPageSearch</var> 3.x.x.
 				<ol style="list-style-type: lower-alpha;"><li value="1">Update <var>spryker/product-page-search ^3.0.0</var></li><li value="2">Follow the steps from  <a href="mg-product-page-search.htm">Migration guide - ProductPageSearch</a>.</li></ol></li>
-                                                                <li value="2">Generate transfers:<pre><code class="language-bash">vendor/bin/console transfer:generate</code></pre></li>
-                                                                <li value="3">
-                                                                    <p>Build frontend:</p><pre><code class="language-bash">vendor/bin/console frontend:yves:install-dependencies  
+                                                        <li value="2">Generate transfers:<pre><code class="language-bash">vendor/bin/console transfer:generate</code></pre></li>
+                                                        <li value="3">
+                                                            <p>Build frontend:</p><pre><code class="language-bash">vendor/bin/console frontend:yves:install-dependencies  
 vendor/bin/console frontend:yves:build</code></pre>
-                                                                </li>
-                                                                <li value="4">
-                                                                    <p>Some files were re-organized, so if you had overwritten classes and templates on project level please check our <a href="https://github.com/spryker-shop/quick-order-page/releases">release notes.</a></p>
-                                                                    <ul>
-                                                                        <li value="1"><var>quick-order-form-field-list.twig</var> was removed</li>
-                                                                        <li value="2"><var>components/molecules/quick-order-rows/quick-order-rows.twig</var> has changes</li>
-                                                                        <li value="3"><var>quick-order.twig</var> and <var>quick-order-form.twig</var> now use new data from controller</li>
-                                                                        <li value="4"><var>quick-order-async-render.twig</var> was renamed to <var>quick-order-row-async.twig</var></li>
-                                                                        <li value="5"><var>TextOrderParser</var> was moved to <var>SprykerShop\Yves\QuickOrderPage\TextOrder</var>, <var>getParsedTextOrderItems()</var> was renamed to <var>parse()</var>.</li>
-                                                                    </ul>
-                                                                </li>
-                                                                <li value="5">
-                                                                    <p>Change the removed deprecated code with its substitution.</p>
-                                                                    <ul>
-                                                                        <li value="1">Deprecated constants were removed <var>QuickOrderPageConstants::ALLOWED_SEPARATORS</var>, <var>QuickOrderPageConstants::PRODUCT_ROWS_NUMBER</var>. Use <var>QuickOrderPageConfig</var> instead.</li>
-                                                                    </ul>
-                                                                </li>
-                                                            </ol>
-                                                            <p><i>Estimated migration time: 2h</i>
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                        </li>
+                                                        <li value="4">
+                                                            <p>Some files were re-organized, so if you had overwritten classes and templates on project level please check our <a href="https://github.com/spryker-shop/quick-order-page/releases">release notes.</a></p>
+                                                            <ul>
+                                                                <li value="1"><var>quick-order-form-field-list.twig</var> was removed</li>
+                                                                <li value="2"><var>components/molecules/quick-order-rows/quick-order-rows.twig</var> has changes</li>
+                                                                <li value="3"><var>quick-order.twig</var> and <var>quick-order-form.twig</var> now use new data from controller</li>
+                                                                <li value="4"><var>quick-order-async-render.twig</var> was renamed to <var>quick-order-row-async.twig</var></li>
+                                                                <li value="5"><var>TextOrderParser</var> was moved to <var>SprykerShop\Yves\QuickOrderPage\TextOrder</var>, <var>getParsedTextOrderItems()</var> was renamed to <var>parse()</var>.</li>
+                                                            </ul>
+                                                        </li>
+                                                        <li value="5">
+                                                            <p>Change the removed deprecated code with its substitution.</p>
+                                                            <ul>
+                                                                <li value="1">Deprecated constants were removed <var>QuickOrderPageConstants::ALLOWED_SEPARATORS</var>, <var>QuickOrderPageConstants::PRODUCT_ROWS_NUMBER</var>. Use <var>QuickOrderPageConfig</var> instead.</li>
+                                                            </ul>
+                                                        </li>
+                                                    </ol>
+                                                    <p><i>Estimated migration time: 2h</i>
+                                                    </p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

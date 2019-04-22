@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="jMfYzQoT5kSqkF-yJOnAWQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="jMfYzQoT5kSqkF-yJOnAWQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="pnUD_XcAWkafUzEiXuBhxA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="pnUD_XcAWkafUzEiXuBhxA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,29 +240,28 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Touch <img src="../resources/images/shoptype/b2b_shop.png" /> <img src="../resources/images/shoptype/b2c_shop.png" /> <img src="../resources/images/shoptype/demoshop.png" /> </h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <ol>
-                                                                <li value="1">Update/install <var>spryker/touch</var> to at least <var>4.0.0</var> version.</li>
-                                                                <li value="2">Install the new database columns by running <var>vendor/bin/console propel:diff</var>. Propel should generate a migration file with the changes.</li>
-                                                                <li value="3">Run <var>vendor/bin/console propel:migrate</var> to apply the database changes.</li>
-                                                                <li value="4">Generate ORM models by running <var>vendor/bin/console propel:model:build</var>.
+                                                    <h2>Upgrading from Version 3.* to Version 4.*</h2>
+                                                    <ol>
+                                                        <li value="1">Update/install <var>spryker/touch</var> to at least <var>4.0.0</var> version.</li>
+                                                        <li value="2">Install the new database columns by running <var>vendor/bin/console propel:diff</var>. Propel should generate a migration file with the changes.</li>
+                                                        <li value="3">Run <var>vendor/bin/console propel:migrate</var> to apply the database changes.</li>
+                                                        <li value="4">Generate ORM models by running <var>vendor/bin/console propel:model:build</var>.
                 <p>
                     This command will update <var>spy_touch_storage</var>, and <var>spy_touch_search</var> classes to have the newly created <var>fk_store</var> columns and their relations.
                 </p></li>
-                                                                <li value="5">
-                                                                    <p>Populate <var>fk_store</var> records respectively to <var>spy_touch_storage.key</var>, and <var>spy_touch_search.key</var>.</p>
-                                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Example migrations</div></a></span>
-                                                                        <div class="MCDropDownBody dropDownBody">
-                                                                            <ol>
-                                                                                <li value="1">
+                                                        <li value="5">
+                                                            <p>Populate <var>fk_store</var> records respectively to <var>spy_touch_storage.key</var>, and <var>spy_touch_search.key</var>.</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Example migrations</div></a></span>
+                                                                <div class="MCDropDownBody dropDownBody">
+                                                                    <ol>
+                                                                        <li value="1">
                                 If you have a single Store, <var>spy_store</var> contains 1 row which represents your active store. Use its <var>spy_store.id_store</var> value to update touch records.
                                 In our current example the store ID is considered: 1.
                                 <pre xml:space="preserve"><code class="language-PHP line-numbers">
                                     UPDATE spy_touch_storage SET fk_store = 1;
                                     UPDATE spy_touch_search SET fk_store = 1;
                                 </code></pre></li>
-                                                                                <li value="2">
+                                                                        <li value="2">
                                 If you have multiple Stores already, you will need to create a query which updates the <var>fk_store</var> values based on the records' key (if it contains the store information).
                                 Example update when the key has the following structure: {STORE_NAME}.{LOCALE_NAME}.{ENTITY_NAME}.{ENTITY_ID}.
                                 <pre><code class="language-PHP line-numbers">
@@ -280,25 +279,23 @@ PostgreSql:
       UPDATE spy_touch_search SET fk_store = spy_store.id_store
       FROM spy_store WHERE LOWER(spy_store.name) = LOWER(SUBSTR(key, 1, STRPOS(key, '.') - 1));
                                 </code></pre></li>
-                                                                            </ol>
-                                                                        </div>
-                                                                    </div>
-                                                                </li>
-                                                                <li value="6">
+                                                                    </ol>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li value="6">
                 The following deprecated methods were removed, please check your code if you have custom calls or dependencies:
                 <ul><li value="1"><var>TouchFacadeInterface::bulkTouchActive()</var></li><li value="2"><var>TouchFacadeInterface::bulkTouchInactive()</var></li><li value="3"><var>TouchFacadeInterface::bulkTouchDeleted()</var></li><li value="4"><var>TouchQueryContainerInterface::queryTouchEntries()</var></li><li value="5"><var>TouchInterface::bulkUpdateTouchRecords()</var></li></ul>
                 You can find additional details on <a href="https://github.com/spryker/touch/releases">Touch module release page</a>.
             </li>
-                                                                <li value="7">
+                                                        <li value="7">
                 The following methods have internal changes, please check if you have customized them:
                 <ul><li value="1"><var>TouchQueryContainer::queryTouchDeleteStorageAndSearch()</var></li><li value="2"><var>TouchRecord::removeTouchEntriesMarkedAsDeleted()</var></li></ul>
                 You can find additional details on <a href="https://github.com/spryker/touch/releases">Touch module release page</a>.
             </li>
-                                                                <li value="8">Note: Module requires PHP 7.1 from now on.</li>
-                                                                <li value="9">After these steps, your <var>Touch</var> module supports multi-store entities.</li>
-                                                            </ol>
-                                                        </div>
-                                                    </div>
+                                                        <li value="8">Note: Module requires PHP 7.1 from now on.</li>
+                                                        <li value="9">After these steps, your <var>Touch</var> module supports multi-store entities.</li>
+                                                    </ol>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Queue    </title>
+        <meta name="author" content="" /><title>Queue  </title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="D8x_nLGRe0mdxih-lmIJQQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="D8x_nLGRe0mdxih-lmIJQQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ElHa1uZcukWKEFFLMtPZ8g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ElHa1uZcukWKEFFLMtPZ8g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,7 +239,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Queue <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
+                                                    <h1>Queue <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /></h1>
                                                     <h2>Concepts</h2>
                                                     <ul>
                                                         <li class="bullet_list" value="1">Sender	 -  a program that sends messages.
@@ -248,48 +248,149 @@
 </li>
                                                         <li class="bullet_list" value="3">Message - 	a string or binary data  passed from Sender to Receiver.
 </li>
-                                                        <li class="bullet_list" value="4">Message Box	- Similar to a Mailbox, here you can store, send and receive messages.
+                                                        <li class="bullet_list" value="4">Queue	- similar to Mailbox; here you can store, send, and receive messages.
 </li>
                                                     </ul>
                                                     <h2>Introduction
 </h2>
-                                                    <p>The Queue module provides a set of APIs and Commands for sending/receiving messages to/from queues for other modules in Spryker.
+                                                    <p>The Queue System provides a protocol for managing asynchronous processing, meaning that the sender and the receiver do not have access to the same message at the same time. The sender produces a message and sends it to the message box, later, when the receiver connects to the message box, the message is received.
 </p>
-                                                    <p>The Queue System provides a protocol for managing asynchronous processing. Asynchronous processing in the sense that the sender and receiver do not have access to the same message at the same time. The sender produces a message and sends it to the message box, later when the receiver connects to the message box the message is <strong>received</strong>.
-
+                                                    <h2>Queue Benefits</h2>
+                                                    <p>Here is the list of the Queue System’s benefits:
 </p>
+                                                    <ol>
+                                                        <li value="1"><![CDATA[
+]]><b>Asynchronousness</b>. Message processing can be offloaded to different times to prevent bottlenecks and run when necessary.
+</li>
+                                                        <li value="2"><b>Decoupling</b>. The queue provides separate layers for data and processing.</li>
+                                                        <li value="3"><b>Scalability</b>. Adding more processes for receiving and processing allows for scaling up your applications.
+</li>
+                                                        <li value="4"><b>Routing</b>. Send messages to different routes for specific receivers.
+</li>
+                                                        <li value="5"><b>Process Ordering</b>. The Queue processes messages in the right order.
+</li>
+                                                        <li value="6"><b>Error Handling</b>. Plan for error handling during message processing such as routing to another queue, re-queuing, etc.
+</li>
+                                                        <li value="7"><b>Confirmation</b>. By approving or rejecting the message we can control the life-cycle of the message in a queue.
+</li>
+                                                    </ol>
                                                     <h2>Spryker Queue Module</h2>
-                                                    <p>The Spryker Queue module provides a set of high level standard APIs for communicating with the queues. Moreover, the Queue module is also a gateway for other moduleto interact with queues and messages. The Queue module is an abstract adapter implementation which provides a standard API for the other module, this API internally calls their queue engine’s API and translates to their own communication language. There are multiple 3rd-party queue engines to choose from such as RabbitMQ, AmazonSQS and etc.
+                                                    <p>The Spryker Queue module provides a set of high-level standard APIs for communicating with queues. Moreover, the Queue module is also a gateway for other modules to interact with queues and messages. The Queue module is an abstract adapter implementation which provides a standard API for other modules.&#160;This API internally calls their queue engine’s API and translates to their own communication language. There are multiple 3rd-party queue engines to choose from such as RabbitMQ, AmazonSQS, etc.
 
 </p>
-                                                    <p>To initially work with the Queue module you need at least one Queue Engine and one Queue Adapter. This module also comes with a set of simple commands for listening to the queues and processing messages by stack of corresponding plugins.</p>
-                                                    <p>&#160;</p>
-                                                    <p class="tip">For more information and examples of how to get started with the Queue module see .
+                                                    <p>To start working with the Queue module, you need at least one Queue Engine and one Queue Adapter. This module also comes with a set of simple commands for listening to the queues and processing messages by the stack of the corresponding plugins.</p>
+                                                    <h2>Default Queue Engine </h2>
+                                                    <p>The Spryker virtual machine is shipped with the ready-to-use <strong>RabbitMQ </strong>engine inside.
+
 </p>
+                                                    <p data-mc-conditions="Spryker.DemoShop"><strong style="font-weight: bold;">To access the management UI</strong>
+                                                    </p>
+                                                    <ol data-mc-conditions="Spryker.DemoShop">
+                                                        <li value="1">Go to <var>http://zed.de.*.local:15672/</var> (Replace the asterisk (*) with <var>demoshop</var>, <var>suite</var>, <var>b2b</var>, or <var>b2c</var>)
+</li>
+                                                        <li value="2">Enter the default credentials: user: <var>admin </var>, password: <var>mate20mg</var></li>
+                                                        <li value="3">Click <var>Login
+</var></li>
+                                                    </ol>
+                                                    <p>For information on how to work with RabbitMQ, see <a href="https://www.rabbitmq.com/tutorials/tutorial-one-php.html">this tutorial</a>  or run:
+</p><pre xml:space="preserve"><code class="language-PHP line-numbers">1man rabbitmq-server</code></pre>
+                                                    <h2>Default Queue Adapter</h2>
+                                                    <p>Spryker includes a RabbitMQ adapter package in <a href="https://github.com/spryker/rabbit-mq" target="_blank">spryker/rabbit-mq</a>. If you have already installed the Spryker Demoshop on your machine, this package will be automatically downloaded for you.
+</p>
+                                                    <h2>Queue Message Processor Plugin</h2>
+                                                    <p>Plugins are used to make it possible for developers to have more focus on message processing. This is achieved by handling the queue implementation as a background process, allowing developers to focus on messages and their processing logic.
+
+</p>
+                                                    <p><strong>Example</strong>:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Application\Communication\Plugin;
+
+use Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface;
+
+class SampleQueueMessageProcessorPlugin implements QueueMessageProcessorPluginInterface
+{
+
+    public function processMessages(array $queueMessageTransfers)
+    {
+        /* Do something*/
+    }
+
+    public function getChunkSize()
+    {
+        return 100;
+    }
+}
+?&gt;
+</code></pre>
+                                                    <p>Register the plugin in <var>QueueDependencyProvider::getProcessorMessagePlugins()</var>:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Zed\Queue;
+
+use Pyz\Zed\Application\Communication\Plugin\SampleQueueMessageProcessorPlugin;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Queue\QueueDependencyProvider as SprykerQueueDependencyProvider;
+
+class QueueDependencyProvider extends SprykerQueueDependencyProvider
+{
+
+    protected function getProcessorMessagePlugins(Container $container)
+    {
+        return [
+            'hello' =&gt; new SampleQueueMessageProcessorPlugin()
+        ];
+    }
+}
+
+?&gt;
+</code></pre>
+                                                    <h2>Queue Task</h2>
+                                                    <p>The Queue module provides a specific command for listening to the queues, fetching messages and triggering registered processors. By running this command, you will see the messages to be consumed and passed to the plugins.
+
+</p>
+                                                    <p>The command syntax is as follows:
+
+</p><pre><code class="language-PHP line-numbers">./vendor/bin/console queue:task:start &lt;queue-name&gt;</code></pre>
+                                                    <h2>Queue Workers</h2>
+                                                    <p>Queue <var>Worker </var> is another useful command that sends the <var>Task </var> to a background process and provides parallel processing. By adjusting the <var>Worker </var> config, we can run tasks within a different time slot and with a different amount of processes.
+</p>
+                                                    <p><a class="MCPopupThumbnailLink MCPopupThumbnailPopup" href="../../../resources/images/rabbitmq_worker.png" data-mc-popup-alt="RabbitMQ Worker"><img class="MCPopupThumbnail img imgThumbnail" data-mc-width="1093" data-mc-height="493" src="../../../resources/images/rabbitmq_worker_thumb_0_48.png" style="width: 476px;height: 215px;" alt="RabbitMQ Worker" title="Click Me" tabindex="" /></a>
+                                                    </p>
+                                                    <p><![CDATA[
+]]><strong>Command syntax</strong>:
+
+</p><pre><code class="language-PHP line-numbers">./vendor/bin/console queue:worker:start -vvv
+</code></pre>
+                                                    <h2>Queue Job Configuration</h2>
+                                                    <p>You can also find the Worker configuration in <var>jobs.php</var> and adjust the worker command to run every minute:
+
+</p><pre><code class="language-PHP line-numbers">&lt;?php
+
+$jobs[] = [
+    'name' =&gt; 'queue-worker-start',
+    'command' =&gt; '$PHP_BIN vendor/bin/console queue:worker:start -vvv',
+    'schedule' =&gt; '* * * * *',
+    'enable' =&gt; true,
+    'run_on_non_production' =&gt; true,
+    'stores' =&gt; $allStores,
+];
+
+?&gt;
+</code></pre>
+                                                    <p class="tip">For more information and examples of how to get started with the Queue module see <a href="https://documentation.spryker.com/tutorials/introduction/setup-hello-world-queue.htm">Tutorial - Set Up a "Hello World" Queue</a>.</p>
                                                     <p>&#160;</p>
                                                     <p><![CDATA[
             ]]><b>See also:
 </b></p>
                                                     <ul>
-                                                        <li value="1"><a href="queue-adapter.htm">Default Queue Adapter</a>
+                                                        <li value="1"><a href="rabbitmq-headers-in-queue-messages-201903.htm">RabbitMQ Headers in Queue Messages</a>
                                                         </li>
-                                                        <li value="2"><a href="queue-benefits.htm">Queue Benefits</a>
-                                                        </li>
-                                                        <li value="3"><a href="queue-engine.htm">Default Queue Engine</a>
-                                                        </li>
-                                                        <li value="4"><a href="queue-job-config.htm">Queue Job Configuration</a>
-                                                        </li>
-                                                        <li value="5"><a href="queue-msg-processor.htm">Queue Message Processor Plugin</a>
-                                                        </li>
-                                                        <li value="6"><a href="queue-task.htm">Queue Task</a>
-                                                        </li>
-                                                        <li value="7"><a href="queue-workers.htm">Queue Workers</a>
-                                                        </li>
-                                                        <li value="8"><a href="http://documentation.spryker.com/module_migration_guides/mg-rabbitmq.htm">Migration Guide - RabbitMQ</a>
+                                                        <li value="2"><a href="http://documentation.spryker.com/module_migration_guides/mg-rabbitmq.htm">Migration Guide - RabbitMQ</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Oct. 18th, 2017 </i>
+                                                    <p><i>Last review date: Apr 9th, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>

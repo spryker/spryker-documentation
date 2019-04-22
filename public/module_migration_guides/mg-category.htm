@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="iw3NhwmTKUK0Qx--IN74lQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iw3NhwmTKUK0Qx--IN74lQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="nRmPd0GtoEqZY8UkrjkPHw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="nRmPd0GtoEqZY8UkrjkPHw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,28 +242,28 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Category</h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 3.* to Version 4.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <h3>Changes</h3>
-                                                            <p>The fourth version of the Category module introduced the changes described below.</p>
-                                                            <p>Added:</p>
-                                                            <ul>
-                                                                <li value="1">category templates functionality</li>
-                                                                <li value="2">category view functionality</li>
-                                                                <li value="3">tests for the module</li>
-                                                                <li value="4">dependencies for Storage and Event modules</li>
-                                                            </ul>
-                                                            <p>Removed:</p>
-                                                            <ul>
-                                                                <li value="1">category <var>is_clickable</var> functionality</li>
-                                                            </ul>
-                                                            <h3>Update modules</h3>
-                                                            <ol>
-                                                                <li value="1">Update the Category module by adding <var>"spryker/category": "^4.0.0"</var> to your <var>composer.json</var> and running <var>composer update</var>.</li>
-                                                                <p>Due to the changes in the Category module, all related modules have to be updated too.</p>
-                                                                <li value="2">Run <var>composer require spryker/event spryker/storage</var> to install Event and Storage modules.</li>
-                                                                <h3>Database update and migration</h3>
-                                                                <li value="3">Execute the following SQL statement to create the table <var>spy_category_template</var> and modify the <var>spy_category</var> one:</li><pre><code class="language-SQL line-numbers">CREATE SEQUENCE "spy_category_template_pk_seq";
+                                                    <h2>Upgrading from Version 3.* to Version 4.*
+        </h2>
+                                                    <h3>Changes</h3>
+                                                    <p>The fourth version of the Category module introduced the changes described below.</p>
+                                                    <p>Added:</p>
+                                                    <ul>
+                                                        <li value="1">category templates functionality</li>
+                                                        <li value="2">category view functionality</li>
+                                                        <li value="3">tests for the module</li>
+                                                        <li value="4">dependencies for Storage and Event modules</li>
+                                                    </ul>
+                                                    <p>Removed:</p>
+                                                    <ul>
+                                                        <li value="1">category <var>is_clickable</var> functionality</li>
+                                                    </ul>
+                                                    <h3>Update modules</h3>
+                                                    <ol>
+                                                        <li value="1">Update the Category module by adding <var>"spryker/category": "^4.0.0"</var> to your <var>composer.json</var> and running <var>composer update</var>.</li>
+                                                        <p>Due to the changes in the Category module, all related modules have to be updated too.</p>
+                                                        <li value="2">Run <var>composer require spryker/event spryker/storage</var> to install Event and Storage modules.</li>
+                                                        <h3>Database update and migration</h3>
+                                                        <li value="3">Execute the following SQL statement to create the table <var>spy_category_template</var> and modify the <var>spy_category</var> one:</li><pre><code class="language-SQL line-numbers">CREATE SEQUENCE "spy_category_template_pk_seq";
 
 CREATE TABLE "spy_category_template"
 (
@@ -277,49 +277,49 @@ CREATE TABLE "spy_category_template"
 ALTER TABLE "spy_category" ADD "fk_category_template" INTEGER;
 
 ALTER TABLE "spy_category" ADD FOREIGN KEY("fk_category_template") REFERENCES spy_category_template(id_category_template);</code></pre>
-                                                                <li value="4">Run <var>console propel:diff; console propel:migrate; console propel:model:build</var> to build propel models.</li>
-                                                                <li value="5">Run <var>console transfer:generate</var> to generate objects.</li>
-                                                                <h3>Resolve deprecations</h3>
-                                                                <p>
+                                                        <li value="4">Run <var>console propel:diff; console propel:migrate; console propel:model:build</var> to build propel models.</li>
+                                                        <li value="5">Run <var>console transfer:generate</var> to generate objects.</li>
+                                                        <h3>Resolve deprecations</h3>
+                                                        <p>
     Before upgrading to the new version, make sure that you do not use any deprecated code from version 3.*. You can find replacements for the deprecated code in the table below.<![CDATA[
 ]]></p>
-                                                                <div class="table-wrap">
-                                                                    <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
-                                                                        <col style="width: 1072px;" class="TableStyle-PatternedRows2-Column-Regular" />
-                                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
-                                                                        <thead>
-                                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
-                                                                                <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Deprecated code</td>
-                                                                                <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Replacement</td>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tbody>
-                                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                                <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>\Spryker\Shared\Category\CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE</var>
-                                                                                </td>
-                                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Shared\Category\CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE</var>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                                <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>\Spryker\Shared\Category\CategoryConstants::RESOURCE_TYPE_NAVIGATION</var>
-                                                                                </td>
-                                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>\Spryker\Shared\Category\CategoryConfig::RESOURCE_TYPE_NAVIGATION</var>
-                                                                                </td>
-                                                                            </tr>
-                                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                                <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>\Spryker\Zed\Category\Communication\Form\CategoryLocalizedAttributeType::setDefaultOptions()</var>
-                                                                                </td>
-                                                                                <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>\Spryker\Zed\Category\Communication\Form\CategoryLocalizedAttributeType::configureOptions()</var>
-                                                                                </td>
-                                                                            </tr>
-                                                                        </tbody>
-                                                                    </table>
-                                                                </div>
-                                                                <div class="note">Also, <var>is_clickable</var> form field was removed because this functionality is obsolete, so make sure that you do not use it.</div>
-                                                                <h4>Data migration</h4>
-                                                                <p>The following migration script is designed to add the category template selection functionality to your project. If necessary, adjust the script to cover your category implementation</p>
-                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">CategoryTemplateMigration.php</div></a></span>
-                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+                                                        <div class="table-wrap">
+                                                            <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 1072px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Deprecated code</td>
+                                                                        <td style="font-weight: bold;" class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Replacement</td>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>\Spryker\Shared\Category\CategoryConstants::RESOURCE_TYPE_CATEGORY_NODE</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Shared\Category\CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>\Spryker\Shared\Category\CategoryConstants::RESOURCE_TYPE_NAVIGATION</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>\Spryker\Shared\Category\CategoryConfig::RESOURCE_TYPE_NAVIGATION</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>\Spryker\Zed\Category\Communication\Form\CategoryLocalizedAttributeType::setDefaultOptions()</var>
+                                                                        </td>
+                                                                        <td style="font-weight: normal;" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>\Spryker\Zed\Category\Communication\Form\CategoryLocalizedAttributeType::configureOptions()</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                        <div class="note">Also, <var>is_clickable</var> form field was removed because this functionality is obsolete, so make sure that you do not use it.</div>
+                                                        <h4>Data migration</h4>
+                                                        <p>The following migration script is designed to add the category template selection functionality to your project. If necessary, adjust the script to cover your category implementation</p>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">CategoryTemplateMigration.php</div></a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 &lt;?php
 
 /**
@@ -415,10 +415,10 @@ class CategoryTemplateMigration extends Console
     }
 
 }</code></pre>
-                                                                    </div>
-                                                                </div>
-                                                                <li value="6">Copy the script to <var>src/Pyz/Zed/Category/Communication/Console/CategoryTemplateMigration.php.</var></li>
-                                                                <li value="7">Register it in <var>Pyz\Zed\Console\ConsoleDependencyProvider:</var></li><pre><code class="language-PHP line-numbers">
+                                                            </div>
+                                                        </div>
+                                                        <li value="6">Copy the script to <var>src/Pyz/Zed/Category/Communication/Console/CategoryTemplateMigration.php.</var></li>
+                                                        <li value="7">Register it in <var>Pyz\Zed\Console\ConsoleDependencyProvider:</var></li><pre><code class="language-PHP line-numbers">
 &lt;?php
 namespace Pyz\Zed\Console;
 
@@ -432,11 +432,9 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
         ]; ...
     }
 }</code></pre>
-                                                                <li value="8">Run the command to add templates to your categories: <var>vendor/bin/console category-template:migrate</var></li>
-                                                            </ol>
-                                                            <p style="font-style: italic;">Estimated migration time: 1 hour. The time may vary depending on project-specific factors.</p>
-                                                        </div>
-                                                    </div>
+                                                        <li value="8">Run the command to add templates to your categories: <var>vendor/bin/console category-template:migrate</var></li>
+                                                    </ol>
+                                                    <p style="font-style: italic;">Estimated migration time: 1 hour. The time may vary depending on project-specific factors.</p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

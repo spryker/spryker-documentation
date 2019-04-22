@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Iqp9Bug2akGobUiFeb-0MA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Iqp9Bug2akGobUiFeb-0MA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="J13_S1Oz-0Wa7kGqoR9Ucw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="J13_S1Oz-0Wa7kGqoR9Ucw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,17 +240,16 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Price</h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 4.* to Version 5.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>
+                                                    <h2>Upgrading from Version 4.* to Version 5.*</h2>
+                                                    <p>
             From version 5 we have changed price module responsibilities: previously it was responsible for handling product price related functionality.
             This responsibility has now been moved to the new PriceProduct module which handles product prices, while Price module is responsible for generic spryker core related functionality.</p>
-                                                            <p>Due to this change of the Price module responsibility, all related modules have also be updated to work with the PriceProduct module.</p>
-                                                            <ol>
-                                                                <li value="1">First you have to install the new PriceProduct module.</li>
-                                                                <ul>
-                                                                    <li value="1">run <var>"composer require spryker/price-product"</var>.</li>
-                                                                    <li value="2">run SQL queries to create a new table and alter the existing one.</li><pre><code class="language-PHP line-numbers">
+                                                    <p>Due to this change of the Price module responsibility, all related modules have also be updated to work with the PriceProduct module.</p>
+                                                    <ol>
+                                                        <li value="1">First you have to install the new PriceProduct module.</li>
+                                                        <ul>
+                                                            <li value="1">run <var>"composer require spryker/price-product"</var>.</li>
+                                                            <li value="2">run SQL queries to create a new table and alter the existing one.</li><pre><code class="language-PHP line-numbers">
 
 CREATE SEQUENCE "spy_price_product_store_pk_seq";
 
@@ -284,9 +283,9 @@ ALTER TABLE "spy_price_type"
       Should be renamed to:
 
       <p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterCreatePlugin;</var></p><p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractAfterUpdatePlugin;</var></p><p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductAbstract\PriceProductAbstractReadPlugin;</var></p><p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterCreatePlugin;</var></p><p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteAfterUpdatePlugin;</var></p><p><var>use Spryker\Zed\PriceProduct\Communication\Plugin\ProductConcrete\PriceProductConcreteReadPlugin;</var></p></ul>
-                                                                <li value="2">Update <var>StorageProductMapper</var> with the new price resolving logic</li>
-                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
-                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+                                                        <li value="2">Update <var>StorageProductMapper</var> with the new price resolving logic</li>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 
 namespace Pyz\Yves\Product\Mapper;
 
@@ -329,11 +328,11 @@ class StorageProductMapper implements StorageProductMapperInterface
     }
 }
 </code></pre>
-                                                                    </div>
-                                                                </div>
-                                                                <li value="3">Inject PriceProduct client depency and pass to mapper class.</li>
-                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
-                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+                                                            </div>
+                                                        </div>
+                                                        <li value="3">Inject PriceProduct client depency and pass to mapper class.</li>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 namespace Pyz\Yves\Product;
 
 class ProductDependencyProvider extends AbstractBundleDependencyProvider
@@ -381,14 +380,14 @@ class ProductFactory extends AbstractFactory
     }
 }
 </code></pre>
-                                                                    </div>
-                                                                </div>
-                                                                <li value="4">Collectors have changed the way price is collected. Change <var>ProductAbstractCollector</var> and <var>ProductConcreteCollector</var> to reflect that.
+                                                            </div>
+                                                        </div>
+                                                        <li value="4">Collectors have changed the way price is collected. Change <var>ProductAbstractCollector</var> and <var>ProductConcreteCollector</var> to reflect that.
 
     Both are now using <var>PriceProductFacade</var> instead of <var>PriceFacade</var>.</li>
-                                                            </ol>
-                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
-                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+                                                    </ol>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Click here to expand the code sample</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
 namespace Pyz\Zed\Collector\Business\Storage;
 
 class ProductConcreteCollector extends AbstractStoragePdoCollector
@@ -460,8 +459,6 @@ class ProductAbstractCollector extends AbstractStoragePdoCollector
      }
 }
 </code></pre>
-                                                                </div>
-                                                            </div>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>

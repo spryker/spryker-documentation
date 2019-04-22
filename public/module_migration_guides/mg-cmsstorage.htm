@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="R19xOfwuD02bUp-KReZZDg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="R19xOfwuD02bUp-KReZZDg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="nv_oNxJ1DkiIdw5PgmuFIA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="nv_oNxJ1DkiIdw5PgmuFIA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,26 +240,25 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - CmsStorage</h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to Version 2.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>Version 2.0.0 of the CmsStorage module introduces the <a href="https://documentation.spryker.com/capabilities/cms/cms_page/multi-store-cms-pages-201903.htm">multi-store functionality</a>. The multi-store CMS page feature enables management of CMS page display per store via a store toggle control in the Admin UI.</p>
-                                                            <p><b>The main BC breaking changes are:</b>
-                                                            </p>
-                                                            <ul>
-                                                                <li value="1">Synchronization behavior</li>
-                                                                <li value="2">CMS Storage Dependency Provider return annotation</li>
-                                                            </ul>
-                                                            <p><b>To upgrade to the new version of the module, do the following:</b>
-                                                            </p>
-                                                            <ol>
-                                                                <li value="1">Update <i>cms-storage</i> to <i>^2.0.0</i> with the command <var>composer update spryker/cms-storage": "^2.0.0</var></li>
-                                                                <li value="2"><b>Remove</b> <i>queue_pool=synchronizationPool</i> behavior from <var>spy_cms_page_storage</var> table.
+                                                    <h2 class="anchor">Upgrading from Version 1.* to Version 2.*</h2>
+                                                    <p>Version 2.0.0 of the CmsStorage module introduces the <a href="https://documentation.spryker.com/capabilities/cms/cms_page/multi-store-cms-pages-201903.htm">multi-store functionality</a>. The multi-store CMS page feature enables management of CMS page display per store via a store toggle control in the Admin UI.</p>
+                                                    <p><b>The main BC breaking changes are:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1">Synchronization behavior</li>
+                                                        <li value="2">CMS Storage Dependency Provider return annotation</li>
+                                                    </ul>
+                                                    <p><b>To upgrade to the new version of the module, do the following:</b>
+                                                    </p>
+                                                    <ol>
+                                                        <li value="1">Update <i>cms-storage</i> to <i>^2.0.0</i> with the command <var>composer update spryker/cms-storage": "^2.0.0</var></li>
+                                                        <li value="2"><b>Remove</b> <i>queue_pool=synchronizationPool</i> behavior from <var>spy_cms_page_storage</var> table.
 				<var>src/Pyz/Zed/CmsStorage/Persistence/Propel/Schema/spy_cms_storage.schema.xml</var><pre><code class="language-PHP">
 &lt;behavior name="synchronization"&gt;
 	&lt;parameter name="queue_pool" value="synchronizationPool"&gt;
 &lt;/behavior&gt;
 				</code></pre><p class="tip">When completed, the above&#160;synchronization parameter should not be in the file.</p></li>
-                                                                <li value="3">Make changes to the CMS Storage Dependency Provider:
+                                                        <li value="3">Make changes to the CMS Storage Dependency Provider:
 				<p>The return annotation for&#160;<var>getContentWidgetDataExpander()</var> has been changed.&#160;<var>CmsPageDataExpanderPluginInterface</var> was moved to&#160;<var>CmsExtension</var>&#160;module and should be referenced as such.</p><var>src/Pyz/Zed/CmsStorage/CmsStorageDependencyProvider.php</var><pre><code class="language-PHP line-numbers">class CmsStorageDependencyProvider extends SprykerCmsStorageDependencyProvider
 {
 /**
@@ -268,19 +267,17 @@
 	protected function getContentWidgetDataExpander()
 	{
 				</code></pre></li>
-                                                                <li value="4">Apply the database change:
+                                                        <li value="4">Apply the database change:
 				<pre><code class="language-PHP">
 $ console propel:install
 				</code></pre></li>
-                                                                <li value="5">Generate the new transfers:
+                                                        <li value="5">Generate the new transfers:
 				<pre><code class="language-PHP">			
 						$ console transfer:generate
 				</code></pre></li>
-                                                            </ol>
-                                                            <p><i>Estimated migration time: 30 minutes</i>
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                    </ol>
+                                                    <p><i>Estimated migration time: 30 minutes</i>
+                                                    </p>
                                                     <p>&#160;</p>
                                                     <p><b>See also:</b>
                                                     </p>

@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="YiN-VYYuJUGcPDooyIpkaA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YiN-VYYuJUGcPDooyIpkaA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="MqG561XATEG3nkWQv_yOOg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="MqG561XATEG3nkWQv_yOOg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,21 +240,20 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>CartsRestApi Migration Guide</h1>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to Version 2.*</div></a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>
+                                                    <h2>Upgrading from Version 1.* to Version 2.*</h2>
+                                                    <p>
 			CartsRestApi version 2 has been improved to be independent of the MultiCart module. Now you can to use the CartsRestApi module only with the PersistentCart module.
 We have also added the API&#160;endpoints functionality to use CartsRestApi as a guest customer. <![CDATA[		]]></p>
-                                                            <p>To migrate to the new version, do the following:		</p>
-                                                            <ul>
-                                                                <li value="1">Find or create <var>CartsRestApiDependencyProvider</var> in a project. Make sure it extends <var>\Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider</var>.</li>
-                                                                <li value="2">Find the <var>getQuoteCollectionReaderPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
-                                                                <li value="3">Find the <var>getQuoteCreatorPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
-                                                                <p>
+                                                    <p>To migrate to the new version, do the following:		</p>
+                                                    <ul>
+                                                        <li value="1">Find or create <var>CartsRestApiDependencyProvider</var> in a project. Make sure it extends <var>\Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider</var>.</li>
+                                                        <li value="2">Find the <var>getQuoteCollectionReaderPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
+                                                        <li value="3">Find the <var>getQuoteCreatorPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
+                                                        <p>
 				The file could look like this:
 			</p>
-                                                                <p><var>CartsRestApiDependencyProvider.php</var>
-                                                                </p><pre><code class="language-PHP line-numbers">
+                                                        <p><var>CartsRestApiDependencyProvider.php</var>
+                                                        </p><pre><code class="language-PHP line-numbers">
 	&lt;?php
  
 	namespace Pyz\Glue\CartsRestApi;
@@ -284,17 +283,17 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 		}
 	}
 				</code></pre>
-                                                                <li value="4">
+                                                        <li value="4">
                 Find or create CustomersRestApiDependencyProvider in a project. Make sure it extends <var>\Spryker\Glue\CustomersRestApi\CustomersRestApiDependencyProvider</var>.
             </li>
-                                                                <li value="5">
+                                                        <li value="5">
                 Find the <var>getCustomerPostRegisterPlugins</var> method and add <var>Spryker\Glue\CartsRestApi\Plugin\CustomerPostRegister\UpdateCartCustomerReferencePlugin</var> to the plugin stack.
             </li>
-                                                                <li value="6">
+                                                        <li value="6">
                 The file could look like this:
             </li>
-                                                                <p><var>CustomersRestApiDependencyProvider.php</var>
-                                                                </p><pre><code class="language-PHP line-numbers">
+                                                        <p><var>CustomersRestApiDependencyProvider.php</var>
+                                                        </p><pre><code class="language-PHP line-numbers">
 	&lt;?php
   
 	namespace Pyz\Glue\CustomersRestApi;
@@ -314,33 +313,33 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 		}
 	}
 				</code></pre>
-                                                                <li value="7">
+                                                        <li value="7">
                 Find or create <var>GlueApplicationDependencyProvider</var> in a project. Make sure it extends <var>\Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider</var>.
             </li>
-                                                                <li value="8">
+                                                        <li value="8">
                 Find the <var>getResourceRoutePlugins</var> method and add the following plugins to the plugins stack.
             </li>
-                                                                <li value="9"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\CartItemsResourceRoutePlugin</var>
-                                                                </li>
-                                                                <li value="10"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\CartsResourceRoutePlugin</var>
-                                                                </li>
-                                                                <li value="11"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\GuestCartItemsResourceRoutePlugin</var>
-                                                                </li>
-                                                                <li value="12"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\GuestCartsResourceRoutePlugin</var>
-                                                                </li>
-                                                                <li value="13">
+                                                        <li value="9"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\CartItemsResourceRoutePlugin</var>
+                                                        </li>
+                                                        <li value="10"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\CartsResourceRoutePlugin</var>
+                                                        </li>
+                                                        <li value="11"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\GuestCartItemsResourceRoutePlugin</var>
+                                                        </li>
+                                                        <li value="12"><var>Spryker\Glue\CartsRestApi\Plugin\ResourceRoute\GuestCartsResourceRoutePlugin</var>
+                                                        </li>
+                                                        <li value="13">
                 Find the <var>getValidateRestRequestPlugins</var> method and add <var>Spryker\Glue\CartsRestApi\Plugin\Validator\AnonymousCustomerUniqueIdValidatorPlugin</var> to the plugins stack.
             </li>
-                                                                <li value="14">
+                                                        <li value="14">
                 Find the <var>getControllerBeforeActionPlugins</var> method and add <var>Spryker\Glue\CartsRestApi\Plugin\ControllerBeforeAction\SetAnonymousCustomerIdControllerBeforeActionPlugin</var> to the plugins stack.
             </li>
-                                                                <li value="15">
+                                                        <li value="15">
                 Find the <var>getResourceRelationshipPlugins</var> method and add <var>Spryker\Glue\CartItemsProductsRelationship\Plugin\CartItemsProductsRelationshipPlugin</var> to the plugins stack.
             </li>
-                                                                <li value="16">
-                                                                    <p>The file could look like this:</p>
-                                                                    <p><var>GlueApplicationDependencyProvider.php</var>
-                                                                    </p><pre><code class="language-PHP line-numbers">
+                                                        <li value="16">
+                                                            <p>The file could look like this:</p>
+                                                            <p><var>GlueApplicationDependencyProvider.php</var>
+                                                            </p><pre><code class="language-PHP line-numbers">
 	&lt;?php
   
 	namespace Pyz\Glue\GlueApplication;
@@ -414,14 +413,14 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 		}
 	}
 				</code></pre>
-                                                                </li>
-                                                            </ul>
-                                                            <p>
+                                                        </li>
+                                                    </ul>
+                                                    <p>
 			To have an ability to run the console command in order to delete expired guest carts, you should:
 		</p>
-                                                            <ol>
-                                                                <li value="1">Run <var>composer require spryker/quote:"^2.3.0"</var></li>
-                                                                <li value="2">Add configuration and cronjob to delete expired guest carts:
+                                                    <ol>
+                                                        <li value="1">Run <var>composer require spryker/quote:"^2.3.0"</var></li>
+                                                        <li value="2">Add configuration and cronjob to delete expired guest carts:
 				<br /> <var>config/Shared/config_default.php</var><br /><var>config_default.php</var><pre><code class="language-PHP line-numbers">
 	$config[QuoteConstants::GUEST_QUOTE_LIFETIME] = 'P01M';
 					</code></pre><br /><var>config/Zed/cronjobs/jobs.php</var><var>jobs.php</var><pre><code class="language-PHP line-numbers">
@@ -435,12 +434,12 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 		'stores' =&gt; $allStores,
 	];
 					</code></pre></li>
-                                                                <li value="3">Find or create <var>ConsoleDependencyProvider</var> in a project. Make sure that it extends <var>\Spryker\Zed\Console\ConsoleDependencyProvider</var>. 
+                                                        <li value="3">Find or create <var>ConsoleDependencyProvider</var> in a project. Make sure that it extends <var>\Spryker\Zed\Console\ConsoleDependencyProvider</var>. 
 				Find the <var>getConsoleCommands</var> method and add <var>Spryker\Zed\Quote\Communication\Console\DeleteExpiredGuestQuoteConsole</var> to the plugin stack.
 			</li>
-                                                                <p>The file could look like this:</p>
-                                                                <p><var>ConsoleDependencyProvider.php</var>
-                                                                </p><pre><code class="language-PHP line-numbers">
+                                                        <p>The file could look like this:</p>
+                                                        <p><var>ConsoleDependencyProvider.php</var>
+                                                        </p><pre><code class="language-PHP line-numbers">
 	&lt;?php
   
 	namespace Pyz\Glue\CustomersRestApi;
@@ -463,13 +462,11 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 		}
 	}
 				</code></pre>
-                                                                <li value="4">Run <var>vendor/bin/console transfer:generate</var></li>
-                                                            </ol>
-                                                            <p>&#160;</p>
-                                                            <p><i>Estimated migration time: 1-2 hours</i>
-                                                            </p>
-                                                        </div>
-                                                    </div>
+                                                        <li value="4">Run <var>vendor/bin/console transfer:generate</var></li>
+                                                    </ol>
+                                                    <p>&#160;</p>
+                                                    <p><i>Estimated migration time: 1-2 hours</i>
+                                                    </p>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: Oct 30, 2018 </i>
                                                     </p>

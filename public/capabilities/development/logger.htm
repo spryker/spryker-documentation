@@ -420,7 +420,10 @@ $config[LogConstants::LOGGER_CONFIG_YVES] = MyYvesLoggerConfigPlugin::class;
                                                     <p><var>Transfer response [200]</var>
                                                     </p>
                                                     <h3>Propel Logging</h3>
-                                                    <p>By default ObjectBuilder is set by demoshop propel configuration, which does NOT log outgoing queries.</p>
+                                                    <p>Propel writes log messages to a specific file, which can be defined in the config:</p><pre><code class="language-PHP line-numbers">$config[PropelConstants::LOG_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/' . Store::getInstance()-&gt;getStoreName() . '/logs/ZED/propel.log'</code></pre>
+                                                    <p>By default, Propel will write all the exceptions thrown while querying a database to this file. You can also customize the logs written to the file by enabling  debugging or profiling. Check the <a href="http://propelorm.org/documentation/07-logging.html">Propel documentation</a> page for details.</p>
+                                                    <h3>Propel Query Logging</h3>
+                                                    <p>By default ObjectBuilder is set by propel configuration, which does NOT log outgoing queries.</p>
                                                     <p>If you want to log the save, update and delete operations of your entities, you need to use <var>ObjectBuilderWithLogger::class</var> as builder in your <var>config_propel.php</var>. This will add the logger to the generated entities.</p><pre><code class="language-PHP line-numbers">&lt;?php
 $config[PropelConstants::PROPEL] = [
     ...
