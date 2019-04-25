@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="ZuXDPONi-kaGBT52SKRykg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ZuXDPONi-kaGBT52SKRykg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Pw9cPw_DwkyKcN1nwxJiZg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Pw9cPw_DwkyKcN1nwxJiZg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -286,14 +286,11 @@ In contrast to Stock, Availability considers not only the number of products in 
                                                             </p>
                                                         </div>
                                                     </div>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Availability Collector
-</a></span>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Availability Storage</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>The availability collector collects all availability information from abstract product to concrete. Items are grouped by abstract product.
-
+                                                            <p><a href="https://documentation.spryker.com/module_guide/spryker/availability-storage.htm">AvailabilityStorage</a> publishes all availability information for abstract and concrete products. Items are grouped by abstract product. This process is handled by <a href="https://documentation.spryker.com/architecture_concepts/publish_and_synchronization/publish-and-synchronization.htm">Publish and Synchronize</a>.
 </p>
-                                                            <p>The collector is touched:
-</p>
+                                                            <p>Events are generated in these two cases:</p>
                                                             <div class="table-wrap">
                                                                 <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                                     <col class="TableStyle-PatternedRows2-Column-Regular" />
@@ -307,30 +304,40 @@ In contrast to Stock, Availability considers not only the number of products in 
                                                                     <tbody>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                             <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Case 1</td>
-                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">If there is <b>no record</b> in availability table and availability is created, it needs to be touched.
-</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">If availability amount was equal to 0 and now it’s more than 0, the event is triggered.</td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Case 2</td>
-                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">If availability amount <b>was 0 and now it’s more than 0</b>, it needs to be touched.
-</td>
-                                                                        </tr>
-                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Case 3</td>
-                                                                            <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">If availability amount <b>was more than 0 and now it’s 0</b>, it needs to be touched.
-</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Case 2</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">If availability amount was more than 0 and now it’s equal to 0, the event is triggered.</td>
                                                                         </tr>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <p class="example">Collected data example in JSON.
-<pre><code class="language-bash line-numbers">{
-    "abstractProductAvailability": true,
-    "concreteProductAvailabilityItems": {
-        "27003893-1": true,
-        "27003893-2": true
-    }
-}</code></pre></p>
+                                                            <p>The default behavior is having <b>available</b> or <b>not available</b> status set for product while the amount of product does not matter. Even though events are triggered when amount is changed from 0 to N or from N to 0, it's not the amount change that triggers events, but the change of product status. You can change the default behavior for the events to be triggered whenever the amount is changed. Learn about it <a href="https://documentation.spryker.com/tutorials/howtos/feature_howtos/ht-change-the-default-behavior-of-event-triggering-in-availability-storage-module">here</a>. </p>
+                                                            <p class="example">
+                                                                <p>Published data example in JSON.</p><pre><code class="language-bash line-numbers">{
+    "id_availability_abstract": 1,
+    "fk_store": 1,
+    "abstract_sku": "001",
+    "quantity": 10,
+    "SpyAvailabilities": [
+        {
+            "id_availability": 1,
+            "fk_availability_abstract": 1,
+            "fk_store": 1,
+            "is_never_out_of_stock": false,
+            "quantity": 10,
+            "sku": "001_25904006"
+        }
+    ],
+    "Store": {
+        "id_store": 1,
+        "name": "DE"
+    },
+    "id_product_abstract": 1,
+    "_timestamp": 1554886713.989162
+}</code></pre>
+                                                            </p>
                                                             <p>This information is used on product details page when <b>Add to cart</b> is rendered.</p>
                                                         </div>
                                                     </div>
@@ -354,9 +361,9 @@ In contrast to Stock, Availability considers not only the number of products in 
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Import / Change Stock
 </a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>It’s possible to use <var>vendor/bin/console data:import:product-stock</var> command to import stocks into database. The default stock importer uses <var>csv </var>file from <var>src/Pyz/Zed/Updater/Business/Internal/data/import/product_stock.csv</var>which imports stocks for demoshop.</p>
-                                                            <p>Administration Interface is provided to allow assigning stocks to products. This can be accessed at <var>(zed.domain.tld)/availability</var>.</p>
-                                                            <p>Stock update considers the stock from the stock file to be the absolute value. On stock update the stock is overwritten with the values from the file. If a certain product does not have a record in the stock file, then it is considered that the stock of this product does not have to be updated.</p>
+                                                            <p>It’s possible to use <var>vendor/bin/console data:import:product-stock</var> command to import stocks into database. The default stock importer uses <var>csv </var>file from <var>src/Pyz/Zed/Updater/Business/Internal/data/import/product_stock.csv</var>which imports stocks.</p>
+                                                            <p>Administration Interface is provided to allow assigning stocks to products. See <a href="https://documentation.spryker.com/administration_interface_guide/products/availability.htm">Availability</a> for details on how to manage product stocks in the backoffice.</p>
+                                                            <p>Stock update considers the stock from the stock file to be the absolute value. On stock update, the stock is overwritten with the values from the file. If a certain product does not have a record in the stock file, then it is considered that the stock of this product does not have to be updated.</p>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Availability Per Store</a></span>
@@ -411,11 +418,13 @@ See scenario 3 above for information about how reservations are handled as well 
                                                     <p><b>See also:</b>
                                                     </p>
                                                     <ul>
-                                                        <li value="1"><a href="about-inventory.htm">Get a general idea of the Inventory feature</a>
+                                                        <li value="1"><a href="about-inventory.htm">Inventory feature overview</a>
                                                         </li>
-                                                        <li value="2"><a href="http://documentation.spryker.com/module_migration_guides/mg-availability.htm">Learn how to migrate to a newer version of Availability module</a>
+                                                        <li value="2"><a href="http://documentation.spryker.com/module_migration_guides/mg-availability.htm">Availability module migration guide</a>
                                                         </li>
-                                                        <li value="3"><a href="http://documentation.spryker.com/module_migration_guides/mg-oms.htm">Learn how to migrate to a newer version of OMS module</a>
+                                                        <li value="3"><a href="http://documentation.spryker.com/module_migration_guides/mg-oms.htm">OMS module migration guide</a>
+                                                        </li>
+                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/feature_howtos/ht-change-the-default-behavior-of-event-triggering-in-availability-storage-module">How to change the default behavior of event triggering in the AvailabilityStorage Module</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
