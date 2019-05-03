@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="-Xxb2vsv_UK1KaT4XZoG5g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="-Xxb2vsv_UK1KaT4XZoG5g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="eoXvNH_6l0u6zDP-3st76g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="eoXvNH_6l0u6zDP-3st76g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,15 +240,30 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Checkout Steps <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
+                                                    <h1>Checkout Steps <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /></h1>
                                                     <div class="MCHelpControl MCHelpControl-Related relatedTopics relatedTopicssideContent" style="mc-label: 'Versions';mc-help-control-display: list;"><span class="MCHelpControl-RelatedHotSpot_ MCHelpControl-RelatedHotSpot_sideContent"><img class="MCHelpControl_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions</span>
                                                         <ul class="MCHelpControlList MCRelatedTopicsControlList">
                                                             <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="checkout-steps.htm#2018-10" target="_self">Checkout Steps   </a>
                                                             </li>
                                                         </ul>
                                                     </div>
+                                                    <p>The checkout process consists of the following steps:</p>
+                                                    <ul>
+                                                        <li value="1">Entry step (cart creation)</li>
+                                                        <li value="2">Customer step</li>
+                                                        <li value="3">Address step</li>
+                                                        <li value="4">Shipment step</li>
+                                                        <li value="5">Payment step</li>
+                                                        <li value="6">Summary step</li>
+                                                        <li value="7">Place order stop</li>
+                                                        <li value="8">Success step</li>
+                                                    </ul>
+                                                    <p>
+                                                        <img src="../../../resources/images/quote_transfer_lifetime.png" />
+                                                    </p>
+                                                    <p>Read on to learn more on each step.</p>
                                                     <h2>Entry Step</h2>
-                                                    <p>The entry step redirects the customer to correct step based on QuoteTransfer state. This step requires <var>input = false</var> so it won’t be rendered.</p>
+                                                    <p>The entry step redirects the customer to correct step based on QuoteTransfer state. This step requires <var>input = false</var>, so it won’t be rendered.</p>
                                                     <h2>Customer Step</h2>
                                                     <p>The customer step provides three forms:</p>
                                                     <ul>
@@ -258,7 +273,7 @@
                                                     </ul>
                                                     <p>This step is responsible for filling <var>CustomerTransfer</var> with corresponding data. The authentication logic is left to customer module, this step is only delegating calls to (and from) customer module and mapping data with forms.</p>
                                                     <h2>Address Step</h2>
-                                                    <p>The address step is the step where customer fills billing and shipping addresses in <var>QuoteTransfer::billingAddress</var> and <var>QuoteTransfer::shippingAddress</var> respectively. This step lets the returning customers select one of the existing addresses or create a new one. New address will be created only if "Save new address to address book" checkbox is checked. Otherwise, it is saved in Order, but won't be stored in the database. This allows customer to skip new address saving if he desires. New and guest customers can only create a new address. If a new address is selected, it’s only created when order is placed and <var>OrderCustomerSavePlugin</var> plugin is enabled.</p>
+                                                    <p>The address step is the step where customer fills billing and shipping addresses in <var>QuoteTransfer::billingAddress</var> and <var>QuoteTransfer::shippingAddress</var> respectively. This step lets the returning customers select one of the existing addresses or create a new one. New address will be created only if "Save new address to address book" checkbox is checked. Otherwise, it is saved in Order, but won't be stored in the database. This allows customer to skip new address saving if they want to. New and guest customers can only create a new address. If a new address is selected, it’s only created when order is placed and <var>OrderCustomerSavePlugin</var> plugin is enabled.</p>
                                                     <h2>Shipment Step</h2>
                                                     <p>Get shipment method information and store it into the quote. This step requires additional configuration because different shipment providers and different ways forms should be handled for each.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Form Handling</a></span>
@@ -285,7 +300,7 @@
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><var>PaymentForm</var> uses subforms. Each subform is implemented as a plugin that implements <var>CheckoutSubFormPluginInterface</var> and is provided in the <var>CheckoutFactory::createPaymentMethodSubForms()</var>. Main form uses <var>QuoteTransfer</var> as a data store. Data for payment is stored under <var>QuoteTransfer::payment</var> as a <var>PaymentTransfer</var> object.</p>
                                                             <p>Main form has radio buttons, where the customer can select from the available payment methods. Choices are built from the subform name. Each provided subform corresponds to a radio input.</p>
-                                                            <p>When the form is created it requires the property path to be provided so that it knows how to map it’s subform to <var>QuoteTransfer</var>. see <a href="http://symfony.com/doc/current/reference/forms/types/form.html#property-path" target="_blank">property_path</a>. Property path is built out of few parts of <var>PaymentTransfer::payment</var> and subform provides <var>getPropertyPath()</var> that returns a string; this string should return the property that exists under <var>PaymentTransfer</var>.</p>
+                                                            <p>When the form is created, it requires the property path to be provided so that it knows how to map its subform to <var>QuoteTransfer</var>. see <a href="http://symfony.com/doc/current/reference/forms/types/form.html#property-path" target="_blank">property_path</a>. Property path is built out of few parts of <var>PaymentTransfer::payment</var> and subform provides <var>getPropertyPath()</var> that returns a string; this string should return the property that exists under <var>PaymentTransfer</var>.</p>
                                                             <p><var>PaymentTransfer</var> includes:</p>
                                                             <ul>
                                                                 <li class="bullet_list" value="1">paymentProvider (string) — payment provider name (Paypal, Payolution etc..).</li>
@@ -296,19 +311,19 @@
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Data handling</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>Data handling happens after a valid form is submitted during the <var>PaymentStep</var>. The step receives plugins that implement <var>CheckoutStepHandlerPluginInterface</var> and that are provided in the <var>CheckoutFactory::createPaymentPlugins()</var>. When <var>execute()</var> method is called on <var>PaymentStep</var>, the plugin that is identified by <var>PaymentTransfer::paymentSelection</var> string is selected and the <var>CheckoutStepHandlerPluginInterface::addToQuote()</var> is called to update <var>QuoteTransfer</var> with payment data. From this part, all population or data handling is left to concrete CheckoutStepHandler.</p>
+                                                            <p>Data handling happens after a valid form is submitted during the <var>PaymentStep</var>. The step receives plugins that implement <var>CheckoutStepHandlerPluginInterface</var> and that are provided in the <var>CheckoutFactory::createPaymentPlugins()</var>. When <var>execute()</var> method is called on <var>PaymentStep</var>, the plugin that is identified by <var>PaymentTransfer::paymentSelection</var> string is selected and the <var>CheckoutStepHandlerPluginInterface::addToQuote()</var> is called to update <var>QuoteTransfer</var> with the payment data. From this part, all population or data handling is left to concrete CheckoutStepHandler.</p>
                                                             <div class="example">A new payment method <var>Paypal</var> must be added. 
-				<ol><li value="1">The first step would be to add the new property to <var>PaymentTransfer</var> and call it <var>paypal</var>. This property will use <var>PaypalTransfer</var> and it will contain the data we need to map the details from the form.</li><li value="2">Next, create/use Paypal module to add step plugin.</li><li value="3">In the Paypal module add the following plugins:
+				<ol><li value="1">The first step would be to add the new property to <var>PaymentTransfer</var> and call it <var>paypal</var>. This property will use <var>PaypalTransfer</var> and it will contain the data we need to map the details from the form.</li><li value="2">Next, create/use Paypal module to add the step plugin.</li><li value="3">In the Paypal module add the following plugins:
                 			<ul><li class="bullet_list" value="1">Create <var>PaypalCheckoutSubForm</var> implementing <var>CheckoutSubFormPluginInterface </var>that returns a subform that implements <var>SubFormInterface</var></li><li class="bullet_list" value="2">Create <var>PaypalHandler</var> implementing <var>CheckoutStepHandlerPluginInterface</var> that should populate <var>QuoteTransfer:payment:paypal</var> with <var>PaypalTransfer</var></li></ul></li></ol><p>After creation you need to add the plugins to the checkout process.</p><ol><li value="1">To do this you need to create a <var>CheckoutDependencyInjector</var> inside your module and configure it to be used by the Checkout module.
-                		From there you can inject the needed forms and handler.</li><li value="2">Add your form to the <var>CheckoutSubFormPluginCollection</var> by extending the given <var>CheckoutDependencyProvider::PAYMENT_SUB_FORMS</var></li><li value="3">Your handler needs to be added to the <var>CheckoutStepHandlerPluginCollection</var> by extending the given <var>CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER</var></li></ol><p>After this, you should be able to see the new payment selection with subform rendered below.</p></div>
+                		From there you can inject the needed forms and handler.</li><li value="2">Add your form to the <var>CheckoutSubFormPluginCollection</var> by extending the given <var>CheckoutDependencyProvider::PAYMENT_SUB_FORMS</var></li><li value="3">Your handler needs to be added to the <var>CheckoutStepHandlerPluginCollection</var> by extending the given <var>CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER</var></li></ol><p>After this, you should  see the new payment selection with subform rendered below.</p></div>
                                                         </div>
                                                     </div>
                                                     <h2>Summary Step</h2>
-                                                    <p>Display order information about to be placed item, details and order totals.</p>
+                                                    <p>Display order information about the item to be placed, details and order totals.</p>
                                                     <h2>Place Order Step</h2>
-                                                    <p>Place order into system. This step requires <var>input = false</var>. This step makes Zed HTTP request which sends <var>QuoteTransfer</var>. In this step, all order saving is happening.</p>
+                                                    <p>Place order into the system. This step requires <var>input = false</var>. This step makes Zed HTTP request which sends <var>QuoteTransfer</var>. In this step, all order saving is happening.</p>
                                                     <h2>Success Page</h2>
-                                                    <p>Display success page, on executing, clears <var>QuoteTransfer</var>, also customer session is marked as dirty so that with next request it would reload with updated data (new customer address).</p>
+                                                    <p>When the success page is executed, <var>QuoteTransfer</var> is cleared. Also, customer session is marked as dirty so that with the next request it would reload with the updated data (new customer address).</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Checkout Step Interface </a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers"> #
   &lt;?php
