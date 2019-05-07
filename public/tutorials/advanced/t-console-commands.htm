@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="PyJqAXlSrE2luAV6mraoZg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PyJqAXlSrE2luAV6mraoZg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="qzCOYQ5pyU2FytI6rm8PSQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qzCOYQ5pyU2FytI6rm8PSQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -300,7 +300,7 @@ protected function execute(InputInterface $input, OutputInterface $output)
     $this-&gt;info('Data was successfully exported to key-value storage.', false);
 }</code></pre>
                                                     <h3>4. Register the new console command</h3>
-                                                    <p>To enable the console command, it must be registered in the <code>getConsoleCommands()</code> operation in the <code>ConsoleConfig</code> class :</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>To enable the console command, it must be registered in the <code>getConsoleCommands()</code> operation in the <code>ConsoleDependencyProvider</code> class :</p><pre><code class="language-PHP line-numbers">&lt;?php
 /**
  * @return \Symfony\Component\Console\Command\Command[]
  */
@@ -308,7 +308,7 @@ public function getConsoleCommands()
 {
     $commands = [
         // ...
-        $this-&gt;getLocator()-&gt;tutorial()-&gt;consoleUpdateApplicationConsole()
+        new UpdateApplicationConsole(),
  
     ];
     return $commands;
