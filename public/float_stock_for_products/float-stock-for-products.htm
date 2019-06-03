@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="Learn about the change of the stock type and quantity fields from int to float. Migration steps and the list of affected modules are included." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Float Stock for Products | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../spryker_user_guides/content/resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../resources/scripts/require.min.js">
+        </script>
+        <script src="../resources/scripts/require.config.js">
+        </script>
+        <script src="../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="Fui1EHxEQ06aq9Ccx-Adjw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Fui1EHxEQ06aq9Ccx-Adjw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Float Stock for Products</h1>
+                                                    <h2>Float stock migration</h2>
+                                                    <p>We have changed the type of stock and quantity fields from int to float. With this change, we allow to manage fractions of items in the system.
+</p>
+                                                    <p>As stock and quantity are very basic concepts of any commerce system, changing their type is a horizontal barrier for the modules. This means that, if a module is upgraded to a version that uses float stock, all the other modules in the project which are involved in the float stock barrier must be upgraded to avoid accidental type incompatibilities. For example, if <i>ModuleX</i> uses float stock and <i>ModuleY</i> uses int stock and there is no hard dependency between them, it’s technically possible to upgrade only one of them, however, during runtime, both modules may happen to process the same request data and, as a result, the response will either be calculated incorrectly or a fatal error will be thrown due to a data type mismatch.
+</p>
+                                                    <p>
+In case of upgrading one of the modules involved into the float stock concept, we strongly recommend upgrading all the modules in your project from the list below. Mostly, the migrations have very low or even zero effort, because they only break type of a transfer object or an internal function’s signature. Some modules changed database field types to DOUBLE which is automatically upgradable by running the necessary console commands.</p>
+                                                    <p class="important">If you upgrade to the float stock concept, you should also review your project code and make sure to adapt all stock and quantity related customizations and implementations to use float type accordingly.</p>
+                                                    <p>Here are some typical occurrences of working with stocks and quantities and tips to make them compatible with the float type:</p>
+                                                    <ul>
+                                                        <li value="1">Product stock and availability management - use <var>UtilQuantityService</var> to handle arithmetic operations with float quantity values.</li>
+                                                        <li value="2">Cart item management - use <var>UtilQuantityService</var> to handle arithmetic operations with float quantity values.</li>
+                                                        <li value="3">Price calculations - use <var>UtilPriceService</var> to handle rounding of price values in a centralized way and avoid handling money fractions.</li>
+                                                    </ul>
+                                                    <h2>Migration process</h2>
+                                                    <p>You can try to upgrade all affected modules together by following the steps below.</p>
+                                                    <ol>
+                                                        <li value="1">
+                                                            <p>Run the following composer command, but make sure to remove the modules that are irrelevant for your project from the command.</p><pre><code class="language-shell line-numbers">composer update "spryker/*" "spryker-shop/*"
+ 
+composer require spryker/availability:"^7.0.0" spryker/availability-cart-connector:"^5.0.0" spryker/availability-gui:"^4.0.0" spryker/availability-offer-connector:"^2.0.0" spryker/cart:"^6.0.0" spryker/cart-extension:"^3.0.0" spryker/carts-rest-api:"^4.0.0" spryker/checkout:"^5.0.0" spryker/discount:"^8.0.0" spryker/discount-promotion:"^2.0.0" spryker/manual-order-entry-gui:"^0.6.0" spryker/offer:"^0.2.0" spryker/offer-gui:"^0.2.0" spryker/oms:"^9.0.0" spryker/orders-rest-api:"^2.0.0" spryker/persistent-cart:"^2.0.0" spryker/price-cart-connector:"^5.0.0" spryker/price-product:"^3.0.0" spryker/price-product-storage:"^3.0.0" spryker/price-product-volume:"^2.0.0" spryker/price-product-volume-gui:"^2.0.0" spryker/product-availabilities-rest-api:"^2.0.0" spryker/product-bundle:"^5.0.0" spryker/product-discount-connector:"^4.0.0" spryker/product-label-discount-connector:"^2.0.0" spryker/product-management:"^0.17.0" spryker/product-measurement-unit:"^3.0.0" spryker/product-option:"^7.0.0" spryker/product-option-cart-connector:"^6.0.0" spryker/product-packaging-unit:"^2.0.0" spryker/product-packaging-unit-storage:"^3.0.0" spryker/product-quantity:"^2.0.0" spryker/product-quantity-data-import:"^2.0.0" spryker/product-quantity-storage:"^2.0.0" spryker/quick-order:"^2.0.0" spryker/sales:"^9.0.0" spryker/sales-quantity:"^2.0.0" spryker/sales-split:"^4.0.0" spryker/shipment-discount-connector:"^2.0.0" spryker/shopping-list:"^3.0.0" spryker/stock:"^6.0.0" spryker/stock-sales-connector:"^4.0.0" spryker/util-price:"^1.0.0" spryker/util-quantity:"^1.0.0" spryker/wishlist:"^7.0.0" spryker-shop/cart-page:"^2.0.0" spryker-shop/customer-reorder-widget:"^5.0.0" spryker-shop/discount-promotion-widget:"^2.0.0" spryker-shop/product-detail-page:"^2.0.0" spryker-shop/product-measurement-unit-widget:"^0.7.0" spryker-shop/product-packaging-unit-widget:"^0.3.0" spryker-shop/product-search-widget:"^2.0.0" spryker-shop/quick-order-page:"^3.0.0" spryker-shop/shopping-list-page:"^0.7.0" spryker-shop/shopping-list-widget:"^0.5.0" --update-with-dependencies</code></pre>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p>Regenerate transfer objects:</p><pre><code class="language-PHP line-numbers">vendor/bin/console transfer:generate</code></pre>
+                                                        </li>
+                                                        <li value="3">
+                                                            <p>Generate database migration file and, if necessary, manually validate if the result suits your expectations.</p><pre><code class="language-PHP line-numbers">console propel:diff</code></pre>
+                                                        </li>
+                                                        <li value="4">
+                                                            <p>Run database migration.</p><pre><code class="language-PHP line-numbers">console propel:migrate
+console propel:model:build
+console transfer:generate</code></pre>
+                                                        </li>
+                                                        <li value="5">
+                                                            <p>Manually upgrade the following modules:</p>
+                                                            <ul>
+                                                                <li value="1">
+                                                                    <p><a href="../module_migration_guides/mg-product-quantity-storage.htm">ProductQuantityStorage</a>
+                                                                    </p>
+                                                                </li>
+                                                                <li value="2">
+                                                                    <p><a href="../module_migration_guides/mg-shopping-list-widget.htm"><p>ShoppingListWidget</p></a>
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ol>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Affected modules</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>You can find the affected modules of the float stock update in the following list.</p>
+                                                            <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../Spryker User Guides/Content/Resources/TableStyles/PatternedRows2.css');" cellspacing="0">
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Operator</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Operator for plain query</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Migration guide</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/availability</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>7.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-availability.htm">Migration Guide - Availability</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">spryker/availability-cart-connector</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>5.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-availability-cart-connector.htm">Migration Guide - AvailabilityCartConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/availability-gui</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>4.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-availability-gui.htm">Migration Guide - AvailabilityGui</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/availability-offer-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-availability-offer-connector.htm">Migration Guide - AvailabilityOfferConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/cart</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>6.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-cart.htm">Migration Guide - Cart</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/cart-extension</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-cart-extension.htm">Migration Guide - CartExtension</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/carts-rest-api</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>4.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/glue_api/cartsrestapi-migration-guide.htm">Migration Guide - CartsRestApi</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/checkout</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>5.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-checkout.htm">Migration Guide - Checkout</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/discount</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>8.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-discount.htm">Migration Guide - Discount</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/discount-promotion</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-discount-promotion.htm">Migration Guide - DiscountPromotion</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/manual-order-entry-gui</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>0.6.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-manual-order-entry-gui.htm">Migration Guide - ManualOrderEntryGui</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/offer</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>0.2.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-offer.htm">Migration Guide - Offer</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/offer-gui</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>0.2.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-offer-gui.htm">Migration Guide - OfferGui</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/oms</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>9.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-oms.htm">Migration Guide - Oms</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/orders-rest-api</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/glue_api/ordersrestapi-migration-guide.htm">Migration Guide - OrdersRestApi</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/persistent-cart</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-persistent-cart.htm">Migration Guide - PersistentCart</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/price-cart-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>5.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-price-cart-connector.htm">Migration Guide - PriceCartConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/price-product</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-priceproduct.htm">Migration Guide - PriceProduct</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">spryker/price-product-storage</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-price-product-storage.htm">Migration Guide - PriceProductStorage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/price-product-volume</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-price-product-volume.htm">Migration Guide - PriceProductVolume</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/price-product-volume-gui</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-price-product-volume-gui.htm">Migration Guide - PriceProductVolumeGui</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-availabilities-rest-api</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/glue_api/productavailabilitiesrestapi-migration-guide.htm">Migration Guide - ProductAvailabilitiesRestApi</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-bundle</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>5.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-bundle.htm">Migration Guide - ProductBundle</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-discount-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>4.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-discount-connector.htm">Migration Guide - ProductDiscountConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-label-discount-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-label-discount-connector.htm">Migration Guide - ProductLabelDiscountConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-management</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>0.17.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-management.htm">Migration Guide - ProductManagement</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-measurement-unit</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-measurement-unit.htm">Migration Guide - ProductMeasurementUnit</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-option</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>7.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-option.htm">Migration Guide - ProductOption</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-option-cart-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>6.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-option-cart-connector.htm">Migration Guide - ProductOptionCartConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-packaging-unit</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-packaging-unit.htm">Migration Guide - ProductPackagingUnit</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-packaging-unit-storage</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-packaging-unit-storage.htm">Migration Guide - ProductPackagingUnitStorage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-quantity</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-quantity.htm">Migration Guide - ProductQuantity</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/product-quantity-data-import</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-quantity-data-import.htm">Migration Guide - ProductQuantityDataImport</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/product-quantity-storage</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-quantity-storage.htm">Migration Guide - ProductQuantityStorage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/quick-order</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-quick-order.htm">Migration Guide - QuickOrder</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/sales</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>9.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-sales.htm">Migration Guide - Sales</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/sales-quantity</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-sales-quantity.htm">Migration Guide - SalesQuantity</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/sales-split</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>4.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-sales-split.htm">Migration Guide - SalesSplit</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/shipment-discount-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-shipment-discount-connector.htm">Migration Guide - ShipmentDiscountConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/shopping-list</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-shopping-list.htm">Migration Guide - ShoppingList</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/stock</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>6.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-stock.htm">Migration Guide - Stock</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker/stock-sales-connector</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>4.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-stock-sales-connector.htm">Migration Guide - StockSalesConnector</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker/wishlist</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>7.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-wishlist.htm">Migration Guide - WishList</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker-shop/cart-page</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-cart-page.htm">Migration Guide - CartPage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker-shop/customer-reorder-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>5.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-customer-reorder-widget.htm">Migration Guide - CustomerReorderWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker-shop/discount-promotion-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-discount-promotion-widget.htm">Migration Guide - DiscountPromotionWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker-shop/product-detail-page</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-details-page.htm">Migration Guide - ProductDetailPage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker-shop/product-measurement-unit-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>0.7.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-measurement-unit-widget.htm">Migration Guide - ProductMeasurementUnitWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker-shop/product-packaging-unit-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>0.3.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-packaging-unit-widget.htm">Migration Guide - ProductPackagingUnitWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker-shop/product-search-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>2.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-product-search-widget.htm">Migration Guide - ProductSearchWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>spryker-shop/quick-order-page</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>3.0.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-quick-order-page.htm">Migration Guide - QuickOrderPage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>spryker-shop/shopping-list-page</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>0.7.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p><a href="../module_migration_guides/mg-shopping-list-page.htm">Migration Guide - ShoppingListPage</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                            <p>spryker-shop/shopping-list-widget</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                            <p>0.5.0</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                            <p><a href="../module_migration_guides/mg-shopping-list-widget.htm">Migration Guide - ShoppingListWidget</a>
+                                                                            </p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../resources/scripts/script.js">
+                                </script>
+                                <script src="../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
