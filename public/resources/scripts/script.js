@@ -97,7 +97,7 @@ function Anchorer () {
     this.$container = $('html, body');
     this.$el = $('.js-anchorer');
     this.$targets = $('h1, h2, h3, .drop-anchor', this.$el);
-    this.headerHeight = document.querySelector('.title-bar').clientHeight;
+    this.headerHeight = getHeaderHeight();
 
     this.init = function() {
 
@@ -105,11 +105,18 @@ function Anchorer () {
         this.mapEvents();
     };
 
+    function getHeaderHeight () {
+        return document.querySelector('.title-bar').clientHeight;
+    }
+
     this.mapEvents = function() {
         this.$el.on('click', '.js-anchorer__trigger', this.onClick.bind(this));
     };
 
     this.onClick = function(e) {
+        var spreader = e.currentTarget.previousSibling;
+        spreader.style.paddingTop = `${getHeaderHeight()}px`;
+        spreader.style.marginTop = `${-getHeaderHeight()}px`;
         var that = this;
         var href = $(e.currentTarget).attr('href');
 
@@ -130,8 +137,9 @@ function Anchorer () {
                 return this.nodeType === 3;
             }).remove();
             var id = that.normalize(text);
-
+            $element.attr('id',id);
             $element.prepend(that.createAnchor(id, text));
+            $element.prepend(that.createSpreader());
         });
     };
 
@@ -145,8 +153,16 @@ function Anchorer () {
             .replace(TEXT_TO_ID_REGEX, '-');
     };
 
+    this.createSpreader = function () {
+        var spreader = document.createElement('div');
+        spreader.classList.add('anchor-spreader');
+        spreader.style.paddingTop = `${this.headerHeight}px`;
+        spreader.style.marginTop = `${-this.headerHeight}px`;
+        return spreader;
+    }
+
     this.createAnchor = function(id, text) {
-        return `<a class="a-anchor js-anchorer__trigger" href="#${id}"><span class="a-anchor__target" id="${id}"></span>${text}</a>`;
+        return `<a class="a-anchor js-anchorer__trigger" href="#${id}"><span class="a-anchor__target" id=""></span>${text}</a>`;
     };
 
     this.scrollToAnchor = function(href, callback) {
@@ -160,8 +176,8 @@ function Anchorer () {
         if ($anchor.length < 1) {
             return;
         }
-
-        var top = $anchor.offset().top - this.headerHeight;
+        // header height logic changed with spreader to clear fixed header
+        var top = $anchor.offset().top - 0; //this.headerHeight;
         console.log(top);
         this.$container.animate({
             scrollTop: top
@@ -169,6 +185,10 @@ function Anchorer () {
     };
 
     this.setHash = function(value) {
+        if(window.history){
+            window.history.replaceState(null,null,value);
+            return;
+        }
         window.location.hash = value;
     }
 
@@ -832,4 +852,3 @@ document.addEventListener("DOMContentLoaded", function (){
     tabs.init();
     versionDisplay();
 } );
-
