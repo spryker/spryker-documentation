@@ -249,7 +249,7 @@
 </p>
                                                     <p>
 In case of upgrading one of the modules involved into the float stock concept, we strongly recommend upgrading all the modules in your project from the list below. Mostly, the migrations have very low or even zero effort, because they only break type of a transfer object or an internal function’s signature. Some modules changed database field types to DOUBLE which is automatically upgradable by running the necessary console commands.</p>
-                                                    <p class="important">If you upgrade to the float stock concept, you should also review your project code and make sure to adapt all stock and quantity related customizations and implementations to use float type accordingly.</p>
+                                                    <p class="important">If you upgrade to the float stock concept, you should also review your project code and make sure to adapt all stock and quantity related customizations and implementations to use float type accordingly. If you have any partner or ECO integrations, they might have to be adjusted too.</p>
                                                     <p>Here are some typical occurrences of working with stocks and quantities and tips to make them compatible with the float type:</p>
                                                     <ul>
                                                         <li value="1">Product stock and availability management - use <var>UtilQuantityService</var> to handle arithmetic operations with float quantity values.</li>
@@ -265,17 +265,10 @@ In case of upgrading one of the modules involved into the float stock concept, w
 composer require spryker/availability:"^7.0.0" spryker/availability-cart-connector:"^5.0.0" spryker/availability-gui:"^4.0.0" spryker/availability-offer-connector:"^2.0.0" spryker/cart:"^6.0.0" spryker/cart-extension:"^3.0.0" spryker/carts-rest-api:"^4.0.0" spryker/checkout:"^5.0.0" spryker/discount:"^8.0.0" spryker/discount-promotion:"^2.0.0" spryker/manual-order-entry-gui:"^0.6.0" spryker/offer:"^0.2.0" spryker/offer-gui:"^0.2.0" spryker/oms:"^9.0.0" spryker/orders-rest-api:"^2.0.0" spryker/persistent-cart:"^2.0.0" spryker/price-cart-connector:"^5.0.0" spryker/price-product:"^3.0.0" spryker/price-product-storage:"^3.0.0" spryker/price-product-volume:"^2.0.0" spryker/price-product-volume-gui:"^2.0.0" spryker/product-availabilities-rest-api:"^2.0.0" spryker/product-bundle:"^5.0.0" spryker/product-discount-connector:"^4.0.0" spryker/product-label-discount-connector:"^2.0.0" spryker/product-management:"^0.17.0" spryker/product-measurement-unit:"^3.0.0" spryker/product-option:"^7.0.0" spryker/product-option-cart-connector:"^6.0.0" spryker/product-packaging-unit:"^2.0.0" spryker/product-packaging-unit-storage:"^3.0.0" spryker/product-quantity:"^2.0.0" spryker/product-quantity-data-import:"^2.0.0" spryker/product-quantity-storage:"^2.0.0" spryker/quick-order:"^2.0.0" spryker/sales:"^9.0.0" spryker/sales-quantity:"^2.0.0" spryker/sales-split:"^4.0.0" spryker/shipment-discount-connector:"^2.0.0" spryker/shopping-list:"^3.0.0" spryker/stock:"^6.0.0" spryker/stock-sales-connector:"^4.0.0" spryker/util-price:"^1.0.0" spryker/util-quantity:"^1.0.0" spryker/wishlist:"^7.0.0" spryker-shop/cart-page:"^2.0.0" spryker-shop/customer-reorder-widget:"^5.0.0" spryker-shop/discount-promotion-widget:"^2.0.0" spryker-shop/product-detail-page:"^2.0.0" spryker-shop/product-measurement-unit-widget:"^0.7.0" spryker-shop/product-packaging-unit-widget:"^0.3.0" spryker-shop/product-search-widget:"^2.0.0" spryker-shop/quick-order-page:"^3.0.0" spryker-shop/shopping-list-page:"^0.7.0" spryker-shop/shopping-list-widget:"^0.5.0" --update-with-dependencies</code></pre>
                                                         </li>
                                                         <li value="2">
-                                                            <p>Regenerate transfer objects:</p><pre><code class="language-PHP line-numbers">vendor/bin/console transfer:generate</code></pre>
-                                                        </li>
-                                                        <li value="3">
-                                                            <p>Generate database migration file and, if necessary, manually validate if the result suits your expectations.</p><pre><code class="language-PHP line-numbers">console propel:diff</code></pre>
-                                                        </li>
-                                                        <li value="4">
-                                                            <p>Run database migration.</p><pre><code class="language-PHP line-numbers">console propel:migrate
-console propel:model:build
+                                                            <p>Run database migration.</p><pre><code class="language-PHP line-numbers">console propel:install
 console transfer:generate</code></pre>
                                                         </li>
-                                                        <li value="5">
+                                                        <li value="3">
                                                             <p>Manually upgrade the following modules:</p>
                                                             <ul>
                                                                 <li value="1">
