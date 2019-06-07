@@ -1,0 +1,126 @@
+button {
+  font-size: 100%;
+}
+
+@mixin generate-button-colors($textColor, $backgroundColor) {
+  background-color: $backgroundColor;
+  color: $textColor;
+  fill: $textColor;
+  border: 1px solid $backgroundColor;
+  &:hover {
+    background-color: lighten($backgroundColor, 8%);
+    color: $textColor;
+  }
+  &:active {
+    background-color: darken($backgroundColor, 8%);
+  }
+  &:focus {
+    background-color: lighten($backgroundColor, 4%);
+    box-shadow: $bs-light;
+    color: $textColor;
+  }
+}
+
+// Button Specific Variables
+$button-border-radius: 2px;
+
+.button  {
+  text-decoration: none;
+  font-size: 0.85rem;
+  line-height: 1.4em;
+  padding: $-xs*1.3 $-m;
+  margin-top: $-xs;
+  margin-bottom: $-xs;
+  display: inline-block;
+  font-weight: 400;
+  outline: 0;
+  border-radius: $button-border-radius;
+  cursor: pointer;
+  transition: background-color ease-in-out 120ms, box-shadow ease-in-out 120ms;
+  box-shadow: none;
+  background-color: $primary;
+  color: #FFF;
+  fill: #FFF;
+  text-transform: uppercase;
+  border: 1px solid $primary;
+  vertical-align: top;
+  &:hover, &:focus {
+    text-decoration: none;
+  }
+  &:active {
+    background-color: darken($primary, 8%);
+  }
+}
+.button.primary {
+  @include generate-button-colors(#FFFFFF, $primary);
+}
+.button.outline {
+  background-color: transparent;
+  color: #888;
+  fill: #888;
+  border: 1px solid #DDD;
+  &:hover, &:focus, &:active {
+    box-shadow: none;
+    background-color: #EEE;
+  }
+}
+
+.button + .button {
+  margin-left: $-s;
+}
+
+.button.small {
+  font-size: 0.75rem;
+  padding: $-xs*1.2 $-s;
+}
+
+.text-button {
+  cursor: pointer;
+  background-color: transparent;
+  padding: 0;
+  margin: 0;
+  border: none;
+  user-select: none;
+  font-size: 0.75rem;
+  line-height: 1.4em;
+  &:focus, &:active {
+    outline: 0;
+  }
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.button.block {
+  width: 100%;
+  text-align: left;
+  display: block;
+}
+
+.button.icon {
+  .svg-icon {
+    margin-right: 0;
+  }
+}
+
+.button.svg {
+  svg {
+    display: inline-block;
+    position: absolute;
+    left: $-m;
+    top: $-s - 2px;
+    width: 24px;
+    height: 24px;
+  }
+  padding: $-s $-m ($-s - 2px) ($-m*2 + 24px);
+}
+
+.button[disabled] {
+  background-color: #BBB;
+  cursor: default;
+  &:hover {
+    background-color: #BBB;
+    cursor: default;
+    box-shadow: none;
+  }
+}

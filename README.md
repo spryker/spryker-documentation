@@ -1,65 +1,157 @@
-# Spryker Documentation
-Spryker documentation (public)
-The central hub for Spryker documentation, knowledge and information.
+# BookStack
 
-Note: Our process is built so that we do not merge pull requests, but migrate the changes manually. We do so to moderate content to see if the feedback needs to be applied somewhere else.
-However, you can be credited in our documentation by stating that you wish to be mentioned when you send us feedback.
+[![GitHub release](https://img.shields.io/github/release/BookStackApp/BookStack.svg)](https://github.com/BookStackApp/BookStack/releases/latest)
+[![license](https://img.shields.io/badge/License-MIT-yellow.svg)](https://github.com/BookStackApp/BookStack/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/BookStackApp/BookStack.svg)](https://travis-ci.org/BookStackApp/BookStack)
 
-Scroll-Down for English version of  Disclaimer.
+A platform for storing and organising information and documentation. General information and documentation for BookStack can be found at https://www.bookstackapp.com/.
 
-## Urheber &amp; Haftungsausschluss für Publikationen
+* [Installation Instructions](https://www.bookstackapp.com/docs/admin/installation)
+* [Documentation](https://www.bookstackapp.com/docs)
+* [Demo Instance](https://demo.bookstackapp.com)
+    * [Admin Login](https://demo.bookstackapp.com/login?email=admin@example.com&password=password)
+* [BookStack Blog](https://www.bookstackapp.com/blog)
 
-Veröffentlicht in Berlin von der:
+## Project Definition
 
-Spryker Systems GmbH
+BookStack is an opinionated wiki system that provides a pleasant and simple out of the box experience. New users to an instance should find the experience intuitive and only basic word-processing skills should be required to get involved in creating content on BookStack. The platform should provide advanced power features to those that desire it but they should not interfere with the core simple user experience.
 
-Julie-Wolfthorn-Strasse 1
+BookStack is not designed as an extensible platform to be used for purposes that differ to the statement above.
 
-10115 Berlin – DEUTSCHLAND
+In regards to development philosophy, BookStack has a relaxed, open & positive approach. At the end of the day this is free software developed and maintained by people donating their own free time.
 
-E-Mail: [info@spryker.com](mailto:info@spryker.com)
+## Road Map
 
-Telefon: +49 (0) 30 208498351
+Below is a high-level road map view for BookStack to provide a sense of direction of where the project is going. This can change at any point and does not reflect many features and improvements that will also be included as part of the journey along this road map. For more granular detail of what will be included in upcoming releases you can review the project milestones as defined in the "Release Process" section below.
 
-Der Inhalt dieser Publikation ist unverbindlich und dient ausschließlich Informationszwecken. Die Informationen sind keine Angebote im Sinne der anwendbaren gesetzlichen Bestimmungen und begründen kein Vertragsverhältnis hinsichtlich der vorgestellten Produkte. Soweit nicht ausdrücklich anderweitig vereinbart, werden sie auch nicht Vertragsbestandteil bestehender oder künftiger Verträge mit der Spryker Systems GmbH.
+- **Design Revamp** *[(In Progress)](https://github.com/BookStackApp/BookStack/pull/1153)*
+    - *A more organised modern design to clean things up, make BookStack more efficient to use and increase mobile usability.*
+- **Platform REST API**
+    - *A REST API covering, at minimum, control of core content models (Books, Chapters, Pages) for automation and platform extension.*
+- **Editor Alignment & Review**
+    - *Review the page editors with goal of achieving increased interoperability & feature parity while also considering collaborative editing potential.*
+- **Permission System Review**
+    - *Improvement in how permissions are applied and a review of the efficiency of the permission & roles system.*
+- **Installation & Deployment Process Revamp**
+    - *Creation of a streamlined & secure process for users to deploy & update BookStack with reduced development requirements (No git or composer requirement).*
 
-Diese Publikation enthält keinerlei Garantien oder Beschaffenheitsvereinbarungen der herausgebenden Gesellschaft für ihre Produkte, sei es ausdrücklich oder stillschweigend, auch nicht hinsichtlich der Aktualität, Korrektheit, Vollständigkeit und Qualität der Informationen sowie der Verfügbarkeit der Produkte. Die Informationen in dieser Publikation sowie die beschriebenen Produkte und Dienstleistungen können ohne vorherige Ankündigung von der herausgebenden Gesellschaft jederzeit geändert oder aktualisiert werden.
+## Release Versioning & Process
 
-Die herausgebende Gesellschaft übernimmt keine Haftung im Zusammenhang mit dieser Publikation. Eine Haftung für jegliche unmittelbaren oder mittelbaren Schäden, Schadensersatzforderungen, Folgeschäden gleich welcher Art und aus welchem Rechtsgrund, die durch die Verwendung der in dieser Publikation enthaltenen Informationen entstehen, ist, soweit rechtlich zulässig, ausgeschlossen.
+BookStack releases are each assigned a version number, such as "v0.25.2", in the format `v<phase>.<feature>.<patch>`. A change only in the `patch` number indicates a fairly minor release that mainly contains fixes and therefore is very unlikely to cause breakages upon update. A change in the `feature` number indicates a release which will generally bring new features in addition to fixes and enhancements. These releases have a small chance of introducing breaking changes upon update so it's worth checking for any notes in the [update guide](https://www.bookstackapp.com/docs/admin/updates/). A change in the `phase` indicates a much large change in BookStack that will likely incur breakages requiring manual intervention.
 
-Alle Texte, Bilder, Grafiken und sonstigen Materialien, sowie deren Koordination und Anordnung in dieser Publikation sind urheberrechtlich entweder für die Spryker Systems GmbH direkt oder für ihre Kooperationspartner geschützt und dürfen nicht zur kommerziellen Verwendung oder Verteilung modifiziert, kopiert oder anderweitig verwendet werden.
+Each BookStack release will have a [milestone](https://github.com/BookStackApp/BookStack/milestones) created with issues & pull requests assigned to it to define what will be in that release. Milestones are built up then worked through until complete at which point, after some testing and documentation updates, the release will be deployed. 
 
-Die gewerblichen Schutzrechte wie Marken (Logos) oder Patente, die in dieser Publikation dargestellt sind, sind entweder Eigentum der Spryker Systems GmbH oder Eigentum der Kooperationspartner der Spryker Systems GmbH. Die Darstellung in dieser Publikation ist keine Gewährung von Lizenzen oder Nutzungsrechten. Ohne eine ausdrückliche schriftliche Einwilligung der Spryker Systems GmbH selbst oder ihrer Kooperationspartner ist ihre Nutzung untersagt.
+For feature releases, and some patch releases, the release will be accompanied by a post on the [BookStack blog](https://www.bookstackapp.com/blog/) which will provide additional detail on features, changes & updates otherwise the [GitHub release page](https://github.com/BookStackApp/BookStack/releases) will show a list of changes. You can sign up to be alerted to new BookStack blogs posts (once per week maximum) [at this link](http://eepurl.com/cmmq5j).
 
-Unerlaubte Vervielfältigung im Ganzen oder in Teilen stellen eine Verletzung des Urheberrechts dar. Die Spryker Systems GmbH wird jede Verletzung ihrer Urheberrechte aktiv verfolgen.
+## Development & Testing
 
-## Copyright &amp; Disclaimer publications
+All development on BookStack is currently done on the master branch. When it's time for a release the master branch is merged into release with built & minified CSS & JS then tagged at its version. Here are the current development requirements:
 
-Published in Berlin by:
+* [Node.js](https://nodejs.org/en/) v10.0+
 
-Spryker Systems GmbH
+SASS is used to help the CSS development and the JavaScript is run through babel to allow for writing ES6 code. This is done using webpack. To run the build task you can use the following commands:
 
-Julie-Wolfthorn-Strasse 1
+``` bash
+# Install NPM Dependencies
+npm install
 
-10115 Berlin – GERMANY
+# Build assets for development
+npm run build
 
-eMail: [info@spryker.com](mailto:info@spryker.com)
+# Build and minify assets for production
+npm run production
 
-Telephone +49 (0) 30 208498351
+# Build for dev (With sourcemaps) and watch for changes
+npm run dev
+```
 
-The content of this publication is provided for information only and without responsibility. The information does not represent an offer as defined by the applicable statutory regulations and does not establish any contractual relations with respect to the products presented. Unless otherwise agreed in writing, the information contained herein does not become part of and current or future agreements with Spryker Systems GmbH.
+BookStack has many integration tests that use Laravel's built-in testing capabilities which makes use of PHPUnit. To use you will need PHPUnit 6 installed and accessible via command line, Directly running the composer-installed version will not work. There is a `mysql_testing` database defined within the app config which is what is used by PHPUnit. This database is set with the following database name, user name and password defined as `bookstack-test`. You will have to create that database and credentials before testing.
 
-This publication does not contain any warranties or quality commitments, whether tacit or explicit, on the part of the respective Company with respect to its products. Nor does it contain any guarantees as regards the topicality, correctness, integrity and quality of the information provided herein or with respect to product availability. The information in this publication and the products and services described herein are subject to change or updating at any time without prior notice on the part of the respective Company.
+The testing database will also need migrating and seeding beforehand. This can be done with the following commands:
 
-The respective Company does not assume any liability in conjunction herewith. To the extent permitted by law, no liability is assumed for any direct, indirect, incidental, consequential or punitive damages arising out of the use of this publication.
+``` bash
+php artisan migrate --database=mysql_testing
+php artisan db:seed --class=DummyContentSeeder --database=mysql_testing
+```
 
-All text, images, graphics and other materials in this publication, as well as their coordination and arrangement, are subject to copyright and other intellectual property rights either held by Spryker Systems GmbH directly or its cooperations partners and may not be modified, copied or used in any other way for commercial purposes or distribution.
+Once done you can run `phpunit` in the application root directory to run all tests.
 
-The industrial property rights presented in this publication
-– such as brands (logos) or patents – are either the property of Spryker Systems GmbH or its cooperation partners. Nothing in this publication should be construed as granting any license or right to use and enjoy- ment of the same. Use of said industrial property rights is prohibited without the express written consent of Spryker Systems GmbH or of its cooperation partners.
+## Translations
 
-Unauthorised reproduction in whole or in part is an infringement of copyright. Spryker Systems GmbH will actively pursue any breach of its copyright.
+All text strings can be found in the `resources/lang` folder where each language option has its own folder. To add a new language you should copy the `en` folder to an new folder (eg. `fr` for french) then go through and translate all text strings in those files, leaving the keys and file-names intact. If a language string is missing then the `en` translation will be used. To show the language option in the user preferences language drop-down you will need to add your language to the options found at the bottom of the `resources/lang/en/settings.php` file. A system-wide language can also be set in the `.env` file like so: `APP_LANG=en`.
 
-Copyright © 2017 - present Spryker Systems GmbH. All rights reserved.
-Spryker Systems GmbH | Julie-Wolfthorn-Str. 1 | 10115 Berlin, Germany | info@spryker.com | [www.spryker.com](http://www.spryker.com)
-Managing Directors: Boris Lokschin, Alexander Graf | Registered Office: Berlin | Registered Court: Amtsgericht Hamburg | HRB 134310
+You will also need to add the language to the `locales` array in the `config/app.php` file.
+
+There is a script available which compares translation content to `en` files to see what items are missing or redundant. This can be ran like so from your BookStack install folder:
+
+```bash
+# Syntax
+php resources/lang/check.php <lang>
+
+# Examples
+php resources/lang/check.php fr
+php resources/lang/check.php pt_BR
+```
+
+Some strings have colon-prefixed variables in such as `:userName`. Leave these values as they are as they will be replaced at run-time.
+
+## Contributing & Maintenance
+
+Feel free to create issues to request new features or to report bugs and problems. Just please follow the template given when creating the issue.
+
+The project's code of conduct [can be found here](https://github.com/BookStackApp/BookStack/blob/master/.github/CODE_OF_CONDUCT.md).
+
+### Code Standards
+
+PHP code within BookStack is generally to [PSR-2](http://www.php-fig.org/psr/psr-2/) standards. From the BookStack root folder you can run `./vendor/bin/phpcs` to check code is formatted correctly and `./vendor/bin/phpcbf` to auto-fix non-PSR-2 code.
+
+### Pull Requests
+
+Pull requests are welcome. Unless a small tweak or language update, It may be best to open the pull request early or create an issue for your intended change to discuss how it will fit in to the project and plan out the merge.
+
+Pull requests should be created from the `master` branch since they will be merged back into `master` once done. Please do not build from or request a merge into the `release` branch as this is only for publishing releases.
+
+If you are looking to alter CSS or JavaScript content please edit the source files found in `resources/assets`. Any CSS or JS files within `public` are built from these source files and therefore should not be edited directly.
+
+## Website, Docs & Blog
+
+The website which contains the project docs & Blog can be found in the [BookStackApp/website](https://github.com/BookStackApp/website) repo.
+
+## Security
+
+Security information for administering a BookStack instance can be found on the [documentation site here](https://www.bookstackapp.com/docs/admin/security/).
+
+If you'd like to be notified of new potential security concerns you can [sign-up to the BookStack security mailing list](http://eepurl.com/glIh8z).
+
+If you would like to report a security concern in a more confidential manner than via a GitHub issue, You can directly email the lead maintainer [ssddanbrown](https://github.com/ssddanbrown). You will need to login to be able to see the email address on the [GitHub profile page](https://github.com/ssddanbrown). Alternatively you can send a DM via twitter to [@ssddanbrown](https://twitter.com/ssddanbrown).
+
+
+## License
+
+The BookStack source is provided under the MIT License.
+
+## Attribution
+
+The great people that have worked to build and improve BookStack can [be seen here](https://github.com/BookStackApp/BookStack/graphs/contributors).
+
+These are the great open-source projects used to help build BookStack:
+
+* [Laravel](http://laravel.com/)
+* [jQuery](https://jquery.com/)
+* [TinyMCE](https://www.tinymce.com/)
+* [CodeMirror](https://codemirror.net)
+* [Vue.js](http://vuejs.org/)
+* [Axios](https://github.com/mzabriskie/axios)
+* [jQuery Sortable](https://johnny.github.io/jquery-sortable/)
+* [Google Material Icons](https://material.io/icons/)
+* [Dropzone.js](http://www.dropzonejs.com/)
+* [clipboard.js](https://clipboardjs.com/)
+* [TinyColorPicker](http://www.dematte.at/tinyColorPicker/index.html)
+* [markdown-it](https://github.com/markdown-it/markdown-it) and [markdown-it-task-lists](https://github.com/revin/markdown-it-task-lists)
+* [BarryVD](https://github.com/barryvdh)
+    * [Debugbar](https://github.com/barryvdh/laravel-debugbar)
+    * [Dompdf](https://github.com/barryvdh/laravel-dompdf)
+    * [Snappy (WKHTML2PDF)](https://github.com/barryvdh/laravel-snappy)
+    * [Laravel IDE helper](https://github.com/barryvdh/laravel-ide-helper)
+* [WKHTMLtoPDF](http://wkhtmltopdf.org/index.html)
+* [Draw.io](https://github.com/jgraph/drawio)
