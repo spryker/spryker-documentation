@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="I_Nh-DIFF0i__vg2lI1w9w">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="I_Nh-DIFF0i__vg2lI1w9w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="PY2-Mp8iw0mTNmOpjdAuCw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PY2-Mp8iw0mTNmOpjdAuCw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -272,8 +272,7 @@
                                                         <li value="13">Shopping List Company User Importer <b>(Beta)</b></li>
                                                         <li value="14">Shopping List Item Importer <b>(Beta)</b></li>
                                                     </ul>
-                                                    <p>
-			In order to use a module-based importer, add it to the plugin stack. See the example below.
+                                                    <p>To be able to use a module-based importer, add it to the plugin stack. See the example below.
 		</p><pre><code class="language-PHP line-numbers">
 		&lt;?php
 	
@@ -336,7 +335,7 @@
 		}
 		</code></pre>
                                                     <p>
-			These actions should be enough to prepare a module-based importer to use.
+			These actions should be enough to prepare a module-based importer for use.
 		</p>
                                                     <p><b style="font-size: 12pt;">Project level importers:</b>
                                                     </p>
@@ -415,7 +414,7 @@
 		}
 		</code></pre>
                                                     <p>
-			Then you should call this method using the <var>DataImportBusinessFactory::getImporter()</var> method.
+			Then call this method using the <var>DataImportBusinessFactory::getImporter()</var> method.
 		</p><pre><code class="language-PHP line-numbers">
 		&lt;?php
 		
@@ -485,7 +484,32 @@
 			...
 		}
 		</code></pre>
-                                                    <p>&#160;</p>
+                                                    <h2>Triggering Events</h2>
+                                                    <p>DataImporters are triggering events manually, this is happening for the performance reasons :</p>
+                                                    <ul>
+                                                        <li value="1">Triggering events automatically would generate many duplicate events during the data import, (e.g: Inserting a <i>Product</i> into <i>spy_product and spy_product_localized_attrbite</i> table will generate two events with the same <i>id_product</i>)</li>
+                                                        <li value="2">Events will be triggered one by one</li>
+                                                    </ul>
+                                                    <p>You can always switch the Event Triggering process with the two methods:</p><pre><code class="language-PHP line-numbers">
+		use Spryker\Zed\EventBehavior\EventBehaviorConfig;
+...
+ 
+    public function foo()
+    {
+        /**
+         * Disable the events triggering automatically
+         */
+        EventBehaviorConfig::disableEvent();
+ 
+        // 1.Create many entities in multiple tables (e.g API bulk import, nightly update jobs)
+        // 2.Trigger proper events if it's necessary ($eventFacade-&gt;triggerBulk('ProductAbstractPublish', $eventTransfers))
+ 
+        /**
+         * Enable the events triggering automatically
+         */
+        EventBehaviorConfig::enableEvent();
+    }
+        </code></pre>
                                                     <p><i>Last review date: Dec 18, 2018 </i>
                                                     </p>
                                                 </div>
