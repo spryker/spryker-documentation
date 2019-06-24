@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="1imZwvK3XECyc0Q-gcL14w">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="1imZwvK3XECyc0Q-gcL14w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ez7L6-wBdkKldXkUfo3o1w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ez7L6-wBdkKldXkUfo3o1w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -249,29 +249,161 @@
                                                     <h2>Calling the Interface </h2>
                                                     <p>To carry out a CRIF order check via a Server-to-Server connection, go to the following URL: https://www.computop-paygate.com/deltavista.aspx</p>
                                                     <p class="note">For security reasons, Paygate rejects all payment requests with formatting errors. Therefore please use the correct data type for each parameter.</p>
-                                                    <h2>Integration with Checkout.</h2>
-                                                    <p>If you want to integrate Computop CRIF in your project, you have to adjust <var>ShipmentStep</var> like described below.</p>
-                                                    <p>In file <var>Yves/Checkout/Process/Steps/ShipmentStep.php</var> in your project add call to <var>ComputopClient</var></p><pre><code class="language-php line-numbers">
-public function execute(Request $request, AbstractTransfer $quoteTransfer)
+                                                    <h2>Integration with Checkout</h2>
+                                                    <p>Integrated into Computop module CRIF provides risk check functionality based on customer, cart, address and other data. CRIF analyzes information and provides result as color response code (GREEN, YELLOW, RED) which corresponds to potential risks. Based on this result payment methods should be filtered. Only allowed payment methods should be displayed on checkout payment page. Module provides possibility to configure list of allowed payment methods for each response color.</p>
+                                                    <p>First of all you need to add CRIF specific configurations into <var>config_default.php</var> file:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">$config[ComputopConstants::CRIF_ENABLED] = false; // Enable or disable CRIF functionality.
+$config[ComputopApiConstants::CRIF_ACTION] = 'https://www.computop-paygate.com/deltavista.aspx'; //CRIF API call enpoint.
+$config[ComputopApiConstants::CRIF_PRODUCT_NAME] = ''; //This is checking method, could be: QuickCheckConsumer, CreditCheckConsumer, QuickCheckBusiness, CreditCheckBusiness, IdentCheckConsumer
+$config[ComputopApiConstants::CRIF_LEGAL_FORM] = ''; // Legal form of the person/company sought, could be: PERSON, COMPANY, UNKNOWN
+ 
+$config[ComputopConstants::CRIF_GREEN_AVAILABLE_PAYMENT_METHODS] = []; //List of allowed payment methods if CRIF returns GREED code, for example: computopCreditCard, computopDirectDebit and so on.
+$config[ComputopConstants::CRIF_YELLOW_AVAILABLE_PAYMENT_METHODS] = []; //List of allowed payment methods if CRIF returns YELLOW code, for example: computopPaydirekt, computopEasyCredit and so on.
+$config[ComputopConstants::CRIF_RED_AVAILABLE_PAYMENT_METHODS] = []; //List of allowed payment methods if CRIF returns RED code, for example: computopSofort, computopPayPal and so on.</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Extend <var>ShipmentStep</var> to add CRIF risk check call before checkout payment step:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\Process\Steps\ShipmentStep</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+ 
+namespace Pyz\Yves\CheckoutPage\Process\Steps;
+ 
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
+use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
+use SprykerEco\Client\Computop\ComputopClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep as SprykerShipmentStep;
+use Symfony\Component\HttpFoundation\Request;
+ 
+class ShipmentStep extends SprykerShipmentStep
 {
-    
-	....
-
-	$quoteTransfer = $this-&gt;computopClient-&gt;performCrifApiCall($quoteTransfer);
-	return $quoteTransfer;
+	/**
+	 * @var \SprykerEco\Client\Computop\ComputopClientInterface
+	 */
+	protected $computopClient;
+ 
+	/**
+	 * @param \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCalculationClientInterface $calculationClient
+	 * @param \Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection $shipmentPlugins
+	 * @param string $stepRoute
+	 * @param string $escapeRoute
+	 * @param \SprykerEco\Client\Computop\ComputopClientInterface $computopClient
+	 */
+	public function __construct(
+		CheckoutPageToCalculationClientInterface $calculationClient,
+		StepHandlerPluginCollection $shipmentPlugins,
+		$stepRoute,
+		$escapeRoute,
+		ComputopClientInterface $computopClient
+	) {
+		parent::__construct(
+			$calculationClient,
+			$shipmentPlugins,
+			$stepRoute,
+			$escapeRoute
+		);
+ 
+		$this-&gt;computopClient = $computopClient;
+	}
+ 
+	/**
+	 * @param \Symfony\Component\HttpFoundation\Request $request
+	 * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+	 *
+	 * @return \Generated\Shared\Transfer\QuoteTransfer
+	 */
+	public function execute(Request $request, AbstractTransfer $quoteTransfer)
+	{
+		$quoteTransfer = parent::execute($request, $quoteTransfer);
+ 
+		return $this-&gt;computopClient-&gt;performCrifApiCall($quoteTransfer);
+	}
 }</code></pre>
-                                                    <p>Do not forget to inject <var>\SprykerEco\Client\Computop\ComputopClientInterface</var> in <var>ShipmentStep</var> and update <var>StepFactory</var>.</p>
-                                                    <p>Also you have to add CRIF configurations that described below:</p><pre><code class="language-php line-numbers">
-	$config[ComputopApiConstants::CRIF_ACTION] = 'https://www.computop-paygate.com/deltavista.aspx';
-	$config[ComputopApiConstants::CRIF_PRODUCT_NAME] = ''; //QuickCheckConsumer or CreditCheckConsumer or QuickCheckBusiness or CreditCheckBusiness or IdentCheckConsumer
-
-	$config[ComputopApiConstants::CRIF_LEGAL_FORM] = ''; //PERSON or COMPANY or UNKNOWN
-
-	$config[ComputopConstants::CRIF_GREEN_AVAILABLE_PAYMENT_METHODS] = [];
-	$config[ComputopConstants::CRIF_YELLOW_AVAILABLE_PAYMENT_METHODS] = [];
-	$config[ComputopConstants::CRIF_RED_AVAILABLE_PAYMENT_METHODS] = [];
-		</code></pre>
-                                                    <p>Or, as usual, you can take a look at <var>config/Zed/config.dist.php</var>.</p>
+                                                        </div>
+                                                    </div>
+                                                    <p>Extend <var>StepFactory</var> to update shipment checkout step:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\Process\StepFactory</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+ 
+namespace Pyz\Yves\CheckoutPage\Process;
+ 
+use Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use Pyz\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use Pyz\Yves\CheckoutPage\Process\Steps\ShipmentStep;
+use SprykerEco\Client\Computop\ComputopClientInterface;
+use SprykerShop\Yves\CheckoutPage\Process\StepFactory as SprykerStepFactory;
+use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
+ 
+/**
+ * @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+ */
+class StepFactory extends SprykerStepFactory
+{
+	/**
+	 * @return \SprykerShop\Yves\CheckoutPage\Process\Steps\ShipmentStep
+	 */
+	public function createShipmentStep()
+	{
+		return new ShipmentStep(
+			$this-&gt;getCalculationClient(),
+			$this-&gt;getShipmentPlugins(),
+			CheckoutPageControllerProvider::CHECKOUT_SHIPMENT,
+			HomePageControllerProvider::ROUTE_HOME,
+			$this-&gt;getComputopClient()
+		);
+	}
+ 
+	/**
+	 * @return \SprykerEco\Client\Computop\ComputopClientInterface
+	 */
+	public function getComputopClient(): ComputopClientInterface
+	{
+		return $this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_COMPUTOP);
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Extend <var>CheckoutPageFactory</var> for project level <var>StepFactory</var> usage:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\CheckoutPageFactory</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+ 
+namespace Pyz\Yves\CheckoutPage;
+ 
+use Pyz\Yves\CheckoutPage\Process\StepFactory;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageFactory as SprykerShopCheckoutPageFactory;
+ 
+class CheckoutPageFactory extends SprykerShopCheckoutPageFactory
+{
+	/**
+	 * @return \SprykerShop\Yves\CheckoutPage\Process\StepFactory
+	 */
+	public function createStepFactory()
+	{
+		return new StepFactory();
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>An example of the configuration can be taken from <var>vendor/spryker-eco/computop/config/config.dist.php</var> file.</p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Jun 14, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
