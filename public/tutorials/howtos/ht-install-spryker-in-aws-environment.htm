@@ -1,0 +1,1541 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="Learn how to configure native AWS services to prepare infrustructure for successful Spryker installation in AWS environment and about the installation itself." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>HowTo Install Spryker In AWS Environment | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="eAgRP4vOnkyOz8Qa_PXBZQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="eAgRP4vOnkyOz8Qa_PXBZQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>HowTo Install Spryker In AWS Environment</h1>
+                                                    <h2>Introduction</h2>
+                                                    <p>This how-to is aimed to provide you with additional information about native configuration of AWS services and Spryker installation using AWS cloud as a base of infrastructure.</p>
+                                                    <p>Following the instructions, you will get Spryker running on AWS. The first part is devoted to step-by-step configuration of AWS native services like RDS, Elasticsearch Service, ElastiCache to prepare a suitable infrustructure for running Spryker. The second part is the installation of Spryker itself.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AWS native services configuration</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <h3>RDS (Managed relational database service)</h3>
+                                                            <ol>
+                                                                <li value="1">Open RDS console.<br /><img src="../../resources/images/spryker-aws-installation/rds-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Create database</b>.<br /><img src="../../resources/images/spryker-aws-installation/create-database.png" /><br /></li>
+                                                                <li value="3">Select <b>PostgreSQL</b>.<br /><img src="../../resources/images/spryker-aws-installation/choose-postgresql.png" /><br /></li>
+                                                                <li value="4">Choose a use case ( For production purpose, we recommend Multi-AZ Deployment).<br /><img src="../../resources/images/spryker-aws-installation/choose-use-case.png" /><br /></li>
+                                                                <li value="5">Fill out all the outlined fields.<br /><img src="../../resources/images/spryker-aws-installation/choose-db-details.png" /><br /><img src="../../resources/images/spryker-aws-installation/db-login-details.png" /><br /><img src="../../resources/images/spryker-aws-installation/network-and-security.png" /><br /><img src="../../resources/images/spryker-aws-installation/db-options.png" /><br /></li>
+                                                                <li value="6">Get <b>DB Name</b>, <b>Endpoint</b> and <b>port</b>.<br /><img src="../../resources/images/spryker-aws-installation/get-db-name-endpoint.png" /></li>
+                                                            </ol>
+                                                            <p><b>References:</b>
+                                                            </p>
+                                                            <ul>
+                                                                <li value="1"><a href="https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_Tutorials.WebServerDB.CreateDBInstance.html">Database creation manual</a>
+                                                                </li>
+                                                            </ul>
+                                                            <h3>Elasticsearch Service</h3>
+                                                            <ol>
+                                                                <li value="1">Open Elasticsearch service console.<br /><img src="../../resources/images/spryker-aws-installation/elastic-search-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Create a new domain.</b><br /><img src="../../resources/images/spryker-aws-installation/create-new-domain.png" /><br /></li>
+                                                                <li value="3">Fill out all the outlined fields.<br /><img src="../../resources/images/spryker-aws-installation/define-domain.png" /><br /><img src="../../resources/images/spryker-aws-installation/node-config.png" /><br /><img src="../../resources/images/spryker-aws-installation/vpc-access.png" /><br /></li>
+                                                                <li style="font-weight: normal;" value="4">Get <b>VPC endpoint.</b><br /><img src="../../resources/images/spryker-aws-installation/get-vpc-endpoint.png" /></li>
+                                                            </ol>
+                                                            <p style="font-weight: bold;">References:</p>
+                                                            <ul>
+                                                                <li value="1"><a href="https://docs.aws.amazon.com/elasticsearch-service/latest/developerguide/es-createupdatedomains.html#es-createdomains">Elasticsearch service creation manual</a>
+                                                                </li>
+                                                            </ul>
+                                                            <h3>ElastiCache</h3>
+                                                            <ol>
+                                                                <li value="1">Open ElastiCache console.<br /><img src="../../resources/images/spryker-aws-installation/elasticache-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Get Started Now.</b><br /><img src="../../resources/images/spryker-aws-installation/elastisearch-start.png" /><br /></li>
+                                                                <li value="3">Fill out all the outlined fields.<br /><img src="../../resources/images/spryker-aws-installation/elastisearch-config.png" /><br /><img src="../../resources/images/spryker-aws-installation/redis-settings.png" /><br /></li>
+                                                                <li value="4">Get <b>Primary Endpoint.</b></li>
+                                                            </ol>
+                                                            <p>
+                                                                <img src="../../resources/images/spryker-aws-installation/get-primary-endpoint.png" />
+                                                            </p>
+                                                            <p style="font-weight: bold;">References:</p>
+                                                            <ul>
+                                                                <li value="1">
+                                                                    <p><a href="https://docs.aws.amazon.com/AmazonElastiCache/latest/red-ug/GettingStarted.CreateCluster.html">ElastiCache creation manual</a>
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />EC2 instance installation and configuration</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <h3>SSH Key</h3>
+                                                            <p>Use the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html#having-ec2-create-your-key-pair">manual</a> to create it.</p>
+                                                            <h3>Security Group</h3>
+                                                            <ol>
+                                                                <li value="1">Open EC2 console.<br /><img src="../../resources/images/spryker-aws-installation/ec2-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Create Security Group.</b><br /><img src="../../resources/images/spryker-aws-installation/create-security-group.png" /><br /></li>
+                                                                <li style="font-weight: normal;" value="3">Fill out the outlined fields and click <b>Create.</b><br /><img src="../../resources/images/spryker-aws-installation/choose-security-group.png" /></li>
+                                                            </ol>
+                                                            <p style="font-weight: bold;">References:</p>
+                                                            <ul>
+                                                                <li value="1"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#creating-security-group">Creating a Security Group</a>
+                                                                </li>
+                                                                <li value="2"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-network-security.html#creating-security-group">Adding Rules to a Security Group</a>
+                                                                </li>
+                                                            </ul>
+                                                            <h3>Elastic IP</h3>
+                                                            <ol>
+                                                                <li value="1">Open EC2 console.<br /><img src="../../resources/images/spryker-aws-installation/ec2-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Allocate new address.</b><br /><img src="../../resources/images/spryker-aws-installation/allocate-new-address.png" /><br /></li>
+                                                                <li value="3">Leave the default setup and click <b>Allocate.</b><br /><img src="../../resources/images/spryker-aws-installation/allocate.png" /><br /></li>
+                                                                <li value="4">Click <b>Actions</b>&gt;<b>Associate address</b>.<br /><img src="../../resources/images/spryker-aws-installation/associate-address.png" /><br /></li>
+                                                                <li value="5">Choose Spryker instance and click <b>Associate</b>.<br /><img src="../../resources/images/spryker-aws-installation/choose-spryker-instance.png" /></li>
+                                                            </ol>
+                                                            <p style="font-weight: bold;">References:</p>
+                                                            <ul>
+                                                                <li value="1"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-allocating">Allocating an Elastic IP Address</a>
+                                                                </li>
+                                                                <li value="2"><a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html#using-instance-addressing-eips-associating">Associating an Elastic IP Address with a Running Instance</a>
+                                                                </li>
+                                                            </ul>
+                                                            <h3>Launching Instance</h3>
+                                                            <ol>
+                                                                <li value="1">Open EC2 console.<br /><img src="../../resources/images/spryker-aws-installation/ec2-console.png" /><br /></li>
+                                                                <li value="2">Click <b>Launch instance.</b><br /><img src="../../resources/images/spryker-aws-installation/launch-instance.png" /><br /></li>
+                                                                <li value="3"><b>Select</b> the Ubuntu server with the <b>64-bit (x86)</b> configuration.<br /><img src="../../resources/images/spryker-aws-installation/choose-os.png" /><br /></li>
+                                                                <li value="4">Choose the instance type and click <b>Next: Configure Instance Details.</b><br /><img src="../../resources/images/spryker-aws-installation/choose-instance.png" /><br /></li>
+                                                                <li value="5">Add storage and click <b>Next: Add Tags.</b><br /><img src="../../resources/images/spryker-aws-installation/add-storage.png" /><br /></li>
+                                                                <li value="6">Add a Name tag and click <b>Next: Configure Security Group.</b><br /><img src="../../resources/images/spryker-aws-installation/add-tags.png" /><br /></li>
+                                                                <li value="7">Choose the security group which you have previously created and click <b>Review and Launch.</b><br /><img src="../../resources/images/spryker-aws-installation/security-group.png" /><br /></li>
+                                                                <li value="8">Choose the ssh key you have previously created, download it and click <b>Launch Instances.</b><br /><img src="../../resources/images/spryker-aws-installation/select-ssh-key.png" /></li>
+                                                            </ol>
+                                                            <h3>Connecting to the instance</h3>
+                                                            <ol>
+                                                                <li value="1">Click <b>Actions</b>&gt;<b>Connect.</b><br /><img src="../../resources/images/spryker-aws-installation/actions-connect.png" /><br /></li>
+                                                                <li value="2">Connect to the Spryker instance using the provided details.<br /><img src="../../resources/images/spryker-aws-installation/connection-instructions.png" /></li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Install additional software</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <h3>System tools installation</h3>
+                                                            <ol>
+                                                                <li value="1">Configure additional  repositories.</li><pre><code class="language-shell line-numbers">sudo apt-get -q -y update
+sudo apt-get -q -y install --no-install-recommends wget gnupg apt-transport-https
+sudo add-apt-repository ppa:ondrej/php
+echo "deb https://deb.nodesource.com/node_8.x stretch main" |sudo tee /etc/apt/sources.list.d/node.list
+wget --quiet -O - https://deb.nodesource.com/gpgkey/nodesource.gpg.key | sudo apt-key add -</code></pre>
+                                                                <li value="2">Install additional software and dependencies.</li><pre><code class="language-shell line-numbers">sudo apt-get -q -y update
+sudo apt-get -q -y install --no-install-recommends ca-certificates \
+curl \
+git \
+graphviz \
+libedit2 \
+libpq5 \
+libsqlite3-0 \
+postgresql-client \
+psmisc \
+python-dev \
+python-setuptools \
+redis-tools \
+unzip \
+vim \
+zip \
+composer \
+gcc \
+g++ \
+make  \
+apache2-utils \
+openjdk-8-jdk</code></pre>
+                                                            </ol>
+                                                            <h3>PHP installation</h3>
+                                                            <p>Run the commands:</p><pre><code class="language-shell line-numbers">sudo apt-get -q -y install php7.2-fpm \
+php7.2-curl \
+php7.2-gd \
+php7.2-gmp \
+php7.2-intl \
+php7.2-bcmath \
+php7.2-pgsql \
+php-redis \
+php7.2-xml \
+php7.2-mbstring \
+php7.2-bz2 \
+php-ssh2 \
+php-msgpack \
+php-memcached \
+php-imagick \
+php-igbinary \
+php7.2-opcache \
+php7.2-zip \
+php7.2-sqlite3 \
+php7.2-mysql \
+php7.2-intl \
+php7.2-fpm \
+php7.2-cli \
+php7.2-dev</code></pre><pre><code class="language-shell line-numbers">sudo update-alternatives --set php /usr/bin/php7.2
+sudo update-alternatives --set phar /usr/bin/phar7.2
+sudo update-alternatives --set phar.phar /usr/bin/phar.phar7.2
+sudo update-alternatives --set phpize /usr/bin/phpize7.2
+sudo update-alternatives --set php-config /usr/bin/php-config7.2</code></pre>
+                                                            <h3>PHP configuration</h3>
+                                                            <ol>
+                                                                <li value="1">Create the following files using the provided templates:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /> /etc/php/7.2/fpm/php.ini</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">memory_limit = 1024M
+[mail function]
+sendmail_path = /usr/sbin/sendmail -t -i</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/pool.d/yves.conf</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">[yves]
+clear_env = no
+catch_workers_output = yes
+listen = /tmp/.fpm.$pool.sock
+listen.backlog = 1000
+listen.allowed_clients = 127.0.0.1
+listen.mode=0666
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 4
+pm.start_servers = 4
+pm.min_spare_servers = 4
+pm.max_spare_servers = 4
+; Avoid PHP memory leaks
+pm.max_requests = 500
+
+pm.status_path = /php-fpm-status-yves
+ping.path = /fpm-ping.php
+ping.response = OK
+
+request_terminate_timeout = 1800
+
+chdir = /
+
+php_admin_value[memory_limit] = 256M
+php_admin_value[expose_php] = off
+php_admin_value[error_log] = /dev/stderr</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/pool.d/zed.conf </a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">[zed]
+clear_env = no
+catch_workers_output = yes
+listen = /tmp/.fpm.$pool.sock
+listen.backlog = 1000
+listen.allowed_clients = 127.0.0.1
+listen.mode=0666
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 4
+pm.start_servers = 4
+pm.min_spare_servers = 4
+pm.max_spare_servers = 4
+; Avoid PHP memory leaks
+pm.max_requests = 500
+
+pm.status_path = /php-fpm-status-zed
+ping.path = /fpm-ping.php
+ping.response = OK
+
+request_terminate_timeout = 1800
+
+chdir = /
+
+php_admin_value[memory_limit] = 256M
+php_admin_value[expose_php] = off
+php_admin_value[error_log] = /dev/stderr</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/pool.d/glue.conf </a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">[glue]
+clear_env = no
+catch_workers_output = yes
+listen = /tmp/.fpm.$pool.sock
+listen.backlog = 1000
+listen.allowed_clients = 127.0.0.1
+listen.mode=0666
+user = www-data
+group = www-data
+pm = dynamic
+pm.max_children = 4
+pm.start_servers = 4
+pm.min_spare_servers = 4
+pm.max_spare_servers = 4
+; Avoid PHP memory leaks
+pm.max_requests = 500
+
+pm.status_path = /php-fpm-status-glue
+ping.path = /fpm-ping.php
+ping.response = OK
+
+request_terminate_timeout = 1800
+
+chdir = /
+
+php_admin_value[memory_limit] = 256M
+php_admin_value[expose_php] = off
+php_admin_value[error_log] = /dev/stderr</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <li value="2">Edit the following file using the template:</li>
+                                                            </ol>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/conf.d/10-opcache.ini </a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">;zend_extension=opcache.so
+opcache.enable=1
+opcache.enable_cli=1
+opcache.file_cache=/var/tmp/opcache
+opcache.max_accelerated_files=8192
+opcache.memory_consumption=256
+opcache.interned_strings_buffer=16
+opcache.fast_shutdown=1
+
+; Check if file updated each 2 seconds - for development
+opcache.revalidate_freq=2
+; Check if file updated each 60 seconds - for production
+;opcache.revalidate_freq=60
+
+; Workaround for PHP 7.2 bug
+; https://bugs.php.net/bug.php?id=76029
+opcache.optimization_level=0</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <h3>Postfix installation</h3>
+                                                            <p>Postfix is a mail server which will be used to send mail. Run the commands to install it:</p><pre><code class="language-shell line-numbers">sudo apt -q -y update
+sudo apt -q -y install postfix </code></pre>
+                                                            <h3>Nginx installation</h3>
+                                                            <p>Nginx  is an open source web server which will proxy requests to PHP FPM via FCGI protocol. Run the commands to install:</p><pre><code class="language-shell line-numbers">sudo apt-get -q -y update 
+sudo apt-get -q -y install nginx nginx-extras
+sudo rm /etc/nginx/sites-enabled/default</code></pre>
+                                                            <h3>Nginx configuration</h3>
+                                                            <ol>
+                                                                <li value="1">Update <var>{{YVES_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-yves.conf</var> using the template:
+			<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-yves.conf template</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-yves {
+server unix:/tmp/.fpm.yves.sock;
+}
+
+server {
+listen 80 default;
+server_name {{YVES_HOST}};
+keepalive_timeout 0;
+access_log /var/log/nginx/yves.log;
+
+root /data/public/Yves;
+
+# Maintenance mode
+#include /etc/nginx/maintenance.conf;
+
+# Static files - allow only specified here paths
+# all other resources should be served via static host (and cached, if possible, via reverse proxy or cdn)
+location ~ (/assets/|/maintenance.html|/favicon.ico|/crossdomain.xml) {
+access_log off;
+expires 30d;
+add_header Pragma public;
+add_header Cache-Control "public";
+try_files $uri $uri/ =404;
+more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';
+}
+
+location ~ \.(jpg|gif|png|css|js|html|xml|ico|txt|csv|map)$ {
+access_log off;
+expires 30d;
+add_header Pragma public;
+add_header Cache-Control "public";
+try_files $uri /index.php?$args;
+more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';
+}
+
+# PHP application
+
+location / {
+# Frontend - force browser to use new rendering engine
+more_set_headers "X-UA-Compatible: IE=Edge,chrome=1";
+
+# Terminate OPTIONS requests immediately. No need for calling php
+# OPTIONS is used by Ajax from http to https as a pre-flight-request
+# see http://en.wikipedia.org/wiki/Cross-origin_resource_sharing
+if ($request_method = OPTIONS) {
+return 200;
+}
+
+add_header X-Server $hostname;
+fastcgi_pass backend-yves;
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
+fastcgi_param SCRIPT_NAME /index.php;
+fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+}
+
+}</code></pre></div></div></li>
+                                                                <li value="2">Create a passwd file by running the command:</li><pre><code class="language-shell">sudo htpasswd -c /etc/nginx/.htpasswd {{SOME_USER}}</code></pre>
+                                                                <li value="3">Update <var>{{ZED_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-zed.conf</var> using the template:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-zed.conf template</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-zed {
+server unix:/tmp/.fpm.zed.sock;
+}
+
+server {
+listen 80;
+server_name {{ZED_HOST}};
+keepalive_timeout 0;
+access_log /var/log/nginx/zed.log;
+
+root /data/public/Zed;
+
+# Maintenance mode
+
+#include /etc/nginx/maintenance.conf;
+
+# Timeout for ZED requests - 10 minutes
+# (longer requests should be converted to jobs and executed via jenkins)
+proxy_read_timeout 600s;
+proxy_send_timeout 600s;
+fastcgi_read_timeout 600s;
+client_body_timeout 600s;
+client_header_timeout 600s;
+send_timeout 600s;
+
+# Static files can be delivered directly
+location ~ (/assets/|/favicon.ico|/robots.txt) {
+access_log off;
+expires 30d;
+add_header Pragma public;
+add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+try_files $uri =404;
+}
+
+# PHP application gets all other requests
+location / {
+add_header X-Server $hostname;
+fastcgi_pass backend-zed;
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
+fastcgi_param SCRIPT_NAME /index.php;
+fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+}
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <li value="4">Update <var>{{GLUE_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-glue.conf</var> using the template:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-glue.conf template</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-glue {
+server unix:/tmp/.fpm.glue.sock;
+}
+
+server {
+## Listener for production/staging - requires external LoadBalancer directing traffic to this port
+#listen 10001;
+
+# istener for testing/development - one host only, doesn't require external LoadBalancer
+listen 80;
+
+server_name {{GLUE_HOST}};
+keepalive_timeout 0;
+access_log /var/log/nginx/glue.log;
+
+root /data/public/Glue;
+# Maintenance mode
+#include /etc/nginx/maintenance.conf;
+
+set $application_env staging;
+set $application_store DE;
+
+# Timeout for Api requests - 10 minutes
+# (longer requests should be converted to jobs and executed via jenkins)
+proxy_read_timeout 600s;
+proxy_send_timeout 600s;
+fastcgi_read_timeout 600s;
+client_body_timeout 600s;
+client_header_timeout 600s;
+send_timeout 600s;
+
+# Static files can be delivered directly
+location ~ (/assets/|/favicon.ico|/robots.txt) {
+access_log off;
+expires 30d;
+add_header Pragma public;
+add_header Cache-Control "public, must-revalidate, proxy-revalidate";
+try_files $uri =404;
+}
+
+# PHP application gets all other requests
+location / {
+add_header X-Server $hostname;
+fastcgi_pass backend-glue;
+fastcgi_index index.php;
+include /etc/nginx/fastcgi_params;
+fastcgi_param SCRIPT_NAME /index.php;
+fastcgi_param APPLICATION_ENV $application_env;
+fastcgi_param APPLICATION_STORE $application_store;
+fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';
+}
+
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <li value="5">Create  <var>/etc/nginx/conf.d/jenkins.conf</var>:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/nginx/conf.d/jenkins.conf</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">server {
+
+
+auth_basic 'Administrator’s Area';
+auth_basic_user_file /etc/nginx/.htpasswd;
+
+listen 80;
+server_name {{JENKINS_HOST}};
+
+location / {
+
+
+access_log /var/log/nginx/jenkins.log;
+proxy_set_header Host $host:$server_port;
+proxy_set_header X-Real-IP $remote_addr;
+proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+proxy_set_header X-Forwarded-Proto $scheme;
+
+# Fix the "It appears that your reverse proxy set up is broken" error.
+proxy_pass http://127.0.0.1:8080;
+proxy_read_timeout 90;
+
+# Required for new HTTP-based CLI
+proxy_http_version 1.1;
+proxy_request_buffering off;
+# workaround for https://issues.jenkins-ci.org/browse/JENKINS-45651
+#add_header 'X-SSH-Endpoint' 'jenkins.domain.tld:50022' always;
+
+}
+}</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <li value="6">Create <var>/etc/nginx/fastcgi_params</var> using the template:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />fastcgi_params template</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">fastcgi_param QUERY_STRING $query_string;
+fastcgi_param REQUEST_METHOD $request_method;
+fastcgi_param CONTENT_TYPE $content_type;
+fastcgi_param CONTENT_LENGTH $content_length;
+
+fastcgi_param SCRIPT_FILENAME $request_filename;
+fastcgi_param SCRIPT_NAME $fastcgi_script_name;
+fastcgi_param REQUEST_URI $request_uri;
+fastcgi_param DOCUMENT_URI $document_uri;
+fastcgi_param DOCUMENT_ROOT $document_root;
+fastcgi_param SERVER_PROTOCOL $server_protocol;
+
+fastcgi_param GATEWAY_INTERFACE CGI/1.1;
+fastcgi_param SERVER_SOFTWARE nginx/$nginx_version;
+
+fastcgi_param REMOTE_ADDR $remote_addr;
+fastcgi_param REMOTE_PORT $remote_port;
+fastcgi_param SERVER_ADDR $server_addr;
+fastcgi_param SERVER_PORT $server_port;
+fastcgi_param SERVER_NAME $server_name;
+
+# PHP only, required if PHP was built with --enable-force-cgi-redirect
+fastcgi_param REDIRECT_STATUS 200;
+
+# Are we using ssl? Backward compatibility env, to emulate Apache.
+# According to RFC, app should take a look at "X-Forwarded-Proto" header to deterimine if SSL is on.
+if ($http_x_forwarded_proto = "https") {
+set $have_https on;
+}
+fastcgi_param HTTPS $have_https;
+
+# Pass request start time to CGI script - NewRelic uses this to monitor queue wait time
+fastcgi_param HTTP_X_REQUEST_START "t=${msec}";</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                            </ol>
+                                                            <h3>Node.js installation</h3>
+                                                            <p>Run the commands:</p><pre><code class="language-shell line-numbers">sudo apt-get -q -y update
+sudo apt-get -y -q install nodejs</code></pre>
+                                                            <h3>RabbitMQ installation</h3>
+                                                            <p>Run the commands:</p><pre><code class="language-shell line-numbers">wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+sudo dpkg -i erlang-solutions_1.0_all.deb
+wget -O- https://dl.bintray.com/rabbitmq/Keys/rabbitmq-release-signing-key.asc | sudo apt-key add -
+wget -O- https://www.rabbitmq.com/rabbitmq-release-signing-key.asc | sudo apt-key add -
+echo "deb https://dl.bintray.com/rabbitmq/debian $(lsb_release -sc) main" | sudo tee /etc/apt/sources.list.d/rabbitmq.list
+sudo apt-get -q -y update
+sudo apt-get -q -y install -y rabbitmq-server</code></pre>
+                                                            <h3>RabbitMQ configuration</h3>
+                                                            <p>Run the commands:</p>
+                                                            <ul>
+                                                                <li value="1">Service configuration.</li><pre><code class="language-shell line-numbers">sudo service rabbitmq-server start
+sudo rabbitmq-plugins enable rabbitmq_management
+sudo chown -R rabbitmq:rabbitmq /var/lib/rabbitmq/</code></pre>
+                                                                <li value="2">Admin user configuration.</li><pre><code class="language-shell line-numbers">sudo rabbitmqctl add_user admin password
+sudo rabbitmqctl add_vhost /spryker
+sudo rabbitmqctl set_user_tags admin administrator
+sudo rabbitmqctl set_permissions -p / admin ".*" ".*" ".*"
+sudo rabbitmqctl set_permissions -p /spryker admin ".*" ".*" ".*"</code></pre>
+                                                                <li value="3">Spryker user configuration.</li><pre><code class="language-shell line-numbers">sudo rabbitmqctl add_user spryker password
+sudo rabbitmqctl set_user_tags spryker administrator
+sudo rabbitmqctl set_permissions -p /spryker spryker ".*" ".*" ".*"</code></pre>
+                                                            </ul>
+                                                            <h3>Jenkins installation</h3>
+                                                            <p>Run the commands as root:</p><pre><code class="language-shell line-numbers">wget -q -O - https://pkg.jenkins.io/debian/jenkins-ci.org.key | sudo apt-key add - 
+sudo sh -c 'echo deb http://pkg.jenkins.io/debian-stable binary/ &gt; /etc/apt/sources.list.d/jenkins.list'
+sudo apt-get -q -y update
+sudo update-alternatives --set java /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+sudo apt-get -q -y install jenkins
+sudo service jenkins stop</code></pre>
+                                                            <h3>Jenkins configuration</h3>
+                                                            <ol>
+                                                                <li value="1">Change the <var>JENKINS_USER</var> variable in the <var>/etc/init.d/jenkins</var> and <var>/etc/default/jenkins</var> files to <var>JENKINS_USER="www-data"</var>.</li>
+                                                                <li value="2">Change the owner of jenkins folders:</li><pre><code class="language-shell line-numbers">sudo chown -R www-data:www-data /var/lib/jenkins
+sudo chown -R www-data:www-data /var/cache/jenkins
+sudo chown -R www-data:www-data /var/log/jenkins</code></pre>
+                                                                <li value="3">Reload services configuration:</li><pre><code class="language-shell line-numbers">sudo systemctl daemon-reload</code></pre>
+                                                                <li value="4">Update Jenkins configuration file: 
+			<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/var/lib/jenkins/config.xml</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">&lt;?xml version='1.1' encoding='UTF-8'?&gt;
+&lt;hudson&gt;
+  &lt;disabledAdministrativeMonitors&gt;
+    &lt;string&gt;jenkins.CLI&lt;/string&gt;
+    &lt;string&gt;jenkins.diagnostics.SecurityIsOffMonitor&lt;/string&gt;
+  &lt;/disabledAdministrativeMonitors&gt;
+  &lt;version&gt;2.164.3&lt;/version&gt;
+  &lt;installStateName&gt;RESTART&lt;/installStateName&gt;
+  &lt;numExecutors&gt;2&lt;/numExecutors&gt;
+  &lt;mode&gt;NORMAL&lt;/mode&gt;
+  &lt;useSecurity&gt;true&lt;/useSecurity&gt;
+  &lt;authorizationStrategy class="hudson.security.AuthorizationStrategy$Unsecured"/&gt;
+  &lt;securityRealm class="hudson.security.SecurityRealm$None"/&gt;
+  &lt;disableRememberMe&gt;false&lt;/disableRememberMe&gt;
+  &lt;projectNamingStrategy class="jenkins.model.ProjectNamingStrategy$DefaultProjectNamingStrategy"/&gt;
+  &lt;workspaceDir&gt;${ITEM_ROOTDIR}/workspace&lt;/workspaceDir&gt;
+  &lt;buildsDir&gt;${ITEM_ROOTDIR}/builds&lt;/buildsDir&gt;
+  &lt;markupFormatter class="hudson.markup.EscapedMarkupFormatter"/&gt;
+  &lt;jdks/&gt;
+  &lt;viewsTabBar class="hudson.views.DefaultViewsTabBar"/&gt;
+  &lt;myViewsTabBar class="hudson.views.DefaultMyViewsTabBar"/&gt;
+  &lt;clouds/&gt;
+  &lt;scmCheckoutRetryCount&gt;0&lt;/scmCheckoutRetryCount&gt;
+  &lt;views&gt;
+    &lt;hudson.model.AllView&gt;
+      &lt;owner class="hudson" reference="../../.."/&gt;
+      &lt;name&gt;all&lt;/name&gt;
+      &lt;filterExecutors&gt;false&lt;/filterExecutors&gt;
+      &lt;filterQueue&gt;false&lt;/filterQueue&gt;
+      &lt;properties class="hudson.model.View$PropertyList"/&gt;
+    &lt;/hudson.model.AllView&gt;
+  &lt;/views&gt;
+  &lt;primaryView&gt;all&lt;/primaryView&gt;
+  &lt;slaveAgentPort&gt;5000&lt;/slaveAgentPort&gt;
+  &lt;label&gt;&lt;/label&gt;
+  &lt;crumbIssuer class="hudson.security.csrf.DefaultCrumbIssuer"&gt;
+    &lt;excludeClientIPFromCrumb&gt;true&lt;/excludeClientIPFromCrumb&gt;
+  &lt;/crumbIssuer&gt;
+  &lt;nodeProperties/&gt;
+  &lt;globalNodeProperties/&gt;</code></pre></div></div></li>
+                                                                <li value="5">Restart Jenkins service:</li><pre><code class="language-shell">sudo service jenkins start</code></pre>
+                                                                <li value="6">
+                                                                    <p>Create  <var>/data/deploy directory</var>:</p><pre><code class="language-shell">mkdir -p /data/deploy</code></pre>
+                                                                </li>
+                                                                <li value="7">
+                                                                    <p>Create variables file /data/deploy/vars with variables</p><pre><code class="language-shell">destination_release_dir=/data
+PGPASSWORD={{RDS_PASSWORD}}</code></pre>
+                                                                </li>
+                                                            </ol>
+                                                            <h3>System configuration</h3>
+                                                            <ol>
+                                                                <li value="1">Change swappiness configuration:</li><pre><code class="language-shell line-numbers">echo "vm.swappiness=5" | sudo tee /etc/sysctl.conf
+sudo sysctl -p</code></pre>
+                                                                <li value="2">Change file limit configuration:</li>
+Update <var>/etc/security/limits.conf</var> with new lines:
+<pre><code class="language-yaml">* soft nofile 65536
+* hard nofile 65536</code></pre>
+Apply limits for current session:
+<pre><code class="language-shell">ulimit -n 65535</code></pre><li value="3">Create logrotate configuration for Spryker:</li><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/logrotate.d/spryker</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">/data/data/*/logs/ZED/*.log {
+daily
+missingok
+rotate 14
+compress
+delaycompress
+notifempty
+create 0640 www-data www-data
+sharedscripts
+postrotate
+/bin/kill -SIGUSR1 `cat /run/php-fpm/php-fpm.pid 2&gt;/dev/null` 2&gt;/dev/null || true
+endscript
+su www-data www-data
+}</code></pre></div></div></ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Spryker installation</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ol>
+                                                                <li value="1">Create data folder:</li><pre><code class="language-shell line-numbers">sudo mkdir /data
+sudo chown ubuntu /data
+cd /data</code></pre>
+                                                                <li value="2">Clone project:</li><pre><code class="language-shell">git clone https://github.com/spryker-shop/suite.git ./</code></pre>
+                                                                <li value="3">Create local configuration using the template:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/data/config/Shared/config_local.php</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">&lt;?php
+
+use Spryker\Shared\Application\ApplicationConstants;
+use Spryker\Shared\Collector\CollectorConstants;
+use Spryker\Shared\Customer\CustomerConstants;
+use Spryker\Shared\Newsletter\NewsletterConstants;
+use Spryker\Shared\ProductManagement\ProductManagementConstants;
+use Spryker\Shared\Propel\PropelConstants;
+use Spryker\Shared\Search\SearchConstants;
+use Spryker\Shared\Session\SessionConstants;
+use Spryker\Shared\Setup\SetupConstants;
+use Spryker\Shared\Storage\StorageConstants;
+use Spryker\Shared\PropelQueryBuilder\PropelQueryBuilderConstants;
+use Spryker\Shared\ZedRequest\ZedRequestConstants;
+use Spryker\Shared\Log\LogConstants;
+use Monolog\Logger;
+use Spryker\Shared\RabbitMq\RabbitMqEnv;
+use Spryker\Shared\GlueApplication\GlueApplicationConstants;
+
+// ---------- Yves host
+$config[ApplicationConstants::HOST_YVES] = '{{YVES_HOST}}';
+$config[ApplicationConstants::PORT_YVES] = ':80';
+$config[ApplicationConstants::PORT_SSL_YVES] = '';
+$config[ApplicationConstants::BASE_URL_YVES] = sprintf(
+'http://%s%s',
+$config[ApplicationConstants::HOST_YVES],
+$config[ApplicationConstants::PORT_YVES]
+);
+$config[ApplicationConstants::BASE_URL_SSL_YVES] = sprintf(
+'https://%s%s',
+$config[ApplicationConstants::HOST_YVES],
+$config[ApplicationConstants::PORT_SSL_YVES]
+);
+$config[ProductManagementConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
+$config[NewsletterConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
+$config[CustomerConstants::BASE_URL_YVES] = $config[ApplicationConstants::BASE_URL_YVES];
+$config[ApplicationConstants::YVES_TRUSTED_HOSTS] = [];
+
+// ---------- Zed host
+$config[ApplicationConstants::HOST_ZED] = '{{ZED_HOST}}';
+$config[ApplicationConstants::PORT_ZED] = ':80';
+$config[ApplicationConstants::PORT_SSL_ZED] = '';
+$config[ApplicationConstants::BASE_URL_ZED] = sprintf(
+'http://%s%s',
+$config[ApplicationConstants::HOST_ZED],
+$config[ApplicationConstants::PORT_ZED]
+);
+$config[ApplicationConstants::BASE_URL_SSL_ZED] = sprintf(
+'https://%s%s',
+$config[ApplicationConstants::HOST_ZED],
+$config[ApplicationConstants::PORT_SSL_ZED]
+);
+$config[ZedRequestConstants::HOST_ZED_API] = $config[ApplicationConstants::HOST_ZED];
+$config[ZedRequestConstants::BASE_URL_ZED_API] = $config[ApplicationConstants::BASE_URL_ZED];
+$config[ZedRequestConstants::BASE_URL_SSL_ZED_API] = $config[ApplicationConstants::BASE_URL_SSL_ZED];
+
+// ---------- Assets / Media
+$config[ApplicationConstants::BASE_URL_STATIC_ASSETS] = $config[ApplicationConstants::BASE_URL_YVES];
+$config[ApplicationConstants::BASE_URL_STATIC_MEDIA] = $config[ApplicationConstants::BASE_URL_YVES];
+$config[ApplicationConstants::BASE_URL_SSL_STATIC_ASSETS] = $config[ApplicationConstants::BASE_URL_SSL_YVES];
+$config[ApplicationConstants::BASE_URL_SSL_STATIC_MEDIA] = $config[ApplicationConstants::BASE_URL_SSL_YVES];
+
+// ---------- Session
+$config[SessionConstants::YVES_SESSION_COOKIE_NAME] = $config[ApplicationConstants::HOST_YVES];
+$config[SessionConstants::YVES_SESSION_COOKIE_DOMAIN] = $config[ApplicationConstants::HOST_YVES];
+$config[SessionConstants::ZED_SESSION_COOKIE_NAME] = $config[ApplicationConstants::HOST_ZED];
+
+
+/** Database credentials */
+$config[PropelConstants::ZED_DB_USERNAME] = '{{RDS_USERNAME}}';
+$config[PropelConstants::ZED_DB_PASSWORD] = '{{RDS_PASSWORD}}';
+$config[PropelConstants::ZED_DB_DATABASE] = '{{RDS_DATABASE}}';
+$config[PropelConstants::ZED_DB_HOST] = '{{RDS_ENDPOINT}}';
+$config[PropelConstants::ZED_DB_PORT] = '5432';
+$config[PropelConstants::ZED_DB_ENGINE]
+= $config[PropelQueryBuilderConstants::ZED_DB_ENGINE]
+= $config[PropelConstants::ZED_DB_ENGINE_PGSQL];
+$config[PropelConstants::USE_SUDO_TO_MANAGE_DATABASE] = false;
+
+
+/** Elasticsearch */
+$config[ApplicationConstants::ELASTICA_PARAMETER__HOST] = '{{ELASTICSEARCH_ENDPOINT WITHOUT HTTPS:// and trailing /}}';
+$config[ApplicationConstants::ELASTICA_PARAMETER__PORT] = '443';
+$config[ApplicationConstants::ELASTICA_PARAMETER__INDEX_NAME]
+= $config[CollectorConstants::ELASTICA_PARAMETER__INDEX_NAME]
+= $config[SearchConstants::ELASTICA_PARAMETER__INDEX_NAME]
+= 'de_search';
+unset($config[SearchConstants::ELASTICA_PARAMETER__AUTH_HEADER]);
+
+
+/** Session and KV storage */
+$config[StorageConstants::STORAGE_REDIS_PROTOCOL] = 'redis';
+$config[StorageConstants::STORAGE_REDIS_HOST] = '{{ELASTICACHE_ENDPOINT}}';
+$config[StorageConstants::STORAGE_REDIS_PORT] = 6379;
+$config[StorageConstants::STORAGE_REDIS_DATABASE] = 0;
+
+$config[SessionConstants::YVES_SESSION_REDIS_PROTOCOL] = 'redis';
+$config[SessionConstants::YVES_SESSION_REDIS_HOST] = '{{ELASTICACHE_ENDPOINT}}';
+$config[SessionConstants::YVES_SESSION_REDIS_PORT] = 6379;
+$config[SessionConstants::YVES_SESSION_REDIS_DATABASE] = 1;
+
+$config[SessionConstants::ZED_SESSION_REDIS_PROTOCOL] = 'redis';
+$config[SessionConstants::ZED_SESSION_REDIS_HOST] = '{{ELASTICACHE_ENDPOINT}}';
+$config[SessionConstants::ZED_SESSION_REDIS_PORT] = 6379;
+$config[SessionConstants::ZED_SESSION_REDIS_DATABASE] = 2;
+
+/** RabbitMQ **/
+$config[RabbitMqEnv::RABBITMQ_API_HOST] = '{{EC2_INSTANCE_HOSTNAME OR 127.0.0.1}}';
+$config[RabbitMqEnv::RABBITMQ_API_PORT] = '15672';
+$config[RabbitMqEnv::RABBITMQ_API_USERNAME] = '{{RABBITMQ_USERNAME}}';
+$config[RabbitMqEnv::RABBITMQ_API_PASSWORD] = '{{RABBITMQ_PASSWORD}}';
+$config[RabbitMqEnv::RABBITMQ_API_VIRTUAL_HOST] = '/spryker';
+$config[RabbitMqEnv::RABBITMQ_CONNECTIONS] = [
+'DE' =&gt; [
+RabbitMqEnv::RABBITMQ_CONNECTION_NAME =&gt; 'DE-connection',
+RabbitMqEnv::RABBITMQ_HOST =&gt; '{{EC2_INSTANCE_HOSTNAME OR 127.0.0.1}}',
+RabbitMqEnv::RABBITMQ_PORT =&gt; '5672',
+RabbitMqEnv::RABBITMQ_PASSWORD =&gt; '{{RABBITMQ_PASSWORD}}',
+RabbitMqEnv::RABBITMQ_USERNAME =&gt; '{{RABBITMQ_USERNAME}}',
+RabbitMqEnv::RABBITMQ_VIRTUAL_HOST =&gt; '/spryker',
+RabbitMqEnv::RABBITMQ_STORE_NAMES =&gt; ['DE'],
+RabbitMqEnv::RABBITMQ_DEFAULT_CONNECTION =&gt; true,
+],
+];
+
+/** Jenkins **/
+$config[SetupConstants::JENKINS_BASE_URL] = 'http://' . '{{EC2_INSTANCE_HOSTNAME OR 127.0.0.1}}' . ':' . 8080 . '/';
+$config[SetupConstants::JENKINS_CSRF_PROTECTION_ENABLED] = true;
+$config[LogConstants::LOG_LEVEL] = Logger::ERROR;
+
+// ----------- Glue Application
+$config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = sprintf('%s', '{{GLUE_DNS_NAME}}');</code></pre>
+                                                                    </div>
+                                                                </div><pre><code class="language-shell line-numbers">composer global require hirak/prestissimo
+composer install</code></pre>
+                                                                <li value="4">
+                                                                    <p>Update the following variables in <var>/data/config/Shared/config_default.php</var>:</p><pre><code class="language-yaml">$config[StorageRedisConstants::STORAGE_REDIS_HOST] = '{{ REDIS_ENDPOINT }}';
+$config[StorageRedisConstants::STORAGE_REDIS_PORT] = {{ REDIS_PORT }};</code></pre>
+                                                                    <p>Run the commands:</p><pre><code class="language-shell line-numbers">composer global require hirak/prestissimo
+composer install</code></pre>
+                                                                </li>
+                                                                <li value="5">Add Jenkins <var>Max # of builds to keep</var> configuration by updating the  <var>&lt;numToKeep&gt;-1&lt;/numToKeep&gt;</var> parameter in <var>/data/vendor/spryker/setup/src/Spryker/Zed/Setup/Business/Model/Cronjobs.php</var> to the desired one. For example, if you wanted to keep 100 items in the Jenkins history, you would change the parameter from -1 to 100 to look this way: <var>&lt;numToKeep&gt;100&lt;/numToKeep&gt;</var></li>
+                                                                <li value="6">Crete the following file:</li>
+                                                                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/data/config/install/staging.yml</a></span>
+                                                                    <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">env:
+    APPLICATION_ENV: staging
+ 
+stores:
+    - DE
+ 
+command-timeout: 3600
+ 
+sections:
+ 
+    hidden:
+        excluded: true
+        maintenance-all-on:
+            command: "vendor/bin/console maintenance:enable"
+ 
+        maintenance-all-off:
+            command: "vendor/bin/console maintenance:disable"
+ 
+        maintenance-zed-on:
+            command: "vendor/bin/console maintenance:enable zed"
+ 
+        maintenance-zed-off:
+            command: "vendor/bin/console maintenance:disable zed"
+ 
+        maintenance-yves-on:
+            command: "vendor/bin/console maintenance:enable yves"
+ 
+        maintenance-yves-off:
+            command: "vendor/bin/console maintenance:disable yves"
+ 
+ 
+    environment:
+        console-environment:
+            command: "if [ ! -f ./config/Shared/console_env_local.php ]; then cp ./config/Shared/console_env_local.dist.php ./config/Shared/console_env_local.php ; fi"
+ 
+ 
+#    clear:
+#        remove-logs:
+#            command: "vendor/bin/console log:clear"
+#
+#        remove-cache:
+#            command: "vendor/bin/console cache:empty-all"
+ 
+#        remove-generated-files:
+#            command: "vendor/bin/console setup:empty-generated-directory"
+ 
+ 
+    jenkins-down:
+        jenkins-stop:
+            command: "vendor/bin/console setup:jenkins:disable"
+ 
+ 
+    generate:
+        generate-transfers:
+            command: "vendor/bin/console transfer:generate"
+ 
+#        generate-ide-auto-completion:
+#            command: "vendor/bin/console dev:ide:generate-auto-completion"
+ 
+ 
+    cache:
+        twig-cache-warmup:
+            command: "vendor/bin/console twig:cache:warmer"
+ 
+        navigation-cache-warmup:
+            command: "vendor/bin/console navigation:build-cache"
+ 
+ 
+    queue-flush:
+        set-permissions:
+            command: "vendor/bin/console queue:permission:set"
+            stores: true
+ 
+        purge-all-queues:
+            command: "vendor/bin/console queue:queue:purge-all"
+            stores: true
+ 
+        delete-all-queues:
+            command: "vendor/bin/console queue:queue:delete-all"
+            stores: true
+ 
+        delete-all-exchanges:
+            command: "vendor/bin/console queue:exchanges:delete-all"
+            stores: true
+ 
+ 
+    database-flush:
+        delete-elastic-search-index:
+            command: "vendor/bin/console search:index:delete"
+            stores: true
+            groups:
+                - elastic
+ 
+        delete-storage:
+            command: "vendor/bin/console storage:delete"
+            stores: true
+            groups:
+                - redis
+ 
+#        drop-database:
+#            pre: "hidden/maintenance-zed-on"
+#            command: "vendor/bin/console propel:database:drop"
+#            stores: true
+#            groups:
+#                - propel
+ 
+        delete-migration-files:
+            command: "vendor/bin/console propel:migration:delete"
+            stores: true
+            groups:
+                - propel
+ 
+ 
+    database-migrate:
+        propel-config:
+            command: "vendor/bin/console propel:config:convert"
+            stores: true
+            groups:
+                - propel
+ 
+        propel-create:
+            command: "vendor/bin/console propel:database:create"
+            stores: true
+            groups:
+                - propel
+ 
+        propel-postgres-compatibility:
+            command: "vendor/bin/console propel:pg-sql-compat"
+            stores: true
+            groups:
+                - propel
+ 
+        propel-copy-schema:
+            command: "vendor/bin/console propel:schema:copy"
+            stores: true
+            groups:
+                - propel
+ 
+        propel-build:
+            command: "vendor/bin/console propel:model:build"
+            groups:
+                - propel
+ 
+        propel-diff:
+            command: "vendor/bin/console propel:diff"
+            stores: true
+            groups:
+                - propel
+ 
+        propel-migration-check:
+            command: "vendor/bin/console propel:migration:check"
+            breakOnFailure: false
+            stores: true
+            groups:
+                - propel
+ 
+        maintenance-page-enable:
+            command: "vendor/bin/console maintenance:enable"
+            stores: true
+            condition:
+                command: "propel-migration-check"
+                ifExitCode: 2
+ 
+        propel-migrate:
+            command: "vendor/bin/console propel:migrate"
+            stores: true
+            groups:
+                - propel
+ 
+        maintenance-page-disable:
+            command: "vendor/bin/console maintenance:disable"
+            stores: true
+ 
+        generate-entity-transfer:
+            command: "vendor/bin/console transfer:generate"
+ 
+        init-database:
+            command: "vendor/bin/console setup:init-db"
+            stores: true
+ 
+        setup-search:
+            command: "vendor/bin/console setup:search"
+            stores: true
+            groups:
+                - elastic
+ 
+    demodata:
+        import:
+            command: "vendor/bin/console data:import"
+            stores: true
+ 
+        update-product-labels:
+            command: "vendor/bin/console product-label:relations:update"
+            stores: true
+ 
+ 
+    jenkins-up:
+        jenkins-generate:
+            command: "vendor/bin/console setup:jenkins:generate"
+ 
+        jenkins-enable:
+            command: "vendor/bin/console setup:jenkins:enable"
+ 
+ 
+    frontend:
+        dependencies-install:
+            command: "vendor/bin/console frontend:project:install-dependencies -vvv"
+            groups:
+                - project
+ 
+        yves-install-dependencies:
+            command: "vendor/bin/console frontend:yves:install-dependencies -vvv"
+            groups:
+                - yves
+ 
+        yves-build-frontend:
+            command: "vendor/bin/console frontend:yves:build -vvv"
+            groups:
+                - yves
+ 
+        zed-install-dependencies:
+            command: "vendor/bin/console frontend:zed:install-dependencies -vvv"
+            groups:
+                - zed
+ 
+        zed-build-frontend:
+            command: "vendor/bin/console frontend:zed:build"
+            groups:
+                - zed</code></pre>
+                                                                    </div>
+                                                                </div>
+                                                                <li value="7">
+                                                                    <p>Set environment variables:</p><pre><code class="language-shell">export PGPASSWORD={{RDS_PASSWORD}}
+export APPLICATION_STORE=DE
+export APPLICATION_ENV=staging</code></pre>
+                                                                </li>
+                                                                <li value="8">Run the install command:</li><pre><code class="language-shell">vendor/bin/install -vvv</code></pre>
+                                                                <li value="9">Change owner of the folder:</li><pre><code class="language-shell">chown -R www-data:www-data /data</code></pre>
+                                                            </ol>
+                                                            <p class="important">Make sure to provide secure configuration of Zed service. You can implement one of the following security measures or all of them simultaneously: "Basic AUTH" based on web-server configuration, IP address restriction, direct VPN connection to the server.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Requirements</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 206px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1" colspan="2">RDS (Managed relational database service)</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Instance type</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&gt;= db.t2.micro</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows" colspan="2">Database type:</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">PostgreSQL</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p>&gt;= 9.6 - Default and preferred</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">MySQL</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>&gt;= 5.7</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                            <p>Public accessibility</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                            <p>no</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p>&#160;</p>
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 206px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1" colspan="2">Elasticsearch Service </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Instance type</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&gt;= t2.small.elasticsearch</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Elasticsearch version</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>5.6</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Volume size</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p>&gt;= 10 GB</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                            <p>Endpoint</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                            <p>VPC</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p>&#160;</p>
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 206px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1" colspan="2">EC2</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Instance type</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">&gt;= t2.medium</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Storage size</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>&gt;= 20Gb</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">OS</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                            <p>Ubuntu 18.04</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p>&#160;</p>
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 206px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1" colspan="2">Security Groups</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Incoming ports</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">22, 80, 443</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <p>&#160;</p>
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 206px;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1" colspan="2">List of Connections</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Nginx</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">TCP: 80, 443 (Any)</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Yves, Glue, Zed</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>TCP: 9000 ( Nginx )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Jenkins </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p>TCP: 8080 ( Nginx )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>PostgreSQL</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>TCP: 5432 ( Zed )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                            <p>RabbitMQ</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                            <p>TCP: 5672, 15672 ( Zed )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                            <p>Redis</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                            <p>TCP: 6379 ( Yves, Glue, Zed )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                            <p>Elasticsearch</p>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                            <p>TCP: 9200 ( Yves, Glue, Zed )</p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AWS services setup validation</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <h3>RDS latency check</h3>
+                                                            <h4>PostgreSQL</h4><pre><code class="language-shell line-numbers">export PGPASSWORD={{RDS_PASSWORD}}
+/usr/bin/pgbench -i -h {{RDS_ENDPOINT}} -p 5432 -U {{RDS_USERNAME}} -d {{RDS_DATABASE}}
+/usr/bin/pgbench -c 10 -h {{RDS_ENDPOINT}} -p 5432 -U {{RDS_USERNAME}} -d {{RDS_DATABASE}}</code></pre>
+                                                            <p class="example">Benchmark result examples:
+		Average latency for db.t2.micro / db.t2.micro  -  29 ms</p>
+                                                            <h4>MySQL</h4><pre><code class="language-shell">sudo apt-get -y install mysql-client
+mysqlslap --host= {{RDS_ENDPOINT}} --user={{RDS_USERNAME}} --concurrency=50 --iterations=10 --password={{RDS_PASSWORD}} --auto-generate-sql --verbose</code></pre>
+                                                            <p class="example">Benchmark result examples:<br />Average number of seconds to run all queries: 0.739 seconds - db.t2.small
+<br />Average number of seconds to run all queries: 0.485 seconds - db.t2.medium</p>
+                                                            <h3>Redis latency check</h3><pre><code class="language-shell">redis-cli --latency -h {{ELASTICACHE_ENDPOINT}} -p 6379</code></pre>
+                                                            <p class="example">Benchmark result examples:
+<br />				avg: 0.48 (20038 samples)  - cache.t2.micro 
+				<br />avg: 0.31 (20047 samples)  - cache.t2.medium</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />List of connections</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>
+                                                                <img src="../../resources/images/spryker-aws-installation/connections-list.jpg" />
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>

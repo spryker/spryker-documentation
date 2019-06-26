@@ -97,7 +97,7 @@ function Anchorer () {
     this.$container = $('html, body');
     this.$el = $('.js-anchorer');
     this.$targets = $('h1, h2, h3, .drop-anchor', this.$el);
-    this.headerHeight = document.querySelector('.title-bar').clientHeight;
+    this.headerHeight = getHeaderHeight();
 
     this.init = function() {
 
@@ -105,11 +105,16 @@ function Anchorer () {
         this.mapEvents();
     };
 
+    function getHeaderHeight () {
+        return document.querySelector('.title-bar').clientHeight;
+    }
+
     this.mapEvents = function() {
         this.$el.on('click', '.js-anchorer__trigger', this.onClick.bind(this));
     };
 
     this.onClick = function(e) {
+
         var that = this;
         var href = $(e.currentTarget).attr('href');
 
@@ -132,6 +137,7 @@ function Anchorer () {
             var id = that.normalize(text);
 
             $element.prepend(that.createAnchor(id, text));
+
         });
     };
 
@@ -161,7 +167,7 @@ function Anchorer () {
             return;
         }
 
-        var top = $anchor.offset().top - this.headerHeight;
+        var top = $anchor.offset().top - getHeaderHeight();
         console.log(top);
         this.$container.animate({
             scrollTop: top
@@ -169,6 +175,10 @@ function Anchorer () {
     };
 
     this.setHash = function(value) {
+        if(window.history){
+            window.history.replaceState(null,null,value);
+            return;
+        }
         window.location.hash = value;
     }
 
@@ -816,7 +826,9 @@ function versionDisplay (){
 
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
-    anchorer.init();
+    if(!document.querySelector('.searchTopic')){
+        anchorer.init();
+    }
     asideNavCloseButton.init();
     showSearchButton.init();
     flHandler.init();
@@ -832,4 +844,3 @@ document.addEventListener("DOMContentLoaded", function (){
     tabs.init();
     versionDisplay();
 } );
-

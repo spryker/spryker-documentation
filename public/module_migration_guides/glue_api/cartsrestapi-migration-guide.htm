@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="YiN-VYYuJUGcPDooyIpkaA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YiN-VYYuJUGcPDooyIpkaA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="xcYYTUhLP0O6lbTdTn5jtQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="xcYYTUhLP0O6lbTdTn5jtQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,6 +240,126 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>CartsRestApi Migration Guide</h1>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 3.* to 4.*</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In this new version of the CartsRestApi module, we have changed the type of stock and quantity fields from int to float. You can find more details about the changes on  <a href="https://github.com/spryker/carts-rest-api/releases/tag/4.0.0">CartsRestApi module release page</a>.</p>
+                                                            <p class="important">This release is a part of the "Float stock" concept migration! When you upgrade this module version, you should upgrade all the other modules installed in your project to use the same concept and avoid inconsistent behavior. Refer to Float Stock for Products for more information.</p>
+                                                            <ol>
+                                                                <li value="1">
+                                                                    <p>Upgrade CartsRestApi module to version 4.0.0:</p><pre><code class="language-shell">composer require spryker/carts-rest-api: "^4.0.0" --update-with-dependencies</code></pre>
+                                                                </li>
+                                                                <li value="2">
+                                                                    <p>Regenerate transfer objects:</p><pre><code class="language-shell">vendor/bin/console transfer:generate</code></pre>
+                                                                </li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 2.* to Version 3.*</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>CartsRestApi version 3 has been improved to provide functionality that allows using multiple carts.</p>
+                                                            <p>Find and remove <var>CartsRestApiDependencyProvider</var> in a project:</p>
+                                                            <p><b>CartsRestApiDependencyProvider.php</b>
+                                                            </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\CartsRestApi;
+ 
+use Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider as SprykerCartsRestApiDependencyProvider;
+use Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin;
+use Spryker\Glue\CartsRestApi\Plugin\QuoteCreator\SingleQuoteCreatorPlugin;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface;
+use Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
+ 
+class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvider
+{
+	/**
+	* @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCollectionReaderPluginInterface
+	*/
+	protected function getQuoteCollectionReaderPlugin(): QuoteCollectionReaderPluginInterface
+	{
+		return new CartQuoteCollectionReaderPlugin();
+	}
+ 
+	/**
+	* @return \Spryker\Glue\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+	*/
+	protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+	{
+		return new SingleQuoteCreatorPlugin();
+	}
+}
+				</code></pre>
+                                                            <p>Find and update <var>CustomersRestApiDependencyProvider</var> in a project. The <var>getCustomerPostCreatePlugins</var> method should replace <var>getCustomerPostRegisterPlugins</var>.</p>
+                                                            <p><b>CustomersRestApiDependencyProvider.php</b>
+                                                            </p><pre><code class="language-PHP line-numbers">&lt;?php
+  
+namespace Pyz\Glue\CustomersRestApi;
+use Spryker\Glue\CartsRestApi\Plugin\CustomersRestApi\UpdateCartCreateCustomerReferencePlugin;
+use Spryker\Glue\CustomersRestApi\CustomersRestApiDependencyProvider as SprykerCustomersRestApiDependencyProvider;
+ 
+class CustomersRestApiDependencyProvider extends SprykerCustomersRestApiDependencyProvider
+{
+	protected function getCustomerPostCreatePlugins(): array
+	{
+		return array_merge(parent::getCustomerPostCreatePlugins(), [
+			new UpdateCartCreateCustomerReferencePlugin(),
+		]);
+	}
+}
+				</code></pre>
+                                                            <p>Find or create <var>CartsRestApiDependencyProvider</var> in a project. Make sure that it extends <var>\Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider</var>.</p>
+                                                            <p>Find the <var>getQuoteCreatorPlugin</var> method and add <var>\Spryker\Zed\PersistentCart\Communication\Plugin\CartsRestApi\QuoteCreatorPlugin</var> to the plugin stack.</p>
+                                                            <p><b>CartsRestApiDependencyProvider.php</b>
+                                                            </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\CartsRestApi;
+ 
+use Spryker\Zed\CartsRestApi\CartsRestApiDependencyProvider as SprykerCartsRestApiDependencyProvider;
+use Spryker\Zed\PersistentCart\Communication\Plugin\CartsRestApi\QuoteCreatorPlugin;
+use Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface;
+ 
+class CartsRestApiDependencyProvider extends SprykerCartsRestApiDependencyProvider
+{
+	/**
+	* @return \Spryker\Zed\CartsRestApiExtension\Dependency\Plugin\QuoteCreatorPluginInterface
+	*/
+	protected function getQuoteCreatorPlugin(): QuoteCreatorPluginInterface
+	{
+		return new QuoteCreatorPlugin();
+	}
+}
+				</code></pre>
+                                                            <p>Find or create <var>QuoteDependencyProvider</var> in a project. Make sure that it extends <var>\Spryker\Zed\Quote\QuoteDependencyProvider</var>.</p>
+                                                            <p>Find the <var>getQuoteValidatorPlugins</var> method and add <var>\Spryker\Zed\Currency\Communication\Plugin\Quote\QuoteCurrencyValidatorPlugin</var>, <var>\Spryker\Zed\Price\Communication\Plugin\Quote\QuotePriceModeValidatorPlugin</var> and <var>\Spryker\Zed\Store\Communication\Plugin\Quote\QuoteStoreValidatorPlugin</var> to the plugin stack.</p>
+                                                            <p><b>CartsRestApiDependencyProvider.php</b>
+                                                            </p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Quote;
+ 
+use Spryker\Zed\Currency\Communication\Plugin\Quote\QuoteCurrencyValidatorPlugin;
+use Spryker\Zed\Price\Communication\Plugin\Quote\QuotePriceModeValidatorPlugin;
+use Spryker\Zed\Store\Communication\Plugin\Quote\QuoteStoreValidatorPlugin;
+use Spryker\Zed\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
+ 
+class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
+{
+	/**
+	* @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteValidatorPluginInterface[]
+	*/
+	protected function getQuoteValidatorPlugins(): array
+	{
+		return [
+			new QuoteCurrencyValidatorPlugin(),
+			new QuotePriceModeValidatorPlugin(),
+			new QuoteStoreValidatorPlugin(),
+		];
+	}
+}
+				</code></pre>
+                                                            <p>Run the following command:</p><pre><code class="language-bash">vendor/bin/console transfer:generate</code></pre>
+                                                            <p><i>Estimated migration time: 1 hour</i>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to Version 2.*</div></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>
@@ -247,9 +367,9 @@
 We have also added the API&#160;endpoints functionality to use CartsRestApi as a guest customer. <![CDATA[		]]></p>
                                                             <p>To migrate to the new version, do the following:		</p>
                                                             <ul>
-                                                                <li value="1">Find or create <var>CartsRestApiDependencyProvider</var> in a project. Make sure it extends <var>\Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider</var>.</li>
+                                                                <li value="1">Find or create <var>CartsRestApiDependencyProvider</var> in a project. Make sure that it extends <var>\Spryker\Glue\CartsRestApi\CartsRestApiDependencyProvider</var>.</li>
                                                                 <li value="2">Find the <var>getQuoteCollectionReaderPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
-                                                                <li value="3">Find the <var>getQuoteCreatorPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCollectionReader\CartQuoteCollectionReaderPlugin</var> to the plugin stack.</li>
+                                                                <li value="3">Find the <var>getQuoteCreatorPlugin</var> method and add <var>\Spryker\Glue\CartsRestApi\Plugin\QuoteCreator\SingleQuoteCreatorPlugin</var> to the plugin stack.</li>
                                                                 <p>
 				The file could look like this:
 			</p>
@@ -285,7 +405,7 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
 	}
 				</code></pre>
                                                                 <li value="4">
-                Find or create CustomersRestApiDependencyProvider in a project. Make sure it extends <var>\Spryker\Glue\CustomersRestApi\CustomersRestApiDependencyProvider</var>.
+                Find or create CustomersRestApiDependencyProvider in a project. Make sure that it extends <var>\Spryker\Glue\CustomersRestApi\CustomersRestApiDependencyProvider</var>.
             </li>
                                                                 <li value="5">
                 Find the <var>getCustomerPostRegisterPlugins</var> method and add <var>Spryker\Glue\CartsRestApi\Plugin\CustomerPostRegister\UpdateCartCustomerReferencePlugin</var> to the plugin stack.
@@ -471,7 +591,7 @@ We have also added the API&#160;endpoints functionality to use CartsRestApi as a
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Oct 30, 2018 </i>
+                                                    <p><i>Last review date: May 30, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
