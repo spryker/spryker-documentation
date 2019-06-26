@@ -114,9 +114,7 @@ function Anchorer () {
     };
 
     this.onClick = function(e) {
-        var spreader = e.currentTarget.previousSibling;
-        spreader.style.paddingTop = `${getHeaderHeight()}px`;
-        spreader.style.marginTop = `${-getHeaderHeight()}px`;
+
         var that = this;
         var href = $(e.currentTarget).attr('href');
 
@@ -137,9 +135,9 @@ function Anchorer () {
                 return this.nodeType === 3;
             }).remove();
             var id = that.normalize(text);
-            $element.attr('id',id);
+
             $element.prepend(that.createAnchor(id, text));
-            $element.prepend(that.createSpreader());
+
         });
     };
 
@@ -153,16 +151,8 @@ function Anchorer () {
             .replace(TEXT_TO_ID_REGEX, '-');
     };
 
-    this.createSpreader = function () {
-        var spreader = document.createElement('div');
-        spreader.classList.add('anchor-spreader');
-        spreader.style.paddingTop = `${this.headerHeight}px`;
-        spreader.style.marginTop = `${-this.headerHeight}px`;
-        return spreader;
-    }
-
     this.createAnchor = function(id, text) {
-        return `<a class="a-anchor js-anchorer__trigger" href="#${id}"><span class="a-anchor__target" id=""></span>${text}</a>`;
+        return `<a class="a-anchor js-anchorer__trigger" href="#${id}"><span class="a-anchor__target" id="${id}"></span>${text}</a>`;
     };
 
     this.scrollToAnchor = function(href, callback) {
@@ -176,8 +166,8 @@ function Anchorer () {
         if ($anchor.length < 1) {
             return;
         }
-        // header height logic changed with spreader to clear fixed header
-        var top = $anchor.offset().top - 0; //this.headerHeight;
+
+        var top = $anchor.offset().top - getHeaderHeight();
         console.log(top);
         this.$container.animate({
             scrollTop: top
@@ -836,7 +826,9 @@ function versionDisplay (){
 
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
-    anchorer.init();
+    if(!document.querySelector('.searchTopic')){
+        anchorer.init();
+    }
     asideNavCloseButton.init();
     showSearchButton.init();
     flHandler.init();
