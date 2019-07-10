@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="7zUgvW-7s0KjlNw2ll01Kg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="7zUgvW-7s0KjlNw2ll01Kg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="V0lVdUaj2k6q6kjmEce-cA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="V0lVdUaj2k6q6kjmEce-cA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -476,8 +476,17 @@
                                                     <p>The import will populate <var>spy_product_packaging_unit</var>, <var>spy_product_packaging_unit_amount</var> and <var>spy_product_packaging_lead_product</var>, <var>spy_product_packaging_unit_amount</var> tables with the respective data.</p>
                                                     <p>The packaging units information is saved in Storage after import: in the Administration Interface, under Maintenace-Storage menu, there ar Redis keys: <var>product_abstract_packaging:{redis_key_suffix_column}</var></p>
                                                     <p class="info">In the current implementation each packaging unit and lead product has to define sales units. It's enough to define the default "item" as base unit for the abstract and to define also "item" as one and the only sales unit for both the lead product and all related packaging units.</p>
+                                                    <h2>Current Constraints</h2>
+                                                    <ul>
+                                                        <li value="1">In the Spryker Commerce OS you cannot define packaging units for products. Currently, they are imported to the database manually.</li>
+                                                        <li value="2">We strive to shift all business logic to our backend, however, with Packaging Units, calculations are performed on Yves.</li>
+                                                        <li value="3">On the shopping cart as well as the shopping list page, products do not have a dropdown to change the packaging units. You can select a packaging unit on the product details page only.</li>
+                                                        <li value="4">A shopper cannot reorder the items with the selected packaging units as they are not added automatically. They should be added manually on the product details page.</li>
+                                                        <li value="5">In the <a href="../../cart/quick_order/quick-order-201903.htm">Quick Order</a> form and <a href="../../search_and_filter/search_widget_for_concrete_products/search-widget-for-concrete-products-201903.htm">search widget</a>, the products use the default packaging units that cannot be changed. Flexible packaging units are not supported on the Quick Order page.</li>
+                                                    </ul>
+                                                    <p class="example">Example: You have a product in your shop - a pen. And there exists a packaging unit for a pen - a box with a minimum amount of 5 items in it up to the maximum amount of 50 pens available. Every shopper can define the necessary amount of pens that will be included in the box and order several such boxes. But on the Quick Order page, if the customer adds a pen with the packaging unit 'box', the box consisting of minimum 5 items will be added by default.</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Feb 7, 2019 </i>
+                                                    <p><i>Last review date: Jul 08, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
