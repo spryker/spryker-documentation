@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="E-xZGP3sFE2xNdXWvt0Vgw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="E-xZGP3sFE2xNdXWvt0Vgw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="I7EwdNXcJkehWHWSQDbBbg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="I7EwdNXcJkehWHWSQDbBbg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -270,7 +270,7 @@ touch src/Pyz/Zed/HelloWorld/HelloWorldDependencyProvider.php</code></pre>
 {% block content %}
    Hello world!
 {% endblock %}</code></pre>
-                                                    <p><code>IndexController</code>at the moment is empty (its index action returns an empty array) :
+                                                    <p><code>IndexController</code> at the moment is empty (its index action returns an empty array) :
 
 </p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Communication\Controller;
@@ -301,22 +301,8 @@ class HelloWorldDependencyProvider extends AbstractBundleDependencyProvider
 
 For this, we’ll create a class that will contain the logic for generating the random salutation message; we’ll call it <code>MessageGenerator</code> and we will place it under the business layer.
 </p>
-                                                    <p><![CDATA[
-]]><b>To display a random salutation message</b>:</p>
-                                                    <table style="width: 100%;">
-                                                        <col />
-                                                        <thead>
-                                                            <tr>
-                                                                <th style="font-weight: normal;">
-                                                                    <li style="text-align: left;" value="1">1. Implement in this class the method that will return the message:
-
-</li>
-                                                                </th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p><b>To display a random salutation message</b>:</p>
+                                                    <p>1. Implement in this class the method that will return the message:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Business;
 
 class MessageGenerator
@@ -331,16 +317,7 @@ class MessageGenerator
         return $helloMessages[0];
     }
 }</code></pre>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>
-                                                                    <li value="1">2. Next, add a business factory so that we can get an instance of this class in the facade:
-</li>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>2. Next, add a business factory so that we can get an instance of this class in the facade:</p><pre><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Zed\HelloWorld\Business;
 
@@ -357,13 +334,7 @@ class HelloWorldBusinessFactory extends AbstractBusinessFactory
         return new MessageGenerator();
     }
 }</code></pre>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>3. Create the <code>HelloWorldFacade</code> and call this functionality from it:</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>3. Create the <code>HelloWorldFacade</code> and call this functionality from it:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Business;
 
 use Spryker\Zed\Kernel\Business\AbstractFacade;
@@ -381,15 +352,7 @@ class HelloWorldFacade extends AbstractFacade implements HelloWorldFacadeInterfa
          return  $this-&gt;getFactory()-&gt;createMessageGenerator()-&gt;generateHelloMessage();
     }
 }</code></pre>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>4. Modify the controller so that it calls the method you just added to your facade:
-
-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    <p>4. Modify the controller so that it calls the method you just added to your facade:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Zed\HelloWorld\Communication\Controller;
 
 use Spryker\Zed\Kernel\Communication\Controller\AbstractController;
@@ -410,22 +373,11 @@ class IndexController extends AbstractController
         ];
     }
 }</code></pre>
-                                                                </td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td>5. Modify the twig template to display the random salutation message instead of the static one we previously defined:
-</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td><pre><code class="language-PHP line-numbers">{% extends '@Gui/Layout/layout.twig' %}
+                                                    <p>5. Modify the twig template to display the random salutation message instead of the static one we previously defined:</p><pre><code class="language-PHP line-numbers">{% extends '@Gui/Layout/layout.twig' %}
 
 {% block content %}
     {{ helloMessage }}
 {% endblock %}</code></pre>
-                                                                </td>
-                                                            </tr>
-                                                        </tbody>
-                                                    </table>
                                                     <p data-mc-conditions="Spryker.DemoShop">We are done! <a href="http://zed.de.demoshop.local/hello-world" target="_blank">http://zed.mysprykershop.com/</a> now displays a random salutation message.</p>
                                                 </div>
                                             </div>
