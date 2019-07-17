@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="fF6w2hBqnk6WyktyJ021rw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="fF6w2hBqnk6WyktyJ021rw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UH3eg5v3zUGBof1H5oi8gg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UH3eg5v3zUGBof1H5oi8gg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,7 +241,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>HowTo Install Spryker In AWS Environment</h1>
+                                                    <h1>HowTo - Install Spryker in AWS Environment</h1>
                                                     <h2>Introduction</h2>
                                                     <p>This how-to is aimed to provide you with additional information about native configuration of AWS services and Spryker installation using AWS cloud as a base of infrastructure.</p>
                                                     <p>Following the instructions, you will get Spryker running on AWS. The first part is devoted to step-by-step configuration of AWS native services like RDS, Elasticsearch Service, ElastiCache to prepare a suitable infrustructure for running Spryker. The second part is the installation of Spryker itself.</p>
@@ -329,11 +329,11 @@
                                                             <ol>
                                                                 <li value="1">Open EC2 console.<br /><img src="../../resources/images/spryker-aws-installation/ec2-console.png" /><br /></li>
                                                                 <li value="2">Click <b>Launch instance.</b><br /><img src="../../resources/images/spryker-aws-installation/launch-instance.png" /><br /></li>
-                                                                <li value="3"><b>Select</b> the Ubuntu server with the <b>64-bit (x86)</b> configuration.<br /><img src="../../resources/images/spryker-aws-installation/choose-os.png" /><br /></li>
+                                                                <li value="3">Select the Ubuntu server with the <b>64-bit (x86)</b> configuration.<br /><img src="../../resources/images/spryker-aws-installation/choose-os.png" /><br /></li>
                                                                 <li value="4">Choose the instance type and click <b>Next: Configure Instance Details.</b><br /><img src="../../resources/images/spryker-aws-installation/choose-instance.png" /><br /></li>
                                                                 <li value="5">Add storage and click <b>Next: Add Tags.</b><br /><img src="../../resources/images/spryker-aws-installation/add-storage.png" /><br /></li>
                                                                 <li value="6">Add a Name tag and click <b>Next: Configure Security Group.</b><br /><img src="../../resources/images/spryker-aws-installation/add-tags.png" /><br /></li>
-                                                                <li value="7">Choose the security group which you have previously created and click <b>Review and Launch.</b><br /><img src="../../resources/images/spryker-aws-installation/security-group.png" /><br /></li>
+                                                                <li value="7">Choose the security group which you have previously created and click <b>Review and Launch.</b><br /></li>
                                                                 <li value="8">Choose the ssh key you have previously created, download it and click <b>Launch Instances.</b><br /><img src="../../resources/images/spryker-aws-installation/select-ssh-key.png" /></li>
                                                             </ol>
                                                             <h3>Connecting to the instance</h3>
@@ -537,7 +537,7 @@ sudo apt-get -q -y install nginx nginx-extras
 sudo rm /etc/nginx/sites-enabled/default</code></pre>
                                                             <h3>Nginx configuration</h3>
                                                             <ol>
-                                                                <li value="1">Update <var>{{YVES_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-yves.conf</var> using the template:
+                                                                <li value="1">Update <var>{{YVES_HOST}}</var> and <var>application_store variables</var>, and create <var>/etc/nginx/conf.d/vhost-yves.conf</var> using the template:
 			<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-yves.conf template</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-yves {
 server unix:/tmp/.fpm.yves.sock;
 }
@@ -549,6 +549,9 @@ keepalive_timeout 0;
 access_log /var/log/nginx/yves.log;
 
 root /data/public/Yves;
+										
+set $application_env staging;
+set $application_store DE;										
 
 # Maintenance mode
 #include /etc/nginx/maintenance.conf;
@@ -592,11 +595,17 @@ fastcgi_index index.php;
 include /etc/nginx/fastcgi_params;
 fastcgi_param SCRIPT_NAME /index.php;
 fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+
+fastcgi_param APPLICATION_ENV $application_env;
+fastcgi_param APPLICATION_STORE $application_store;
+
+more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';
+																				
 }
 
 }</code></pre></div></div></li>
                                                                 <li value="2">Create a passwd file by running the command:</li><pre><code class="language-shell">sudo htpasswd -c /etc/nginx/.htpasswd {{SOME_USER}}</code></pre>
-                                                                <li value="3">Update <var>{{ZED_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-zed.conf</var> using the template:</li>
+                                                                <li value="3">Update <var>{{ZED_HOST}}</var> and <var>application_store</var> variables, and create <var>/etc/nginx/conf.d/vhost-zed.conf</var> using the template:</li>
                                                                 <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-zed.conf template</a></span>
                                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-zed {
 server unix:/tmp/.fpm.zed.sock;
@@ -609,6 +618,9 @@ keepalive_timeout 0;
 access_log /var/log/nginx/zed.log;
 
 root /data/public/Zed;
+									
+set $application_env staging;
+set $application_store DE;
 
 # Maintenance mode
 
@@ -640,11 +652,16 @@ fastcgi_index index.php;
 include /etc/nginx/fastcgi_params;
 fastcgi_param SCRIPT_NAME /index.php;
 fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+									
+fastcgi_param APPLICATION_ENV $application_env;
+fastcgi_param APPLICATION_STORE $application_store;
+
+more_clear_headers 'X-Powered-By' 'X-Store' 'X-Locale' 'X-Env' 'Server';									
 }
 }</code></pre>
                                                                     </div>
                                                                 </div>
-                                                                <li value="4">Update <var>{{GLUE_HOST}}</var> variable and create <var>/etc/nginx/conf.d/vhost-glue.conf</var> using the template:</li>
+                                                                <li value="4">Update <var>{{GLUE_HOST}}</var> and <var>application_store</var> variables and create <var>/etc/nginx/conf.d/vhost-glue.conf</var> using the template:</li>
                                                                 <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vhost-glue.conf template</a></span>
                                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">upstream backend-glue {
 server unix:/tmp/.fpm.glue.sock;
@@ -874,7 +891,7 @@ Update <var>/etc/security/limits.conf</var> with new lines:
 <pre><code class="language-yaml">* soft nofile 65536
 * hard nofile 65536</code></pre>
 Apply limits for current session:
-<pre><code class="language-shell">ulimit -n 65535</code></pre><li value="3">Create logrotate configuration for Spryker:</li><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/logrotate.d/spryker</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">/data/data/*/logs/ZED/*.log {
+<pre><code class="language-shell">ulimit -n 65535</code></pre><li value="3">Create logrotate configuration for Spryker:</li><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/logrotate.d/spryker</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">/data/data/*/logs/*/*.log {
 daily
 missingok
 rotate 14
@@ -1041,7 +1058,7 @@ $config[StorageRedisConstants::STORAGE_REDIS_PORT] = {{ REDIS_PORT }};</code></p
 composer install</code></pre>
                                                                 </li>
                                                                 <li value="5">Add Jenkins <var>Max # of builds to keep</var> configuration by updating the  <var>&lt;numToKeep&gt;-1&lt;/numToKeep&gt;</var> parameter in <var>/data/vendor/spryker/setup/src/Spryker/Zed/Setup/Business/Model/Cronjobs.php</var> to the desired one. For example, if you wanted to keep 100 items in the Jenkins history, you would change the parameter from -1 to 100 to look this way: <var>&lt;numToKeep&gt;100&lt;/numToKeep&gt;</var></li>
-                                                                <li value="6">Crete the following file:</li>
+                                                                <li value="6">Create the following file:</li>
                                                                 <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/data/config/install/staging.yml</a></span>
                                                                     <div class="MCDropDownBody dropDownBody"><pre><code class="line-numbers">env:
     APPLICATION_ENV: staging

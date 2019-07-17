@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="pw01ZkxNu0KFy7xSJ2Fz0Q">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="pw01ZkxNu0KFy7xSJ2Fz0Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="gZA9keKY5kSy1F0bYuNkkg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="gZA9keKY5kSy1F0bYuNkkg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -267,7 +267,7 @@
                                                     <p>Usually, data is stored in <i>Yves</i> differently than in <i>Zed</i>, as the data model used in <i>Redis</i> and <i>Elasticsearch </i>is more optimized for use by the frontend. So, we need to transform it before sending. In P&amp;S, data is always designed with the help of <b>Transfer Objects</b> as a dual contract between <i>Zed</i> and <i>Yves</i>.</p>
                                                     <p>Let us start with a simple transfer object. </p>
                                                     <p class="tip"><b>Spryk</b>: Using Spryk to Create Module</p>
-                                                    <p>Create <code>hello_wrold.transfer.xml</code> in <code>Shared\HelloSpryker\Transfer</code>. It will be easier to display data on the frontend, if we store information in <i>Redis</i> as name-message pairs. For this reason, we will create a Transfer Object that holds a <code>name</code> and a <code>message</code>.</p>
+                                                    <p>Create <code>hello_world.transfer.xml</code> in <code>Shared\HelloSpryker\Transfer</code>. It will be easier to display data on the frontend, if we store information in <i>Redis</i> as name-message pairs. For this reason, we will create a Transfer Object that holds a <code>name</code> and a <code>message</code>.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />hello_spryker.transfer.xml</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-XML line-numbers">&lt;transfer name="HelloSprykerStorage"&gt;
     &lt;property name="name" type="string"/&gt;
@@ -452,7 +452,7 @@ Hello Spryker!
                                                     <p class="tip">You can use the <code>-k</code> option when running the command to keep messages in the queue for debugging purposes: <code>queue:task:start event -k</code>.</p>
                                                     <p>The next step is to publish the data to <i>Redis</i>.</p>
                                                     <h2>5. Storage Table</h2>
-                                                    <p>To publish data, we need an intermediate table where data will be stored before sending it to <i>Redis</i>. This table is special table and it designed for this specific reason, so you need to create the table and then check it together afterward:</p>
+                                                    <p>To publish data, we need an intermediate table where data will be stored before sending it to <i>Redis</i>. This table is a special table and it is designed for this specific reason, so you need to create the table and then check it together afterward:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />spy_hello_spryker.schema.xml</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;table name="spy_hello_spryker_message_storage" idMethod="native" allowPkInsert="true"&gt;
     &lt;column name="id_hello_spryker_message_storage" type="BIGINT" autoIncrement="true" primaryKey="true"/&gt;
@@ -710,10 +710,10 @@ class MessageStorageReader
             -&gt;generateKey($synchronizationDataTransfer);
 
         $data = $this-&gt;storageClient-&gt;get($key);
-        
+
         $messageStorageTransfer = new HelloSprykerStorageTransfer();
         $messageStorageTransfer-&gt;fromArray($data, true);
-        
+
         return $messageStorageTransfer;
     }
 }
