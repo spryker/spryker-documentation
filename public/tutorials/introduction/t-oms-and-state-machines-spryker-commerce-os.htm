@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="BgUkGEHfREaphgAqIssMpA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BgUkGEHfREaphgAqIssMpA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ewLJQm1YUE6Ts9y1v7n9Fw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ewLJQm1YUE6Ts9y1v7n9Fw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,7 +239,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Tutorial - OMS and State Machines - <span class="GeneralProductName">Spryker Commerce OS</span></h1>
+                                                    <h1>Tutorial - OMS and State Machines - Spryker Commerce OS</h1>
                                                     <p class="info">This tutorial is also available on the Spryker Training web-site. For more information and hands-on exercises, visit the <a href="https://training.spryker.com/courses/developer-bootcamp">Spryker Training</a> web-site.</p>
                                                     <h2>Challenge Description</h2>
                                                     <p>In this task you will create a full order management process (OMS) using the Spryker state machine and then use it in your shop.</p>
@@ -284,7 +284,7 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
 &lt;/states&gt;					
 					</code></pre></p></li>
                                                                 <li value="5">Check the state machine graph while building it.
-					<ol><li value="1">Go to the OMS page in the Backend Office, you will see your state machine <b>Demo01</b>.</li><li value="2">Click on it and you will see the graph that represents your XML file. </li><p class="info">Whenever you change the skeleton in the XML file, refresh the page so see the new changes.</p></ol></li>
+					<ol><li value="1">Go to the <b>Maintenance → OMS</b> page in the Backend Office, you will see your state machine <b>Demo01</b>.</li><li value="2">Click on it and you will see the graph that represents your XML file. </li><p class="info">Whenever you change the skeleton in the XML file, refresh the page so see the new changes.</p></ol></li>
                                                                 <li value="6">Add the rest of the states to the state machine. Refresh the state machine graph after adding them.
 					<p><pre><code class="language-PHP line-numbers">
 &lt;states&gt;
@@ -389,58 +389,56 @@ $config[OmsConstants::ACTIVE_PROCESSES] = [
 					<p class="info">In a real scenario, this command would call a payment provider to authorize the payment.</p><p>A command in the Spryker state machine is added to an event. So add the command <i>Pay</i> to the pay event.
 					<pre><code>
 &lt;event name="pay" onEnter="true" command="Demo/Pay" /&gt;
-</code></pre></p><p class="info">Refresh the graph again. You will see that the command is added with the label <i>not implemented</i>. This means that the PHP implementation is not hooked yet.</p></li>
+</code></pre></p><p class="info">Refresh the graph again. You will see that the command is added with the label <i>not implemented</i>. This means that the PHP implementation has not been hooked yet.</p></li>
                                                                 <li value="2">The next step is to add the command and hook it into the skeleton. The command is simply a Spryker plugin connected to the OMS module. 
-					<p class="info">For the demo, we will add the command plugin directly to the OMS module. In a real life scenario, you can include the plugin in any other module depending on your software design of your shop.</p><p>Add the command plugin in <code>src/Pyz/Zed/Oms/Communication/Plugin/Command/Demo</code> and call it <i>PayCommand</i>.</p><p>As the command is a plugin, it should implement some interface. The interface for the command here is <code>CommandByOrderInterface</code> which has the method <i>run();</i></p><p><pre><code class="language-PHP line-numbers">	
-namespace Pyz\Zed\Oms\Communication\Plugin\Command\Demo;
- 
+					<p class="info">For the demo, we will add the command plugin directly to the OMS module. In a real life scenario, you can include the plugin in any other module depending on your software design of your shop.</p><p>Add the command plugin in <code>src/Pyz/Zed/Oms/Communication/Plugin/Command/Demo</code> and call it <i>PayCommand</i>.</p><p>As the command is a plugin, it should implement some interface. The interface for the command here is <code>CommandByOrderInterface</code> which has the method <i>run();</i></p><p><pre><code class="language-PHP line-numbers">namespace Pyz\Zed\Oms\Communication\Plugin\Command\Demo;
+
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Command\AbstractCommand;
 use Spryker\Zed\Oms\Dependency\Plugin\Command\CommandByOrderInterface;
- 
+
 class PayCommand extends AbstractCommand implements CommandByOrderInterface
 {
 	/**
-	 *
-	 * Command which is executed per order basis
-	 *
-	 * @api
-	 *
-	 * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
-	 * @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
-	 * @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
-	 *
-	 * @return array
-	 */
-	public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
+	* {@inheritDoc}
+	*
+	* @api
+	*
+	* @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem[] $orderItems
+	* @param \Orm\Zed\Sales\Persistence\SpySalesOrder $orderEntity
+	* @param \Spryker\Zed\Oms\Business\Util\ReadOnlyArrayObject $data
+	*
+	* @return array
+	*/
+	public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data): array
 	{
 		return [];
 	}
 }
 					</code></pre></p></li>
                                                                 <li value="3">The next step is to hook the command to your state machine using the <code>OmsDependencyProvider</code>. 
-					<p>In the <code>OmsDependencyProvider</code>, there is a method called <code>provideBusinessLayerDependencies</code>.</p><p>Add your new command to the command collection inside the container and use the same command name you have used in the XML skeleton like this:</p><p><pre><code class="language-PHP line-numbers">
-/**
- * @param \Spryker\Zed\Kernel\Container $container
- *
- * @return \Spryker\Zed\Kernel\Container
- */
-public function provideBusinessLayerDependencies(Container $container)
+						<p>In the <code>OmsDependencyProvider</code>, there is a method called <code>extendCommandPlugins()</code> which is called from <var>provideBusinessLayerDependencies()</var> one.</p><p>Add your new command to the command collection inside the container and use the same command name you have used in the XML skeleton like this:</p><p><pre><code class="language-PHP line-numbers">/**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Spryker\Zed\Kernel\Container
+*/
+protected function extendCommandPlugins(Container $container): Container
 {
-	$container = parent::provideBusinessLayerDependencies($container);
- 
-	$container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
+	$container-&gt;extend(static::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection): CommandCollectionInterface {
+		...
+
 		$commandCollection-&gt;add(new PayCommand(), 'Demo/Pay');
- 
+
+
 		return $commandCollection;
 	});
- 
+
 	return $container;
 }
 					</code></pre></p><p class="info">Refresh the graph. You should not see the <i>not implemented</i> label anymore meaning that the state machine  recognizes the command.</p></li>
                                                                 <li value="4">The next step is to add the condition in the same way but using the <code>ConditionInterface</code> interface for the plugin instead of the command one. The state machine engine recognizes where to move next using the event name. In this case, the transitions <i>paid-&gt;shipped</i> and <i>paid-&gt;unauthorized</i> should use the same event name with a condition on one of the transitions. 
-					<p class="info">The machine then will examine the condition, if it returns true then go to shipped state, otherwise go to unauthorized.</p><p>The skeleton will look like this:
+					<p class="info">The machine then will examine the condition, if it returns 'true', then go to the 'shipped' state, otherwise go to 'unauthorized'.</p><p>The skeleton will look like this:
 <pre><code class="language-PHP line-numbers">
 &lt;transition condition="Demo/IsAuthorized"&gt;
 	&lt;source&gt;new&lt;/source&gt;
@@ -454,25 +452,24 @@ public function provideBusinessLayerDependencies(Container $container)
 	&lt;event&gt;pay&lt;/event&gt;
 &lt;/transition&gt;									
 </code></pre></p><p>The condition plugin:
-<pre><code class="language-PHP line-numbers">
-namespace Pyz\Zed\Oms\Communication\Plugin\Condition\Demo;
- 
+							<pre><code class="language-PHP line-numbers">namespace Pyz\Zed\Oms\Communication\Plugin\Condition\Demo;
+
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Spryker\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 use Spryker\Zed\Oms\Dependency\Plugin\Condition\ConditionInterface;
- 
+
 class IsAuthorizedCondition extends AbstractCondition implements ConditionInterface
 {
 	/**
-	 * @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
-	 *
-	 * @return bool
-	 */
-	public function check(SpySalesOrderItem $orderItem)
+	* @param \Orm\Zed\Sales\Persistence\SpySalesOrderItem $orderItem
+	*
+	* @return bool
+	*/
+	public function check(SpySalesOrderItem $orderItem): bool
 	{
-			return true;
+		return true;
 	}
-}							
+}						
 </code></pre></p><p>And the <code>OmsDependencyProvider</code>:
 <pre><code class="language-PHP line-numbers">		
 /**
@@ -480,24 +477,18 @@ class IsAuthorizedCondition extends AbstractCondition implements ConditionInterf
  *
  * @return \Spryker\Zed\Kernel\Container
  */
-public function provideBusinessLayerDependencies(Container $container)
+protected function extendConditionPlugins(Container $container): Container
 {
-	$container = parent::provideBusinessLayerDependencies($container);
-	$container-&gt;extend(self::COMMAND_PLUGINS, function (CommandCollectionInterface $commandCollection) {
-		$commandCollection-&gt;add(new PayCommand(), 'Demo/Pay');
+	$container-&gt;extend(static::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection): ConditionCollectionInterface {
+		...
  
-		return $commandCollection;
-	});
+		$conditionCollection-&gt;add(new IsAuthorizedCondition(), 'Demo/IsAuthorized');
  
-	$container-&gt;extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
-			$conditionCollection-&gt;add(new IsAuthorizedCondition(), 'Demo/IsAuthorized');
- 
-			return $conditionCollection;
+		return $conditionCollection;
 	});
  
 	return $container;
-}
-</code></pre></p></li>
+}</code></pre></p></li>
                                                             </ol>
                                                             <p class="info">The order process for your shop is done. Refresh the graph and check it out.</p>
                                                         </div>
@@ -520,26 +511,26 @@ $config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
                                                             <ol>
                                                                 <li value="1">Go to the <a href="http://www.de.suite.local/">shop</a>, chose a product, add it to cart, and checkout using the Invoice payment method.</li>
                                                                 <li value="2">Open the <a href="http://zed.de.demoshop.local/sales">orders page</a> in Zed UI and then open your order. 
-                        <p class="info">This order is now applying the process you have defined in the state machine. </p></li>
-                                                                <li value="3">You will notices that there is a button next to your order called <b>ship</b>, this one triggers the manual event ship.</li>
+                        <p class="info">This order is now applying the process you have defined in the state machine.</p></li>
+                                                                <li value="3">You will notice that there is a button next to your order called <b>ship</b>, this one triggers the manual event ship.</li>
                                                                 <li value="4">You can click on the last state name under the state column to see what the current state for a specific item is.
 						<p class="info"> The current state has a yellowish background color.</p></li>
                                                                 <li value="5">Click on ship to move the item into the next state.</li>
                                                                 <li value="6">Click again on the last state name and check the current state.
-					<p class="tip">You can keep moving the item until the order is closed.</p></li>
+						<p class="tip">You can keep moving the item until the order is closed.</p></li>
                                                             </ol>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Nice Addition</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>Along with the nice representation of the state machine as a graph, Spryker provides a flag called <b>happy</b>.</p>
-                                                            <p>This flags add green arrows on the transitions in order to define the happy path of an order item.</p>
+                                                            <p>This flag adds green arrows on the transitions in order to define the happy path of an order item.</p>
                                                             <p>To add this flag, just write <code>happy = "true"</code> on the transitions that are part of your process happy path and refresh the graph.</p>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Jul 20, 2018 </i>
+                                                    <p><i>Last review date: Jul 11, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>

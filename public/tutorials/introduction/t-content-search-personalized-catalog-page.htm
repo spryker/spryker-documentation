@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="iVMLPyi8XkWqqcFqxqMBpg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iVMLPyi8XkWqqcFqxqMBpg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="B6HwueyKRkel4-g-eGC08Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="B6HwueyKRkel4-g-eGC08Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -250,7 +250,7 @@
                                                             <ol>
                                                                 <li value="1">
                         First, we will create the CMS page template. 
-						<p>In <code>src/Pyz/Shared/Cms/Theme/default/templates</code>, add a new directory called <i>my-offers</i>.</p><p>Inside this folde, add a twig file called <i>my-offers.twig</i>.</p><p><pre><code class="language-PHP line-numbers">
+						<p>In <code>src/Pyz/Shared/Cms/Theme/default/templates</code>, add a new directory called <i>my-offers</i>.</p><p>Inside this folder, add a twig file called <i>my-offers.twig</i>.</p><p><pre><code class="language-PHP line-numbers">
 {% extends template('page-layout-main') %}
  
 {% define data = {
@@ -272,12 +272,12 @@
 	&lt;/div&gt;
 {% endblock %}										
 						</code></pre></p></li>
-                                                                <li value="2">Create a new CMS page from CMS tab in the back office. Use the twig template you have just added, and use the URL <i>/my-offers</i>. 
+                                                                <li value="2">Create a new CMS page from CMS tab in the back office. Use the twig template you have just added, and use the URL <i>/my-offers</i> for every configured locale. 
 					</li>
                                                                 <li value="3">Click <b>Next</b> and fill the title and content of the page. 
 					<p>Use any title and description you like to add.</p></li>
                                                                 <li value="4"> Save the page, and publish it.</li>
-                                                                <li value="5">Now, we need to test the CMS page. Go to the <b>My Offers</b> page in your shop: <a href="http://www.de.suite.local/my-offers">http://www.de.suite.local/my-offers</a>.</li>
+                                                                <li value="5">Now, we need to test the CMS page. Go to the <b>My Offers</b> page in your shop: <a href="http://www.de.suite.local/my-offers">http://www.de.suite-nonsplit.local/my-offers</a>.</li>
                                                             </ol>
                                                             <p>That is it! It is very simple to add a CMS page and publish it.</p>
                                                             <p>Next, let's get the personalized products and add them to the page.</p>
@@ -289,8 +289,8 @@
                                                             <p>So, mainly we will work with Yves to get the request from the shop, and the client to pass the request to <b>Elasticsearch</b> and get the response back.</p>
                                                             <ol>
                                                                 <li value="1">First, create a new Yves module in <code>src/Pyz/Yves</code> and call it <b>PersonalizedProduct</b>.</li>
-                                                                <li value="2">Create a <code>PersonalizedProductControllerProvider</code> inside <code>src/Pyz/Yves/PersonalizedProduct/Plugin</code> and add the route to the personalized products inside it.
-					<p><pre><code class="language-PHP line-numbers">
+                                                                <li value="2">Create a <code>PersonalizedProductControllerProvider</code> inside <code>src/Pyz/Yves/PersonalizedProduct/Plugin/Provider</code> and add the route to the personalized products inside it.
+					<p><pre xml:space="preserve"><code class="language-PHP line-numbers">
 namespace Pyz\Yves\PersonalizedProduct\Plugin\Provider;
  
 use Silex\Application;
@@ -298,14 +298,14 @@ use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvi
  
 class PersonalizedProductControllerProvider extends AbstractYvesControllerProvider
 {
-	const PERSONALIZED_PRODUCT_INDEX = 'personalized-product-index';
+	public const PERSONALIZED_PRODUCT_INDEX = 'personalized-product-index';
  
 		/**
 		 * @param \Silex\Application $app
 		 *
 		 * @return void
 		 */
-		protected function defineControllers(Application $app)
+		protected function defineControllers(Application $app): voi
 		{
 			$this-&gt;createGetController('/personalized-product/{limit}', static::PERSONALIZED_PRODUCT_INDEX, 'PersonalizedProduct', 'Index', 'index')
 				-&gt;value('limit', 10)
@@ -314,23 +314,23 @@ class PersonalizedProductControllerProvider extends AbstractYvesControllerProvid
 }
 					</code></pre></p><div class="info">The <i>value()</i> method gives a default value in case the limit value is not passed from the URL.
 							<p>The <i>assert()</i> method checks if the limit value is a positive integer.</p></div></li>
-                                                                <li value="3">Register the <code>PersonalizedProductControllerProvider</code> in the method <code>getControllerProviderStack()</code> inside YvesBootstrap.</li>
+                                                                <li value="3">Register the <code>PersonalizedProductControllerProvider</code> in the <code>getControllerProviderStack()</code> method inside YvesBootstrap.</li>
                                                                 <li value="4">Create an <i>IndexController</i> for the <b>PersonalizedProduct</b> module in <code>src/Pyz/Yves/PersonalizedProduct/Controller</code> and add an <i>indexAction()</i>. 
-					<p>Then add the twig template for the controller and the action in <code>src/Pyz/Yves/PersonalizedProduct/Theme/default/views/index</code> and call it <i>index.twig</i>.</p><p><pre><code class="language-PHP line-numbers">
+					<p>Then, add the twig template for the controller and the action in <code>src/Pyz/Yves/PersonalizedProduct/Theme/default/views/index</code> and call it <i>index.twig</i>.</p><p><pre xml:space="preserve"><code class="language-PHP line-numbers">
 namespace Pyz\Yves\PersonalizedProduct\Controller;
  
 use Spryker\Yves\Kernel\Controller\AbstractController;
+use Spryker\Yves\Kernel\View\View;
  
 class IndexController extends AbstractController
 {
 	/**
-	 * @param $limit
+	 * @param int $limit
 	 *
-	 * @return array
-	 */
-	public function indexAction($limit)
+	 * @return View</code></pre><pre xml:space="preserve"><code class="language-PHP line-numbers">	 */
+	public function indexAction($limit): View
 	{
-		return [];
+		return $this-&gt;view([], [], '@PersonalizedProduct/views/index/index.twig');
 	}
 }								
 </code></pre></p><p><pre><code class="language-PHP line-numbers">
@@ -340,9 +340,12 @@ class IndexController extends AbstractController
 	{{ 'My Personalized Products' }}
 {% endblock %}									
 </code></pre></p></li>
-                                                                <div class="info">For now, the Yves part is done. You can now go to <a href="http://www.de.suite.local/personalized-product/12">http://www.de.suite.local/personalized-product/12</a> and get the personalized products page.
-					<p>Now try <a href="http://www.de.suite.local/personalized-product/not-positive-integer">http://www.de.suite.local/personalized-product/not-positive-integer</a>, this should result in an <code>404</code> error as the rout in not defined.</p><p>The next set of steps is for work on the client. By performing those, you will connect your module to Elasticsearch. First, you need a client for that in order to connect Yves to Elasticsearch.</p></div>
-                                                                <li value="5">Create the PersonalizedProduct's client directory in <b>src/Pyz/Client</b> and call it <i>PersonalizedProduct</i> and add the client class and interface.
+                                                                <div class="info">For now, the Yves part is done. You can now go to <a href="http://www.de.suite.local/personalized-product/12">http://www.de.suite-nonsplit.local/personalized-product/12</a> and get the personalized products page.
+					<p>Now try <a href="http://www.de.suite.local/personalized-product/not-positive-integer">http://www.de.suite-nonsplit.local/personalized-product/not-positive-integer</a>, this should result in an <code>404</code> error as the rout in not defined.</p></div>
+                                                            </ol>
+                                                            <p>The next set of steps is for work on the client. By performing those, you will connect your module to Elasticsearch. First, you need a client for that in order to connect Yves to Elasticsearch.</p>
+                                                            <ol>
+                                                                <li value="1">Create the PersonalizedProduct's client directory in <b>src/Pyz/Client</b> and call it <i>PersonalizedProduct</i> and add the client class and interface.
 					<p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\PersonalizedProduct;
  
@@ -353,7 +356,7 @@ interface PersonalizedProductClientInterface
 	 *
 	 * @return array
 	 */
-	public function getPersonalizedProducts($limit);
+	public function getPersonalizedProducts(int $limit): array;
 }						
 						</code></pre></p><p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\PersonalizedProduct;
@@ -367,15 +370,15 @@ class PersonalizedProductClient extends AbstractClient implements PersonalizedPr
 	 *
 	 * @return array
 	 */
-	public function getPersonalizedProducts($limit)
+	public function getPersonalizedProducts(int $limit): array
 	{
 	}
 }									
 									</code></pre></p></li>
-                                                                <li value="6">To get the products from Elasticsearch, we need to use the SearchClient. In the SearchClient there is the method <code>search()</code> that queries the search engine and takes a search query and an array of formatters as parameters. So, we need three main steps here: 
+                                                                <li value="2">To get the products from Elasticsearch, we need to use the SearchClient. In the SearchClient there is the <code>search()</code> method that queries the search engine and takes a search query and an array of formatters as parameters. So, we need three main steps here: 
 					<ul><li value="1">create the query</li><li value="2">get the formatters </li><li value="3">get the SearchClient.</li></ul>Then we can hook things together. 
 						<p>First, let's create the query. The query is basically a plugin implementing the QueryInterface. 
-						<ol><li value="1">Add the following directory structure inside the client's directory: Plugin/Elasticsearch/Query.</li><li value="2">Then add the query plugin inside it and call it PersonalizedProductQueryPlugin:</li></ol></p><p><pre><code class="language-PHP line-numbers">								
+						<ol><li value="1">Add the following directory structure inside the client's directory: <var>Plugin/Elasticsearch/Query</var>.</li><li value="2">Then add the query plugin inside it and call it <var>PersonalizedProductQueryPlugin</var>:</li></ol></p><p><pre xml:space="preserve"><code class="language-PHP line-numbers">								
 namespace Pyz\Client\PersonalizedProduct\Plugin\Elasticsearch\Query;
  
 use Elastica\Query;
@@ -397,7 +400,7 @@ class PersonalizedProductQueryPlugin implements QueryInterface
 	/**
 	 * @param int $limit
 	 */
-	public function __construct($limit)
+	public function __construct(int $limit)
 	{
 		$this-&gt;limit = $limit;
 	}
@@ -405,16 +408,10 @@ class PersonalizedProductQueryPlugin implements QueryInterface
 	/**
 	 * @return \Elastica\Query
 	 */
-	public function getSearchQuery()
+	public function getSearchQuery(): Query
 	{
-		$boolQuery = (new BoolQuery())
-			-&gt;addMust((new FunctionScore())
-				-&gt;setQuery(new MatchAll())
-				-&gt;addFunction('random_score', ['seed' =&gt; session_id()])
-				-&gt;setScoreMode('sum'))
-			-&gt;addMust((new Match())
-				-&gt;setField(PageIndexMap::TYPE, ProductSearchConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT));
- 
+		$boolQuery = $this-&gt;createBoolQuery();
+			 
 		$query = (new Query())
 			-&gt;setSource([PageIndexMap::SEARCH_RESULT_DATA])
 			-&gt;setQuery($boolQuery)
@@ -422,185 +419,183 @@ class PersonalizedProductQueryPlugin implements QueryInterface
  
 		return $query;
 	}
-}								
-									</code></pre></p><p class="info">As you notice, we have the limit passed in the constructor of the query plugin. Also, the seed value is the <code>session_id()</code> of the customer and it is used with the random score from Elasticsearch. Again, you can change these values according to your needs.</p></li>
-                                                                <li value="7">Both the formatters and the <b>SearchClient</b> are and external dependency to our <code>PersonalizedProductClient</code>, therefore we need to use the dependency provider to get them and inject them inside our client. Create the <code>PersonalizedProductDependencyProvider</code> in <code>src/Pyz/Client</code> and get both the formatters array and the <b>SearchClient</b>. 
-					<p>The formatter that we need to use here is the <code>RawCatalogSearchResultFormatterPlugin</code>.</p><p>Your dependency provider will look like this:</p><p><pre><code class="language-PHP line-numbers">
+	/**
+	* @return BoolQuery
+	*/
+	protected function createBoolQuery(): BoolQuery
+	{
+		return (new BoolQuery())
+			-&gt;addMust((new FunctionScore())
+				-&gt;setQuery(new MatchAll())
+				-&gt;addFunction('random_score', ['seed' =&gt; session_id()])
+				-&gt;setScoreMode('sum'))
+			-&gt;addMust((new Match())
+				-&gt;setField(PageIndexMap::TYPE, ProductSearchConfig::RESOURCE_TYPE_PRODUCT_ABSTRACT));
+	}
+} 									</code></pre></p><p class="info">As you notice, we have the limit passed in the constructor of the query plugin. Also, the seed value is the <code>session_id()</code> of the customer and it is used with the random score from Elasticsearch. Again, you can change these values according to your needs.</p></li>
+                                                                <li value="3">Both formatters and <b>SearchClient</b> are and external dependency to our <code>PersonalizedProductClient</code>, therefore we need to use the dependency provider to get them and inject them inside our client. Create the <code>PersonalizedProductDependencyProvider</code> in <code>src/Pyz/Client</code> and get both the formatters array and the <b>SearchClient</b>. 
+					<p>The formatter that we need to use here is the <code>RawCatalogSearchResultFormatterPlugin</code>.</p><p>Your dependency provider will look like this:</p><p><pre xml:space="preserve"><code class="language-PHP line-numbers">
 namespace Pyz\Client\PersonalizedProduct;
- 
+
 use Spryker\Client\Catalog\Plugin\Elasticsearch\ResultFormatter\RawCatalogSearchResultFormatterPlugin;
 use Spryker\Client\Kernel\AbstractDependencyProvider;
 use Spryker\Client\Kernel\Container;
- 
+use Spryker\Client\Search\SearchClientInterface;
+
 class PersonalizedProductDependencyProvider extends AbstractDependencyProvider
 {
-	const CLIENT_SEARCH = 'CLIENT_SEARCH';
-	const CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS = 'CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS';
- 
+	public const CLIENT_SEARCH = 'CLIENT_SEARCH';
+	public const PLUGINS_CATALOG_SEARCH_RESULT_FORMATTER = 'PLUGINS_CATALOG_SEARCH_RESULT_FORMATTER';
+
 	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	public function provideServiceLayerDependencies(Container $container)
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	public function provideServiceLayerDependencies(Container $container): Container
 	{
 		$container = $this-&gt;addSearchClient($container);
 		$container = $this-&gt;addCatalogSearchResultFormatterPlugins($container);
- 
+
 		return $container;
 	}
- 
+
 	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	protected function addSearchClient(Container $container)
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	protected function addSearchClient(Container $container): Container
 	{
-		$container[static::CLIENT_SEARCH] = function (Container $container) {
+		$container-&gt;set(static::CLIENT_SEARCH, function (Container $container): SearchClientInterface {
 			return $container-&gt;getLocator()-&gt;search()-&gt;client();
-		};
- 
+		});
+
 		return $container;
 	}
- 
-	public function addCatalogSearchResultFormatterPlugins($container)
+
+	/**
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	public function addCatalogSearchResultFormatterPlugins(Container $container): Container
 	{
-		$container[static::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS] = function () {
+		$container-&gt;set(static::PLUGINS_CATALOG_SEARCH_RESULT_FORMATTER, function (): array {
 			return [
 				new RawCatalogSearchResultFormatterPlugin()
 			];
-		};
- 
+		});
+
 		return $container;
 	}
 }
-</code></pre></p></li>
-                                                                <li value="8">To use the dependencies from the <code>PersonalizedProductDependencyProvider</code>, we need the factory. Create the <code>PersonalizedProductFactory</code> in <code>src/Pyz/Client</code>, then get the dependencies and create the <code>PersonalizedProductQueryPlugin</code> in order for them to be used from the client.
-<p><pre><code class="language-PHP line-numbers">						
-namespace Pyz\Client\PersonalizedProduct;
+					</code></pre></p></li>
+                                                                <li value="4">To use the dependencies from the <code>PersonalizedProductDependencyProvider</code>, we need the factory. Create the <code>PersonalizedProductFactory</code> in <code>src/Pyz/Client</code>, then get the dependencies and create the <code>PersonalizedProductQueryPlugin</code> in order for them to be used from the client.
+						<p><pre><code class="language-PHP line-numbers">namespace Pyz\Client\PersonalizedProduct;
  
 use Pyz\Client\PersonalizedProduct\Plugin\Elasticsearch\Query\PersonalizedProductQueryPlugin;
 use Spryker\Client\Kernel\AbstractFactory;
  
 class PersonalizedProductFactory extends AbstractFactory
 {
-	/**
-	 * @param $limit
-	 *
-	 * @return PersonalizedProductQueryPlugin
-	 */
-	public function createPersonalizedProductsQueryPlugin($limit)
-	{
-		return new PersonalizedProductQueryPlugin($limit);
-	}
- 
-	/**
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 *
-	 * @return array
-	 */
-	public function getSearchQueryFormatters()
-	{
-		return $this-&gt;getProvidedDependency(PersonalizedProductDependencyProvider::CATALOG_SEARCH_RESULT_FORMATTER_PLUGINS);
-	}
- 
-	/**
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 *
-	 * @return \Spryker\Client\Search\SearchClientInterface
-	 */
-	public function getSearchClient()
-	{
-		return $this-&gt;getProvidedDependency(PersonalizedProductDependencyProvider::CLIENT_SEARCH);
-	}
+/**
+* @param int $limit
+*
+* @return PersonalizedProductQueryPlugin
+*/
+public function createPersonalizedProductsQueryPlugin(int $limit): PersonalizedProductQueryPlugin
+{
+	return new PersonalizedProductQueryPlugin($limit);
+}
+
+/** 
+* @return \Spryker\Client\Search\Dependency\Plugin\ResultFormatterPluginInterface[] 
+*/
+public function getSearchQueryFormatters(): array
+{
+	return $this-&gt;getProvidedDependency(PersonalizedProductDependencyProvider::PLUGINS_CATALOG_SEARCH_RESULT_FORMATTER);
+}
+
+/**
+* @return \Spryker\Client\Search\SearchClientInterface
+*/
+public function getSearchClient(): SearchClientInterface
+{
+	return $this-&gt;getProvidedDependency(PersonalizedProductDependencyProvider::CLIENT_SEARCH);
 }
 						</code></pre></p></li>
-                                                                <li value="9">The client now can get all the objects it needs to send the search query and to get the response back from Elasticsearch. 
-					<p><pre><code class="language-PHP line-numbers">
-/**
- * @param int $limit
- *
- * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
- *
- * @return array
- */
-public function getPersonalizedProducts($limit)
+                                                                <li value="5">The client now can get all the objects it needs to send the search query and to get the response back from Elasticsearch. 
+						<p><pre><code class="language-PHP line-numbers">/**
+* @param int $limit
+*
+* @return array
+*/
+public function getPersonalizedProducts(int $limit): array
 {
 	$searchQuery = $this
 		-&gt;getFactory()
-		-&gt;createPersonalizedProductsQueryPlugin($limit);
- 
-	$searchQueryFromatters = $this
+		-&gt;createPersonalizedProductQueryPlugin($limit);
+
+	$searchQueryFormatters = $this
 		-&gt;getFactory()
 		-&gt;getSearchQueryFormatters();
- 
+
 	$searchResult = $this-&gt;getFactory()
 		-&gt;getSearchClient()
-		-&gt;search(
-			$searchQuery,
-			$searchQueryFromatters
-		);
- 
+		-&gt;search($searchQuery, $searchQueryFormatters);
+
 	return $searchResult;
-}					
+}
 									</code></pre></p></li>
-                                                                <li value="10">Finally, let's hook things together. The client is done, and now we only need to update the controller and its twig template so it calls the client and renders the results.
-<p><pre><code class="language-PHP line-numbers">					
-namespace Pyz\Yves\PersonalizedProduct\Controller;
- 
+                                                                <li value="6">Finally, let's hook things together. The client is done, and now we only need to update the controller and its twig template so it calls the client and renders the results.
+						<p><pre><code class="language-PHP line-numbers">namespace Pyz\Yves\PersonalizedProduct\Controller;
+
 use Spryker\Yves\Kernel\Controller\AbstractController;
- 
+use Spryker\Yves\Kernel\View\View;
+
 class IndexController extends AbstractController
 {
-	/**
-	 * @param $limit
-	 *
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 *
-	 * @return \Spryker\Yves\Kernel\View\View
-	 */
-	public function indexAction($limit)
+	/** 
+	* @param int $limit
+	*
+	* @return \Spryker\Yves\Kernel\View\View
+	*/
+	public function indexAction(int $limit): View
 	{
 		$searchResults = $this-&gt;getClient()-&gt;getPersonalizedProducts($limit);
- 
-		return $this-&gt;view(
-			$searchResults,
-			[],
-			'@PersonalizedProduct/views/index/index.twig'
-		);
-	}
-}					
-</code></pre></p><p><pre><code class="language-PHP line-numbers">	
 
-{% extends template('page-blank') %}
- 
+		return $this-&gt;view($searchResults, [], '@PersonalizedProduct/views/index/index.twig');
+	}
+} 
+						</code></pre></p><p><pre><code class="language-PHP line-numbers">{% extends template('page-blank') %}
+
 {% define data = {
-	products: _view.products
- %}
- 
+products: _view.products
+} %}
+
 {% block body %}
 	&lt;div&gt;
 		{% for product in data.products %}
 			&lt;div&gt;
-				{% include molecule('product-card') with {
-					data: {
-						name: product.abstract_name,
-						abstractId: product.id_product_abstract,
-						url: product.url,
-						imageUrl: product.images.0.external_url_small,
-						price: product.price,
-						originalPrice: null
-					}
-				} only %}
+					{% include molecule('product-card') with {
+						data: {
+							name: product.abstract_name,
+							abstractId: product.id_product_abstract,
+							url: product.url,
+							imageUrl: product.images.0.external_url_small,
+							price: product.price,
+							originalPrice: null
+						}
+					} only %}
 			&lt;/div&gt;
 		{% endfor %}
 	&lt;/div&gt;
-{% endblock %}												
-</code></pre></p></li>
+{% endblock %}		
+						</code></pre></p></li>
                                                             </ol>
                                                             <div class="info">That's it for getting the personalized products. 
-				<p>To demonstrate having different personalized products for different customers. Go to <a href="http://www.de.suite.local/personalized-product/12">http://www.de.suite.local/personalized-product/12</a> and check out the products. Refresh the page, you should see the same products as you still have the same session ID.</p><p>Now, remove the Spryker cookie so the session ID is different and refresh the page, you should see different products. This different customers with different sessions IDs get different personalized products.</p></div>
+				<p>To demonstrate having different personalized products for different customers. Go to <a href="http://www.de.suite.local/personalized-product/12">http://www.de.suite-nonsplit.local/personalized-product/12</a> and check out the products. Refresh the page, you should see the same products as you still have the same session ID.</p><p>Now, remove the Spryker cookie so the session ID is different and refresh the page, you should see different products. These different customers with different sessions IDs get different personalized products.</p></div>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />3. Put the personalized products in the CMS page</a></span>
@@ -608,37 +603,36 @@ class IndexController extends AbstractController
                                                             <p>Let's put our personalized products inside our CMS page, the one we have created in the first step, so they get the same look and feel of the whole shop with extra content around them. </p>
                                                             <p>To do so, we will use the <b>render()</b> method with the twig templates. </p>
                                                             <p>The method takes a path for the route name as a parameter. What it does is that it creates a sub-request internally and calls the route with the provided name, then it renders the results inside another twig template. Open <i>my-offers.twig</i> and use the render method like this <code>{{ render(path('personalized-product-index', {'limit': 12})) }}</code>.</p>
-                                                            <p><pre><code class="language-PHP line-numbers">
-{% extends template('page-layout-main') %}
+                                                            <p><pre><code class="language-PHP line-numbers">{% extends template('page-layout-main') %}
  
 {% define data = {
-	title: _view.pageTitle | default('global.spryker.shop' | trans),
-	metaTitle: _view.pageTitle | default('global.spryker.shop' | trans),
-	metaDescription: _view.pageDescription | default(''),
-	metaKeywords: _view.pageKeywords | default('')
+		title: _view.pageTitle | default('global.spryker.shop' | trans),
+		metaTitle: _view.pageTitle | default('global.spryker.shop' | trans),
+		metaDescription: _view.pageDescription | default(''),
+		metaKeywords: _view.pageKeywords | default('')
 } %}
  
 {% block title %}
-	&lt;!-- CMS_PLACEHOLDER : "title" --&gt;
-	&lt;h3&gt;{{ spyCms('title') | raw }}&lt;/h3&gt;
+		&lt;!-- CMS_PLACEHOLDER : "title" --&gt;
+		&lt;h3&gt;{{ spyCms('title') | raw }}&lt;/h3&gt;
 {% endblock %}
  
 {% block content %}
-	&lt;!-- CMS_PLACEHOLDER : "content" --&gt;
-	&lt;div class="box"&gt;
-		{{ spyCms('content') | raw }}
-	&lt;/div&gt;
-	&lt;div class="box"&gt;
-		{{ render(path('personalized-product-index', {'limit': 12})) }}
-	&lt;/div&gt;
+		&lt;!-- CMS_PLACEHOLDER : "content" --&gt;
+		&lt;div class="box"&gt;
+				{{ spyCms('content') | raw }}
+		&lt;/div&gt;
+		&lt;div class="box"&gt;
+				{{ render(path('personalized-product-index', {'limit': 12})) }}
+		&lt;/div&gt;
 {% endblock %}
 				</code></pre>
                                                             </p>
-                                                            <p>Done! To check the results, go to <a href="http://www.de.suite.local/my-offers">http://www.de.suite.local/my-offers</a>. </p>
+                                                            <p>Done! To check the results, go to <a href="http://www.de.suite.local/my-offers">http://www.de.suite-nonsplit.local/my-offers</a>. </p>
                                                             <p>Remove the Spryker cookie and refresh again to see different personalized products.</p>
                                                             <p>&#160;</p>
                                                             <p>&#160;</p>
-                                                            <p><i>Last review date: Jul 03, 2018</i> </p>
+                                                            <p><i>Last review date: Jul 8, 2019</i> </p>
                                                         </div>
                                                     </div>
                                                 </div>

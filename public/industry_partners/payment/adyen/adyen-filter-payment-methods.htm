@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="PbRzWU87Mk6YlIigj19PQQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="PbRzWU87Mk6YlIigj19PQQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="7uhf_5yJLUa0mnWiUI4PEg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="7uhf_5yJLUa0mnWiUI4PEg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,14 +241,36 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Adyen - Filtering Payment Methods</h1>
-                                                    <p>Adyen module provides filtering available payment methods depend on result of <var>/paymentMethods</var> API call.</p>
-                                                    <p>To enable this add <var>\SprykerEco\Zed\Adyen\Communication\Plugin\AdyenPaymentMethodFilterPlugin</var> to filter plugins list at <var>src/Pyz/Zed/Payment/PaymentDependencyProvider.php</var>:</p><pre><code class="language-php line-numbers">
-protected function getPaymentMethodFilterPlugins()
+                                                    <p>Adyen module provides filtering of available payment methods which depends on the result of <var>/paymentMethods</var> API call.</p>
+                                                    <p>To enable this add <var>\SprykerEco\Zed\Adyen\Communication\Plugin\AdyenPaymentMethodFilterPlugin</var> to the list of filter plugins:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Payment/PaymentDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
+ 
+/**
+ * This file is part of the Spryker Suite.
+ * For full license information, please view the LICENSE file that was distributed with this source code.
+ */
+ 
+namespace Pyz\Zed\Payment;
+ 
+...
+use SprykerEco\Zed\Adyen\Communication\Plugin\AdyenPaymentMethodFilterPlugin;
+ 
+class PaymentDependencyProvider extends SprykerPaymentDependencyProvider
 {
-	return [
-		...
-		new AdyenPaymentMethodFilterPlugin(),
-	];</code></pre>
+    /**
+     * @return \Spryker\Zed\Payment\Dependency\Plugin\Payment\PaymentMethodFilterPluginInterface[]
+     */
+    protected function getPaymentMethodFilterPlugins()
+    {
+        return [
+            ...
+            new AdyenPaymentMethodFilterPlugin(),
+        ];
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
                                                     <p>&#160;</p>
                                                     <p><b>See also</b>:</p>
                                                     <ul>
