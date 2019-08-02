@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="mvHeFO0RvUqvmNI14cCrJA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="mvHeFO0RvUqvmNI14cCrJA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="zIUrD1mW5E2GqVNwueOe-g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="zIUrD1mW5E2GqVNwueOe-g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -305,6 +305,85 @@ This HowTo describes     how to add a new page template in Yves using the CMS. <
 &lt;/div&gt;		
 		</code></pre>
                                                             <p>Next, configure the new block in the CMS Block interface and add the corresponding glossary keys (<i>EN</i>, <i>DE</i>, for example) for the 2 included placeholders.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Adding a Template for a Content Item Widget</div></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <div class="info">The article describes the steps on how to create a template for <a href="https://documentation.spryker.com/capabilities/cms/content_item_widgets/content-item-widgets-overview-201907.htm">content item widgets</a>.</div>
+                                                            <p>By default, the Spryker application provides two basic types of templates related to each content item widget: Banner widget, Abstract Product List widget, Product Set widget, and File widget. However, you, as a developer, can add a new type of template or adjust an existing one on a project level.</p>
+                                                            <p><b>To add a content item widget template:</b>
+                                                            </p>
+                                                            <p>1. Depending on the type of a content item widget for which you want to create a template, make sure you have the respective Content Item Widget module installed::</p>
+                                                            <ul>
+                                                                <li value="1"><a href="https://github.com/spryker-shop/content-banner-widget">ContentBannerWidget</a>
+                                                                </li>
+                                                                <li value="2"><a href="https://github.com/spryker-shop/content-product-widget">ContentProductWidget</a>
+                                                                </li>
+                                                                <li value="3"><a href="https://github.com/spryker-shop/content-product-set-widget">ContentProductSetWidget</a>
+                                                                </li>
+                                                                <li value="4"><a href="https://github.com/spryker-shop/content-file-widget">ContentFileWidget</a>
+                                                                </li>
+                                                            </ul>
+                                                            <p>2. Create a new Twig template file - <b>{new-template}.twig</b> - under the <b>src/Pyz/Yves/{ModuleWidget}/Theme/default/views/{template-folder}/</b> folder where:</p>
+                                                            <ul>
+                                                                <li value="1"><b>{new-template}</b> is the name of the template you want to add.</li>
+                                                                <li value="2"><b>{ModuleWidget}</b> is the name of your Content Item Widget module.</li>
+                                                                <li value="3"><b>{template-folder}</b> is the name of the template folder: banner, cms-product-abstract, content-product-set, or content-file.</li>
+                                                            </ul>
+                                                            <p>By default, the template data is stored to the core modules of widgets. Thus, you can use it as an example.</p>
+                                                            <p>3. Modify the template configuration in the <b>{ModuleWidgetTwigFunction}.php</b> file under the <b>Pyz/Yves/{ModuleWidget}/Twig/</b> folder:</p>
+                                                            <div class="info">You can find the name of the <b>{ModuleWidgetTwigFunction}.php</b> file here: <b>SprykerShop/Yves/{ModuleWidget}/Twig/</b></div>
+                                                            <ul>
+                                                                <li value="1">Add the identifier of the template</li>
+                                                                <li value="2">Add a path to the template based on its identifier</li>
+                                                            </ul>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Pyz/Yves/{ModuleWidget}/Twig/{ModuleWidgetTwigFunction}.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">namespace \Pyz\Yves\{ModuleWidget}\Twig;
+ 
+class {ModuleWidgetTwigFunction} extends \SprykerShop\Yves\{ModuleWidget}\Twig\{ModuleWidgetTwigFunction}
+{
+	protected const WIDGET_TEMPLATE_IDENTIFIER_NEW_TEMPLATE = 'new-template';
+     
+	/**
+	* @return array
+	*/
+	protected function getAvailableTemplates(): array
+	{
+		return array_merge(parent::getAvailableTemplates(), [
+			static::WIDGET_TEMPLATE_IDENTIFIER_NEW_TEMPLATE =&gt; '@{ModuleWidget}/views/{template-folder}/{new-template}.twig',
+		]);
+	}
+}
+						</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <p>4. Override the method in the factory that creates the object of the <b>twig</b> function</p>
+                                                            <p>where <b>{ModuleWidgetTwigFunction}</b> is the configuration file name of the Twig function:</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Pyz/Yves/{ModuleWidget}/{ModuleWidget}Factory.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">namespace \Pyz\Yves\{ModuleWidget};
+ 
+use \Pyz\Yves\{ModuleWidget}\Twig\{ModuleWidgetTwigFunction};
+ 
+class {ModuleWidget}Factory extends \SprykerShop\Yves\{ModuleWidget}\{ModuleWidget}Factory
+{
+	/**
+	* @param \Twig\Environment $twig
+	* @param string $localeName
+	*
+	* @return \Pyz\Yves\{ModuleWidget}\Twig\{ModuleWidgetTwigFunction}
+	*/
+	public function createContentBannerTwigFunction(Environment $twig, string $localeName): \SprykerShop\Yves\{ModuleWidget}\Twig\{ModuleWidgetTwigFunction}
+	{
+		return new {ModuleWidgetTwigFunction}(
+			$twig,
+			$localeName,
+			$this-&gt;getContentBannerClient()
+		);
+	}
+}
+								</code></pre>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

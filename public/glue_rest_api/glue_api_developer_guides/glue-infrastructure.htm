@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="EtlRuUj6yE2jLen9vt_CdQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="EtlRuUj6yE2jLen9vt_CdQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="j93Ar0A_cEaS3JToqHbtBw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="j93Ar0A_cEaS3JToqHbtBw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -287,6 +287,12 @@
                                                                         </ul>
                                                                         <li><a href="#ResourceVersioning">Resource Versioning</a>
                                                                         </li>
+                                                                        <li><a href="#ConcurrentRequestsandCaching">Concurrent Requests and Caching</a>
+                                                                        </li>
+                                                                        <ul>
+                                                                            <li><a href="#SupportingEtagsforaResource">Supporting Etags for a Resource</a>
+                                                                            </li>
+                                                                        </ul>
                                                                         <li><a href="#ResponseCodes">Response Codes</a>
                                                                         </li>
                                                                         <ul>
@@ -1049,6 +1055,36 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                         <li value="2">If a version is specified and it exists on the server, that specific version is returned.</li>
                                                         <li value="3">If a version is specified, but it does not exist, the <b>404 Not Found</b> error is returned.</li>
                                                     </ul>
+                                                    <h3 data-mc-conditions="ReleaseVersions.201907-0" id="ConcurrentRequestsandCaching" data-magellan-target="ConcurrentRequestsandCaching">Concurrent Requests and Caching</h3>
+                                                    <p data-mc-conditions="ReleaseVersions.201907-0">Certain resources can be owned and managed by multiple users. Sometimes, it is necessary to handle multiple concurrent updates at a time. In this case, if you don't manage concurrency, updates of one of the users can override the updates of the others, resulting in information loss. To avoid that, starting from <b>version 201907.0</b>, Spryker provides the possibility to implement concurrency control in your resources with the help of <b>Entity Tags</b> (also called <b>ETags</b>).</p>
+                                                    <p class="info" data-mc-conditions="ReleaseVersions.201907-0">For more details on how the API client handles Etags, see <a href="../glue_api_storefront_guides/handling-concurrent-rest-requests-and-caching-with-etags-201907.htm" class="MCXref xref">Handling Concurrent REST Requests and Caching with Etags</a>.</p>
+                                                    <p data-mc-conditions="ReleaseVersions.201907-0"><i>ETags</i> are generated and stored in <i>Redis</i> by the <b>Glue Application</b>. The application also handles concurrent update requests and checks whether resource updates should be allowed. <i>Resource Modules</i> should only satisfy requests passed to them. The modules should neither be aware of nor perform any checks of the current <i>Entity Tag</i> value.</p>
+                                                    <h4 data-mc-conditions="ReleaseVersions.201907-0" id="SupportingEtagsforaResource" data-magellan-target="SupportingEtagsforaResource">Supporting Etags for a Resource</h4>
+                                                    <p data-mc-conditions="ReleaseVersions.201907-0">If you want a resource to support concurrent request handling via Etags, you need to add it to the Entity Tags REST API Configuration located at <var>src/Pyz/Glue/EntityTagsRestApi/EntityTagsRestApiConfig.php</var>:</p><pre data-mc-conditions="ReleaseVersions.201907-0"><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Glue\EntityTagsRestApi;
+
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\EntityTagsRestApi\EntityTagsRestApiConfig as SprykerEntityTagsRestApiConfig;
+
+class EntityTagsRestApiConfig extends SprykerEntityTagsRestApiConfig
+{
+    /**
+     * @return string[]
+     */
+    public function getEntityTagRequiredResources(): array
+    {
+        return array_merge(
+            parent::getEntityTagRequiredResources(),
+            [
+                CartsRestApiConfig::RESOURCE_CARTS,
+                {YOUR_RESOURCE1},
+                {YOUR_RESOURCE2}
+            ]
+        );
+    }
+}</code></pre>
+                                                    <p data-mc-conditions="ReleaseVersions.201907-0">Where  <i>{YOUR_RESOURCE1}</i> and <i>{YOUR_RESOURCE2}</i> are the resource types for which you want to support concurrent requests. The resource types must match the one specified by the <a href="#resource-routing">Resource Route Plugin</a>.</p>
                                                     <h3 id="ResponseCodes" data-magellan-target="ResponseCodes">Response Codes</h3>
                                                     <h4 id="HTTPStatusCodes" data-magellan-target="HTTPStatusCodes">HTTP Status Codes</h4>
                                                     <p>
@@ -1272,7 +1308,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                             <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">1101-1199</td>
-                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Checkout API</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="../glue_api_storefront_guides/checking-out-purchases-and-getting-checkout-data-201907.htm">Checkout API</a>
+                                                                            </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                             <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">1201-1299</td>
@@ -1284,7 +1321,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>1401-1499</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                                <p>Company Users API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/b2b_account_management/retrieving-company-user-information-201907.htm">Company Users API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
@@ -1292,7 +1330,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>1601-1499</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                                <p>Navigations API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/retrieving-navigation-trees-201907.htm">Navigations API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
@@ -1300,7 +1339,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>1801-1899</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                                <p>Companies API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/b2b_account_management/retrieving-company-information-201907.htm">Companies API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
@@ -1308,7 +1348,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>1901-1999</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                                <p>Business Units API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/b2b_account_management/retrieving-business-unit-information-201907.htm">Business Units API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
@@ -1316,7 +1357,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2001-2099</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                                <p>Business Unit Addresses API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/b2b_account_management/retrieving-business-unit-information-201907.htm">Business Unit Addresses API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
@@ -1324,7 +1366,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2101-2199</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                                <p>Company Roles API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/b2b_account_management/retrieving-company-role-information-201907.htm">Company Roles API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
@@ -1332,7 +1375,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2201-2299</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                                <p>Abstract Product List API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/retrieving_content_item_data/retrieving-content-item-data-201907.htm">Abstract Product List API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
@@ -1340,7 +1384,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2401-2499</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
-                                                                                <p>Order Payments API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/checking-out-purchases-and-getting-checkout-data-201907.htm">Order Payments API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
@@ -1348,7 +1393,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2501-2599</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
-                                                                                <p>Shared Cart Permission Groups API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/managing_carts/sharing-company-user-carts-201907.html">Shared Cart Permission Groups API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr class="TableStyle-PatternedRows2-Body-LightRows">
@@ -1356,7 +1402,8 @@ class ConcreteProductBySkuResourceRelationshipPlugin extends AbstractPlugin impl
                                                                                 <p>2701-2799</p>
                                                                             </td>
                                                                             <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
-                                                                                <p>Shared Carts API</p>
+                                                                                <p><a href="../glue_api_storefront_guides/managing_carts/sharing-company-user-carts-201907.html">Shared Carts API</a>
+                                                                                </p>
                                                                             </td>
                                                                         </tr>
                                                                     </tbody>

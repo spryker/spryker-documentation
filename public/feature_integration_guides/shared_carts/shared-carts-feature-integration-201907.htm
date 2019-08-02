@@ -1,0 +1,1461 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The Shared Carts Feature allows sharing shopping carts within an entire business unit. The guide describes how to integrate the feature into your project." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Shared Carts Feature Integration | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="I58IYZNJKESAveSeslQnnA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="I58IYZNJKESAveSeslQnnA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1 id="SharedCartsFeatureIntegration" data-magellan-target="SharedCartsFeatureIntegration">Shared Carts Feature Integration <img src="../../resources/images/shoptype/b2b_shop.png" /></h1>
+                                                    <p><a href="javascript:void(0);" class="MCTextPopup popup popupHead">ML<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-language</span></a> <a href="javascript:void(0);" class="MCTextPopup popup popupHead">MS<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-store</span></a> <a href="javascript:void(0);" class="MCTextPopup popup popupHead">MC<span class="MCTextPopupBody MCTextPopupBody_Closed needs-pie popupBody"><span class="MCTextPopupArrow"></span>Multi-currency</span></a></p>
+                                                    <div class="MCHelpControl MCHelpControl-Related relatedTopics" style="mc-label: 'Versions';mc-help-control-display: list;"><span class="MCHelpControl-RelatedHotSpot_"><img class="MCHelpControl_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions</span>
+                                                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                                                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="Spryker" target="_self">Shared Carts Feature Integration </a>
+                                                            </li>
+                                                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="Spryker" target="_self">Shared Carts Feature Integration </a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul data-magellan="" data-animation-duration="250" data-active-class="selected" data-scroll-container-on="small" class="nocontent menu _Skins_SideMenuNotFixed mc-component">
+                                                        <li><a href="#SharedCartsFeatureIntegration">Shared Carts Feature Integration </a>
+                                                        </li>
+                                                        <ul>
+                                                            <li><a href="#InstallFeatureCore">Install Feature Core</a>
+                                                            </li>
+                                                            <ul>
+                                                                <li><a href="#Prerequisites">Prerequisites</a>
+                                                                </li>
+                                                                <li><a href="#1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</a>
+                                                                </li>
+                                                                <li><a href="#2SetuptheDatabaseSchema">2) Set up the Database Schema</a>
+                                                                </li>
+                                                                <li><a href="#3AddTranslations">3) Add Translations</a>
+                                                                </li>
+                                                                <li><a href="#4ImportData">4) Import Data</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#AddInfrastructuralData">Add Infrastructural Data</a>
+                                                                    </li>
+                                                                    <li><a href="#ImportCartsSharing">Import Carts Sharing</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#5SetupBehavior">5) Set up Behavior</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#QuoteIntegration">Quote Integration</a>
+                                                                    </li>
+                                                                    <li><a href="#PersistentCartIntegration">Persistent Cart Integration</a>
+                                                                    </li>
+                                                                    <li><a href="#SetupPermissionIntegration">Setup Permission Integration</a>
+                                                                    </li>
+                                                                    <li><a href="#SetupCustomerIntegration">Setup Customer Integration</a>
+                                                                    </li>
+                                                                    <li><a href="#SetupCompanyUserIntegration">Setup Company User Integration</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                            <li><a href="#InstallFeatureFrontend">Install Feature Frontend</a>
+                                                            </li>
+                                                            <ul>
+                                                                <li><a href="#Prerequisites1">Prerequisites</a>
+                                                                </li>
+                                                                <li><a href="#1InstalltheRequiredModulesUsingComposer1">
+			1) Install the Required Modules Using Composer
+		</a>
+                                                                </li>
+                                                                <li><a href="#2AddTranslations">2) Add Translations</a>
+                                                                </li>
+                                                                <li><a href="#3SetupWidgets">3) Set up Widgets</a>
+                                                                </li>
+                                                                <li><a href="#4EnableControllers">4) Enable Controllers</a>
+                                                                </li>
+                                                            </ul>
+                                                        </ul>
+                                                    </ul>
+                                                    <h2 id="InstallFeatureCore" data-magellan-target="InstallFeatureCore">Install Feature Core</h2>
+                                                    <h3 id="Prerequisites" data-magellan-target="Prerequisites">Prerequisites</h3>
+                                                    <p>To start feature integration, overview and install the necessary features:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201907.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Persistent Cart</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">201907.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Multiple Carts</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201907.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Company Account</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">201907.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="1InstalltheRequiredModulesUsingComposer" data-magellan-target="1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</h3>
+                                                    <p>
+			Run the following command(s) to install the required modules:
+		</p><pre><code class="language-bash">composer require spryker-feature/shared-carts: "^201907.0" --update-with-dependencies</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following modules have been installed:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCart</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/shared-cart</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>SharedCartDataImport</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/shared-cart-data-import</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="2SetuptheDatabaseSchema" data-magellan-target="2SetuptheDatabaseSchema">2) Set up the Database Schema</h3>
+                                                    <p>
+			Run the following commands to apply the database changes and generate entity and transfer changes:
+		</p><pre><code class="language-bash">console transfer:generate
+console propel:install
+console transfer:generate</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following changes have been applied by checking your database:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database Entity</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_quote_company_user</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_quote_permission_group</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">table</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spy_quote_permission_group_to_permission</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">table</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">created</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following changes in transfer objects have been applied:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>QuoteResponseTransfer.sharedCustomerQuotes</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">added</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteResponseTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>QuoteTransfer.shareDetails</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">column</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">added</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuoteTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>QuoteUpdateRequestAttributesTransfer.shareDetails</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">column</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">added</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuoteUpdateRequestAttributesTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShareDetailTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShareDetailTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShareDetailCollectionTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShareDetailCollectionTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>QuotePermissionGroupTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuotePermissionGroupTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>QuotePermissionGroupCriteriaFilterTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/QuotePermissionGroupCriteriaFilterTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>QuotePermissionGroupResponseTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/QuotePermissionGroupResponseTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ShareCartRequestTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShareCartRequestTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="3AddTranslations" data-magellan-target="3AddTranslations">3) Add Translations</h3>
+                                                    <p>Glossary keys for flash messages:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/data/import/glossary.csv
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">shared_cart.share.error.already_exist,Cart was already shared with this customer,en_US
+shared_cart.share.error.already_exist,Der Warenkorb wurde bereits mit diesem Kunden geteilt,de_DE</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to import data:
+		</p><pre><code class="language-bash">console data:import glossary</code></pre>
+                                                    <p class="tip">Make sure that  the configured data has been added to the <var>spy_glossary</var> table in the database.</p>
+                                                    <h3 id="4ImportData" data-magellan-target="4ImportData">4) Import Data</h3>
+                                                    <h4 id="AddInfrastructuralData" data-magellan-target="AddInfrastructuralData">Add Infrastructural Data</h4>
+                                                    <p>Register the following plugins:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartPermissionInstallerPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Installs the registered infrastructural quote permissions.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ReadSharedCartPermissionPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Quote permission to check read shared cart permissions in the client layer.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Client\SharedCart\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>WriteSharedCartPermissionPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Quote permission to check writing shared cart permissions in the client layer.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Client\SharedCart\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ReadSharedCartPermissionPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Quote permission to check read shared cart permissions in the zed layer.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>WriteSharedCartPermissionPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Quote permission to check writing shared cart permissions in the zed layer.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Installer/InstallerDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Installer;
+
+use Spryker\Zed\Installer\InstallerDependencyProvider as SprykerInstallerDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\SharedCartPermissionInstallerPlugin;
+
+class InstallerDependencyProvider extends SprykerInstallerDependencyProvider
+{
+	/**
+	 * @return \Spryker\Zed\Installer\Dependency\Plugin\InstallerPluginInterface[]
+	 */
+	public function getInstallerPlugins()
+	{
+		return [
+			new SharedCartPermissionInstallerPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/Permission/PermissionDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\Permission;
+
+use Spryker\Client\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
+use Spryker\Client\SharedCart\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Client\SharedCart\Plugin\WriteSharedCartPermissionPlugin;
+
+class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
+{
+	/**
+	 * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+	 */
+	protected function getPermissionPlugins(): array
+	{
+		return [
+			new ReadSharedCartPermissionPlugin(),
+			new WriteSharedCartPermissionPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Permission/PermissionDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Permission;
+
+use Spryker\Zed\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\ReadSharedCartPermissionPlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\WriteSharedCartPermissionPlugin;
+
+class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
+{
+	/**
+	 * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+	 */
+	protected function getPermissionPlugins()
+	{
+		return [
+			new ReadSharedCartPermissionPlugin(),
+			new WriteSharedCartPermissionPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to execute registered installer plugins and install infrastructural data:</p><pre><code class="language-bash">console setup:init-db</code></pre>
+                                                    <div class="tip">
+			Make sure that records with the keys <var>ReadSharedCartPermissionPlugin</var> and <var>WriteSharedCartPermissionPlugin</var> have been added to the <var>spy_permission</var> table.
+			<p>Make sure that in the database the configured infrastructural quote permission groups have been added to the <var>spy_quote_permission_group</var> and <var>spy_quote_permission_group_to_permission</var> tables.</p></div>
+                                                    <h4 id="ImportCartsSharing" data-magellan-target="ImportCartsSharing">Import Carts Sharing</h4>
+                                                    <p class="info">The following imported entities will be used as carts to the company user relations in the Spryker OS.</p>
+                                                    <p>Prepare your data according to your requirements using our demo data:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />vendor/spryker/shared-cart-data-import/data/import/shared_cart.csv
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">quote_key,company_user_key,permission_group_name
+quote-22,Spryker--1,FULL_ACCESS
+quote-23,Spryker--1,FULL_ACCESS
+quote-23,Spryker--2,FULL_ACCESS
+quote-23,Spryker--3,FULL_ACCESS
+quote-23,Spryker--6,FULL_ACCESS
+quote-23,Spryker--4,READ_ONLY
+quote-23,Spryker--5,READ_ONLY</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Column</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Is Obligatory?</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Data Example</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Data Explanation</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>quote_key</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">mandatory</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">quote-22</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Key that will identify the quote to add data to.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>company_user_key</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">mandatory</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Spryker--1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Key that will identify the company user that the quote is shared with.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>permission_group_name</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">mandatory</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">string</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">FULL_ACCESS</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Permission group that will be assigned to the shared company user.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>Register the following plugin to enable data import:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SharedCartDataImportPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Imports customer's quotes sharing to database.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Make sure that customers have been already imported.
+							<br />Make sure that company users have been already imported.
+							<br />Make sure that a cart has been already imported.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\SharedCartDataImport\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/DataImport/DataImportDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\DataImport;
+
+use Spryker\Zed\DataImport\DataImportDependencyProvider as SprykerDataImportDependencyProvider;
+use Spryker\Zed\SharedCartDataImport\Communication\Plugin\SharedCartDataImportPlugin;
+
+class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
+{
+	protected function getDataImporterPlugins(): array
+	{
+		return [
+			new SharedCartDataImportPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to import data:</p><pre><code class="language-bash">console data:import shared-cart</code></pre>
+                                                    <p class="tip">Open the <var>spy_quote_company_user</var> DB table and make sure that all the data has been imported.</p>
+                                                    <h3 id="5SetupBehavior" data-magellan-target="5SetupBehavior">5) Set up Behavior</h3>
+                                                    <p class="info">This feature requires the database storage strategy enabled in the quote module.</p>
+                                                    <h4 id="QuoteIntegration" data-magellan-target="QuoteIntegration">Quote Integration</h4>
+                                                    <p>Register the following plugins:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CleanQuoteShareBeforeQuoteCreatePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cleans up the cart shared details before the quote has been created.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>DeactivateSharedQuotesBeforeQuoteSavePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Deactivates all shared carts for the current customer if the current cart in marked as <i>active</i> before the cart has been created or updated.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>MarkAsDefaultQuoteAfterSavePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Updates the <i>is active</i> flag for the current shared cart based the <i>active</i> flag for the sharing relation.
+							<br />It is executed after the cart has been created or updated.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RemoveSharedQuoteBeforeQuoteDeletePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Removes the sharing relation for the current cart before the cart has been removed.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>UpdateShareDetailsQuoteAfterSavePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Updates the cart sharing relations after the cart has been created or updated.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>SharedQuoteSetDefaultBeforeQuoteSavePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Marks the cart sharing relation for the current customer as <i>active</i> if the quote has been marked as <i>active</i>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p class="info">All shared cart plugins must be added after the multi-cart plugins have been registered.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><p>src/Pyz/Zed/Quote/QuoteDependencyProvider.php</p></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Quote;
+
+use Spryker\Zed\Quote\QuoteDependencyProvider as SprykerQuoteDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\CleanQuoteShareBeforeQuoteCreatePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\DeactivateSharedQuotesBeforeQuoteSavePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\MarkAsDefaultQuoteAfterSavePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\RemoveSharedQuoteBeforeQuoteDeletePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\SharedQuoteSetDefaultBeforeQuoteSavePlugin;
+use Spryker\Zed\SharedCart\Communication\Plugin\UpdateShareDetailsQuoteAfterSavePlugin;
+
+class QuoteDependencyProvider extends SprykerQuoteDependencyProvider
+{
+	/**
+	 * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+	 */
+	protected function getQuoteCreateBeforePlugins(): array
+	{
+		return [
+			new CleanQuoteShareBeforeQuoteCreatePlugin(),
+			new DeactivateSharedQuotesBeforeQuoteSavePlugin(),
+		];
+	}
+
+	/**
+	 * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+	 */
+	protected function getQuoteUpdateAfterPlugins(): array
+	{
+		return [
+			new UpdateShareDetailsQuoteAfterSavePlugin(),
+			new MarkAsDefaultQuoteAfterSavePlugin(),
+		];
+	}
+
+	/**
+	 * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+	 */
+	protected function getQuoteUpdateBeforePlugins(): array
+	{
+		return [
+			new DeactivateSharedQuotesBeforeQuoteSavePlugin(),
+			new SharedQuoteSetDefaultBeforeQuoteSavePlugin(),
+		];
+	}
+
+	/**
+	 * @return \Spryker\Zed\QuoteExtension\Dependency\Plugin\QuoteWritePluginInterface[]
+	 */
+	protected function getQuoteDeleteBeforePlugins(): array
+	{
+		return [
+			new RemoveSharedQuoteBeforeQuoteDeletePlugin(),
+		];
+	}
+}
+</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">A shared quote can be marked as default for a customer that has access. The <var>is_default</var> field in the  <var>spy_quote_company_user</var> BD table must be set to <var>true</var> in the corresponding record.
+		<p>A new record will be added to <var>spy_quote_company_user</var> if the sharing quote functionality is used.</p></div>
+                                                    <h4 id="PersistentCartIntegration" data-magellan-target="PersistentCartIntegration">Persistent Cart Integration</h4>
+                                                    <p>Register the following plugins:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartsUpdateQuoteUpdatePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds shared cart list to multi-cart collection.
+							<br />Sorts the collection by name.
+						<br />Saves the multi-cart collection in the session.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartQuoteResponseExpanderPlugin</var> should be included.
+							It should be executed after <var>\Spryker\Client\MultiCart\Plugin\SaveCustomerQuotesQuoteUpdatePlugin</var> has been registered
+						and before <var>\Spryker\Client\MultiCart\Plugin\DefaultQuoteUpdatePlugin</var> has been registered.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Client\SharedCart\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ProductSeparatePersistentCartChangeExpanderPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Allows adding a product as a separate item if the product with the same SKU already exists in the cart.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Client\SharedCart\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>PermissionUpdateQuoteUpdatePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Takes a permission list from <var>QuoteResponseTransfer</var> and updates a customer from the session.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartQuoteResponseExpanderPlugin</var> should be included.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Client\SharedCart\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>SharedCartQuoteResponseExpanderPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Expands <var>QuoteResponseTransfer</var> with the following shared cart related data:
+							<ul><li value="1">Carts shared with the customer.</li><li value="2">Customer permission list.</li><li value="3">Expands a customer cart with the sharing data.</li></ul></td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">1</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><p>src/Pyz/Client/PersistentCart/PersistentCartDependencyProvider.php</p></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Client\PersistentCart;
+
+use Spryker\Client\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+use Spryker\Client\SharedCart\Plugin\PermissionUpdateQuoteUpdatePlugin;
+use Spryker\Client\SharedCart\Plugin\ProductSeparatePersistentCartChangeExpanderPlugin;
+use Spryker\Client\SharedCart\Plugin\SharedCartsUpdateQuoteUpdatePlugin;
+
+class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+{
+	/**
+	 * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\QuoteUpdatePluginInterface[]
+	 */
+	protected function getQuoteUpdatePlugins(): array
+	{
+		return [
+			new SharedCartsUpdateQuoteUpdatePlugin(),
+			new PermissionUpdateQuoteUpdatePlugin(),
+		];
+	}
+
+	/**
+	 * @return \Spryker\Client\PersistentCartExtension\Dependency\Plugin\PersistentCartChangeExpanderPluginInterface[]
+	 */
+	protected function getChangeRequestExtendPlugins(): array
+	{
+		return [
+			new ProductSeparatePersistentCartChangeExpanderPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/PersistentCart/PersistentCartDependencyProvider
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\PersistentCart;
+
+use Spryker\Zed\PersistentCart\PersistentCartDependencyProvider as SprykerPersistentCartDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\SharedCartQuoteResponseExpanderPlugin;
+
+class PersistentCartDependencyProvider extends SprykerPersistentCartDependencyProvider
+{
+	/**
+	 * @return \Spryker\Zed\PersistentCartExtension\Dependency\Plugin\QuoteResponseExpanderPluginInterface[]
+	 */
+	protected function getQuoteResponseExpanderPlugins(): array
+	{
+		return [
+			new SharedCartQuoteResponseExpanderPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">After adding items to the cart, the following things must be done:
+			<ul><li value="1">Quotes shared with the current customer must be added to the multi-cart session;</li><li value="2"><var>CustomerTransfer::$permissions</var> must contain permissions and be updated in the customer session.</li></ul></div>
+                                                    <h4 id="SetupPermissionIntegration" data-magellan-target="SetupPermissionIntegration">Setup Permission Integration</h4>
+                                                    <p>Register the following plugin:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>QuotePermissionStoragePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Shared cart permission provider.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Permission/PermissionDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\Permission;
+
+use Spryker\Zed\Permission\PermissionDependencyProvider as SprykerPermissionDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionStoragePlugin;
+
+class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
+{
+	/**
+	 * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+	 */
+	protected function getPermissionStoragePlugins(): array
+	{
+		return [
+			new QuotePermissionStoragePlugin(), #SharedCartFeature
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">A customer cannot add an item to read only shared quote.</p>
+                                                    <h4 id="SetupCustomerIntegration" data-magellan-target="SetupCustomerIntegration">Setup Customer Integration</h4>
+                                                    <p>Register the following plugin:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>QuotePermissionCustomerExpanderPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Expands customer with shared cart permissions.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Customer/CustomerDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">
+	&lt;?php
+
+	namespace Pyz\Zed\Customer;
+
+	use Spryker\Zed\Customer\CustomerDependencyProvider as SprykerCustomerDependencyProvider;
+	use Spryker\Zed\SharedCart\Communication\Plugin\QuotePermissionCustomerExpanderPlugin;
+
+	class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
+	{
+		/**
+		* @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+		*/
+		protected function getCustomerTransferExpanderPlugins()
+		{
+			return [
+				new QuotePermissionCustomerExpanderPlugin(),
+			];
+		}
+	}
+			</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Logged in customer's <var>CustomerTransfer::$permissions</var> must contain such permissions as <var>ReadSharedCartPermissionPlugin</var> and <var>WriteSharedCartPermissionPlugin</var>.</p>
+                                                    <h4 id="SetupCompanyUserIntegration" data-magellan-target="SetupCompanyUserIntegration">Setup Company User Integration</h4>
+                                                    <p>Register the following plugin:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SharedCartCompanyUserPreDeletePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Removes all company users from the cart relations before a company user has been removed.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\SharedCart\Communication\Plugin\CompanyUserExtension</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/CompanyUser/CompanyUserDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Zed\CompanyUser;
+
+use Spryker\Zed\CompanyUser\CompanyUserDependencyProvider as SprykerCompanyUserDependencyProvider;
+use Spryker\Zed\SharedCart\Communication\Plugin\CompanyUserExtension\SharedCartCompanyUserPreDeletePlugin;
+
+class CompanyUserDependencyProvider extends SprykerCompanyUserDependencyProvider
+{
+	/**
+	 * @return \Spryker\Zed\CompanyUserExtension\Dependency\Plugin\CompanyUserPreDeletePluginInterface[]
+	 */
+	protected function getCompanyUserPreDeletePlugins(): array
+	{
+		return [
+			new SharedCartCompanyUserPreDeletePlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Before removing a company user, all records from the  <var>spy_quote_company_user</var> DB table related to the company user must be removed.</p>
+                                                    <h2 id="InstallFeatureFrontend" data-magellan-target="InstallFeatureFrontend">Install Feature Frontend</h2>
+                                                    <h3 id="Prerequisites1" data-magellan-target="Prerequisites1">Prerequisites</h3>
+                                                    <p>Please overview and install the necessary features before beginning the integration step.</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Cart</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Persistent Cart</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Multiple Carts</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">201903.0</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Spryker Core E-commerce</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">201903.0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="1InstalltheRequiredModulesUsingComposer1" data-magellan-target="1InstalltheRequiredModulesUsingComposer1">
+			1) Install the Required Modules Using Composer
+		</h3>
+                                                    <p>Run the following command(s) to install the required modules:</p><pre xml:space="preserve"><code class="language-bash">composer require spryker-feature/shared-carts: "^201903.0" --update-with-dependencies</code></pre>
+                                                    <p>Make sure that the following modules have been installed:
+			<div class="table-wrap"><table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0"><thead><tr class="TableStyle-PatternedRows2-Head-Header1"><th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th><th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th></tr></thead><tbody><tr class="TableStyle-PatternedRows2-Body-LightRows"><td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartPage</var></td><td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker-shop/shared-cart-page</var></td></tr><tr class="TableStyle-PatternedRows2-Body-DarkerRows"><td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>SharedCartWidget</var></td><td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker-shop/shared-cart-widget</var></td></tr></tbody></table></div></p>
+                                                    <h3 id="2AddTranslations" data-magellan-target="2AddTranslations">2) Add Translations</h3>
+                                                    <p>Append glossary according to your configuration:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><p>src/data/import/glossary.csv</p></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">shared_cart_widget.add_product.separate,"Add as separate item",en_US
+shared_cart_widget.add_product.separate,"Als separaten Artikel hinzufügen",de_DE
+shared_cart_widget.cart.share,"Share cart",en_US
+shared_cart_widget.cart.share,"Warenkorb teilen",de_DE
+shared_cart_widget.cart.unshare,"Unshare cart",en_US
+shared_cart_widget.cart.unshare,"Freigabewagen wird aufgehoben",de_DE
+shared_cart_widget.cart.dismiss,Dismiss,en_US
+shared_cart_widget.cart.dismiss,Ablehnen,de_DE
+shared_cart_widget.share_list.shared_with,Cart shared with,en_US
+shared_cart_widget.share_list.shared_with,Warenkorb geteilt mit,de_DE
+shared_cart_widget.share_list.customer_name,Customer name,en_US
+shared_cart_widget.share_list.customer_name,Kundenname,de_DE
+shared_cart_widget.share_list.permission,Access level,en_US
+shared_cart_widget.share_list.permission,Zugriffsebene,de_DE
+shared_cart_widget.share_list.actions,Actions,en_US
+shared_cart_widget.share_list.actions,Aktionen,de_DE
+shared_cart_widget.share_list.action.unshare,Unshare cart,en_US
+shared_cart_widget.share_list.action.unshare,Freigabe des Einkaufswagens,de_DE
+shared_cart.share_list.permissions.NO_ACCESS,No access,en_US
+shared_cart.share_list.permissions.NO_ACCESS,Kein Zugang,de_DE
+shared_cart.share_list.permissions.READ_ONLY,Read-only,en_US
+shared_cart.share_list.permissions.READ_ONLY,Schreibgeschützt,de_DE
+shared_cart.share_list.permissions.FULL_ACCESS,Full access,en_US
+shared_cart.share_list.permissions.FULL_ACCESS,Ohne Einschränkung,de_DE
+shared_cart.share_list.permissions.OWNER_ACCESS,Owner access,en_US
+shared_cart.share_list.permissions.OWNER_ACCESS,Eigentümer Zugriff,de_DE
+shared_cart.form.share_cart,"Share cart",en_US
+shared_cart.form.share_cart,"Warenkorb teilen",de_DE
+shared_cart.form.share_cart.title,"Share cart ""cart_name""",en_US
+shared_cart.form.share_cart.title,"Warenkorb teilen ""cart_name""",de_DE
+shared_cart.form.customer,"Customer name",en_US
+shared_cart.form.customer,Kundenname,de_DE
+shared_cart.form.select_customer,Select customer,en_US
+shared_cart.form.select_customer,"Wählen Sie den Kunden aus",de_DE
+shared_cart.form.select_permissions,Select access level,en_US
+shared_cart.form.select_permissions,"Wählen Sie Zugriffsebene",de_DE
+shared_cart.form.share_button,Share,en_US
+shared_cart.form.share_button,Aktie,de_DE
+shared_cart.form.save_button,Save,en_US
+shared_cart.form.save_button,Sparen,de_DE
+shared_cart.form.data_empty,"There are no Users with whom you can share shopping cart.",en_US
+shared_cart.form.data_empty,"Es gibt keine Benutzer, mit denen Sie den Einkaufswagen teilen können.",de_DE
+shared_cart.share.breadcrumbs.share,Share,en_US
+shared_cart.share.breadcrumbs.share,Teilen,de_DE
+shared_cart.share.breadcrumbs.shopping_carts,Shopping carts,en_US
+shared_cart.share.breadcrumbs.shopping_carts,Warenkörbe,de_DE
+shared_cart.share.form.users,Users,en_US
+shared_cart.share.form.users,Benutzer,de_DE
+shared_cart_page.share.success,Cart was successfully shared,en_US
+shared_cart_page.share.success,Warenkorb wurde erfolgreich geteilt,de_DE
+shared_cart_page.unshare.success,Cart was successfully unshared,en_US
+shared_cart_page.unshare.success,Teilen des Warenkorbs wurde erfolgreich aufgehoben ,de_DE
+shared_cart_page.dismiss_confirmation.warning,Warning,en_US
+shared_cart_page.dismiss_confirmation.warning,Warnung,de_DE
+shared_cart.dismiss.title,Dismiss shared cart ‘quote_name’,en_US
+shared_cart.dismiss.title,Warenkorb ‘quote_name’ ablehnen,de_DE
+shared_cart_page.share.breadcrumbs.dismiss,Dismiss,en_US
+shared_cart_page.share.breadcrumbs.dismiss,Ablehnen,de_DE
+shared_cart_page.cart.dismiss,Dismiss,en_US
+shared_cart_page.cart.dismiss,Ablehnen,de_DE
+shared_cart_page.dismiss_confirmation.trying_to_dismiss,Are you sure that you what to dismiss shopping cart?,en_US
+shared_cart_page.dismiss_confirmation.trying_to_dismiss,"Sind Sie sicher, dass Sie den Warenkorb ablehnen wollen?",de_DE
+shared_cart_page.dismiss.success,Shopping cart was dismissed successfully.,en_US
+shared_cart_page.dismiss.success,Warenkorb wurde erfolgreich abgelehnt.,de_DE</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to import data:</p><pre><code class="language-bash">console data:import glossary</code></pre>
+                                                    <p>Make sure that in the database the configured data has been added to the <var>spy_glossary</var> table.</p>
+                                                    <h3 id="3SetupWidgets" data-magellan-target="3SetupWidgets">3) Set up Widgets</h3>
+                                                    <p>Register the following global widgets:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartPermissionGroupWidget</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Adds a cart access level for the multicart list to the header.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>SprykerShop\Yves\SharedCartWidget\Widget</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CartListPermissionGroupWidget</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Adds the cart access level column and share/dismiss links to the action column for the multicart list page.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>SprykerShop\Yves\SharedCartWidget\Widget</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CartDeleteCompanyUsersListWidget</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Renders a list, shared with the customer, for the cart confirm delete page.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>SprykerShop\Yves\SharedCartWidget\Widget</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\ShopApplication;
+
+use SprykerShop\Yves\SharedCartWidget\Widget\CartDeleteCompanyUsersListWidget;
+use SprykerShop\Yves\SharedCartWidget\Widget\CartListPermissionGroupWidget;
+use SprykerShop\Yves\SharedCartWidget\Widget\SharedCartPermissionGroupWidget;
+use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+
+class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+{
+	/**
+	 * @return string[]
+	 */
+	protected function getGlobalWidgets(): array
+	{
+		return [
+			CartDeleteCompanyUsersListWidget::class,
+			CartListPermissionGroupWidget::class,
+			SharedCartPermissionGroupWidget::class,
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following command to enable Javascript and CSS changes:</p><pre><code class="language-bash">console frontend:yves:build</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following plugin has been registered:<br />Open Yves and log in with customer.</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Test</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SharedCartPermissionGroupWidget</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Hover over the multicart list in the header: it should contain the access column.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CartListPermissionGroupWidget</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Open <var>https://mysprykershop.com/multi-cart/</var> - the page should contain the access column and share cart link.</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CartDeleteCompanyUsersListWidget</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Open <var>https://mysprykershop.com/multi-cart/</var>. Click on the share cart link. <br />Share the cart and click on the delete link.
+								<br />The list of customers whom this cart is shared with should appear on the delete confirmation page.
+							</td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="4EnableControllers" data-magellan-target="4EnableControllers">4) Enable Controllers</h3>
+                                                    <p>Register the following plugin:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SharedCartPageControllerProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Provides routes used in <var>SharedCartPage</var>.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>SprykerShop\Yves\SharedCartPage\Plugin\Provider</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/ShopApplication/YvesBootstrap.php
+        </a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\ShopApplication;
+
+use SprykerShop\Yves\SharedCartPage\Plugin\Provider\SharedCartPageControllerProvider;
+use SprykerShop\Yves\ShopApplication\YvesBootstrap as SprykerYvesBootstrap;
+
+class YvesBootstrap extends SprykerYvesBootstrap
+{
+	/**
+	 * @param bool|null $isSsl
+	 *
+	 * @return \SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider[]
+	 */
+	protected function getControllerProviderStack($isSsl)
+	{
+		return [
+			new SharedCartPageControllerProvider($isSsl), #SharedCartFeature
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">Make sure that the following plugin has been registered:
+		<ol><li value="1">Open Yves and log in with customer.</li><li value="2">Open <var>https://mysprykershop.com/multi-cart/</var> - the page should contain all customer's quotes.</li><li value="3">Click on the share link. The share cart page should open.</li></ol></div>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1">
+                                                            <p><a href="../persisitent-cart-sharing-shared-carts-integration-201907.htm"><p>Persistent Cart Sharing + Shared Carts Feature Integration</p></a>
+                                                            </p>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/capabilities/cart/shared_cart/shared-cart-overview.htm">Shared Cart Overview</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last
+review date: Jul 29, 2019</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
