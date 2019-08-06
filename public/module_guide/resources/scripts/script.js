@@ -97,7 +97,7 @@ function Anchorer () {
     this.$container = $('html, body');
     this.$el = $('.js-anchorer');
     this.$targets = $('h1, h2, h3, .drop-anchor', this.$el);
-    this.headerHeight = document.querySelector('.title-bar').clientHeight;
+    this.headerHeight = getHeaderHeight();
 
     this.init = function() {
 
@@ -105,11 +105,16 @@ function Anchorer () {
         this.mapEvents();
     };
 
+    function getHeaderHeight () {
+        return document.querySelector('.title-bar').clientHeight;
+    }
+
     this.mapEvents = function() {
         this.$el.on('click', '.js-anchorer__trigger', this.onClick.bind(this));
     };
 
     this.onClick = function(e) {
+
         var that = this;
         var href = $(e.currentTarget).attr('href');
 
@@ -132,6 +137,7 @@ function Anchorer () {
             var id = that.normalize(text);
 
             $element.prepend(that.createAnchor(id, text));
+
         });
     };
 
@@ -161,7 +167,7 @@ function Anchorer () {
             return;
         }
 
-        var top = $anchor.offset().top - this.headerHeight;
+        var top = $anchor.offset().top - getHeaderHeight();
         console.log(top);
         this.$container.animate({
             scrollTop: top
@@ -169,6 +175,10 @@ function Anchorer () {
     };
 
     this.setHash = function(value) {
+        if(window.history){
+            window.history.replaceState(null,null,value);
+            return;
+        }
         window.location.hash = value;
     }
 
@@ -709,8 +719,12 @@ function versionElementsHandler(){
             this.versionElements.forEach((elem)=>{
                 let versionElem = elem.querySelector('.js-versions-trigger');
                 let dropdown = elem.querySelector('.js-versions-dropdown');
-                versionElem.addEventListener('click', ()=>{
+                versionElem.addEventListener('click', (e)=>{
+                    e.stopPropagation();
                     dropdown.classList.toggle('visible');
+                });
+                document.addEventListener('click', ()=>{
+                    dropdown.classList.remove('visible');
                 })
             })
         }
@@ -725,6 +739,7 @@ function gaDropdownReadCheck(){
     return function (){
         const dropDown = this.querySelector('.MCDropDown');
         const dropdownName = this.querySelector('.MCDropDownHotSpot').innerText;
+        const pageName = window.location.href.split('/').slice(-1).join();
         let isOpen = () => {
             let result = dropDown.classList.contains('MCDropDown_Open');
             console.log(result);
@@ -737,8 +752,8 @@ function gaDropdownReadCheck(){
                 if(isOpen()){
                     console.log('sending');
                     gtag('event', dropdownName, {
-                        'event_category': 'Reading Installation Guides',
-                        'event_label': 'docs',
+                        'event_category': 'Reading Dropdowns',
+                        'event_label': pageName,
                         'value': 1
                     });
                     gaDropdownsPending = false;
@@ -755,13 +770,65 @@ function initGaDropDowns (){
     document.querySelectorAll('.ga-dropdown').forEach((dropDown)=>{
         dropDown.addEventListener('click', gaDropdownReadCheck());
     })
-
 }
+
+function TabHandler () {
+    this.tabContainer = document.querySelector('.tab-container');
+
+    this.init = ()=>{
+        if(!this.tabContainer) return;
+        this.tabs = this.tabContainer.querySelectorAll('.tab-nav-link');
+        this.tabPanes = this.tabContainer.querySelectorAll('.tab-pane');
+        this.mapEvents();
+    };
+
+    this.mapEvents = ()=>{
+        this.tabs.forEach((tab, index) => {
+            tab.tabIndex = [index];
+            tab.addEventListener('click', (e)=>{
+                e.preventDefault();
+                this.tabPanes.forEach((pane)=>{
+                    pane.classList.remove('active');
+                });
+                this.tabs.forEach((tab)=>{
+                    tab.classList.remove('active');
+                });
+                e.currentTarget.classList.add('active');
+                this.tabPanes[e.currentTarget.tabIndex].classList.add('active');
+            })
+        });
+    }
+}
+const tabs = new TabHandler();
+
+function versionDisplay (){
+    this.container = document.querySelector('.versions-element--extended');
+    this.init = ()=>{
+        if(!this.container) return;
+        this.triggers = this.container.querySelectorAll('.version-display-trigger');
+        this.display = this.container.querySelector('.version-display');
+        this.mapEvents();
+    };
+
+    this.mapEvents = ()=>{
+        this.triggers.forEach((trigger)=>{
+            trigger.addEventListener('click', (e)=>{
+                e.stopPropagation();
+                this.display.innerText = e.currentTarget.innerText;
+            })
+        })
+    };
+
+    this.init();
+}
+
 
 
 document.addEventListener("DOMContentLoaded", function (){
     topScroll.init();
-    anchorer.init();
+    if(!document.querySelector('.searchTopic')){
+        anchorer.init();
+    }
     asideNavCloseButton.init();
     showSearchButton.init();
     flHandler.init();
@@ -774,5 +841,6 @@ document.addEventListener("DOMContentLoaded", function (){
     imageMapster();
     versionElementsHandler();
     initGaDropDowns();
+    tabs.init();
+    versionDisplay();
 } );
-

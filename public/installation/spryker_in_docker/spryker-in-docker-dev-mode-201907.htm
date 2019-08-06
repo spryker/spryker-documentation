@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="n-6rTUVjIkqMV9L9T7lZug">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="n-6rTUVjIkqMV9L9T7lZug:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="sH6y9Ib-lkeHX_4fJQDDPA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="sH6y9Ib-lkeHX_4fJQDDPA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -247,13 +247,11 @@
                                                     <p>Docker images/containers are used in the DEV environment. Find more information in <a href="https://docs.docker.com/v17.09/engine/userguide/storagedriver/imagesandcontainers/">Docker documentation</a>.
 
 </p>
-                                                    <p>File synchronization is enabled when the <var>"dev"</var> mode is active. File synchronization between host OS and containers is handled by docker-sync. 
+                                                    <p>File synchronization is enabled when the <var>"dev"</var> mode is active. </p>
+                                                    <p>In development mode, file changes on host machine are synced into containers.
 
 </p>
-                                                    <p>All IDEs are supported and IDEA temp files are already excluded from the synchronization process. 
-
-</p>
-                                                    <p>When the containers are killed, all files remain on the host machine. </p>
+                                                    <p>When containers are killed, all files remain on the host machine. </p>
                                                     <h2>Source code synchronization</h2>
                                                     <p>The following table describes the approaches and solutions used for each supported operating system:</p>
                                                     <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
@@ -288,15 +286,29 @@
                                                     <h2>Multi-store Setup Support</h2>
                                                     <ul>
                                                         <li value="1">Multi-store setup is supported.</li>
-                                                        <li value="2">Each store has dedicated containers.</li>
-                                                        <li value="3">Default stores are AT, DE, US.</li>
+                                                        <li value="2">Default stores are AT, DE, US.</li>
+                                                        <li value="3">
+                                                            <p>AT and DE are handled by a separate group of containers and have a common database.</p>
+                                                        </li>
+                                                        <li value="4">
+                                                            <p>US is handled by a separate group of containers and has a separate database.</p>
+                                                        </li>
                                                     </ul>
-                                                    <p>Find more information about the multi-store setup here.</p>
+                                                    <p>Find more information about the multi-store setup <a href="https://documentation.spryker.com/capabilities/internationalization/multiple-stores.htm">here</a>.</p>
+                                                    <h2>Database Access</h2>
+                                                    <p>In development mode, you can access your postgres database using the following credentials:</p>
+                                                    <ul>
+                                                        <li value="1">host - <var>localhost</var></li>
+                                                        <li value="2">port - <var>5432</var></li>
+                                                        <li value="3">user - <var>spryker</var></li>
+                                                        <li value="4">pw - <var>secret</var></li>
+                                                    </ul>
+                                                    <p>All of the credentials can be changed in the <a href="docker_sdk/deploy-file-reference-version-1-201907.htm">Deploy file</a>.</p>
                                                     <h2>Xdebug Support</h2>
                                                     <p>Use the <var>-x</var> argument with the <var>sdk run|start|up</var> command to enable Xdebug.</p>
                                                     <div class="info">
-                                                        <p>The full list of possible arguments can be found in Getting started with Docker [PUBLISHED]</p>
-                                                        <p>More information about Xdebug can be found in Debugging Setup in Docker [PUBLISHED].</p>
+                                                        <p>The full list of possible arguments can be found <a href="getting-started-with-docker-201907.htm">here</a>.</p>
+                                                        <p>More information about Xdebug can be found <a href="debugging-setup-in-docker-201907.htm">here</a>.</p>
                                                     </div>
                                                     <h2>Mail Catcher: MailHog</h2>
                                                     <p>MailHog is a mail catcher service that is used with Spryker in Docker for the Demo and Dev environments. This email testing tool is used by developers to catch and show emails locally without an SMTP (Simple Mail Transfer Protocol) server.</p>
@@ -316,9 +328,9 @@
                                                         </li>
                                                         <li value="3"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">HowTo - Install Self-Signed SSL Certificates</a>
                                                         </li>
-                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-setup-schedulers-for-different-environment-201907.htm">HowTo - Setup Schedulers For Different Environments</a>
-                                                        </li>
                                                     </ul>
+                                                    <p><i>Last review date: Aug 06, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

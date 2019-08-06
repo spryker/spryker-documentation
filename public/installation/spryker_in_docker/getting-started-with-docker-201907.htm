@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="FkMqJmkQZEuqS-H_yIK9iQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="FkMqJmkQZEuqS-H_yIK9iQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="TYVeyNoTMUmsD4HUwaRJFg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TYVeyNoTMUmsD4HUwaRJFg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -252,16 +252,22 @@
 			</li>
                                                                 <li value="3">Depending on the desired shop type:
 			      <ol style="list-style-type: lower-alpha;"><li value="1">Clone the B2C repository:
-						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2c-demo-shop.git ./</code></pre></li><li value="2">Clone the  B2B repository:
-						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2b-demo-shop.git ./</code></pre></li></ol></li>
+						<pre><code class="language-shell">git clone --single-branch 201907.0 https://github.com/spryker-shop/b2c-demo-shop.git ./</code></pre></li><li value="2">Clone the  B2B repository:
+						<pre><code class="language-shell">git clone --single-branch 201907.0 https://github.com/spryker-shop/b2b-demo-shop.git ./</code></pre></li></ol></li>
                                                                 <li value="4">Clone the docker repository:
-				<pre><code class="language-shell">git clone https://github.com/spryker/docker-sdk.git ./docker</code></pre></li>
+				<pre><code class="language-shell">git clone --single-branch 1.0.0 https://github.com/spryker/docker-sdk.git ./docker</code></pre></li>
                                                                 <li value="5">Bootstrap local docker setup for demo:
 				<pre><code class="language-shell">docker/sdk bootstrap</code></pre></li>
                                                                 <li value="6">Once the job finishes, build and start the instance:
 				<pre><code class="language-shell">docker/sdk up</code></pre></li>
                                                                 <li value="7">Update the <var>hosts</var> file:
-				<pre><code class="language-shell">echo "127.0.0.1 zed.de.demo-spryker.com yves.de.demo-spryker.com glue.de.demo-spryker.com zed.at.demo-spryker.com yves.at.demo-spryker.com glue.at.demo-spryker.com zed.us.demo-spryker.com yves.us.demo-spryker.com glue.us.demo-spryker.com mail.demo-spryker.com scheduler.demo-spryker.com queue.demo-spryker.com" | sudo tee -a /etc/hosts</code></pre><p class="info">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker</p></li>
+</li>
+                                                                <ul>
+                                                                    <li value="1">Linux/MacOS:				<pre><code class="language-shell">echo "127.0.0.1 zed.de.demo-spryker.com yves.de.demo-spryker.com glue.de.demo-spryker.com zed.at.demo-spryker.com yves.at.demo-spryker.com glue.at.demo-spryker.com zed.us.demo-spryker.com yves.us.demo-spryker.com glue.us.demo-spryker.com mail.demo-spryker.com scheduler.demo-spryker.com queue.demo-spryker.com" | sudo tee -a /etc/hosts</code></pre><p class="info">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker</p></li>
+                                                                    <li value="2">Windows:
+							<ol><li value="1">Click <b>Start</b> → <b>Search</b> and type "Notepad".</li><li value="2">Right-click <b>Notepad</b> and select the <b>Run as administrator option</b>.</li><li value="3">In the <b>User Account Control</b> window click <b>Yes</b> to confirm the action.</li><li value="4">In the upper navigation panel, select <b>File</b> → <b>Open</b>.</li><li value="5">Put the following path into the address line: <var>C:\Windows\System32\drivers\etc</var></li><li value="6">In the <b>File name</b> line, enter "hosts" and click <b>Open</b>. <br />The hosts file is opened in the drop-down.</li><li value="7">Add the following line into the file:
+								<var>127.0.0.1   zed.de.demo-spryker.com glue.de.demo-spryker.com yves.de.demo-spryker.com scheduler.demo-spryker.com mail.demo-spryker.com queue.demo-spryker.com</var><p class="note">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: <var>zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker.com</var></p></li><li value="8">Click <b>File</b> → <b>Save</b>.</li><li value="9">Close the file.</li></ol></li>
+                                                                </ul>
                                                             </ol>
                                                             <p class="note">Depending on the hardware performance, the first project launch can take up to 20 minutes.</p>
                                                         </div>
@@ -286,18 +292,23 @@
 				<pre><code class="language-shell">docker/sdk bootstrap deploy.dev.yml</code></pre></li>
                                                                 <li value="6">Once the job finishes, build and start the instance:
 				<pre><code class="language-shell">docker/sdk up</code></pre></li>
-                                                                <li value="7">Update the <var>hosts</var> file:
-				<pre><code class="language-shell">echo "127.0.0.1 zed.de.demo-spryker.com yves.de.demo-spryker.com glue.de.demo-spryker.com zed.at.demo-spryker.com yves.at.demo-spryker.com glue.at.demo-spryker.com zed.us.demo-spryker.com yves.us.demo-spryker.com glue.us.demo-spryker.com mail.demo-spryker.com scheduler.demo-spryker.com queue.demo-spryker.com" | sudo tee -a /etc/hosts</code></pre><p class="info">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker</p></li>
+                                                                <li value="7">Update the <var>hosts</var> file:</li>
+                                                                <ul>
+                                                                    <li value="1">Linux/MacOS:				<pre><code class="language-shell">echo "127.0.0.1 zed.de.demo-spryker.com yves.de.demo-spryker.com glue.de.demo-spryker.com zed.at.demo-spryker.com yves.at.demo-spryker.com glue.at.demo-spryker.com zed.us.demo-spryker.com yves.us.demo-spryker.com glue.us.demo-spryker.com mail.demo-spryker.com scheduler.demo-spryker.com queue.demo-spryker.com" | sudo tee -a /etc/hosts</code></pre><p class="info">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker</p></li>
+                                                                    <li value="2">Windows:
+								<ol><li value="1">Click <b>Start</b> → <b>Search</b> and type "Notepad".</li><li value="2">Right-click <b>Notepad</b> and select the <b>Run as administrator option</b>.</li><li value="3">In the <b>User Account Control</b> window click <b>Yes</b> to confirm the action.</li><li value="4">In the upper navigation panel, select <b>File</b> → <b>Open</b>.</li><li value="5">Put the following path into the address line: <var>C:\Windows\System32\drivers\etc</var></li><li value="6">In the <b>File name</b> line, enter "hosts" and click <b>Open</b>. <br />The hosts file is opened in the drop-down.</li><li value="7">Add the following line into the file:
+							<var>127.0.0.1   zed.de.demo-spryker.com glue.de.demo-spryker.com yves.de.demo-spryker.com scheduler.demo-spryker.com mail.demo-spryker.com queue.demo-spryker.com</var><p class="note">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: <var>zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker.com</var></p></li><li value="8">Click <b>File</b> → <b>Save</b>.</li><li value="9">Close the file.</li></ol></li>
+                                                                </ul>
                                                             </ol>
                                                             <p class="note">Depending on the hardware performance, the first project launch can take up to 20 minutes.</p>
-                                                            <p>Learn more about development mode here.</p>
+                                                            <p>Learn more about development mode <a href="spryker-in-docker-dev-mode-201907.htm">here</a>.</p>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />SSL Mode</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <ol>
                                                                 <li value="1">
-                                                                    <p>Set the value of docker: ssl: enable: property to true in <var>deploy.yml</var> (or <var>deploy.dev.yml</var> if needed).</p><pre><code class="language-PHP line-numbers">...
+                                                                    <p>Set the value of docker: ssl: enable: property to true in <var>deploy.yml</var> (or <var>deploy.dev.yml</var> if needed).</p><pre><code class="language-yaml line-numbers">...
 docker:
     ssl:
         enabled: true
@@ -320,7 +331,25 @@ Getting CA Private Key
 Checking chain
 /certs/spryker_ssl.crt: OK</code></pre>
                                                                 </li>
-                                                                <li value="4">In the meanwhile, if you haven't installed the CA certificate, follow the <a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">instructions</a>.</li>
+                                                                <li value="4">In the meanwhile, if you haven't installed the CA certificate, take <var>spryker.crt</var> from <var>/docker/deployment/default/</var> and follow the <a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">instructions</a>.</li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Using MySQL instead of PostgreSQL</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ol>
+                                                                <li value="1">
+                                                                    <p>Set the value of <var>services:database:engine:</var> property to <var>mysql</var> in <var>deploy.yml</var> (or <var>deploy.dev.yml</var> if needed).</p><pre><code class="language-PHP line-numbers">...
+services:
+    database:
+        engine: mysql
+...</code></pre>
+                                                                </li>
+                                                                <li value="2">Apply the changes:
+				<pre><code class="language-shell">docker/sdk bootstrap deploy.yml</code></pre><p class="note">Make sure to use the name of the file from step 1.</p></li>
+                                                                <li value="3">
+                                                                    <p>Run the script to build and restart containers with MySQL settings:</p><pre><code class="language-shell">docker/sdk up</code></pre>
+                                                                </li>
                                                             </ol>
                                                         </div>
                                                     </div>
@@ -366,8 +395,7 @@ Checking chain
                                                                 <li value="2"><var>-x</var> - Enable Xdebug.
 			<p>You can set the environment variable <var>SPRYKER_XDEBUG_ENABLE=1</var> instead of using this option.</p></li>
                                                                 <li value="3"><var>-t</var> - Enable testing mode.
-			<p>You can set environment variable <var>SPRYKER_TESTING_ENABLE=1</var> instead of using this option.</p><div class="note">These arguments cannot be used with the <var>cli</var> and <var>console</var> commands. Use <var>docker/sdk codecept</var> instead:
-					<ul><li value="1"><var>docker/sdk cli</var> - Start a new container where you can run cli commands.</li><li value="2"><var>docker/sdk cli &lt;command&gt;</var> - Run any cli command, e.g. <var>sdk cli composer install</var>.</li><li value="3"><var>docker/sdk console</var> - Run Spryker console command, e.g. <var>sdk console code:test -vvv -g Acceptance</var>.</li></ul></div></li>
+			<p>You can set environment variable <var>SPRYKER_TESTING_ENABLE=1</var> instead of using this option.</p></li>
                                                             </ul>
                                                         </div>
                                                     </div>
@@ -376,13 +404,15 @@ Checking chain
                                                     <ul>
                                                         <li value="1"><a href="spryker-in-docker-troubleshooting-201907.htm">Spryker in Docker - Troubleshooting</a>
                                                         </li>
-                                                        <li value="2"><a href="docker_install_prerequisites/docker-install-prerequisites-201907.htm">Docker Installation Prerequisites</a>
+                                                        <li value="2"><a href="debugging-setup-in-docker-201907.htm">Debugging Setup in Docker</a>
                                                         </li>
-                                                        <li value="3"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">HowTo - Install Self-Signed SSL Certificates</a>
+                                                        <li value="3"><a href="docker_install_prerequisites/docker-install-prerequisites-201907.htm">Docker Installation Prerequisites</a>
                                                         </li>
-                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-setup-schedulers-for-different-environment-201907.htm">HowTo - Setup Schedulers For Different Environments</a>
+                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">HowTo - Install Self-Signed SSL Certificates</a>
                                                         </li>
                                                     </ul>
+                                                    <p><i>Last review date: Aug 06, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
