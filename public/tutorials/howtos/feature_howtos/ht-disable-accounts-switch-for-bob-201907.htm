@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos|Docker HowTos">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Tutorials|HowTos|Feature HowTos">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>HowTo - Setup MySQL Database Engine Instead of PostgreSQL</title>
+        <meta name="author" content="" /><title>HowTo - Disable Accounts Switch for Business on Behalf</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="FgJhqE9W_kqKV5qmdmNBSw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="FgJhqE9W_kqKV5qmdmNBSw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="hpwJVvMm50GzHwARpxs75g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="hpwJVvMm50GzHwARpxs75g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,58 +239,35 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>HowTo - Setup MySQL Database Engine Instead of PostgreSQL</h1>
-                                                    <p>This HowTo helps to change database engine from the default PostgreSQL to MySQL.
-
-    </p>
+                                                    <h1>HowTo - Disable Accounts Switch for Business on Behalf</h1>
+                                                    <p>We have implemented the functionality that allows you to disable switching between the Business-on-Behalf accounts. E.g., if the user logs in to the pre-defined company account that has Business-on-Behalf feature integrated, the shop owner can disable the ability to switch between the accounts. In case the Business-on-Behalf is disabled, the company user will log in to the default account and will not be able to switch between the company users within their company account.</p>
+                                                    <p>To disable switching between Business-on-Behalf accounts:</p>
                                                     <ul>
-                                                        <li value="1">PostgreSQL is an object-relational database management system with an emphasis on extensibility and standards compliance. 
-    </li>
-                                                        <li value="2">MySQL is an open-source relational database management system. Just like PostgreSQL, MySQL uses tables as a core component. 
-
-</li>
+                                                        <li value="1">Introduce a plugin that implements this interface - <var>CompanyUserChangeAllowedCheckPluginInterface</var>:
+				<pre><code class="language-PHP">public function check(CustomerTransfer $customerTransfer): bool
+{
+	return false;
+}
+				</code></pre></li>
+                                                        <li value="2">Add the introduced plugin to <var>Pyz\Client\BusinessOnBehalf\BusinessOnBehalfDependencyProvider::getCompanyUserChangeAllowedCheckPlugins()</var>:
+				<pre><code class="language-PHP">protected function getCompanyUserChangeAllowedCheckPlugins(): array
+{
+	return [
+		new ...Plugin(),
+	];
+}
+				</code></pre></li>
                                                     </ul>
-                                                    <p>This change is optional. Depending on the value of <var>services:database:engine</var> defined in <var>deploy.*.yml</var>, the <var>spryker</var> script makes use of <var>mysql</var> or <var>postgres</var> database engine to build environment. The app image is labeled <var>MYSQL</var> or <var>PGSQL</var> accordingly. If you need to change the default setting, follow the steps described below.
-
-    </p>
-                                                    <ol>
-                                                        <li value="1">Open a terminal.
-    </li>
-                                                        <li value="2">Create a new folder and navigate into it.
-
-    </li>
-                                                        <li value="3">Depending on the desired shop type:</li>
-                                                        <ol style="list-style-type: lower-alpha;">
-                                                            <li value="1">Clone the B2C repository:
-					<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2c-demo-shop.git ./</code></pre></li>
-                                                            <li value="2">Clone the  B2B repository:
-					<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2b-demo-shop.git ./</code></pre></li>
-                                                        </ol>
-                                                        <li value="4">Clone the docker repository:
-			<pre><code class="language-shell">git clone https://github.com/spryker/docker-sdk.git ./docker</code></pre></li>
-                                                        <li value="5">Set the <var>services:database:engine</var> variable in <var>deploy.*.yml</var> file:
-		<pre><code class="language-PHP line-numbers">...
-services:
-    database:
-        engine: mysql
-...</code></pre></li>
-                                                        <li value="6">
-                                                            <p>Bootstrap local docker setup for the demo with development features (exclude <var>deploy.dev.yml</var> if development features are not needed):</p><pre><code class="language-shell">/docker/sdk bootstrap</code></pre>
-                                                        </li>
-                                                        <li value="7">Build and run Spryker apps:
-				<pre><code class="language-shell">/docker/sdk up</code></pre></li>
-                                                        <li value="8">Update the hosts file:
-				<pre><code class="language-shell">echo "127.0.0.1 zed.de.demo-spryker.com glue.de.demo-spryker.com yves.de.demo-spryker.com scheduler.demo-spryker.com queue.demo-spryker.com mail.demo-spryker.com" | sudo tee -a /etc/hosts</code></pre><p class="info">If needed, add corresponding entries for other stores. For example, if you are going to have a US store, add the following entries: zed.us.demo-spryker.com glue.us.demo-spryker.com yves.us.demo-spryker</p></li>
-                                                        <div class="tip">Make sure that the <var>SPRYKER_DB_ENGINE</var> variable is set to <var>MYSQL</var>:
-			<pre><code class="language-shell">/docker/sdk cli env | grep SPRYKER_DB_ENGINE</code></pre></div>
-                                                    </ol>
-                                                    <p class="info">You can switch back only after executing <var>/docker/sdk clean</var> and <var>/docker/sdk build</var> commands.</p>
-                                                    <hr width="100%" size="0" align="center" />
-                                                    <p style="font-weight: bold;">See also:</p>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
                                                     <ul>
-                                                        <li style="font-weight: normal;" value="1"><a href="https://documentation.spryker.com/installation/spryker_in_docker/spryker-in-docker-201907.htm">Spryker in Docker</a>
+                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/workflow___process_management/customer_login_by_token/customer-login-by-token-feature-overview-201907.htm">Customer Login by Token feature overview</a>
                                                         </li>
                                                     </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Jul 04, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

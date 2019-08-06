@@ -78,6 +78,7 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../../resources/scripts/jquery.min.js">
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="a_zA6ayOJkGZYD0y55AjZQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="a_zA6ayOJkGZYD0y55AjZQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UT2DGQLubUaSQ2teagj5pQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UT2DGQLubUaSQ2teagj5pQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,14 +242,35 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Integrating Docker into an Existing Project</h1>
                                                     <p>This page describes how you can convert an existing non-docker based project into a docker based one. If you want to install Spryker Commerce OS in&#160;Docker from scratch, start from <a href="getting-started-with-docker-201907.htm">here</a>.</p>
-                                                    <h2>Docker environment configuration</h2>
-                                                    <div class="info">The application environment name is "Docker".</div>
-                                                    <ol>
-                                                        <li value="1">
-                                                            <p>Install <a href="docker_install_prerequisites/docker-install-prerequisites-201907.htm">prerequisites</a>.</p>
-                                                        </li>
-                                                        <li value="2">
-                                                            <p>Create a new <var>.dockerignore</var> file to match the <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file">project infrastructure</a>.</p><pre><code class="language-yaml line-numbers">.git
+                                                    <h2>Prerequisites</h2>
+                                                    <p>To start Docker integration into your project, overview and install the necessary features:</p>
+                                                    <table style="margin-left: 0;margin-right: auto;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <thead>
+                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Feature</th>
+                                                                <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Required sub-feature</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">201907.0</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                    <p><a href="https://documentation.spryker.com/feature_integration_guides/spryker-core-feature-integration-201907.htm">Feature</a>
+                                                                    </p>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <p>
+                                                        <h2>Set up .dockerignore</h2>
+                                                    </p>
+                                                    <p>
+                                                        <p>Create a new <a href="https://docs.docker.com/engine/reference/builder/#dockerignore-file"><var>.dockerignore</var></a>file to match the project file structure.</p><pre><code class="language-yaml line-numbers">.git
 .idea
 node_modules
 /vendor
@@ -263,24 +285,334 @@ node_modules
  
 /docker
 !/docker/deployment/</code></pre>
-                                                        </li>
-                                                        <li value="3">
-                                                            <p>Create a new <var>deploy.yml</var>. This file defines Spryker infrastructure and services for Spryker tools used to deploy Spryker applications.</p>
-                                                            <p>You can  create an unlimited amount of deployment files with different configurations, e.g it can depend on the environment name - <var>deploy.{environment}.yml</var></p>
-                                                            <p>Find the file structure description here.</p>
-                                                        </li>
-                                                        <li value="4">
-                                                            <p>Create a new configuration file <var>config_default-[environment].php</var>. This file affects all stores in a specific environment. Usually, this place is used for global flags - <var>config_default-docker.php</var>.</p>
-                                                            <div class="info">
-                                                                <p>As Spryker in Docker supports a <a href="https://documentation.spryker.com/capabilities/internationalization/multiple-stores.htm">multi-store</a> setup, you can configure a specific store. Default stores are AT, DE, US.</p>
-                                                                <p>If you are configuring a specific store, configuration file structure is the following: <var>config_default-[environment]_[storename].php</var>.</p>
-                                                                <p>For example, for DE store in docker environment, the file name would be <var>config_default-docker_DE.php</var>.</p>
+                                                        <h2>Set up Configuration</h2>
+                                                        <p>Under <var>config/Shared</var>, adjust or create a configuration file which depends on the environment name.</p>
+                                                        <p>As the Docker configuration file is too big, find a ready-made working example <a href="https://github.com/spryker-shop/b2c-demo-shop/blob/master/config/Shared/config_default-docker.php">here</a>. Also, the configuration has to be adjusted for specific store(s), e.g <var><a href="https://github.com/spryker-shop/b2c-demo-shop/blob/master/config/Shared/config_default-docker_DE.php">config_default-docker_DE.php</a></var>.</p>
+                                                        <h2>Set up Deploy File</h2>
+                                                        <p><a href="docker_sdk/deploy-file-reference-version-1-201907.htm">Deploy file</a> is a YAML file defining Spryker infrastructure and services for Spryker tools used to deploy Spryker applications in different environments.</p>
+                                                        <p>It's possible to create an unlimited amount of deployment files with different configuration settings, e.g <var>deploy.yml</var> for demo mode or <var>deploy.dev.yml</var> for development mode.</p>
+                                                        <p>Find an example of deploy file for demo mode (DE, AT, and US stores) below:</p>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />deploy.yml</a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">version: "0.1"
+ 
+namespace: spryker_b2c
+tag: '1.0'
+ 
+environment: docker
+image: spryker/php:7.2
+ 
+regions:
+    EU:
+        services:
+            database:
+                database: eu-docker
+                username: spryker
+                password: secret
+ 
+        stores:
+            DE:
+                services:
+                    broker:
+                        namespace: de-docker
+                    key_value_store:
+                        namespace: 1
+                    search:
+                        namespace: de_search
+            AT:
+                services:
+                    broker:
+                        namespace: at-docker
+                    key_value_store:
+                        namespace: 2
+                    search:
+                        namespace: at_search
+    US:
+        services:
+            database:
+                database: us-docker
+                username: spryker
+                password: secret
+        stores:
+            US:
+                services:
+                    broker:
+                        namespace: us-docker
+                    key_value_store:
+                        namespace: 3
+                    search:
+                        namespace: us_search
+groups:
+    EU:
+        region: EU
+        applications:
+            yves_eu:
+                application: yves
+                endpoints:
+                    yves.de.demo-spryker.com:
+                        store: DE
+                        services:
+                            session:
+                                namespace: 1
+                    yves.at.demo-spryker.com:
+                        store: AT
+                        services:
+                            session:
+                                namespace: 2
+            glue_eu:
+                application: glue
+                endpoints:
+                    glue.de.demo-spryker.com:
+                        store: DE
+                    glue.at.demo-spryker.com:
+                        store: AT
+            zed_eu:
+                application: zed
+                endpoints:
+                    zed.de.demo-spryker.com:
+                        store: DE
+                        services:
+                            session:
+                                namespace: 3
+                    zed.at.demo-spryker.com:
+                        store: AT
+                        services:
+                            session:
+                                namespace: 4
+    US:
+        region: US
+        applications:
+            yves_us:
+                application: yves
+                endpoints:
+                    yves.us.demo-spryker.com:
+                        store: US
+                        services:
+                            session:
+                                namespace: 5
+            glue_us:
+                application: glue
+                endpoints:
+                    glue.us.demo-spryker.com:
+                        store: US
+            zed_us:
+                application: zed
+                endpoints:
+                    zed.us.demo-spryker.com:
+                        store: US
+                        services:
+                            session:
+                                namespace: 6
+services:
+    database:
+        engine: postgres
+        root:
+            username: "root"
+            password: "secret"
+    broker:
+        engine: rabbitmq
+        api:
+            username: "spryker"
+            password: "secret"
+        endpoints:
+            queue.demo-spryker.com:
+    session:
+        engine: redis
+    key_value_store:
+        engine: redis
+    search:
+        engine: elastic
+    scheduler:
+        engine: jenkins
+        endpoints:
+            scheduler.demo-spryker.com:
+    mail_catcher:
+        engine: mailhog
+        endpoints:
+            mail.demo-spryker.com:
+ 
+docker:
+ 
+    ssl:
+        enabled: false
+ 
+    testing:
+        store: DE
+ 
+    mount:
+        baked:</code></pre>
                                                             </div>
-                                                        </li>
-                                                        <li value="5">
-                                                            <p>Prepare and install the tool for system installation as described in the install recipe file:</p>
-                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/install/docker.yml</a></span>
-                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">env:
+                                                        </div>
+                                                        <p>Find an example of deploy file for development mode (DE, AT, and US stores) below:</p>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />deploy.dev.yml</a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">version: "0.1"
+ 
+namespace: spryker_b2c_dev
+tag: 'dev'
+ 
+environment: docker
+image: spryker/php:7.2
+ 
+regions:
+    EU:
+        services:
+            database:
+                database: eu-docker
+                username: spryker
+                password: secret
+ 
+        stores:
+            DE:
+                services:
+                    broker:
+                        namespace: de-docker
+                    key_value_store:
+                        namespace: 1
+                    search:
+                        namespace: de_search
+            AT:
+                services:
+                    broker:
+                        namespace: at-docker
+                    key_value_store:
+                        namespace: 2
+                    search:
+                        namespace: at_search
+    US:
+        services:
+            database:
+                database: us-docker
+                username: spryker
+                password: secret
+        stores:
+            US:
+                services:
+                    broker:
+                        namespace: us-docker
+                    key_value_store:
+                        namespace: 3
+                    search:
+                        namespace: us_search
+groups:
+    EU:
+        region: EU
+        applications:
+            yves_eu:
+                application: yves
+                endpoints:
+                    yves.de.demo-spryker.com:
+                        store: DE
+                        services:
+                            session:
+                                namespace: 1
+                    yves.at.demo-spryker.com:
+                        store: AT
+                        services:
+                            session:
+                                namespace: 2
+            glue_eu:
+                application: glue
+                endpoints:
+                    glue.de.demo-spryker.com:
+                        store: DE
+                    glue.at.demo-spryker.com:
+                        store: AT
+            zed_eu:
+                application: zed
+                endpoints:
+                    zed.de.demo-spryker.com:
+                        store: DE
+                        services:
+                            session:
+                                namespace: 3
+                    zed.at.demo-spryker.com:
+                        store: AT
+                        services:
+                            session:
+                                namespace: 4
+    US:
+        region: US
+        applications:
+            yves_us:
+                application: yves
+                endpoints:
+                    yves.us.demo-spryker.com:
+                        store: US
+                        services:
+                            session:
+                                namespace: 5
+            glue_us:
+                application: glue
+                endpoints:
+                    glue.us.demo-spryker.com:
+                        store: US
+            zed_us:
+                application: zed
+                endpoints:
+                    zed.us.demo-spryker.com:
+                        store: US
+                        services:
+                            session:
+                                namespace: 6
+services:
+    database:
+        engine: postgres
+        root:
+            username: "root"
+            password: "secret"
+        endpoints:
+            localhost:5432:
+                protocol: tcp
+    broker:
+        engine: rabbitmq
+        api:
+            username: "spryker"
+            password: "secret"
+        endpoints:
+            queue.demo-spryker.com:
+    session:
+        engine: redis
+    key_value_store:
+        engine: redis
+    search:
+        engine: elastic
+    scheduler:
+        engine: jenkins
+        endpoints:
+            scheduler.demo-spryker.com:
+    mail_catcher:
+        engine: mailhog
+        endpoints:
+            mail.demo-spryker.com:
+ 
+docker:
+ 
+    ssl:
+        enabled: false
+ 
+    testing:
+        store: DE
+ 
+    debug:
+        enabled: true
+ 
+    mount:
+        native:
+            platforms:
+                - linux
+ 
+        docker-sync:
+            platforms:
+                - macos
+                - windows</code></pre>
+                                                            </div>
+                                                        </div>
+                                                    </p>
+                                                    <p>
+                                                        <h2>Set up Installation Script</h2>
+                                                        <p>Under <var>config/Shared</var>, prepare the <a href="https://documentation.spryker.com/capabilities/development/install-tool.htm?Highlight=install">installation recipe</a> that defines the way Spryker should be installed.</p>
+                                                        <p>Find an installation recipe example below:</p>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />install.yml</a></span>
+                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-yaml line-numbers">env:
     APPLICATION_ENV: docker
  
 sections:
@@ -374,13 +706,23 @@ sections:
  
         update-product-labels:
             command: "vendor/bin/console product-label:relations:update"</code></pre>
-                                                                </div>
                                                             </div>
+                                                        </div>
+                                                        <h2>Start Developing</h2>
+                                                        <p>Follow the <a href="docker_sdk/docker-sdk-201907.htm">guide</a> to start working with Docker.</p>
+                                                        <hr width="100%" size="0" align="center" />
+                                                    </p>
+                                                    <p style="font-weight: bold;">See also:</p>
+                                                    <ul>
+                                                        <li value="1"><a href="docker_install_prerequisites/docker-install-prerequisites-201907.htm">Overview and install the prerequisites</a>
                                                         </li>
-                                                        <li value="6">
-                                                            <p>Follow the <a href="docker_sdk/docker-sdk-201907.htm">guide</a> to start working with Docker.</p>
+                                                        <li value="2"><a href="getting-started-with-docker-201907.htm">Getting Started with Docker</a>
                                                         </li>
-                                                    </ol>
+                                                        <li value="3"><a href="docker_sdk/docker-sdk-201907.htm">Docker SDK</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p><i>Last review date: Aug 06, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
