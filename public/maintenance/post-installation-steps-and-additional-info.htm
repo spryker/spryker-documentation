@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="8zxpnm-eQ06B9Xpj4Vuz2w">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="8zxpnm-eQ06B9Xpj4Vuz2w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="x1tW_6-sskSvsnSoNiEu9Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="x1tW_6-sskSvsnSoNiEu9Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -308,7 +308,57 @@ export VM_IP_PREFIX="10.10.0."
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Services and Ports</a></span>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Services and Ports: Docker</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <h2>Services</h2>
+                                                            <p>Spryker provides an easily manageable and extendable way to configure required services according to the predefined <var>deploy.*.yml</var> file that contains a <var>service</var> section which describes services used to deploy Spryker Applications for different environments.</p>
+                                                            <p>Configuration can be defined on different levels: project-wide, region-wide, store-specific or endpoint-specific with limitations depending on the service type.</p>
+                                                            <p>Below, you can find an example of the service declaration that represents type and configuration of the <var>broker</var> service.</p><pre><code class="language-PHP line-numbers">...
+services:
+    // Defines the service name
+    broker:
+        engine: rabbitmq
+        // Defines the list of the environment variables
+        api:
+            username: "spryker"
+            password: "secret"
+        // Defined the list of Endpoints that points to the Service web interface or service's port
+        endpoints:
+            queue.demo-spryker.com:
+...</code></pre>
+                                                            <h2>Endpoints</h2>
+                                                            <p>Endpoint is a point of access to a Spryker Application or Service.</p>
+                                                            <p>Individual endpoints and ports are set in <var>deploy.*.yml</var> file.</p>
+                                                            <p class="note">Key format: <var>domain[:port]</var>. By default, the port for HTTP endpoints is 80. A port is mandatory for TCP endpoints.</p>
+                                                            <h2>How to apply changes</h2>
+                                                            <ol>
+                                                                <li value="1">
+                                                                    <p>Apply the necessary changes in <var>deploy.*.yml</var>.</p><pre><code class="language-PHP line-numbers">...
+groups:
+    EU:
+        region: EU
+        applications:
+            yves_eu:
+                application: yves
+                endpoints:
+                    {endpointName}:
+                        store: DE
+                        services:
+                            session:
+                                namespace: 1
+...</code></pre>
+                                                                </li>
+                                                                <li value="2">
+                                                                    <p>Bootstrap the local docker setup:</p><pre><code class="language-shell">docker/sdk boot</code></pre>
+                                                                </li>
+                                                                <li value="3">Once the job finishes, build and start the instance:
+				<pre><code class="language-shell">docker/sdk up</code></pre></li>
+                                                                <li value="4">Update the hosts file:
+				<pre><code class="language-shell">echo "127.0.0.1 {endpointName}" | sudo tee -a /etc/hosts</code></pre></li>
+                                                            </ol>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Services and Ports: DevVM</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <table style="mc-table-style: url('../resources/tablestyles/patternedrows.css');" class="TableStyle-PatternedRows" cellspacing="0">
                                                                 <col class="TableStyle-PatternedRows-Column-Regular" />

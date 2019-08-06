@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides|B2B Account Management">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="The article provides information on how to access private B2B resources using Spryker Glue API." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Logging In as Company User | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="EVASq2zaik-g6f4gENEp0Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="EVASq2zaik-g6f4gENEp0Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Logging In as Company User</h1>
+                                                    <p>
+                                                        <img src="../../../resources/images/shoptype/b2b_shop.png" />
+                                                    </p>
+                                                    <p>In the B2B context, buyers typically represent a company and act on its behalf. For this reason, Spryker Commerce OS provides the <a href="https://documentation.spryker.com/capabilities/company_account/company_account_overview/company-account-overview.htm">Company Account</a> capability which allows companies to create multiple <a href="https://documentation.spryker.com/capabilities/company_account/company_account_overview/company-account-general-organizational-structure.htm">Company Users</a>, as well as organize them in Business Units depending on the user role and scope. Customers can impersonate as various <i>Company Accounts</i> depending on the task they need to perform.</p>
+                                                    <p>To impersonate a customer as a Company User, API clients can use the&#160;<b>Business on Behalf API</b>. It&#160;provides REST access to retrieve a list of the Company Users available to the currently logged in user and impersonate as any user available to them.</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />Before impersonating as Company Users, customers need to authenticate first. For details on how to do so, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p>During the impersonation process, customers receive&#160;an <b>Access Token</b>. The token can be used to access any B2B REST API resources, such as <i>Companies</i>, <i>Business Units</i>,&#160;<i>Carts</i> etc. Also, authenticated company users will benefit from the <a href="https://documentation.spryker.com/capabilities/price/prices_per_merchant_relations/price-per-merchant-relation-feature-overview.htm">merchant-specific prices</a> available to them&#160;(applied to certain business units as a rule) instead of the default ones. Also, you can customize the behavior of your API client to match the user's company, job role, business unit, and scope.</p>
+                                                    <p class="info">If the&#160;<a href="https://documentation.spryker.com/capabilities/price/prices_per_merchant_relations/price-per-merchant-relation.htm">Prices per Merchant Relation (Customer specific prices)</a> feature is enabled in your project, all prices returned by Spryker REST API are the prices specific to the Company of the current <i>Company User</i> (if any).</p>
+                                                    <p>The same as with B2C resource access tokens, the tokens provided by the API have limited timeframe. When receiving an access token, the response body contains not only the access token itself, but also its lifetime, in seconds, and a <b>Refresh Token</b>. When the lifetime expires, the <i>Refresh Token</i> can be exchanged for a new <i>Access Token</i>. The new token will also have a limited lifetime and have a corresponding Refresh Token for future authentication. The default lifetime of the tokens is <b>8 hours</b> (<b>28800 seconds</b>) for an access token and <b>1 month</b> (<b>2628000 seconds</b>) for a refresh token. The settings can be changed in the module configuration.</p>
+                                                    <p class="info">For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p>In your development, the endpoint can help you to:</p>
+                                                    <ul>
+                                                        <li value="1">Authenticate users as B2B <i>Company Users</i>;</li>
+                                                        <li value="2">Obtain a token that can be used when accessing protected B2B resources;</li>
+                                                        <li value="3">Provide customized user experience based on the user's Company, Business Unit, Role etc;</li>
+                                                        <li value="4">Allow users to benefit from prices specific to their company.</li>
+                                                    </ul>
+                                                    <h2>Installation</h2>
+                                                    <p>For detailed information on the modules that provide the API functionality and related installation instructions, see&#160;<a href="https://documentation.spryker.com/feature_integration_guides/glue_api/b2b-login-feature-integration-201907.htm">B2B Login Feature Integration</a>.</p>
+                                                    <h2>Retrieving Available Company Users</h2>
+                                                    <p>To retrieve a list of all the Company Users available to the currently logged in user, send a&#160;<i>GET</i> request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/company-users">/company-users/mine</a></b>
+                                                    </p>
+                                                    <p>Sample request:&#160;<i>GET&#160;http://glue.mysprykershop.com/company-users/mine</i></p>
+                                                    <p class="note"><b>Authentication Required</b>
+                                                        <br />To get a list of Company Users, you need to authenticate first and pass an access token as a part of your request. For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <h3>Response</h3>
+                                                    <p>The endpoint responds with a&#160;<b>RestCompanyUserCollectionResponse</b>&#160;that contains the <i>Company Users</i>&#160;available to the currently logged in user.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>id</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Specifies the Company User ID.</p>
+                                                                        <p>You can use the ID to impersonate as the Company User via the <b>/company-user-access-tokens</b> endpoint.</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>isActive</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Boolean</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Indicates whether the Company User is active.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>isDefault</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Boolean</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Indicates whether the Company User is the default one for the logged in customer.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type is not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Sample Response</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "company-users",
+            "id": "4c677a6b-2f65-5645-9bf8-0ef3532bead1",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/4c677a6b-2f65-5645-9bf8-0ef3532bead1"
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "cfbe2644-a9bd-581b-977b-e72d1c9a9c54",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/cfbe2644-a9bd-581b-977b-e72d1c9a9c54"
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "e1019900-88c4-5582-af83-2c1ea8775ac5",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/e1019900-88c4-5582-af83-2c1ea8775ac5"
+            }
+        }
+    ],
+    "links": {
+        "self": "http://glue.mysprykershop.com/company-users/mine"
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="info">If the currently logged in user does not have access to any Company User accounts, the endpoint returns an empty&#160;<b>RestCompanyUserCollectionResponse</b> response.</p>
+                                                    <p>To help customers with selecting the necessary&#160;<i>Company User</i>, you&#160;can provide additional information, such as the company and business unit that each account belongs to. Also, you can identify which roles the corporate accounts can perform within the company. To fetch such information, extend the response of the endpoint with the <b>companies</b>&#160;and&#160;<b>company-business-units</b>, and <b>company-roles&#160;</b>resource relationships.</p>
+                                                    <p>Sample request:&#160;<i>GET&#160;http://glue.mysprykershop.com/company-users/min<b>?include=companies,company-business-units,company-roles</b></i></p>
+                                                    <p>In this case, the following additional attributes will be added to the response:</p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Resource</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td rowspan="3" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">companies</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the name of the Company.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">
+                                                                        <p><b>isActive</b>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Boolean</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Indicates whether the Company is active.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>status</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the status of the Company. Possible values:&#160;<i>Pending</i>,<i>Approved</i> or <i>Denied</i>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">company-roles</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the name of the Company Role.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>isDefault</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Boolean</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Indicates whether the Company Role is the default role for the company.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td rowspan="7" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">company-business-units</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the name of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>email</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the email address of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>phone</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the telephone number of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>externalUrl</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the url of the website of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>bic</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the Bank Identifier Code of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>iban</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the International Bank Account Number of the Business Unit.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>defaultBillingAddress</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies the default billing address of the Business Unit.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type and ID are not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Sample Response</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "company-users",
+            "id": "4c677a6b-2f65-5645-9bf8-0ef3532bead1",
+            "attributes": {...},
+            "links": {...},
+            "relationships": {
+                "companies": {
+                    "data": [
+                        {
+                            "type": "companies",
+                            "id": "88efe8fb-98bd-5423-a041-a8f866c0f913"
+                        }
+                    ]
+                },
+                "company-business-units": {
+                    "data": [
+                        {
+                            "type": "company-business-units",
+                            "id": "b2ea10b2-263a-5cd9-88dc-747309f0534a"
+                        }
+                    ]
+                },
+                "company-roles": {
+                    "data": [
+                        {
+                            "type": "company-roles",
+                            "id": "50c647a4-d27f-5d82-a587-1d0b7cc6b58d"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "cfbe2644-a9bd-581b-977b-e72d1c9a9c54",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/cfbe2644-a9bd-581b-977b-e72d1c9a9c54?include=companies,company-business-units"
+            },
+            "relationships": {
+                "companies": {
+                    "data": [
+                        {
+                            "type": "companies",
+                            "id": "88efe8fb-98bd-5423-a041-a8f866c0f913"
+                        }
+                    ]
+                },
+                "company-business-units": {
+                    "data": [
+                        {
+                            "type": "company-business-units",
+                            "id": "35752ce6-e25f-5d04-8bef-d46b2c359695"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "e1019900-88c4-5582-af83-2c1ea8775ac5",
+            "attributes": {...},
+            "links": {...},
+            "relationships": {
+                "companies": {
+                    "data": [
+                        {
+                            "type": "companies",
+                            "id": "88efe8fb-98bd-5423-a041-a8f866c0f913"
+                        }
+                    ]
+                },
+                "company-business-units": {
+                    "data": [
+                        {
+                            "type": "company-business-units",
+                            "id": "5a6032dc-fbce-5d0d-9d57-11ade1947bac"
+                        }
+                    ]
+                }
+            }
+        }
+    ],
+    "links": {...},
+    "included": [
+        {
+            "type": "companies",
+            "id": "88efe8fb-98bd-5423-a041-a8f866c0f913",
+            "attributes": {
+                "isActive": true,
+                "name": "BoB-Hotel Mitte",
+                "status": "approved"
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/companies/88efe8fb-98bd-5423-a041-a8f866c0f913"
+            }
+        },
+        {
+            "type": "company-business-units",
+            "id": "b2ea10b2-263a-5cd9-88dc-747309f0534a",
+            "attributes": {
+                "name": "Hotel Mitte",
+                "email": "Hotel.Mitte@spryker.com",
+                "phone": "12345617",
+                "externalUrl": "",
+                "bic": "",
+                "iban": "",
+                "defaultBillingAddress": null
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/b2ea10b2-263a-5cd9-88dc-747309f0534a"
+            }
+        },
+        {
+            "type": "company-business-units",
+            "id": "35752ce6-e25f-5d04-8bef-d46b2c359695",
+            "attributes": {
+                "name": "Service Mitte",
+                "email": "Service.Mitte@spryker.com",
+                "phone": "12345617",
+                "externalUrl": "",
+                "bic": "",
+                "iban": "",
+                "defaultBillingAddress": null
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-business-units/35752ce6-e25f-5d04-8bef-d46b2c359695"
+            }
+        },
+        {
+            "type": "company-business-units",
+            "id": "5a6032dc-fbce-5d0d-9d57-11ade1947bac",
+            "attributes": {
+                "name": "Cleaning Mitte",
+                "email": "Cleaning.Mitte@spryker.com",
+                "phone": "12345617",
+                "externalUrl": "",
+                "bic": "",
+                "iban": "",
+                "defaultBillingAddress": null
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-business-units/5a6032dc-fbce-5d0d-9d57-11ade1947bac"
+            }
+        },
+        {
+            "type": "company-roles",
+            "id": "50c647a4-d27f-5d82-a587-1d0b7cc6b58d",
+            "attributes": {
+                "name": "Buyer",
+                "isDefault": true
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-roles/50c647a4-d27f-5d82-a587-1d0b7cc6b58d"
+            }
+        }
+    ]
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <thead>
+                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">403</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The access token is missing.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>Impersonating as a Company User</h2>
+                                                    <p>To impersonate a user as a <i>Company Account</i> and receive a B2B access token, send a POST request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/company-user-access-tokens">/company-user-access-tokens</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>POST&#160;http://glue.mysprykershop.com/company-user-access-tokens</i></p>
+                                                    <p class="note"><b>Authentication Required</b>
+                                                        <br />To access the endpoint, you need to authenticate customers as regular users first and pass an access token as a part of your request. For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p><b>Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>idCompanyUser</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Specifies the ID of the <i>Company User</i> to impersonate.<p class="tip">Company User IDs can be retrieved using the&#160;<b>/company-users/mine</b>&#160;endpoint.</p></td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p><b>Sample Request:</b>
+                                                    </p><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "company-user-access-tokens",
+        "attributes": {
+            "idCompanyUser": "5daf27b3-eddf-5b81-98cb-899f140f97e5"
+        }
+    }
+}</code></pre>
+                                                    <h3>Response</h3>
+                                                    <p>If the request was successful, the endpoint responds with a&#160;<b>RestCompanyUserAccessTokensRequest</b> containing the access and refresh tokens.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>tokenType</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the token type. By default, the type is always&#160;<i>Bearer</i>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>accessToken</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the access token that can be used to impersonate as the Company User.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>expiresIn</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Integer</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the time period after which the access token expires (in seconds). By default,&#160;<i>28800</i>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>refreshToken</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Specifies the refresh token that can be exchanged for a new access token after the current one expires.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type and ID are not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Sample Response</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "company-user-access-tokens",
+        "id": null,
+        "attributes": {
+            "tokenType": "Bearer",
+            "expiresIn": 28800,
+            "accessToken": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUz",
+            "refreshToken": "def50200d7338763c798a0600f18e"
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/company-user-access-tokens"
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <table style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                        <thead>
+                                                            <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Code</th>
+                                                                <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                    <p>Failed to authenticate a user. This can happen due to the following reasons:</p>
+                                                                    <ul>
+                                                                        <li value="1">the currently logged on user cannot authenticate as the specified <i>Company User</i>;</li>
+                                                                        <li value="2">the specified&#160;<i>Company User</i> does not exist;</li>
+                                                                        <li value="3">the access token provided in the request is incorrect.</li>
+                                                                    </ul>
+                                                                </td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing in the request.</td>
+                                                            </tr>
+                                                            <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">422</td>
+                                                                <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">The&#160;Company User Id format is incorrect.</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                    <h2>Accessing B2B Resources</h2>
+                                                    <p>After impersonating as a Company User, you can access the resources provided to B2B customers using the access token received via the&#160;<b>/company-user-access-tokens</b> endpoint. When accessing the resources, you need to pass the token in the <b>Authorization</b> header. For details, see <a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/authentication-and-authorization.htm#accessing-resources">Accessing Resources</a>.</p>
+                                                    <h2>Refreshing the Access Token</h2>
+                                                    <p>You can refresh an access token issued for a Company User the same as any other access token issued by Glue API. For details, see <a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/authentication-and-authorization.htm#refreshing-tokens">Refreshing Tokens</a>.</p>
+                                                    <h2>See also:</h2>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/capabilities/company_account/company_account_overview/company-account-overview.htm">Company Account</a>
+                                                        </li>
+                                                        <li value="2"><a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>
+                                                        </li>
+                                                        <li value="3"><a href="retrieving-company-user-information-201907.htm" class="MCXref xref">Retrieving Company User Information</a>
+                                                        </li>
+                                                        <li value="4"><a href="retrieving-company-information-201907.htm" class="MCXref xref">Retrieving Company Information</a>
+                                                        </li>
+                                                        <li value="5"><a href="retrieving-business-unit-information-201907.htm" class="MCXref xref">Retrieving Business Unit Information</a>
+                                                        </li>
+                                                        <li value="6"><a href="retrieving-company-role-information-201907.htm" class="MCXref xref">Retrieving Company Role Information</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p><i>Last review date: July 12, 2019</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>

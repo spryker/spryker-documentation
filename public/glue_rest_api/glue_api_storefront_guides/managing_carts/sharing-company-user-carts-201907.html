@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0,Spryker.B2B" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides|Managing Carts">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This article describes the endpoints that provide the possibility to share and unshare carts of registered users." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Sharing Company User Carts | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="KaOpkOXIVU-bhfqb_hnDow">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KaOpkOXIVU-bhfqb_hnDow:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1>Sharing Company User Carts</h1>
+                                                    <p>
+                                                        <img src="../../../resources/images/shoptype/b2b_shop.png" />
+                                                    </p>
+                                                    <p>Company users can share their carts with others so that multiple representatives of the same company can work together on the same order. In addition to that, users can choose what type of access they want to grant to different users.</p>
+                                                    <p>To share and unshare user carts, you can send REST requests against the endpoints provided by the <b>Cart Permission Groups API</b> and the <b>Shared Carts API</b>.</p>
+                                                    <p>In your development, the endpoints will help you to:</p>
+                                                    <ul>
+                                                        <li value="1">Identify what levels of access are available in the system and display them to users;</li>
+                                                        <li value="2">Identify whether a certain cart is shared;</li>
+                                                        <li value="3">Identify with whom a cart is shared, and what are the levels of access granted to those users;</li>
+                                                        <li value="4">Allow users to share their carts to other users;</li>
+                                                        <li value="5">Allow users to stop sharing their carts when no longer needed.</li>
+                                                    </ul>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />The endpoints provided by the API cannot be accessed anonymously. For this reason, you need to pass a user's authentication token in your REST requests. For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <h2>Installation</h2>
+                                                    <p>For detailed information on the modules that provide the API functionality and related installation instructions, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/950632488/%5BAPPROVED%5D+GLUE%3A+Shared+carts+API+feature+integration+-+ongoing" data-linked-resource-id="950632488" data-linked-resource-version="28" data-linked-resource-type="page">Shared Carts Feature Integration</a>.</p>
+                                                    <h2>Shared Carts in Spryker</h2>
+                                                    <p>Registered users can <a href="https://documentation.spryker.com/capabilities/cart/shared_cart/shared-cart.htm">share</a> the carts owned by them with other users in their company. The feature can help them distribute the workload among their team members.</p>
+                                                    <p>To be able to manage shared carts, you need to impersonate customers as their respective <b>Company User Accounts</b>. Upon impersonation, you will receive a bearer token that can be used to access the endpoints provided by the API.</p>
+                                                    <p>Carts can be shared only with users that belong to the same company. As customers can impersonate themselves as multiple Company Users belonging to different companies, the available carts, as well as cart access permissions, depend on the company that a Company User Account belongs to. The active Company User can be selected when impersonating a customer as a Company User. A bearer token provided during Company User impersonation will include, among other information, the company that the user belongs to.</p>
+                                                    <p class="info">For details on how to receive the token, see <a href="../b2b_account_management/logging-in-as-company-user-201907.htm" class="MCXref xref">Logging In as Company User</a>.</p>
+                                                    <p>Each access type is represented by a <b>Permission Group</b>. There are <b>2</b> Permission Groups available out of the box: <i>Read-only</i>, and <i>Full access</i>.</p>
+                                                    <h2>Retrieving Cart Permission Groups</h2>
+                                                    <p>To retrieve <b>all</b> available Permission Groups, send a GET request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/cart-permission-groups">/cart-permission-groups</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>GET http://glue.mysprykershop.com/cart-permission-groups</i></p>
+                                                    <p>To retrieve a specific Permission Group, query the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/cart-permission-groups">/cart-permission-groups/{{permission_group_id}}</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>GET http://glue.mysprykershop.com/cart-permission-groups/<b>1</b></i></p>
+                                                    <p>where <b>1</b> is the ID of the Permission Group you need.</p>
+                                                    <p class="note"><b>Authentication Required</b>
+                                                        <br />To get Cart Permission Groups, you need to authenticate first and pass an access token as a part of your request. For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <h3>Response</h3>
+                                                    <p>If all Permission Groups are requested, the resource responds with a <b>RestCartPermissionGroupsCollectionResponse</b>. If a single group is queried, the response is a <b>RestCartPermissionGroupsResponse</b>.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>id</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies a unique identifier that can be used to assign the permissions with this Permission Group.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>name</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the Permission Group name, for example, <i>READ_ONLY</i> or <i>FULL_ACCESS</i>.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                        <p><b>isDefault</b>
+                                                                        </p>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Boolean</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Indicates whether the Permission Group is applied to shared carts by default.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type is not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response Containing All Groups</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "cart-permission-groups",
+            "id": "1",
+            "attributes": {
+                "name": "READ_ONLY",
+                "isDefault": true
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/cart-permission-groups/1"
+            }
+        },
+        {
+            "type": "cart-permission-groups",
+            "id": "2",
+            "attributes": {
+                "name": "FULL_ACCESS",
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/cart-permission-groups/2"
+            }
+        }
+    ],
+    "links": {
+        "self": "http://glue.mysprykershop.com/cart-permission-groups"
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response Containing Specific Group</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "cart-permission-groups",
+        "id": "1",
+        "attributes": {
+            "name": "READ_ONLY",
+            "isDefault": true
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/cart-permission-groups/1"
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">The specified Permission Group was not found or the user does not have access to it.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Viewing Permissions for Carts</h2>
+                                                    <p>To identify whether a cart is shared, send a request to the <b>/carts</b> or the <b>/carts/{{cartId}}</b> endpoint with the <b>shared-carts</b> resource relationship included. Additionally, to find out with whom carts are shared and what are the access levels, you can include the <b>company-users</b> and <b>cart-permission-groups</b> relationships.</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/carts">/carts</a></b> - provides information on all carts of a user;</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/carts">/carts/{{cartId}}</a></b> - provides information on a specific cart.</p>
+                                                    <h3>Request</h3>
+                                                    <p>Sample requests:</p>
+                                                    <ul>
+                                                        <li value="1"><i>GET http://glue.mysprykershop.com/carts<b>?include=shared-carts,company-users,cart-permission-groups</b></i>
+                                                        </li>
+                                                        <li value="2"><i>GET http://glue.mysprykershop.com/carts/4741fc84-2b9b-59da-bb8d-f4afab5be054<b>?include=shared-carts,company-users,cart-permission-groups</b></i>
+                                                            <p>where <b>4741fc84-2b9b-59da-bb8d-f4afab5be054</b> is the ID of the specific cart you need.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first.  For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3>Response</h3>
+                                                    <p>No matter which of the 2 endpoints you use, the response will consist of a single or multiple <b>RestCartsResponse</b> objects containing the requested cart(s).</p>
+                                                    <p class="info">For a detailed list of <b>RestCartsResponse</b> attributes, see section <b>Retrieving Carts</b> in <a href="managing-carts-of-registered-users-201907.htm#retrieving-carts">Managing Carts of Registered Users</a>.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Attributes Added by the Resource Relationships</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <div class="u-is-scrollable">
+                                                                <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Resource</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type of Information</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>shared-carts</b>
+                                                                            </td>
+                                                                            <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Shared cart properties</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>idCompanyUser</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Unique identifier of the user with whom the cart is shared.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>idCartPermissionGroup</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Integer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies the ID of the <i>Cart Permission Group</i> that describes the permissions granted.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>cart-permission-groups</b>
+                                                                            </td>
+                                                                            <td rowspan="2" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Permissions granted to the user for shared carts</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>name</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the Permission Group name, for example, <i>READ_ONLY</i> or <i>FULL_ACCESS</i>.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>isDefault</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Boolean</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Indicates whether the Permission Group is applied to shared carts by default.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td rowspan="3" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>company-users</b>
+                                                                            </td>
+                                                                            <td rowspan="3" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Information on users with whom the cart(s) is shared</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>id</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies the ID of the Company User with whom the cart is shared.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>isActive</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Boolean</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Indicates whether the Company User is active.</td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>isDefault</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Boolean</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Indicates whether the Company User is the default one for the customer.</td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response - All Carts</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": [
+        {
+            "type": "carts",
+            "id": "f23f5cfa-7fde-5706-aefb-ac6c6bbadeab",
+            "attributes": {
+                "name": "Shared Cart",
+                "priceMode": "GROSS_MODE",
+                "currency": "EUR",
+                "store": "DE",
+                "discounts": [],
+                "totals": {...},
+                "isDefault": false
+            },
+            "links": {...},
+            "relationships": {
+                "shared-carts": {
+                    "data": [
+                        {
+                            "type": "shared-carts",
+                            "id": "6f7bc709-08c0-5bdb-a3c4-d28f62b3906d"
+                        }
+                    ]
+                }
+            }
+        },
+        {
+            "type": "carts",
+            "id": "d186c09a-2ed8-50e9-ae18-03251185850d",
+            "attributes": {
+                "name": "Not Shared Cart",
+                "priceMode": "GROSS_MODE",
+                "currency": "EUR",
+                "store": "DE",
+                "discounts": [],
+                "totals": {...},
+                "isDefault": true
+            },
+            "links": {...}
+        }
+    ],
+    "links": {
+        "self": "http://glue.mysprykershop.com/carts?include=shared-carts,company-users,cart-permission-groups"
+    },
+    "included": [
+        {
+            "type": "cart-permission-groups",
+            "id": "1",
+            "attributes": {
+                "name": "READ_ONLY",
+                "isDefault": true
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/cart-permission-groups/1"
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "3692d238-acb3-5b7e-8d24-8dab9c1f4505",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/3692d238-acb3-5b7e-8d24-8dab9c1f4505"
+            }
+        },
+        {
+            "type": "shared-carts",
+            "id": "6f7bc709-08c0-5bdb-a3c4-d28f62b3906d",
+            "attributes": {
+                "idCompanyUser": "3692d238-acb3-5b7e-8d24-8dab9c1f4505",
+                "idCartPermissionGroup": 1
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/shared-carts/6f7bc709-08c0-5bdb-a3c4-d28f62b3906d"
+            },
+            "relationships": {
+                "cart-permission-groups": {
+                    "data": [
+                        {
+                            "type": "cart-permission-groups",
+                            "id": "1"
+                        }
+                    ]
+                },
+                "company-users": {
+                    "data": [
+                        {
+                            "type": "company-users",
+                            "id": "3692d238-acb3-5b7e-8d24-8dab9c1f4505"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response - Single Cart</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "carts",
+        "id": "f23f5cfa-7fde-5706-aefb-ac6c6bbadeab",
+        "attributes": {...},
+        "links": {...},
+        "relationships": {
+            "shared-carts": {
+                "data": [
+                    {
+                        "type": "shared-carts",
+                        "id": "6f7bc709-08c0-5bdb-a3c4-d28f62b3906d"
+                    }
+                ]
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "cart-permission-groups",
+            "id": "1",
+            "attributes": {
+                "name": "READ_ONLY",
+                "isDefault": true
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/cart-permission-groups/1"
+            }
+        },
+        {
+            "type": "company-users",
+            "id": "3692d238-acb3-5b7e-8d24-8dab9c1f4505",
+            "attributes": {
+                "isActive": true,
+                "isDefault": false
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/company-users/3692d238-acb3-5b7e-8d24-8dab9c1f4505"
+            }
+        },
+        {
+            "type": "shared-carts",
+            "id": "6f7bc709-08c0-5bdb-a3c4-d28f62b3906d",
+            "attributes": {
+                "idCompanyUser": "3692d238-acb3-5b7e-8d24-8dab9c1f4505",
+                "idCartPermissionGroup": 1
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/shared-carts/6f7bc709-08c0-5bdb-a3c4-d28f62b3906d"
+            },
+            "relationships": {
+                "cart-permission-groups": {
+                    "data": [
+                        {
+                            "type": "cart-permission-groups",
+                            "id": "1"
+                        }
+                    ]
+                },
+                "company-users": {
+                    "data": [
+                        {
+                            "type": "company-users",
+                            "id": "3692d238-acb3-5b7e-8d24-8dab9c1f4505"
+                        }
+                    ]
+                }
+            }
+        }
+    ]
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">A cart with the specified ID was not found.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Sharing Carts</h2>
+                                                    <p>To share a user's cart, send a <i>POST</i> request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/carts">/carts/{{cart-uuid}}/shared-carts</a></b>
+                                                    </p>
+                                                    <h3>Request</h3>
+                                                    <p>Sample request: <i>POST http://glue.mysprykershop.com/carts/<b>f23f5cfa-7fde-5706-aefb-ac6c6bbadeab</b>/shared-carts</i></p>
+                                                    <p>where <b>f23f5cfa-7fde-5706-aefb-ac6c6bbadeab</b> is the ID of the cart you want to share.</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first.  For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p><b>Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute<br /></th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>idCompanyUser</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                        <img src="../../../resources/images/check.png" />
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Specifies the name of the company user you want to share the cart with.</p>
+                                                                        <p class="note">The user must belong to the same company as the cart owner.</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>idCartPermissionGroup</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Integer</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" style="text-align: center;">
+                                                                        <img src="../../../resources/images/check.png" />
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>Specifies the ID of the <i>Cart Permission Group</i> that provides the desired permissions.</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <p><b>Sample Request Body:</b>
+                                                    </p><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "shared-carts",
+        "attributes": {
+            "idCompanyUser": "4c677a6b-2f65-5645-9bf8-0ef3532bead1",
+            "idCartPermissionGroup": 1
+        }
+    }
+}</code></pre>
+                                                    <h3>Response</h3>
+                                                    <p>If a request was successful and a cart was shared, the endpoint responds with a <b>RestSharedCartsResponse</b> containing information on the shared cart.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*<br /></th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>id</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies a unique identifier that can be used to manage the sharing of the cart in the future.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>idCompanyUser</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                        <p>Specifies the name of the company user the cart is shared with.</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>idCartPermissionGroup</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Integer</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                        <p>Specifies the ID of the <i>Cart Permission Group</i> that describes the permissions granted to the user.</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type is not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "shared-carts",
+        "id": "4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa",
+        "attributes": {
+            "idCompanyUser": "4c677a6b-2f65-5645-9bf8-0ef3532bead1",
+            "idCartPermissionGroup": 1
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/shared-carts/4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa"
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Cart not found.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">422</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <div class="response-col_description__inner">
+                                                                            <div class="renderedMarkdown">
+                                                                                <p>Failed to share a cart.</p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Changing Permissions</h2>
+                                                    <p>To change permissions for a shared cart, send a <i>PATCH </i>request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/shared-carts">/shared-carts/{{shared-cart-uuid}}</a></b>
+                                                    </p>
+                                                    <h3>Request</h3>
+                                                    <p>Sample request: <i>PATCH http://glue.mysprykershop.com/shared-carts/<b>4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa</b></i></p>
+                                                    <p>where <b>4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa</b> is the ID of the shared cart object.</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first.  For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <p><b>Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute<br /></th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>idCartPermissionGroup</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Integer</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows" style="text-align: center;">
+                                                                        <img src="../../../resources/images/check.png" />
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                        <p>Specifies the ID of the Cart Permission Group that provides the desired permissions.</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <p><b>Sample Request Body:</b>
+                                                    </p><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "shared-carts",
+        "attributes": {
+            "idCartPermissionGroup": 2
+        }
+    }
+}</code></pre>
+                                                    <h3>Response</h3>
+                                                    <p>If a request was successful and permissions for the shared cart were changed, the endpoint responds with a <b>RestSharedCartsResponse</b> containing updated information on the shared cart.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*<br /></th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>idCompanyUser</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Specifies the name of the company user the cart is shared with.</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>idCartPermissionGroup</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Integer</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>Specifies the ID of the <i>Cart Permission Group</i> that describes the permissions granted to the user.</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>
+                                                        <br />
+                                                    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Response</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-Json line-numbers">{
+    "data": {
+        "type": "shared-carts",
+        "id": "4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa",
+        "attributes": {
+            "idCompanyUser": "4c677a6b-2f65-5645-9bf8-0ef3532bead1",
+            "idCartPermissionGroup": 2
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/shared-carts/4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa"
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Cart or shared cart object not found.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>Unsharing Carts</h2>
+                                                    <p>To stop sharing a cart, send a <i>DELETE</i> request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/shared-carts">/shared-carts/{{shared-cart-uuid}}</a></b>
+                                                    </p>
+                                                    <h4>Request</h4>
+                                                    <p>Sample request: <i>DELETE http://glue.mysprykershop.com/shared-carts/<b>4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa</b></i></p>
+                                                    <p>where <b>4c677a6b-2f65-5645-9bf8-0ef3532bbbccaa</b> is the ID of the shared cart object.</p>
+                                                    <p class="note"><b>Authentication</b>
+                                                        <br />To use this endpoint, customers need to authenticate first.  For details, see <a href="../authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                    <h3>Response</h3>
+                                                    <p>If a request was successful and a cart was shared, the endpoint responds with a <b>204 No Content</b> status code.</p>
+                                                    <h3>Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" style="width: 75px;" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">401</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">The access token is invalid.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">403</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">The access token is missing.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Cart or shared cart object not found.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2>See also:</h2>
+                                                    <ul>
+                                                        <li value="1"><a href="../b2b_account_management/logging-in-as-company-user-201907.htm" class="MCXref xref">Logging In as Company User</a>
+                                                        </li>
+                                                        <li value="2"><a href="managing-carts-of-registered-users-201907.htm" class="MCXref xref">Managing Carts of Registered Users</a>
+                                                        </li>
+                                                        <li value="3"><a href="https://documentation.spryker.com/capabilities/cart/shared_cart/shared-cart.htm">Shared Cart</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p><i>Last review date: July 16, 2019 </i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>

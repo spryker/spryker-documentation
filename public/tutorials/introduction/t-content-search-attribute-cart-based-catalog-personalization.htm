@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="GNEKVae6j0eAs50YR9blIQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="GNEKVae6j0eAs50YR9blIQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="jWMfrcE_1EK-avG0a5QyXQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="jWMfrcE_1EK-avG0a5QyXQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -258,7 +258,7 @@
                                                                 <li value="1">Inside the catalog client directory, create the following directories: <code>Plugin/Elasticsearch/QueryExpander</code>. 
 					<p>Then, inside the <i>QueryExpander</i> directory, create the new query plugin and call it <b>AttributeCartBasedBoostingQueryExpanderPlugin</b> that implements the <code>QueryExpanderPluginInterface</code>.</p><p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\Catalog\Plugin\Elasticsearch\QueryExpander;
- 
+
 use Elastica\Query;
 use Elastica\Query\BoolQuery;
 use Elastica\Query\FunctionScore;
@@ -271,48 +271,46 @@ use Spryker\Client\Kernel\AbstractPlugin;
 use Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface;
 use Spryker\Client\Search\Dependency\Plugin\QueryInterface;
 use Spryker\Shared\Kernel\Store;
- 
+
 class AttributeCartBasedBoostingQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
 {
 	/**
-	 * @param QueryInterface $searchQuery
-	 * @param array $requestParameters
-	 *
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
-	 *
-	 * @return QueryInterface
-	 */
-	public function expandQuery(QueryInterface $searchQuery, array $requestParameters = [])
+	* @param QueryInterface $searchQuery
+	* @param array $requestParameters
+	*
+	* @return QueryInterface
+	*/
+	public function expandQuery(QueryInterface $searchQuery, array $requestParameters = []): QueryInterface
 	{
 		$quoteTransfer = $this-&gt;getFactory()
 			-&gt;getCartClient()
 			-&gt;getQuote();
- 
+
 		// Don't need to change query when cart is empty.
 		if (!$quoteTransfer-&gt;getItems()-&gt;count()) {
 			return $searchQuery;
 		}
- 
+
 		// Make sure that the query we are extending is compatible with our expectations.
 		$boolQuery = $this-&gt;getBoolQuery($searchQuery-&gt;getSearchQuery());
- 
+
 		// Boost query based on cart.
 		$this-&gt;boostByCartItemColors($boolQuery, $quoteTransfer);
- 
+
 		return $searchQuery;
 	}
- 
+
 	/**
-	 * @param \Elastica\Query $query
-	 *
-	 * @throws \InvalidArgumentException
-	 *
-	 * @return \Elastica\Query\BoolQuery
-	 */
-	protected function getBoolQuery(Query $query)
+	* @param \Elastica\Query $query
+	*
+	* @return \Elastica\Query\BoolQuery
+	* @throws \InvalidArgumentException
+	*
+	*/
+	protected function getBoolQuery(Query $query): BoolQuery
 	{
 		$boolQuery = $query-&gt;getQuery();
+
 		if (!$boolQuery instanceof BoolQuery) {
 			throw new InvalidArgumentException(sprintf(
 				'Cart boost query expander available only with %s, got: %s',
@@ -320,76 +318,74 @@ class AttributeCartBasedBoostingQueryExpanderPlugin extends AbstractPlugin imple
 				get_class($boolQuery)
 			));
 		}
- 
+
 		return $boolQuery;
 	}
- 
+
 	/**
-	 * @param BoolQuery $boolQuery
-	 * @param QuoteTransfer $quoteTransfer
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
-	 *
-	 * @return void
-	 */
-	protected function boostByCartItemColors(BoolQuery $boolQuery, QuoteTransfer $quoteTransfer)
+	* @param BoolQuery $boolQuery
+	* @param QuoteTransfer $quoteTransfer
+	*
+	* @return void
+	*/
+	protected function boostByCartItemColors(BoolQuery $boolQuery, QuoteTransfer $quoteTransfer): void
 	{
 		$functionScoreQuery = new FunctionScore();
 		// Define how the computed scores are combined for the used functions.
 		$functionScoreQuery-&gt;setScoreMode(FunctionScore::SCORE_MODE_MULTIPLY);
 		// Define how the newly computed score is combined with the score of the query.
 		$functionScoreQuery-&gt;setBoostMode(FunctionScore::BOOST_MODE_MULTIPLY);
- 
+
 		foreach ($quoteTransfer-&gt;getItems() as $itemTransfer) {
 			$color = $this-&gt;getProductColor($itemTransfer);
- 
+
 			if ($color) {
 				// Create filter for all products that contains the same color.
 				$filter = $this-&gt;createFulltextSearchQuery($color);
- 
+
 				// Boost the results with a custom number.
 				$functionScoreQuery-&gt;addFunction('weight', 20, $filter);
 			}
 		}
- 
+
 		// Extend the original search query with function_score that will change the score of the results.
 		$boolQuery-&gt;addMust($functionScoreQuery);
 	}
- 
+
 	/**
-	 * @param ItemTransfer $itemTransfer
-	 *
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 * @throws \Spryker\Shared\Kernel\Locale\LocaleNotFoundException
-	 *
-	 * @return null
-	 */
-	protected function getProductColor(ItemTransfer $itemTransfer)
+	* @param ItemTransfer $itemTransfer
+	*
+	* @return string|null
+	*/
+	protected function getProductColor(ItemTransfer $itemTransfer): ?string
 	{
 		// We get the concrete product from the key-value storage (Redis).
 		$productData = $this-&gt;getFactory()
 			-&gt;getProductStorageClient()
-			-&gt;getProductAbstractStorageData($itemTransfer-&gt;getIdProductAbstract(), Store::getInstance()-&gt;getCurrentLocale());
- 
-		return isset($productData['attributes']['color']) ? $productData['attributes']['color'] : null;
+			-&gt;getProductAbstractStorageData(
+					$itemTransfer-&gt;getIdProductAbstract(),
+					Store::getInstance()-&gt;getCurrentLocale()
+			);
+
+		return $productData['attributes']['color'] ?? null;
 	}
- 
+
 	/**
-	 * @param string $searchString
-	 *
-	 * @return \Elastica\Query\MultiMatch
-	 */
-	protected function createFulltextSearchQuery($searchString)
+	* @param string $searchString
+	*
+	* @return \Elastica\Query\MultiMatch
+	*/
+	protected function createFulltextSearchQuery($searchString): MultiMatch
 	{
 		// We search for color in the "full-text" and "full-text-boosted" fields.
 		$matchQuery = (new MultiMatch())
 			-&gt;setFields([
-				PageIndexMap::FULL_TEXT,
-				PageIndexMap::FULL_TEXT_BOOSTED . '^3', // Boost results with custom number.
+					PageIndexMap::FULL_TEXT,
+					PageIndexMap::FULL_TEXT_BOOSTED . '^3', // Boost results with custom number.
 			])
 			-&gt;setQuery($searchString)
 			-&gt;setType(MultiMatch::TYPE_CROSS_FIELDS);
- 
+
 		return $matchQuery;
 	}
 }
@@ -398,6 +394,8 @@ class AttributeCartBasedBoostingQueryExpanderPlugin extends AbstractPlugin imple
 					<p>Open the <code>CatalogDependencyProvider</code> in <code>src/Pyz/Client/Catalog</code> and add the <b>CartClient</b> as a dependency like this:</p><p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\Catalog;
  
+
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Catalog\CatalogDependencyProvider as SprykerCatalogDependencyProvider;
 ...
 use Spryker\Client\Kernel\Container;
@@ -405,126 +403,118 @@ use Spryker\Client\Kernel\Container;
  
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
-	const CLIENT_CART = 'cart client';
- 
+	public const CLIENT_CART = 'CLIENT_CART';
+
 	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	public function provideServiceLayerDependencies(Container $container)
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	public function provideServiceLayerDependencies(Container $container): Container
 	{
 		$container = parent::provideServiceLayerDependencies($container);
- 
+
 		$container = $this-&gt;addCartClient($container);
- 
+
 		return $container;
 	}
- 
+
 	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	protected function addCartClient(Container $container)
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	protected function addCartClient(Container $container): Container
 	{
-		$container[static::CLIENT_CART] = function (Container $container) {
+		$container-&gt;set(static::CLIENT_CART, function (Container $container): CartClientInterface {
 			return $container-&gt;getLocator()-&gt;cart()-&gt;client();
-		};
- 
+		});
+
 		return $container;
 	}
-     
-	...
-}
-					</code></pre></p></li>
+... 
+}					</code></pre></p></li>
                                                                 <li value="3">Next, get the <b>CartClient</b> dependency using the <b>CatalogFactory</b>. Extend the <b>CatalogFactory</b> of the catalog client in <code>src/Pyz/Client/Catalog</code> and get the <b>CartClient</b>.
 				<p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\Catalog;
- 
+
+use Spryker\Client\Cart\CartClientInterface;
 use Spryker\Client\Catalog\CatalogFactory as SprykerCatalogFactory;
- 
+
 class CatalogFactory extends SprykerCatalogFactory
 {
 	/**
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 *
-	 * @return \Spryker\Client\Cart\CartClientInterface
-	 */
-	public function getCartClient()
+	* @return \Spryker\Client\Cart\CartClientInterface
+	*/
+	public function getCartClient(): CartClientInterface
 	{
 		return $this-&gt;getProvidedDependency(CatalogDependencyProvider::CLIENT_CART);
 	}
-}					
+}  				
 				</code></pre></p></li>
                                                                 <li value="4">To get the color of a product from the cart we need to read the product data from the <i>key-value storage; Redis</i>. 
-				<p>For that you need to use the <b>ProductStorageClient</b> with the method <code>getProductAbstractStorageData()</code>.</p><p>Like the <b>CartClient</b>, the <b>productStorageClient</b> needs to be added to the <code>CatalogDependencyProvider</code>. Then the <b>CatalogFactory</b> can get it from the dependency provider.</p><p><pre><code class="language-PHP line-numbers">
+				<p>For that you need to use the <b>ProductStorageClient</b> with the method <code>getProductAbstractStorageData()</code>.</p><p>Like the <b>CartClient</b>, the <b>ProductStorageClient</b> needs to be added to the <code>CatalogDependencyProvider</code>. Then the <b>CatalogFactory</b> can get it from the dependency provider.</p><p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\Catalog;
  
 class CatalogDependencyProvider extends SprykerCatalogDependencyProvider
 {
-	...
-	const CLIENT_PRODUCT_STORAGE = 'product storage client';
+		...
+		public const CLIENT_PRODUCT_STORAGE = 'CLIENT_PRODUCT_STORAGE'; 
+
+		/**
+		* @param \Spryker\Client\Kernel\Container $container
+		*
+		* @return \Spryker\Client\Kernel\Container
+		*/
+		public function provideServiceLayerDependencies(Container $container): Container
+		{
+				$container = parent::provideServiceLayerDependencies($container);
  
+				$container = $this-&gt;addCartClient($container);
+				$container = $this-&gt;addProductStorageClient($container);
+ 
+				return $container;
+		}
+ 
+		...
 	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	public function provideServiceLayerDependencies(Container $container)
+	* @param \Spryker\Client\Kernel\Container $container
+	*
+	* @return \Spryker\Client\Kernel\Container
+	*/
+	protected function addProductStorageClient(Container $container): Container
 	{
-		$container = parent::provideServiceLayerDependencies($container);
- 
-		$container = $this-&gt;addCartClient($container);
-		$container = $this-&gt;addProductStorageClient($container);
- 
-		return $container;
-	}
- 
-	...
-     
-	/**
-	 * @param \Spryker\Client\Kernel\Container $container
-	 *
-	 * @return \Spryker\Client\Kernel\Container
-	 */
-	protected function addProductStorageClient(Container $container)
-	{
-		$container[static::CLIENT_PRODUCT_STORAGE] = function (Container $container) {
+		$container-&gt;set(static::CLIENT_PRODUCT_STORAGE, function (Container $container): ProductStorageClientInterface {
 			return $container-&gt;getLocator()-&gt;productStorage()-&gt;client();
-		};
- 
+		});
+
 		return $container;
 	}
- 
-	...
-}
+... }
 				</code></pre></p><p><pre><code class="language-PHP line-numbers">
 namespace Pyz\Client\Catalog;
- 
+
 use Spryker\Client\Catalog\CatalogFactory as SprykerCatalogFactory;
-class CatalogFactory extends SprykerCatalogFactory
-{
-	...
- 
+use Spryker\Client\ProductStorage\ProductStorageClientInterface; 
+
+class CatalogFactory extends SprykerCatalogFactory {
+...
 	/**
-	 * @throws \Spryker\Client\Kernel\Exception\Container\ContainerKeyNotFoundException
-	 *
-	 * @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
-	 */
-	public function getProductStorageClient()
+	* @return \Spryker\Client\ProductStorage\ProductStorageClientInterface
+	*/
+	public function getProductStorageClient(): ProductStorageClientInterface
 	{
 		return $this-&gt;getProvidedDependency(CatalogDependencyProvider::CLIENT_PRODUCT_STORAGE);
-	}
-}		
-				</code></pre></p></li>
+	} 
+}
+					</code></pre></p></li>
                                                             </ol>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />2. Extend the catalog's search queries stack</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>The final step is very simple.</p>
-                                                            <p>In the<code>CatalogDependencyProvider</code>, there is a stack of plugins for expanding the search query.</p>
+                                                            <p>In the <code>CatalogDependencyProvider</code>, there is a stack of plugins for expanding the search query.</p>
                                                             <p>Boosting the catalog is basically and expansion of the base search query in order to change the weight of products in the catalog page so it changes the order of the products in that page.</p>
                                                             <p>So, to use our new plugin, we simply need to inject it in the <code>CatalogDependencyProvider</code> in the <code>createCatalogSearchQueryExpanderPlugins()</code> method.</p>
                                                             <ol>
@@ -532,22 +522,22 @@ class CatalogFactory extends SprykerCatalogFactory
                                                                 <li value="2">Make sure that you keep the same exact position of the the plugin as the order of these plugins matters for the search results.
 					<p><pre><code class="language-PHP line-numbers">
 /**
- * @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
- */
-protected function createCatalogSearchQueryExpanderPlugins()
+* @return \Spryker\Client\Search\Dependency\Plugin\QueryExpanderPluginInterface[]
+*/
+protected function createCatalogSearchQueryExpanderPlugins(): array
 {
-	return [
-		new StoreQueryExpanderPlugin(),
-		new LocalizedQueryExpanderPlugin(),
-		new ProductPriceQueryExpanderPlugin(),
-		new FacetQueryExpanderPlugin(),
-		new SortedQueryExpanderPlugin(),
-		new AttributeCartBasedBoostingQueryExpanderPlugin(),
-		new PaginatedQueryExpanderPlugin(),
-		new SpellingSuggestionQueryExpanderPlugin(),
-		new IsActiveQueryExpanderPlugin(),
-		new IsActiveInDateRangeQueryExpanderPlugin(),
-	];
+		return [
+				new StoreQueryExpanderPlugin(),
+				new LocalizedQueryExpanderPlugin(),
+				new ProductPriceQueryExpanderPlugin(),
+				new FacetQueryExpanderPlugin(),
+				new SortedQueryExpanderPlugin(),
+				new AttributeCartBasedBoostingQueryExpanderPlugin(),
+				new PaginatedQueryExpanderPlugin(),
+				new SpellingSuggestionQueryExpanderPlugin(),
+				new IsActiveQueryExpanderPlugin(),
+				new IsActiveInDateRangeQueryExpanderPlugin(),
+		];
 }
 					</code></pre></p></li>
                                                             </ol>
@@ -555,15 +545,15 @@ protected function createCatalogSearchQueryExpanderPlugins()
                                                             <ol>
                                                                 <li value="1"> Add a red camera to cart</li>
                                                                 <li value="2">Go back to the same catalog page. 
-					<p>You will see that all red cameras are on the top now.</p></li>
+						<p>You will see that all red cameras are on the top now.</p></li>
                                                             </ol>
-                                                            <p>To see how simple it is to update this boosting, go to the <code>CatalogDependencyProvider</code>, comment and uncomment the <code>AttributeCartBasedBoostingQueryExpanderPlugin()</code>. </p>
+                                                            <p>To see how simple it is to update this boosting, go to the <code>CatalogDependencyProvider</code>, comment and uncomment the <code>AttributeCartBasedBoostingQueryExpanderPlugin()</code>.</p>
                                                             <p>See how it affects the catalog page.</p>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Jul 11, 2018 </i>
+                                                    <p><i>Last review date: Jul 10, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
