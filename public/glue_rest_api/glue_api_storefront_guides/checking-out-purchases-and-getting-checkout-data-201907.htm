@@ -1,0 +1,1627 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="Spryker.B2C,Spryker.B2B,ReleaseVersions.201907-0" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Glue&#160;API|Glue API Storefront Guides">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <meta name="description" content="This article will help you set up the endpoint functionality for creating checkout experience, like placing orders and retrieving checkout information." />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Checking Out Purchases and Getting Checkout Data | Spryker</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="_mmERziYaEy15MU72AXrNA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="_mmERziYaEy15MU72AXrNA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1 id="CheckingOutPurchasesandGettingCheckoutData" data-magellan-target="CheckingOutPurchasesandGettingCheckoutData">Checking Out Purchases and Getting Checkout Data</h1>
+                                                    <p>
+                                                        <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/b2b_shop.png" /></p>
+                                                    <div class="MCHelpControl MCHelpControl-Related relatedTopics relatedTopicssideContent" style="mc-label: 'Versions';mc-help-control-display: list;"><span class="MCHelpControl-RelatedHotSpot_ MCHelpControl-RelatedHotSpot_sideContent"><img class="MCHelpControl_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions</span>
+                                                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                                                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="checking-out-purchases-and-getting-checkout-data.htm" target="_self">Checking Out Purchases and Getting Checkout Data</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Contents</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <ul data-magellan="" data-animation-duration="250" data-active-class="selected" data-scroll-container-on="small" class="nocontent menu _Skins_SideMenuNotFixed mc-component">
+                                                                <li><a href="#CheckingOutPurchasesandGettingCheckoutData">Checking Out Purchases and Getting Checkout Data</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#Installation">Installation</a>
+                                                                    </li>
+                                                                    <li><a href="#CheckoutWorkflow">Checkout Workflow</a>
+                                                                    </li>
+                                                                    <li><a href="#SubmittingCheckoutData">Submitting Checkout Data</a>
+                                                                    </li>
+                                                                    <ul>
+                                                                        <li><a href="#Request">Request</a>
+                                                                        </li>
+                                                                        <li><a href="#Response">Response</a>
+                                                                        </li>
+                                                                        <li><a href="#PossibleErrors">Possible Errors</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <li><a href="#PlacingOrders">Placing Orders</a>
+                                                                    </li>
+                                                                    <ul>
+                                                                        <li><a href="#Request1">Request</a>
+                                                                        </li>
+                                                                        <li><a href="#Response1">Response</a>
+                                                                        </li>
+                                                                        <li><a href="#PossibleErrors1">Possible Errors</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <li><a href="#RedirectingtheUserforPaymentConfirmation">Redirecting the User for Payment Confirmation</a>
+                                                                    </li>
+                                                                    <li><a href="#UpdatingPaymentData">Updating Payment Data</a>
+                                                                    </li>
+                                                                    <ul>
+                                                                        <li><a href="#Request2">Request</a>
+                                                                        </li>
+                                                                        <li><a href="#Response2">Response</a>
+                                                                        </li>
+                                                                        <li><a href="#PossibleErrors2">Possible Errors</a>
+                                                                        </li>
+                                                                    </ul>
+                                                                    <li><a href="#Seealso">See also:</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <p>The <b>Checkout API</b> provides endpoints for placing, updating and retrieving checkout information.</p>
+                                                    <p>In order to create a checkout experience, we offer an endpoint that allows placing orders and an additional endpoint that allows retrieving and updating checkout information. The data exposed by the endpoints is based not only on the shopping cart that is being checked out but also on the customers themselves. For registered customers, the API provides their registered addresses as well as the applicable payment and shipment methods.</p>
+                                                    <p>If necessary, checkout data can be updated each time additional checkout information is provided. For example, for the purposes of fraud protection, specific payment methods can be disallowed for certain delivery addresses. In this case, a second call may be necessary to perform verification of payment method restrictions.</p>
+                                                    <p>Apart from that, the API also supports redirecting to third party websites for additional checkout procession. Such a possibility may be needed, for example, when a customer pays with the help of an external payment system. For this purpose, the API allows generating a payload in the format and with the data as required by the third party, as well as processing the response received from it.</p>
+                                                    <p class="important">It is the responsibility of the API Client to redirect to the third party web site, send the payload and receive it (if necessary). The API is only responsible for generating a redirect URL, as well as generating and processing the payloads.</p>
+                                                    <h2 id="Installation" data-magellan-target="Installation">Installation</h2>
+                                                    <p>For detailed information on the modules that provide the API functionality and related installation instructions, see <a href="https://spryker.atlassian.net/wiki/spaces/DOCS/pages/673120599/%5BWIP%5D+GLUE%3A+Checkout+API+Feature+Integration+-+ongoing" data-linked-resource-id="673120599" data-linked-resource-version="36" data-linked-resource-type="page">Checkout API Feature Integration</a>.</p>
+                                                    <h2 id="CheckoutWorkflow" data-magellan-target="CheckoutWorkflow">Checkout Workflow</h2>
+                                                    <p>There are three endpoints provided to implement checkout via the API:</p>
+                                                    <ul>
+                                                        <li value="1">
+                                                            <p><var>/checkout-data</var> - allows submitting checkout data as many times as you need. Using the endpoint, you can implement checkout steps in your Glue API client, perform verification steps and execute other operations that require multiple calls to complete. The endpoint does not allow placing an order.</p>
+                                                            <p class="info">For usage information, see section <b>Submitting Checkout Data</b>.</p>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p><var>/checkout</var> - finalizes the checkout process and places an order. The cart is deleted automatically, and you cannot make any changes in the checkout data. Thus, the endpoint can be used for checkouts that can be performed in one pass or for finalizing a checkout after using <var>/checkout-data</var>.</p>
+                                                            <p class="info">For usage information, see section <b>Placing Orders</b>.</p>
+                                                            <p>The endpoint also provides information on whether it is necessary to redirect the user to a third party page to complete the payment.<br /><br /></p>
+                                                        </li>
+                                                        <li value="3">
+                                                            <p><var>/order-payments</var> - allows completing the payment with payment verification on a third party page.</p>
+                                                            <p class="info">For usage information, see sections <b>Redirecting the User for Payment Confirmation</b> and <b>Updating Payment Data</b>.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <p>A typical API Client workflow is as follows:</p>
+                                                    <p>
+                                                        <img src="../../resources/images/checkout-payment-process.png" />
+                                                    </p>
+                                                    <h2 id="SubmittingCheckoutData" data-magellan-target="SubmittingCheckoutData">Submitting Checkout Data</h2>
+                                                    <p>To submit checkout data without order confirmation, you need to use the <var>/checkout-data</var> endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/checkout-data">/checkout-data</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>POST http://glue.mysprykershop.com/checkout-data</i></p>
+                                                    <h3 id="Request" data-magellan-target="Request">Request</h3>
+                                                    <p>A request should contain the ID of the customer's cart that is being checked out. All other fields are optional.</p>
+                                                    <p class="info">To submit a request, the customer needs to have at least one cart with products in it.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Request Attributes</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <div class="u-is-scrollable">
+                                                                <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>customer</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestCustomerTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/error.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Information about the customer</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>idCart</b>
+                                                                                <br />
+                                                                                <br />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">RestAddressTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                                <p>ID of the customer's cart.</p>
+                                                                                <p class="info">For details, see <a href="managing_carts/managing-carts-of-registered-users.htm" class="MCXref xref">Managing Carts of Registered Users</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>billingAddress</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestAddressTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/error.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Customer's billing address</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>shippingAddress</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">RestAddressesRequestData</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/error.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                                <p>Customer's shipping address</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>payments</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestPayment</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/error.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Payment options, such as the payment system, method of payment, etc</p>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#payment-step"><b>Payment Step</b></a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>shipment</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">RestShipmentTransfer</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/error.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                                <p>Shipment details</p>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#shipment-step"><b>Shipment Step</b></a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Body Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout-data",
+        "attributes": {
+            "customer": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin.new.address@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin"
+            },
+            "idCart": "d69fc8d2-acc9-5b32-81b6-103618e94fc9",
+            "billingAddress": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin",
+                "address1": "West road",
+                "address2": "212",
+                "address3": "",
+                "zipCode": "61000",
+                "city": "Berlin",
+                "iso2Code": "DE",
+                "company": "Spryker",
+                "phone": "+380669455897",
+                "isDefaultShipping": true,
+                "isDefaultBilling": true
+            },
+            "shippingAddress": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin",
+                "address1": "West road",
+                "address2": "212",
+                "address3": "",
+                "zipCode": "61000",
+                "city": "Berlin",
+                "iso2Code": "DE",
+                "company": "Spryker",
+                "phone": "+380669455897",
+                "isDefaultShipping": false,
+                "isDefaultBilling": false
+            },
+            "payments": [
+                {
+                    "paymentMethodName": "invoice",
+                    "paymentProviderName": "DummyPayment"
+                }
+            ],
+            "shipment": {
+                "idShipmentMethod": 1
+            }
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>In your request, you can use the addresses stored in a customer's account rather than specify them explicitly. To do so, pass the address identifier as a part of the <b>billingAddress</b> or the <b>shippingAddress</b> fields.</p>
+                                                    <p class="info">The address identifiers will be available in the <b>addresses</b> field of the endpoint response. For details, see subsection <b>Response</b>.<br />You can also retrieve the IDs by querying the <var>/customers/{{customer_reference}}/addresses</var> endpoint. For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                    <p class="note">The following address parts are compulsory: <b>salutation</b>, <b>firstName</b>, <b>lastName</b>, <b>address1</b>, <b>address2</b>, <b>zipCode</b>, <b>city</b>, <b>iso2Code</b>. If you are using an address ID, you can pass dummy values for the address parts. When resolving the ID, they will be replaced with the actual values of the customer account.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Body Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout-data",
+        "attributes": {
+            "idCart": "d69fc8d2-acc9-5b32-81b6-103618e94fc9",
+            "billingAddress": {
+                "id": "22d78681-9885-5b47-8916-42f9e72b29ff",
+                "salutation": "dummyValue",
+                "firstName": "dummyValue",
+                "lastName": "dummyValue",
+                "address1": "dummyValue",
+                "address2": "dummyValue",
+                "zipCode": "dummyValue",
+                "city": "dummyValue",
+                "iso2Code": "dummyValue"
+            }
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p><b>User Identification</b>
+                                                    </p>
+                                                    <p>In order to access the endpoint, you need to identify the user whose cart you are checking out:</p>
+                                                    <ul>
+                                                        <li value="1">
+                                                            <p>If you are checking out a cart of a <b>registered</b> user, you need to include the user's authorization token in the request.</p>
+                                                            <p>For details, see <a href="authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p>If you are checking out a <b>guest </b>cart, you need to include the guest user identifier in the <var>X-Anonymous-Customer-Unique-Id</var> header.</p>
+                                                            <p>For details, see <a href="managing_carts/managing-guest-carts.htm" class="MCXref xref">Managing Guest Carts</a>.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3 id="Response" data-magellan-target="Response">Response</h3>
+                                                    <p>In case of a successful update, the endpoint responds with information that can help you fill in the missing checkout data, such as the customer's addresses, available payment and shipment methods, etc.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Response Attributes</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <div class="u-is-scrollable">
+                                                                <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>addresses</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>An array of customer addresses that can be used for billing and shipping.</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>paymentProviders</b>
+                                                                                <br />
+                                                                                <br />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                                <p>An array of payment providers that can be used for the checkout.</p>
+                                                                                <p>The following information is available for each payment provider:</p>
+                                                                                <ul>
+                                                                                    <li value="1"><b>paymentProviderName</b> - specifies the provider name;</li>
+                                                                                    <li value="2"><b>paymentMethods</b> - specifies an array of payment methods. Each method exposes the following fields:<ul><li value="1"><b>paymentMethodName</b> - specifies the method name;</li><li value="2"><b>requiredRequestData</b> - specifies an array of fields required to complete the payment. The actual field list depends on a specific payment provider.</li></ul></li>
+                                                                                </ul>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#payment-step"><b>Payment Step</b></a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>shipmentMethods</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                                <p>Provides information on the available Shipment Methods.</p>
+                                                                                <p>Each method exposes the following details:</p>
+                                                                                <ul>
+                                                                                    <li value="1"><b>carrierName</b> - specifies the carrier name;</li>
+                                                                                    <li value="2"><b>id</b> - specifies the method ID;</li>
+                                                                                    <li value="3"><b>name</b> - specifies the method name;</li>
+                                                                                    <li value="4"><b>price</b> - specifies the price for this method of shipment;</li>
+                                                                                    <li value="5"><b>taxRate</b> - specifies the tax rate;</li>
+                                                                                    <li value="6"><b>deliveryTime</b> - specifies the delivery time.</li>
+                                                                                </ul>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#payment-step"><b>Payment Step</b></a>.</p>
+                                                                                <p>You can use the ID provided to use a certain method of payment.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <p>*The attributes mentioned are all attributes in the response. Type and ID are not mentioned.</p>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout-data",
+        "id": null,
+        "attributes": {
+            "addresses": [
+                {
+                    "id": "22d78681-9885-5b47-8916-42f9e72b29ff",
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": false,
+                    "isDefaultShipping": false
+                },
+                {
+                    "id": "ea7d85be-9253-5952-89e6-999c016f7618",
+                    "salutation": "Mr",
+                    "firstName": "henry",
+                    "lastName": "tudor",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": false,
+                    "isDefaultShipping": false
+                },
+                {
+                    "id": "b2d315b4-fcff-57ad-9148-83d2e595946c",
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": false,
+                    "isDefaultShipping": false
+                },
+                {
+                    "id": "b3b9bf61-1bab-5eed-8775-9694ff744d66",
+                    "salutation": "Mr",
+                    "firstName": "henry",
+                    "lastName": "tudor",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": false,
+                    "isDefaultShipping": false
+                },
+                {
+                    "id": "b654ce76-af7b-5210-8ccd-6bab2e88ea8e",
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": false,
+                    "isDefaultShipping": false
+                },
+                {
+                    "id": "676943eb-536a-5645-937c-0f7662ae9065",
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "zipCode": "61000",
+                    "city": "Berlin",
+                    "country": {
+                        "id_country": 60,
+                        "iso2_code": "DE",
+                        "iso3_code": "DEU",
+                        "name": "Germany",
+                        "postal_code_mandatory": true,
+                        "postal_code_regex": "\\d{5}",
+                        "regions": []
+                    },
+                    "iso2Code": "DE",
+                    "company": "Spryker",
+                    "phone": "+380669455897",
+                    "isDefaultBilling": true,
+                    "isDefaultShipping": true
+                }
+            ],
+            "paymentProviders": [
+                {
+                    "paymentProviderName": "DummyPayment",
+                    "paymentMethods": [
+                        {
+                            "paymentMethodName": "credit card",
+                            "requiredRequestData": [
+                                "paymentMethod",
+                                "paymentProvider",
+                                "dummyPaymentCreditCard.cardType",
+                                "dummyPaymentCreditCard.cardNumber",
+                                "dummyPaymentCreditCard.nameOnCard",
+                                "dummyPaymentCreditCard.cardExpiresMonth",
+                                "dummyPaymentCreditCard.cardExpiresYear",
+                                "dummyPaymentCreditCard.cardSecurityCode"
+                            ]
+                        },
+                        {
+                            "paymentMethodName": "invoice",
+                            "requiredRequestData": [
+                                "paymentMethod",
+                                "paymentProvider",
+                                "dummyPaymentInvoice.dateOfBirth"
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "shipmentMethods": [
+                {
+                    "carrierName": "Spryker Dummy Shipment",
+                    "id": 1,
+                    "name": "Standard",
+                    "price": 490,
+                    "taxRate": null,
+                    "deliveryTime": null
+                },
+                {
+                    "carrierName": "Spryker Dummy Shipment",
+                    "id": 2,
+                    "name": "Express",
+                    "price": 590,
+                    "taxRate": null,
+                    "deliveryTime": null
+                },
+                {
+                    "carrierName": "Spryker Drone Shipment",
+                    "id": 3,
+                    "name": "Air Standard",
+                    "price": 500,
+                    "taxRate": null,
+                    "deliveryTime": null
+                },
+                {
+                    "carrierName": "Spryker Drone Shipment",
+                    "id": 4,
+                    "name": "Air Sonic",
+                    "price": 1000,
+                    "taxRate": null,
+                    "deliveryTime": null
+                },
+                {
+                    "carrierName": "Spryker Drone Shipment",
+                    "id": 5,
+                    "name": "Air Light",
+                    "price": 1500,
+                    "taxRate": null,
+                    "deliveryTime": null
+                }
+            ]
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/checkout-data"
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="PossibleErrors" data-magellan-target="PossibleErrors">Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Bad request. This error can occur due to the following reasons:</p>
+                                                                        <ul>
+                                                                            <li value="1">The POST data is incorrect;</li>
+                                                                            <li value="2">Neither <b>Authorization</b> nor <b>X-Anonymous-Customer-Unique-Id</b> headers were provided in the request.</li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">422</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The checkout data is incorrect</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2 id="PlacingOrders" data-magellan-target="PlacingOrders">Placing Orders</h2>
+                                                    <p>To finalize checkout and place an order, send a POST request to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/checkout">/checkout</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>POST http://glue.mysprykershop.com/checkout</i></p>
+                                                    <h3 id="Request1" data-magellan-target="Request1">Request</h3>
+                                                    <p>A request should contain:</p>
+                                                    <ul>
+                                                        <li value="1">valid customer information (e.g. first name, last name, salutation etc);</li>
+                                                        <li value="2">payment and shipment methods (they should exist in the system);</li>
+                                                        <li value="3">valid shipping and billing addresses;</li>
+                                                        <li value="4">ID of the customer's cart that is being checked out.</li>
+                                                    </ul>
+                                                    <p class="info">To submit a request, the customer needs to have at least one cart with products in it.</p>
+                                                    <p class="note">By default, if the checkout is successful, the order is placed and the shopping cart is deleted automatically.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Request Attributes</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <div class="u-is-scrollable">
+                                                                <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>customer</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestCustomerTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Information about the customer</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>idCart</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">RestAddressTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                                <p>ID of the customer's cart.</p>
+                                                                                <p class="info">For details, see <a href="managing_carts/managing-carts-of-registered-users.htm" class="MCXref xref">Managing Carts of Registered Users</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>billingAddress</b>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestAddressTransfer</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Customer's billing address</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>shippingAddress</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">RestAddressesRequestData</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">
+                                                                                <p>Customer's shipping address</p>
+                                                                                <p class="info">For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>payments</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">RestPayment</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                                <p>Payment options, such as the payment system, method of payment, etc</p>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#payment-step"><b>Payment Step</b></a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>shipment</b>
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">RestShipmentTransfer</td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" style="text-align: center;">
+                                                                                <img src="../../resources/images/check.png" />
+                                                                            </td>
+                                                                            <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                                <p>Shipment details</p>
+                                                                                <p class="info">For details, see <a href="https://documentation.spryker.com/capabilities/checkout/multi-step_checkout/checkout-steps-201903.htm#shipment-step"><b>Shipment Step</b></a>.</p>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Body Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout",
+        "attributes": {
+            "customer": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin"
+            },
+            "idCart": "fe6969e9-09aa-5183-b911-0a9218ed21bb",
+            "billingAddress": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin",
+                "address1": "West road",
+                "address2": "212",
+                "address3": "",
+                "zipCode": "61000",
+                "city": "Berlin",
+                "iso2Code": "DE",
+                "company": "Spryker",
+                "phone": "+380669455897",
+                "isDefaultShipping": true,
+                "isDefaultBilling": true
+            },
+            "shippingAddress": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin",
+                "address1": "West road",
+                "address2": "212",
+                "address3": "",
+                "zipCode": "61000",
+                "city": "Berlin",
+                "iso2Code": "DE",
+                "company": "Spryker",
+                "phone": "+380669455897",
+                "isDefaultShipping": false,
+                "isDefaultBilling": false
+            },
+            "payments": [
+                {
+                    "paymentMethodName": "invoice",
+                    "paymentProviderName": "DummyPayment"
+                }
+            ],
+            "shipment": {
+                "idShipmentMethod": 1
+            }
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>In your request, you can use the addresses stored in a customer's account rather than specify them explicitly. To do so, pass the address identifier as a part of the <b>billingAddress</b> or the <b>shippingAddress</b> fields.</p>
+                                                    <p class="info">The address identifiers will be available in the <b>addresses</b> field  of the <var>/checkout-data</var> endpoint response. For details, see subsection <b>Response</b>.<br />You can also retrieve the IDs by querying the <var>/customers/{{customer_reference}}/addresses</var> endpoint. For details, see <a href="managing-customers.htm" class="MCXref xref">Managing Customers</a>.</p>
+                                                    <p class="note">The following address parts are compulsory: <b>salutation</b>, <b>firstName</b>, <b>lastName</b>, <b>address1</b>, <b>address2</b>, <b>zipCode</b>, <b>city</b>, <b>iso2Code</b>. If you are using an address ID, you can pass dummy values for the address parts. The <b>iso2Code</b> must be a valid code, for example, <i>DE</i>. When resolving the ID, they will be replaced with the actual values of the customer account.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Body Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout",
+        "attributes": {
+            "customer": {
+                "salutation": "Mr",
+                "email": "spencor.hopkin.new.address@spryker.com",
+                "firstName": "spencor",
+                "lastName": "hopkin"
+            },
+            "idCart": "d69fc8d2-acc9-5b32-81b6-103618e94fc9",
+            "billingAddress": {
+                "id": "22d78681-9885-5b47-8916-42f9e72b29ff",
+                "salutation": "dummyValue",
+                "firstName": "dummyValue",
+                "lastName": "dummyValue",
+                "address1": "dummyValue",
+                "address2": "dummyValue",
+                "zipCode": "dummyValue",
+                "city": "dummyValue",
+                "iso2Code": "DE"
+            },
+            "shippingAddress": {
+            	"id": "22d78681-9885-5b47-8916-42f9e72b29ff",
+                "salutation": "dummyValue",
+                "firstName": "dummyValue",
+                "lastName": "dummyValue",
+                "address1": "dummyValue",
+                "address2": "dummyValue",
+                "zipCode": "dummyValue",
+                "city": "dummyValue",
+                "iso2Code": "DE"
+            },
+            "payments": [
+                {
+                    "paymentMethodName": "invoice",
+                    "paymentProviderName": "DummyPayment"
+                }
+            ],
+            "shipment": {
+                "idShipmentMethod": 1
+            }
+        }
+    }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p><b>User Identification</b>
+                                                    </p>
+                                                    <p>In order to access the endpoint, you need to identify the user whose cart you are checking out:</p>
+                                                    <ul>
+                                                        <li value="1">
+                                                            <p>If you are checking out a cart of a <b>registered</b> user, you need to include the user's authorization token in the request.</p>
+                                                            <p>For details, see <a href="authentication-and-authorization.htm" class="MCXref xref">Authentication and Authorization</a>.</p>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p>If you are checking out a <b>guest </b>cart, you need to include the guest user identifier in the <var>X-Anonymous-Customer-Unique-Id</var> header.</p>
+                                                            <p>For details, see <a href="managing_carts/managing-guest-carts.htm" class="MCXref xref">Managing Guest Carts</a>.</p>
+                                                        </li>
+                                                    </ul>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <h3 id="Response1" data-magellan-target="Response1">Response</h3>
+                                                    <p>The endpoint responds with the checkout information.</p>
+                                                    <p class="info">Among the attributes returned, there is <b>orderReference</b> that can be used to reference the associated order in the future.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>orderReference</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Specifies a reference that can be used to access the order in the future.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><b>redirectUrl</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">String</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Specifies a URL where the customer needs to be redirected to perform additional verification, if necessary.</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><b>isExternalRedirect</b>
+                                                                    </td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Boolean</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">Indicates whether the customer is redirected to an external URL.</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type and ID are not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout",
+        "id": null,
+        "attributes": {
+            "orderReference": "DE--3",
+            "redirectUrl": null,
+            "isExternalRedirect": null
+        },
+        "links": {
+            "self": "http://glue.mysprykershop.com/checkout"
+        },
+    },
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>You can extend the response with the <b>orders</b> resource relationship in order to obtain detailed order information.</p>
+                                                    <p class="info">For detailed information and a list of attributes, see section <a href="https://documentation.spryker.com/glue_rest_api/glue_api_storefront_guides/retrieving-order-history.htm#retrieving-specific-order">Retrieving Specific Order</a>.</p>
+                                                    <p>Sample request: <i>POST http://glue.mysprykershop.com/checkout<b>?include=orders</b></i></p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+    "data": {
+        "type": "checkout",
+        "id": null,
+        "attributes": {...},
+        "links": {...},
+        "relationships": {
+            "orders": {
+                "data": [
+                    {
+                        "type": "orders",
+                        "id": "DE--3"
+                    }
+                ]
+            }
+        }
+    },
+    "included": [
+        {
+            "type": "orders",
+            "id": "DE--3",
+            "attributes": {
+                "createdAt": "2019-07-25 09:14:16.274617",
+                "totals": {
+                    "expenseTotal": 490,
+                    "discountTotal": 7143,
+                    "taxTotal": 9880,
+                    "subtotal": 68530,
+                    "grandTotal": 61877,
+                    "canceledTotal": 0
+                },
+                "currencyIsoCode": "EUR",
+                "items": [
+                    {
+                        "name": "Acer Chromebook C730-C8T7",
+                        "sku": "136_24425591",
+                        "sumPrice": 33265,
+                        "sumPriceToPayAggregation": 30938,
+                        "quantity": 1,
+                        "metadata": {
+                            "superAttributes": [],
+                            "image": "//images.icecat.biz/img/gallery_mediums/img_24425591_medium_1483525296_3275_9985.jpg"
+                        },
+                        "calculatedDiscounts": [
+                            {
+                                "unitAmount": 3327,
+                                "sumAmount": 3327,
+                                "displayName": "10% Discount for all orders above",
+                                "description": "Get a 10% discount on all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+                                "voucherCode": null,
+                                "quantity": 1
+                            }
+                        ],
+                        "unitGrossPrice": 33265,
+                        "sumGrossPrice": 33265,
+                        "taxRate": "19.00",
+                        "unitNetPrice": 0,
+                        "sumNetPrice": 0,
+                        "unitPrice": 33265,
+                        "unitTaxAmountFullAggregation": 4940,
+                        "sumTaxAmountFullAggregation": 4940,
+                        "refundableAmount": 30938,
+                        "canceledAmount": 0,
+                        "sumSubtotalAggregation": 34265,
+                        "unitSubtotalAggregation": 34265,
+                        "unitProductOptionPriceAggregation": 1000,
+                        "sumProductOptionPriceAggregation": 1000,
+                        "unitExpensePriceAggregation": 0,
+                        "sumExpensePriceAggregation": null,
+                        "unitDiscountAmountAggregation": 3327,
+                        "sumDiscountAmountAggregation": 3327,
+                        "unitDiscountAmountFullAggregation": 3327,
+                        "sumDiscountAmountFullAggregation": 3327,
+                        "unitPriceToPayAggregation": 30938,
+                        "taxRateAverageAggregation": "19.00",
+                        "taxAmountAfterCancellation": null
+                    },
+                    {
+                        "name": "Acer Chromebook C730-C8T7",
+                        "sku": "136_24425591",
+                        "sumPrice": 33265,
+                        "sumPriceToPayAggregation": 30939,
+                        "quantity": 1,
+                        "metadata": {
+                            "superAttributes": [],
+                            "image": "//images.icecat.biz/img/gallery_mediums/img_24425591_medium_1483525296_3275_9985.jpg"
+                        },
+                        "calculatedDiscounts": [
+                            {
+                                "unitAmount": 3326,
+                                "sumAmount": 3326,
+                                "displayName": "10% Discount for all orders above",
+                                "description": "Get a 10% discount on all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+                                "voucherCode": null,
+                                "quantity": 1
+                            }
+                        ],
+                        "unitGrossPrice": 33265,
+                        "sumGrossPrice": 33265,
+                        "taxRate": "19.00",
+                        "unitNetPrice": 0,
+                        "sumNetPrice": 0,
+                        "unitPrice": 33265,
+                        "unitTaxAmountFullAggregation": 4940,
+                        "sumTaxAmountFullAggregation": 4940,
+                        "refundableAmount": 30939,
+                        "canceledAmount": 0,
+                        "sumSubtotalAggregation": 34265,
+                        "unitSubtotalAggregation": 34265,
+                        "unitProductOptionPriceAggregation": 1000,
+                        "sumProductOptionPriceAggregation": 1000,
+                        "unitExpensePriceAggregation": 0,
+                        "sumExpensePriceAggregation": null,
+                        "unitDiscountAmountAggregation": 3326,
+                        "sumDiscountAmountAggregation": 3326,
+                        "unitDiscountAmountFullAggregation": 3326,
+                        "sumDiscountAmountFullAggregation": 3326,
+                        "unitPriceToPayAggregation": 30939,
+                        "taxRateAverageAggregation": "19.00",
+                        "taxAmountAfterCancellation": null
+                    }
+                ],
+                "expenses": [
+                    {
+                        "type": "SHIPMENT_EXPENSE_TYPE",
+                        "name": "Standard",
+                        "sumPrice": 490,
+                        "unitGrossPrice": 490,
+                        "sumGrossPrice": 490,
+                        "taxRate": "19.00",
+                        "unitNetPrice": 0,
+                        "sumNetPrice": 0,
+                        "canceledAmount": null,
+                        "unitDiscountAmountAggregation": null,
+                        "sumDiscountAmountAggregation": null,
+                        "unitTaxAmount": 0,
+                        "sumTaxAmount": 0,
+                        "unitPriceToPayAggregation": 0,
+                        "sumPriceToPayAggregation": 0,
+                        "taxAmountAfterCancellation": null
+                    }
+                ],
+                "billingAddress": {
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "middleName": null,
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "company": "Spryker",
+                    "city": "Berlin",
+                    "zipCode": "61000",
+                    "poBox": null,
+                    "phone": "+380669455897",
+                    "cellPhone": null,
+                    "description": null,
+                    "comment": null,
+                    "email": null,
+                    "country": "Germany",
+                    "iso2Code": "DE"
+                },
+                "shippingAddress": {
+                    "salutation": "Mr",
+                    "firstName": "spencor",
+                    "middleName": null,
+                    "lastName": "hopkin",
+                    "address1": "West road",
+                    "address2": "212",
+                    "address3": "",
+                    "company": "Spryker",
+                    "city": "Berlin",
+                    "zipCode": "61000",
+                    "poBox": null,
+                    "phone": "+380669455897",
+                    "cellPhone": null,
+                    "description": null,
+                    "comment": null,
+                    "email": null,
+                    "country": "Germany",
+                    "iso2Code": "DE"
+                },
+                "priceMode": "GROSS_MODE",
+                "payments": [
+                    {
+                        "amount": 61877,
+                        "paymentProvider": "DummyPayment",
+                        "paymentMethod": "invoice"
+                    }
+                ],
+                "calculatedDiscounts": [
+                    {
+                        "unitAmount": null,
+                        "sumAmount": 490,
+                        "displayName": "Free standard delivery",
+                        "description": "Free standard delivery for all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+                        "voucherCode": null,
+                        "quantity": 1
+                    },
+                    {
+                        "unitAmount": null,
+                        "sumAmount": 6653,
+                        "displayName": "10% Discount for all orders above",
+                        "description": "Get a 10% discount on all orders above certain value depending on the currency and net/gross price. This discount is not exclusive and can be combined with other discounts.",
+                        "voucherCode": null,
+                        "quantity": 2
+                    }
+                ]
+            },
+            "links": {
+                "self": "http://glue.mysprykershop.com/orders/DE--3"
+            }
+        }
+    ]
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="PossibleErrors1" data-magellan-target="PossibleErrors1">Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">400</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Bad request. This error can occur due to the following reasons:</p>
+                                                                        <ul>
+                                                                            <li value="1">The POST data is incorrect;</li>
+                                                                            <li value="2">Neither <b>Authorization</b> nor <b>X-Anonymous-Customer-Unique-Id</b> headers were provided in the request.</li>
+                                                                        </ul>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">422</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">The checkout data is incorrect</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2 id="RedirectingtheUserforPaymentConfirmation" data-magellan-target="RedirectingtheUserforPaymentConfirmation">Redirecting the User for Payment Confirmation</h2>
+                                                    <p>When placing an order, you need to check the value of the <b>redirectURL</b> attribute. If the value is null or empty, this means that the payment method selected by the customer does not require additional verification. If verification is necessary, the attribute will contain a URL to redirect the customer to.</p>
+                                                    <p class="note">It is the responsibility of the API Client to redirect the customer to the page and capture the response. For information on how to process it, see information on the payment service provider's API.</p>
+                                                    <p>The formats of the payloads used in the request and response to the third party page are defined by the respective <b>Eco</b> layer module that implements the interaction with the payment provider. For details, see section <b>3. Implement Payload Processor Plugin</b> in <a href="http://documentation.spryker.com/tutorials/advanced/glue_api/t-interacting-with-third-party-payment-providers-via-glue-api.htm#3--implement-payload-processor-plugin">Interacting with Third Parties via Glue API</a>.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><b>Interaction Diagram</b></a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>
+                                                                <img src="../../resources/images/multi-step-checkout-glue-storefront.png" />
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <h2 id="UpdatingPaymentData" data-magellan-target="UpdatingPaymentData">Updating Payment Data</h2>
+                                                    <p>If the user is redirected to a third-party page for payment verification, you need to update the payment with the payload received from the payment provider. To do so, post the payload to the following endpoint:</p>
+                                                    <p><b><a href="https://documentation.spryker.com/glue_rest_api/rest-api-reference.htm#/order-payments">/order-payments</a></b>
+                                                    </p>
+                                                    <p>Sample request: <i>POST http://glue.mysprykershop.com/order-payments</i></p>
+                                                    <h3 id="Request2" data-magellan-target="Request2">Request</h3>
+                                                    <p>Your request should contain the payload related to the order. The request can include an optional payment identifier, if necessary.</p>
+                                                    <p class="info">The identifier is specified in the <b>orderReference</b> attribute of the <var>/checkout</var> endpoint response.</p>
+                                                    <p><b>Attributes</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Required</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>paymentIdentifier</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows" style="text-align: center;">
+                                                                        <img src="../../resources/images/error.png" />
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>Payment ID</p>
+                                                                        <p class="info">The value of the payment identifier depends on the payment services provider plugin used to process the payment. For details, see section <b>3. Implement Payload Processor Plugin</b> in <a href="http://documentation.spryker.com/tutorials/advanced/glue_api/t-interacting-with-third-party-payment-providers-via-glue-api.htm#3--implement-payload-processor-plugin">Interacting with Third Parties via Glue API</a>.</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>dataPayload</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Array</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows" style="text-align: center;">
+                                                                        <img src="../../resources/images/check.png" />
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>Payload received from the payment service provider</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p class="tip">
+        You can also use the <b>Accept-Language</b> header to specify the locale.<br />Sample header:<br /><var>[{"key":"Accept-Language","value":"de, en;q=0.9"}]</var><br />where <b>de</b> and <b>en</b> are the locales;
+        <b>q=0.9</b> is the user's preference for a specific locale. For details, see <a href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4" target="_blank">14.4 Accept-Language</a>.
+    </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Sample Request Body</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+  "data": {
+    "type": "order-payments",
+    "attributes": {
+      "paymentIdentifier": "1ce91011-8d60-59ef-9fe0-4493ef36bbfe",
+      "dataPayload": [
+         {
+            "type": "payment-confirmation",
+            "hash": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1Ni"
+         }
+      ]
+    }
+  }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="Response2" data-magellan-target="Response2">Response</h3>
+                                                    <p>If the request was successful, the endpoint will respond with a <b>201 Created</b> status code and a new payload, if it is necessary to pass it to a third party provider. If there is no new payload, the <b>dataPayload</b> is null.</p>
+                                                    <p><b>Response Attributes:</b>
+                                                    </p>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Attribute*</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Description</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><b>paymentIdentifier</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">String</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <div class="content-wrapper">
+                                                                            <p>Payment ID</p>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><b>dataPayload</b>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Array</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>Payload</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <p>*The attributes mentioned are all attributes in the response. Type and ID are not mentioned.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Response Sample</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-JSON line-numbers">{
+  "data": {
+    "type": "order-payments",
+    "id": "86791011-8d60-59ef-9fe0-4493ef36bbfe",
+    "attributes": {
+      "paymentIdentifier": "1ce91011-8d60-59ef-9fe0-4493ef36bbfe",
+      "dataPayload": [
+         {
+            "type": "payment-confirmation",
+            "hash": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1Ni"
+         }
+      ]
+    },
+    "links": {
+      "self": "http://glue.mysprykershop.com/order-payments/1ce91011-8d60-59ef-9fe0-4493ef36bbfe"
+    }
+  },
+  "links": {
+    "self": "http://glue.mysprykershop.com/order-payments/86791011-8d60-59ef-9fe0-4493ef36bbfe"
+  }
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="PossibleErrors2" data-magellan-target="PossibleErrors2">Possible Errors</h3>
+                                                    <div class="u-is-scrollable">
+                                                        <table class="TableStyle-PatternedRows2" style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" cellspacing="0">
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Status</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Reason</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">404</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Order not found</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">422</td>
+                                                                    <td colspan="1" class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Order payment is not updated</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h2 id="Seealso" data-magellan-target="Seealso">See also:</h2>
+                                                    <ul>
+                                                        <li value="1"><a href="managing_carts/managing-carts.htm" class="MCXref xref">Managing Carts</a>
+                                                        </li>
+                                                        <li value="2"><a href="retrieving-order-history.htm" class="MCXref xref">Retrieving Customer's Order History</a>
+                                                        </li>
+                                                        <li value="3"><a href="http://documentation.spryker.com/tutorials/advanced/glue_api/t-interacting-with-third-party-payment-providers-via-glue-api.htm">Interacting with Third Parties via Glue API</a>.</li>
+                                                    </ul>
+                                                    <p><i>Last review date: July 26, 2019 </i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
