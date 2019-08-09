@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Feature Integration Guides|Glue API">
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
+        <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
+        <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
+        <link rel="icon" sizes="32x32" href="../../Skins/Favicons/favicon-32x32.png" />
+        <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
+        <meta charset="utf-8" />
+        <meta name="description" content="" />
+        <meta name="author" content="" /><title>Glue Application Feature Integration</title>
+        <!-- Google Tag Manager -->
+        <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&amp;l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+		})(window,document,'script','dataLayer','GTM-NP24S2');/* ]]> */</script>
+        <!-- End Google Tag Manager -->
+        <script>/* <![CDATA[ */
+			var s = document.createElement("script");
+			s.type = "text/javascript";
+			s.src = "https://www.googletagmanager.com/gtag/js?id==UA-56589105-4";
+			document.getElementsByTagName('head').item(0).appendChild(s);
+		/* ]]> */</script>
+        <script>/* <![CDATA[ */
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'UA-56589105-4');
+		/* ]]> */</script>
+        <link href="../../Skins/Default/Stylesheets/Slideshow.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/TextEffects.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Topic.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Styles.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Default/Stylesheets/Components/Mobile.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/foundation.6.2.3.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/styles.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/tablet.css" rel="stylesheet" />
+        <link href="../../Skins/Fluid/stylesheets/mobile.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/perfect-scrollbar.css" rel="stylesheet" />
+        <link href="../../resources/stylesheets/prism.css" rel="stylesheet" />
+        <style>/*&lt;meta /&gt;*/
+
+.button.previous-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button
+{
+	-pie-background: url('../../Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+}
+
+.needs-pie
+{
+	behavior: url('../../resources/scripts/PIE-no-motw.htc');
+}
+
+</style>
+        <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
+        <script src="../../resources/scripts/custom.modernizr.js">
+        </script>
+        <script src="../../resources/scripts/jquery.min.js">
+        </script>
+        <script src="../../resources/scripts/require.min.js">
+        </script>
+        <script src="../../resources/scripts/require.config.js">
+        </script>
+        <script src="../../resources/scripts/foundation.6.2.3_custom.js">
+        </script>
+        <script src="../../resources/scripts/plugins.min.js">
+        </script>
+        <script src="../../resources/scripts/MadCapAll.js">
+        </script>
+    </head>
+    <body>
+        <div class="foundation-wrap off-canvas-wrapper">
+            <div class="off-canvas-wrapper-inner" data-off-canvas-wrapper="">
+                <aside class="off-canvas position-right" id="offCanvas" data-off-canvas="" data-position="right" data-mc-ignore="true">
+                    <ul class="off-canvas-drilldown vertical menu off-canvas-list" data-drilldown="" data-mc-back-link="Back" data-mc-css-tree-node-expanded="is-drilldown-submenu-parent" data-mc-css-tree-node-collapsed="is-drilldown-submenu-parent" data-mc-css-sub-menu="vertical menu slide-in-right is-drilldown-submenu" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="True" data-mc-include-back="True" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.drilldown" data-mc-toc="True">
+                    </ul>
+                </aside>
+                <div class="off-canvas-content inner-wrap" data-off-canvas-content="">
+                    <div data-sticky-container="" class="title-bar-container">
+                        <nav class="title-bar tab-bar sticky" data-sticky="" data-options="marginTop:0" style="width:100%" data-sticky-on="small" data-mc-ignore="true">
+                            <div class="middle title-bar-section outer-row clearfix">
+                                <div class="menu-icon-container relative clearfix">
+                                    <button class="menu-icon" data-toggle="offCanvas"><span></span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="title-bar-layout outer-row">
+                                <div class="logo-wrapper"><a class="logo" href="../../home.htm" alt="Logo"></a>
+                                </div>
+                                <div class="navigation-wrapper nocontent">
+                                    <ul class="navigation clearfix" data-mc-css-tree-node-has-children="has-children" data-mc-css-sub-menu="sub-menu" data-mc-expand-event="mouseenter" data-mc-top-nav-menu="True" data-mc-max-depth="3" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                        <li class="placeholder" style="visibility:hidden"><a>placeholder</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="nav-search-wrapper">
+                                    <div class="nav-search row">
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search the Academy" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    </div>
+                    <section class="main-section">
+                        <div class="row outer-row sidenav-layout">
+                            <div class="sidenav-wrapper">
+                                <div class="sidenav-container">
+                                    <ul class="off-canvas-accordion vertical menu sidenav" data-accordion-menu="" data-mc-css-tree-node-expanded="is-accordion-submenu-parent" data-mc-css-tree-node-collapsed="is-accordion-submenu-parent" data-mc-css-sub-menu="vertical menu accordion-menu is-accordion-submenu nested" data-mc-include-indicator="False" data-mc-include-icon="False" data-mc-include-parent-link="False" data-mc-include-back="False" data-mc-defer-expand-event="True" data-mc-expand-event="click.zf.accordionMenu" data-mc-toc="True" data-mc-side-nav-menu="True">
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="body-container" data-mc-content-body="True">
+                                <!-- Google Tag Manager (noscript) -->
+                                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NP24S2" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+                                </noscript>
+                                <!-- End Google Tag Manager (noscript) -->
+                                <div class="search-container">
+                                    <form class="search" action="#">
+                                        <div class="search-bar search-bar-container needs-pie _Skins_SearchTopics mc-component">
+                                            <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                            <div class="search-filter-wrapper">
+                                                <div class="search-filter">
+                                                    <div class="search-filter-content">
+                                                        <ul>
+                                                            <li>All Files</li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="search-submit-wrapper" dir="ltr">
+                                                <div class="search-submit" title="Search">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <div class="row collapse">
+                                    <div class="top-bar">
+                                        <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                        </div>
+                                        <form class="search" action="#">
+                                            <div class="search-bar search-bar-container needs-pie _Skins_SearchHome mc-component">
+                                                <input class="search-field needs-pie" type="search" placeholder="Search" />
+                                                <div class="search-filter-wrapper">
+                                                    <div class="search-filter">
+                                                        <div class="search-filter-content">
+                                                            <ul>
+                                                                <li>All Files</li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="search-submit-wrapper" dir="ltr">
+                                                    <div class="search-submit" title="Search">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="topic-layout">
+                                        <div>
+                                            <div class="side-menu">
+                                                <div data-sticky-container="" id="Kp_toePj70idTqpeFOwoaQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Kp_toePj70idTqpeFOwoaQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="side-menu">
+                                                <div class="toolbar-wrapper">
+                                                    <div class="widget-github js-widget-github"><a class="widget-github-link js-widget-github-link" href="https://github.com/spryker/spryker-documentation" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26"><path d="M13.5 0C6.057 0 0 6.057 0 13.5c0 5.888 3.791 10.905 9.058 12.745a.463.463 0 0 0 .258.088c1.316.43 2.724.667 4.184.667C20.943 27 27 20.943 27 13.5S20.943 0 13.5 0zm0 .931c6.93 0 12.569 5.639 12.569 12.569 0 5.428-3.459 10.061-8.287 11.818a1.903 1.903 0 0 1-.092-.527v-2.446c0-.975-.477-2.037-.946-2.75 2.584-.436 5.537-1.776 5.537-6.779 0-1.37-.429-2.58-1.275-3.598.186-.611.415-1.9-.225-3.52a.47.47 0 0 0-.291-.272c-.13-.04-1.326-.35-3.806 1.277a12.921 12.921 0 0 0-6.36 0c-2.481-1.63-3.68-1.319-3.809-1.277a.47.47 0 0 0-.29.273C5.582 7.319 5.811 8.607 6 9.218c-.85 1.018-1.279 2.227-1.279 3.598 0 4.957 2.9 6.323 5.463 6.778-.322.407-.66.934-.81 1.47-.661.184-2.018.19-2.929-1.37-.032-.06-.829-1.475-2.4-1.584-.25.002-.882.042-1.035.525-.169.537.424.944.679 1.117l.058.034c.029.015.707.371 1.213 1.644.105.333 1.03 2.84 4.353 2.399.002.367 0 .552-.004.7v.26c0 .15-.045.378-.096.525C4.386 23.558.931 18.924.931 13.5.931 6.57 6.57.931 13.5.931zm6.51 5.375c.5 1.471.158 2.537.035 2.839a.468.468 0 0 0 .089.49c.805.883 1.214 1.952 1.214 3.181 0 4.72-2.796 5.666-5.535 5.97a.464.464 0 0 0-.253.815c.368.314 1.199 1.68 1.199 2.744v2.446c0 .009.001.414.134.809a12.513 12.513 0 0 1-6.792-.002c.135-.396.139-.802.139-.81l.001-.248c.002-.211.006-.497 0-1.266a.473.473 0 0 0-.174-.362.47.47 0 0 0-.391-.09c-3.126.681-3.802-1.576-3.828-1.67l-.016-.047c-.448-1.135-1.037-1.713-1.388-1.975.759.267 1.182 1.007 1.193 1.024 1.231 2.107 3.264 2.162 4.328 1.685a.463.463 0 0 0 .27-.36c.095-.665.826-1.545 1.196-1.87a.464.464 0 0 0 .136-.488.461.461 0 0 0-.39-.324c-2.73-.31-5.524-1.266-5.524-5.98 0-1.228.41-2.3 1.219-3.181a.464.464 0 0 0 .087-.491c-.124-.302-.467-1.364.031-2.837.396.013 1.362.182 2.988 1.286.112.076.256.1.387.063.973-.27 2.058-.416 3.135-.421 1.08.005 2.166.15 3.14.421.131.037.273.013.386-.063 1.635-1.11 2.6-1.275 2.984-1.288z" /></svg></a>
+                                                    </div>
+                                                    <div class="buttons popup-container clearfix topicToolbarProxy _Skins_TopicToolbar mc-component nocontent" style="mc-topic-toolbar-items: PreviousTopic NextTopic Print ExpandAll CollapseAll;">
+                                                        <div class="button-group-container-left">
+                                                            <button class="button needs-pie previous-topic-button" title="Navigate previous">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="previous topic" />
+                                                            </button>
+                                                            <button class="button needs-pie next-topic-button" title="Navigate next">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="next topic" />
+                                                            </button>
+                                                            <button class="button needs-pie print-button" title="Print">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="print" />
+                                                            </button>
+                                                            <button class="button needs-pie expand-all-button" data-state1-class="expand-all-button" data-state2-class="collapse-all-button" data-state2-title="Collapse all" title="Expand all" data-state1-title="Expand all">
+                                                                <img src="../../Skins/Default/Stylesheets/Images/transparent.gif" alt="expand all" />
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="js-anchorer main-content">
+                                                    <h1 id="GlueApplicationFeatureIntegration" data-magellan-target="GlueApplicationFeatureIntegration">Glue Application Feature Integration</h1>
+                                                    <div class="MCHelpControl MCHelpControl-Related relatedTopics relatedTopicssideContent" style="mc-label: 'Versions';mc-help-control-display: list;"><span class="MCHelpControl-RelatedHotSpot_ MCHelpControl-RelatedHotSpot_sideContent"><img class="MCHelpControl_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions</span>
+                                                        <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                                                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="glue-application-feature-integration-201903.htm" target="_self">Glue Application Feature Integration</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                    <ul data-magellan="" data-animation-duration="250" data-active-class="selected" data-scroll-container-on="small" class="nocontent menu _Skins_SideMenuNotFixed mc-component">
+                                                        <li><a href="#GlueApplicationFeatureIntegration">Glue Application Feature Integration</a>
+                                                        </li>
+                                                        <ul>
+                                                            <li><a href="#InstallFeatureAPI">Install Feature API</a>
+                                                            </li>
+                                                            <ul>
+                                                                <li><a href="#Prerequisites">Prerequisites</a>
+                                                                </li>
+                                                                <li><a href="#1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</a>
+                                                                </li>
+                                                                <li><a href="#2SetUpConfiguration">2) Set Up Configuration</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#AddGlobalCORSpolicy">Add Global CORS policy</a>
+                                                                    </li>
+                                                                    <li><a href="#AllowCORSrequeststoanydomain">Allow CORS requests to any domain</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <li><a href="#3SetUpTransferObjects">3) Set Up Transfer Objects</a>
+                                                                </li>
+                                                                <li><a href="#4SetUpBehavior">4) Set Up Behavior</a>
+                                                                </li>
+                                                                <ul>
+                                                                    <li><a href="#Configurewebserver">Configure web server</a>
+                                                                    </li>
+                                                                </ul>
+                                                            </ul>
+                                                        </ul>
+                                                    </ul>
+                                                    <h2 id="InstallFeatureAPI" data-magellan-target="InstallFeatureAPI">Install Feature API</h2>
+                                                    <h3 id="Prerequisites" data-magellan-target="Prerequisites">Prerequisites</h3>
+                                                    <p>To start feature integration, overview and install the necessary features:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Spryker Core</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Feature</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">201907.0</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3 id="1InstalltheRequiredModulesUsingComposer" data-magellan-target="1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</h3>
+                                                    <p>Run the following command(s) to install the required modules:</p><pre><code class="language-bash">composer require spryker/glue-application:"^1.0.0" spryker/entity-tags-rest-api:"^1.0.0" spryker/stores-rest-api:"^1.0.0" --update-with-dependencies
+		</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following modules are installed:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>GlueApplication</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/glue-application</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>EntityTagsRestApi</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>vendor/spryker/entity-tag-rest-api</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>StoresRestApi</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>vendor/spryker/stores-rest-api</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3 id="2SetUpConfiguration" data-magellan-target="2SetUpConfiguration">2) Set Up Configuration</h3>
+                                                    <p>Add the necessary parameters to <var>config/Shared/config_default.php</var>:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = 'http://glue.mysprykershop.com';
+$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = 'http://glue.mysprykershop.com';
+$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="AddGlobalCORSpolicy" data-magellan-target="AddGlobalCORSpolicy">Add Global CORS policy</h4>
+                                                    <p class="info">GLUE_APPLICATION_CORS_ALLOW_ORIGIN should be configured for every domain used in the project.</p>
+                                                    <p>Adjust <var>config/Shared/config_default.php</var>:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = 'http://glue.mysprykershop.com';</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="AllowCORSrequeststoanydomain" data-magellan-target="AllowCORSrequeststoanydomain">Allow CORS requests to any domain</h4>
+                                                    <p>Adjust <var>config/Shared/config_default.php</var>:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = '*';
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">
+                                                        <p class="tip">To make sure the CORS headers are set up correctly, make OPTIONS request to any valid GLUE resource with Origin header <code>http://glue.mysprykershop.com/</code> and see the correct JSON response:
+		<ul><li value="1">Verify that the <b>access-control-allow-origin</b> header exists and is the same as set in config</li><li value="2">Verify that the <b>access-control-allow-methods</b> header exists and contains all available methods</li><li value="3">Make POST, PATCH or DELETE request (can choose any of available one) and verify that response headers are the same</li></ul></p>
+                                                    </div>
+                                                    <div class="info">
+                                                        <p class="info">
+                                                            <ul>
+                                                                <li value="1">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to "false", no relationship will be loaded, unless they are explicitly specified in the "included" query parameter (e.g. /abstract-products?include=abstract-product-prices).</li>
+                                                                <li value="2">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to "true", all resource relationships will be loaded by default unless you pass empty "include" query parameter (e.g. /abstract-products?include=). If you specify needed relationships in the "included" query parameter, only required relationships will be added to response data.</li>
+                                                            </ul>
+                                                        </p>
+                                                    </div>
+                                                    <h3 id="3SetUpTransferObjects" data-magellan-target="3SetUpTransferObjects">3) Set Up Transfer Objects</h3>
+                                                    <p>Run the following command to generate transfer objects:</p><pre><code class="language-bash">console transfer:generate</code></pre>
+                                                    <p class="tip">
+                                                        <p class="tip">Make sure that the following changes have occurred:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestPageOffsetsTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestPageOffsetsTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RestErrorMessageTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestErrorMessageTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestErrorCollectionTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestErrorCollectionTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>RestVersionTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/RestVersionTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>RestUserTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/RestUserTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>StoresRestAttributesTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/StoresRestAttributesTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>StoreCountryRestAttributesTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/StoreCountryRestAttributesTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>StoreRegionRestAttributesTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/StoreRegionRestAttributesTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>StoreLocaleRestAttributesTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/StoreLocaleRestAttributesTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>StoreCurrencyRestAttributesTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/StoreCurrencyRestAttributesTransfer.php</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </p>
+                                                    <h3 id="4SetUpBehavior" data-magellan-target="4SetUpBehavior">4) Set Up Behavior</h3>
+                                                    <p>Activate the following plugins:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>GlueResourceBuilderService</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the resource builder service in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>GlueApplicationServiceProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the pimple plugin, the controller resolver and configures the debug mode in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SessionServiceProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers session services in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Silex\Provider</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ServiceControllerServiceProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the controller resolver service in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Silex\Provider</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>GlueServiceProviderPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the <var>onKernelController</var> event listeners in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>GlueRoutingServiceProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Registers the URL matcher and router services in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SetStoreCurrentLocaleBeforeActionPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Sets a locale for the whole current store.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest\SetStoreCurrentLocaleBeforeActionPlugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>EntityTagFormatResponseHeadersPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Adds the ETag header to response if applicable.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagFormatResponseHeadersPlugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>EntityTagRestRequestValidatorPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Verifies that the `If-Match` header is equal to entity tag.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagRestRequestValidatorPlugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>StoresResourceRoutePlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Registers stores resource.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Glue\StoresRestApi\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Glue/GlueApplication/Bootstrap/GlueBootstrap.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication\Bootstrap;
+ 
+use Silex\Provider\ServiceControllerServiceProvider;
+use Silex\Provider\SessionServiceProvider;
+use Spryker\Glue\GlueApplication\Bootstrap\AbstractGlueBootstrap;
+use Spryker\Glue\GlueApplication\Plugin\Rest\GlueServiceProviderPlugin;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueApplicationServiceProvider;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueResourceBuilderService;
+use Spryker\Glue\GlueApplication\Plugin\Rest\ServiceProvider\GlueRoutingServiceProvider;
+ 
+class GlueBootstrap extends AbstractGlueBootstrap
+{
+	/**
+	* @return void
+	*/
+	protected function registerServiceProviders(): void
+	{
+		$this-&gt;application
+			-&gt;register(new GlueResourceBuilderService())
+			-&gt;register(new GlueApplicationServiceProvider())
+			-&gt;register(new SessionServiceProvider())
+			-&gt;register(new ServiceControllerServiceProvider())
+			-&gt;register(new GlueServiceProviderPlugin())
+			-&gt;register(new GlueRoutingServiceProvider());
+	}
+}
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Create a new entry point for Glue Application:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />public/Glue/index.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+use Pyz\Glue\GlueApplication\Bootstrap\GlueBootstrap;
+use Spryker\Shared\Config\Application\Environment;
+use Spryker\Shared\ErrorHandler\ErrorHandlerEnvironment;
+ 
+define('APPLICATION', 'GLUE');
+defined('APPLICATION_ROOT_DIR') || define('APPLICATION_ROOT_DIR', realpath(__DIR__ . '/../..'));
+ 
+require_once APPLICATION_ROOT_DIR . '/vendor/autoload.php';
+ 
+Environment::initialize();
+ 
+$errorHandlerEnvironment = new ErrorHandlerEnvironment();
+$errorHandlerEnvironment-&gt;initialize();
+ 
+$bootstrap = new GlueBootstrap();
+$bootstrap
+	-&gt;boot()
+	-&gt;run();
+		</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="Configurewebserver" data-magellan-target="Configurewebserver">Configure web server</h4>
+                                                    <p>Create Nginx VHOST configuration:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/nginx/sites-enabled/DE_development_glue</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">server {
+	# Listener for production/staging - requires external LoadBalancer directing traffic to this port
+	listen 10001;
+ 
+	# Listener for testing/development - one host only, doesn't require external LoadBalancer
+	listen 80;
+ 
+	server_name ~^glue\\..+\\.com$;
+ 
+	keepalive_timeout 0;
+	access_log  /data/logs/development/glue-access.log extended;
+ 
+	# entry point for Glue Application
+	root /data/shop/development/current/public/Glue;
+ 
+	set $application_env development;
+	# Binding store
+	set $application_store DE;
+	include "spryker/zed.conf";
+}				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Update hosts configuration by adding the following line (replace IP with your server's IP address):</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/hosts</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">ip glue.mysprykershop.com</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">
+                                                        <p class="tip">If everything is set up correctly, you should be able to access http://glue.mysprykershop.com and get a correct JSON response as follows:</p>
+                                                        <p><b>Default JSON Response</b>
+                                                        </p><pre><code class="language-json line-numbers">{
+	"errors": [
+		{
+			"status": 404,
+			"detail": "Not Found"
+		}
+	]
+}</code></pre>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Glue\GlueApplication\GlueApplicationDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\GlueApplication;
+ 
+use Spryker\Glue\GlueApplication\GlueApplicationDependencyProvider as SprykerGlueApplicationDependencyProvider;
+use Spryker\Glue\GlueApplication\Plugin\Rest\SetStoreCurrentLocaleBeforeActionPlugin;
+use Spryker\Glue\StoresRestApi\Plugin\StoresResourceRoutePlugin;
+ 
+class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependencyProvider
+{
+	/**
+	* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ResourceRoutePluginInterface[]
+	*/
+	protected function getResourceRoutePlugins(): array
+	{
+		return [
+			new StoresResourceRoutePlugin(),
+		];
+	}
+ 
+	/**
+	* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\ControllerBeforeActionPluginInterface[]
+	*/
+	protected function getControllerBeforeActionPlugins(): array
+	{
+		return [
+			new SetStoreCurrentLocaleBeforeActionPlugin(),
+		];
+	}
+     
+	/**
+	* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\FormatResponseHeadersPluginInterface[]
+	*/
+	protected function getFormatResponseHeadersPlugins(): array
+	{
+		return [
+			new EntityTagFormatResponseHeadersPlugin(),
+		];
+	}
+ 
+	/**
+	* @return \Spryker\Glue\GlueApplicationExtension\Dependency\Plugin\RestRequestValidatorPluginInterface[]
+	*/
+	protected function getRestRequestValidatorPlugins(): array
+	{
+		return [
+			new EntityTagRestRequestValidatorPlugin(),
+		];
+	}
+}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="info"><b>Hint</b>
+                                                        <br />Use constant of resource name instead of plain string.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Glue/EntityTagsRestApi/EntityTagsRestApiConfig.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Glue\EntityTagsRestApi;
+ 
+use Spryker\Glue\CartsRestApi\CartsRestApiConfig;
+use Spryker\Glue\EntityTagsRestApi\EntityTagsRestApiConfig as SprykerEntityTagsRestApiConfig;
+ 
+class EntityTagsRestApiConfig extends SprykerEntityTagsRestApiConfig
+{
+	/**
+	* @return string[]
+	*/
+	public function getEntityTagRequiredResources(): array
+	{
+		return array_merge(
+			parent::getEntityTagRequiredResources(),
+			[PyzRestApiConfig::RESOURCE_NAME]
+		);
+	}
+}
+				</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">If everything is set up correctly, a request to http://glue.mysprykershop.com with the header <code>[{"key":"Accept-Language","value":"de_DE, de;q=0.9"}]</code> should result in a response that contains the content-language header set to de_DE.</p>
+                                                    <div class="tip">
+                                                        <p class="tip">Send a GET request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
+                                                        <br />Make sure that the response contains the 'ETag' header.
+			<br />Prepare a PATCH request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identitifer}}</code><br />Add the 'If-Match' header with the value of ETag from the GET response header.
+			<br />Add the request body:
+			<pre><code class="language-json line-numbers">{
+	"data": {
+		"type": "RESOURCE_NAME",
+		"attributes": {
+			"name": "{{new_name}}"
+		}
+	}
+}
+			</code></pre><br />Send a request with the specified header and body.
+			<br />Make sure that the returned resource contains updated 'ETag'.
+			</div>
+                                                    <div class="tip">
+                                                        <p class="tip">Send a GET request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
+                                                        <br />Make sure that the response contains the 'ETag' header.
+			<br />Prepare a PATCH request to  <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code><br />Add the 'If-Match' header with some random value.
+			<br />Add a request body.
+			<pre><code class="language-json line-numbers">{
+	"data": {
+		"type": "RESOURCE_NAME",
+		"attributes": {
+			"name": "{{new_name}}"
+		}
+	}
+}
+			</code></pre><br />Send a request with the specified header and body.
+			<br />Make sure that the response contains the ETag validation error.
+		</div>
+                                                    <p class="tip">Make sure that the following endpoint is available:
+			<ul><li value="1">http://mysprykershop.com/stores</li></ul></p>
+                                                    <p><i>Last review date: Aug 02, 2019</i>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><a class="scroll-top js-scroll-top" href="#"><svg xmlns="http://www.w3.org/2000/svg" width="12" height="16" viewBox="0 0 12 16"><path fill="#FFF" fill-rule="nonzero" d="M11.82 5.22a.54.54 0 0 1 0 .806.636.636 0 0 1-.852 0L6.607 1.937v13.49a.587.587 0 0 1-.602.573c-.336 0-.611-.258-.611-.573V1.937L1.04 6.026a.647.647 0 0 1-.86 0 .54.54 0 0 1 0-.807L5.573.163a.636.636 0 0 1 .852 0L11.82 5.22z" /></svg></a>
+                                <script>/* <![CDATA[ */
+			function createGithubUrl() {
+			var GITHUB_CONTENT_PATH = '/blob/master/public';
+			var link = document.querySelector('.js-widget-github-link');
+			var href =
+			link.getAttribute('href')
+			+ GITHUB_CONTENT_PATH
+			+ window.location.pathname;
+			link.setAttribute('href', href);
+			}
+			createGithubUrl();
+		/* ]]> */</script>
+                                <script>/* <![CDATA[ */
+			requirejs.config({
+				appDir: '',
+				paths: {
+					'clipboard': ['https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min']
+					
+				}
+			});
+			require(['clipboard'], function(Clipboard) {
+				console.log(Clipboard);
+				window.Clipboard = Clipboard;
+			});
+		/* ]]> */</script>
+                                <script src="../../resources/scripts/perfect-scrollbar.js">
+                                </script>
+                                <script src="../../resources/scripts/imagemapster.js">
+                                </script>
+                                <script src="../../resources/scripts/script.js">
+                                </script>
+                                <script src="../../resources/scripts/prism.js">
+                                </script>
+                            </div>
+                        </div>
+                    </section><a data-close="true"></a>
+                </div>
+            </div>
+            <script>/* <![CDATA[ */$(document).foundation();/* ]]> */</script>
+        </div>
+    </body>
+</html>
