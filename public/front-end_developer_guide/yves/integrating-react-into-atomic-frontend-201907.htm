@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.2019-02,ReleaseVersions.2019-03" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Features|Search &amp; Filter">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Front-End|Yves">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <meta name="msapplication-config" content="../../Skins/Favicons/browserconfig.xml" />
-        <meta name="description" content="The CMS Pages in Search Results feature allows displaying CMS pages in addition to products in the search results page. CMS pages are represented either as a grid or as a list." />
         <link rel="apple-touch-icon" sizes="180x180" href="../../Skins/Favicons/apple-touch-icon.png" />
         <link rel="shortcut icon" href="../../Skins/Favicons/favicon-32x32.png" />
         <link rel="icon" sizes="96x96" href="../../Skins/Favicons/favicon-96x96.png" />
@@ -13,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>CMS Pages in Search Results | Spryker</title>
+        <meta name="author" content="" /><title>Integrating React into Atomic Frontend | Spryker</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -209,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Lok2da0uukOlRJROrx0AwQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Lok2da0uukOlRJROrx0AwQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="KJd6Pt9eU0eHLQFAh42QOA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KJd6Pt9eU0eHLQFAh42QOA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,35 +239,69 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>CMS Pages in Search Results</h1>
-                                                    <p>When it comes to search in a webshop, a shop owner should make sure that they can offer the existing and potential customers the content they need. Most often shop visitors search for products on the website. However,  they also might need other information, for example, terms and conditions, legal information, contacts etc. that is contained on <a href="https://documentation.spryker.com/capabilities/cms/cms_page/cms-page.htm">CMS pages</a>.</p>
-                                                    <p>Spryker has implemented a specific feature for that: CMS pages in Search Results. This feature allows searching not only for products but for CMS pages content as well. At the same time, the search results pertaining to products and CMS pages do not intervene with each other, as the search result page is split into two tabs: one displays product pages and the other - CMS pages that can be shown either as a grid or as a list. Thus, the shop visitors can easily switch between tabs.</p>
-                                                    <p>
-                                                        <img src="../../resources/images/cms-pages-in-search-results.png" />
+                                                    <h1>Integrating React into Atomic Frontend</h1>
+                                                    <p>This guide aims to illustrate how to integrate <i>React</i> within Spryker frontend.</p>
+                                                    <h2>Setup</h2>
+                                                    <ol>
+                                                        <li value="1">Install <i>React</i>, <i>ReactDOM</i> and relative types.
+        <p>Add required dependencies to the project by running the following command from the root folder:</p><pre><code class="language-shell">npm install react react-dom @types/react @types/react-dom --save</code></pre><div class="tip"><p class="tip"><var>./package.json</var> is updated as follows:</p><pre><code class="language-PHP line-numbers">"dependencies": {
+  ...
+  "@types/react": "~16.7.18",
+  "@types/react-dom": "~16.0.11",
+  "react": "~16.7.0",
+  "react-dom": "~16.7.0"
+  ...
+}</code></pre></div></li>
+                                                        <li value="2">Update webpack configuration.
+			<p>React relies on <var>.jsx</var> (or <var>.tsx</var>) files. As they must be specifically transpiled into Javascript, you need to tell Webpack to read them.
+				Add the following to <var>./frontend/configs/development.js</var>:</p><pre><code class="language-PHP line-numbers">resolve: {
+  extensions: ['.ts', '.tsx', '.js', '.jsx', '.json', '.css', '.scss'], // add .jsx and tsx here
+  ...
+},
+
+module: {
+  rules: [
+    {
+      test: /\.tsx?$/, // change from /\.ts$/ to /\.tsx?$/
+      loader: 'ts-loader',
+      ...
+    }
+  },
+  ...
+}</code></pre></li>
+                                                        <li value="3">
+Add the following into <var>./tsconfig.json</var> to make <i>Typescript</i> transpile <i>React</i>:
+<pre><code class="language-PHP line-numbers">{
+  "compilerOptions": {
+    ...
+    "jsx": "react",
+    ...
+  }
+}</code></pre></li>
+                                                        <li value="4">
+Add the following lines into <var>./src/Pyz/Yves/ShopUi/Theme/default/vendor.ts</var> to make sure that React is included into the final output:	
+<pre><code class="language-PHP line-numbers">import 'react';
+import 'react-dom';</code></pre><p>By doing this, Webpack will know to place <i>React</i> source code inside the vendor chunk and require it from there whenever needed.</p></li>
+                                                    </ol>
+                                                    <h2>Usage</h2>
+                                                    <ol>
+                                                        <li value="1">Create your first React component.
+				<ol style="list-style-type: lower-alpha;"><li value="1"><p>Create the example folder <var>./src/Pyz/Yves/ShopUi/Theme/default/components/molecules/react-component</var>.</p></li><li value="2"><p>In this folder, create 2 files:</p><ul><li value="1"><var>index.ts</var> - will be used as the component entry point, automatically globbed by the application and injected into the DOM;</li><pre><code class="language-PHP line-numbers">import(/* webpackMode: "lazy" */'./react-component');</code></pre><li value="2"><var>react-component.tsx</var> - contains the component implementation.</li><pre><code class="language-PHP line-numbers">import * as React from 'react';
+import { render } from 'react-dom';
+
+export const ReactComponent = () =&gt; &lt;h1&gt;Hello from React!&lt;/h1&gt;;
+
+document
+  .querySelectorAll('.react-component')
+  .forEach(element =&gt; render(&lt;ReactComponent /&gt;, element));</code></pre></ul></li></ol></li>
+                                                        <li value="2">Run the command from the project root folder to rebuild frontend, including React and every new created component:
+			<pre><code class="language-shell">npm run yves</code></pre></li>
+                                                        <li value="3">To use the component, add an html element with the class name <var>.react-component</var> anywhere in your twig files to see the <i>React</i> component - <var>&lt;div class="react-component"&gt;&lt;/div&gt;</var>.
+			</li>
+                                                    </ol>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Aug 08, 2019</i>
                                                     </p>
-                                                    <p>Also, sorting pages by a name and pagination available on the search results page help shop visitors to find the content they are looking for, much quicker and easier, especially, if there are many CMS pages on the store website. Breadcrumbs navigation allows a shop administrator to structure the content and this way reduce the number of steps the visitors of your online shop should perform to return to the previous page.</p>
-                                                    <p>To sum it up, this advanced tool for browsing and searching will not only enhance the user experience, but will move forward the search functionality of your online shop. That means that shop visitors will be more likely to become or stay your customers who can quickly and easily find the content they are looking for.</p>
-                                                    <!-- Feature Links block includes the sections with the related links based on roles: Developer, Shop Administrator, Shop User. Just copy and paste the below written code to your page. -->
-                                                    <div class="fl-wrapper">
-                                                        <div class="fl-container">
-                                                            <div class="fl-tile js-expandable-container">
-                                                                <!-- Title for block here -->
-                                                                <h4 class="fl-title">Developer</h4>
-                                                                <!-- Link Element. Add all the necessary referrals to other pages related for your role. Add the link to a page in href instead of #  --><a href="https://documentation.spryker.com/feature_integration_guides/cms-pages-in-search-results-integration.htm" class="fl-link">Enable the CMS Pages in Search Results feature</a>
-                                                            </div>
-                                                            <!-- End of block with title and links -->
-                                                            <div class="fl-tile js-expandable-container">
-                                                                <!-- Title for block here -->
-                                                                <h4 class="fl-title">Shop Administrator</h4>
-                                                                <!-- Link Element. Add all the necessary referrals to other pages related for your role. Add the link to a page in href instead of #  --><a href="https://documentation.spryker.com/capabilities/cms/cms_page/cms-page.htm" class="fl-link">CMS Page Overview</a>
-                                                            </div>
-                                                            <div class="fl-tile js-expandable-container">
-                                                                <!-- Title for block here -->
-                                                                <h4 class="fl-title">Shop User</h4>
-                                                                <!-- Link Element. Add all the necessary referrals to other pages related for your role. Add the link to a page in href instead of #  --><a href="https://documentation.spryker.com/shop_user_guide/searching-within-cms-pages.htm" class="fl-link">Searching within CMS Pages</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
