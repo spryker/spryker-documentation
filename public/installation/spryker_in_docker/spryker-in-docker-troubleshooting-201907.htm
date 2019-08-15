@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="qLZtg3nT9EmlnN7i7CPKdQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qLZtg3nT9EmlnN7i7CPKdQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="jWM1G6uaI0WyriD4rA4MPQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="jWM1G6uaI0WyriD4rA4MPQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,7 +242,7 @@
                                                     <h1>Spryker in Docker - Troubleshooting</h1>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Docker demon is not running</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p><b>when</b> running the <var>docker/sdk up</var> console command, you see an error similar to this:</p><pre><code class="language-shell">Error response from daemon: Bad response from Docker engine</code></pre>
+                                                            <p><b>when</b> running the <var>docker/sdk up</var> console command, you get an error similar to this:</p><pre><code class="language-shell">Error response from daemon: Bad response from Docker engine</code></pre>
                                                             <p><b>then</b>
                                                             </p>
                                                             <ol>
@@ -255,7 +255,7 @@
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />HTTP/HTTPS port is already occupied on host</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p><b>when</b> running the <var>docker/sdk up</var> console command, you see an error similar to this:</p><pre><code class="language-shell">ERROR: for nginx_frontend Cannot start service nginx_frontend: driver failed programming external connectivity on endpoint spryker_nginx_frontend_1 (e4fdb360f6c9a3243c0a88fa74f8d377325f65b8cd2340b2dacb51377519c1cf): Error starting userland proxy: Bind for 0.0.0.0:80: unexpected error (Failure EADDRINUSE)</code></pre>
+                                                            <p><b>when</b> running the <var>docker/sdk up</var> console command, you get an error similar to this:</p><pre><code class="language-shell">ERROR: for nginx_frontend Cannot start service nginx_frontend: driver failed programming external connectivity on endpoint spryker_nginx_frontend_1 (e4fdb360f6c9a3243c0a88fa74f8d377325f65b8cd2340b2dacb51377519c1cf): Error starting userland proxy: Bind for 0.0.0.0:80: unexpected error (Failure EADDRINUSE)</code></pre>
                                                             <p><b>then</b>
                                                             </p>
                                                             <ol>
@@ -273,13 +273,19 @@
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Docker sync error</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p><b>when</b> you see the error similar to this running the console command:</p><pre><code class="language-shell">docker: Error response from daemon: Conflict. The container name "/data-sync" is already in use by container "47dd708a7a7f9550390432289bd85fe0e4491b080748fcbba7ddb3331de2c7e7". You have to remove (or rename) that container to be able to reuse that name.</code></pre>
+                                                            <p><b>when</b> </p>
+                                                            <p>you get an error similar to this after running <var>docker/sdk up</var>:</p><pre><code class="language-shell">docker: Error response from daemon: Conflict. The container name "/data-sync" is already in use by container "47dd708a7a7f9550390432289bd85fe0e4491b080748fcbba7ddb3331de2c7e7". You have to remove (or rename) that container to be able to reuse that name.</code></pre>
                                                             <p><b>then</b>
                                                             </p>
                                                             <ol>
                                                                 <li value="1">Run <var>docker-sync clean</var></li>
                                                                 <li value="2">Run <var>docker/sdk up</var> again.</li>
                                                             </ol>
+                                                            <p style="font-weight: bold;">when </p>
+                                                            <p>you get an error similar to this:</p><pre><code class="language-shell">Unable to find image "eugenmayer/unison:hostsync_@.2' Locally
+docker: Error response from daemon: manifest for eugenmayer/unison:hostsync_@.2 not found: manifest unknown: manifest unknown.</code></pre>
+                                                            <p style="font-weight: bold;">then</p>
+                                                            <p>update docker-sync:</p><pre><code class="language-shell">gem install docker-sync</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Xdebug does not work</a></span>

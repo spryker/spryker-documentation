@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="iDLWOJp300CGfBdbtXXHsg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="iDLWOJp300CGfBdbtXXHsg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="sPSfrDuT3EG_HRnEkOR49A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="sPSfrDuT3EG_HRnEkOR49A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -316,14 +316,14 @@
                                                             </tr>
                                                         </tbody>
                                                     </table><![CDATA[
-		
-		
+
+
 		]]><pre><code class="language-PHP line-numbers">zend_extension=opcache.so
 opcache.enable=1
 opcache.enable_cli=1
 opcache.max_accelerated_files=8192
 opcache.memory_consumption=256
- 
+
 ; Check if file updated on each request - for development
 opcache.validate_timestamps=0
 opcache.revalidate_freq=0</code></pre><h2>Optimized Composer Autoloader</h2><p>
@@ -345,16 +345,16 @@ $config[\Spryker\Shared\Config\ConfigConstants::ENABLE_WEB_PROFILER] = false;
 		</code></pre><h2>
 Activate Twig Compiler
 
-		</h2><p>Twig files can be pre-compiled into PHP classes to speed it up. It can be activated in the configuration. We highly recommend using the <var>FORCE_BYTECODE_INVALIDATION</var> option. Otherwise, the opcache may contain outdated content, as these files are modified during runtime.</p><pre><code class="language-PHP line-numbers">
+		</h2><p>Twig files can be pre-compiled into PHP classes to speed it up. It can be activated in the configuration. We highly recommend using the <var>FORCE_BYTECODE_INVALIDATION</var> option. Otherwise, Opcache may contain outdated content, as these files are modified during runtime.</p><pre><code class="language-PHP line-numbers">
 $config[\Spryker\Shared\Twig\TwigConstants::ZED_TWIG_OPTIONS] = [
-'cache' =&gt; new Twig_Cache_Filesystem(sprintf(
+'cache' =&gt; new \Twig\Cache\FilesystemCache(sprintf(
 '%s/data/%s/cache/Zed/twig',
 APPLICATION_ROOT_DIR, $CURRENT_STORE),
 Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION),
 ];
- 
+
 $config[\Spryker\Shared\Twig\TwigConstants::YVES_TWIG_OPTIONS] = [
-'cache' =&gt; new Twig_Cache_Filesystem(sprintf(
+'cache' =&gt; new \Twig\Cache\FilesystemCache(sprintf(
 '%s/data/%s/cache/Yves/twig',
 APPLICATION_ROOT_DIR, $CURRENT_STORE),
 Twig_Cache_Filesystem::FORCE_BYTECODE_INVALIDATION),
@@ -373,11 +373,26 @@ $config[\Spryker\Shared\ZedNavigation\ZedNavigationConstants::ZED_NAVIGATION_CAC
 		</code></pre><h2>
 			Activate Class Resolver Cache
 
-		</h2><p>Spryker allows to extend some classes (like facades, clients, etc.) in projects and also for multiple stores. Therefore each class can exist on core-, project- and store-level. We also support multiple namespaces for each level, so there are several possible places for any of these classes. To avoid unnecessary usages of the expensive <var>class_exists()</var> function, Spryker provides a caching mechanism that writes all non-existing classes into a cache file (see for example <var>/data/DE/cache/Yves/unresolvable.cache</var>, the same applies for different stores and Zed as well). This cache file must be removed during every deployment, and it is not recommended to active this during development.</p><pre><code class="language-PHP">
+		</h2><p>Spryker allows extending some classes (like facades, clients, etc.) in projects also for multiple stores. Therefore each class can exist on core-, project- and store-level. We also support multiple namespaces for each level, so there are several possible places for any of these classes. To avoid unnecessary usages of the expensive <var>class_exists()</var> function, Spryker provides a caching mechanism that writes all non-existing classes into a cache file (see for example <var>/data/DE/cache/Yves/unresolvable.cache</var>, the same applies for different stores and Zed as well). This cache file must be removed during every deployment, and it is not recommended to active this during development.</p><pre><code class="language-PHP">
 $config[\Spryker\Shared\Kernel\KernelConstants::AUTO_LOADER_UNRESOLVABLE_CACHE_ENABLED] = true;
 		</code></pre><p>You can also configure a path for the <var>unresolvable.cache</var> file:</p><pre><code class="language-PHP line-numbers">
 $config[\Spryker\Shared\Kernel\KernelConstants::AUTO_LOADER_CACHE_FILE_PATH] = APPLICATION_ROOT_DIR . '/data/' . \Spryker\Shared\Kernel\Store::getInstance()-&gt;getStoreName() . '/cache/' . ucfirst(strtolower(APPLICATION)) . '/unresolvable.cache';
-	</code></pre><h2>Redis Mget Cache (Default: On)</h2><p>Yves performs a high number of <var>get()</var> calls to Redis. In case Redis is installed on the same machine, then the expected time per <var>get()</var> is below 0.1 ms. However, in case you run Spryker on a cloud environment, there is latency for each <var>get()</var> call to Redis. It can sum up to a few hundred milliseconds per request. To avoid this performance bottleneck, Spryker remembers all used <var>get()</var> calls per URL and performs a single <var>mget()</var> to retrieve all needed data in one call. This behavior works out of the box. In case you see a high number of <var>get()</var> calls in your monitoring, you should make sure that the <var>StorageCacheServiceProvider</var> is registered in <var>YvesBootstrap</var>. This provider is responsible for the persistence of the cache data in Redis. For more information about the Redis Mget cache <a href="https://documentation.spryker.com/yves/redis-as-kv.htm?Highlight=redis%20as%20kv#using-redis-cache">this article</a>.</p><p>&#160;</p><p><i>Last review date:&#160;May 3, 2019 </i></p></div>
+	</code></pre><h2>Redis Mget Cache (Default: On)</h2><p>Yves performs a high number of <var>get()</var> calls to Redis. In case Redis is installed on the same machine, the expected time per <var>get()</var> is below 0.1 ms. However, if you run Spryker in a cloud environment, there is latency for each <var>get()</var> call to Redis. It can sum up to a few hundred milliseconds per request. To avoid this performance bottleneck, Spryker remembers all used <var>get()</var> calls per URL and performs a single <var>mget()</var> to retrieve all needed data in one call. This behavior works out of the box. In case you see a high number of <var>get()</var> calls in your monitoring, make sure that <var>StorageCacheServiceProvider</var> is registered in <var>YvesBootstrap</var>. This provider is responsible for the persistence of the cache data in Redis. For more information about the Redis Mget cache see <a href="https://documentation.spryker.com/yves/redis-as-kv.htm?Highlight=redis%20as%20kv#using-redis-cache">this article</a>.</p><h2>Active located class cache</h2><p>You can turn on an instance cache for already located classes instead of creating new ones for each call.</p><pre><code class="language-PHP">
+namespace Pyz\Shared\Kernel;
+
+use Spryker\Shared\Kernel\KernelConfig as SprykerKernelConfig;
+
+class KernelConfig extends SprykerKernelConfig
+{
+    /**
+     * @return bool
+     */
+    public function isLocatorInstanceCacheEnabled(): bool
+    {
+        return true;
+    }
+}
+            </code></pre><p class="info">Use this carefully! If one of the located classes is not stateless this might have bad side effects.</p><p>&#160;</p><p><i>Last review date:&#160;May 3, 2019 </i></p></div>
                                             </div>
                                         </div>
                                     </div>
