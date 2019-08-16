@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="TYVeyNoTMUmsD4HUwaRJFg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TYVeyNoTMUmsD4HUwaRJFg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="TYatOSDts0CTXm9F5JqXXw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="TYatOSDts0CTXm9F5JqXXw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,6 +241,9 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Getting Started with Docker</h1>
                                                     <p>This guide will help you to run the spryker script on Linux, MacOS and Windows.</p>
+                                                    <div class="note">
+                                                        <p>When working with Windows, use absolute paths while running commands. For example: <var>mkdir /d/spryker &amp;&amp; cd $_</var> or <var>mkdir /c/Users/spryker &amp;&amp; cd $_</var>.</p>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Demo Mode</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <ol>
@@ -252,10 +255,10 @@
 			</li>
                                                                 <li value="3">Depending on the desired shop type:
 			      <ol style="list-style-type: lower-alpha;"><li value="1">Clone the B2C repository:
-						<pre><code class="language-shell">git clone --single-branch 201907.0 https://github.com/spryker-shop/b2c-demo-shop.git ./</code></pre></li><li value="2">Clone the  B2B repository:
-						<pre><code class="language-shell">git clone --single-branch 201907.0 https://github.com/spryker-shop/b2b-demo-shop.git ./</code></pre></li></ol></li>
+						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2c-demo-shop.git -b 201907.0 --single-branch ./</code></pre></li><li value="2">Clone the  B2B repository:
+						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2b-demo-shop.git -b 201907.0 --single-branch ./</code></pre></li></ol></li>
                                                                 <li value="4">Clone the docker repository:
-				<pre><code class="language-shell">git clone --single-branch 1.0.0 https://github.com/spryker/docker-sdk.git ./docker</code></pre></li>
+				<pre><code class="language-shell">git clone git@github.com:spryker/docker-sdk.git -b 1.0.0 --single-branch docker</code></pre></li>
                                                                 <li value="5">Bootstrap local docker setup for demo:
 				<pre><code class="language-shell">docker/sdk bootstrap</code></pre></li>
                                                                 <li value="6">Once the job finishes, build and start the instance:
@@ -280,14 +283,13 @@
                                                                     <p class="info">In case you are going to run the script on Windows, open Ubuntu (Learn about it <a href="docker_install_prerequisites/docker-install-prerequisites-windows-201907.htm#Install">here</a>).</p>
                                                                 </li>
                                                                 <li value="2">Create a new folder and navigate into this folder.
-						<p class="note">You should use an absolute path. For example: <var>mkdir /d/spryker &amp;&amp; cd $_</var> or <var>mkdir /c/Users/spryker &amp;&amp; cd $_</var>.
-							If you want to get into an existing directory, you should use an absolute path as well. For example: <var>cd /d/spryker</var> or <var>cd /c/Users/spryker</var>.</p></li>
+						</li>
                                                                 <li value="3">Depending on the desired shop type:
 			      <ol style="list-style-type: lower-alpha;"><li value="1">Clone the B2C repository:
-						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2c-demo-shop.git ./</code></pre></li><li value="2">Clone the  B2B repository:
-						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2b-demo-shop.git ./</code></pre></li></ol></li>
+						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2c-demo-shop.git -b 201907.0 --single-branch ./</code></pre></li><li value="2">Clone the  B2B repository:
+						<pre><code class="language-shell">git clone https://github.com/spryker-shop/b2b-demo-shop.git -b 201907.0 --single-branch ./</code></pre></li></ol></li>
                                                                 <li value="4">Clone the docker repository:
-				<pre><code class="language-shell">git clone https://github.com/spryker/docker-sdk.git ./docker</code></pre></li>
+				<pre><code class="language-shell">git clone git@github.com:spryker/docker-sdk.git -b 1.0.0 --single-branch docker</code></pre></li>
                                                                 <li value="5">Bootstrap local docker setup:
 				<pre><code class="language-shell">docker/sdk bootstrap deploy.dev.yml</code></pre></li>
                                                                 <li value="6">Once the job finishes, build and start the instance:
@@ -331,7 +333,7 @@ Getting CA Private Key
 Checking chain
 /certs/spryker_ssl.crt: OK</code></pre>
                                                                 </li>
-                                                                <li value="4">In the meanwhile, if you haven't installed the CA certificate, take <var>spryker.crt</var> from <var>/docker/deployment/default/</var> and follow the <a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">instructions</a>.</li>
+                                                                <li value="4">In the meanwhile, if you haven't installed the CA certificate, take <var>spryker.crt</var> from <var>/docker/deployment/default/</var> and follow the <a href="https://documentation.spryker.com/tutorials/howtos/spryker_in_docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">instructions</a>.</li>
                                                             </ol>
                                                         </div>
                                                     </div>
@@ -408,7 +410,7 @@ services:
                                                         </li>
                                                         <li value="3"><a href="docker_install_prerequisites/docker-install-prerequisites-201907.htm">Docker Installation Prerequisites</a>
                                                         </li>
-                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">HowTo - Install Self-Signed SSL Certificates</a>
+                                                        <li value="4"><a href="https://documentation.spryker.com/tutorials/howtos/spryker_in_docker_howtos/ht-install-self-signed-ssl-certificates-201907.htm">HowTo - Install Self-Signed SSL Certificates</a>
                                                         </li>
                                                     </ul>
                                                     <p><i>Last review date: Aug 06, 2019</i>
