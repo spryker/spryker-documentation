@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="kfjvBWOR1ECzbp_z5UIniQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="kfjvBWOR1ECzbp_z5UIniQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Os73P2_sfUel0-MhJZfCBA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Os73P2_sfUel0-MhJZfCBA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -258,9 +258,8 @@
                                                     <p>Queue data import is intended to be done in two separate steps.</p>
                                                     <ol>
                                                         <li value="1"><b>Step 1</b> is about importing the data from the original data source into the queue.<br />a. Each resource (e.g. abstract product data) is meant to be imported to its dedicated queue.<br />b. In general, during this step, data should not be preprocessed in any way and should go to a queue as is.</li>
-                                                        <li value="2">
-                                                            <p>During Step 2, data previously stored in a queue is consumed from the queue and imported into persistent storage.</p>
-                                                        </li>
+                                                        <li value="2">During Step 2, data previously stored in a queue is consumed from the queue and imported into persistent storage.
+            </li>
                                                     </ol>
                                                     <h3>How to Export Data from CSV to Queue (Step 1)</h3>
                                                     <p>The <var>DataImport</var> module was extended with the new classes that are responsible for providing the preconfigured queue writer instances to the data import facilities. It is completely configured on the project level.</p>
@@ -388,7 +387,7 @@ class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
                                                     <p>Pay attention to the <var>::setImportGroup()</var> method call on the data importer instance. By calling this method, an import group can be set for each separate data import. Import groups allow you to run importers separately on a per-group basis by supplying the group name as an option for the data import console command. Three groups are supported out of the box: <var>FULL, QUEUE_READERS, QUEUE_WRITERS</var>. With no call to <var>::setImportGroup</var>, data importer will be placed into the <var>FULL</var> group by default.</p>
                                                     <p class="important">It is not recommended to use the <var>QUEUE_READERS</var> group. This executes all the configured queue importers during one import run. Because in a lot of scenarios the order, in which the data is imported, matters and because of the possibility of the race condition, this can lead to various malfunctions/inconsistencies in the imported data. We recommend structuring the import process in a way that would allow importing data with the help of the message queues apart from other imported resources.</p>
                                                     <p>Now, whenever you run <var>vendor/bin/console data:import</var> with the <var>--group</var> option set to <var>QUEUE_WRITERS</var>, product abstract data will be stored in the dedicated queue.</p><pre><code class="language-PHP line-numbers">vendor/bin/console data:import --group=QUEUE_WRITERS</code></pre>
-                                                    <div class="important">Import groups should not be used together with import types. For example, this command is illegal and will lead to an exception:<br /><var>vendor/bin/console data:import:product-abstract --group=QUEUE_WRITERS</var></div>
+                                                    <p class="important">Import groups should not be used together with import types. For example, this command is illegal and will lead to an exception:<br /><var>vendor/bin/console data:import:product-abstract --group=QUEUE_WRITERS</var></p>
                                                     <p class="important">We also highly recommend preparing the properly structured data for the import in queues from the very beginning instead of actually importing it from CSV, XML, etc. as the first step. In this case, a queue can be treated as an original source of data for import which would make the overall process more convenient.</p>
                                                     <h2>How to Export Data from Queue to Database (Step 2)</h2>
                                                     <p>Add a new constant and a public method to <var>Pyz\Zed\DataImport\DataImportConfig</var>. The method should call <var>Spryker\Zed\DataImport::buildQueueDataImporterConfiguration()</var>, passing three arguments:</p>
@@ -451,7 +450,7 @@ class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <div class="important">You should use different import type names for <b>Step 1</b> and <b>Step 2</b></div>
+                                                    <p class="important">You should use different import type names for <b>Step 1</b> and <b>Step 2</b></p>
                                                     <p>&#160;</p>
                                                     <p>Go to <var>Pyz\Zed\DataImport\Business\DataImportBusinessFactory</var> and add a new method for creating the queue data importer that will use the queue reader and import data to the database. Add a call to this method to <var>DataImportBusinessFactory::getImporter()</var> after the one that creates the queue writer.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Pyz\Zed\DataImport\Business\DataImportBusinessFactory</a></span>
@@ -544,9 +543,15 @@ class ProductAbstractBulkPdoDataSetWriter implements DataSetWriterInterface
                                                         </div>
                                                     </div>
                                                     <p>To perform data importing from the queue into the persistent storage, run <var>vendor/bin/console data:import</var> with the <var>--group</var> option set to <var>QUEUE_READERS</var>.</p><pre><code class="language-PHP line-numbers">vendor/bin/console data:import --group=QUEUE_READERS</code></pre>
-                                                    <div class="tip">It is possible to perform both steps (as well as all the other enabled imports) by executing the console command only once. Simply don't use the <var>--group</var> option, or set it to <var>FULL</var>. In this case, the data will be imported into a queue and then immediately consumed from the queue and saved to the persistent storage. All the other importers will be executed as usual. Just make sure that the <b>Step 1</b> importer is configured to run before the <b>Step 2</b> importer.</div>
+                                                    <p class="tip">It is possible to perform both steps (as well as all the other enabled imports) by executing the console command only once. Simply don't use the <var>--group</var> option, or set it to <var>FULL</var>. In this case, the data will be imported into a queue and then immediately consumed from the queue and saved to the persistent storage. All the other importers will be executed as usual. Just make sure that the <b>Step 1</b> importer is configured to run before the <b>Step 2</b> importer.</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: May 7, 2019</i><![CDATA[  ]]></p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/feature_integration_guides/queue-data-import-feature-integration-201903.htm">Integrate the Queue Data Import v.201903.0 into your project</a> </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Aug 12, 2019</i><![CDATA[  ]]></p>
                                                 </div>
                                             </div>
                                         </div>

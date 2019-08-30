@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="AlbU5D0yBUKoqwPxXroZUw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="AlbU5D0yBUKoqwPxXroZUw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="yIBoIO48MEugJKzL0VNWEQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="yIBoIO48MEugJKzL0VNWEQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -299,40 +299,40 @@
 			All those plugins should implement <var>Spryker\Zed\DataImport\Dependency\Plugin\DataImportPluginInterface</var>.
 		</p>
                                                     <p>
-			By default, CSV files with data are stored under the module directory in a data folder. It's possible to place them at the project level by extending the Config class for the import module at the project level. See the example below:<![CDATA[		]]></p><pre><code class="language-PHP line-numbers">
-		&lt;?php
+			By default, CSV files with data are stored under the module directory in a data folder. It's possible to place them at the project level by extending the Config class for the import module at the project level. See the example below:<![CDATA[		]]></p><pre xml:space="preserve"><code class="language-PHP line-numbers">
+&lt;?php
 		
-		namespace Pyz\Zed\CompanyDataImport;
-		...
+namespace Pyz\Zed\CompanyDataImport;
+...
 		
-		class CompanyDataImportConfig extends SprykerCompanyDataImportConfig
-		{
-			/**
-			* You can re-implement the whole method if you need some custom location
-			*/
-			public function getCompanyDataImporterConfiguration(): DataImporterConfigurationTransfer
-			{
-				$moduleDataImportDirectory = $this-&gt;getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
+class CompanyDataImportConfig extends SprykerCompanyDataImportConfig
+{
+	/**
+	 * You can re-implement the whole method if you need some custom location
+	 */
+	public function getCompanyDataImporterConfiguration(): DataImporterConfigurationTransfer
+	{
+		$moduleDataImportDirectory = $this-&gt;getModuleRoot() . 'data' . DIRECTORY_SEPARATOR . 'import' . DIRECTORY_SEPARATOR;
 		
-				return $this-&gt;buildImporterConfiguration($moduleDataImportDirectory . 'company.csv', static::IMPORT_TYPE_COMPANY);
-			}
+		return $this-&gt;buildImporterConfiguration($moduleDataImportDirectory . 'company.csv', static::IMPORT_TYPE_COMPANY);
+	}
 		
-			/**
-			* Or you can re-implement this method in order to change base folder
-			*/
-			protected function getModuleRoot(): string
-			{
-				$moduleRoot = realpath(
-					__DIR__
-					. DIRECTORY_SEPARATOR . '..'
-					. DIRECTORY_SEPARATOR . '..'
-					. DIRECTORY_SEPARATOR . '..'
-					. DIRECTORY_SEPARATOR . '..'
-				);
+	/**
+	 * Or you can re-implement this method in order to change base folder
+	 */
+	protected function getModuleRoot(): string
+	{
+		$moduleRoot = realpath(
+			__DIR__
+			. DIRECTORY_SEPARATOR . '..'
+			. DIRECTORY_SEPARATOR . '..'
+			. DIRECTORY_SEPARATOR . '..'
+			. DIRECTORY_SEPARATOR . '..'
+		);
 		
-				return $moduleRoot . DIRECTORY_SEPARATOR;
-			}
-		}
+		return $moduleRoot . DIRECTORY_SEPARATOR;
+	}
+}
 		</code></pre>
                                                     <p>
 			These actions should be enough to prepare a module-based importer for use.
@@ -389,59 +389,57 @@
 		</p>
                                                     <p>
 			Add a new method to the <var>Pyz\Zed\DataImport\Business\DataImportBusinessFactory</var> class that should return the following <var>\Spryker\Zed\DataImport\Business\Model\DataImporterInterface</var>. Here you need to set data import configuration and required steps that will prepare data. Use the example below to do that.
-		</p><pre><code class="language-PHP line-numbers">
-		&lt;?php
+		</p><pre xml:space="preserve"><code class="language-PHP line-numbers">
+&lt;?php
  
-		namespace Pyz\Zed\DataImport\Business;
-		...
+namespace Pyz\Zed\DataImport\Business;
+...
 		
-		class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
-		{
+class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
+{
 		
-			/**
-			* @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
-			*/
-			protected function createOrderSourceImporter()
-			{
-				//Add importer config
-				$dataImporter = $this-&gt;getCsvDataImporterFromConfig($this-&gt;getConfig()-&gt;getOrderSourceDataImporterConfiguration());
+	/**
+	 * @return \Spryker\Zed\DataImport\Business\Model\DataImporterInterface
+	 */
+	protected function createOrderSourceImporter()
+	{
+		//Add importer config
+		$dataImporter = $this-&gt;getCsvDataImporterFromConfig($this-&gt;getConfig()-&gt;getOrderSourceDataImporterConfiguration());
 		
-				$dataSetStepBroker = $this-&gt;createTransactionAwareDataSetStepBroker();
-				//Add step
-				$dataSetStepBroker-&gt;addStep(new OrderSourceWriterStep());
+		$dataSetStepBroker = $this-&gt;createTransactionAwareDataSetStepBroker();
+		//Add step
+		$dataSetStepBroker-&gt;addStep(new OrderSourceWriterStep());
 		
-				$dataImporter-&gt;addDataSetStepBroker($dataSetStepBroker);
+		$dataImporter-&gt;addDataSetStepBroker($dataSetStepBroker);
 		
-				return $dataImporter;
-			}
-		}
-		</code></pre>
+		return $dataImporter;
+	}
+}</code></pre>
                                                     <p>
 			Then call this method using the <var>DataImportBusinessFactory::getImporter()</var> method.
-		</p><pre><code class="language-PHP line-numbers">
-		&lt;?php
+		</p><pre xml:space="preserve"><code class="language-PHP line-numbers">
+&lt;?php
 		
-		namespace Pyz\Zed\DataImport\Business;
+namespace Pyz\Zed\DataImport\Business;
+...
+		
+class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
+{
+		
+public function getImporter()
+{
+	$dataImporterCollection = $this-&gt;createDataImporterCollection();
+	$dataImporterCollection
 		...
+		//Add importer
+		-&gt;addDataImporter($this-&gt;createOrderSourceImporter());
 		
-		class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
-		{
+		//Add module based importers
+		$dataImporterCollection-&gt;addDataImporterPlugins($this-&gt;getDataImporterPlugins());
 		
-			public function getImporter()
-			{
-				$dataImporterCollection = $this-&gt;createDataImporterCollection();
-				$dataImporterCollection
-					...
-					//Add importer
-					-&gt;addDataImporter($this-&gt;createOrderSourceImporter());
-		
-				//Add module based importers
-				$dataImporterCollection-&gt;addDataImporterPlugins($this-&gt;getDataImporterPlugins());
-		
-				return $dataImporterCollection;
-			}
-		}
-		</code></pre>
+		return $dataImporterCollection;
+	}
+}</code></pre>
                                                     <p>
 			Also, there are bulk importers that can be used if you have a huge amount of data to import, and existing importers may be slow.
 		</p>
@@ -461,32 +459,31 @@
                                                     </ul>
                                                     <p>
 			You can enable a bulk importer in <var>Pyz\Zed\DataImport\Business\DataImportBusinessFactory</var>:
-		</p><pre><code class="language-PHP line-numbers">
-		&lt;?php
+		</p><pre xml:space="preserve"><code class="language-PHP line-numbers">
+&lt;?php
 		
-		namespace Pyz\Zed\DataImport\Business;
+namespace Pyz\Zed\DataImport\Business;
 
-		...
+...
 		
-		class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
-		{
-			...
+class DataImportBusinessFactory extends SprykerDataImportBusinessFactory
+{
+...
 		
-			/**
-			* This is an example of how bulk importer plugins should be enabled. Same goes for similar importers.
-			* @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
-			*/
-			protected function createProductAbstractWriterPlugins()
-			{
-				return [
-					//use \Pyz\Zed\DataImport\Communication\Plugin\ProductAbstract\ProductAbstractBulkPdoWriterPlugin for bulk import
-					new ProductAbstractPropelWriterPlugin(),
-				];
-			}
+	/**
+	 * This is an example of how bulk importer plugins should be enabled. Same goes for similar importers.
+	 * @return \Spryker\Zed\DataImportExtension\Dependency\Plugin\DataSetWriterPluginInterface[]
+	 */
+	protected function createProductAbstractWriterPlugins()
+	{
+		return [
+			//use \Pyz\Zed\DataImport\Communication\Plugin\ProductAbstract\ProductAbstractBulkPdoWriterPlugin for bulk import
+			new ProductAbstractPropelWriterPlugin(),
+		];
+	}
 		
-			...
-		}
-		</code></pre>
+	...
+}</code></pre>
                                                     <h2>Triggering Events</h2>
                                                     <p>DataImporters are triggering events manually, this is happening for the performance reasons :</p>
                                                     <ul>

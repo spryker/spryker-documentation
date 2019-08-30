@@ -78,6 +78,7 @@
 
 </style>
         <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../resources/scripts/jquery.min.js">
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="lHhcH0Z4rkmtcwZqCbxALA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lHhcH0Z4rkmtcwZqCbxALA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="lCaQfHK9JUmqQdkRiiUehg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lCaQfHK9JUmqQdkRiiUehg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,7 +241,633 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Comments Feature Integration</h1>
-                                                    <p class="important">This integration guide will be published by August 20th, 2019.</p>
+                                                    <h2>Install Feature Core</h2>
+                                                    <h3>Prerequisites</h3>
+                                                    <p>To start feature integration, overview and install the necessary features:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>Spryker Core</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>201907.0</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                        <p>Customer Account Management</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>201907.0</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>1) Install the Required Modules Using Composer</h3>
+                                                    <p>Run the following command(s) to install the required modules:</p><pre><code class="language-bash">composer require spryker-feature/comments: "^201907.0" --update-with-dependencies</code></pre>
+                                                    <p class="tip">Make sure that the following modules were installed:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Comment
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker/comment</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">CommentDataImport
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker/comment-data-import</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>2) Set up Configuration</h3>
+                                                    <p>Add the following configuration to your project:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Configuration</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CommentConfig::getAvailableCommentTags()</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Used to allow saving comment tags to the database.
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Pyz\Shared\Comment</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">A regular expression (See below in <var>config/Shared/config_default.php</var>)
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Used to close access for not logged customers.
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">-
+                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Comment/CommentConfig.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+namespace Pyz\Shared\Comment;
+ 
+use Spryker\Shared\Comment\CommentConfig as SprykerCommentConfig;
+ 
+class CommentConfig extends SprykerCommentConfig
+{
+	/**
+	 * @return string[]
+	 */
+	public function getAvailableCommentTags(): array
+	{
+		return [
+			'delivery',
+			'important',
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Make sure that when you add/remove comment tag (listed in config) to comment is allowed.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+$config[CustomerConstants::CUSTOMER_SECURED_PATTERN] = '(^(/en|/de)?/comment($|/))';
+</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Make sure that mysprykershop.com/comment with not logged user redirects to login page.</p>
+                                                    <h3>3) Set up Database Schema and Transfer Objects</h3>
+                                                    <p>Run the following commands to apply database changes and generate entity and transfer changes:</p><pre xml:space="preserve"><code class="language-bash">console transfer:generate
+console propel:install
+console transfer:generate</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following changes applied by checking your database:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 33%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Database Entity</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Event</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_comment</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created
+                    </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_comment_tag</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">table
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created
+                    </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_comment_thread</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created
+                    </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>spy_comment_to_comment_tag</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">table
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">created
+                    </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following changes in transfer objects:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Transfer</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Event</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Path</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SpyCommentEntityTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyCommentEntityTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyCommentTagEntityTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyCommentTagEntityTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SpyCommentThreadEntityTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyCommentThreadEntityTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyCommentToCommentTagEntityTransfer</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyCommentToCommentTagEntityTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>Comment</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/Comment</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CommentThread</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/CommentThread</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CommentTag</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/CommentTag</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CommentFilter</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/CommentFilter</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CommentRequest</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/CommentRequest</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>CommentTagRequest</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/CommentTagRequest</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CommentThreadResponse</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">class
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">created
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/CommentThreadResponse</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <h3>4) Add Translations</h3>
+                                                    <p>Append glossary according to your configuration:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/data/import/glossary.csv</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-yaml line-numbers">comment.validation.error.comment_not_found,Comment not found.,en_US
+comment.validation.error.comment_not_found,Kommentar nicht gefunden.,de_DE
+comment.validation.error.comment_thread_not_found,Comment Thread not found.,en_US
+comment.validation.error.comment_thread_not_found,Kommentar Thread nicht gefunden.,de_DE
+comment.validation.error.access_denied,Access denied.,en_US
+comment.validation.error.access_denied,Zugriff verweigert.,en_US
+comment.validation.error.comment_thread_already_exists,Comment Thread already exists.,de_DE
+comment.validation.error.comment_thread_already_exists,Kommentar Thread existiert bereits.,de_DE
+comment.validation.error.invalid_message_length,Invalid message length.,en_US
+comment.validation.error.invalid_message_length,Ungültige Nachrichtenlänge.,de_DE
+comment.validation.error.comment_tag_not_available,Comment tag not available.,en_US
+comment.validation.error.comment_tag_not_available,Kommentar-Tag nicht verfügbar.,de_DE</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to import data:</p><pre xml:space="preserve"><code class="language-bash">console data:import glossary</code></pre>
+                                                    <p class="tip">Make sure that in the database the configured data are added to the <var>spy_glossary</var> table.</p>
+                                                    <h3>5) Set up Behavior</h3>
+                                                    <h4>Setup Comment Workflow</h4>
+                                                    <p>Enable the following behaviors by registering the plugins:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CommentDataImportPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Imports Comments data.
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\CommentDataImport\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/DataImport/DataImportDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\DataImport;
+ 
+use Spryker\Zed\CommentDataImport\Communication\Plugin\CommentDataImportPlugin;
+use Spryker\Zed\DataImport\DataImportDependencyProvider as SprykerDataImportDependencyProvider;
+ 
+class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
+{
+	/**
+	 * @return array
+	 */
+	protected function getDataImporterPlugins(): array
+	{
+		return [
+			new CommentDataImportPlugin(),
+		];
+	}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Make sure that <var>spy_comment</var>, <var>spy_comment_thread</var>, <var>spy_comment_to_comment_tag not</var> empty.</p>
+                                                    <h2>Install Feature Frontend</h2>
+                                                    <h3>Prerequisites</h3>
+                                                    <p>Please overview and install the necessary features before beginning the integration step.</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Name</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Version</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">
+                                                                        <p>Spryker Core</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">
+                                                                        <p>201907.0</p>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">
+                                                                        <p>Customer Account Management</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">
+                                                                        <p>201907.0</p>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>1) Install the Required Modules Using Composer</h3>
+                                                    <p>Run the following command(s) to install the required modules:</p><pre xml:space="preserve"><code class="language-bash">composer require spryker-feature/comments: "^201907.0" --update-with-dependencies</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following modules were installed:</p>
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Expected Directory</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>CommentWidget</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>vendor/spryker-shop/comment-widget</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>CommentWidgetExtension</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>vendor/spryker-shop/comment-widget-extension</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <h3>2) Add Translations
+			</h3>
+                                                    <p>Append glossary according to your configuration:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/data/import/glossary.csv</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-yaml line-numbers">comment_widget.comments_to_cart,Comments to Cart,en_US
+comment_widget.comments_to_cart,Kommentare zum Warenkorb,de_DE
+comment_widget.form.add_comment,Add,en_US
+comment_widget.form.add_comment,Hinzufügen,de_DE
+comment_widget.form.update_comment,Update,en_US
+comment_widget.form.update_comment,Aktualisieren,de_DE
+comment_widget.form.remove_comment,Remove,en_US
+comment_widget.form.remove_comment,Entfernen,de_DE
+comment_widget.form.you,You,en_US
+comment_widget.form.you,Sie,de_DE
+comment_widget.form.attach,Attach,en_US
+comment_widget.form.attach,Anhängen,de_DE
+comment_widget.form.unattach,Unattach,en_US
+comment_widget.form.unattach, Anhang entfernen,de_DE
+comment_widget.form.all,All,en_US
+comment_widget.form.all,Alles,de_DE
+comment_widget.form.attached,Attached,en_US
+comment_widget.form.attached,Angehängt,de_DE
+comment_widget.form.button_default,Button,en_US
+comment_widget.form.button_default,Schaltfläche,de_DE
+comment_widget.form.edited,edited,en_US
+comment_widget.form.edited,bearbeitet,de_DE
+comment_widget.form.tags,Tags,en_US
+comment_widget.form.tags,Tags,de_DE
+comment_widget.form.placeholder.add_comment,Add a comment,en_US
+comment_widget.form.placeholder.add_comment,Kommentar hinzufügen,de_DE
+comment_widget.tags.all,All,en_US
+comment_widget.tags.all,Alles,de_DE
+comment_widget.tags.delivery,Delivery,en_US
+comment_widget.tags.delivery,Lieferung,de_DE
+comment_widget.tags.important,Important,en_US
+comment_widget.tags.important,Wichtig,de_DE</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following console command to import data:</p><pre xml:space="preserve"><code class="language-bash">console data:import glossary</code></pre>
+                                                    <p class="tip">Make sure that in the database the configured data are added to the <var>spy_glossary</var> table.</p>
+                                                    <h3>3) Enable Controllers</h3>
+                                                    <h4>Controller Provider List</h4>
+                                                    <p>Register controller provider(s) in the Yves application</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Provider</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CommentWidgetControllerProvider</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>SprykerShop\Yves\CommentWidget\Plugin\Provider</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/ShopApplication/YvesBootstrap.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+namespace Pyz\Yves\ShopApplication;
+ 
+use SprykerShop\Yves\CommentWidget\Plugin\Provider\CommentWidgetControllerProvider;
+use SprykerShop\Yves\ShopApplication\YvesBootstrap as SprykerYvesBootstrap;
+ 
+class YvesBootstrap extends SprykerYvesBootstrap
+{
+	/**
+	 * @param bool|null $isSsl
+	 *
+	 * @return \SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider[]
+	 */
+	protected function getControllerProviderStack($isSsl)
+	{
+		return [
+			new CommentWidgetControllerProvider($isSsl),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Verify the <var>CommentWidgetControllerProvider</var>, login as customer and open the link: <var>mysprykershop.com/comment/0adafdf4-cb26-477d-850d-b26412fbd382/tag/add?returnUrl=/cart</var><br />Make sure that error flash message was shown.</p>
+                                                    <h3>4) Set up Widgets
+</h3>
+                                                    <p>			Register the following plugins to enable widgets:</p>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Description</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CommentThreadWidget</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                        <p>Displays comments.</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                                                                        <p>None</p>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>SprykerShop\Yves\CommentWidget\Widget</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/ShopApplication/ShopApplicationDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
+ 
+namespace Pyz\Yves\ShopApplication;
+ 
+use SprykerShop\Yves\CommentWidget\Widget\CommentThreadWidget;
+use SprykerShop\Yves\ShopApplication\ShopApplicationDependencyProvider as SprykerShopApplicationDependencyProvider;
+ 
+class ShopApplicationDependencyProvider extends SprykerShopApplicationDependencyProvider
+{
+	/**
+	 * @return string[]
+	 */
+	protected function getGlobalWidgets(): array
+	{
+		return [
+			CommentThreadWidget::class,
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Run the following command to enable Javascript and CSS changes:</p><pre xml:space="preserve"><code class="language-bash">console frontend:yves:build</code></pre>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure that the following widget was registered:</p>
+                                                        <div class="table-wrap">
+                                                            <table style="width: 100%;mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 50%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Test</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>CommentThreadWidget</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">
+                                                                            <p>You can check availability in twig <var>{% widget 'CommentThreadWidget' args [...] only %}{% endwidget %}</var></p>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                    <p>&#160;</p>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="comments-persistent-cart-feature-integration-201907.htm">Integrate Comments + Persistent Cart feature v.201907.0</a>
+                                                        </li>
+                                                        <li value="2"><a href="comments-order-management-feature-integration-201907.htm">Integrate Comments + Order Management feature v.201907.0 into your project</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Aug 14, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="bTbDMeNaKEy79_7d3tOM0A">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="bTbDMeNaKEy79_7d3tOM0A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="AJI6Cba5FEWwAZJlMkM-1w">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="AJI6Cba5FEWwAZJlMkM-1w:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,30 +240,160 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Dataimporter Speed Optimization</h1>
-                                                    <p>Importing big amount of data into a system can pose a real problem, as, when not optimized, the importing process will most likely be slow and might even affect the overall performance. One of the solutions to help optimizing and speeding up the data import for projects is enabling the use of different types of data writers: Propel or PDO. In case of big data import though, Propel has a negative impact of performance, therefore using it is for big amount of data is not recommended. For such cases, PDO writers would be a better option, as they enable a faster import of data in bulk.</p>
-                                                    <p>As part of the new PDO data import type implementation, we have also removed duplicate events during import, optimized memory consumption by better queue worker management as well as improved event setting adjustment.</p>
-                                                    <h2>Data Importers Overview</h2>
-                                                    <p>To import data, currently Propel importer is used by default. However, importing big amount of data with Propel is not the best solution, as Propel importer adds data to database one by one. For example, in case when you have many products and related data (images, prices, etc.) importing them using Propel importer will take lots of time, since this data would need to be written to Redis and Elasticsearch in turns, one after the other.</p>
-                                                    <p>To import big amount of data, it makes sense to use another type of data importers: PDO writers, as they separate data hydration and writing data. Currently, the following entities support import with PDO:</p>
+                                                    <h1>Data Importer Speed Optimization</h1>
+                                                    <h2>Concept</h2>
+                                                    <p style="font-weight: bold;">"Writing code is the easy part of every feature but writing a scalable and fast solution is a challenge"</p>
+                                                    <p>This article will define the best practices for Spryker modules that need to work with two infrastructure concepts like DataImport and Publish &amp; Synchronize. After several reviews and tests, we found that we need to define these rules to help developers to write more scalable and high-performance code when they implementing their features. Most of the time when developers create features, they don't consider very high traffic or heavy data processing for big data. This article is going to describe all necessary requirements when you want to create new features and they should work with big data, for example, you want to create a new <var>DataImport</var> or a new P&amp;S module which save millions of entities into a database in a very short amount of time.</p>
+                                                    <h2>Rules for Data Importers</h2>
+                                                    <p><var>DataImport</var> module is responsible for reading data from different formats like CSV, JSON, etc and import them into a database with proper Spryker data structure. Usually importing of data is a time-consuming process and we need to follow some best practices to increase the performance. Here you will find some of them:</p>
+                                                    <h3>Single vs Batch operation</h3>
+                                                    <p>Assuming you are writing a data importer for ProductAbstract, you might want to find a category for each product abstract, your very basic code would be something like this:</p><pre><code class="language-PHP line-numbers">protected function importProductAbstract(DataSetInterface $dataSet): void
+{
+	$categoryKey = $dataSet['category_key'];
+	$productCategory = SpyCategoryQuery::create()-&gt;findOneByCategoryKey($categoryKey);
+	$dataSet['product_category'] = $productCategory;
+      
+	$this-&gt;importProductCategories($dataSet);
+}</code></pre>
+                                                    <p>This will work fine and you already achieved to your goals, but can you see the problem here?</p>
+                                                    <p>Here is the problem:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">protected function importProductAbstract(DataSetInterface $dataSet): void
+{
+	...
+	$productCategory = SpyCategoryQuery::create()-&gt;findOneByCategoryKey($categoryKey); // expensive call
+	...
+}</code></pre>
+                                                    <p><var>importProductAbstract</var> method will call for each line of your CSV, imagine if you have one CSV file with 1,000,000 lines, it means you will run this query again and again for 1 million times! The possible solution is to avoid single processing and implementing a batch query for it.</p>
+                                                    <p>The current solution for <var>DataImport</var> is to add another step before the main step to gather all the information you need for the next steps. Like querying all categories and remember them in memory and the next step can do a fast PHP look up from that result in memory.</p>
+                                                    <p class="note">DataImport v1.4.x doesn't support the batch processing by default and the next version will provide a very clear solution for it.</p>
+                                                    <h3>ORM vs PDO</h3>
+                                                    <p>ORM (Object-relational mapping) is a very good approach when we are working on very big and complex software but it's not always the answer to all problems especially when it comes to batch processing. ORM is slow by design as they need to handle so many internal hydration and mapping.</p>
+                                                    <p>Here is an example of using the Propel ORM, this is a very clean and nice approach but not optimized enough for importing big data.</p><pre xml:space="preserve"><code class="language-PHP line-numbers">protected function createOrUpdateProductAbstract(DataSetInterface $dataSet): SpyProductAbstract
+{
+	$productAbstractEntityTransfer = $this-&gt;getProductAbstractTransfer($dataSet);
+  
+	$productAbstractEntity = SpyProductAbstractQuery::create()
+		-&gt;filterBySku($productAbstractEntityTransfer-&gt;getSku())
+		-&gt;findOneOrCreate()
+		-&gt;save()
+	;
+  
+	return $productAbstractEntity;
+}</code></pre>
+                                                    <p>This approach has two problems</p>
+                                                    <ol>
+                                                        <li value="1">It runs <b>two</b> queries, one <b>SELECT</b> for <var>findOneOrCreate</var> and one <b>INSERT</b> or <b>UPDATE</b> for <var>save</var></li>
+                                                        <li value="2">Single process approach (repeated per each entry)</li>
+                                                    </ol>
+                                                    <p>Solution is</p>
+                                                    <ol>
+                                                        <li value="1">Avoid ORM, you can use a very simple raw SQL but you should also avoid complex raw or big raw SQL queries.</li>
+                                                        <li value="2">Implement DataSetWriterInterface to achieve the batch processing approach, prepare one by one and write them once (Take a look at <var>ProductAbstractWriter</var> in <var>Dataimport</var> as an example)</li>
+                                                    </ol>
+                                                    <h3>Facade Calls</h3>
+                                                    <p>Sometimes you may need to run some validation or business logic for each data set, the easiest and safest way would be a Facade API call, that's totally fine, but then imagine if these APIs also call some heavy queries very deep! this has a huge side effect on your performance during importing millions of data.</p>
+                                                    <p>Here you can see for each product stock, there are two facade calls, each facade call may run more than 5 queries, this means for importing 1,000,000 data, you will have 10,000,000 queries! (this will never finish!).</p><pre xml:space="preserve"><code class="language-PHP line-numbers">protected function updateBundleAvailability(): void
+{
+	foreach (static::$stockProductCollection as $stockProduct) {
+		if (!$stockProduct[ProductStockHydratorStep::KEY_IS_BUNDLE]) {
+			continue;
+		}
+		$this-&gt;productBundleFacade-&gt;updateBundleAvailability($stockProduct[ProductStockHydratorStep::KEY_CONCRETE_SKU]);
+		$this-&gt;productBundleFacade-&gt;updateAffectedBundlesAvailability($stockProduct[ProductStockHydratorStep::KEY_CONCRETE_SKU]);
+	}
+}</code></pre>
+                                                    <p>The solution is:</p>
+                                                    <ol>
+                                                        <li value="1">Implement a new Facade API for batch operation</li>
+                                                        <li value="2">Only call facade if they are very lightweight and they don't run any query to a database</li>
+                                                    </ol>
+                                                    <h3>Memory Management</h3>
+                                                    <p>Let's say you already started to work with the batch operation, one of the challenges would be to keep the memory as low as possible. Sometimes you create variables and try to remember them always, but you may need them only until the end of the batch operation, so it's better to release them as soon as possible.</p>
+                                                    <h3>Database Vendor Approach</h3>
+                                                    <p>In Spryker we are supporting both PostgreSQL and MySQL, both are very powerful and come with very promising and handy features. When we are working with databases, it's always good to know these features, one of the very cool features that we like is <a href="https://www.postgresql.org/docs/9.1/queries-with.html">CTE</a>. If you think you are inserting or updating very big data like millions of millions, use CTE as a replaceable for multiple inserts/update. you can find some of Spryker implementation in our demo shops.</p>
+                                                    <h2>Rules for Publish and Synchronize</h2>
+                                                    <p>P&amp;S is a concept for transferring data from Zed database to Yves databases like Redis and ES, This operation is separated into two isolated processes which call <b>Publish</b> and <b>Synchronize</b>. Publishing is a process to aggregating data and writing it to Database and Queue. Synchronization is a process to read an aggregated message from a queue and write it to external endpoints. The performance issues mostly come from <b>Publishing</b> part. Again we need to follow the best practices to increase the performance. Here you will find some of them:</p>
+                                                    <h3>Single vs Batch operation</h3>
+                                                    <p>When you are creating a new listener you should consider these rules:</p>
                                                     <ul>
-                                                        <li value="1">ProductPrice</li>
-                                                        <li value="2">ProductAbstract</li>
-                                                        <li value="3">ProductConcrete</li>
-                                                        <li value="4">ProductAbstractStore</li>
-                                                        <li value="5">ProductImage</li>
-                                                        <li value="6">ProductStock</li>
+                                                        <li value="1">Run your logic against a chunk of event messages not per each.</li>
+                                                        <li value="2">Don't run the query inside of <var>for-loop</var></li>
+                                                        <li value="3">Try to save them with a bulk operation, not one by one</li>
                                                     </ul>
-                                                    <p>This means that now you can import product prices, abstract product, concrete products, abstract product stores, product images and product stocks in bulk. </p>
-                                                    <p>Each PDO data importer reads data one by one as a dataset. For the time being, only CSV format is supported. Data importers use steps to prepare data for writing to database and separate the objects hydration and the persistence layer. The importers can choose one or many plugins for writing the hydrated objects to any resources and the writers choose a plugin to trigger the events for exporting data to Yves.</p>
-                                                    <p>
-                                                        <img src="../resources/images/dataimporter_speed_optimization/modules.png" />
-                                                    </p>
-                                                    <p>You can use either Propler or PDO importers (MysqlPDO is not supported, you can choose Properl plugins), and it should be kept in mind that Storage and Search modules need to use same Propel/PDO for persistence.</p>
+                                                    <p>Take a look at this example:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">public function publish(array $productAbstractIds): void
+{
+	foreach ($productAbstractIds as $idProductAbstract) {
+		$productAbstractProductListStorageEntity = $this-&gt;queryProductAbstractProductListEntity($idProductAbstract);
+	}
+  
+}</code></pre>
+                                                    <p>Here we are passing a set of ids and then we try to run a query for each product abstract. Imagine if you have 2000 events as a chunk, then you have 2000 queries to a database.</p>
+                                                    <p>We can easily fix this by changing the query and run query only once per 2000 ids.</p><pre xml:space="preserve"><code class="language-PHP line-numbers">public function publish(array $productAbstractIds): void
+{
+	$productAbstractProductListStorageEntities = $this-&gt;queryProductAbstractProductListEntities($productAbstractIds);
+}</code></pre>
+                                                    <h3>Facade Calls</h3>
+                                                    <p>Another point that we need to be very careful here is to call Facade API without any thinking through, we must make sure that these APIs will not run queries inside same as <var>DataImport</var> rule. You are allowed to call Facade API but if:</p>
+                                                    <ul>
+                                                        <li value="1">There is no query inside</li>
+                                                        <li value="2">Facade API designed for batch operation (<var>findPriceForSku</var> vs <var>findPricesForSkus</var>)</li>
+                                                    </ul>
+                                                    <h3>Triggering Events</h3>
+                                                    <p>Data Importers are triggering events manually, this is happening because of performance reasons :</p>
+                                                    <ol>
+                                                        <li value="1">Triggering events automatically will generate so many duplicates events during data importing, (e.g: Inserting a Product into <var>spy_product</var> and <var>spy_product_localized_attrbite</var> table will generate two events with the same <var>id_product</var>).</li>
+                                                        <li value="2">Events will be triggered one by one.</li>
+                                                    </ol>
+                                                    <p>You can always switch the Event Triggering process with two methods:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">use Spryker\Zed\EventBehavior\EventBehaviorConfig;
+...
+  
+	public function foo()
+	{
+		/**
+		 * Disable the events triggering automatically
+		 */
+		EventBehaviorConfig::disableEvent();
+  
+		// 1.Create many entities in multiple tables (e.g API bulk import, nightly update jobs)
+		// 2.Trigger proper events if it's necessary ($eventFacade-&gt;triggerBulk('ProductAbstractPublish', $eventTransfers))
+  
+		/**
+		 * Enable the events triggering automatically
+		 */
+		EventBehaviorConfig::enableEvent();
+	}</code></pre>
+                                                    <h3>P&amp;S and CTE</h3>
+                                                    <p>Sometimes the amount of the data which needs be synced is very high, for this reason, we can not rely on a standard ORM solution for storing data in the database tables. we recommend you to use bulk insert operation whenever you have more than hundreds of thousand of data. you can still use the CTE technique which was used in DataImporter before. Spryker suite comes with several examples of using CTE technique in Storage and Search module you can replace them by overwriting the Business Factory in the modules:</p>
+                                                    <p class="note">These examples only tested for PostgreSQL.</p>
+                                                    <ul>
+                                                        <li value="1"><var>src/Pyz/Zed/PriceProductStorage/Business/Storage/PriceProductAbstractStorageWriter.php</var>
+                                                        </li>
+                                                        <li value="2"><var>src/Pyz/Zed/PriceProductStorage/Business/Storage/PriceProductConcreteStorageWriter.php</var>
+                                                        </li>
+                                                        <li value="3"><var>src/Pyz/Zed/ProductPageSearch/Business/Publisher/ProductAbstractPagePublisher.php</var>
+                                                        </li>
+                                                        <li value="4"><var>src/Pyz/Zed/ProductPageSearch/Business/Publisher/ProductConcretePageSearchPublisher.php</var>
+                                                        </li>
+                                                        <li value="5"><var>src/Pyz/Zed/ProductStorage/Business/Storage/ProductAbstractStorageWriter.php</var>
+                                                        </li>
+                                                        <li value="6"><var>src/Pyz/Zed/ProductStorage/Business/Storage/ProductConcreteStorageWriter.php</var>
+                                                        </li>
+                                                        <li value="7"><var>src/Pyz/Zed/UrlStorage/Business/Storage/UrlStorageWriter.php</var>
+                                                        </li>
+                                                    </ul>
+                                                    <p>Example classes are going to be replaced with a Core CTE solution.</p>
+                                                    <h2>Conclusion</h2>
+                                                    <p>When we are facing some batch operation, we need to think about big data and performance under heavy loading, we are not allowed to write same code that only does the job, it needs to be scalable and fast for high usages. here you can find our main points</p>
+                                                    <ul>
+                                                        <li value="1">Create batch queries and processes</li>
+                                                        <li value="2">Don’t use ORM for batch processing as it’s slow by design</li>
+                                                        <li value="3">Don’t run separated queries for each data-set</li>
+                                                        <li value="4">Don’t call any facade logic if they are slow or run internal queries</li>
+                                                        <li value="5">Release memory after each bulk operations to prevent memory issues</li>
+                                                        <li value="6">Use CTE technique (supported by PostgreSQL and MySQL)</li>
+                                                    </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: November 7th, 2018</i>
+                                                    <p><i>Last review date: Aug 12, 2019</i>
                                                     </p>
-                                                    <p>&#160;</p>
                                                 </div>
                                             </div>
                                         </div>
