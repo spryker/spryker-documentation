@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="LOmXjTrmhEuKFxxH_laiug">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="LOmXjTrmhEuKFxxH_laiug:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="WSMU1NSW5EyPNOjYJqICrA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="WSMU1NSW5EyPNOjYJqICrA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -246,19 +246,66 @@
                                                         <img src="../../resources/images/shoptype/mastersuite.png" />
                                                         <img src="../../resources/images/shoptype/demoshop.png" />
                                                     </p>
-                                                    <p>Spryker enables integration with New Relic for performance monitoring. New Relic contains a set of powerful features that helps you monitor the performance and health of your application. To be able to use New Relic you must first get an account. Next you will need to install the New Relic PHP extension in your virtual machine by following the steps described <a href="https://rpm.newrelic.com/accounts/1131235/applications/setup" target="_blank" title="New relic setup" alt="New relic setup">here</a>.</p>
-                                                    <h2>New Relic Logs</h2>
-                                                    <h3>Request logging</h3>
-                                                    <p>Every request is automatically logged by New Relic. The name of the requests will be the name of the used route for Yves and the [module]/[controller]/[action] for Zed. You’ll also find the request URI and the host stored as custom parameters for each request.</p>
-                                                    <h3>Error logging</h3>
-                                                    <p>Every error will be logged in New Relic together with its detailed stack trace.</p>
-                                                    <h3>Console command logging</h3>
-                                                    <p>Every executed console command will be logged by New Relic.</p>
-                                                    <h3>Deployment logging</h3>
-                                                    <p>To be able to use the deployment recording feature of New Relic, you need to add your api_key to the project config. The api key is generated on your New Relic account. Open your account settings in New Relic and enable the API Access in the Data Sharing page. After enabling you’ll get your api key.</p><pre><code class="language-PHP line-numbers">$config[\Spryker\Shared\NewRelic\NewRelicConfig::NEWRELIC_API_KEY] = 'YOUR_API_KEY';</code></pre>
-                                                    <h2>New Relic API</h2>
-                                                    <p>You can add custom New Relic events in your application with the API wrapper for New Relic that you can find in <code>\Spryker\Shared\NewRelic\Api</code>.</p>
-                                                    <p>To read more detailed information about the available API methods, please read the following documentation: <a href="https://docs.newrelic.com/docs/agents/php-agent/php-agent-api" target="_blank" title="New Relic API" alt="New Relic API">New Relic API</a>.</p>
+                                                    <h2>Installing the PHP agent</h2>
+                                                    <p>When accessing your New Relic APM dashboard, you will be asked to download and set up the New Relic agent:</p>
+                                                    <p>
+                                                        <img src="../../resources/images/newrelic-step1.png" />
+                                                    </p>
+                                                    <p>It is important to generate a LICENSE KEY (which is different from the API KEY):</p>
+                                                    <p>
+                                                        <img src="../../resources/images/newrelic-step2.png" />
+                                                    </p>
+                                                    <p>Then, you'll be able to install the New Relic agent:</p>
+                                                    <p>
+                                                        <img src="../../resources/images/newrelic-step3.png" />
+                                                    </p>
+                                                    <p>Here is the instruction for a default Linux installation:</p><pre><code class="language-PHP line-numbers">$ wget http://download.newrelic.com/php_agent/release/newrelic-php5-X.X.X.X-OS.tar.gz
+			$ sudo gzip -dc newrelic-php5-X.X.X.X-OS.tar.gz | tar xf -
+			$ cd newrelic-php5-X.X.X.X
+		$ sudo ./newrelic-install install</code></pre>
+                                                    <p>Enter the license key  and follow the instructions:</p>
+                                                    <p>
+                                                        <img src="../../resources/images/newrelic-step4.png" />
+                                                    </p>
+                                                    <p>Once the installation is finished,  check/modify the following files: a mapping default fpm (web) transaction to the default Yves, and the console commands (non-web) to the default Zed.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/cli/conf.d/newrelic.ini</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP">newrelic.appname = "YVES-DE (environment)"
+				newrelic.framework = "no_framework"</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/conf.d/newrelic.ini</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP">newrelic.appname = "ZED-DE (environment)"
+				newrelic.framework = "no_framework"</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>Additionally, if, for some reasons, the transactions return some erroneous data, these values can be set in either one or both newrelic.ini files:</p><pre><code class="language-PHP">newrelic.browser_monitoring.auto_instrument = false
+		newrelic.transaction_tracer.enabled = false</code></pre>
+                                                    <p>The same is for the <i>vhost</i> configuration of php parameters.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/pool.d/environment-yves.conf</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP">php_admin_value[newrelic.appname] = "YVES-DE (environment)"
+				php_admin_value[newrelic.framework] = "no_framework"</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/php/7.2/fpm/pool.d/environment-zed.conf</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP">php_admin_value[newrelic.appname] = "ZED-DE (environment)"
+				php_admin_value[newrelic.framework] = "no_framework"</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <p>In the end, you'll need to restart <var>fpm</var> and <var>Nginx</var>, and check that the New Relic daemon is up and running:</p><pre><code class="language-PHP">$ sudo service php7.2-fpm restart
+				$ sudo service nginx restart
+		$ sudo /etc/init.d/newrelic-daemon status</code></pre>
+                                                    <p>To enable or migrate New Relic packages, check the following articles:</p>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/module_migration_guides/mg-monitoring.htm">Migration Guide - Monitoring</a>
+                                                        </li>
+                                                        <li value="2">
+                                                            <p><a href="https://documentation.spryker.com/industry_partners/performance/new-relic.htm">Performance Monitoring - New Relic</a>
+                                                            </p>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Jun 20, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

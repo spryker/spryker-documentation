@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Nw1PJrb8_EKDLaIxshT6Ow">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Nw1PJrb8_EKDLaIxshT6Ow:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="Ew3_421v7EeIPX2xHHdZ1A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Ew3_421v7EeIPX2xHHdZ1A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,35 +239,118 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Peformance Monitoring - New Relic <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/mastersuite.png" /> <img src="../../resources/images/shoptype/demoshop.png" /></h1>
+                                                    <h1>Performance Monitoring - New Relic <img src="../../resources/images/shoptype/b2c_shop.png" /> <img src="../../resources/images/shoptype/mastersuite.png" /> <img src="../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <h2>New Relic Monitoring</h2>
-                                                    <p>Spryker enables integration with New Relic for performance monitoring. New Relic contains a set of powerful features that help you monitor the performance and health of your application. To be able to use New Relic you must first get an account. Next, you will need to install the New Relic PHP extension in your virtual machine by following the steps described <a href="https://rpm.newrelic.com/accounts/1131235/applications/setup">New Relic Setup instructions</a>.</p>
+                                                    <p>Spryker enables integration with New Relic for performance monitoring. New Relic contains a set of powerful features that help you monitor the performance and health of your application. To be able to use New Relic, first, you need to get an account. Next, you will need to install the New Relic PHP extension in your virtual machine by following the steps described <a href="https://rpm.newrelic.com/accounts/1131235/applications/setup">here </a>(New Relic Setup instructions).</p>
                                                     <h2>General Information</h2>
                                                     <p>The <code>spryker-eco/new-relic</code> module provides a <code>NewRelicMonitoringExtensionPlugin</code> to send monitoring information to the New Relic service.</p>
                                                     <h2>Installation</h2>
-                                                    <p>To install New Relic module, run:</p><pre><code class="language-bash">composer require spryker-eco/new-relic</code></pre>
+                                                    <p>To install New Relic module, run</p><pre><code class="language-bash">composer require spryker-eco/new-relic</code></pre>
+                                                    <p>This will install:</p>
+                                                    <ul>
+                                                        <li value="1"><var>spryker-eco/new-relic - 1.1.x</var>
+                                                        </li>
+                                                        <li value="2"><var>spryker/monitoring - 2.x.x</var>
+                                                        </li>
+                                                        <li value="3"><var>spryker/monitoring - 1.x.x</var>
+                                                        </li>
+                                                    </ul>
+                                                    <p>and will remove the eventual New Relic legacy packages:</p>
+                                                    <ul>
+                                                        <li value="1"><var>spryker/new-relic</var>
+                                                        </li>
+                                                        <li value="2"><var>spryker/new-relic-api</var>
+                                                        </li>
+                                                    </ul>
                                                     <h2>New Relic Logs Configuration </h2>
                                                     <h3>Request Logging</h3>
-                                                    <p>Every request is automatically logged by New Relic. The name of the requests will be the name of the used route for Yves and the <code>[module]/[controller]/[action]</code> for Zed. You’ll also find the request URI and the host stored as custom parameters for each request.</p>
+                                                    <p>Every request is automatically logged by New Relic. The name of the requests will be the name of the used route for Yves and the <code>[module]/[controller]/[action]</code> for Zed. You’ll also find the URL request and the host stored as custom parameters for each request.</p>
+                                                    <p>To enable the New Relic monitoring extension,  add it to the MonitoringDependencyProvider in your project:</p><pre><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Service\Monitoring;
+                          
+use Spryker\Service\Monitoring\MonitoringDependencyProvider as SprykerMonitoringDependencyProvider;
+use SprykerEco\Service\NewRelic\Plugin\NewRelicMonitoringExtensionPlugin;
+                          
+class MonitoringDependencyProvider extends SprykerMonitoringDependencyProvider
+{
+	/**
+	* @return \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
+	*/
+	protected function getMonitoringExtensions(): array
+	{
+		return [
+			new NewRelicMonitoringExtensionPlugin(),
+		];
+	}
+}</code></pre>
+                                                    <p>Additionally, you can add ignorable transactions in your config file - for example, <var>config/Shared/config_default.php</var>:</p><pre><code class="language-PHP line-numbers">use Spryker\Shared\Monitoring\MonitoringConstants;
+ 
+// ---------- Monitoring
+$config[MonitoringConstants::IGNORABLE_TRANSACTIONS] = [
+	'_profiler',
+	'_wdt',
+	'page/catalog/my-endpoint',
+];</code></pre>
                                                     <h3>Error Logging</h3>
-                                                    <p>Every error will be logged in New Relic together with its detailed stack trace.</p>
+                                                    <p>Every error will be logged in New Relic along with its detailed stack trace.</p>
                                                     <h3>Console Command Logging</h3>
-                                                    <p>Every executed console command will be logged by New Relic.</p>
+                                                    <p>To enable the Monitoring for console commands, modify the <var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var> file:</p><pre><code class="language-PHP line-numbers">protected function getConsoleCommands(Container $container)
+{
+	$commands = [
+		...
+		new \SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole(),
+	];
+}
+ 
+/**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+*/
+public function getEventSubscriber(Container $container)
+{
+	$eventSubscriber = parent::getEventSubscriber($container);
+ 
+	if (extension_loaded('newrelic')) {
+		$eventSubscriber[] = new \Spryker\Zed\Monitoring\Communication\Plugin\MonitoringConsolePlugin();
+	}
+ 
+	return $eventSubscriber;
+}</code></pre>
                                                     <h3>Deployment Logging</h3>
-                                                    <p>To be able to use the deployment recording feature of New Relic, you need to add your <code>api_key</code> and <code>deployment_api_url</code> to the project config. The API key is generated on your New Relic account. Open your account settings in NewRelic and enable the API Access in the Data Sharing page. After enabling you’ll get your API key.</p><pre><code class="language-PHP">
-$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEWRELIC_API_KEY] = 'YOUR_API_KEY';
-
-$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_DEPLOYMENT_API_URL] = 'NEW_RELIC_DEPLOYMENT_API_URL';
-				</code></pre>
+                                                    <p>To be able to use the deployment recording feature of New Relic, add your <code>api_key</code> and <code>deployment_api_url</code> to the project config. </p>
+                                                    <p>The API key is generated in your New Relic account. Open your account settings in New Relic and enable the API Access on the Data Sharing page. Once done, you’ll get your API key. For more details, see the <a href="https://rpm.newrelic.com/api/explore">API Explorer</a> page.</p><pre><code class="language-PHP">$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_API_KEY] = 'YOUR_API_KEY';
+$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_DEPLOYMENT_API_URL] = 'NEW_RELIC_DEPLOYMENT_API_URL';</code></pre>
+                                                    <p>The NEW_RELIC_DEPLOYMENT_API_URL can be retrieved from the official documentation about <a href="https://docs.newrelic.com/docs/apm/new-relic-apm/maintenance/record-deployments-webhooks-or-api">Record Deployment</a>. It should contain the environment application ID you want to register the deployment for.</p>
+                                                    <p>For example: https://api.newrelic.com/v2/applications/12345/deployments.json</p>
+                                                    <p>However, the latest version (1.1.0)  of the module allows passing a list of IDs to be able to record multiple deployments (i.e. Yves and Zed for different stores) at once. In that case, the config has to be modified using the %s as a placeholder in the deployment URL:</p><pre><code class="language-json line-numbers">$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_DEPLOYMENT_API_URL] =
+	'https://api.newrelic.com/v2/applications/%s/deployments.json';
+$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_APPLICATION_ID_ARRAY] = [
+	'yves_de'   =&gt; '12345',
+	'zed_de'    =&gt; '12346',
+	'yves_us'   =&gt; '12347',
+	'zed_us'    =&gt; '12348',
+];</code></pre>
+                                                    <p>Therefore, it will be possible to use the record deployment functionality built-in in the console commands, as follows:</p><pre><code class="language-json">$ vendor/bin/console newrelic:record-deployment &lt;app_name&gt; &lt;user&gt; &lt;revision&gt; [&lt;description&gt;] [&lt;changelog&gt;]</code></pre>
+                                                    <p>where the first three arguments are mandatory. A real example of usage would be:</p><pre><code class="language-json">$ vendor/bin/console newrelic:record-deployment MyStore user@gmail.com v1.2.0 "New version 1.2.0" "Fixed bugs in controller"</code></pre>
                                                     <h2>Implementation Overview</h2>
-                                                    <p>Monitoring is a Spryker Module and it provides a hook to add any monitoring provider you want to. In the Monitoring Module, you can find some service provider and controller listener for Yves and Zed which needs to be added to the <code>ApplicationDependencyProvider</code> to enable them.</p>
+                                                    <p>Monitoring is a Spryker module and it provides a hook to add any monitoring provider you want to. In the Monitoring module, you can find a service provider and a controller listener for Yves and Zed that needs to be added to <code>ApplicationDependencyProvider</code> to enable them.</p>
                                                     <h2>New Relic API</h2>
-                                                    <p>You can add custom New Relic events in your application with the API wrapper for New Relic that you can find in <code>\SprykerEco\Service\NewRelic\Plugin\NewRelicMonitoringExtensionPlugin</code>. To read more detailed information about the available API methods, please read the following documentation: <a href="https://docs.newrelic.com/docs/agents/php-agent/php-agent-api">New Relic API</a>.</p>
+                                                    <p>You can add custom New Relic events in your application with the API wrapper for New Relic  in <code>\SprykerEco\Service\NewRelic\Plugin\NewRelicMonitoringExtensionPlugin</code>. For more information on the available API methods, see <a href="https://docs.newrelic.com/docs/agents/php-agent/php-agent-api">New Relic API</a>.</p>
                                                     <p>&#160;</p>
                                                     <h2>Copyright and Disclaimer</h2>
                                                     <p>See <a href="https://github.com/spryker/spryker-documentation" target="_blank">Disclaimer</a>.</p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Aug. 10th, 2018 </i>
+                                                    <p><b>See also:</b>
+                                                    </p>
+                                                    <ul>
+                                                        <li value="1"><a href="https://documentation.spryker.com/tutorials/advanced/t-new-relic-monitoring.htm">Tutorial - New Relic Monitoring</a>
+                                                        </li>
+                                                        <li value="2"><a href="https://documentation.spryker.com/module_migration_guides/mg-monitoring.htm">Migration Guide - Monitoring</a>
+                                                        </li>
+                                                    </ul>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Jun 19, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>

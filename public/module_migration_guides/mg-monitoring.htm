@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="i7dWMySZCEG5UhRGaFgeBg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="i7dWMySZCEG5UhRGaFgeBg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="JBpH799LUkWefdCcz4YvNw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="JBpH799LUkWefdCcz4YvNw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -242,31 +242,62 @@
                                                     <h1>Migration Guide - Monitoring</h1>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 1.* to Version 2.*</div></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>For BC reasons the initial version of this module had dependencies to <var>spryker/new-relic</var> and the <var>spryker/new-relic-api</var> modules.</p>
-                                                            <p>In this version we removed this hard dependency. If you still want to use NewRelic as monitoring service you can use the <var>spryker-eco/new-relic</var> module by running <code class="language-bash">composer require spryker-eco/new-relic</code>. This will download the NewRelic monitoring extension.</p>
-                                                            <p>Enable the NewRelic monitoring extension you need to add it to the <var>MonitoringDependencyProvider</var> in your project:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                            <p>For BC reasons, the initial version of this module had dependencies to <var>spryker/new-relic</var> and the <var>spryker/new-relic-api</var> modules.</p>
+                                                            <p>In this version, we have removed this hard dependency. If you still want to use New Relic as a monitoring service, you can use the <var>spryker-eco/new-relic</var> module by running the command: </p><pre><code class="language-bash">composer require spryker-eco/new-relic</code>. </pre>
+                                                            <p>This will download the New Relic monitoring extension.</p>
+                                                            <p>To enable the New Relic monitoring extension, add it to the <var>MonitoringDependencyProvider</var> in your project:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Service\Monitoring;
-						
+                         
 use Spryker\Service\Monitoring\MonitoringDependencyProvider as SprykerMonitoringDependencyProvider;
 use SprykerEco\Service\NewRelic\Plugin\NewRelicMonitoringExtensionPlugin;
-						
+                         
 class MonitoringDependencyProvider extends SprykerMonitoringDependencyProvider
 {
 	/**
-	 * @return \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
-	 */
+	* @return \Spryker\Service\MonitoringExtension\Dependency\Plugin\MonitoringExtensionPluginInterface[]
+	*/
 	protected function getMonitoringExtensions(): array
 	{
 		return [
 			new NewRelicMonitoringExtensionPlugin(),
 		];
 	}
+}</code></pre>
+                                                            <p>Meanwhile, if you want to log a console command, modify the <var>src/Pyz/Zed/Console/ConsoleDependencyProvider.php</var> file.</p><pre><code class="language-PHP line-numbers">protected function getConsoleCommands(Container $container)
+{
+	$commands = [
+		...
+		new \SprykerEco\Zed\NewRelic\Communication\Console\RecordDeploymentConsole(),
+	];
 }
-				</code></pre>
+ 
+/**
+* @param \Spryker\Zed\Kernel\Container $container
+*
+* @return \Symfony\Component\EventDispatcher\EventSubscriberInterface[]
+*/
+public function getEventSubscriber(Container $container)
+{
+	$eventSubscriber = parent::getEventSubscriber($container);
+ 
+	if (extension_loaded('newrelic')) {
+		$eventSubscriber[] = new \Spryker\Zed\Monitoring\Communication\Plugin\MonitoringConsolePlugin();
+	}
+ 
+	return $eventSubscriber;
+}</code></pre>
+                                                            <p>If you want to record deployments, add the following code to your local configuration:</p><pre><code class="language-PHP line-numbers">$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEWRELIC_API_KEY] = 'YOUR_API_KEY';
+$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_DEPLOYMENT_API_URL] = 'https://api.newrelic.com/v2/applications/%s/deployments.json';
+$config[\SprykerEco\Shared\NewRelic\NewRelicEnv::NEW_RELIC_APPLICATION_ID_ARRAY] = [
+	'store1'    =&gt; '12345',
+	'store2'    =&gt; '12346',
+	...
+];</code></pre>
+                                                            <p>For more details, see <a href="https://documentation.spryker.com/industry_partners/performance/new-relic.htm">Performance Monitoring - New Relic</a>.</p>
                                                         </div>
                                                     </div>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Oct. 11, 2018</i> </p>
+                                                    <p><i>Last review date: Jun 20, 2019</i> </p>
                                                 </div>
                                             </div>
                                         </div>
