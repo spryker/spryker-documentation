@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="XN60wmX7ekulSxifMF7W3Q">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="XN60wmX7ekulSxifMF7W3Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="BoCQWRpAiEi7HUaspVolcQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="BoCQWRpAiEi7HUaspVolcQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -260,16 +260,18 @@
                                                                 </li>
                                                                 <li><a href="#1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</a>
                                                                 </li>
-                                                                <li><a href="#2SetuptheDatabaseSchema">2) Set up the Database Schema</a>
+                                                                <li><a href="#2SetuptheDatabaseSchemaandTransferObjects">2) Set up the Database Schema and Transfer Objects</a>
                                                                 </li>
                                                                 <li><a href="#3AddTranslations">3) Add Translations</a>
                                                                 </li>
                                                                 <li><a href="#4ConfigureExporttoRedis">4) Configure Export to Redis</a>
                                                                 </li>
                                                                 <ul>
-                                                                    <li><a href="#SetupEventListeners">Setup Event Listeners</a>
+                                                                    <li><a href="#SetupEventListeners">Set up Event Listeners</a>
                                                                     </li>
-                                                                    <li><a href="#SetupReSyncFeatures">Setup Re-Sync Features</a>
+                                                                    <li><a href="#ConfigureMessageProcessors">Configure Message Processors</a>
+                                                                    </li>
+                                                                    <li><a href="#AddSynchronizationPlugins">Add Synchronization Plugins</a>
                                                                     </li>
                                                                 </ul>
                                                                 <li><a href="#5ImportData">5) Import Data</a>
@@ -375,7 +377,7 @@
                                                             </table>
                                                         </div>
                                                     </div>
-                                                    <h3 id="2SetuptheDatabaseSchema" data-magellan-target="2SetuptheDatabaseSchema">2) Set up the Database Schema</h3>
+                                                    <h3 id="2SetuptheDatabaseSchemaandTransferObjects" data-magellan-target="2SetuptheDatabaseSchemaandTransferObjects">2) Set up the Database Schema and Transfer Objects</h3>
                                                     <p>Adjust the schema definition so that entity changes can trigger events.</p>
                                                     <div class="table-wrap">
                                                         <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
@@ -421,7 +423,8 @@
                                                             </tbody>
                                                         </table>
                                                     </div>
-                                                    <p>src/Pyz/Zed/ShoppingList/Persistence/Propel/Schema/spy_shopping_list.schema.xml</p><pre xml:space="preserve"><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/ShoppingList/Persistence/Propel/Schema/spy_shopping_list.schema.xml</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 		name="zed"
 		xsi:noNamespaceSchemaLocation="http://static.spryker.com/schema-01.xsd"
@@ -451,8 +454,23 @@
 			&lt;parameter name="spy_shopping_list_company_business_unit_all" column="*"/&gt;
 		&lt;/behavior&gt;
 	&lt;/table&gt;
- 
 &lt;/database&gt;</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/ShoppingListStorage/Persistence/Propel/Schema/spy_shopping_list_customer_storage.schema.xml</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+	   namespace="Orm\Zed\ShoppingListStorage\Persistence"
+	   package="src.Orm.Zed.ShoppingListStorage.Persistence"&gt;
+ 
+	&lt;table name="spy_shopping_list_customer_storage"&gt;
+		&lt;behavior name="synchronization"&gt;
+			&lt;parameter name="queue_pool" value="synchronizationPool"/&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+ &lt;/database&gt;</code></pre>
+                                                        </div>
+                                                    </div>
                                                     <p>Run the following commands to apply database changes and generate entity and transfer changes:</p><pre xml:space="preserve"><code class="language-bash">console transfer:generate
 console propel:install
 console transfer:generate</code></pre>
@@ -499,22 +517,28 @@ console transfer:generate</code></pre>
                                                                         <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_shopping_list_permission_group</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_shopping_list_customer_storage</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">table</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created</td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_shopping_list_permission_group_to_permission</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spy_shopping_list_permission_group</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">table</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">created</td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>spy_shopping_list_item_note</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spy_shopping_list_permission_group_to_permission</var>
                                                                         </td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">table</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">table</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">created</td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>spy_shopping_list_item_note</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">table</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows">created</td>
                                                                     </tr>
                                                                 </tbody>
                                                             </table>
@@ -606,35 +630,51 @@ console transfer:generate</code></pre>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShoppingListPermissionGroup</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShoppingListCustomerStorage</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShoppingListPermissionGroupTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShoppingListCustomerStorageTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListPermissionGroupCollection</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListPermissionGroup</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShoppingListPermissionGroupCollectionTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShoppingListPermissionGroupTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShoppingListAddToCartRequest</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShoppingListPermissionGroupCollection</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShoppingListAddToCartRequestTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShoppingListPermissionGroupCollectionTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListAddToCartRequestCollection</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListAddToCartRequest</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShoppingListAddToCartRequestCollectionTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShoppingListAddToCartRequestTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShoppingListAddToCartRequestCollection</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/ShoppingListAddToCartRequestCollectionTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListSession</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/ShoppingListSessionTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
@@ -750,35 +790,43 @@ console transfer:generate</code></pre>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyShoppingListPermissionGroupEntity</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyShoppingListCustomerStorageEntity</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyShoppingListPermissionGroupEntityTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyShoppingListCustomerStorageEntityTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SpyShoppingListPermissionGroupToPermissionEntity</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SpyShoppingListPermissionGroupEntity</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyShoppingListPermissionGroupToPermissionEntityTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyShoppingListPermissionGroupEntityTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyShoppingListItemEntity</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>SpyShoppingListPermissionGroupToPermissionEntity</var>
                                                                         </td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">class</td>
                                                                         <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyShoppingListItemEntityTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyShoppingListPermissionGroupToPermissionEntityTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                     <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SpyShoppingListItemNoteEntity</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>SpyShoppingListItemEntity</var>
                                                                         </td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">class</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">created</td>
-                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyShoppingListItemEntityTransfer</var>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>src/Generated/Shared/Transfer/SpyShoppingListItemEntityTransfer</var>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>SpyShoppingListItemNoteEntity</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">class</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">created</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>src/Generated/Shared/Transfer/SpyShoppingListItemEntityTransfer</var>
                                                                         </td>
                                                                     </tr>
                                                                 </tbody>
@@ -855,7 +903,7 @@ customer.account.shopping_list.quick_add.submit,Hinzufügen,de_DE</code></pre>
                                                     <p class="tip">Make sure that in the database the configured data is added to the <var>spy_glossary</var> table.</p>
                                                     <h3 id="4ConfigureExporttoRedis" data-magellan-target="4ConfigureExporttoRedis">4) Configure Export to Redis</h3>
                                                     <p>This step will publish tables on change (create, edit, delete) to the <var>spy_shopping_list_storage</var> and synchronize the data to Storage.</p>
-                                                    <h4 id="SetupEventListeners" data-magellan-target="SetupEventListeners">Setup Event Listeners</h4>
+                                                    <h4 id="SetupEventListeners" data-magellan-target="SetupEventListeners">Set up Event Listeners</h4>
                                                     <div class="table-wrap">
                                                         <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                             <thead>
@@ -898,9 +946,153 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <h4 id="SetupReSyncFeatures" data-magellan-target="SetupReSyncFeatures">Setup Re-Sync Features</h4>
+                                                    <p>Register synchronization queue and synchronization error queue: </p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/RabbitMq/RabbitMqConfig.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Client\RabbitMq;
+ 
+use ArrayObject;
+use Generated\Shared\Transfer\RabbitMqOptionTransfer;
+use Spryker\Client\RabbitMq\Model\Connection\Connection;
+use Spryker\Client\RabbitMq\RabbitMqConfig as SprykerRabbitMqConfig;
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
+ 
+class RabbitMqConfig extends SprykerRabbitMqConfig
+{
+	/**
+	 * @return \ArrayObject
+	 */
+	protected function getQueueOptions()
+	{
+		$queueOptionCollection = new ArrayObject();
+		$queueOptionCollection-&gt;append($this-&gt;createQueueOption(ShoppingListStorageConfig::SHOPPING_LIST_SYNC_STORAGE_QUEUE, ShoppingListStorageConfig::SHOPPING_LIST_SYNC_STORAGE_ERROR_QUEUE));
+ 
+		return $queueOptionCollection;
+	}
+ 
+	/**
+	 * @param string $queueName
+	 * @param string $errorQueueName
+	 * @param string $routingKey
+	 *
+	 * @return \Generated\Shared\Transfer\RabbitMqOptionTransfer
+	 */
+	protected function createQueueOption($queueName, $errorQueueName, $routingKey = 'error')
+	{
+		$queueOptionTransfer = new RabbitMqOptionTransfer();
+		$queueOptionTransfer
+			-&gt;setQueueName($queueName)
+			-&gt;setDurable(true)
+			-&gt;setType('direct')
+			-&gt;setDeclarationType(Connection::RABBIT_MQ_EXCHANGE)
+			-&gt;addBindingQueueItem($this-&gt;createQueueBinding($queueName))
+			-&gt;addBindingQueueItem($this-&gt;createErrorQueueBinding($errorQueueName, $routingKey));
+ 
+		return $queueOptionTransfer;
+	}
+ 
+	/**
+	 * @param string $queueName
+	 *
+	 * @return \Generated\Shared\Transfer\RabbitMqOptionTransfer
+	 */
+	protected function createQueueBinding($queueName)
+	{
+		$queueOptionTransfer = new RabbitMqOptionTransfer();
+		$queueOptionTransfer
+			-&gt;setQueueName($queueName)
+			-&gt;setDurable(true)
+			-&gt;setNoWait(false)
+			-&gt;addRoutingKey('');
+ 
+		return $queueOptionTransfer;
+	}
+ 
+	/**
+	 * @param string $errorQueueName
+	 * @param string $routingKey
+	 *
+	 * @return \Generated\Shared\Transfer\RabbitMqOptionTransfer
+	 */
+	protected function createErrorQueueBinding($errorQueueName, $routingKey)
+	{
+		$queueOptionTransfer = new RabbitMqOptionTransfer();
+		$queueOptionTransfer
+			-&gt;setQueueName($errorQueueName)
+			-&gt;setDurable(true)
+			-&gt;setNoWait(false)
+			-&gt;addRoutingKey($routingKey);
+ 
+			return $queueOptionTransfer;
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="ConfigureMessageProcessors" data-magellan-target="ConfigureMessageProcessors">Configure Message Processors</h4>
                                                     <div class="table-wrap">
-                                                        <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                        <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>SynchronizationStorageQueueMessageProcessorPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        Configures all Shopping List messages to sync with Redis storage, and marks messages as failed in case of error.
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        None
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\Synchronization\Communication\Plugin\Queue</var>
+                                                                    </td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Queue/QueueDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Queue;
+ 
+use Spryker\Shared\ShoppingListStorage\ShoppingListStorageConfig;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Queue\QueueDependencyProvider as SprykerDependencyProvider;
+use Spryker\Zed\Synchronization\Communication\Plugin\Queue\SynchronizationStorageQueueMessageProcessorPlugin;
+ 
+class QueueDependencyProvider extends SprykerDependencyProvider
+{
+	/**
+ 	 * @param \Spryker\Zed\Kernel\Container $container
+	 *
+	 * @return \Spryker\Zed\Queue\Dependency\Plugin\QueueMessageProcessorPluginInterface[]
+	 */
+	protected function getProcessorMessagePlugins(Container $container)
+	{
+		return [
+			ShoppingListStorageConfig::SHOPPING_LIST_SYNC_STORAGE_QUEUE =&gt; new SynchronizationStorageQueueMessageProcessorPlugin(),
+		];
+	}
+}</code></pre>
+                                                        </div>
+                                                    </div>
+                                                    <h4 id="AddSynchronizationPlugins" data-magellan-target="AddSynchronizationPlugins">Add Synchronization Plugins</h4>
+                                                    <div class="table-wrap">
+                                                        <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                            <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
                                                             <thead>
                                                                 <tr class="TableStyle-PatternedRows2-Head-Header1">
                                                                     <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
@@ -913,16 +1105,20 @@ class EventDependencyProvider extends SprykerEventDependencyProvider
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ShoppingListSynchronizationDataPlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Allows populating an empty storage table with data.</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization
-						</var>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                       Allows populating empty storage table with data.
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        None
+                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\ShoppingListStorage\Communication\Plugin\Synchronization</var>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
-                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Synchronization/SynchronizationDependencyProvider.php</a></span>
-                                                            <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+                                                    </div>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Synchronization/SynchronizationDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\Synchronization;
  
@@ -932,8 +1128,8 @@ use Spryker\Zed\Synchronization\SynchronizationDependencyProvider as SprykerSync
 class SynchronizationDependencyProvider extends SprykerSynchronizationDependencyProvider
 {
 	/**
-	* @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
-	*/
+	 * @return \Spryker\Zed\SynchronizationExtension\Dependency\Plugin\SynchronizationDataPluginInterface[]
+	 */
 	protected function getSynchronizationDataPlugins(): array
 	{
 		return [
@@ -941,7 +1137,43 @@ class SynchronizationDependencyProvider extends SprykerSynchronizationDependency
 		];
 	}
 }</code></pre>
-                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <p class="tip">Verify if <var>console sync:data --help</var> has <var>shopping_list_customer</var> as an available resource in the list.<br />Make sure, that <var>sync.storage.shopping_list</var> and <var>sync.storage.shopping_list.error</var> queues get created after at least one message is pushed through Spryker into any RabbitMQ queue.</p>
+                                                    <div class="tip">
+                                                        <p class="tip">Make sure when shopping lists are exported or created, updated, deleted manually in Zed UI, they are exported (or removed) to Redis accordingly.</p>
+                                                        <div class="table-wrap">
+                                                            <table style="width: 100%;mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <col style="width: 25%;" class="TableStyle-PatternedRows2-Column-Regular" />
+                                                                <thead>
+                                                                    <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Storage Type</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Target Entity</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Example Expected Data Identifier</th>
+                                                                        <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Example Expected Data Fragment</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                        Redis
+						</td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">
+                       Shopping List
+                    </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>shopping_list_customer:de--1</var>
+                                                                        </td>
+                                                                        <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><pre><code class="language-html">{
+	"updated_at": 1565796408,
+	"_timestamp": 1565796408.2470579,
+}</code></pre>
+                                                                        </td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                     <h3 id="5ImportData" data-magellan-target="5ImportData">5) Import Data</h3>
@@ -1496,11 +1728,19 @@ class DataImportDependencyProvider extends SprykerDataImportDependencyProvider
                                                                     </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ShoppingListItemNotePostSavePlugin</var>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>ShoppingListItemNotePostSavePlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Saves a shopping list item note when saving a shopping list item.</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>Spryker\Zed\ShoppingListNote\Communication\Plugin</var>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Saves a shopping list item note when saving a shopping list item.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Zed\ShoppingListNote\Communication\Plugin</var>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>ShoppingListCollectionOutdatedPlugin</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Used to determine if the shopping list collection needs to be updated, according to the last update date.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Zed\ShoppingListNote\Communication\Plugin</var>
                                                                     </td>
                                                                 </tr>
                                                             </tbody>
@@ -1531,7 +1771,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Permission/PermissionDependencyProvider.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\Permission;
  
@@ -1543,8 +1783,8 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\WriteShoppingListPermissionPlu
 class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
 {
 	/**
-	* @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
-	*/
+	 * @return \Spryker\Zed\PermissionExtension\Dependency\Plugin\PermissionStoragePluginInterface[]
+	 */
 	protected function getPermissionStoragePlugins(): array
 	{
 		return [
@@ -1553,8 +1793,8 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
 	}
  
 	/**
-	* @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
-	*/
+	 * @return \Spryker\Shared\PermissionExtension\Dependency\Plugin\PermissionPluginInterface[]
+	 */
 	protected function getPermissionPlugins()
 	{
 		return [
@@ -1566,7 +1806,7 @@ class PermissionDependencyProvider extends SprykerPermissionDependencyProvider
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Customer/CustomerDependencyProvider.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\Customer;
  
@@ -1576,8 +1816,8 @@ use Spryker\Zed\ShoppingList\Communication\Plugin\ShoppingListPermissionCustomer
 class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
 {
 	/**
-	* @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
-	*/
+	 * @return \Spryker\Zed\Customer\Dependency\Plugin\CustomerTransferExpanderPluginInterface[]
+	 */
 	protected function getCustomerTransferExpanderPlugins()
 	{
 		return [
@@ -1588,7 +1828,7 @@ class CustomerDependencyProvider extends SprykerCustomerDependencyProvider
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/ShoppingList/ShoppingListDependencyProvider.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Client\ShoppingList;
  
@@ -1598,8 +1838,8 @@ use Spryker\Client\ShoppingListNote\Plugin\ShoppingListItemNoteToItemCartNoteMap
 class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvider
 {
 	/**
-	* @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
-	*/
+	 * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+	 */
 	protected function getShoppingListItemToItemMapperPlugins(): array
 	{
 		return [
@@ -1610,7 +1850,7 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/ShoppingList/ShoppingListDependencyProvider.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Client\ShoppingList;
  
@@ -1623,8 +1863,8 @@ use Spryker\Zed\ShoppingListNote\Communication\Plugin\ShoppingListItemNotePostSa
 class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvider
 {
 	/**
-	* @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
-	*/
+	 * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemPostSavePluginInterface[]
+	 */
 	protected function getShoppingListItemPostSavePlugins(): array
 	{
 		return [
@@ -1633,8 +1873,8 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
 	}
  
 	/**
-	* @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
-	*/
+	 * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ShoppingListItemBeforeDeletePluginInterface[]
+	 */
 	protected function getBeforeDeleteShoppingListItemPlugins(): array
 	{
 		return [
@@ -1643,18 +1883,18 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
 	}
  
 	/**
-	* @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
-	*/
+	 * @return \Spryker\Zed\ShoppingListExtension\Dependency\Plugin\ItemExpanderPluginInterface[]
+	 */
 	protected function getItemExpanderPlugins(): array
 	{
 		return [
-		new ShoppingListItemNoteExpanderPlugin(),
+			new ShoppingListItemNoteExpanderPlugin(),
 		];
 	}
  
 	/**
-	* @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
-	*/
+	 * @return \Spryker\Client\ShoppingListExtension\Dependency\Plugin\ShoppingListItemToItemMapperPluginInterface[]
+	 */
 	protected function getShoppingListItemToItemMapperPlugins(): array
 	{
 		return [
@@ -1662,10 +1902,33 @@ class ShoppingListDependencyProvider extends SprykerShoppingListDependencyProvid
 		];
 	}
 }</code></pre>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Client/ShoppingListSession/ShoppingListSessionDependencyProvider.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Client\ShoppingListSession;
+ 
+use Spryker\Client\ShoppingListSession\ShoppingListSessionDependencyProvider as SprykerShoppingListSessionDependencyProvider;
+use Spryker\Client\ShoppingListStorage\Dependency\Plugin\ShoppingListSession\ShoppingListCollectionOutdatedPlugin;
+ 
+class ShoppingListSessionDependencyProvider extends SprykerShoppingListSessionDependencyProvider
+{
+	/**
+	 * @return \Spryker\Client\ShoppingListSessionExtension\Dependency\Plugin\ShoppingListCollectionOutdatedPluginInterface[]
+	 */
+	protected function getShoppingListCollectionOutdatedPlugins(): array
+	{
+		return [
+			new ShoppingListCollectionOutdatedPlugin(),
+		];
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <p class="tip">Share User A's shopping list with User B, then change the shopping list from User A's profile; User B should get the updated shopping list. Also, make sure that sharing shopping lists have the correct permission group (the ones you had in your installation).</p>
                                                     <p class="tip">Make sure that shopping list item notes are being saved when saving shopping list item and deleted when deleting shopping list item. Also, make sure that shopping list item notes are transferred to cart item notes when creating a cart from a shopping list.</p>
+                                                    <p class="tip">Make sure that shopping list collection in session and in storage is always up-to-date. You can check this by changing the session shopping list collection 'updated_at' value to be older than one in shopping list customer storage.</p>
                                                     <h2 id="InstallFeatureFrontend" data-magellan-target="InstallFeatureFrontend">Install Feature Frontend</h2>
                                                     <h3 id="Prerequisites1" data-magellan-target="Prerequisites1">Prerequisites</h3>
                                                     <p>Please overview and install the necessary features before beginning the integration step.</p>
@@ -2111,7 +2374,7 @@ class ShopApplicationDependencyProvider extends SprykerShopApplicationDependency
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Jul 17, 2019</i>
+                                                    <p><i>Last review date: Sep 03, 2019</i>
                                                     </p>
                                                 </div>
                                             </div>
