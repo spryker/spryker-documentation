@@ -78,6 +78,7 @@
 
 </style>
         <link href="../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../resources/scripts/jquery.min.js">
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="-T9FBNoyLkySewJU7OkUJQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="-T9FBNoyLkySewJU7OkUJQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="YVTB4l8BqUGyJ4Ata0OAOQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="YVTB4l8BqUGyJ4Ata0OAOQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,6 +241,141 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Shipment</h1>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from Version 6.* to Version 7.0.0</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In this new version of the <b>Shipment</b> module, we have added support of split delivery. You can find more details about the changes on the <a href="https://github.com/spryker/shipment/releases">Shipment module release</a> page.</p>
+                                                            <p class="important">This release is a part of the <b>Split delivery</b> concept migration. When you upgrade this module version, you should also update all other installed modules in your project to use the same concept as well as to avoid inconsistent behavior. For more information, see <a href="../migration_concepts/split-delivery-concept.htm" class="MCXref xref">Split Delivery Migration Concept</a>.</p>
+                                                            <p><b>To upgrade to the new version of the module, do the following:</b>
+                                                            </p>
+                                                            <p>1. Upgrade the Shipment module to the new version:</p><pre><code class="language-bash">composer require spryker/shipment: "^7.0.0" --update-with-dependencies</code></pre>
+                                                            <p>2. Run the database migration.</p><pre><code class="language-bash">console propel:install
+console transfer:generate</code></pre>
+                                                            <p>3. Enable the following plugins : </p>
+                                                            <div class="table-wrap">
+                                                                <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                                    <thead>
+                                                                        <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Plugin</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Specification</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Prerequisites</th>
+                                                                            <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Namespace</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>GiftCardShipmentGroupMethodFilterPlugin</var>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Filters available shipment methods for a shipment group.</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>\Spryker\Zed\GiftCard\Communication\Plugin\Shipment\GiftCardShipmentGroupMethodFilterPlugin</var>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>ShipmentOrderMailExpanderPlugin</var>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Expands order mail transfer data with shipment groups data.</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>\Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentOrderMailExpanderPlugin</var>
+                                                                            </td>
+                                                                        </tr>
+                                                                        <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows"><var>ShipmentManualEventGrouperPlugin</var>
+                                                                            </td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">Groups manual events by sales shipment ID.</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyB-Regular-LightRows">None</td>
+                                                                            <td class="TableStyle-PatternedRows2-BodyA-Regular-LightRows"><var>\Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentManualEventGrouperPlugin</var>
+                                                                            </td>
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.phpsrc/Pyz/Zed/Shipment/ShipmentDependencyProvider.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Shipment;
+ 
+use Spryker\Zed\GiftCard\Communication\Plugin\Shipment\GiftCardShipmentGroupMethodFilterPlugin;
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Shipment\ShipmentDependencyProvider as SprykerShipmentDependencyProvider;
+ 
+class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
+{
+	/**
+	* @param \Spryker\Zed\Kernel\Container $container
+	*
+	* @return \Spryker\Zed\ShipmentExtension\Dependency\Plugin\ShipmentMethodFilterPluginInterface[]
+	*/
+	protected function getMethodFilterPlugins(Container $container)
+	{
+		return [
+			new GiftCardShipmentGroupMethodFilterPlugin(),
+		];
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Oms/OmsDependencyProvider.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+/**
+* This file is part of the Spryker Suite.
+* For full license information, please view the LICENSE file that was distributed with this source code.
+*/
+ 
+namespace Pyz\Zed\Oms;
+ 
+use Spryker\Zed\Kernel\Container;
+use Spryker\Zed\Oms\OmsDependencyProvider as SprykerOmsDependencyProvider;
+use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentManualEventGrouperPlugin;
+use Spryker\Zed\Shipment\Dependency\Plugin\Oms\ShipmentOrderMailExpanderPlugin;
+ 
+class OmsDependencyProvider extends SprykerOmsDependencyProvider
+{
+	/**
+	* @param \Spryker\Zed\Kernel\Container $container
+	*
+	* @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsOrderMailExpanderPluginInterface[]
+	*/
+	protected function getOmsOrderMailExpanderPlugins(Container $container)
+	{
+		return [
+			new ShipmentOrderMailExpanderPlugin(),
+		];
+	}
+ 
+	/**
+	* @param \Spryker\Zed\Kernel\Container $container
+	*
+	* @return \Spryker\Zed\OmsExtension\Dependency\Plugin\OmsManualEventGrouperPluginInterface[]
+	*/
+	protected function getOmsManualEventGrouperPlugins(Container $container)
+	{
+		return [
+			new ShipmentManualEventGrouperPlugin(),
+		];
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <p>4. Enable project configuration:</p><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Shared\Shipment;
+ 
+use Spryker\Shared\Shipment\ShipmentConfig as SprykerShipmentConfig;
+ 
+class ShipmentConfig extends SprykerShipmentConfig
+{
+	/**
+	* @return bool
+	*/
+	public function isMultiShipmentSelectionEnabled(): bool
+	{
+		return true;
+	}
+}</code></pre>
+                                                            <p style="font-style: italic;">Estimated migration time: 10 min</p>
+                                                        </div>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 5.* to Version 6.*</div></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>In version 6, multi-currency prices are introduced for shipment methods, allowing to set up different net and gross price per shipment method for each preconfigured currency.</p>
