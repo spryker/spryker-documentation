@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-conditions="ReleaseVersions.201907-0" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Silex Replacement|Router">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Migration Concepts">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Router Yves</title>
+        <meta name="author" content="" /><title>Split Delivery Migration Concept</title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -78,6 +78,7 @@
 
 </style>
         <link href="../../resources/stylesheets/mainstyles.css" rel="stylesheet" />
+        <link href="../resources/tablestyles/patternedrows2.css" rel="stylesheet" />
         <script src="../../resources/scripts/custom.modernizr.js">
         </script>
         <script src="../../resources/scripts/jquery.min.js">
@@ -208,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="GkJWIBLUd0qSwZbMbT3njg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="GkJWIBLUd0qSwZbMbT3njg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="ZGbwTzKXuUK4XQl_uu30EA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="ZGbwTzKXuUK4XQl_uu30EA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,216 +240,102 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Router Yves</h1>
-                                                    <p>The Router is responsible for matching a request to a route and generating URLs based on a route name. The Spryker's Router module is based on the Symfony's Routing component; for more information on it, check out the <a href="https://symfony.com/doc/current/routing.html">documentation</a>.</p>
-                                                    <h2>Modules</h2>
-                                                    <p>You can find the list of all the modules related to the service below:</p>
+                                                    <h1>Split Delivery Migration Concept</h1>
+                                                    <h2>General Information</h2>
+                                                    <p>Split Delivery splits order items into different shipments according to a delivery address, a shipment method, and a delivery date. The feature also provides an ability to edit a shipment or create a new one for the existing order in the Back Office.</p>
+                                                    <h2>Migration process</h2>
+                                                    <p>You can upgrade all affected modules by the feature in bulk.</p>
+                                                    <p style="font-weight: bold;">To update all the modules  affected by feature in bulk, do the following:</p>
+                                                    <p>1. Run the following <var>composer</var> command, but make sure <b>to remove the modules that are irrelevant for your project from the command:</b></p><pre><code class="language-bash">composer update "spryker/*" "spryker-shop/*"
+ composer require spryker/sales: "^11.0.0" spryker/shipment: "^7.0.0" spryker-shop/checkout-page: "^3.0.0" spryker-shop/customer-page: "^2.0.0" spryker/checkout-rest-api: "^2.0.0" spryker/manual-order-entry-gui:"^0.8.0" spryker/shipment-cart-connector:"^2.0.0" spryker/shipment-checkout-connector:"^2.0.0" spryker/shipment-discount-connector:"^4.0.0" spryker/orders-rest-api: "^4.0.0" --update-with-dependencies</code></pre>
+                                                    <p>2. Run the database migration:</p><pre><code class="language-bash">console propel:install
+console transfer:generate</code></pre>
+                                                    <p>3. Follow the steps in the individual migration guides of the modules listed below:</p>
                                                     <ul>
-                                                        <li value="1">Router - <var>spryker/router</var></li>
-                                                        <li value="2">RouterExtension - <var>spryker/router-extension</var></li>
+                                                        <li value="1"><a href="../../Migration Concepts/Module Migration Guides/mg-customerpage.htm">CustomerPage</a>
+                                                        </li>
+                                                        <li value="2"><a href="../../Migration Concepts/Module Migration Guides/mg-sales.htm">Sales</a>
+                                                        </li>
+                                                        <li value="3"><a href="../../Migration Concepts/Module Migration Guides/mg-shipment.htm">Shipment</a>
+                                                        </li>
                                                     </ul>
-                                                    <h3>Installation</h3>
-                                                    <p>Run this command to install the extension module along with the router:</p><pre><code class="language-PHP line-numbers">composer require spryker/router</code></pre>
-                                                    <h2>Integration</h2>
-                                                    <p>To be able to use the Router, add <var>RouterApplicationPlugin</var> of the <var>spryker/router</var> module to your <var>ApplicationDependencyProvider</var>.</p>
-                                                    <h4>Yves integration</h4>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
- 
-namespace Pyz\Yves\Application;
- 
-use Spryker\Yves\Application\ApplicationDependencyProvider as SprykerApplicationDependencyProvider;
-use Spryker\Yves\Router\Plugin\Application\RouterApplicationPlugin;
- 
-class ApplicationDependencyProvider extends SprykerApplicationDependencyProvider
-{
-    ...
- 
-    /**
-     * @return \Spryker\Shared\ApplicationExtension\Dependency\Plugin\ApplicationPluginInterface[]
-     */
-    protected function getApplicationPlugins(): array
-    {
-        return [
-            ...
-            new RouterApplicationPlugin(),
-            ...
-        ];
-    }
- 
-    ...
-}</code></pre>
-                                                        </div>
+                                                    <p>The following table lists the modules affected by the Split Delivery update.</p>
+                                                    <div class="table-wrap">
+                                                        <table style="mc-table-style: url('../../Migration Concepts/Resources/TableStyles/PatternedRows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
+                                                            <thead>
+                                                                <tr class="TableStyle-PatternedRows2-Head-Header1">
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Module</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadE-Regular-Header1">Version</th>
+                                                                    <th class="TableStyle-PatternedRows2-HeadD-Regular-Header1">Migration guide</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/sales</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">11.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - Sales</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/shipment</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">7.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - Shipment</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker-shop/checkout-page</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">3.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - CheckoutPage</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker-shop/customer-page</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">2.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - CustomerPage</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/checkout-rest-api</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">2.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - CheckoutRestApi</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/manual-order-entry-gui</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">0.8.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - ManualOrderEntryGui</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/shipment-cart-connector</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">2.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - ShipmentCartConnector</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/shipment-сheckout-сonnector</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">2.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - ShipmentCheckoutConnector</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-LightRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/shipment-discount-connector</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">4.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - ShipmentDiscountConnector</td>
+                                                                </tr>
+                                                                <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>spryker/orders-rest-api</var>
+                                                                    </td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">4.0.0</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Migration Guide - OrdersRestApi</td>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
                                                     </div>
-                                                    <h2>Configure Router per Environment</h2>
-                                                    <p>The Router can be configured with the following <var>\Spryker\Yves\Router\RouterEnvironmentConfigConstantsYves</var> options:</p>
-                                                    <ul>
-                                                        <li value="1"><var>\Spryker\Shared\Router\RouterConstants::YVES_IS_CACHE_ENABLED</var> - use this option to enable/disable the cache. By default, it is enabled.</li>
-                                                        <li value="2"><var>\Spryker\Shared\Router\RouterConstants::YVES_CACHE_PATH</var> - use this if you want to change the path to the generated cache files.</li>
-                                                        <li value="3"><var>\Spryker\Shared\Router\RouterConstants::YVES_IS_SSL_ENABLED</var> - use this to enable/disable the Router's SSL capabilities.</li>
-                                                        <li value="4"><var>\Spryker\Shared\Router\RouterConstants::YVES_SSL_EXCLUDED_ROUTE_NAMES</var> - use this to disable SSL for the specific route names when SSL is enabled.</li>
-                                                    </ul>
-                                                    <p>For further information check out the specifications for the Router.</p>
-                                                    <h2>Configure Router</h2>
-                                                    <p>Additionally, you also have the option to configure the Symfony Router with <var>\Spryker\Yves\Router\RouterConfig::getRouterConfiguration()</var>.</p>
-                                                    <p>Check <var>\Symfony\Component\Routing\Router::setOptions()</var> to see what you can use. Basically, you do not have to change this configuration, but if you need to, you can.</p>
-                                                    <h2>Extending Router</h2>
-                                                    <p>The Router can be extended in many ways. To be able to add additional functionality, there is a RouterExtension module which is installed automatically with the <var>spryker/router</var> module.</p>
-                                                    <p>The extension module offers the following interfaces:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterPluginInterface</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
- 
-namespace Spryker\Yves\RouterExtension\Dependency\Plugin\Router;
- 
-use Spryker\Service\Container\ContainerInterface;
-use Twig\Environment;
- 
-interface RouterPluginInterface
-{
-    /**
-     * Specification:
-     * - Returns a RouterInterface which is added to the ChainRouter.
-     *
-     * @api
-     *
-     * @return \Symfony\Component\Routing\RouterInterface
-     */
-    public function getRouter(): RouterInterface;
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>This plugin is used to add a project specific Router to the ChainRouter. The returned router must implement <var>\Symfony\Component\Routing\RouterInterface</var>.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Spryker\Yves\RouterExtension\Dependency\Plugin\RouteProviderPluginInterface</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
- 
-namespace SprykerShop\Yves\RouterExtension\Dependency\Plugin\Router;
- 
-use Spryker\Service\Container\ContainerInterface;
-use Twig\Environment;
- 
-interface RouteProviderPluginInterface
-{
-    /**
-     * Specification:
-     * - Adds routes to the RouteCollection.
-     * - Returns a RouteCollection.
-     *
-     * @api
-     *
-     * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
-     *
-     * @return \Spryker\Yves\Router\Route\RouteCollection
-     */
-    public function addRoutes(RouteCollection $routeCollection): RouteCollection;
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>This plugin is used to provide routes to a router. There is <var>\SprykerShop\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin</var> that can be extended in all modules that need to add routes.</p>
-                                                    <p>AbstractPlugin provides convenient methods to add routes to your Application.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Spryker\Yves\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
- 
-namespace Spryker\Yves\RouterExtension\Dependency\Plugin\Router;
- 
-use Spryker\Service\Container\ContainerInterface;
-use Twig\Environment;
- 
-interface PostAddRouteManipulatorPluginInterface
-{
-    /**
-     * Specification:
-     * - Returns a manipulated Route.
-     *
-     * @api
-     *
-     * @param string $routeName
-     * @param \Symfony\Component\Routing\Route $route
-     *
-     * @return \Symfony\Component\Routing\Route
-     */
-    public function manipulate(string $routeName, Route $route): Route;
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Use this class when you need to manipulate all routes at once without refactoring each part of the code, where routes are created. Every route, which is added to RouteCollection, will be manipulated with all the attached <var>\Spryker\Shared\RouterExtension\Dependency\Plugin\PostAddRouteManipulatorPluginInterface</var>'s. Imagine you need all your URLs to have a prefix or suffix (e.g. /{store}/url-to-something/{locale}) instead of adding {store} and {locale} to all routes manually. In this case, you just add a manipulator that does that for you.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage" style="font-weight: bold;"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Spryker\Yves\RouterExtension\Dependency\Plugin\RouterEnhancerPluginInterface</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
- 
-namespace Spryker\Yves\RouterExtension\Dependency\Plugin;
- 
-use Symfony\Component\Routing\RequestContext;
- 
-interface RouterEnhancerPluginInterface
-{
-    /**
-     * Specification:
-     * - Returns a manipulated pathinfo.
-     * - Can be used to e.g. remove optional prefix from pathinfo.
-     *
-     * Symfony's routing component doesn't allow to have optional URL parameter before non-optional ones.
-     *
-     * We need to allow projects to use optional arguments in the URL e.g. `/{store}/{locale}/foo-bar`.
-     * The configured route will only have an URL like `/foo-bar` without the optional arguments but we need to be able
-     * to match an incoming route like `/de/de/foo-bar` to the configured one.
-     *
-     * This method will "normalize" the incoming URL to be matchable.
-     *
-     * @api
-     *
-     * @param string $pathinfo
-     * @param \Symfony\Component\Routing\RequestContext $requestContext
-     *
-     * @return string
-     */
-    public function beforeMatch(string $pathinfo, RequestContext $requestContext): string;
- 
-    /**
-     * Specification:
-     * - Adds additional information to the matched $parameters.
-     *
-     * @api
-     *
-     * @param array $parameters
-     * @param \Symfony\Component\Routing\RequestContext $requestContext
-     *
-     * @return array
-     */
-    public function afterMatch(array $parameters, RequestContext $requestContext): array;
- 
-    /**
-     * Specification:
-     * - Returns a manipulated url after it was generated.
-     * - Can be used to e.g. add an optional argument to the URL.
-     *
-     * Symfony's routing component doesn't allow to have optional URL parameter before non-optional ones.
-     *
-     * We need to allow projects to use optional arguments in the URL e.g. `/{store}/{locale}/foo-bar`.
-     * The configured route will only have an URL like `/foo-bar` with a route name e.g. `foo-bar`. After the generator
-     * was able to generate an URL by the given route name we need to add the optional arguments to
-     * return an URL like `/de/de/foo-bar`.
-     *
-     * This method will "normalize" the outgoing URL after it was generated.
-     *
-     * @api
-     *
-     * @param string $url
-     * @param \Symfony\Component\Routing\RequestContext $requestContext
-     * @param int $referenceType
-     *
-     * @return string
-     */
-    public function afterGenerate(string $url, RequestContext $requestContext, int $referenceType): string;
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Use this plugin to hook into the <var>match</var> and the <var>generate</var> processes of the Router.</p>
                                                     <p>&#160;</p>
-                                                    <p><b>See also:</b>
+                                                    <p><i>Last review date: Sep 12, 2019 </i>
                                                     </p>
-                                                    <p><a href="../../module_migration_guides/mg-router-201907.htm" class="MCXref xref">Migration Guide - Router</a>
-                                                    </p>
-                                                    <p>&#160;</p>
-                                                    <p><i>Last review date: Jul 15, 2019</i> </p>
                                                 </div>
                                             </div>
                                         </div>
