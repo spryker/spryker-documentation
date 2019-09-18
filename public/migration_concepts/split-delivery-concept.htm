@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Migration Concepts">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -180,6 +180,10 @@
                                 <div class="row collapse">
                                     <div class="top-bar">
                                         <div class="breadcrumbs-block">
+                                            <div class="nocontent">
+                                                <div class="MCBreadcrumbsBox_0 breadcrumbs" data-mc-breadcrumbs-divider=" &gt; " data-mc-breadcrumbs-count="3" data-mc-toc="True"><span class="MCBreadcrumbsPrefix">You are here: </span>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                         </div>
@@ -205,6 +209,12 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
+                                                <div data-sticky-container="" id="7BKknVuwxkuNug4dIOxvMA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="7BKknVuwxkuNug4dIOxvMA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                        <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div>
@@ -238,18 +248,12 @@
                                                     <p style="font-weight: bold;">To update all the modules  affected by feature in bulk, do the following:</p>
                                                     <p>1. Run the following <var>composer</var> command, but make sure <b>to remove the modules that are irrelevant for your project from the command:</b></p><pre><code class="language-bash">composer update "spryker/*" "spryker-shop/*"
  composer require spryker/sales: "^11.0.0" spryker/shipment: "^7.0.0" spryker-shop/checkout-page: "^3.0.0" spryker-shop/customer-page: "^2.0.0" spryker/checkout-rest-api: "^2.0.0" spryker/manual-order-entry-gui:"^0.8.0" spryker/shipment-cart-connector:"^2.0.0" spryker/shipment-checkout-connector:"^2.0.0" spryker/shipment-discount-connector:"^4.0.0" spryker/orders-rest-api: "^4.0.0" --update-with-dependencies</code></pre>
-                                                    <p>2. Run the database migration:</p><pre><code class="language-bash">console propel:install
+                                                    <p>2. Clean up the database entity schema for each store in the system:</p><pre><code class="language-bash">APPLICATION_STORE=DE console propel:schema:copy
+APPLICATION_STORE=US console propel:schema:copy
+...</code></pre>
+                                                    <p>3. Run the database migration:</p><pre><code class="language-bash">console propel:install
 console transfer:generate</code></pre>
-                                                    <p>3. Follow the steps in the individual migration guides of the modules listed below:</p>
-                                                    <ul>
-                                                        <li value="1"><a href="../module_migration_guides/mg-customerpage.htm">CustomerPage</a>
-                                                        </li>
-                                                        <li value="2"><a href="../module_migration_guides/mg-sales.htm">Sales</a>
-                                                        </li>
-                                                        <li value="3"><a href="../module_migration_guides/mg-shipment.htm">Shipment</a>
-                                                        </li>
-                                                    </ul>
-                                                    <p>The following table lists the modules affected by the Split Delivery update.</p>
+                                                    <p>4. Follow the steps in the following versions of the module migration guides affected by the Split Delivery update:</p>
                                                     <div class="table-wrap">
                                                         <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                             <thead>
@@ -264,67 +268,77 @@ console transfer:generate</code></pre>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/sales</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">11.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - Sales</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-sales.htm#upgrading-from-version-10---to-version-11-0-0">Migration Guide - Sales</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/shipment</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">7.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - Shipment</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-shipment.htm#upgrading-from-version-6---to-version-7-0-0">Migration Guide - Shipment</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker-shop/checkout-page</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">3.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - CheckoutPage</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-checkout-page.htm#upgrading-from-version-2---to-version-3-0-0">Migration Guide - CheckoutPage</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker-shop/customer-page</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">2.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - CustomerPage</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-customerpage.htm#upgrading-from-version-1---to-version-2-0-0">Migration Guide - CustomerPage</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/checkout-rest-api</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">2.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - CheckoutRestApi</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/module_migration_guides/glue_api/mg-checkoutrestapi.htm#upgrading-from-version-1---to-version-2-0-0">Migration Guide - CheckoutRestApi</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/manual-order-entry-gui</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">0.8.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - ManualOrderEntryGui</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-manual-order-entry-gui.htm#upgrading-from-version-0-7---to-version-0-8-0">Migration Guide - ManualOrderEntryGui</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/shipment-cart-connector</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">2.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - ShipmentCartConnector</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-shipment-cart-connector.htm#upgrading-from-version-1-0---to-version-2-0-0">Migration Guide - ShipmentCartConnector</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>spryker/shipment-сheckout-сonnector</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">2.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows">Migration Guide - ShipmentCheckoutConnector</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-shipment-checkout-connector.htm#upgrading-from-version-1-0---to-version-2-0-0">Migration Guide - ShipmentCheckoutConnector</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>spryker/shipment-discount-connector</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">4.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows">Migration Guide - ShipmentDiscountConnector</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><a href="https://documentation.spryker.com/module_migration_guides/mg-shipment-discount-connector.htm#upgrading-from-version-3-0---version-to-4-0-0">Migration Guide - ShipmentDiscountConnector</a>
+                                                                    </td>
                                                                 </tr>
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>spryker/orders-rest-api</var>
                                                                     </td>
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">4.0.0</td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows">Migration Guide - OrdersRestApi</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><a href="https://documentation.spryker.com/module_migration_guides/glue_api/mg-ordersrestapi.htm#upgrading-from-version-3-0---to-version-4-0-0">Migration Guide - OrdersRestApi</a>
+                                                                    </td>
                                                                 </tr>
                                                             </tbody>
                                                         </table>
                                                     </div>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Sep 12, 2019 </i>
+                                                    <p><i>Last review date: Sep 18, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
