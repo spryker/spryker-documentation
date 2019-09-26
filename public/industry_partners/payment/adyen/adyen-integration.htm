@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="d46PnZc1qE-B4O6OBB3HNg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="d46PnZc1qE-B4O6OBB3HNg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="0VvIri2hJECxEXEUNkHZRQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="0VvIri2hJECxEXEUNkHZRQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,11 +240,21 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Adyen - Integration</h1>
-                                                    <h2>Integration into Project</h2>
-                                                    <p>Add sub form plugins and payment method handlers:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
+                                                    <h1>Adyen - Integration into a Project</h1>
+                                                    <p>This article provides step-by-step instructions on integrating the Adyen system into your project.</p>
+                                                    <h2>Prerequisites</h2>
+                                                    <p>Before you start integrating Adyen into your project, make sure you complete the following steps:</p>
+                                                    <ul>
+                                                        <li value="1">Get your credentials to the Adyen Account by following the <a href="https://docs.adyen.com/developers/checkout/api-integration#beforeyoubegin" target="_blank">instruction.</a></li>
+                                                        <li value="2">Get JS SDK url and generate your origin key by following this<a href="https://docs.adyen.com/developers/checkout/api-integration#encryptcreditcarddetails" target="_blank">instruction</a>.</li>
+                                                        <li value="3"><a href="adyen-configuration.htm">Install and configure</a> the Adyen module.</li>
+                                                    </ul>
+                                                    <h2>Integrating Adyen into Your Project</h2>
+                                                    <p>To integrate Adyen, do the following:</p>
+                                                    <ol>
+                                                        <li value="1">Add sub form plugins and payment method handlers:
+            
+                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\CheckoutPage\CheckoutPageDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
  
 /**
  * This file is part of the Spryker Suite.
@@ -333,12 +343,10 @@ class CheckoutPageDependencyProvider extends SprykerShopCheckoutPageDependencyPr
  
         return $container;
     }
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Add controller provider:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\ShopApplication\YvesBootstrap</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
+}</code></pre></div></div></li>
+                                                        <li value="2">Add controller provider:
+            
+                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Yves\ShopApplication\YvesBootstrap</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
  
 /**
  * This file is part of the Spryker Suite.
@@ -367,12 +375,9 @@ class YvesBootstrap extends SprykerYvesBootstrap
             new AdyenControllerProvider($isSsl),
         ];
     }
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Add checkout plugins:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Checkout\CheckoutDependencyProvider</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
+}</code></pre></div></div></li>
+                                                        <li value="3">Add checkout plugins:
+                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Checkout\CheckoutDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
  
 /**
  * This file is part of the Spryker Suite.
@@ -417,12 +422,9 @@ class CheckoutDependencyProvider extends SprykerCheckoutDependencyProvider
             new AdyenPostSaveHookPlugin(),
         ];
     }
-}</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <p>Add OMS commands and conditions:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Oms\OmsDependencyProvider</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
+}</code></pre></div></div></li>
+                                                        <li value="4">Add OMS commands and conditions:
+                <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />\Pyz\Zed\Oms\OmsDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">&lt;?php
  
 /**
  * This file is part of the Spryker Suite.
@@ -511,9 +513,8 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
  
         return $container;
     }
-}</code></pre>
-                                                        </div>
-                                                    </div>
+}</code></pre></div></div></li>
+                                                    </ol>
                                                     <h3>Frontend Integration</h3>
                                                     <p>To make Adyen module work properly, update <var>payment.twig</var> file and add payment method forms into <var>customForms</var>:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</a></span>
@@ -552,19 +553,7 @@ protected function addCoreTemplatePaths(array $paths)
 }</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>&#160;</p>
-                                                    <p><b>See also</b>:</p>
-                                                    <ul>
-                                                        <li value="1"><a href="adyen.htm">Get acquainted with Adyen</a>
-                                                        </li>
-                                                        <li value="2"><a href="adyen-configuration.htm">Configure Adyen</a>
-                                                        </li>
-                                                        <li value="3"><a href="adyen-filter-payment-methods.htm">Learn about Adyen Filter Payment Methods
-					</a>
-                                                        </li>
-                                                        <li value="4"><a href="adyen-provided-payment-methods.htm">Learn about Adyen Provided Payment Methods</a>
-                                                        </li>
-                                                    </ul>
+                                                    <p>That's it. Now Adyen is integrated into your project.</p>
                                                     <p>&#160;</p>
                                                     <p><i>Last review date: November, 16th, 2018 </i>
                                                     </p>

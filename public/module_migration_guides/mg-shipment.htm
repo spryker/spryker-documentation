@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-conditions="General.Demoshop" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Module Migration Guides">
+<html xmlns:MadCap="http://www.madcapsoftware.com/Schemas/MadCap.xsd" lang="en-us" xml:lang="en-us" class="_Skins_HTML5___Top_Navigation" data-mc-search-type="Stem" data-mc-help-system-file-name="Default.xml" data-mc-path-to-help-system="../" data-mc-has-content-body="True" data-mc-conditions="General.Demoshop,ReleaseVersions.201911-0" data-mc-target-type="WebHelp2" data-mc-runtime-file-type="Topic;Default" data-mc-preload-images="false" data-mc-in-preview-mode="false" data-mc-toc-path="Migration and Integration|Module Migration Guides">
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Pv1gdhExME-cdzT7YAaHYQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Pv1gdhExME-cdzT7YAaHYQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="OUnhn4XPcUST6-LgNw902A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="OUnhn4XPcUST6-LgNw902A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -248,9 +248,12 @@
                                                             <p><b>To upgrade to the new version of the module, do the following:</b>
                                                             </p>
                                                             <p>1. Upgrade the Shipment module to the new version:</p><pre><code class="language-bash">composer require spryker/shipment: "^7.0.0" --update-with-dependencies</code></pre>
-                                                            <p>2. Run the database migration.</p><pre><code class="language-bash">console propel:install
+                                                            <p>2. Clean up the database entity schema for each store in the system:</p><pre><code class="language-bash">APPLICATION_STORE=DE console propel:schema:copy
+APPLICATION_STORE=US console propel:schema:copy
+...</code></pre>
+                                                            <p>3. Run the database migration.</p><pre><code class="language-bash">console propel:install
 console transfer:generate</code></pre>
-                                                            <p>3. Enable the following plugins : </p>
+                                                            <p>4. Enable the following plugins : </p>
                                                             <div class="table-wrap">
                                                                 <table style="mc-table-style: url('../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                                     <thead>
@@ -289,7 +292,7 @@ console transfer:generate</code></pre>
                                                                     </tbody>
                                                                 </table>
                                                             </div>
-                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Yves/CheckoutPage/CheckoutPageDependencyProvider.phpsrc/Pyz/Zed/Shipment/ShipmentDependencyProvider.php</a></span>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Shipment/ShipmentDependencyProvider.php</a></span>
                                                                 <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Zed\Shipment;
@@ -357,7 +360,7 @@ class OmsDependencyProvider extends SprykerOmsDependencyProvider
 }</code></pre>
                                                                 </div>
                                                             </div>
-                                                            <p>4. Enable project configuration:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                            <p>5. Enable project configuration:</p><pre><code class="language-PHP line-numbers">&lt;?php
  
 namespace Pyz\Shared\Shipment;
  
@@ -661,7 +664,7 @@ class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Oct. 16th, 2017 </i>
+                                                    <p><i>Last review date: Sep 18, 2019</i>
                                                     </p>
                                                 </div>
                                             </div>
