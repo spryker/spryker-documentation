@@ -279,28 +279,6 @@
         &lt;/pages&gt;
     &lt;/hello-world&gt;
 &lt;/config&gt;</code></pre>
-                                                    <p>Make sure your <var>Pyz/Zed/Application/ApplicationConfig.php</var> contains the pattern for your project.</p><pre><code class="language-PHP line-numbers">touch src/Pyz/Zed/Application/ApplicationConfig.php</code></pre>
-                                                    <p>and insert the code as follows:</p><pre><code class="language-PHP line-numbers">&lt;?php
-namespace Pyz\Zed\Application;
-
-use Spryker\Zed\Application\ApplicationConfig as SprykerApplicationConfig;
-
-class ApplicationConfig extends SprykerApplicationConfig
-{
-
-    /**
-     * @return array
-     */
-    public function getNavigationSchemaPathPattern()
-    {
-        $pattern = parent::getNavigationSchemaPathPattern();
-
-        $pattern[] = APPLICATION_ROOT_DIR . '/src/*/Zed/*/Communication';
-
-        return $pattern;
-    }
-
-}</code></pre>
                                                     <p>and run the following command :</p><pre><code class="language-PHP line-numbers">vendor/bin/console application:build-navigation-cache</code></pre>
                                                     <p>Now reload your Zed page and you will find your “Greeter” menu point under the main point “Hello World”.</p>
                                                     <h2>Tips</h2>
