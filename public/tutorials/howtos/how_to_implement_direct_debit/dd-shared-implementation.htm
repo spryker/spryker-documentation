@@ -12,7 +12,7 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <meta charset="utf-8" />
         <meta name="description" content="" />
-        <meta name="author" content="" /><title>Direct Debit Shared Implementation   </title>
+        <meta name="author" content="" /><title>HowTo - Implement Direct Debit in Shared Layer  </title>
         <!-- Google Tag Manager -->
         <script>/* <![CDATA[ */(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
 			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="KyClbIM8Y0KYzvKVPMCuGw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KyClbIM8Y0KYzvKVPMCuGw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="cRKI3L6I10y4IsoKyHD0JA">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="cRKI3L6I10y4IsoKyHD0JA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,56 +239,46 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Direct Debit Shared Implementation <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <p>This procedure will help us to identify a new payment type through some unique constants. We are going to define those constants under the <var>Shared</var> namespace, since they’re needed both by Yves and Zed.
+                                                    <h1>HowTo - Implement Direct Debit in Shared Layer<img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> </h1>
+                                                    <p>This articles provides step-by-step instructions on how to identify the new payment type using some unique constants. We are going to define those constants under the <var>Shared</var> namespace, since they’re needed both for Yves and Zed.
 </p>
+                                                    <p>To identify the new payment type, do the following:</p>
                                                     <ol>
                                                         <li value="1">Create the <var>PaymentMethodsConstants</var> interface under the <var>Shared</var> namespace, where you’ll define these unique constants.
-<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numebrs">&lt;?php
-
+				<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numebrs">&lt;?php
 namespace Pyz\Shared\PaymentMethods;
 
 interface PaymentMethodsConstants
 {
-
-    /**
-     * @const string
-     */
-    const PROVIDER = 'paymentmethods';
-
-    /**
-     * @const string
-     */
-    const PAYMENT_METHOD_DIRECTDEBIT = 'directdebit';
-
-    /**
-     * @const string
-     */
-    const PAYMENT_DIRECTDEBIT_FORM_PROPERTY_PATH = static::PROVIDER . static::PAYMENT_METHOD_DIRECTDEBIT;
-
+	public const PROVIDER = 'PaymentMethods';
+	public const PAYMENT_METHOD_DIRECTDEBIT = 'paymentMethodsDirectDebit';
 }</code></pre></div></div></li>
-                                                        <li value="2">Enrich the <var>Payment</var> transfer file with a new property that corresponds to the new payment method.
-			<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
+                                                        <li value="2">Enrich the <var>Payment</var> transfer file with a new property that corresponds to the new Direct Debit payment method.
+			<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
 &lt;transfers xmlns="spryker:transfer-01"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="spryker:transfer-01 http://static.spryker.com/transfer-01.xsd"&gt;
 
     &lt;transfer name="Payment"&gt;
-        &lt;!-- Should be equal to PaymentMethodsConstants::PAYMENT_DIRECTDEBIT_FORM_PROPERTY_PATH. Then the form fields can be automatically mapped to the transfer object inside this field. --&gt;
-        &lt;property name="paymentmethodsdirectdebit" type="PaymentDirectDebit"/&gt;
+        &lt;property name="paymentMethodsDirectDebit" type="PaymentDirectDebit"/&gt;
     &lt;/transfer&gt;
 
     &lt;transfer name="PaymentDirectDebit"&gt;
-        &lt;property name="idPaymentDirectdebit" type="int"/&gt;
+        &lt;property name="idPaymentDirectDebit" type="int"/&gt;
         &lt;property name="fkSalesOrder" type="int"/&gt;
 
         &lt;property name="bankAccountHolder" type="string"/&gt;
         &lt;property name="bankAccountBic" type="string"/&gt;
         &lt;property name="bankAccountIban" type="string"/&gt;
     &lt;/transfer&gt;</code></pre></div></div></li>
-                                                        <li value="3"> Run the <var>vendor/bin/console transfer:generate</var> command to have the <var>PaymentTransfer</var> class updated.
-</li>
+                                                        <li value="3"> To have the <var>PaymentTransfer</var> class updated, run the following command: </li><pre><code class="language-bash">vendor/bin/console transfer:generate</code></pre>
                                                     </ol>
+                                                    <p>&#160;</p>
+                                                    <p style="font-weight: bold;">What's next?</p>
+                                                    <p>After you've completed the front end, back end and shared implementation of the Direct Debit payment method, you can test it. See <a href="dd-test-implementation.htm">HowTo - Test the Direct Debit Implementation</a> for information on how to do that.</p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Sep 27, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

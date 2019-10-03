@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="M0uWlslQ5UaKSzz5qjQQsg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="M0uWlslQ5UaKSzz5qjQQsg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="wnhgkpZ-m0C1pkmBp2Lt7Q">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="wnhgkpZ-m0C1pkmBp2Lt7Q:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,73 +239,80 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Integrate Direct Debit into Checkout <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /><![CDATA[  ]]><img src="../../../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <p>The next step is to integrate direct debit into <b>Checkout</b>. In the <var>PaymentMethods/Dependency/Injector</var> from in Yves add the <code>CheckoutDependencyInjector</code>, that will inject the direct debit form and handler into the <b>Checkout</b> module:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
+                                                    <h1>Integrate Direct Debit into Checkout <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /><![CDATA[  ]]></h1>
+                                                    <p>This HowTo article provides the instructions on how to  integrate the Direct Debit payment form and handler into <b>Checkout</b>. </p>
+                                                    <p>For this purpose, in Yves, add the <code>CheckoutDependencyInjector</code> to the <var>PaymentMethods/Dependency/Injector</var>. </p>
+                                                    <p>This will inject the Direct Debit form and handler into the <b>Checkout</b> module:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Code sample</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="bash">&lt;?php
 
 namespace Pyz\Yves\PaymentMethods\Dependency\Injector;
 
-use Spryker\Shared\Kernel\ContainerInterface;
-use Spryker\Shared\Kernel\Dependency\Injector\DependencyInjectorInterface;
-use Spryker\Yves\Checkout\CheckoutDependencyProvider;
+use Spryker\Yves\Kernel\Container;
+use Spryker\Yves\Kernel\Dependency\Injector\DependencyInjectorInterface;
 use Pyz\Yves\PaymentMethods\Plugin\DirectDebitHandlerPlugin;
 use Pyz\Yves\PaymentMethods\Plugin\DirectDebitSubFormPlugin;
+use Spryker\Yves\Checkout\CheckoutDependencyProvider;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginCollection;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginCollection;
 use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
 
-class CheckoutDependencyInjector implements DependencyInjectorInterface
+class CheckoutPageDependencyInjector implements DependencyInjectorInterface
 {
-    /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
-     *
-     * @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
-     */
-    public function inject(ContainerInterface $container)
-    {
-        $container = $this-&gt;injectPaymentSubForms($container);
-        $container = $this-&gt;injectPaymentMethodHandler($container);
+	/**
+	* @param \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container $container
+	*
+	* @return \Spryker\Shared\Kernel\ContainerInterface|\Spryker\Yves\Kernel\Container
+	*/
+	public function inject(Container $container)
+	{
+		$container = $this-&gt;injectPaymentSubForms($container);
+		$container = $this-&gt;injectPaymentMethodHandler($container);
 
-        return $container;
-    }
+		return $container;
+	}
 
-    /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
-     */
-    protected function injectPaymentSubForms(ContainerInterface $container)
-    {
-        $container-&gt;extend(static::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
-            $paymentSubForms-&gt;add(new DirectDebitSubFormPlugin());
+	/**
+	* @param \Spryker\Shared\Kernel\ContainerInterface $container
+	*
+	* @return \Spryker\Shared\Kernel\ContainerInterface
+	*/
+	protected function injectPaymentSubForms(Container $container)
+	{
+		$container-&gt;extend(CheckoutDependencyProvider::PAYMENT_SUB_FORMS, function (SubFormPluginCollection $paymentSubForms) {
+			$paymentSubForms-&gt;add(new DirectDebitSubFormPlugin());
 
-            return $paymentSubForms;
-        });
+			return $paymentSubForms;
+		});
 
-        return $container;
-    }
+		return $container;
+	}
 
-    /**
-     * @param \Spryker\Shared\Kernel\ContainerInterface $container
-     *
-     * @return \Spryker\Shared\Kernel\ContainerInterface
-     */
-    protected function injectPaymentMethodHandler(ContainerInterface $container)
-    {
-        $container-&gt;extend(static::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
-            $paymentMethodHandler-&gt;add(new DirectDebitHandlerPlugin(), PaymentMethodsConstants::PROVIDER);
+	/**
+	* @param \Spryker\Shared\Kernel\ContainerInterface $container
+	*
+	* @return \Spryker\Shared\Kernel\ContainerInterface
+	*/
+	protected function injectPaymentMethodHandler(Container $container)
+	{
+		$container-&gt;extend(CheckoutDependencyProvider::PAYMENT_METHOD_HANDLER, function (StepHandlerPluginCollection $paymentMethodHandler) {
+			$paymentMethodHandler-&gt;add(new DirectDebitHandlerPlugin(), PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT);
 
-            return $paymentMethodHandler;
-        });
+			return $paymentMethodHandler;
+		});
 
-        return $container;
-    }
-}
-</code></pre>
+		return $container;
+	}
+}</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p class="important" data-mc-conditions="Spryker.DemoShop">If you recreated this example in Demoshop, you’ll need to do some adjustments on the <var>selectPayment()</var> from <var>checkout.js</var>.</p>
+                                                    <p>&#160;</p>
+                                                    <p><b>What's next?</b>
+                                                    </p>
+                                                    <p>Once done, you need to <a href="dd-be-implementation.htm">create and integrate the Direct Debit payment method in the back-end</a>.</p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Sep 27, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
