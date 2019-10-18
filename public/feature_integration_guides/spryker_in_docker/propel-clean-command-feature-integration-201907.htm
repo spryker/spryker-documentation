@@ -210,8 +210,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="39xAcfgk1U-BT6IQZhiwKQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="39xAcfgk1U-BT6IQZhiwKQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="op1QVftWCkOdvOSJjL_1Tg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="op1QVftWCkOdvOSJjL_1Tg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -296,14 +296,20 @@
                                                     <p>Clean up codeception configuration by deleting <var>SetupHelper</var> from all codeception configuration files:</p><pre><code class="language-shell">- \SprykerTest\Shared\Application\Helper\SetupHelper</code></pre>
                                                     <div class="info">Use <var>SprykerTest\Shared\Testify\Helper\DataCleanupHelper</var> instead to clean up data after each test that can intersect with other tests.</div>
                                                     <p>Enable the <var>DatabaseDropTablesConsole</var> console command in <var>Pyz\Zed\Console\ConsoleDependencyProvider</var>:</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Application/ApplicationDependencyProvider.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">use Spryker\Zed\Application\Communication\Plugin\ServiceProvider\AssertUrlConfigurationServiceProvider;
-
-...
-
-if (Environment::isDevelopment()) {	
-    array_unshift($providers, new AssertUrlConfigurationServiceProvider());		
-}
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Console/ConsoleDependencyProvider.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">class ConsoleDependencyProvider extends SprykerConsoleDependencyProvider
+{
+    /**
+     * @param \Spryker\Zed\Kernel\Container $container
+     *
+     * @return \Symfony\Component\Console\Command\Command[]
+     */
+    protected function getConsoleCommands(Container $container)
+    {
+        $commands = [
+            ...
+            new DatabaseDropTablesConsole(),
+            ...
 ...</code></pre>
                                                         </div>
                                                     </div>
