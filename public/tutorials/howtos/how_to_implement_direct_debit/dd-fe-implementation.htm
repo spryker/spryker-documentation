@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="zYNd1B8BIU2XDsTOsfNnag">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="zYNd1B8BIU2XDsTOsfNnag:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="SWN1p6LUYkWy-l3y-kBonQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="SWN1p6LUYkWy-l3y-kBonQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -239,124 +239,245 @@
                                                     </div>
                                                 </div>
                                                 <div class="js-anchorer main-content">
-                                                    <h1>Direct Debit Front-end Implementation <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
-                                                    <h2>Form creation
-</h2>
-                                                    <p>In Yves, the starting point is to build a form.</p>
-                                                    <ul>
-                                                        <li value="1">Add a new module in Yves</li>
-                                                        <li value="2">Add a <var>Form</var> folder where we will place the implementation for building the form</li>
-                                                    </ul>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Adding the data provider</a></span>
+                                                    <h1>Direct Debit Front-end Implementation <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> </h1>
+                                                    <p>Usually, the first step of the Direct Debit payment method implementation is set-up on Yves. This article provides step-by-step instructions on how to do that. </p>
+                                                    <h2>Prerequisites</h2>
+                                                    <li value="4">Prior to proceeding with the first step, the form creation, add a new module on the project level in Yves - for example, the <var>PaymentMethods</var> module. If you haven't had any experience in creating a new module yet, see <a href="http://documentation.spryker.com/tutorials/advanced/t-add-new-bundle.htm">Tutorial - Adding a New Module</a>. Create a <i>Form</i> folder in the module.</li>
+                                                    <h2>Creating a Form</h2>
+                                                    <p>The starting point is to <a name="creating-form"></a>create the form in Yves.</p>
+                                                    <p style="font-weight: normal;">To create the form, do the following:</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Add the data provider</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>The first step is to add the data provider, inside the <var>Form/DataProvider/</var> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
+                                                            <p>In the created module, in our example <var>PaymentMethods</var>, add the data provider to the <var>Form/DataProvider/</var> folder:</p><pre><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\PaymentMethods\Form\DataProvider;
 
+use Generated\Shared\Transfer\PaymentDirectDebitTransfer;
+use Generated\Shared\Transfer\PaymentTransfer;
 use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
 
-class DirectDebitDataProvider implements DataProviderInterface
+class DirectDebitDataProvider
 {
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getData(QuoteTransfer $quoteTransfer)
-    {
-        return $quoteTransfer;
-    }
+	/**
+	* @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+	*
+	* @return \Generated\Shared\Transfer\QuoteTransfer
+	*/
+	public function getData(QuoteTransfer $quoteTransfer)
+	{
+		if ($quoteTransfer-&gt;getPayment() === null) {
+			$paymentTransfer = new PaymentTransfer();
+			$paymentTransfer-&gt;setPaymentMethodsDirectDebit(new PaymentDirectDebitTransfer());
+			$paymentTransfer-&gt;setDummyPaymentCreditCard(new PaymentDirectDebitTransfer());
+			$quoteTransfer-&gt;setPayment($paymentTransfer);
+		}
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getOptions(QuoteTransfer $quoteTransfer)
-    {
-        return [];
-    }
+		return $quoteTransfer;
+	}
+
+	/**
+	* @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+	*
+	* @return array
+	*/
+	public function getOptions(QuoteTransfer $quoteTransfer)
+	{
+		return [];
+	}
 
 }</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />2. Implementing the form</a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>The next step is to implement the form:</p><pre><code class="language-PHP line-numbers">&lt;?php
-namespace Pyz\Yves\PaymentMethods\Form\DataProvider;
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />2. Implementing the form</a></span>
+                                                                <div class="MCDropDownBody dropDownBody">
+                                                                    <p>Once done, implement the form:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+namespace Pyz\Yves\PaymentMethods\Form;
 
-use Generated\Shared\Transfer\QuoteTransfer;
-use Pyz\Yves\Checkout\Dependency\DataProvider\DataProviderInterface;
+use Generated\Shared\Transfer\PaymentDirectDebitTransfer;
+use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
+use Spryker\Yves\StepEngine\Dependency\Form\AbstractSubFormType;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormInterface;
+use Spryker\Yves\StepEngine\Dependency\Form\SubFormProviderNameInterface;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
-class DirectDebitDataProvider implements DataProviderInterface
+class DirectDebitForm extends AbstractSubFormType implements SubFormInterface, SubFormProviderNameInterface
 {
+	const FIELD_BANK_ACCOUNT_HOLDER = 'bank_account_holder';
+	const FIELD_BANK_ACCOUNT_IBAN = 'bank_account_iban';
+	const FIELD_BANK_ACCOUNT_BIC = 'bank_account_bic';
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function getData(QuoteTransfer $quoteTransfer)
-    {
-        return $quoteTransfer;
-    }
+	/**
+	* @param \Symfony\Component\OptionsResolver\OptionsResolver $resolver
+	*
+	* @return void
+	*/
+	public function configureOptions(OptionsResolver $resolver)
+	{
+		$resolver-&gt;setDefaults([
+			'data_class' =&gt; PaymentDirectDebitTransfer::class,
+		])-&gt;setRequired(self::OPTIONS_FIELD_NAME);
+	}
 
-    /**
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return array
-     */
-    public function getOptions(QuoteTransfer $quoteTransfer)
-    {
-        return [];
-    }
+	/**
+	* @param \Symfony\Component\Form\FormBuilderInterface $builder
+	* @param array $options
+	*
+	* @return void
+	*/
+	public function buildForm(FormBuilderInterface $builder, array $options): void
+	{
+		$this-&gt;addBankAccountHolderField($builder);
+		$this-&gt;addBankAccountIbanField($builder);
+		$this-&gt;addBankAccountBicField($builder);
+	}
 
+	/**
+	* @return string
+	*/
+	public function getTemplatePath()
+	{
+		return PaymentMethodsConstants::PROVIDER . '/views/' . PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
+	}
+
+	/**
+	* @return string
+	*/
+	public function getName()
+	{
+		return PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
+	}
+
+	/**
+	* @return string
+	*/
+	public function getProviderName()
+	{
+		return PaymentMethodsConstants::PROVIDER;
+	}
+
+	/**
+	* @return string
+	*/
+	public function getPropertyPath()
+	{
+		return PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
+	}
+
+	/**
+	* @param \Symfony\Component\Form\FormBuilderInterface $builder
+	*
+	* @return $this
+	*/
+	protected function addBankAccountHolderField(FormBuilderInterface $builder)
+	{
+		$builder-&gt;add(
+			static::FIELD_BANK_ACCOUNT_HOLDER,
+			TextType::class,
+			[
+				'label' =&gt; static::FIELD_BANK_ACCOUNT_HOLDER,
+				'constraints' =&gt; [
+					$this-&gt;createNotBlankConstraint(),
+				],
+			]
+		);
+
+		return $this;
+	}
+
+	/**
+	* @param \Symfony\Component\Form\FormBuilderInterface $builder
+	*
+	* @return $this
+	*/
+	protected function addBankAccountIbanField(FormBuilderInterface $builder)
+	{
+		$builder-&gt;add(
+			static::FIELD_BANK_ACCOUNT_IBAN,
+			TextType::class,
+			[
+				'label' =&gt; static::FIELD_BANK_ACCOUNT_IBAN,
+				'constraints' =&gt; [
+					$this-&gt;createNotBlankConstraint(),
+				],
+			]
+		);
+
+		return $this;
+	}
+
+	/**
+	* @param \Symfony\Component\Form\FormBuilderInterface $builder
+	*
+	* @return $this
+	*/
+	protected function addBankAccountBicField(FormBuilderInterface $builder)
+	{
+		$builder-&gt;add(
+			static::FIELD_BANK_ACCOUNT_BIC,
+			TextType::class,
+			[
+				'label' =&gt; static::FIELD_BANK_ACCOUNT_BIC,
+				'constraints' =&gt; [
+					$this-&gt;createNotBlankConstraint(),
+				],
+			]
+		);
+
+		return $this;
+	}
+
+	/**
+	* @return \Symfony\Component\Validator\Constraint
+	*/
+	protected function createNotBlankConstraint()
+	{
+		return new NotBlank(['groups' =&gt; $this-&gt;getPropertyPath()]);
+	}
 }</code></pre>
-                                                        </div>
-                                                    </div>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />3. Adding a plugin</a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p>Right after the form is implemented, you will need to plug this form into checkout. In order to do that, add a plugin for it inside the <var>Plugin/</var> folder:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
-
+                                                                </div>
+                                                            </div>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />3. Add a plugin</a></span>
+                                                                <div class="MCDropDownBody dropDownBody">
+                                                                    <p>After the form has been implemented, plug this form into the checkout by adding a plugin to the <var>Plugin/</var> folder:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\PaymentMethods\Plugin;
+
 
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Form\SubFormPluginInterface;
 
 /**
- * @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
- */
+* @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
+*/
 class DirectDebitSubFormPlugin extends AbstractPlugin implements SubFormPluginInterface
 {
+	/**
+	* @return \Pyz\Yves\PaymentMethods\Form\DirectDebitForm
+	*/
+	public function createSubForm()
+	{
+		return $this-&gt;getFactory()-&gt;createDirectDebitForm();
+	}
 
-    /**
-     * @return \Pyz\Yves\PaymentMethods\Form\DirectDebitSubForm
-     */
-    public function createSubForm()
-    {
-        return $this-&gt;getFactory()-&gt;createDirectDebitForm();
-    }
-
-    /**
-     * @return \Pyz\Yves\Checkout\Dependency\DataProvider\DataProviderInterface
-     */
-    public function createSubFormDataProvider()
-    {
-        return $this-&gt;getFactory()-&gt;createDirectDebitFormDataProvider();
-    }
-
+	/**
+	* @return \Pyz\Yves\PaymentMethods\Form\DataProvider\DirectDebitDataProvider
+	*/
+	public function createSubFormDataProvider()
+	{
+		return $this-&gt;getFactory()-&gt;createDirectDebitFormDataProvider();
+	}
 }</code></pre>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <h2>
-Payment Handler</h2>
-                                                    <p>The next procedure to be performed is to set up the payment handler.</p>
-                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Handling the new payment type</a></span>
+                                                    <h2>Setting up a Payment Handler</h2>
+                                                    <p><a name="set-up-payment-handler"></a>The next step is setting up the payment handler. Follow the procedure below to accomplish this.</p>
+                                                    <p>&#160;</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />1. Handle a new payment type</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p xml:space="preserve">
-To be able to handle this new payment type, add a <var>DirectDebitHandler</var> class inside the <var>Handler/</var> folder:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
-
+To handle the new payment type, add a <var>DirectDebitHandler</var> class to the <var>Handler/</var> folder:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
 namespace Pyz\Yves\PaymentMethods\Handler;
 
 use Generated\Shared\Transfer\QuoteTransfer;
@@ -366,94 +487,147 @@ use Symfony\Component\HttpFoundation\Request;
 class DirectDebitHandler
 {
 
-    /**
-     * @const string
-     */
-    const PAYMENT_PROVIDER = PaymentMethodsConstants::PROVIDER;
+	/**
+	* @const string
+	*/
+	const PAYMENT_PROVIDER = PaymentMethodsConstants::PROVIDER;
 
-    /**
-     * @const string
-     */
-    const PAYMENT_METHOD = PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
+	/**
+	* @const string
+	*/
+	const PAYMENT_METHOD = PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
-    {
-        $quoteTransfer-&gt;getPayment()
-            -&gt;setPaymentProvider(static::PAYMENT_PROVIDER)
-            -&gt;setPaymentMethod(static::PAYMENT_METHOD);
+	/**
+	* @param \Symfony\Component\HttpFoundation\Request $request
+	* @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+	*
+	* @return \Generated\Shared\Transfer\QuoteTransfer
+	*/
+	public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)
+	{
+		$quoteTransfer-&gt;getPayment()
+			-&gt;setPaymentProvider(static::PAYMENT_PROVIDER)
+			-&gt;setPaymentMethod(static::PAYMENT_METHOD);
 
-        return $quoteTransfer;
-    }
+		return $quoteTransfer;
+	}
 }</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
-2. Plugging the payment handler into checkout</a></span>
+2. Plug the payment handler into the checkout</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
-                                                            <p>To plug this payment handler into checkout, add a plugin for it inside the <var>Plugin/</var> folder:</p><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+                                                            <p>To plug this payment handler into the checkout, add a plugin to the following folders: </p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /> the <var>Plugin/</var> folder:</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
 
 namespace Pyz\Yves\PaymentMethods\Plugin;
 
-use Spryker\Shared\Kernel\AbstractTransfer;
+use Spryker\Shared\Kernel\Transfer\AbstractTransfer;
 use Spryker\Yves\Kernel\AbstractPlugin;
 use Spryker\Yves\StepEngine\Dependency\Plugin\Handler\StepHandlerPluginInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
- */
+* @method \Pyz\Yves\PaymentMethods\PaymentMethodsFactory getFactory()
+*/
 class DirectDebitHandlerPlugin extends AbstractPlugin implements StepHandlerPluginInterface
 {
 
-    /**
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
-     *
-     * @return \Generated\Shared\Transfer\QuoteTransfer
-     */
-    public function addToDataClass(Request $request, QuoteTransfer $quoteTransfer)
-    {
-        $this-&gt;getFactory()-&gt;createDirectDebitHandler()-&gt;addPaymentToQuote($request, $quoteTransfer);
-    }
+	/**
+	* @param \Symfony\Component\HttpFoundation\Request $request
+	* @param \Generated\Shared\Transfer\QuoteTransfer|\Spryker\Shared\Kernel\Transfer\AbstractTransfer $quoteTransfer
+	*
+	* @return \Generated\Shared\Transfer\QuoteTransfer
+	*/
+	public function addToDataClass(Request $request, AbstractTransfer $quoteTransfer)
+	{
+		$this-&gt;getFactory()-&gt;createDirectDebitHandler()-&gt;addPaymentToQuote($request, $quoteTransfer);
+	}
 
 }</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />
+the <var>Handler/</var> folder:</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+
+namespace Pyz\Yves\PaymentMethods\Handler;
+
+use Generated\Shared\Transfer\PaymentTransfer;
+use Generated\Shared\Transfer\QuoteTransfer;
+use Pyz\Shared\PaymentMethods\PaymentMethodsConstants;
+use Symfony\Component\HttpFoundation\Request;
+
+class DirectDebitHandler
+{
+
+	/**
+	* @const string
+	*/
+	const PAYMENT_PROVIDER = PaymentMethodsConstants::PROVIDER;
+	
+	/**
+	* @const string
+	*/
+	const PAYMENT_METHOD = PaymentMethodsConstants::PAYMENT_METHOD_DIRECTDEBIT;
+
+	/**
+	* @param \Symfony\Component\HttpFoundation\Request $request
+	* @param \Generated\Shared\Transfer\QuoteTransfer $quoteTransfer
+	*
+	* @return \Generated\Shared\Transfer\QuoteTransfer
+	*/
+	public function addPaymentToQuote(Request $request, QuoteTransfer $quoteTransfer)	
+	{
+		$quoteTransfer-&gt;getPayment()		
+			-&gt;setPaymentProvider(static::PAYMENT_PROVIDER)
+			-&gt;setPaymentMethod(static::PAYMENT_METHOD);
+
+		return $quoteTransfer;
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <h2>
-Direct Debit Twig Template
+                                                    <h2>Creating a Direct Debit Twig Template
 </h2>
-                                                    <p>Add the Twig template that will be rendered when direct debit payment method is selected under the configured path:</p>
+                                                    <p>This procedure learns you on how to create the Twig template that will be rendered when the direct debit payment method is selected under the configured path. </p>
+                                                    <p><a name="create-dd-twig-template"></a>To create the Direct Debit twig template, do the following:</p>
                                                     <ol>
-                                                        <li value="1">In Yves, create the <var>directdebit.twig</var> template file in <code><var>PaymentMethods/Theme/ </var></code>, then <var>ApplicationConstants::YVES_THEME</var> config value directory.</li>
-                                                        <li value="2">Adjust the path according to the theme you are currently using.<br /><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;div class="payment-subform directdebit-form"&gt;
-    &lt;h4&gt;{{ 'payment.paymentmethods.directdebit.bankaccount' | trans }}&lt;/h4&gt;
-    &lt;label&gt;{{ 'payment.paymentmethods.directdebit.holder' | trans }}&lt;/label&gt;
-    &lt;div class="field"&gt;
-        {{ form_widget(form.paymentmethods_directdebit.bank_account_holder, { 'attr': {'placeholder': 'payment.paymentmethods.directdebit.holder' | trans } }) }}
-        {{ form_errors(form.paymentmethods_directdebit.bank_account_holder) }}
-    &lt;/div&gt;
-    &lt;label&gt;{{ 'payment.paymentmethods.directdebit.iban' | trans }}&lt;/label&gt;
-    &lt;div class="field"&gt;
-        {{ form_widget(form.paymentmethods_directdebit.bank_account_iban, { 'attr': {'placeholder': 'payment.paymentmethods.directdebit.iban' | trans } }) }}
-        {{ form_errors(form.paymentmethods_directdebit.bank_account_iban) }}
-    &lt;/div&gt;
-    &lt;label&gt;{{ 'payment.paymentmethods.directdebit.bic' | trans }}&lt;/label&gt;
-    &lt;div class="field"&gt;
-        {{ form_widget(form.paymentmethods_directdebit.bank_account_bic, { 'attr': {'placeholder': 'payment.paymentmethods.directdebit.bic' | trans } }) }}
-        {{ form_errors(form.paymentmethods_directdebit.bank_account_bic) }}
-    &lt;/div&gt;
-    {{ form_widget(form.paymentmethods_directdebit) }}
-    {{ form_errors(form.paymentmethods_directdebit) }}
-&lt;/div&gt;</code></pre></div></div></li>
+                                                        <li value="1">In Yves, create the <var>directdebit.twig</var> template file in the <code><var>PaymentMethods/Theme/ </var></code>folder, and then <var>ApplicationConstants::YVES_THEME</var> config value directory.</li>
+                                                        <li value="2">Adjust the path according to the theme you are currently using.<br /><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Code sample</a></span><div class="MCDropDownBody dropDownBody"><pre xml:space="preserve">
+<code class="language-XML line-numbers">&lt;div class="payment-subform directdebit-form"&gt;
+	&lt;h4&gt;{{ 'payment.paymentMethodsDirectDebit.directdebit.bankaccount' | trans }}&lt;/h4&gt;
+	&lt;label&gt;{{ 'payment.paymentMethodsDirectDebit.directdebit.holder' | trans }}&lt;/label&gt;
+	&lt;div class="field"&gt;
+		{{ form_widget(form.paymentMethodsDirectDebit.bank_account_holder, { 'attr': {'placeholder': 'payment.paymentMethodsDirectDebit.directdebit.holder' | trans } }) }}
+		{{ form_errors(form.paymentMethodsDirectDebit.bank_account_holder) }}
+	&lt;/div&gt;
+	&lt;label&gt;{{ 'payment.paymentMethodsDirectDebit.directdebit.iban' | trans }}&lt;/label&gt;
+	&lt;div class="field"&gt;
+		{{ form_widget(form.paymentMethodsDirectDebit.bank_account_iban, { 'attr': {'placeholder': 'payment.paymentMethodsDirectDebit.directdebit.iban' | trans } }) }}
+		{{ form_errors(form.paymentMethodsDirectDebit.bank_account_iban) }}
+	&lt;/div&gt;
+	&lt;label&gt;{{ 'payment.paymentMethodsDirectDebit.directdebit.bic' | trans }}&lt;/label&gt;
+	&lt;div class="field"&gt;
+		{{ form_widget(form.paymentMethodsDirectDebit.bank_account_bic, { 'attr': {'placeholder': 'payment.paymentMethodsDirectDebit.directdebit.bic' | trans } }) }}
+		{{ form_errors(form.paymentMethodsDirectDebit.bank_account_bic) }}
+	&lt;/div&gt;
+		{{ form_widget(form.paymentMethodsDirectDebit) }}
+		{{ form_errors(form.paymentMethodsDirectDebit) }}
+	&lt;/div&gt;</code></pre></div></div></li>
                                                     </ol>
-                                                    <p class="important">Don’t forget to add the factory and the dependency provider for this new added module in Yves.
+                                                    <p class="important">Don’t forget to add the factory and the dependency provider for this new module in Yves.
 </p>
+                                                    <p>&#160;</p>
+                                                    <p><b>What's next?</b>
+                                                    </p>
+                                                    <p>After the form has been created and the payment handler has been set up, you need to <a href="dd-checkout-implementation.htm">integrate them into the Checkout module</a>. </p>
+                                                    <p>&#160;</p>
+                                                    <p><i>Last review date: Sep 30, 2019</i>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>
