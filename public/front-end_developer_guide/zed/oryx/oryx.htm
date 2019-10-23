@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="lRF0RmbwekSA2uQdoYGqDA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lRF0RmbwekSA2uQdoYGqDA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="-Ihg3eyqKkiZtNagMQzsqg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="-Ihg3eyqKkiZtNagMQzsqg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -288,9 +288,8 @@ yarn add @spryker/oryx --dev
                                                     <p>Use Oryx to find Spryker Yves core entry points and add them to your configuration. The following <var>entrySettings</var> constant defines where to search for them (<var>dirs</var>), which patterns to adopt to spot them (<var>patterns</var>), the description to log in the terminal (<var>description</var>) and how to name the entry points (<var>defineName(path)</var>).
 </p>
                                                     <p>
-To configure Oryx to look for your own entry points, change the settings accordingly or add them directly as you always do with webpack (see example below).
-
-</p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
+To configure Oryx to look for your own entry points, change the settings accordingly or add them directly as you always do with webpack. As the "find entry points" function is working an asyncronous mode, it is necessary to create an asyncronous configuration function which would resolve the entry points promises (see example below).<![CDATA[
+]]></p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
 
 const entrySettings = {
     dirs: [path.resolve('vendor/spryker')],
@@ -299,28 +298,35 @@ const entrySettings = {
     defineName: fullPath =&gt; path.basename(fullPath, '.entry.js')
 }
 
-const webpackConfiguration = {
-    // ...
-    entry: oryx.find(entrySettings, {
+async function getConfiguration() {
+    const entryPaths = await oryx.find(settings.entry, {
         // your project entry points go here
         'app': './path/to/app',
         'commons': './path/to/commons'
-    }),
-    // ...
+    });
+
+    const webpackConfiguration = {
+        // ...
+        entry: entryPaths,
+        // ...
+    }
+
+    return webpackConfiguration;
 }
 
-module.exports = webpackConfiguration;
+module.exports = getConfiguration;
 </code></pre>
                                                     <h3>build.js
 </h3>
                                                     <p>This file contains the programmatic call to <var>webpack </var>using the <var>oryx.build()</var> function. Oryx will take care of printing a minimal log in the terminal console.
 
-</p>
-                                                    <p>const oryx = require('oryx');
-const configuration = require('./webpack.config.js');
+</p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
+const getConfiguration = require('./webpack.config.js');
 
-oryx.build(configuration);
-</p>
+getConfiguration()
+    .then(configuration =&gt; oryx.build(configuration))
+    .catch(error =&gt; console.error('An error occurred while creating configuration', error));
+</code></pre>
                                                     <h3>package.json
 </h3>
                                                     <p>Add a script into your <var>package.json</var> pointing to <var>build.js</var>.
@@ -342,9 +348,8 @@ yarn run yves
                                                     <h3><a name="find"></a>find()
 </h3><pre><code class="language-bash line-numbers">oryx.find(settings, [initial])
 </code></pre>
-                                                    <p>Performs a glob search into provided directories, using provided patterns and returns all the matching paths as an object {name-path} or as an array (path array).
-
-</p>
+                                                    <p>Performs a glob search in the provided directories, using the provided patterns and returns all the matching paths as an object {name-path}, or as an array (path array). oryx.find() works in the asynchronous mode and returns a promise.<![CDATA[
+]]></p>
                                                     <ul>
                                                         <li class="bullet_list" value="1"><var>settings {object}</var>:
 <ul><li class="bullet_list" value="1"><var>dirs {array[string]}</var>: directories in which to search

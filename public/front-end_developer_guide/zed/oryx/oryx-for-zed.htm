@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="Cp-FV3nsE0-o4OuHsGkk4g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="Cp-FV3nsE0-o4OuHsGkk4g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="tY5Ml2WfFkCmqZIT242Hcg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="tY5Ml2WfFkCmqZIT242Hcg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -346,11 +346,14 @@ oryxForZed.getConfiguration(myCustomZedSettings).then(configuration =&gt; oryx.b
                                                     <p>Create a <var>webpack.config.js</var> file in your project containing your <var>webpack </var>custom configuration:
 
 </p><pre><code class="language-bash line-numbers">const oryxForZed = require('@spryker/oryx-for-zed');
-const oryxConfiguration = oryxForZed.getConfiguration(oryxForZed.settings);
 
-const myCustomZedConfiguration = Object.assign({}, oryxConfiguration, {
-    // your own configuration
-});
+async function myCustomZedConfiguration() {
+    const oryxConfiguration = await oryxForZed.getConfiguration(oryxForZed.settings);
+
+    return Object.assign({}, oryxConfiguration, {
+        // your own configuration
+    });
+}
 
 module.exports = myCustomZedConfiguration;
 </code></pre>
@@ -360,7 +363,7 @@ module.exports = myCustomZedConfiguration;
 </p><pre><code class="language-bash line-numbers">const oryx = require('@spryker/oryx');
 const myCustomZedConfiguration = require('./webpack.config.js');
 
-oryx.build(myCustomZedConfiguration);
+myCustomZedConfiguration().then(configuration =&gt; oryx.build(configuration));
 </code></pre>
                                                     <p><strong>Step 3</strong>: <var>package.json</var><![CDATA[
 
@@ -385,7 +388,7 @@ oryx.build(myCustomZedConfiguration);
 </h3>
                                                     <p>oryxForZed.getConfiguration(settings)
 </p>
-                                                    <p>Returns the default Zed <var>webpack </var>configuration, based on provided <var>settings</var>.
+                                                    <p>Returns a promise with default Zed <var>webpack </var>configuration, based on provided <var>settings</var>.
 
 </p>
                                                     <p>Go to the <a href="https://github.com/spryker/oryx-for-zed/blob/master/lib/webpack.config.js" target="_blank">code</a> for more details.
