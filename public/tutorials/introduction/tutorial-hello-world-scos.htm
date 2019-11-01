@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="xeY4gInCGUimNRdwTjTm4g">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="xeY4gInCGUimNRdwTjTm4g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="UHEEeTCmpkGb2eNVUvt5Sg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="UHEEeTCmpkGb2eNVUvt5Sg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -251,7 +251,8 @@
 				<p class="info">A new module is simply a new folder. </p></li>
                                                         <li value="2">Now add a new controller for the module. 
 				<p>Add a new folder inside the HelloWorld module called Controller, and then add the following controller class called IndexController:</p><![CDATA[
-				]]><pre><code class="language-PHP line-numbers">
+				]]><pre><code class="language-PHP line-numbers">&lt;?php
+
 namespace Pyz\Yves\HelloWorld\Controller;
  
 use Spryker\Yves\Kernel\Controller\AbstractController;
@@ -278,24 +279,28 @@ class IndexController extends AbstractController
 				</code></pre></li>
                                                         <li value="3">Add the route to the controller:
 			<p>1. Add a new folder inside the HelloWorld module called Plugin.</p><p>2. Inside the <b>Plugin</b> folder, add a folder called <b>Provider</b>.</p><p>3. Add your <code>ControllerProvider</code> class with the name <code>HelloWorldControllerProvider</code>:
-				<pre><code class="language-PHP line-numbers">
+				<pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
+
 namespace Pyz\Yves\HelloWorld\Plugin\Provider;
+
+use Spryker\Yves\Router\Plugin\RouteProvider\AbstractRouteProviderPlugin;
+use Spryker\Yves\Router\Route\RouteCollection;
  
-use Silex\Application;
-use SprykerShop\Yves\ShopApplication\Plugin\Provider\AbstractYvesControllerProvider;
- 
-class HelloWorldControllerProvider extends AbstractYvesControllerProvider
+class HelloWorldRouteProviderPlugin extends AbstractRouteProviderPlugin
 {
-	const HELLO_WORLD_INDEX = 'hello_world-index';
+	protected const ROUTE_HELLO_WORLD = 'hello-world';
  
 	/**
-	* @param \Silex\Application $app
-	*
-	* @return void
-	*/
-	protected function defineControllers(Application $app)
+	 * @param \Spryker\Yves\Router\Route\RouteCollection $routeCollection
+	 *
+	 * @return \Spryker\Yves\Router\Route\RouteCollection
+	 */
+	public function addRoutes(RouteCollection $routeCollection): RouteCollection
 	{
-		$this-&gt;createGetController('/hello-world', static::HELLO_WORLD_INDEX, 'HelloWorld', 'Index', 'index');
+		$route = $this-&gt;buildRoute('/hello-world', 'HelloWorld', 'Index', 'indexAction');
+		$routeCollection = $this-&gt;addRoute($route);
+
+		return $routeCollection;
 	}
 }</code></pre></p></li>
                                                         <li value="4">Register the ControllerProvider in the application, so the application knows about your controller action.
@@ -316,7 +321,7 @@ class HelloWorldControllerProvider extends AbstractYvesControllerProvider
                                                         <li value="6">Open the newly created page <a href="http://www.de.suite.local/hello-world">http://www.de.suite.local/hello-world</a>.</li>
                                                     </ol>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Jul 20, 2018 </i>
+                                                    <p><i>Last review date: Oct 28, 2019 </i>
                                                     </p>
                                                 </div>
                                             </div>
