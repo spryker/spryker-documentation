@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="EMoK5wHockqXQepTWe5lPA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="EMoK5wHockqXQepTWe5lPA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="fBHW1icLMUu4AWNy599S1g">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="fBHW1icLMUu4AWNy599S1g:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -289,15 +289,13 @@
                                                     <h2>3. Events</h2>
                                                     <p>Now you need to enable events for the table we want to watch the changes, and then react to them. For this purpose, we need to activate Event Propel Behavior for the <code>SpyHelloSprykerMessage</code> table. Open <code>spy_hello_spryker.schema.xml</code> we created in step <b><a href="#Creating_Module"><b>1</b></a></b> and make the following changes:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />spy_hello_spryker.schema.xml</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;?xml version="1.0"?&gt;
-&lt;database xmlns="spryker:schema-01" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd" namespace="Orm\Zed\Cms\Persistence" package="src.Orm.Zed.Cms.Persistence"&gt;
-&lt;table name="spy_hello_spryker_message" idMethod="native" allowPkInsert="true"&gt;
-    &lt;column name="id_hello_spryker_message" type="INTEGER" autoIncrement="true" primaryKey="true"/&gt;
-    &lt;column name="name" required="true" type="VARCHAR" /&gt;
-    &lt;column name="message" required="false" type="LONGVARCHAR" /&gt;
-    &lt;id-method-parameter value="spy_hello_spryker_message_pk_seq"/&gt;
-&lt;/table&gt;
-&lt;/database&gt;</code></pre>
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-XML line-numbers">&lt;table name="spy_hello_spryker_message" idMethod="native" allowPkInsert="true"&gt;
+    ...
+    ...
+    &lt;behavior name="event"&gt;
+    &lt;parameter name="spy_hello_spryker_message_all" column="*"/&gt;
+&lt;/behavior&gt;
+&lt;/table&gt;</code></pre>
                                                         </div>
                                                     </div>
                                                     <p class="info">In our example, we will track changes in <b>all</b> columns. For this reason, we use the asterisk ('<b>*</b>') for the <b>column</b> attribute. If you want to track changes only in certain columns, insert their name in the attribute value instead of the asterisk.</p>
