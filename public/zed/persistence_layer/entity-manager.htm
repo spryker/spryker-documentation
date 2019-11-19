@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="KoWOYR1L00eLh-EoySwXIg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="KoWOYR1L00eLh-EoySwXIg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="HGDVRWquNEOSCgoErkxbSw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="HGDVRWquNEOSCgoErkxbSw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,23 +241,18 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Entity Manager</h1>
                                                     <p>
-    Since Kernel version 3.2, it is possible to create an entity manager class in your persistence layer.
-It will be responsible for saving, updating and deleting data. Using the class, you can separate data from persistence details (Propel).</p>
+    From Kernel version 3.2, it is possible to create an entity manager class in your persistence layer.
+It will be responsible for saving, updating, and deleting data. Using the class, you can separate data from persistence details (Propel).</p>
                                                     <p>
-It is important to not overuse the entity manager or repository for your logic, 
-    these two new concepts should only be concerned about data persistence for a entities. Combining multiple calls, 
-    making decisions should be done in business layer by delegating calls to corresponding entities/repositories. 
-    The side effect of not doing it, will be the business logic creep to persistence layer which will make change hard.
-    </p>
+It is important not to overuse the entity manager or repository for your logic. These two concepts should only be used for data persistence in entities. Combination of multiple calls and the entire logic should be done in the business layer by delegating calls to corresponding entities/repositories to keep the persistence layer separated from the business layer.</p>
                                                     <p>
-  		As an example on using an entity manager, see the <a href="https://github.com/spryker/blog-example" target="_blank" title="Access Blog module" alt="Access Blog module">Blog module</a>.
+  		As an example on using an entity manager, see the <a href="https://github.com/spryker/company" target="_blank" title="Access Blog module" alt="Access Blog module">Company module</a>.
 			</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Entity Transfers</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>
-    With the Publish and Synchronize feature we have added a new transfer generation for EntityTransfers. The EntityTransfers are direct representation of SQL tables,
-    EntityTransfer has all properties and relations defined, also it holds FQCN to the Propel entity it is mapped to. This FQCN is used when mapping entity when data is persisted.
-    Names of Entity Transfers start with <var>Spy</var>, followed by the table name, and then the <var>EntityTransfer</var> suffix. For example,  <var>SpyBlogEntityTransfer</var> would map to SpyBlog Propel entity.</p>
+    With the Publish and Synchronize feature we have added a new transfer generation for EntityTransfers. The EntityTransfers are a direct representation of SQL tables.    EntityTransfer has all properties, and relations defined and holds FQCN to the Propel entity it is mapped to. This FQCN is used when mapping the entity as the data is persisted.
+    </p>
                                                         </div>
                                                     </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />AbstractEntityManager Class</a></span>
@@ -266,9 +261,10 @@ It is important to not overuse the entity manager or repository for your logic,
 
     Abstract entity manager has one public helper method <var>save()</var> to save EntityTransfer trees.
     If you call <var>$this-&gt;save(SpyBlogEntityTransfer)</var> on your module, EntityManager will try to save the whole tree in a single transaction,
-    and you will get back another transfer back with primary foreign keys populated.
+    and you will get another transfer back with primary foreign keys populated.
 
-    Example implementation:
+    </p>
+                                                            <p>Example:
 	<pre><code class="language-PHP line-numbers">
 use Spryker\Zed\Kernel\Persistence\AbstractEntityManager;
 
@@ -292,7 +288,7 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
 }
     	</code></pre>
 
-    It's good practice to include saver method for each saved entity, even it can be automatically mapped, as this way you define contracts.
+   It's a good practice to include saver method for each saved entity, even if it can be automatically mapped, as this way, you define contracts.
 	</p>
                                                             <p>
     Deletion would be done the same way you normally do with Propel.
@@ -323,11 +319,10 @@ class BlogEntityManager extends AbstractEntityManager implements BlogEntityManag
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Entity Manager Availability</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>
-    The main idea is to keep entity manager inside its own module, and have control over how data is persisted. It cannot be located by Spryker dependency locator. So it cannot be used by other modules.
-    If you need to save from another module, you have to provide facade method.
+    The main idea is to keep entity manager inside its own module and have control over how data is persisted. It cannot be located by Spryker dependency locator. So it cannot be used by other modules.
+    If you need to save from another module, you have to provide a Facade method.
 
-    The entity manager is available in the same module as Factories and Facade, and can be accessed by calling <var>getEntityManager</var>. Also you need to defined autocomplete namespace the same wast as for other magic classes.
-    <pre><code class="language-PHP line-numbers">
+    The entity manager is available in the same module as Factories and Facade, and can be accessed by calling <var>getEntityManager</var>. Also, you need to define autocomplete namespace the same way as for other magic classes.<![CDATA[    ]]><pre><code class="language-PHP line-numbers">
 use Spryker\Zed\Kernel\Business\AbstractBusinessFactory;
 
 /**
