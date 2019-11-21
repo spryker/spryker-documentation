@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="5x73DOdpIEWKhVXhsGxEAA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="5x73DOdpIEWKhVXhsGxEAA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="m5r5VPaYpUir6FFSNir6Ng">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="m5r5VPaYpUir6FFSNir6Ng:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,19 +241,62 @@
                                                 <div class="js-anchorer main-content">
                                                     <h1>Ratenkauf by Easycredit - Installation and Configuration</h1>
                                                     <h2>Installation</h2>
-                                                    <p>To install Easycredit, run the following command in the console:</p>
+                                                    <p>To install Easycredit, run the command in the console:</p>
                                                     <p><pre><code class="language-yaml">composer require spryker-eco/easycredit</code></pre>
                                                     </p>
-                                                    <p>In order to use front-end functionality (JavaScript and CSS) with old Demoshop, the <var>shop-ui-compatibility</var> module is required:</p>
+                                                    <p>After installation, you have to run the <var>propel:install</var> command or you can check the following migration:</p><pre><code class="language-sql line-numbers">
+CREATE SEQUENCE "spy_payment_easycredit_api_log_pk_seq";
+ 
+CREATE TABLE "spy_payment_easycredit_api_log"
+(
+	"id_payment_easycredit_api_log" INTEGER NOT NULL,
+	"type" VARCHAR NOT NULL,
+	"request" TEXT NOT NULL,
+	"response" TEXT NOT NULL,
+	"status_code" INT2,
+	"error_code" VARCHAR,
+	"error_message" VARCHAR,
+	"error_type" VARCHAR,
+	"created_at" TIMESTAMP,
+	"updated_at" TIMESTAMP,
+	PRIMARY KEY ("id_payment_easycredit_api_log")
+);
+ 
+CREATE SEQUENCE "spy_payment_easycredit_order_identifier_pk_seq";
+ 
+CREATE TABLE "spy_payment_easycredit_order_identifier"
+(
+	"id_payment_easycredit_order_identifier" INTEGER NOT NULL,
+	"fk_sales_order" INTEGER NOT NULL,
+	"identifier" VARCHAR NOT NULL,
+	"confirmed" BOOLEAN NOT NULL,
+	PRIMARY KEY ("id_payment_easycredit_order_identifier")
+);</code></pre>
+                                                    <p>To use front-end functionality (JavaScript and CSS) with old demoshop, the <var>shop-ui-compatibility</var> module is necessary:</p>
                                                     <p><pre><code class="language-yaml">composer require spryker-eco/shop-ui-compatibility</code></pre>
                                                     </p>
-                                                    <p class="info">After installing <var>shop-ui-compatibility</var> use procedures described in this migration guide - <a href="https://documentation.spryker.com/updating_the_legacy_demoshop_with_scos/setting-up-shopuicompatibility.htm">Setting up ShopUICompatibility Module in the Legacy Demoshop</a>.</p>
+                                                    <p>After installing <var>shop-ui-compatibility</var> use procedures described in this migration guide - <a href="https://documentation.spryker.com/updating_the_legacy_demoshop_with_scos/setting-up-shopuicompatibility.htm">Setting up ShopUICompatibility Module in the Legacy Demoshop</a>.</p>
                                                     <h2>Configuration</h2>
-                                                    <p>Perform the initial configuration of Easycredit:</p>
-                                                    <p><pre><code class="language-php line-numbers">&lt;?php
+                                                    <p>Set up the Easycredit initial configuration.</p>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config_default.php</a></span>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
 ...
 use SprykerEco\Shared\Easycredit\EasycreditConstants;
+use Spryker\Shared\Oms\OmsConstants;
+use Spryker\Shared\Sales\SalesConstants;
+ 
 ...
+ 
+$config[OmsConstants::ACTIVE_PROCESSES] = [
+	...
+	'Easycredit01',
+];
+ 
+$config[SalesConstants::PAYMENT_METHOD_STATEMACHINE_MAPPING] = [
+	...
+	'easycredit' =&gt; 'Easycredit01',
+];
+ 
 ...
 $config[EasycreditConstants::SHOP_IDENTIFIER] = 'Your shop identifier';
 $config[EasycreditConstants::SHOP_TOKEN] = 'Your shop token';
@@ -261,56 +304,73 @@ $config[EasycreditConstants::API_URL] = 'https://ratenkauf.easycredit.de/ratenka
 $config[EasycreditConstants::SUCCESS_URL] = $config[ApplicationConstants::BASE_URL_YVES] . '/easycredit/payment/success';
 $config[EasycreditConstants::CANCELLED_URL] = $config[ApplicationConstants::BASE_URL_YVES] . '/checkout/payment';
 $config[EasycreditConstants::DENIED_URL] = $config[ApplicationConstants::BASE_URL_YVES] . '/checkout/payment';</code></pre>
-                                                    </p>
+                                                        </div>
+                                                    </div>
                                                     <h2>Integration</h2>
                                                     <ol>
                                                         <li value="1">First of all, update <var>CheckoutPageDependencyProvider</var> by adding a new payment subform and a payment method handler.
-        <p class="info">To show the Easycredit payment method on the payment step, you should define <var>SubFormPlugin</var> and <var>StepHandlerPlugin</var>.</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />CheckoutPageDependencyProvider.php</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">...
-/**
- * @param \Spryker\Yves\Kernel\Container $container
- *
- * @return \Spryker\Yves\Kernel\Container
- */
-protected function addSubFormPluginCollection(Container $container): Container
-{
-	$container[static::PAYMENT_SUB_FORMS] = function () {
-		$subFormPluginCollection = new SubFormPluginCollection();
-		$subFormPluginCollection-&gt;add(new EasycreditSubFormPlugin());
-
-		return $subFormPluginCollection;
-	};
-	return $container;
-}
-
-/**
- * @param \Spryker\Yves\Kernel\Container $container
- * @return \Spryker\Yves\Kernel\Container
- */
-protected function addPaymentMethodHandlerPluginCollection(Container $container): Container
-{
-	$container[self::PAYMENT_METHOD_HANDLER] = function () {
-		$stepHandlerPluginCollection = new StepHandlerPluginCollection();
-		$stepHandlerPluginCollection-&gt;add(new EasycreditHandlerPlugin(), PaymentTransfer::EASYCREDIT);
-		return $stepHandlerPluginCollection;
-	};
-
-	return $container;
-}
-/**
- * @param \Spryker\Yves\Kernel\Container $container
- *
- * @return \Spryker\Yves\Kernel\Container
- */
-protected function addEasycreditClient(Container $container): Container
-{
-    $container[static::CLIENT_EASYCREDIT] = function (Container $container) {
-        return $container-&gt;getLocator()-&gt;easycredit()-&gt;client();
-    };
-
-    return $container;
-}
+        <p>To show the Easycredit payment method on the payment step, you should define <var>SubFormPlugin</var> and <var>StepHandlerPlugin</var>.</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />CheckoutPageDependencyProvider.php</a></span><div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">public const CLIENT_EASYCREDIT = 'CLIENT_EASYCREDIT';
+ 
 ...
-</code></pre></p></div></div></li>
+	/**
+	* @param \Spryker\Yves\Kernel\Container $container
+	*
+	* @return \Spryker\Yves\Kernel\Container
+	*/
+	public function provideDependencies(Container $container): Container
+	{
+		$container = parent::provideDependencies($container);
+		$container = $this-&gt;addEasycreditClient($container);
+     
+		return $container;
+	}
+ 
+	/**
+	* @param \Spryker\Yves\Kernel\Container $container
+	*
+	* @return \Spryker\Yves\Kernel\Container
+	*/
+	protected function addSubFormPluginCollection(Container $container): Container
+	{
+		$container[static::PAYMENT_SUB_FORMS] = function () {
+			$subFormPluginCollection = new SubFormPluginCollection();
+			$subFormPluginCollection-&gt;add(new EasycreditSubFormPlugin());
+ 
+			return $subFormPluginCollection;
+		};
+		return $container;
+	}
+ 
+	/**
+	* @param \Spryker\Yves\Kernel\Container $container
+	*
+	* @return \Spryker\Yves\Kernel\Container
+	*/
+	protected function addPaymentMethodHandlerPluginCollection(Container $container): Container
+	{
+		$container[self::PAYMENT_METHOD_HANDLER] = function () {
+			$stepHandlerPluginCollection = new StepHandlerPluginCollection();
+			$stepHandlerPluginCollection-&gt;add(new EasycreditHandlerPlugin(), PaymentTransfer::EASYCREDIT);
+			return $stepHandlerPluginCollection;
+		};
+ 
+		return $container;
+	}
+ 
+	/**
+	* @param \Spryker\Yves\Kernel\Container $container
+	*
+	* @return \Spryker\Yves\Kernel\Container
+	*/
+	protected function addEasycreditClient(Container $container): Container
+	{
+		$container[static::CLIENT_EASYCREDIT] = function (Container $container) {
+			return $container-&gt;getLocator()-&gt;easycredit()-&gt;client();
+		};
+ 
+		return $container;
+	}
+...</code></pre></div></div></li>
                                                         <li value="2">The next dependency provider you should update is <var>OmsDependencyProvider</var>.
 		<p>To use commands and conditions for events in OMS,  define them.</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />OmsDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">...
 $container-&gt;extend(self::CONDITION_PLUGINS, function (ConditionCollectionInterface $conditionCollection) {
@@ -318,8 +378,8 @@ $container-&gt;extend(self::CONDITION_PLUGINS, function (ConditionCollectionInte
 	return $conditionCollection;
 });
 ...</code></pre></p></div></div></li>
-                                                        <li value="3">And one more dependency provider to be updated is <var>CheckoutDependencyProvider</var>. 
-				<p>To send requests to Easycredit, you need the technical order identifier value. After adding this plugin, the order identifier will be saved to the database in <var>table spy_payment_easycredit_order_identifier</var>.</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />CheckoutDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">...
+                                                        <li value="3">And another dependency provider to be updated is <var>CheckoutDependencyProvider</var>. 
+				<p>To send requests to Easycredit, you need the technical order identifier value. After adding this plugin, the order identifier will be saved to the database in the <var>spy_payment_easycredit_order_identifier</var> table.</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />CheckoutDependencyProvider</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">...
 protected function getCheckoutOrderSavers(Container $container)
 {
 	return [
@@ -330,7 +390,7 @@ protected function getCheckoutOrderSavers(Container $container)
  
 ...</code></pre></p></div></div></li>
                                                     </ol>
-                                                    <p>To use Easycredit requests during the checkout process, you have to create your own checkout steps. To implement the checkout steps, follow the guidelines below:</p>
+                                                    <p>To use Easycredit requests during the checkout process, you have to create your own checkout steps. To implement the checkout steps, follow the steps below:</p>
                                                     <ol>
                                                         <li value="1">Extend <var>StepFactory</var>.
 				<div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />CheckoutPageFactory</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">&lt;?php
@@ -414,16 +474,7 @@ class StepFactory extends SprykerStepFactory
     public function createStepCollection(): StepCollectionInterface
     {
         $stepCollection = new StepCollection(
-            $this-&gt;getUrlGenerator(),            {% if data.easycredit %}
-                {% include molecule('easycredit-summary', 'Easycredit') with {
-                    data: {
-                        interest: data.easycredit.interest,
-                        url: data.easycredit.url,
-                        text: data.easycredit.text
-                    }
-                } only %}
-            {% endif %}
- 
+            $this-&gt;getUrlGenerator(),  
             CheckoutPageControllerProvider::CHECKOUT_ERROR
         );
          $stepCollection
@@ -449,7 +500,7 @@ class StepFactory extends SprykerStepFactory
     }
 }</code></pre></p></div></div></li>
                                                         <li value="3">Now you can extend the basic steps on the project level and can create your Easycredit step that will be called when a user takes Easycredit as <var>PaymentMethod</var>. 
-<p>Examples of steps implementations:</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />EasycreditStep.php</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">&lt;?php
+<p>Examples of steps implementations:</p><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />EasycreditStep.php</a></span><div class="MCDropDownBody dropDownBody"><p><pre xml:space="preserve"><code class="language-php line-numbers">&lt;?php
  
 namespace Pyz\Yves\CheckoutPage\Process\Steps;
  
@@ -526,7 +577,7 @@ class EasycreditStep extends AbstractBaseStep implements StepWithExternalRedirec
     }
  
     /**
-     * Return external redirect url, when redirect occurs not within same application. Used after execute.
+     * Return external redirect url, when redirect occurs not within the same application. Used after execute.
      *
      * @return string
      */
@@ -701,8 +752,9 @@ class YvesBootstrap extends SprykerYvesBootstrap
 }</code></pre></p></div></div></li>
                                                     </ol>
                                                     <h2>Frontend part</h2>
-                                                    <p>Еo show the Easycredit info on the PDP page, and Summary and Payment steps, you have to extend some views on the project level .</p>
+                                                    <p>You should extend some views on the project level for showing Easycredit info on the PDP page, and Summary, and Payment steps.</p>
                                                     <p>You can find some examples below in <var><a href="#Payment_step"><var>payment.twig</var></a></var>, <a href="#Summary_step"><var>summary.twig</var></a> and <a href="#PDP_page"><var>pdp.twig</var></a>.</p>
+                                                    <p>Payment step - <var>src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</var></p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />payment.twig</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><a name="Payment_step"></a>Payment step - <var>src/Pyz/Yves/CheckoutPage/Theme/default/views/payment/payment.twig</var></p>
@@ -793,6 +845,7 @@ class YvesBootstrap extends SprykerYvesBootstrap
                                                             </p>
                                                         </div>
                                                     </div>
+                                                    <p>Summary step - <var>src/Pyz/Yves/CheckoutPage/Theme/default/views/summary/summary.twig</var></p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />summary.twig</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p><a name="Summary_step"></a>Summary step - <var>src/Pyz/Yves/CheckoutPage/Theme/default/views/summary/summary.twig</var></p>
@@ -964,10 +1017,9 @@ class YvesBootstrap extends SprykerYvesBootstrap
                                                             </p>
                                                         </div>
                                                     </div>
+                                                    <p>PDP page - <var>src/Pyz/Yves/ProductDetailPage/Theme/default/views/pdp/pdp.twig</var></p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />pdp.twig</a></span>
-                                                        <div class="MCDropDownBody dropDownBody">
-                                                            <p><a name="PDP_page"></a>PDP page - <var>src/Pyz/Yves/ProductDetailPage/Theme/default/views/pdp/pdp.twig</var></p>
-                                                            <p><pre><code class="language-php line-numbers">{% extends template('page-layout-main') %}
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-php line-numbers">{% extends template('page-layout-main') %}
  
 {% define data = {
 	product: _view.product,
@@ -1052,10 +1104,14 @@ class YvesBootstrap extends SprykerYvesBootstrap
 {% endif %}
  
 {% endblock %}</code></pre>
-                                                            </p>
                                                         </div>
                                                     </div>
-                                                    <div class="info">You might want to configure the product detail page to add some validation and show the Easycredit badge in <var>src/Pyz/Yves/ProductDetailPage/Theme/default/components/molecules/product-configurator/product-configurator.twig</var><div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />product-configurator.twig</a></span><div class="MCDropDownBody dropDownBody"><p><pre><code class="language-php line-numbers">...
+                                                    <p>You might want to configure the product detail page to add some validation and show the Easycredit badge in <var>src/Pyz/Yves/ProductDetailPage/Theme/default/components/molecules/product-configurator/product-configurator.twig.</var></p>
+                                                    <p>
+                                                        <p>Make sure to replace <i>&lt;Your shop identifier&gt;</i> with value used in <b>config_default</b>.</p>
+                                                        <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />product-configurator.twig</a></span>
+                                                            <div class="MCDropDownBody dropDownBody">
+                                                                <p><pre><code class="language-php line-numbers">...
     {% set easyCreditMinTreshold = 20000 %}
     {% set easyCreditMaxTreshold = 500000 %}
     {% if data.product.price &gt; easyCreditMinTreshold and data.product.price &lt; easyCreditMaxTreshold %}
@@ -1073,7 +1129,11 @@ class YvesBootstrap extends SprykerYvesBootstrap
             }
         } only %}
     {% endif %}
-...</code></pre></p></div></div></div>
+...</code></pre>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </p>
                                                 </div>
                                             </div>
                                         </div>

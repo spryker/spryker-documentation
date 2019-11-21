@@ -232,95 +232,142 @@
                                                     <h1><a name="Use"></a>Use Case Scenario - Step Engine <img src="../../../resources/images/shoptype/b2b_shop.png" /> <img src="../../../resources/images/shoptype/b2c_shop.png" /> <img src="../../../resources/images/shoptype/mastersuite.png" /> <img src="../../../resources/images/shoptype/demoshop.png" /></h1>
                                                     <p>Below you can see an example of configuration for the checkout process, containing two steps: an entry step and a success step.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Click to expand the code sample</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
-namespace Pyz\Yves\Checkout;
+                                                        <div class="MCDropDownBody dropDownBody"><pre xml:space="preserve"><code class="language-PHP line-numbers">&lt;?php
 
-use Pyz\Yves\Checkout\Form\FormFactory;
-use Pyz\Yves\Checkout\Plugin\Provider\CheckoutControllerProvider;
-use Pyz\Yves\Application\Plugin\Provider\ApplicationControllerProvider;
+namespace SprykerShop\Yves\CheckoutPage\Process;
+
 use Spryker\Yves\Kernel\AbstractFactory;
+use Spryker\Yves\StepEngine\Process\StepBreadcrumbGenerator;
+use Spryker\Yves\StepEngine\Process\StepCollection;
+use Spryker\Yves\StepEngine\Process\StepCollectionInterface;
+use Spryker\Yves\StepEngine\Process\StepEngine;
+use SprykerShop\Yves\CheckoutPage\CheckoutPageDependencyProvider;
+use SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface;
+use SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface;
+use SprykerShop\Yves\CheckoutPage\Plugin\Provider\CheckoutPageControllerProvider;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep;
+use SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep;
+use SprykerShop\Yves\HomePage\Plugin\Provider\HomePageControllerProvider;
 
-class CheckoutFactory extends AbstractFactory
+/**
+* @method \SprykerShop\Yves\CheckoutPage\CheckoutPageConfig getConfig()
+*/
+class StepFactory extends AbstractFactory
 {
+	protected const ROUTE_CART = 'cart';
 
-    /**
-     * @return \Spryker\Yves\StepEngine\Process\StepEngine
-     */
-    public function createCheckoutProcess()
-    {
-        return $this-&gt;createStepEngine(
-            $this-&gt;createStepCollection()
-        );
-    }
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\DataContainer\DataContainer
+	*/
+	public function createDataContainer()
+	{
+		return new DataContainer($this-&gt;getQuoteClient());
+	}
 
-    /**
-     * @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
-     *
-     * @return \Spryker\Yves\StepEngine\Process\StepEngine
-     */
-    public function createStepEngine(StepCollectionInterface $stepCollection)
-    {
-        return new StepEngine($stepCollection, $this-&gt;createDataContainer());
-    }
+	/**
+	* @param \Spryker\Yves\StepEngine\Process\StepCollectionInterface $stepCollection
+	*
+	* @return \Spryker\Yves\StepEngine\Process\StepEngine
+	*/
+	public function createStepEngine(StepCollectionInterface $stepCollection)
+	{
+		return new StepEngine($stepCollection, $this-&gt;createDataContainer(), $this-&gt;createStepBreadcrumbGenerator());
+	}
 
-    /**
-     * @return \Spryker\Yves\Checkout\DataContainer\DataContainer
-     */
-    protected function createDataContainer()
-    {
-        return new DataContainer($this-&gt;getCartClient());
-    }
+	/**
+	* @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
+	*/
+	public function createStepCollection()
+	{
+		$stepCollection = new StepCollection(
+			$this-&gt;getUrlGenerator(),
+			CheckoutPageControllerProvider::CHECKOUT_ERROR
+		);
 
-    /**
-     * @return \Spryker\Yves\StepEngine\Process\StepCollectionInterface
-     */
-    public function createStepCollection()
-    {
-        $stepCollection = new StepCollection(
-            $this-&gt;getUrlGenerator(),
-            CheckoutControllerProvider::CHECKOUT_ERROR
-        );
+		$stepCollection
+			-&gt;addStep($this-&gt;createEntryStep())
+			-&gt;addStep($this-&gt;createSuccessStep());
 
-        $stepCollection
-            -&gt;addStep($this-&gt;createEntryStep())
-            -&gt;addStep($this-&gt;createSuccessStep());
+		return $stepCollection;
+	}
 
-        return $stepCollection;
-    }
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\Process\Steps\EntryStep
+	*/
+	public function createEntryStep()
+	{
+		return new EntryStep(
+			static::ROUTE_CART,
+			HomePageControllerProvider::ROUTE_HOME
+		);
+	}
 
-    /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\EntryStep
-     */
-    protected function createEntryStep()
-    {
-        return new EntryStep(
-            CheckoutControllerProvider::CHECKOUT_INDEX,
-            ApplicationControllerProvider::ROUTE_HOME
-        );
-    }
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\Process\Steps\SuccessStep
+	*/
+	public function createSuccessStep()
+	{
+		return new SuccessStep(
+			$this-&gt;getCustomerClient(),
+			$this-&gt;getCartClient(),
+			$this-&gt;getConfig(),
+			CheckoutPageControllerProvider::CHECKOUT_SUCCESS,
+			HomePageControllerProvider::ROUTE_HOME
+		);
+	}
+    
+	/**
+	* @return \Symfony\Component\Routing\Generator\UrlGeneratorInterface
+	*/
+	public function getUrlGenerator()
+	{
+		return $this-&gt;getApplication()['url_generator'];
+	}
 
-    /**
-     * @return \Pyz\Yves\Checkout\Process\Steps\SuccessStep
-     */
-    protected function createSuccessStep()
-    {
-        return new SuccessStep(
-            CheckoutControllerProvider::CHECKOUT_SUCCESS,
-            ApplicationControllerProvider::ROUTE_HOME
-        );
-    }
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToQuoteClientInterface
+	*/
+	public function getQuoteClient(): CheckoutPageToQuoteClientInterface
+	{
+		return $this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_QUOTE);
+	}
 
-    /**
-     * @throws \Spryker\Yves\Kernel\Exception\Container\ContainerKeyNotFoundException
-     *
-     * @return \Spryker\Client\Cart\CartClientInterface
-     */
-    protected function getCartClient()
-    {
-        return $this-&gt;getProvidedDependency(CheckoutDependencyProvider::CLIENT_CART);
-    }
+	/**
+	* @return \Spryker\Yves\Kernel\Application
+	*/
+	public function getApplication()
+	{
+		return $this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::PLUGIN_APPLICATION);
+	}
 
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCartClientInterface
+	*/
+	public function getCartClient(): CheckoutPageToCartClientInterface
+	{
+		return $this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CART);
+	}
+
+	/**
+	* @return \Spryker\Yves\StepEngine\Process\StepBreadcrumbGeneratorInterface
+	*/
+	public function createStepBreadcrumbGenerator()
+	{
+		return new StepBreadcrumbGenerator();
+	}
+
+	/**
+	* @return \SprykerShop\Yves\CheckoutPage\Dependency\Client\CheckoutPageToCustomerClientInterface
+	*/
+	public function getCustomerClient(): CheckoutPageToCustomerClientInterface
+	{
+		return $this-&gt;getProvidedDependency(CheckoutPageDependencyProvider::CLIENT_CUSTOMER);
+	}
 }</code></pre>
+                                                            <p><b>See also:</b>
+                                                            </p>
                                                         </div>
                                                     </div>
                                                     <ul>
