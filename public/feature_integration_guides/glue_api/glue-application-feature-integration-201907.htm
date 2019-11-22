@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="vMBfxDCiV0qhOoS68LaQXQ">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="vMBfxDCiV0qhOoS68LaQXQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="OCwHqInx00O2OY-tSZM-nw">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="OCwHqInx00O2OY-tSZM-nw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -243,6 +243,8 @@
                                                     <h1 id="GlueApplicationFeatureIntegration" data-magellan-target="GlueApplicationFeatureIntegration">Glue Application Feature Integration</h1>
                                                     <div class="MCHelpControl MCHelpControl-Related relatedTopics relatedTopicssideContent" style="mc-label: 'Versions';mc-help-control-display: list;"><span class="MCHelpControl-RelatedHotSpot_ MCHelpControl-RelatedHotSpot_sideContent"><img class="MCHelpControl_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="16" width="16" alt="Related Topics Link Icon" />Versions</span>
                                                         <ul class="MCHelpControlList MCRelatedTopicsControlList">
+                                                            <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="glue-application-feature-integration.htm" target="_self">Glue Application Feature Integration</a>
+                                                            </li>
                                                             <li class="MCHelpControlListItem MCRelatedTopicsControlListItem"><a class="MCHelpControlListItemLink MCRelatedTopicsControlListItemLink" href="glue-application-feature-integration-201903.htm" target="_self">Glue Application Feature Integration</a>
                                                             </li>
                                                         </ul>
@@ -261,7 +263,7 @@
                                                                 <li><a href="#2SetUpConfiguration">2) Set Up Configuration</a>
                                                                 </li>
                                                                 <ul>
-                                                                    <li><a href="#AddGlobalCORSpolicy">Add Global CORS policy</a>
+                                                                    <li><a href="#AddaglobalCORSpolicy">Add a global CORS policy</a>
                                                                     </li>
                                                                     <li><a href="#AllowCORSrequeststoanydomain">Allow CORS requests to any domain</a>
                                                                     </li>
@@ -271,12 +273,15 @@
                                                                 <li><a href="#4SetUpBehavior">4) Set Up Behavior</a>
                                                                 </li>
                                                                 <ul>
-                                                                    <li><a href="#Configurewebserver">Configure web server</a>
+                                                                    <li><a href="#Configurethewebserver">Configure the web server</a>
                                                                     </li>
                                                                 </ul>
                                                             </ul>
                                                         </ul>
                                                     </ul>
+                                                    <p class="important"><b>The following Feature Integration Guide expects the basic feature to be in place.</b>
+                                                        <br />The current guide only adds the <i>Glue Application</i> functionality.
+        </p>
                                                     <h2 id="InstallFeatureAPI" data-magellan-target="InstallFeatureAPI">Install Feature API</h2>
                                                     <h3 id="Prerequisites" data-magellan-target="Prerequisites">Prerequisites</h3>
                                                     <p>To start feature integration, overview and install the necessary features:</p>
@@ -299,10 +304,9 @@
                                                         </table>
                                                     </div>
                                                     <h3 id="1InstalltheRequiredModulesUsingComposer" data-magellan-target="1InstalltheRequiredModulesUsingComposer">1) Install the Required Modules Using Composer</h3>
-                                                    <p>Run the following command(s) to install the required modules:</p><pre><code class="language-bash">composer require spryker/glue-application:"^1.0.0" spryker/entity-tags-rest-api:"^1.0.0" spryker/stores-rest-api:"^1.0.0" --update-with-dependencies
-		</code></pre>
+                                                    <p>Run the following command to install the required modules:</p><pre><code class="language-bash">composer require spryker/glue-application:"^1.0.0" spryker/entity-tags-rest-api:"^1.0.0" spryker/stores-rest-api:"^1.0.0" --update-with-dependencies</code></pre>
                                                     <div class="tip">
-                                                        <p class="tip">Make sure that the following modules are installed:</p>
+                                                        <p>Make sure that the following modules are installed:</p>
                                                         <div class="table-wrap">
                                                             <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                                 <thead>
@@ -339,11 +343,10 @@
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_DOMAIN] = 'http://glue.mysprykershop.com';
 $config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = 'http://glue.mysprykershop.com';
-$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
-		</code></pre>
+$config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;</code></pre>
                                                         </div>
                                                     </div>
-                                                    <h4 id="AddGlobalCORSpolicy" data-magellan-target="AddGlobalCORSpolicy">Add Global CORS policy</h4>
+                                                    <h4 id="AddaglobalCORSpolicy" data-magellan-target="AddaglobalCORSpolicy">Add a global CORS policy</h4>
                                                     <p class="info">GLUE_APPLICATION_CORS_ALLOW_ORIGIN should be configured for every domain used in the project.</p>
                                                     <p>Adjust <var>config/Shared/config_default.php</var>:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
@@ -353,26 +356,25 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
                                                     <h4 id="AllowCORSrequeststoanydomain" data-magellan-target="AllowCORSrequeststoanydomain">Allow CORS requests to any domain</h4>
                                                     <p>Adjust <var>config/Shared/config_default.php</var>:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />config/Shared/config_default.php</a></span>
-                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = '*';
-		</code></pre>
+                                                        <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">$config[GlueApplicationConstants::GLUE_APPLICATION_CORS_ALLOW_ORIGIN] = '*';</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="tip">
-                                                        <p class="tip">To make sure the CORS headers are set up correctly, make OPTIONS request to any valid GLUE resource with Origin header <code>http://glue.mysprykershop.com/</code> and see the correct JSON response:
-		<ul><li value="1">Verify that the <b>access-control-allow-origin</b> header exists and is the same as set in config</li><li value="2">Verify that the <b>access-control-allow-methods</b> header exists and contains all available methods</li><li value="3">Make POST, PATCH or DELETE request (can choose any of available one) and verify that response headers are the same</li></ul></p>
+                                                        <p>To make sure that CORS headers are set up correctly, make an <i>OPTIONS</i> request to any valid GLUE API&#160;resource with the <var>Origin</var> header set to <code>http://glue.mysprykershop.com/</code> and check whether the JSON response is correct:
+		<ul><li value="1">Make sure that the <var>access-control-allow-origin</var> header exists and is the same as set in configuration;</li><li value="2">Make sure that the <var>access-control-allow-methods</var> header exists and contains all available REST&#160;methods.</li><li value="3">Make a<i>POST</i>, <i>PATCH</i> or <i>DELETE</i> call and verify that the response headers are the same.</li></ul></p>
                                                     </div>
                                                     <div class="info">
                                                         <p class="info">
                                                             <ul>
-                                                                <li value="1">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to "false", no relationship will be loaded, unless they are explicitly specified in the "included" query parameter (e.g. /abstract-products?include=abstract-product-prices).</li>
-                                                                <li value="2">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to "true", all resource relationships will be loaded by default unless you pass empty "include" query parameter (e.g. /abstract-products?include=). If you specify needed relationships in the "included" query parameter, only required relationships will be added to response data.</li>
+                                                                <li value="1">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to <var>false</var>, no relationships will be loaded, unless they are explicitly specified via the <var>included</var> query parameter (e.g. <var>/abstract-products?include=abstract-product-prices</var>).</li>
+                                                                <li value="2">When the <var>GlueApplicationConfig::isEagerRelationshipsLoadingEnabled()</var> option is set to <var>true</var>, all resource relationships will be loaded by default unless you pass an empty <var>included</var> query parameter (e.g. <var>/abstract-products?include=</var>). If you specify the necessary relationships via the <var>included</var> query parameter, only the requested relationships will be added to the response data.</li>
                                                             </ul>
                                                         </p>
                                                     </div>
                                                     <h3 id="3SetUpTransferObjects" data-magellan-target="3SetUpTransferObjects">3) Set Up Transfer Objects</h3>
                                                     <p>Run the following command to generate transfer objects:</p><pre><code class="language-bash">console transfer:generate</code></pre>
                                                     <p class="tip">
-                                                        <p class="tip">Make sure that the following changes have occurred:</p>
+                                                        <p>Make sure that the following changes have occurred:</p>
                                                         <div class="table-wrap">
                                                             <table style="mc-table-style: url('../../resources/tablestyles/patternedrows2.css');" class="TableStyle-PatternedRows2" cellspacing="0">
                                                                 <thead>
@@ -516,7 +518,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>GlueServiceProviderPlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers the <var>onKernelController</var> event listeners in Glue Application.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Registers <var>onKernelController</var> event listeners in Glue Application.</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\GlueApplication\Plugin\Rest</var>
                                                                     </td>
@@ -540,7 +542,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows"><var>EntityTagFormatResponseHeadersPlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Adds the ETag header to response if applicable.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">Adds the <var>ETag</var> header to the response, if applicable.</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-DarkerRows">None</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyD-Regular-DarkerRows"><var>Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagFormatResponseHeadersPlugin</var>
                                                                     </td>
@@ -548,7 +550,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
                                                                 <tr class="TableStyle-PatternedRows2-Body-LightRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows"><var>EntityTagRestRequestValidatorPlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Verifies that the `If-Match` header is equal to entity tag.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">Verifies that the <var>If-Match</var> header is equal to the entity tag.</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyE-Regular-LightRows">None</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyD-Regular-LightRows"><var>Spryker\Glue\EntityTagsRestApi\Plugin\GlueApplication\EntityTagRestRequestValidatorPlugin</var>
                                                                     </td>
@@ -556,7 +558,7 @@ $config[GlueApplicationConstants::GLUE_APPLICATION_REST_DEBUG] = false;
                                                                 <tr class="TableStyle-PatternedRows2-Body-DarkerRows">
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows"><var>StoresResourceRoutePlugin</var>
                                                                     </td>
-                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Registers stores resource.</td>
+                                                                    <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">Registers the <var>stores</var> resource.</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyB-Regular-DarkerRows">None</td>
                                                                     <td class="TableStyle-PatternedRows2-BodyA-Regular-DarkerRows"><var>Spryker\Glue\StoresRestApi\Plugin</var>
                                                                     </td>
@@ -592,8 +594,7 @@ class GlueBootstrap extends AbstractGlueBootstrap
 			-&gt;register(new GlueServiceProviderPlugin())
 			-&gt;register(new GlueRoutingServiceProvider());
 	}
-}
-		</code></pre>
+}</code></pre>
                                                         </div>
                                                     </div>
                                                     <p>Create a new entry point for Glue Application:</p>
@@ -617,11 +618,10 @@ $errorHandlerEnvironment-&gt;initialize();
 $bootstrap = new GlueBootstrap();
 $bootstrap
 	-&gt;boot()
-	-&gt;run();
-		</code></pre>
+	-&gt;run();</code></pre>
                                                         </div>
                                                     </div>
-                                                    <h4 id="Configurewebserver" data-magellan-target="Configurewebserver">Configure web server</h4>
+                                                    <h4 id="Configurethewebserver" data-magellan-target="Configurethewebserver">Configure the web server</h4>
                                                     <p>Create Nginx VHOST configuration:</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/nginx/sites-enabled/DE_development_glue</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">server {
@@ -643,16 +643,16 @@ $bootstrap
 	# Binding store
 	set $application_store DE;
 	include "spryker/zed.conf";
-}				</code></pre>
+}</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p>Update hosts configuration by adding the following line (replace IP with your server's IP address):</p>
+                                                    <p>Update the hosts configuration by adding the following line (replacing the IP with the IP address of your server):</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />/etc/hosts</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-bash">ip glue.mysprykershop.com</code></pre>
                                                         </div>
                                                     </div>
                                                     <div class="tip">
-                                                        <p class="tip">If everything is set up correctly, you should be able to access http://glue.mysprykershop.com and get a correct JSON response as follows:</p>
+                                                        <p>If everything is set up correctly, you should be able to access <var>http://glue.mysprykershop.com</var> and get a correct JSON response as follows:</p>
                                                         <p><b>Default JSON Response</b>
                                                         </p><pre><code class="language-json line-numbers">{
 	"errors": [
@@ -713,12 +713,11 @@ class GlueApplicationDependencyProvider extends SprykerGlueApplicationDependency
 			new EntityTagRestRequestValidatorPlugin(),
 		];
 	}
-}
-				</code></pre>
+}</code></pre>
                                                         </div>
                                                     </div>
                                                     <p class="info"><b>Hint</b>
-                                                        <br />Use constant of resource name instead of plain string.</p>
+                                                        <br />Use resource name constant instead of a plain string.</p>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Glue/EntityTagsRestApi/EntityTagsRestApiConfig.php</a></span>
                                                         <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
  
@@ -739,46 +738,43 @@ class EntityTagsRestApiConfig extends SprykerEntityTagsRestApiConfig
 			[PyzRestApiConfig::RESOURCE_NAME]
 		);
 	}
-}
-				</code></pre>
+}</code></pre>
                                                         </div>
                                                     </div>
-                                                    <p class="tip">If everything is set up correctly, a request to http://glue.mysprykershop.com with the header <code>[{"key":"Accept-Language","value":"de_DE, de;q=0.9"}]</code> should result in a response that contains the content-language header set to de_DE.</p>
+                                                    <p class="tip">If everything is set up correctly, a request to <var>http://glue.mysprykershop.com</var> with the following header:<br /><code>[{"key":"Accept-Language","value":"de_DE, de;q=0.9"}]</code><br />This should result in a response that contains the <var>content-language</var> header set to <b>de_DE</b>.</p>
                                                     <div class="tip">
-                                                        <p class="tip">Send a GET request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
-                                                        <br />Make sure that the response contains the 'ETag' header.
-			<br />Prepare a PATCH request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identitifer}}</code><br />Add the 'If-Match' header with the value of ETag from the GET response header.
-			<br />Add the request body:
-			<pre><code class="language-json line-numbers">{
+                                                        <p>Send a <i>GET</i> request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
+                                                        <p>Make sure that the response contains the <var>ETag</var> header.
+			<br />Prepare a <i>PATCH</i> request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identitifer}}</code><br />Add the <var>If-Match</var> header with the value equal to the value of the <var>ETag</var> header in the <i>GET</i> response header.</p>
+                                                        <p>Add the following request body:<pre><code class="language-json line-numbers">{
 	"data": {
 		"type": "RESOURCE_NAME",
 		"attributes": {
 			"name": "{{new_name}}"
 		}
 	}
-}
-			</code></pre><br />Send a request with the specified header and body.
-			<br />Make sure that the returned resource contains updated 'ETag'.
-			</div>
+}</code></pre></p>
+                                                        <p>Send a request with the specified header and body.
+			<br />Make sure that the returned resource contains an updated <var>ETag</var> header.</p>
+                                                    </div>
                                                     <div class="tip">
-                                                        <p class="tip">Send a GET request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
-                                                        <br />Make sure that the response contains the 'ETag' header.
-			<br />Prepare a PATCH request to  <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code><br />Add the 'If-Match' header with some random value.
-			<br />Add a request body.
-			<pre><code class="language-json line-numbers">{
+                                                        <p>Send a <i>GET</i> request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identifier}}</code>.</p>
+                                                        <p>Make sure that the response contains the <var>ETag</var> header.
+			<br />Prepare a <i>PATCH</i> request to <code>http://glue.mysprykershop.com/{{RESOURCE_NAME}}/{{identitifer}}</code><br />Add the <var>If-Match</var> header with a random value.</p>
+                                                        <p>Add the following request body:<pre><code class="language-json line-numbers">{
 	"data": {
 		"type": "RESOURCE_NAME",
 		"attributes": {
 			"name": "{{new_name}}"
 		}
 	}
-}
-			</code></pre><br />Send a request with the specified header and body.
-			<br />Make sure that the response contains the ETag validation error.
-		</div>
+}</code></pre></p>
+                                                        <p>Send a request with the specified header and body.
+			<br />Make sure that the response contains an <i>ETag</i> validation error.</p>
+                                                    </div>
                                                     <p class="tip">Make sure that the following endpoint is available:
-			<ul><li value="1">http://mysprykershop.com/stores</li></ul></p>
-                                                    <p><i>Last review date: Aug 02, 2019</i>
+			<ul><li value="1"><var>http://mysprykershop.com/stores</var></li></ul></p>
+                                                    <p><i>Last review date: November 11, 2019</i>
                                                     </p>
                                                 </div>
                                             </div>
