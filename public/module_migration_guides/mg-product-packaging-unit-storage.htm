@@ -208,8 +208,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="nUL2Gf99_0m7DVX7cObueA">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="nUL2Gf99_0m7DVX7cObueA:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="9iLcyCp4ykKyQLk85z9lQg">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="9iLcyCp4ykKyQLk85z9lQg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -240,6 +240,68 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - ProductPackagingUnitStorage</h1>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from Version 4.* Version to 5.0.0</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In this new version of the <b>ProductPackagingUnitStorage</b> module, we have added support of decimal stock. You can find more details about the changes on the <a href="https://github.com/spryker/product-packaging-unit-storage/releases">ProductPackagingUnitStorage module</a> release page.</p>
+                                                            <div class="important">This release is a part of the <b>Decimal Stock</b> concept migration. When you upgrade this module version, you should also update all other installed modules in your project to use the same concept as well as to avoid inconsistent behavior. For more information, see Decimal Stock Migration Concept.</div>
+                                                            <p><b>To upgrade to the new version of the module, do the following:</b>
+                                                            </p>
+                                                            <p>1. Upgrade the <b>ProductPackagingUnitStorage</b> module to the new version:</p><pre><code class="language-bash">composer require spryker/product-packaging-unit-storage: "^5.0.0" --update-with-dependencies</code></pre>
+                                                            <p>2. Rename the <var>spy_product_abstract_packaging_storage.schema.xml</var> to <var>spy_product_packaging_unit_storage.schema.xml</var> and do the following changes:</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/ProductPackagingUnitStorage/Persistence/Propel/Schema/spy_product_packaging_unit_storage.schema.xml</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-xml line-numbers">&lt;?xml version="1.0"?&gt;
+&lt;database xmlns="spryker:schema-01"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		name="zed"
+		xsi:schemaLocation="spryker:schema-01 https://static.spryker.com/schema-01.xsd"
+		namespace="Orm\Zed\ProductPackagingUnitStorage\Persistence"
+		package="src.Orm.Zed.ProductPackagingUnitStorage.Persistence"&gt;
+ 
+	&lt;table name="spy_product_packaging_unit_storage"&gt;
+		&lt;behavior name="synchronization"&gt;
+			&lt;parameter name="queue_pool" value="synchronizationPool"/&gt;
+		&lt;/behavior&gt;
+	&lt;/table&gt;
+ 
+&lt;/database&gt;</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <p>3. Update the database entity schema for <b>each store</b> in the system:</p><pre><code class="language-bash">APPLICATION_STORE=DE console propel:schema:copy
+APPLICATION_STORE=US console propel:schema:copy
+...</code></pre>
+                                                            <p>4. Run the database migration:</p><pre><code class="language-bash">console propel:install
+console transfer:generate</code></pre>
+                                                            <p>5. Run the following command to republish all the packaging units to storage:</p><pre><code class="language-bash">console event:trigger -r product_packaging_unit</code></pre>
+                                                            <p>6. Run the following - or create a bash file for it - to clean up the Redis storage from the entries with the old data:</p><pre><code class="language-bash">for k in $(redis-cli -p 10009 --scan --pattern "*:product_abstract_packaging:*"); do
+echo "deleting key '$k'";
+redis-cli -p 10009 DEL $k;
+		done</code></pre>
+                                                            <p>7. Add the following plugin to the project dependency provider, if applicable, and remove the old <var>ProductAbstractPackagingEventResourceRepositoryPlugin</var> plugin.</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/EventBehavior/EventBehaviorDependencyProvider.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\EventBehavior;
+ 
+use Spryker\Zed\EventBehavior\EventBehaviorDependencyProvider as SprykerEventBehaviorDependencyProvider;
+use Spryker\Zed\ProductPackagingUnitStorage\Communication\Plugin\Event\ProductPackagingUnitEventResourceBulkRepositoryPlugin;
+ 
+class EventBehaviorDependencyProvider extends SprykerEventBehaviorDependencyProvider
+{
+	/**
+	* @return \Spryker\Zed\EventBehavior\Dependency\Plugin\EventResourcePluginInterface[]
+	*/
+	protected function getEventTriggerResourcePlugins()
+	{
+		return [
+			new ProductPackagingUnitEventResourceBulkRepositoryPlugin(),
+		];
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <p><![CDATA[	]]><i>Estimated migration time: 15 min</i></p>
+                                                        </div>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from version 2.* to 4.0.0</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p class="info"> In order to dismantle the Horizontal Barrier and enable partial module updates on projects, Technical Release took place. Public API of source and target major versions are equal. No migration efforts are required. Please <a href="https://support.spryker.com/hc/en-us">contact us</a> if you have any questions.</p>
@@ -265,7 +327,7 @@
                                                     <p><a href="https://documentation.spryker.com/capabilities/cart/quick_order/quick-order-201903.htm">Quick Order</a>
                                                     </p>
                                                     <p>&#160;</p>
-                                                    <p><i>Last review date: Mar 13, 2019</i>
+                                                    <p><i>Last review date: Nov 26, 2019</i>
                                                     </p>
                                                     <p>&#160;</p>
                                                 </div>

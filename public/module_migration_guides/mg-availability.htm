@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="URiNXYxxgEmK-qFXRBhrRw">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="URiNXYxxgEmK-qFXRBhrRw:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="lAK9uQayn0GO9NXE4VvX9A">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="lAK9uQayn0GO9NXE4VvX9A:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,6 +241,49 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Availability <a href="../resources/images/shoptype/b2c_shop.png"><img src="../resources/images/shoptype/b2b_shop.png" /> <img src="../resources/images/shoptype/b2c_shop.png" /></a></h1>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from Version 8.* to Version 9.0.0</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In this new version of the <b>Availability</b> module, we have added support of decimal stock. You can find more details about the changes on the <a href="https://github.com/spryker/availability/releases">Availability</a> release page.</p>
+                                                            <div class="important">This release is a part of the <b>Decimal Stock</b> concept migration. When you upgrade this module version, you should also update all other installed modules in your project to use the same concept as well as to avoid inconsistent behavior. For more information, see Decimal Stock Migration Concept.</div>
+                                                            <p><b>To upgrade to the new version of the module, do the following:</b>
+                                                            </p>
+                                                            <p>1. Upgrade the <b>Availability</b> module to the new version:</p><pre><code class="language-bash">composer require spryker/availability: "^9.0.0" --update-with-dependencies</code></pre>
+                                                            <p>2. Update the database entity schema for <b>each store</b> in the system:</p><pre><code class="language-bash">APPLICATION_STORE=DE console propel:schema:copy
+APPLICATION_STORE=US console propel:schema:copy
+...</code></pre>
+                                                            <p>3. Run the database migration:</p><pre><code class="language-bash">console propel:install
+console transfer:generate</code></pre>
+                                                            <p>4. Add the following plugin to the project dependency provider, if applicable:</p>
+                                                            <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />src/Pyz/Zed/Cart/CartDependencyProvider.php</a></span>
+                                                                <div class="MCDropDownBody dropDownBody"><pre><code class="language-PHP line-numbers">&lt;?php
+ 
+namespace Pyz\Zed\Cart;
+ 
+use Spryker\Zed\AvailabilityCartConnector\Communication\Plugin\CheckAvailabilityPlugin;
+use Spryker\Zed\Cart\CartDependencyProvider as SprykerCartDependencyProvider;
+use Spryker\Zed\Kernel\Container;
+ 
+class CartDependencyProvider extends SprykerCartDependencyProvider
+{
+ 
+	/**
+	* @param \Spryker\Zed\Kernel\Container $container
+	*
+	* @return \Spryker\Zed\CartExtension\Dependency\Plugin\CartPreCheckPluginInterface[]
+	*/
+	protected function getCartPreCheckPlugins(Container $container)
+	{
+		return [
+			new CheckAvailabilityPlugin(),
+		];
+	}
+}</code></pre>
+                                                                </div>
+                                                            </div>
+                                                            <p><i>Estimated migration time: 5 min</i>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from version 6.* to 8.0.0</a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p class="info"> In order to dismantle the Horizontal Barrier and enable partial module updates on projects, Technical Release took place. Public API of source and target major versions are equal. No migration efforts are required. Please <a href="https://support.spryker.com/hc/en-us">contact us</a> if you have any questions.</p>
