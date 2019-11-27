@@ -209,8 +209,8 @@
                                     <div class="topic-layout">
                                         <div>
                                             <div class="side-menu">
-                                                <div data-sticky-container="" id="kqH86xasDEi_x8EDNjF7Xg">
-                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="kqH86xasDEi_x8EDNjF7Xg:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
+                                                <div data-sticky-container="" id="qaNYVKGLqE6Gej-_cAqynQ">
+                                                    <div class="sticky sticky-menu" style="width:100%" data-sticky="" data-top-anchor="qaNYVKGLqE6Gej-_cAqynQ:top" data-bottom-anchor="contentBody:bottom" data-sticky-on="small" data-scroll-container-on="small">
                                                         <ul class="nocontent menu _Skins_SideMenu mc-component" data-mc-is-context-sensitive="True" data-mc-linked-toc="Data/Tocs/master.js" data-mc-side-menu="True" data-mc-max-depth="1" data-mc-include-icon="False" data-mc-include-indicator="False" data-mc-include-children="True" data-mc-include-siblings="True" data-mc-include-parent="True" data-mc-toc="True">
                                                         </ul>
                                                     </div>
@@ -241,6 +241,21 @@
                                                 </div>
                                                 <div class="js-anchorer main-content">
                                                     <h1>Migration Guide - Shipment</h1>
+                                                    <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" />Upgrading from Version 7.* to Version 8.0.0</a></span>
+                                                        <div class="MCDropDownBody dropDownBody">
+                                                            <p>In the version 8.0.0 of the <b>Shipment</b> module, we have added the ability to assign a delivery method to a store in the Back Office. You can find more details about the changes on the <a href="https://github.com/spryker/shipment/releases">Shipment module</a> release page.</p>
+                                                            <p><b>To upgrade to the new version of the module, do the following:</b>
+                                                            </p>
+                                                            <p>1. Upgrade the <b>Shipment</b> module to the new version:</p><pre><code class="language-bash">composer require spryker/shipment:"^8.0.0" --update-with-dependencies</code></pre>
+                                                            <p>2. Prepare database entity schema for each store in the system:</p><pre><code class="language-bash">APPLICATION_STORE=DE console propel:schema:copy
+APPLICATION_STORE=US console propel:schema:copy
+...</code></pre>
+                                                            <p>3. Run the database migration:</p><pre><code class="language-bash">console propel:install
+console transfer:generate</code></pre>
+                                                            <p><i>Estimated migration time: 5 min</i>
+                                                            </p>
+                                                        </div>
+                                                    </div>
                                                     <div class="MCDropDown MCDropDown_Closed dropDown"><span class="MCDropDownHead dropDownHead"><a href="javascript:void(0);" class="MCDropDownHotSpot dropDownHotspot MCDropDownHotSpot_ MCHotSpotImage"><img class="MCDropDown_Image_Icon" src="../Skins/Default/Stylesheets/Images/transparent.gif" height="11" width="16" alt="Closed" data-mc-alt2="Open" /><div class="drop-anchor">Upgrading from Version 6.* to Version 7.0.0</div></a></span>
                                                         <div class="MCDropDownBody dropDownBody">
                                                             <p>In this new version of the <b>Shipment</b> module, we have added support of split delivery. You can find more details about the changes on the <a href="https://github.com/spryker/shipment/releases">Shipment module release</a> page.</p>
@@ -661,6 +676,10 @@ class ShipmentDependencyProvider extends SprykerShipmentDependencyProvider
                                                         <li value="2"><a href="https://documentation.spryker.com/module_guide/spryker/shipment.htm">Learn more about Shipment concepts</a>
                                                         </li>
                                                         <li value="3"><a href="https://documentation.spryker.com/capabilities/shipment/shipment-method-plugins.htm">Learn more about Shipment Methods Plugins</a>
+                                                        </li>
+                                                        <li value="4"><a href="mg-shipmentgui.htm">Learn how to migrate to a newer version of the ShipmentGui module</a>
+                                                        </li>
+                                                        <li value="5"><a href="mg-manual-order-entry-gui.htm">Learn how to migrate to a newer version of the ManualOrderEntryGui module (version 0.9.0)</a>
                                                         </li>
                                                     </ul>
                                                     <p>&#160;</p>
